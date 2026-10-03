@@ -1,0 +1,3781 @@
+Technical Sales Guide
+U-MATCH SERIES AIR CONDITIONERS
+(GC202209-II)
+CAPACITY RANGE: 3.5~16.0kW
+GREE ELECTRIC APPLIANCES, INC. OF ZHUHAI
+
+CONTENTS
+1 PRODUCT LIST ........................................................................ 1
+2 NOMENCLATURE ..................................................................... 6
+3 PRODUCT FEATURES ............................................................. 7
+4 PRODUCT PARAMETERS ..................................................... 28
+5 OPERATION RANGE .............................................................. 40
+6 CAPACITY CORRECTION ...................................................... 41
+7 AIR VOLUME STATIC PRESSURE CURVE ........................... 79
+8 AIRFLOW CHART ................................................................... 84
+9 NOISE ................................................................................... 105
+10 DIMENSIONS AND INSTALLATION SITE .......................... 109
+11 ELECTRICAL INSTALLATION ............................................ 120
+12 LIST OF STANDARD AND OPTIONAL PARTS ................. 126
+
+U-MATCH SERIES AIR CONDITIONERS
+1 PRODUCT LIST
+1.1 Outdoor Unit Lineup
+Power Supply
+Model Product Code Appearance
+(V,Ph,Hz)
+CF090W2182
+GUD35W1/NhA-S
+*CF090W2181
+CF090W2160
+GUD50W1/NhA-S
+*CF090W2161
+CF090W2170
+GUD71W1/NhA-S
+*CF090W2171
+220-240V ~50/60Hz CF090W2420
+GUD85W1/NhA-S
+*CF090W2421
+CF090W2330
+GUD100W1/NhA-S
+*CF090W2331
+CF090W2200
+GUD125W1/NhA-S
+*CF090W2201
+CF090W2430
+GUD140W1/NhA-S
+*CF090W2431
+1
+
+Power Supply
+Model Product Code Appearance
+(V,Ph,Hz)
+CF090W2340
+GUD100W1/NhA-X
+*CF090W2341
+CF090W2190
+GUD125W1/NhA-X
+*CF090W2191
+CF090W2230
+GUD140W1/NhA-X 380-415V 3N~50/60Hz
+*CF090W2231
+CF090W2470
+GUD160W1/NhA-X
+*CF090W2471
+Notes:
+• As for the product code with “*”, it indicates that there is electric heating belt on the chassis.
+• If one outdoor unit is to be connected with multiple indoor units, the indoor units must have the same
+cooling capacity and be of the same type.
+2
+
+U-MATCH SERIES AIR CONDITIONERS
+1.2 Indoor Unit Lineup
+• Gree U-MATCH VI adopts self-adaptation technology to be matched with different types of indoor units (duct
+type, cassette type, floor ceiling type, wall-mounted type) according to the room decoration design and
+user demands, saving the cost of warehouse management and after-sales maintenance.
+• It is widely applicable for apartments, villas, hotels, office buildings and small and medium sized
+supermarkets.
+• Cooling capacity range:3.5kW~16 kW; Applicable area:16~140m²
+Rated Cooling/
+Model Heating Capacity Product Code Appearance Features
+(kW)
+3
+epyT
+ettessaC
+●Compact cassette unit with dimensions
+of 570mm×570mm; can be perfectly fit into
+GUD35T1/A-S 3.50/4.00 ET010N2320 a standard 600mm×600mm ceiling space;
+●With 8-way air discharge panels for 360°
+air supply;
+●Thanks to the built-in electric box,
+maintenance can be carried out after
+GUD50T1/A1-S 5.00/5.60 ET010N2440
+opening the grill –no need to remove the
+ceiling;
+ET010N2310
+GUD50T1/A-S 5.30/5.80
+ET010N2311
+General series:
+●With 8-way air discharge panels for
+ET010N2330
+GUD71T1/A-S 7.10/7.80 360°air supply;
+ET010N2331
+●5 fan speeds can be set to meet different
+air flow requirements;
+●Panels with smart sensors are optional;
+ET010N2480
+GUD85T1/A-S 8.50/8.80 ●Plasmacluster ion sterilization module
+ET010N2481
+is included, for a healthy and comfortable
+environment;
+ET010N2400 Special functional series:
+GUD100T1/A-S 10.50/11.50
+ET010N2401 ●Equipped with MODBUS interface, which
+can be directly connected to the BMS;
+BACnet gateway is optional;
+●It can be directly connected to a
+ET010N2410
+GUD125T1/A-S 12.10/13.50 centralized controller and can share a
+ET010N2411
+centralized controller with GREE GMV6 for
+centralized control;
+●Panel lifting function module is built as
+standard; lifting panel is optional;
+ET010N2370
+GUD140T1/A-S 13.40/15.50 ●It is equipped with an 8-way air discharge
+ET010N2371
+panel and a panel lifting function module;
+lifting panel is optional.
+ET010N2510
+GUD160T1/A-S 14.50/17.00
+ET010N2511
+
+Rated Cooling/
+Model Heating Capacity Product Code Appearance Features
+(kW)
+4
+epyT
+tcuD
+●Ultra thin structure, only 200mm thick;
+GUD35P1/A-S CF022N3970
+3.50/4.00 ●Static pressure up to 80Pa, with 5 static
+GUD35PS1/A-S CF022N3980
+pressure stages and 7 fan speeds;
+●Models with and without drain pumps
+are available. The delivery lift can reach
+1000mm;
+GUD50P1/A-S CF022N3960
+5.30/5.60 ●Two air return modes to choose from:
+GUD50PS1/A-S CF022N3950
+bottom air return and rear air return;
+CF022N3930
+GUD71PH1/A-S
+7.10/8.00 CF022N3940 General series:
+GUD71PHS1/A-S
+CF022N3941 ●Up to 9 static pressure stages with a
+maximum of 200Pa can be set, to suit
+different static pressure requirements;
+CF022N4310 ●Compact structure, only 260mm thick;
+GUD85PH1/A-S
+8.50/8.80 CF022N4300 models 7.1kW/8.5kW are only 900mm
+GUD85PHS1/A-S
+CF022N4301 in length, suitable to places with narrow
+ceiling space;
+●Models with and without drain pumps
+CF022N4170
+GUD100PH1/A-S are available. The delivery lift can reach
+10.50/11.50 CF022N4160
+GUD100PHS1/A-S 1000mm;
+CF022N4161
+●Two air return modes to choose from:
+bottom air return and rear air return;
+●Plasmacluster ion sterilization
+CF022N4000
+GUD125PH1/A-S module is included, for a healthy and
+12.10/13.50 CF022N3990
+GUD125PHS1/A-S comfortable environment;
+CF022N3991
+Special functional series:
+CF022N4110 ●Equipped with MODBUS interface, which
+GUD140PH1/A-S
+13.40/15.50 CF022N4120 can be directly connected to the BMS;
+GUD140PHS1/A-S
+CF022N4121 BACnet gateway is optional;
+●It can be directly connected to a
+centralized controller and can share a
+CF022N4390 centralized controller with GREE GMV6 for
+GUD160PH1/A-S
+16.00/17.00 CF022N4400 centralized control;
+GUD160PHS1/A-S
+CF022N4401
+
+U-MATCH SERIES AIR CONDITIONERS
+Rated Cooling/
+Model Heating Capacity Product Code Appearance Features
+(kW)
+5
+epyT
+gnilieC
+roolF
+GUD35ZD1/A-S 3.50/4.00 ED020N2380
+GUD50ZD1/A-S 5.30/5.60 ED020N2370
+General series:
+●Two installation methods to choose from:
+floor or ceiling mounted;
+ED020N2360
+GUD71ZD1/A-S 7.10/7.70 ●Dual air guide louvers for multi-layer air
+ED020N2361
+discharge and higher level of comfort; the
+bright white appearance makes it simple
+and beautiful;
+ED020N2490 ●2 digit 7-segment display of temperature
+GUD85ZD1/A-S 8.50/8.80
+ED020N2491 and error codes;
+●Plasmacluster ion sterilization module
+is included, for a healthy and comfortable
+environment;
+ED020N2450
+GUD100ZD1/A-S 10.00/11.50
+ED020N2451 Special functional series:
+●Equipped with MODBUS interface, which
+can be directly connected to the BMS;
+BACnet gateway is optional;
+ED020N2390
+GUD125ZD1/A-S 12.10/13.50 ●It can be directly connected to a
+ED020N2391
+centralized controller and can share a
+centralized controller with GREE GMV6 for
+centralized control;
+ED020N2420
+GUD140ZD1/A-S 13.40/15.50
+ED020N2421
+ED020N2540
+GUD160ZD1/A-S 16.00/17.00
+ED020N2541
+Notes:
+• 1 Ton =12000Btu/h = 3.517kW
+• The outdoor unit is compatible with three types of indoor units: cassette type, duct type and floor ceiling
+type.
+
+2 NOMENCLATURE
+2.1 Nomenclature of Outdoor Unit
+2.2 Nomenclature of Indoor Unit
+6
+
+U-MATCH SERIES AIR CONDITIONERS
+3 PRODUCT FEATURES
+3.1 Energy-Saving
+U-Match VI adopts R32 refrigerant .Thanks to the high-efficiency structural design, all DC inverter con-
+trol, high-efficiency compressor and motor, optimized wind field design and enhanced heat exchange tech-
+nology, they can achieve 10% energy savings on average compared to the last generation.
+3.1.1 High Efficiency Compressor
+7
+
+3.1.2 High-Efficiency DC Motor
+• DC Brushless Motor (outdoor)
+Thanks to the high-efficiency DC inverter design
+and high-power density structure, the external motor
+has less magnetic flux leakage and less loss. Motor
+efficiency is 32% higher than that of conventional AC
+motors.
+• DC Brushless Motor (indoor)
+3.1.3 Enhanced Heat Exchange Design
+• The newly designed internally threaded copper pipe can effectively improve heat exchange performance.
+Smaller addendum angle helps to increase the internal heat transfer area;
+Larger helix angle helps to improve turbulence intensity and enhance convective heat transfer;
+More teeth, larger internal heat transfer area, higher heat exchange efficiency
+• The low resistance distribution type sub-cooling flow path, new type fins and optimized wind field design
+also contribute to the increase of heat exchange efficiency.
+8
+
+U-MATCH SERIES AIR CONDITIONERS
+3.1.4 Wind Field Optimization
+• Low wind resistance grille: 2% increase in air volume by optimizing the“raindrop” grille and rotating
+divergent low wind resistance structure.
+• Low wind resistance motor support: the U-shaped motor support results in 55% decrease in windward
+area and 1.5% increase in air volume.
+• Efficient bionic fan blades:bionic fan blades with long chord length and a big rooting-in angle are used to
+improve the aerodynamic performance of the fan, leading to 10% increase in air volume.
+3.2 Health Protection
+3.2.1 Fresh Air Control
+Duct units and floor ceiling units of the entire series are
+equipped with fresh air inlets. They can introduce 8%~12%
+fresh outside air into the room to ensure indoor air quality.
+For cassette units with large panels, we offer optional
+fresh air accessories which can effectively bring in 5%~10%
+fresh outside air.
+3.2.2 Various Options of Sterilization Filters
+Different choices of anti-bacterial or purifying filters are offered to be installed (e.g. catechin, active car-
+bon, etc…)
+Photocatalytic Filter
+Active Carbon Filter
+Multifunctional Filter
+Catechin Filter
+Silver lon Filter
+Note: applicable to duct units of 35, 50, 140, and 160 only.
+9
+
+3.2.3 Plasmacluster Ion Sterilization
+Through high-voltage discharge of the plasmacluster ion module, the air is ionized and generates a
+large number of ions, which then combine with bacteria and viruses to make them inactivated.
+3.2.4 56℃ Self-cleaning System
+Gree high-temperature self-cleaning system with 5 stages of deep cleaning can effectively clean away
+dust and dirt on the evaporator and then automatically enter the stage of high-temperature sterilization, to
+make the conditioned air cleaner and healthier.
+3.2.5 Plasma Sterilization Module
+• Primary filter: filter out hair, pollen, fluff, flying insects and large particles.
+• Generator: generate plasma to kill bacteria and viruses with charged particles.
+• Collector: collect dust, dead bacteria and other harmful substances.
+Notes：
+1. A variety of sterilization filters and plasma sterilization module are optional for duct type units.
+2. We offer series with plasmacluster ion sterilization function as standard and series with plasmacluster ion
+sterilization as optional.
+3. Applicable only to duct units of 35 and 50.
+10
+
+U-MATCH SERIES AIR CONDITIONERS
+3.3 Enhanced Comfort
+3.3.1 Stable Temperature Control
+U-Match VI provide stable temperature control and more comfortable user experience by adopting DC
+inverter compressors with variable capacity output, DC motors with stepless speed regulation, electronic ex-
+pansion valves with accurate flow control ranging from 0 to 480P ,and ambient temperature sensing technol-
+ogy with a precision of ±0.5℃ .
+3.3.2 Fast Cooling / Heating
+By detecting the set temperature, indoor and out-
+door ambient temperatures, it will automatically enable
+fast cooling or heating, which is 20% faster than standard
+cooling or heating.
+3.3.3 I Demand Function
+This function enables the air conditioner to operate at less than 75% rated power. For some places,
+the government may have restrictions in power use during peak hours. This can save energy while relieving
+power consumption stress caused by full load operation.
+11
+
+3.3.4 Quiet Design
+3.3.4.1 Low Noise Fan Blade Design
+Noise is down by 3dB(A) through the optimi-
+zation of the fan blade profile.
+Based on a full analysis of the low resistance
+and silent characteristics of birds flying at high
+speed, the fan blades are designed with the shape
+of eagle wings to improve the air flow on the sur-
+face of the blade rotating at high speed, and to
+suppress the trailing edge noise intensity of the
+blade for lower noise;
+The tail of the blade imitates the serrated
+shape of eagle wings, with excellent aerodynamic
+performance and low noise after repeated optimi-
+zation through software simulation.
+3.3.4.2 Compressor Quiet Design
+① New Flange Support Structure ④ L-shaped Feet
+New support structure for flange component, L-shaped compressor feet are adopted to low-
+with high stiffness, low vibration and improved er the center of gravity and reduce vibration
+sound quality.
+② Dual-layer Sound Absorption Design ⑤ Reservoir
+Wide-spectrum sound absorption structure,
+Thicker casing is designed to improve the
+leading to significant reduction in exhaust noise.
+compressor’s stiffness and reduce noise radiation
+③ Newly Designed Support
+High-strength support is used to avoid sympa-
+thetic vibration, enabling lower operating sound.
+12
+
+U-MATCH SERIES AIR CONDITIONERS
+3.4 Reliability
+3.4.1 Wide Operation Range
+The cooling system equipped with all DC inverter technology adopts stepless speed regulation for its
+compressor and fan motor and accurate flow control for the electronic expansion valve, which ensure reliable
+operation in a wide operation range, making the units well-suited to a wider range of applications.
+Ambient temperature range for cooling: -20℃ ~52℃
+Ambient temperature range for heating: -20℃ ~24℃
+3.4.2 Wide Voltage Range
+Through the optimization of drive and electronic control parameters, U-Match VI can operate in a wide
+voltage range and run normally even if the voltage is down to 180V. They can be used in islands or places
+with unstable power supply.
+3.4.3 PCB 3-layer Anticorrosion Coating
+PCB boards of outdoor units all have three layers of anticorrosion coating, which can prevent moisture,
+insects and dust.
+13
+
+3.4.4 Wired Controller Moisture-proof
+The wired controller adopts double moisture-proof
+sealing designs, which can effectively protect the PCB
+from dampness
+Responsive and water-proof touch buttons, with
+long service life.
+3.4.5 Anti-Corrosion Design of Fins
+We offer two kinds of anticorrosion fins (blue and gold) for outdoor condensers to meet the requirements
+for corrosion prevention in different places.
+Anticorrosion
+Type of aluminum foil Feature
+time
+Blue Hydrophilic coating 500h
+Hydrophilic coating
+Gold 1500h
+High corrosion resistance
+*Please specify the anticorrosion requirements when placing an order.
+14
+
+U-MATCH SERIES AIR CONDITIONERS
+3.4.6 Multiple Safety Protection Measures
+Our units are CE certified
+15
+
+3.5 Intelligent Control
+3.5.1 Multiple Control Functions
+A variety of control modules to be selected, providing multiple intelligent control functions for users.
+Notes:
+*1. It is under development. This picture is for reference only.
+*2. Please consult our salespersons before placing an order.
+16
+
+U-MATCH SERIES AIR CONDITIONERS
+3.5.2 WiFi Intelligent Control (under development)
+Air conditioners in the whole house can be centrally controlled by the mobile app, which is more conve-
+nient to use.
+3.5.3 Centralized Control
+Our centralized controller (model CE52 - 24/F(C)) can control up to 36 indoor units. It can be connected
+with Gree GMV units to improve the control intelligence, which is very suitable for commercial and industrial
+places
+Note: This topology is only for general series. For series with special functions, the Modbus gateway is
+not needed.
+17
+
+3.5.4 Diversified Control Forms
+Note: Wired controller XE7A-24/HC only supports one (or more) indoor unit(s) controlled by one wired
+controller.
+18
+
+U-MATCH SERIES AIR CONDITIONERS
+3.5.6 Access Control LE60-24/H1
+Connectable to the access control system: Pull the key card to power off the indoor unit and insert the
+key card to resume operation.
+3.5.7 No KIT Needed for Multi-split Application
+Multi-split kit is no longer needed for U-Match VI. Current standard wired controllers can satisfy the
+needs for controlling multiple indoor units with one single controller, providing more convenience for installa-
+tion.
+19
+
+3.5.8 Remote Control
+Up to 255 units can be controlled remotely for the convenience of commercial and industrial use. At
+present, there are 2 gateways for selection: Modbus gateway or BACnet gateway.
+Note: This topology is only for general series. For series with special functions, the Modbus gateway is
+not needed.
+20
+
+U-MATCH SERIES AIR CONDITIONERS
+3.5.9 Dry Contact Gateway (under development)
+Gree dry contact gateway (optional) provides signal output contacts for fire alarm, remote ON/OFF
+switch, operating status, running mode, error indicating, etc.
+Application scenario: aircraft boarding bridge, public places, linking with units via ON/OFF signal con-
+trol.
+21
+
+3.6 IDU (Indoor Unit)
+3.6.1 360°Temperature Field Detection Sensor
+We use the industry-leading infrared thermal sensors for our units. With a temperature precision of
+±0.5°C,the 32×24 pixel sensor can rotate automatically to detect people’s locations in the room.
+The function is optional.It is under development.
+• Balanced Air Supply in 360°
+For cassette units, the panels can discharge air in 360°, with wider air supply range and even tempera-
+ture distribution.
+22
+
+U-MATCH SERIES AIR CONDITIONERS
+• Top-down Cooling and Bottom-up Heating
+In cooling, the cool air will blow horizontally instead of directly blowing to people; while in heating, the
+warm air will blow vertically and then fall onto the ground.
+• Auto Lifting Panel
+Auto lifting panel is optional for cassette units with large panels, To clean the filter, you can lower it to a
+designated height at just a push of a button. Filter cleaning is simple and safer.
+Note:The lifting panel is optional
+23
+
+• Fresh Air Intake Kit
+5%-10% of outdoor fresh air can be effectively introduced. All-foam design, light and durable, used with
+5%-10% fresh outdoor air can be effectively introduced.
+Light and durable, it is simple and convenient to install.
+Designed with double air inlets, it uses pressure difference principle to bring in fresh outdoor air without
+requiring a motor, for the improvement of indoor air quality.
+Note: This fresh air intake kit is optional and fit for panel 840×840 only.
+• DC Drain Pump with High Lift
+12V DC drain pump with 1000mm lift is standard for cassette units. It is energy-efficient and safe due to
+the DC design and weak current control.
+3.6.2 Duct type
+• Exquisite unit body
+The duct unit is only 200mm thick and 450mm deep, which is suitable for spaces with different heights.
+Note: applicable to duct units of 35 and 50 only.
+24
+
+U-MATCH SERIES AIR CONDITIONERS
+• Adjustable External Static Pressure
+Up to 9 static pressure stages with a maximum of 200Pa can be set. Static pressure can be adjusted
+according to the actual condition of the room and the air duct length, to suit different air volume requirements.
+There are two air return modes to choose from for flexible installation: rear air return and bottom air re-
+turn
+It can be connected to the fresh air duct to introduce fresh air from outside to ensure fresh indoor air.
+• Optional Drain Pump
+Duct units can be divided into models with and without drain pumps, which can be selected according to
+user needs. The drain pump has a lift of 1 000mm. User can adjust the installation height flexibly to meet the
+engineering requirements.
+25
+
+3.6.3 Floor Ceiling Unit
+• Floor /Ceiling Installation
+There are two installation options for users to choose.
+• Dual Air Guide Louvers
+• Air volume two-stage pressurization technology
+Unique backflow prevention fan blade can avoid secondary backflow of air supply and improve the effi-
+ciency of air supply.
+The application of cavity variation technology changes the fluid cross-sectional area, creating a second-
+ary pressure boost that increases the air supply distance by 2.5%.
+26
+
+U-MATCH SERIES AIR CONDITIONERS
+• 2-way air return
+The 2-way air return design enlarges air return area and increases air volume by 7%.
+• Multi-angle Air Supply
+The floor ceiling type unit adopts dual air guide louvers and dislocation air swing structure to achieve
+multi-angle air supply
+• Large-angle Swing Design
+The swing louvers adopt independent distribution design, which allows the left and right air outlet angle
+to be adjusted freely according to different applications.
+27
+
+4 PRODUCT PARAMETERS
+4.1 Cassette Type Data
+Indoor Unit GUD35T1/A-S GUD50T1/A1-S GUD50T1/A-S
+Model
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD50W1/NhA-S
+Cooling kW 3.50 5.00 5.30
+Rated Capacity
+Heating kW 4.00 5.60 5.80
+Cooling kW 0.92 1.47 1.54
+Input Power
+Heating kW 1.00 1.60 1.50
+EER/ COP W/W 3.80/4.00 3.40/3.50 3.45/3.95
+SEER/SCOP — 7.10/4.20 6.60/4.00 7.20/4.30
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+
+Indoor Unit GUD35T1/A-S GUD50T1/A1-S GUD50T1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume
+m³/h 600/550/500/400 720/650/600/500 900/800/700/600
+(SH/H/M/L)
+Filter — PP-MD10 PP-MD10 PP-MD10
+Sound Pressure Level(SH/H/M/L) dB(A) 36/35/33/29 43/41/39/35 36/35/33/31
+Liquid Pipe in. Ф1/4 Ф1/4 Ф1/4
+Connection Pipe Gas Pipe in. Ф3/8 Ф1/2 Ф1/2
+Water Pipe mm Ф25×1.50 Ф25×1.50 Ф25×1.50
+Dimensions Outline mm 570×570×260 570×570×260 840×840×200
+(W×D×H) Package mm 698×653×295 698×653×295 943×923×245
+Weight Net/Gross kg 16.5/21 16.5/21 21/27
+Panel Dimensions Outline mm 620×620×47.5 620×620×47.5 950×950×52
+(W×D×H)
+Packaged mm 693×693×115 693×693×115 1033×1020×110
+Panel Weight Net/Gross kg 3.0/4.5 3.0/4.5 6.0/9.5
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD50W1/NhA-S
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz 220-240V ~50/60Hz 220-240V ~50/60Hz
+Model FTz-AN108ACBD QXF-A120zH170A QXF-A120zH170A
+Compressor
+Type Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 1800 2200 2200
+Sound Pressure Level dB(A) 48 52 52
+Type R32 R32 R32
+Refrigerant Weight kg 0.57 0.85 0.85
+Throttling Method Electronic Expansion Valve
+28
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor Unit GUD35T1/A-S GUD50T1/A1-S GUD50T1/A-S
+Model
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD50W1/NhA-S
+Liquid Pipe in. Ф1/4 Ф1/4 Ф1/4
+Connection Pipe
+Gas Pipe in. Ф3/8 Ф1/2 Ф1/2
+Standard
+m 5 5 5
+Length
+Refrigerant Pipe
+Max. Length m 30 30 30
+Max. Height m 15 20 20
+Dimensions Outline mm 675×285×553 745×300×555 745×300×555
+(W×D×H) Package mm 794×376×605 872×398×609 872×398×609
+Weight Net/Gross kg 24.5/27.0 30.5/33.0 30.5/33.0
+Indoor Unit GUD71T1/A-S GUD85T1/A-S
+Model
+Outdoor Unit GUD71W1/NhA-S GUD85W1/NhA-S
+Cooling kW 7.10 8.50
+Rated Capacity
+Heating kW 7.80 8.80
+Cooling kW 2.03 2.50
+Input Power
+Heating kW 2.00 2.25
+EER/ COP W/W 3.50/3.90 3.40/3.90
+SEER/SCOP — 6.70/4.30 6.90/4.30
+Energy Class (Cooling /Heating) — A++/A+ A++/A+
+Indoor Unit GUD71T1/A-S GUD85T1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume
+m³/h 1100/1000/900/800 1400/1300/1100/1000
+(SH/H/M/L)
+Filter — PP-MD10 PP-MD10
+Sound Pressure Level(SH/H/M/L) dB(A) 39/38/36/34 47/46/42/38
+Liquid Pipe in. Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8
+Water Pipe mm Ф25×1.50 Ф25×1.50
+Dimensions Outline mm 840×840×200 840×840×200
+(W×D×H) Package mm 943×923×245 943×923×245
+Weight Net/Gross kg 21.0/27.0 21.0/27.0
+Panel Dimensions Outline mm 950×950×52 950×950×52
+(W×D×H) Packaged mm 1033×1020×110 1033×1020×110
+Panel Weight Net/Gross kg 6.0/9.5 6.0/9.5
+Outdoor Unit GUD71W1/NhA-S GUD85W1/NhA-S
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz
+Model QXFS-M180zX170 QXFS-B238zX070
+Compressor
+Type Rotary Rotary
+Type — Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 3600 3600
+29
+
+Indoor Unit GUD71T1/A-S GUD85T1/A-S
+Model
+Outdoor Unit GUD71W1/NhA-S GUD85W1/NhA-S
+Sound Pressure Level dB(A) 55 57
+Type R32 R32
+Refrigerant Weight kg 1.5 1.5
+Throttling Method Electronic Expansion Valve
+Liquid Pipe in. Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8
+Standard
+m 5 5
+Length
+Refrigerant Pipe
+Max. Length m 30 30
+Max. Height m 20 25
+Dimensions Outline mm 889×340×660 889×340×660
+(W×D×H) Package mm 1032×456×730 1032×456×730
+Weight Net/Gross kg 41.5/45.0 46.0/50.0
+Indoor Unit GUD100T1/A-S GUD125T1/A-S GUD140T1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Cooling kW 10.50 12.10 13.40
+Rated Capacity
+Heating kW 11.50 13.50 15.50
+Cooling kW 3.10 3.90 4.60
+Input Power
+Heating kW 2.95 4.00 4.70
+EER/ COP W/W 3.40/3.90 3.10/3.40 2.91/3.30
+SEER/SCOP — 6.60/4.40 6.10/4.10 6.30/4.00
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+
+Indoor Unit GUD100T1/A-S GUD125T1/A-S GUD140T1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume
+m³/h 1500/1400/1200/1000 1700/1500/1300/1100 2000/1800/1600/1400
+(SH/H/M/L)
+Filter — PP-MD10 PP-MD10 PP-MD10
+Sound Pressure Level(SH/H/M/L) dB(A) 43/41/39/38 48/46/43/39 50/48/45/41
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8 Ф5/8
+Water Pipe mm Ф25×1.50 Ф25×1.50 Ф25×1.50
+Dimensions Outline mm 840×840×240 840×840×240 840×840×290
+(W×D×H) Package mm 933×903×272 933×903×272 933×903×335
+Weight Net/Gross kg 23/29 23/29 25/32
+Panel Dimensions Outline mm 950×950×52 950×950×52 950×950×52
+(W×D×H) Packaged mm 1033×1020×110 1033×1020×110 1033×1020×110
+Panel Weight Net/Gross kg 6.0/9.5 6.0/9.5 6.0/9.5
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz
+30
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor Unit GUD100T1/A-S GUD125T1/A-S GUD140T1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Model QXFS-D280zX070 QXFS-D280zX070 QXFS-D280zX070B
+Compressor
+Type Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 4800 5200 5200
+Sound Pressure Level dB(A) 57 58 59
+Type R32 R32 R32
+Refrigerant Weight kg 2.10 2.25 2.80
+Throttling Method Electronic Expansion Valve
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8 Ф5/8
+Standard
+m 5 5 7.5
+Length
+Refrigerant Pipe
+Max. Length m 75 75 75
+Max. Height m 30 30 30
+Dimensions Outline mm 940×370×820 940×370×820 940×370×820
+(W×D×H) Package mm 1093×497×885 1093×497×885 1093×497×885
+Weight Net/Gross kg 65.0/72.0 66.0/73.0 73.0/80.0
+Indoor Unit GUD100T1/A-S GUD125T1/A-S GUD140T1/A-S GUD160T1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Cooling kW 10.50 12.10 13.40 14.50
+Rated Capacity
+Heating kW 11.50 13.50 15.50 17.00
+Cooling kW 3.10 3.90 4.60 5.30
+Input Power
+Heating kW 2.95 4.00 4.70 5.70
+EER/ COP W/W 3.40/3.90 3.10/3.40 2.91/3.30 2.74/2.98
+SEER/SCOP — 6.60/4.40 6.10/4.10 6.30/4.00 6.10/4.00
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+ A++/A+
+Indoor Unit GUD100T1/A-S GUD125T1/A-S GUD140T1/A-S GUD160T1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume 1500/1400/ 1700/1500/ 2000/1800/ 2300/2100/
+m³/h
+(SH/H/M/L) 1200/1000 1300/1100 1600/1400 1900/1600
+Filter — PP-MD10 PP-MD10 PP-MD10 PP-MD10
+Sound Pressure Level(SH/H/M/L) dB(A) 43/41/39/38 48/46/43/39 50/48/45/41 52/50/48/44
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8 Ф5/8 Ф5/8
+Water Pipe mm Ф25×1.50 Ф25×1.50 Ф25×1.50 Ф25×1.50
+Dimensions Outline mm 840×840×240 840×840×240 840×840×290 840×840×290
+(W×D×H) Package mm 933×903×272 933×903×272 933×903×335 933×903×335
+Weight Net/Gross kg 23/29 23/29 25/32 26.0/33.0
+Panel Dimensions Outline mm 950×950×52 950×950×52 950×950×52 950×950×52
+(W×D×H) Packaged mm 1033×1020×110 1033×1020×110 1033×1020×110 1033×1020×110
+31
+
+Indoor Unit GUD100T1/A-S GUD125T1/A-S GUD140T1/A-S GUD160T1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Panel Weight Net/Gross kg 6.0/9.5 6.0/9.5 6.0/9.5 6.0/9.5
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Power Supply 380-415V 3N~50/60Hz
+Model QXFS-D280zX070 QXFS-D280zX070 QXFS-D280zX070 QXFS-D388zX050A
+Compressor
+Type Rotary Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan Axial fan
+Fan Motor
+Air Volume m³/h 4800 5200 5200 5500
+Sound Pressure Level dB(A) 57 58 59 60
+Type R32 R32 R32 R32
+Refrigerant Weight kg 2.10 2.25 2.80 3.50
+Throttling Method Electronic Expansion Valve
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8 Ф5/8 Ф5/8
+Standard
+m 5 5 7.5 7.5
+Length
+Refrigerant Pipe
+Max. Length m 75 75 75 75
+Max. Height m 30 30 30 30
+Dimensions Outline mm 940×370×820 940×370×820 940×370×820 990×370×960
+(W×D×H) Package mm 1093×497×885 1093×497×885 1093×497×885 1153×478×1110
+Weight Net/Gross kg 75.0/82.0 76.0/83.0 81.0/88.0 94.0/103.0
+Notes:
+1. The above data are based on the following conditions.
+— Cooling Heating
+Indoor DB:27°C / WB:19°C DB:20°C / WB:15°C
+Outdoor DB:35°C / WB:24°C DB:7°C / WB:6°C
+2. The sound pressure level is tested in the anechoic room. It would be somewhat different in the actual
+operation due to environmental change. Indoor and outdoor sound levels are determined in an anechoic
+chamber and may differ once the unit is installed due to ambient conditions.
+32
+
+U-MATCH SERIES AIR CONDITIONERS
+4.2 Duct Type Data
+GUD35P1/A-S GUD50P1/A-S GUD71PH1/A-S GUD85PH1/A-S
+Indoor Unit
+Model GUD35PS1/A-S GUD50PS1/A-S GUD71PHS1/A-S GUD85PHS1/A-S
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD71W1/NhA-S GUD85W1/NhA-S
+Cooling kW 3.50 5.30 7.10 8.50
+Rated Capacity
+Heating kW 4.00 5.60 8.00 8.80
+Cooling kW 1.03 1.51 1.92 2.50
+Input Power
+Heating kW 1.00 1.42 2.00 2.25
+EER/ COP W/W 3.40/4.00 3.50/3.95 3.70/4.00 3.40/3.90
+SEER/SCOP — 6.50/4.00 6.30/4.00 6.60/4.10 6.40/4.10
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+ A++/A+
+GUD35P1/A-S GUD50P1/A-S GUD71PH1/A-S GUD85PH1/A-S
+Indoor Unit
+GUD35PS1/A-S GUD50PS1/A-S GUD71PHS1/A-S GUD85PHS1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Air Volume
+m³/h 600/550/500/400 900/800/700/600 1100/1000/900/800 1400/1300/1100/1000
+(SH/H/M/L)
+Fan Motor External
+Static
+Pa 25 25 25 37
+Pressure
+Standard
+Filter — PP PP PP PP
+Sound Pressure Level(SH/H/M/L) dB(A) 35/33/32/30 36/35/33/31 37/35/33/31 43/41/39/37
+Liquid Pipe in. Ф1/4 Ф1/4 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф3/8 Ф1/2 Ф5/8 Ф5/8
+Water Pipe mm Ф26×2.5 Ф26×2.5 Ф26×2.5 Ф26×2.5
+Dimensions Outline mm 700×450×200 1000×450×200 900×655×260 900×655×260
+(W×D×H) Package mm 1008×568×275 1308×568×275 1115×772×320 1115×772×320
+Weight without
+kg 17.0/21.0 23.0/28.0 28.5/32.5 28.5/32.5
+Drain Pump
+Net/Gross
+Weight with Drain
+kg 18.0/22.0 24.0/29.0 29.5/33.5 29.5/33.5
+Pump
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD71W1/NhA-S GUD85W1/NhA-S
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz
+Model FTz-AN108ACBD QXF-A120zH170A QXFS-M180zX170 QXFS-B238zX070
+Compressor
+Type Rotary Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 1800 2200 3600 3600
+Sound Pressure Level dB(A) 48 52 55 57
+Type R32 R32 R32 R32
+Refrigerant Weight kg 0.57 0.85 1.50 1.50
+Throttling Method Electronic Expansion Valve
+33
+
+GUD35P1/A-S GUD50P1/A-S GUD71PH1/A-S GUD85PH1/A-S
+Indoor Unit
+Model GUD35PS1/A-S GUD50PS1/A-S GUD71PHS1/A-S GUD85PHS1/A-S
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD71W1/NhA-S GUD85W1/NhA-S
+Liquid Pipe in. Ф1/4 Ф1/4 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф3/8 Ф1/2 Ф5/8 Ф5/8
+Standard
+m 5 5 5 5
+Length
+Refrigerant Pipe
+Max. Length m 30 30 30 30
+Max. Height m 15 20 20 25
+Dimensions Outline mm 675×285×553 745×300×555 889×340×660 889×340×660
+(W×D×H) Package mm 794×376×605 872×398×609 1032×456×730 1032×456×730
+Weight Net/Gross kg 24.5/27.0 30.5/33.0 41.5/45.0 46.0/50.0
+GUD100PH1/A-S GUD125PH1/A-S GUD140PH1/A-S
+Indoor Unit
+Model GUD100PHS1/A-S GUD125PHS1/A-S GUD140PHS1/A-S
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Cooling kW 10.50 12.10 13.40
+Rated Capacity
+Heating kW 11.50 13.50 15.50
+Cooling kW 3.00 3.58 4.50
+Input Power
+Heating kW 2.80 3.70 4.50
+EER/ COP W/W 3.50/4.10 3.38/3.65 2.98/3.44
+SEER/SCOP — 6.40/4.20 6.10/4.10 6.10/4.00
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+
+GUD100PH1/A-S GUD125PH1/A-S GUD140PH1/A-S
+Indoor Unit
+GUD100PHS1/A-S GUD125PHS1/A-S GUD140PHS1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Air Volume
+m³/h 1700/1600/1400/1200 2000/1800/1600/1400 2300/2100/1800/1500
+(SH/H/M/L)
+Fan Motor
+External Static
+Pressure Pa 37 50 50
+Standard
+Filter — PP PP PP
+Sound Pressure Level(SH/H/M/L) dB(A) 39/38/37/36 43/42/41/40 43/42/40/38
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8 Ф5/8
+Water Pipe mm Ф26×2.5 Ф26×2.5 Ф26×2.5
+Outline mm 1340×655×260 1340×655×260 1400×700×300
+Dimensions (W×D×H)
+Package mm 1568×770×323 1568×770×323 1601×813×365
+Weight without Drain
+kg 42.0/48.0 42.0/48.0 51.0/57.0
+Pump Net/Gross
+Weight with Drain Pump kg 43.0/49.0 43.0/49.0 52.0/58.0
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz
+34
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD100PH1/A-S GUD125PH1/A-S GUD140PH1/A-S
+Indoor Unit
+Model GUD100PHS1/A-S GUD125PHS1/A-S GUD140PHS1/A-S
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Model QXFS-D280zX070 QXFS-D280zX070 QXFS- D280zX070B
+Compressor
+Type Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 4800 5200 5200
+Sound Pressure Level dB(A) 57 58 59
+Type R32 R32 R32
+Refrigerant Weight kg 2.1 2.25 2.80
+Throttling Method Electronic Expansion Valve
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8 Ф5/8
+Standard
+m 5 5 7.5
+Length
+Refrigerant Pipe
+Max. Length m 75 75 75
+Max. Height m 30 30 30
+Outline mm 940×370×820 940×370×820 940×370×820
+Dimensions (W×D×H)
+Package mm 1093×497×885 1093×497×885 1093×497×885
+Weight
+Net/Gross kg 65.0/72.0 66.0/73.0 73.0/80.0
+GUD100PH1/A-S GUD125PH1/A-S GUD140PH1/A-S GUD160PH1/A-S
+Indoor Unit
+Model GUD100PHS1/A-S GUD125PHS1/A-S GUD140PHS1/A-S GUD160PHS1/A-S
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Cooling kW 10.50 12.10 13.40 16.00
+Rated Capacity
+Heating kW 11.50 13.50 15.50 17.00
+Cooling kW 3.00 3.58 4.50 5.40
+Input Power
+Heating kW 2.80 3.70 4.50 4.70
+EER/ COP W/W 3.50/4.10 3.38/3.65 2.98/3.44 2.96/3.62
+SEER/SCOP — 6.40/4.20 6.10/4.10 6.10/4.00 6.10/4.00
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+ A++/A+
+GUD100PH1/A-S GUD125PH1/A-S GUD140PH1/A-S GUD160PH1/A-S
+Indoor Unit
+GUD100PHS1/A-S GUD125PHS1/A-S GUD140PHS1/A-S GUD160PHS1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Air Volume 1700/1600/ 2000/1800/ 2300/2100/ 2600/2300/
+m³/h
+(SH/H/M/L) 1400/1200 1600/1400 1800/1500 2000/1700
+Fan Motor External
+Static
+Pa 37 50 50 50
+Pressure
+Standard
+Filter — PP PP PP PP
+Sound Pressure Level
+dB(A) 39/38/37/36 43/42/41/40 43/42/40/38 46/44/42/40
+(SH/H/M/L)
+35
+
+GUD100PH1/A-S GUD125PH1/A-S GUD140PH1/A-S GUD160PH1/A-S
+Indoor Unit
+Model GUD100PHS1/A-S GUD125PHS1/A-S GUD140PHS1/A-S GUD160PHS1/A-S
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8 Ф5/8 Ф5/8
+Water Pipe mm Ф26×2.5 Ф26×2.5 Ф26×2.5 Ф26×2.5
+Dimensions Outline mm 1340×655×260 1340×655×260 1400×700×300 1400×700×300
+(W×D×H) Package mm 1568×770×323 1568×770×323 1601×813×365 1601×813×365
+Weight without
+kg 42.0/48.0 42.0/48.0 51.0/57.0 54.0/61.0
+Drain Pump
+Net/Gross
+Weight with Drain
+kg 43.0/49.0 43.0/49.0 52.0/58.0 55.0/62.0
+Pump
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 380-415V 3N~50/60Hz
+Model QXFS-D280zX070 QXFS-D280zX070 QXFS- D280zX070 QXFS-D388zX050A
+Compressor
+Type Rotary Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan Axial fan
+Fan Motor
+Air Volume m³/h 4800 5200 5200 5500
+Sound Pressure Level dB(A) 57 58 59 60
+Type R32 R32 R32 R32
+Refrigerant Weight kg 2.1 2.25 2.80 3.50
+Throttling Method Electronic Expansion Valve
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8 Ф5/8 Ф5/8
+Standard
+m 5 5 7.5 7.5
+Length
+Refrigerant Pipe Max.
+m 75 75 75 75
+Length
+Max. Height m 30 30 30 30
+Dimensions Outline mm 940×370×820 940×370×820 940×370×820 990×370×960
+(W×D×H) Package mm 1093×497×885 1093×497×885 1093×497×885 1153×478×1110
+Weight Net/Gross kg 75.0/82.0 76.0/83.0 81.0/88.0 94.0/103.0
+Notes:
+1. The above data are based on the following conditions.
+— Cooling Heating
+Indoor DB:27°C / WB:19°C DB:20°C / WB:15°C
+Outdoor DB:35°C / WB:24°C DB:7°C / WB:6°C
+2. Airflow volume was measured under applicable standard external static pressure
+3. The sound pressure level is tested in the anechoic room. It would be somewhat different in the actual
+operation due to environmental change. Indoor and outdoor sound levels are determined in an anechoic
+chamber and may differ once the unit is installed due to ambient conditions.
+36
+
+U-MATCH SERIES AIR CONDITIONERS
+4.3 Floor Ceiling Type Data
+Indoor Unit GUD35ZD1/A-S GUD50ZD1/A-S GUD71ZD1/A-S GUD85ZD1/A-S
+Model
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD71W1/NhA-S GUD85W1/NhA-S
+Rated Cooling kW 3.50 5.30 7.10 8.50
+Capacity Heating kW 4.00 5.60 7.70 8.80
+Cooling kW 0.92 1.56 2.03 2.50
+Input Power
+Heating kW 0.93 1.44 1.95 2.25
+EER/ COP W/W 3.80/4.30 3.40/3.90 3.50/3.95 3.40/3.90
+SEER/SCOP — 7.20/4.10 6.50/4.20 7.20/4.30 6.80/4.50
+Energy Class
+— A++/A+ A++/A+ A++/A+ A++/A+
+(Cooling /Heating)
+Indoor Unit GUD35ZD1/A-S GUD50ZD1/A-S GUD71ZD1/A-S GUD85ZD1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume
+m³/h 650/600/500/400 900/800/700/600 1250/1100/1000/900 1400/1300/1200/1000
+(SH/H/M/L)
+Filter — PP PP PP PP
+Sound Pressure Level
+dB(A) 35/34/31/28 41/40/38/36 41/39/37/35 46/45/43/39
+(SH/H/M/L)
+Liquid Pipe in. Ф1/4 Ф1/4 Ф3/8 Ф3/8
+Connection
+Gas Pipe in. Ф3/8 Ф1/2 Ф5/8 Ф5/8
+Pipe
+Water Pipe mm Ф17×1.5 Ф17×1.5 Ф17×1.5 Ф17×1.5
+Dimensions Outline mm 870×665×235 870×665×235 1200×665×235 1200×665×235
+(W×D×H) Package mm 973×770×300 973×770×300 1303×770×300 1303×770×300
+Weight Net/Gross kg 24.0/28.0 25.0/29.0 31.0/36.0 32.0/37.0
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD71W1/NhA-S GUD85W1/NhA-S
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz
+Model FTz-AN108ACBD QXF-A120zH170A QXFS-M180zX170 QXFS-B238zX070
+Compressor
+Type Rotary Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 1800 2200 3600 3600
+Sound Pressure Level dB(A) 48 52 55 57
+Type R32 R32 R32 R32
+Refrigerant Weight kg 0.57 0.85 1.5 1.5
+Throttling Method Electronic Expansion Valve
+Connection Liquid Pipe in. Ф1/4 Ф1/4 Ф3/8 Ф3/8
+Pipe Gas Pipe in. Ф3/8 Ф1/2 Ф5/8 Ф5/8
+Standard
+m 5 5 5 5
+Refrigerant Length
+Pipe Max. Length m 30 30 30 30
+Max. Height m 15 20 20 25
+37
+
+Indoor Unit GUD35ZD1/A-S GUD50ZD1/A-S GUD71ZD1/A-S GUD85ZD1/A-S
+Model
+Outdoor Unit GUD35W1/NhA-S GUD50W1/NhA-S GUD71W1/NhA-S GUD85W1/NhA-S
+Dimensions Outline mm 675×285×553 745×300×555 889×340×660 889×340×660
+(W×D×H) Package mm 794×376×605 872×398×609 1032×456×730 1032×456×730
+Weight Net/Gross kg 24.5/27.0 30.5/33.0 41.5/45.0 46/50.0
+Indoor Unit GUD100ZD1/A-S GUD125ZD1/A-S GUD140ZD1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Cooling kW 10.00 12.10 13.40
+Rated Capacity
+Heating kW 11.50 13.5 0 15.50
+Cooling kW 2.94 3.67 4.30
+Input Power
+Heating kW 2.95 3.75 4.20
+EER/ COP W/W 3.40/3.90 3.30/3.60 3.12/3.69
+SEER/SCOP — 6.30/4.20 6.30/4.00 6.30/4.00
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+
+Indoor Unit GUD100ZD1/A-S GUD125ZD1/A-S GUD140ZD1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume
+m³/h 1600/1500/1400/1200 1900/1800/1600/1400 2300/2100/1800/1500
+(SH/H/M/L)
+Filter — PP PP PP
+Sound Pressure Level(SH/H/M/L) dB(A) 48/46/45/43 45/43/40/38 51/48/45/43
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8 Ф5/8
+Water Pipe mm Ф17×1.5 Ф17×1.5 Ф17×1.5
+Outline mm 1200×665×235 1570×665×235 1570×665×235
+Dimensions (W×D×H)
+Package mm 1303×770×300 1669×770×300 1669×770×300
+Weight Net/Gross kg 32.0/37.0 39.5/46.5 42.0/49.0
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 220-240V ~50/60Hz
+Model QXFS-D280zX070 QXFS-D280zX070 QXFS-D280zX070B
+Compressor
+Type Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan
+Fan Motor
+Air Volume m³/h 4800 5200 5200
+Sound Pressure Level dB(A) 57 58 59
+Type R32 R32 R32
+Refrigerant Weight kg 2.1 2.25 2.80
+Throttling Method Electronic Expansion Valve
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8 Ф5/8
+38
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor Unit GUD100ZD1/A-S GUD125ZD1/A-S GUD140ZD1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-S GUD125W1/NhA-S GUD140W1/NhA-S
+Standard
+m 5 5 7.5
+Length
+Refrigerant Pipe
+Max. Length m 75 75 75
+Max. Height m 30 30 30
+Outline mm 940×370×820 940×370×820 940×370×820
+Dimensions (W×D×H)
+Package mm 1093×497×885 1093×497×885 1093×497×885
+Weight
+Net/Gross kg 65.0/72.0 66.0/73.0 73.0/80.0
+Indoor Unit GUD100ZD1/A-S GUD125ZD1/A-S GUD140ZD1/A-S GUD160ZD1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Cooling kW 10.00 12.10 13.40 16.00
+Rated Capacity
+Heating kW 11.50 13.50 15.50 17.00
+Cooling kW 2.94 3.67 4.30 5.30
+Input Power
+Heating kW 2.95 3.75 4.20 4.80
+EER/ COP W/W 3.40/3.90 3.30/3.60 3.12/3.69 3.02/3.54
+SEER/SCOP — 6.30/4.20 6.30/4.00 6.30/4.00 6.10/4.00
+Energy Class (Cooling /Heating) — A++/A+ A++/A+ A++/A+ A++/A+
+Indoor Unit GUD100ZD1/A-S GUD125ZD1/A-S GUD140ZD1/A-S GUD160ZD1/A-S
+Power Supply 220-240V ~50/60Hz
+Heat Exchanger — Inner Groove Copper Tube-Aluminum Fin
+Type — Centrifugal Fan
+Fan Motor Air Volume 1600/1500/ 1900/1800/ 2300/2100/ 2400/2200/
+m³/h
+(SH/H/M/L) 1400/1200 1600/1400 1800/1500 1900/1600
+Filter — PP PP PP PP
+Sound Pressure Level(SH/H/M/
+dB(A) 48/46/45/43 45/43/40/38 51/48/45/43 53/51/48/44
+L)
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8 Ф3/8
+Connection Pipe Gas Pipe in. Ф5/8 Ф5/8 Ф5/8 Ф5/8
+Water Pipe mm Ф17×1.5 Ф17×1.5 Ф17×1.5 Ф17×1.5
+Dimensions Outline mm 1200×665×235 1570×665×235 1570×665×235 1570×665×235
+(W×D×H) Package mm 1303×770×300 1669×770×300 1669×770×300 1669×770×300
+Weight Net/Gross kg 32.0/37.0 39.5/46.5 42.0/49.0 42.0/49.0
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Heat Exchanger Inner Groove Copper Tube-Aluminum Fin
+Power Supply 380-415V 3N~50/60Hz
+Model QXFS-D280zX070 QXFS-D280zX070 QXFS-D280zX070B QXFS-D388zX050A
+Compressor
+Type Rotary Rotary Rotary Rotary
+Type — Axial Fan Axial Fan Axial Fan Axial fan
+Fan Motor
+Air Volume m³/h 4800 5200 5200 5500
+Sound Pressure Level dB(A) 57 58 59 60
+Type R32 R32 R32 R32
+Refrigerant Weight kg 2.1 2.25 2.80 3.50
+Throttling Method Electronic Expansion Valve
+39
+
+Indoor Unit GUD100ZD1/A-S GUD125ZD1/A-S GUD140ZD1/A-S GUD160ZD1/A-S
+Model
+Outdoor Unit GUD100W1/NhA-X GUD125W1/NhA-X GUD140W1/NhA-X GUD160W1/NhA-X
+Liquid Pipe in. Ф3/8 Ф3/8 Ф3/8 Ф3/8
+Connection Pipe
+Gas Pipe in. Ф5/8 Ф5/8 Ф5/8 Ф5/8
+Standard
+m 5 5 7.5 7.5
+Length
+Refrigerant Pipe
+Max. Length m 75 75 75 75
+Max. Height m 30 30 30 30
+Dimensions Outline mm 940×370×820 940×370×820 940×370×820 990×370×960
+(W×D×H) Package mm 1093×497×885 1093×497×885 1093×497×885 1153×478×1110
+Weight Net/Gross kg 75.0/82.0 76.0/83.0 81.0/88.0 94.0/103.0
+Notes:
+1. The above data are based on the following conditions.
+— Cooling Heating
+Indoor DB:27°C / WB:19°C DB:20°C / WB:15°C
+Outdoor DB:35°C / WB:24°C DB:7°C / WB:6°C
+2. Airflow volume was measured under applicable standard external static pressure
+3. The sound pressure level is tested in the anechoic room. It would be somewhat different in the actual
+operation due to environmental change. Indoor and outdoor sound levels are determined in an anechoic
+chamber and may differ once the unit is installed due to ambient conditions.
+5 OPERATION RANGE
+— Cooling Heating
+Outdoor temperature DB(°C) -20~52 -20~24
+Indoor temperature DB/WB(°C)
+32/23 27/-
+(Maximum)
+40
+
+U-MATCH SERIES AIR CONDITIONERS
+6 CAPACITY CORRECTION
+6.1 Table of Performance Correction
+6.1.1 Cassette Type
+GUD35T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+℃
+speed TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 3.26 2.80 0.71 3.24 2.78 0.80 3.11 2.67 0.85 2.99 2.56 0.88 2.74 2.35 0.96
+24 17 3.46 3.03 0.75 3.44 3.01 0.84 3.30 2.89 0.89 3.17 2.77 0.93 2.91 2.54 1.00
+26 18 3.60 3.19 0.77 3.58 3.17 0.87 3.43 3.04 0.92 3.29 2.92 0.95 3.02 2.68 1.03
+Turbo
+27 19 3.67 3.27 0.77 3.65 3.25 0.87 3.50 3.12 0.92 3.36 3.00 0.96 3.08 2.75 1.04
+30 22 3.89 3.51 0.79 3.87 3.49 0.90 3.71 3.35 0.95 3.56 3.22 0.99 3.27 2.95 1.07
+32 24 4.06 3.72 0.82 4.04 3.70 0.92 3.88 3.55 0.97 3.72 3.41 1.02 3.42 3.13 1.10
+20 14 3.13 2.61 0.69 3.11 2.60 0.77 2.99 2.49 0.82 2.87 2.39 0.85 2.64 2.21 0.92
+23 16 3.32 2.84 0.72 3.30 2.82 0.81 3.17 2.71 0.86 3.04 2.60 0.89 2.80 2.40 0.97
+26 18 3.45 3.00 0.74 3.43 2.98 0.84 3.29 2.86 0.88 3.16 2.75 0.92 2.91 2.53 1.00
+H
+27 19 3.52 3.08 0.74 3.50 3.06 0.84 3.36 2.94 0.89 3.23 2.82 0.92 2.97 2.60 1.00
+30 22 3.73 3.31 0.77 3.71 3.29 0.86 3.56 3.16 0.91 3.42 3.03 0.95 3.15 2.79 1.03
+32 24 3.90 3.52 0.79 3.88 3.50 0.89 3.72 3.36 0.94 3.57 3.22 0.98 3.29 2.97 1.06
+20 14 2.97 2.41 0.65 2.96 2.40 0.74 2.84 2.30 0.78 2.73 2.21 0.81 2.51 2.04 0.88
+23 16 3.15 2.63 0.69 3.14 2.62 0.78 3.01 2.51 0.82 2.89 2.41 0.85 2.66 2.22 0.93
+26 18 3.28 2.79 0.71 3.26 2.77 0.80 3.13 2.66 0.84 3.00 2.55 0.88 2.77 2.35 0.95
+M
+27 19 3.34 2.86 0.71 3.33 2.85 0.80 3.19 2.73 0.85 3.06 2.62 0.88 2.82 2.42 0.96
+30 22 3.55 3.09 0.73 3.53 3.07 0.83 3.38 2.95 0.87 3.25 2.83 0.91 2.99 2.61 0.99
+32 24 3.71 3.29 0.75 3.69 3.28 0.85 3.54 3.14 0.90 3.39 3.02 0.94 3.13 2.78 1.01
+20 14 2.74 2.16 0.64 2.72 2.15 0.72 2.61 2.06 0.76 2.51 1.98 0.79 2.31 1.82 0.86
+23 16 2.90 2.37 0.67 2.89 2.35 0.76 2.77 2.26 0.80 2.66 2.17 0.83 2.45 2.00 0.90
+26 18 3.02 2.51 0.69 3.00 2.50 0.78 2.88 2.40 0.82 2.76 2.30 0.86 2.55 2.12 0.93
+L
+27 19 3.08 2.58 0.69 3.06 2.57 0.78 2.94 2.46 0.83 2.82 2.37 0.86 2.60 2.18 0.93
+30 22 3.26 2.79 0.71 3.24 2.78 0.80 3.11 2.66 0.85 2.99 2.56 0.89 2.75 2.36 0.96
+32 24 3.41 2.99 0.73 3.39 2.97 0.83 3.25 2.85 0.88 3.12 2.73 0.91 2.88 2.52 0.99
+41
+
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 2.90 0.88 2.75 0.91 2.62 0.94 2.51 0.97 2.42 1.00
+-5 -5.6 3.05 0.86 2.89 0.88 2.76 0.91 2.65 0.94 2.54 0.97
+Turbo 0 -0.7 3.31 0.87 3.14 0.89 3.00 0.93 2.88 0.96 2.77 0.99
+7 6 4.42 0.94 4.19 0.97 4.00 1.00 3.84 1.03 3.69 1.07
+10 8 4.64 0.97 4.40 1.00 4.20 1.03 4.03 1.06 3.87 1.10
+-10 -11 2.82 0.88 2.67 0.90 2.55 0.93 2.45 0.97 2.35 1.00
+-5 -5.6 2.97 0.85 2.81 0.88 2.69 0.91 2.57 0.94 2.48 0.97
+H 0 -0.7 3.22 0.87 3.06 0.89 2.92 0.92 2.80 0.95 2.69 0.98
+7 6 4.30 0.94 4.08 0.96 3.89 1.00 3.73 1.03 3.59 1.06
+10 8 4.51 0.96 4.28 0.99 4.09 1.02 3.92 1.06 3.77 1.09
+-10 -11 2.73 0.89 2.59 0.92 2.47 0.95 2.37 0.98 2.28 1.01
+-5 -5.6 2.87 0.87 2.72 0.89 2.60 0.92 2.49 0.95 2.40 0.98
+M 0 -0.7 3.12 0.88 2.96 0.90 2.83 0.94 2.71 0.97 2.60 1.00
+7 6 4.16 0.95 3.94 0.98 3.77 1.01 3.61 1.04 3.47 1.08
+10 8 4.37 0.98 4.14 1.01 3.96 1.04 3.79 1.08 3.65 1.11
+-10 -11 2.59 0.92 2.46 0.95 2.35 0.98 2.25 1.01 2.16 1.05
+-5 -5.6 2.73 0.89 2.59 0.92 2.47 0.95 2.37 0.98 2.28 1.01
+L 0 -0.7 2.96 0.91 2.81 0.93 2.68 0.96 2.57 1.00 2.47 1.03
+7 6 3.95 0.98 3.75 1.01 3.58 1.04 3.43 1.08 3.30 1.11
+10 8 4.15 1.01 3.94 1.04 3.76 1.07 3.60 1.11 3.46 1.15
+GUD50T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 4.94 4.18 1.19 4.91 4.16 1.34 4.71 3.99 1.42 4.53 3.83 1.48 4.15 3.51 1.60
+24 17 5.24 4.53 1.25 5.21 4.51 1.41 5.00 4.33 1.49 4.80 4.15 1.55 4.40 3.81 1.68
+26 18 5.45 4.78 1.28 5.42 4.76 1.45 5.20 4.56 1.53 4.99 4.38 1.60 4.58 4.02 1.73
+Turbo
+27 19 5.55 4.90 1.29 5.52 4.88 1.46 5.30 4.68 1.54 5.09 4.49 1.60 4.67 4.12 1.74
+30 22 5.89 5.27 1.33 5.86 5.24 1.50 5.62 5.03 1.59 5.39 4.83 1.65 4.95 4.43 1.79
+32 24 6.15 5.60 1.37 6.12 5.57 1.54 5.87 5.34 1.63 5.64 5.13 1.70 5.17 4.70 1.84
+20 14 4.74 3.90 1.15 4.72 3.88 1.30 4.52 3.72 1.37 4.34 3.58 1.43 4.00 3.30 1.55
+23 16 5.03 4.25 1.20 5.00 4.23 1.36 4.80 4.06 1.44 4.60 3.89 1.50 4.24 3.59 1.62
+26 18 5.23 4.50 1.24 5.20 4.47 1.40 4.99 4.29 1.48 4.79 4.12 1.54 4.41 3.80 1.67
+H
+27 19 5.33 4.61 1.25 5.30 4.59 1.41 5.09 4.40 1.49 4.88 4.23 1.55 4.50 3.90 1.68
+30 22 5.65 4.97 1.28 5.62 4.94 1.45 5.39 4.74 1.53 5.18 4.55 1.59 4.77 4.20 1.73
+32 24 5.91 5.29 1.32 5.87 5.26 1.49 5.64 5.05 1.57 5.41 4.85 1.64 4.99 4.47 1.78
+42
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 4.50 3.61 1.10 4.48 3.59 1.24 4.30 3.44 1.31 4.13 3.30 1.36 3.80 3.04 1.48
+23 16 4.77 3.94 1.15 4.75 3.92 1.30 4.56 3.76 1.37 4.37 3.61 1.43 4.03 3.33 1.55
+26 18 4.97 4.18 1.18 4.94 4.16 1.34 4.74 3.99 1.41 4.55 3.83 1.47 4.19 3.53 1.60
+M
+27 19 5.07 4.30 1.19 5.04 4.27 1.34 4.83 4.10 1.42 4.64 3.94 1.48 4.28 3.63 1.60
+30 22 5.37 4.64 1.22 5.34 4.61 1.38 5.12 4.43 1.46 4.92 4.25 1.52 4.53 3.92 1.65
+32 24 5.61 4.95 1.26 5.58 4.93 1.42 5.35 4.73 1.50 5.14 4.54 1.57 4.74 4.18 1.70
+20 14 4.14 3.23 1.07 4.12 3.21 1.21 3.95 3.08 1.27 3.80 2.95 1.33 3.50 2.72 1.44
+23 16 4.39 3.54 1.12 4.37 3.52 1.27 4.19 3.38 1.34 4.02 3.24 1.39 3.71 2.99 1.51
+26 18 4.57 3.77 1.15 4.54 3.75 1.30 4.36 3.59 1.38 4.19 3.45 1.43 3.86 3.18 1.55
+L
+27 19 4.66 3.87 1.16 4.64 3.85 1.31 4.45 3.70 1.38 4.27 3.55 1.44 3.94 3.27 1.56
+30 22 4.94 4.19 1.19 4.91 4.17 1.35 4.71 4.00 1.42 4.53 3.84 1.48 4.17 3.54 1.61
+32 24 5.16 4.49 1.23 5.13 4.47 1.39 4.93 4.28 1.47 4.73 4.11 1.53 4.36 3.79 1.66
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 4.20 1.32 3.98 1.36 3.80 1.41 3.65 1.46 3.50 1.51
+-5 -5.6 4.42 1.29 4.19 1.32 4.00 1.37 3.84 1.41 3.69 1.46
+Turbo 0 -0.7 4.80 1.31 4.55 1.34 4.35 1.39 4.17 1.44 4.01 1.48
+7 6 6.41 1.41 6.07 1.45 5.80 1.50 5.56 1.55 5.35 1.60
+10 8 6.73 1.45 6.38 1.49 6.09 1.55 5.84 1.60 5.61 1.65
+-10 -11 4.09 1.32 3.87 1.35 3.70 1.40 3.55 1.45 3.41 1.50
+-5 -5.6 4.30 1.28 4.08 1.32 3.89 1.36 3.73 1.41 3.59 1.45
+H 0 -0.7 4.68 1.30 4.43 1.34 4.23 1.38 4.06 1.43 3.90 1.48
+7 6 6.23 1.40 5.91 1.44 5.64 1.49 5.41 1.54 5.20 1.59
+10 8 6.55 1.44 6.20 1.49 5.93 1.54 5.68 1.59 5.46 1.64
+-10 -11 3.96 1.34 3.75 1.38 3.58 1.42 3.43 1.47 3.30 1.52
+-5 -5.6 4.16 1.30 3.95 1.34 3.77 1.38 3.61 1.43 3.47 1.48
+M 0 -0.7 4.53 1.32 4.29 1.36 4.10 1.40 3.93 1.45 3.78 1.50
+7 6 6.03 1.42 5.72 1.46 5.46 1.52 5.24 1.57 5.04 1.62
+10 8 6.34 1.47 6.01 1.51 5.74 1.56 5.50 1.61 5.29 1.67
+-10 -11 3.76 1.38 3.56 1.42 3.40 1.47 3.26 1.52 3.14 1.57
+-5 -5.6 3.96 1.34 3.75 1.38 3.58 1.43 3.43 1.47 3.30 1.52
+L 0 -0.7 4.30 1.36 4.08 1.40 3.89 1.45 3.73 1.50 3.59 1.55
+7 6 5.73 1.47 5.43 1.51 5.19 1.56 4.98 1.61 4.78 1.67
+10 8 6.02 1.51 5.71 1.55 5.45 1.61 5.22 1.66 5.02 1.72
+43
+
+GUD50T1/A1-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 4.66 3.19 1.14 4.64 3.17 1.28 4.45 3.05 1.35 4.27 2.92 1.41 3.92 2.68 1.53
+24 17 4.94 3.58 1.19 4.91 3.56 1.34 4.71 3.42 1.42 4.53 3.28 1.48 4.15 3.01 1.61
+26 18 5.14 3.85 1.23 5.11 3.83 1.38 4.90 3.68 1.46 4.71 3.53 1.52 4.32 3.24 1.65
+Turbo
+27 19 5.24 3.98 1.23 5.21 3.96 1.39 5.00 3.80 1.47 4.80 3.65 1.53 4.40 3.35 1.66
+30 22 5.55 4.36 1.27 5.52 4.34 1.43 5.30 4.16 1.51 5.09 3.99 1.58 4.67 3.66 1.71
+32 24 5.80 4.73 1.31 5.77 4.70 1.47 5.54 4.51 1.56 5.32 4.33 1.62 4.88 3.97 1.76
+20 14 4.47 2.97 1.10 4.45 2.96 1.24 4.27 2.84 1.31 4.10 2.73 1.36 3.78 2.51 1.48
+23 16 4.74 3.35 1.15 4.72 3.34 1.30 4.52 3.20 1.37 4.34 3.07 1.43 4.00 2.83 1.55
+26 18 4.93 3.62 1.18 4.91 3.60 1.34 4.71 3.46 1.41 4.52 3.32 1.47 4.16 3.06 1.59
+H
+27 19 5.03 3.75 1.19 5.00 3.73 1.34 4.80 3.58 1.42 4.61 3.43 1.48 4.25 3.16 1.60
+30 22 5.33 4.11 1.22 5.30 4.09 1.38 5.09 3.92 1.46 4.88 3.77 1.52 4.50 3.47 1.65
+32 24 5.57 4.47 1.26 5.54 4.45 1.42 5.32 4.27 1.50 5.10 4.10 1.57 4.71 3.78 1.70
+20 14 4.25 2.74 1.05 4.23 2.73 1.18 4.06 2.62 1.25 3.89 2.51 1.30 3.59 2.32 1.41
+23 16 4.50 3.11 1.10 4.48 3.09 1.24 4.30 2.97 1.31 4.13 2.85 1.36 3.80 2.63 1.48
+26 18 4.68 3.37 1.13 4.66 3.35 1.28 4.47 3.21 1.35 4.29 3.09 1.40 3.96 2.84 1.52
+M
+27 19 4.78 3.49 1.14 4.75 3.47 1.28 4.56 3.33 1.35 4.38 3.20 1.41 4.04 2.95 1.53
+30 22 5.07 3.84 1.17 5.04 3.82 1.32 4.83 3.66 1.39 4.64 3.52 1.45 4.28 3.24 1.58
+32 24 5.29 4.19 1.20 5.27 4.17 1.36 5.05 4.00 1.43 4.85 3.84 1.49 4.47 3.54 1.62
+20 14 3.91 2.45 1.02 3.89 2.44 1.15 3.73 2.34 1.22 3.58 2.24 1.27 3.30 2.07 1.37
+23 16 4.14 2.79 1.07 4.12 2.78 1.21 3.95 2.66 1.28 3.80 2.56 1.33 3.50 2.36 1.44
+26 18 4.31 3.03 1.10 4.29 3.02 1.24 4.11 2.89 1.31 3.95 2.78 1.37 3.64 2.56 1.48
+L
+27 19 4.40 3.14 1.11 4.37 3.13 1.25 4.20 3.00 1.32 4.03 2.88 1.37 3.71 2.66 1.49
+30 22 4.66 3.47 1.14 4.64 3.45 1.29 4.45 3.31 1.36 4.27 3.18 1.42 3.94 2.93 1.54
+32 24 4.87 3.80 1.17 4.84 3.78 1.32 4.65 3.63 1.40 4.46 3.48 1.46 4.11 3.21 1.58
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 4.05 1.41 3.84 1.45 3.67 1.50 3.52 1.55 3.38 1.61
+-5 -5.6 4.27 1.37 4.05 1.41 3.86 1.46 3.70 1.51 3.56 1.56
+Turbo 0 -0.7 4.64 1.39 4.40 1.43 4.20 1.48 4.03 1.53 3.87 1.58
+7 6 6.19 1.50 5.86 1.55 5.60 1.60 5.37 1.65 5.16 1.71
+10 8 6.49 1.55 6.16 1.59 5.88 1.65 5.64 1.70 5.42 1.76
+-10 -11 3.95 1.41 3.74 1.45 3.57 1.50 3.42 1.55 3.29 1.60
+-5 -5.6 4.15 1.36 3.94 1.40 3.76 1.45 3.60 1.50 3.47 1.55
+H 0 -0.7 4.51 1.39 4.28 1.42 4.09 1.47 3.92 1.52 3.77 1.57
+7 6 6.02 1.50 5.71 1.54 5.45 1.59 5.22 1.65 5.02 1.70
+10 8 6.32 1.54 5.99 1.58 5.72 1.64 5.49 1.69 5.27 1.75
+44
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 3.82 1.43 3.62 1.47 3.46 1.52 3.31 1.57 3.19 1.62
+-5 -5.6 4.02 1.39 3.81 1.42 3.64 1.47 3.49 1.52 3.36 1.57
+M 0 -0.7 4.37 1.41 4.14 1.45 3.96 1.50 3.79 1.55 3.65 1.60
+7 6 5.83 1.52 5.52 1.56 5.27 1.62 5.06 1.67 4.86 1.73
+10 8 6.12 1.56 5.80 1.61 5.54 1.66 5.31 1.72 5.11 1.78
+-10 -11 3.63 1.47 3.44 1.51 3.28 1.57 3.15 1.62 3.03 1.67
+-5 -5.6 3.82 1.43 3.62 1.47 3.46 1.52 3.31 1.57 3.19 1.62
+L 0 -0.7 4.15 1.45 3.94 1.49 3.76 1.54 3.60 1.59 3.46 1.65
+7 6 5.53 1.57 5.25 1.61 5.01 1.67 4.80 1.72 4.62 1.78
+10 8 5.81 1.61 5.51 1.66 5.26 1.72 5.04 1.77 4.85 1.83
+GUD71T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 6.62 5.07 1.57 6.58 5.05 1.77 6.31 4.84 1.87 6.06 4.65 1.95 5.56 4.27 2.11
+24 17 7.01 5.59 1.65 6.98 5.56 1.86 6.69 5.33 1.96 6.43 5.12 2.04 5.90 4.70 2.22
+26 18 7.29 5.95 1.69 7.26 5.92 1.91 6.96 5.68 2.02 6.68 5.45 2.10 6.13 5.00 2.28
+Turbo
+27 19 7.44 6.12 1.70 7.40 6.09 1.92 7.10 5.84 2.03 6.82 5.61 2.11 6.25 5.14 2.29
+30 22 7.89 6.63 1.75 7.84 6.60 1.98 7.53 6.33 2.09 7.23 6.08 2.18 6.63 5.58 2.36
+32 24 8.24 7.11 1.80 8.20 7.07 2.04 7.86 6.79 2.15 7.55 6.52 2.24 6.93 5.98 2.43
+20 14 6.35 4.73 1.51 6.32 4.71 1.71 6.06 4.52 1.80 5.82 4.34 1.88 5.36 4.00 2.04
+23 16 6.73 5.24 1.59 6.70 5.21 1.79 6.43 5.00 1.89 6.17 4.80 1.97 5.69 4.42 2.14
+26 18 7.00 5.59 1.63 6.97 5.56 1.84 6.68 5.33 1.95 6.42 5.12 2.03 5.91 4.72 2.20
+H
+27 19 7.14 5.76 1.64 7.10 5.73 1.85 6.82 5.49 1.96 6.54 5.27 2.04 6.03 4.86 2.21
+30 22 7.57 6.26 1.69 7.53 6.22 1.91 7.22 5.97 2.02 6.94 5.73 2.10 6.39 5.28 2.28
+32 24 7.91 6.73 1.74 7.87 6.69 1.96 7.55 6.42 2.08 7.25 6.16 2.16 6.68 5.68 2.35
+20 14 6.03 4.37 1.44 6.00 4.35 1.63 5.76 4.17 1.72 5.53 4.00 1.79 5.10 3.69 1.95
+23 16 6.40 4.86 1.52 6.36 4.83 1.71 6.10 4.63 1.81 5.86 4.45 1.88 5.40 4.10 2.04
+26 18 6.65 5.20 1.56 6.62 5.17 1.76 6.35 4.96 1.86 6.09 4.76 1.94 5.62 4.39 2.10
+M
+27 19 6.79 5.36 1.57 6.75 5.33 1.77 6.48 5.12 1.87 6.22 4.91 1.95 5.73 4.53 2.11
+30 22 7.19 5.84 1.61 7.15 5.81 1.82 6.86 5.57 1.92 6.59 5.35 2.00 6.07 4.93 2.18
+32 24 7.52 6.30 1.66 7.48 6.26 1.88 7.17 6.01 1.98 6.89 5.77 2.06 6.35 5.32 2.24
+20 14 5.55 3.91 1.41 5.52 3.88 1.59 5.30 3.73 1.68 5.09 3.58 1.75 4.69 3.30 1.90
+23 16 5.88 4.36 1.48 5.85 4.34 1.67 5.62 4.16 1.76 5.39 3.99 1.84 4.97 3.68 1.99
+26 18 6.12 4.68 1.52 6.09 4.66 1.72 5.84 4.47 1.81 5.61 4.29 1.89 5.17 3.95 2.05
+L
+27 19 6.24 4.83 1.53 6.21 4.81 1.73 5.96 4.61 1.82 5.72 4.43 1.90 5.27 4.08 2.06
+30 22 6.62 5.28 1.57 6.58 5.25 1.78 6.31 5.04 1.88 6.06 4.84 1.95 5.59 4.46 2.12
+32 24 6.91 5.71 1.62 6.88 5.68 1.83 6.60 5.45 1.93 6.34 5.23 2.01 5.84 4.82 2.18
+45
+
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 5.65 1.77 5.35 1.82 5.11 1.88 4.90 1.94 4.71 2.01
+-5 -5.6 5.94 1.71 5.64 1.76 5.38 1.82 5.16 1.89 4.96 1.95
+Turbo 0 -0.7 6.46 1.74 6.13 1.79 5.85 1.85 5.61 1.91 5.39 1.98
+7 6 8.62 1.88 8.17 1.93 7.80 2.00 7.48 2.07 7.19 2.14
+10 8 9.05 1.94 8.58 1.99 8.19 2.06 7.85 2.13 7.55 2.20
+-10 -11 5.50 1.76 5.21 1.81 4.97 1.87 4.77 1.93 4.59 2.00
+-5 -5.6 5.78 1.71 5.48 1.75 5.24 1.82 5.02 1.88 4.83 1.94
+H 0 -0.7 6.29 1.73 5.96 1.78 5.69 1.84 5.46 1.90 5.25 1.97
+7 6 8.38 1.87 7.95 1.92 7.59 1.99 7.28 2.06 7.00 2.13
+10 8 8.80 1.93 8.34 1.98 7.97 2.05 7.64 2.12 7.35 2.19
+-10 -11 5.32 1.78 5.04 1.83 4.82 1.90 4.62 1.96 4.44 2.03
+-5 -5.6 5.60 1.73 5.31 1.78 5.07 1.84 4.86 1.90 4.67 1.97
+M 0 -0.7 6.09 1.76 5.77 1.81 5.51 1.87 5.28 1.93 5.08 2.00
+7 6 8.11 1.90 7.69 1.95 7.35 2.02 7.04 2.09 6.77 2.16
+10 8 8.52 1.96 8.08 2.01 7.71 2.08 7.40 2.15 7.11 2.22
+-10 -11 5.05 1.84 4.79 1.89 4.57 1.96 4.39 2.02 4.22 2.09
+-5 -5.6 5.32 1.79 5.04 1.84 4.82 1.90 4.62 1.96 4.44 2.03
+L 0 -0.7 5.78 1.81 5.48 1.86 5.23 1.93 5.02 1.99 4.83 2.06
+7 6 7.71 1.96 7.31 2.01 6.98 2.08 6.69 2.15 6.43 2.23
+10 8 8.09 2.02 7.67 2.07 7.33 2.15 7.03 2.22 6.76 2.29
+GUD85T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 7.92 5.40 1.93 7.88 5.37 2.18 7.56 5.15 2.30 7.26 4.95 2.40 6.66 4.54 2.60
+24 17 8.40 6.06 2.03 8.35 6.03 2.29 8.01 5.79 2.42 7.69 5.55 2.52 7.06 5.10 2.73
+26 18 8.73 6.53 2.09 8.69 6.50 2.35 8.33 6.23 2.49 8.00 5.98 2.59 7.34 5.49 2.81
+Turbo
+27 19 8.91 6.75 2.10 8.86 6.71 2.37 8.50 6.44 2.50 8.16 6.18 2.60 7.49 5.67 2.83
+30 22 9.44 7.39 2.16 9.39 7.35 2.44 9.01 7.05 2.57 8.65 6.77 2.68 7.94 6.21 2.91
+32 24 9.87 8.02 2.22 9.81 7.98 2.51 9.42 7.65 2.65 9.04 7.35 2.76 8.29 6.74 2.99
+20 14 7.60 5.03 1.86 7.56 5.01 2.10 7.26 4.80 2.22 6.97 4.61 2.31 6.42 4.25 2.51
+23 16 8.06 5.68 1.95 8.02 5.65 2.21 7.69 5.42 2.33 7.39 5.20 2.43 6.81 4.80 2.63
+26 18 8.38 6.14 2.01 8.34 6.10 2.27 8.00 5.86 2.40 7.68 5.62 2.50 7.08 5.18 2.71
+H
+27 19 8.55 6.35 2.02 8.51 6.32 2.28 8.16 6.06 2.41 7.83 5.82 2.51 7.22 5.36 2.73
+30 22 9.06 6.97 2.08 9.02 6.94 2.35 8.65 6.65 2.48 8.30 6.39 2.59 7.65 5.89 2.81
+32 24 9.47 7.59 2.14 9.42 7.55 2.42 9.04 7.24 2.56 8.68 6.95 2.66 8.00 6.41 2.89
+46
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 7.22 4.64 1.78 7.19 4.62 2.01 6.89 4.43 2.12 6.62 4.25 2.21 6.10 3.92 2.40
+23 16 7.66 5.27 1.87 7.62 5.24 2.11 7.31 5.02 2.23 7.02 4.82 2.32 6.47 4.45 2.52
+26 18 7.96 5.71 1.92 7.92 5.68 2.17 7.60 5.45 2.29 7.30 5.23 2.39 6.73 4.82 2.59
+M
+27 19 8.12 5.91 1.93 8.08 5.88 2.18 7.75 5.64 2.30 7.44 5.42 2.40 6.86 4.99 2.60
+30 22 8.61 6.51 1.99 8.57 6.47 2.24 8.22 6.21 2.37 7.89 5.96 2.47 7.27 5.50 2.68
+32 24 9.00 7.11 2.05 8.95 7.07 2.31 8.59 6.78 2.44 8.24 6.51 2.54 7.60 6.00 2.76
+20 14 6.65 4.14 1.73 6.61 4.12 1.96 6.34 3.95 2.07 6.09 3.80 2.15 5.61 3.50 2.34
+23 16 7.05 4.73 1.82 7.01 4.70 2.05 6.72 4.51 2.17 6.45 4.33 2.26 5.95 3.99 2.45
+26 18 7.33 5.14 1.87 7.29 5.11 2.11 6.99 4.90 2.23 6.71 4.71 2.33 6.19 4.34 2.52
+L
+27 19 7.47 5.33 1.88 7.43 5.30 2.12 7.13 5.09 2.24 6.85 4.88 2.34 6.31 4.50 2.54
+30 22 7.92 5.88 1.94 7.88 5.85 2.19 7.56 5.62 2.31 7.26 5.39 2.41 6.69 4.97 2.61
+32 24 8.28 6.45 1.99 8.23 6.41 2.25 7.90 6.15 2.38 7.58 5.90 2.48 6.99 5.44 2.69
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 6.37 1.99 6.04 2.04 5.77 2.11 5.53 2.18 5.32 2.26
+-5 -5.6 6.71 1.93 6.36 1.98 6.07 2.05 5.82 2.12 5.60 2.19
+Turbo 0 -0.7 7.29 1.96 6.91 2.01 6.60 2.08 6.33 2.15 6.08 2.23
+7 6 9.72 2.11 9.21 2.17 8.80 2.25 8.44 2.33 8.11 2.40
+10 8 10.21 2.18 9.68 2.24 9.24 2.32 8.86 2.40 8.52 2.48
+-10 -11 6.20 1.98 5.88 2.03 5.61 2.10 5.38 2.17 5.17 2.25
+-5 -5.6 6.53 1.92 6.19 1.97 5.91 2.04 5.66 2.11 5.45 2.18
+H 0 -0.7 7.09 1.95 6.72 2.00 6.42 2.07 6.16 2.14 5.92 2.21
+7 6 9.46 2.10 8.97 2.16 8.56 2.24 8.21 2.31 7.89 2.39
+10 8 9.93 2.17 9.41 2.23 8.99 2.31 8.62 2.38 8.29 2.46
+-10 -11 6.00 2.01 5.69 2.06 5.43 2.14 5.21 2.21 5.01 2.28
+-5 -5.6 6.32 1.95 5.99 2.00 5.72 2.07 5.48 2.14 5.27 2.21
+M 0 -0.7 6.87 1.98 6.51 2.03 6.22 2.10 5.96 2.17 5.73 2.25
+7 6 9.16 2.14 8.68 2.20 8.29 2.27 7.95 2.35 7.64 2.43
+10 8 9.61 2.20 9.11 2.26 8.70 2.34 8.34 2.42 8.02 2.50
+-10 -11 5.70 2.07 5.40 2.13 5.16 2.20 4.95 2.28 4.76 2.35
+-5 -5.6 6.00 2.01 5.69 2.07 5.43 2.14 5.21 2.21 5.01 2.28
+L 0 -0.7 6.52 2.04 6.18 2.10 5.91 2.17 5.66 2.24 5.44 2.32
+7 6 8.70 2.20 8.25 2.26 7.87 2.34 7.55 2.42 7.26 2.50
+10 8 9.13 2.27 8.66 2.33 8.27 2.41 7.93 2.49 7.62 2.58
+47
+
+GUD100T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 9.79 7.66 2.39 9.73 7.62 2.70 9.34 7.31 2.86 8.96 7.01 2.98 8.23 6.44 3.23
+24 17 10.37 8.40 2.51 10.32 8.36 2.84 9.90 8.02 3.00 9.50 7.70 3.12 8.72 7.06 3.39
+26 18 10.79 8.93 2.59 10.73 8.88 2.92 10.29 8.52 3.08 9.88 8.18 3.21 9.07 7.50 3.49
+Turbo
+27 19 11.00 9.18 2.60 10.94 9.13 2.93 10.50 8.76 3.10 10.08 8.41 3.23 9.25 7.72 3.50
+30 22 11.66 9.93 2.68 11.60 9.88 3.02 11.13 9.48 3.19 10.69 9.10 3.32 9.80 8.35 3.61
+32 24 12.19 10.63 2.75 12.12 10.57 3.11 11.63 10.14 3.29 11.17 9.74 3.42 10.25 8.93 3.71
+20 14 9.39 7.14 2.31 9.34 7.11 2.61 8.96 6.82 2.76 8.61 6.55 2.87 7.93 6.03 3.11
+23 16 9.96 7.87 2.42 9.90 7.83 2.74 9.50 7.51 2.89 9.12 7.21 3.01 8.41 6.65 3.27
+26 18 10.36 8.39 2.49 10.30 8.35 2.82 9.88 8.01 2.98 9.49 7.69 3.10 8.74 7.09 3.36
+H
+27 19 10.56 8.64 2.51 10.51 8.59 2.83 10.08 8.24 2.99 9.68 7.91 3.12 8.92 7.29 3.38
+30 22 11.20 9.37 2.58 11.14 9.32 2.91 10.68 8.94 3.08 10.26 8.58 3.21 9.46 7.91 3.48
+32 24 11.70 10.05 2.66 11.64 10.00 3.00 11.17 9.59 3.17 10.72 9.21 3.30 9.88 8.49 3.58
+20 14 8.92 6.60 2.21 8.88 6.56 2.49 8.52 6.29 2.63 8.18 6.04 2.74 7.54 5.57 2.97
+23 16 9.46 7.30 2.31 9.41 7.26 2.61 9.03 6.97 2.76 8.67 6.69 2.87 7.99 6.17 3.12
+26 18 9.84 7.80 2.38 9.79 7.76 2.69 9.39 7.45 2.84 9.01 7.15 2.96 8.31 6.59 3.21
+M
+27 19 10.03 8.04 2.39 9.98 8.00 2.70 9.58 7.67 2.86 9.19 7.37 2.97 8.47 6.79 3.23
+30 22 10.64 8.74 2.46 10.58 8.70 2.78 10.15 8.34 2.94 9.75 8.01 3.06 8.98 7.38 3.32
+32 24 11.12 9.41 2.54 11.06 9.36 2.86 10.61 8.98 3.03 10.18 8.62 3.15 9.39 7.95 3.42
+20 14 8.21 5.89 2.15 8.17 5.86 2.43 7.83 5.63 2.57 7.52 5.40 2.67 6.93 4.98 2.90
+23 16 8.70 6.56 2.26 8.66 6.52 2.55 8.30 6.26 2.69 7.97 6.01 2.80 7.35 5.54 3.04
+26 18 9.05 7.03 2.32 9.00 6.99 2.62 8.64 6.71 2.77 8.29 6.44 2.89 7.64 5.94 3.13
+L
+27 19 9.23 7.25 2.33 9.18 7.21 2.63 8.81 6.92 2.78 8.46 6.64 2.90 7.80 6.12 3.15
+30 22 9.79 7.90 2.40 9.73 7.86 2.71 9.34 7.54 2.87 8.97 7.24 2.98 8.26 6.67 3.24
+32 24 10.23 8.53 2.47 10.17 8.49 2.79 9.76 8.14 2.95 9.37 7.82 3.07 8.64 7.20 3.33
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 8.33 2.65 7.89 2.72 7.54 2.82 7.23 2.91 6.95 3.01
+-5 -5.6 8.76 2.57 8.31 2.64 7.94 2.74 7.61 2.83 7.32 2.92
+Turbo 0 -0.7 9.53 2.61 9.03 2.68 8.63 2.78 8.27 2.87 7.95 2.97
+7 6 12.70 2.82 12.04 2.90 11.50 3.00 11.03 3.10 10.60 3.20
+10 8 13.34 2.90 12.64 2.99 12.08 3.09 11.58 3.19 11.13 3.30
+-10 -11 8.10 2.64 7.68 2.71 7.33 2.80 7.03 2.90 6.76 3.00
+-5 -5.6 8.53 2.56 8.08 2.63 7.72 2.72 7.40 2.81 7.12 2.91
+H 0 -0.7 9.27 2.60 8.79 2.67 8.39 2.76 8.05 2.86 7.74 2.95
+7 6 12.36 2.81 11.72 2.88 11.19 2.99 10.73 3.09 10.32 3.19
+10 8 12.98 2.89 12.30 2.97 11.75 3.07 11.26 3.18 10.83 3.28
+48
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 7.84 2.68 7.43 2.75 7.10 2.85 6.81 2.94 6.55 3.04
+-5 -5.6 8.26 2.60 7.83 2.67 7.47 2.76 7.17 2.86 6.89 2.95
+M 0 -0.7 8.97 2.64 8.51 2.71 8.12 2.81 7.79 2.90 7.49 3.00
+7 6 11.96 2.85 11.34 2.93 10.83 3.03 10.38 3.13 9.99 3.24
+10 8 12.56 2.93 11.91 3.02 11.37 3.12 10.90 3.23 10.48 3.33
+-10 -11 7.45 2.76 7.06 2.84 6.75 2.94 6.47 3.03 6.22 3.14
+-5 -5.6 7.84 2.68 7.43 2.75 7.10 2.85 6.81 2.95 6.55 3.04
+L 0 -0.7 8.52 2.72 8.08 2.80 7.72 2.89 7.40 2.99 7.11 3.09
+7 6 11.37 2.94 10.77 3.02 10.29 3.13 9.87 3.23 9.49 3.34
+10 8 11.93 3.03 11.31 3.11 10.80 3.22 10.36 3.33 9.96 3.44
+GUD125T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 11.28 7.41 3.01 11.22 7.37 3.40 10.76 7.07 3.59 10.33 6.79 3.74 9.48 6.23 4.06
+24 17 11.95 8.37 3.16 11.89 8.33 3.57 11.41 7.99 3.77 10.95 7.67 3.93 10.05 7.04 4.26
+26 18 12.43 9.05 3.25 12.37 9.01 3.67 11.86 8.64 3.88 11.39 8.29 4.04 10.45 7.61 4.39
+Turbo
+27 19 12.68 9.37 3.27 12.61 9.32 3.69 12.10 8.94 3.90 11.62 8.58 4.06 10.66 7.87 4.41
+30 22 13.44 10.29 3.37 13.37 10.24 3.80 12.83 9.82 4.01 12.31 9.43 4.18 11.30 8.65 4.54
+32 24 14.05 11.21 3.46 13.97 11.15 3.91 13.40 10.70 4.13 12.87 10.27 4.30 11.81 9.43 4.67
+20 14 10.83 6.90 2.91 10.77 6.87 3.28 10.33 6.59 3.47 9.92 6.32 3.61 9.14 5.83 3.92
+23 16 11.47 7.84 3.05 11.41 7.80 3.44 10.95 7.48 3.64 10.51 7.19 3.79 9.69 6.62 4.11
+26 18 11.93 8.51 3.14 11.87 8.46 3.54 11.39 8.12 3.74 10.93 7.79 3.90 10.08 7.18 4.23
+H
+27 19 12.17 8.81 3.15 12.11 8.77 3.56 11.62 8.41 3.76 11.15 8.07 3.92 10.28 7.44 4.25
+30 22 12.90 9.71 3.25 12.83 9.66 3.67 12.31 9.27 3.87 11.82 8.90 4.03 10.90 8.20 4.38
+32 24 13.48 10.61 3.34 13.41 10.56 3.77 12.87 10.13 3.99 12.35 9.72 4.15 11.39 8.96 4.51
+20 14 10.28 6.36 2.78 10.23 6.33 3.13 9.81 6.07 3.31 9.42 5.83 3.45 8.68 5.37 3.74
+23 16 10.90 7.27 2.91 10.84 7.23 3.29 10.40 6.94 3.47 9.99 6.66 3.62 9.21 6.14 3.92
+26 18 11.34 7.91 3.00 11.28 7.87 3.38 10.82 7.55 3.57 10.39 7.25 3.72 9.57 6.68 4.04
+M
+27 19 11.56 8.21 3.01 11.50 8.16 3.40 11.04 7.83 3.59 10.59 7.52 3.74 9.77 6.93 4.06
+30 22 12.26 9.07 3.10 12.19 9.02 3.50 11.70 8.65 3.70 11.23 8.31 3.85 10.35 7.66 4.18
+32 24 12.81 9.94 3.19 12.74 9.89 3.60 12.22 9.48 3.81 11.74 9.10 3.97 10.82 8.39 4.30
+20 14 9.46 5.68 2.71 9.41 5.65 3.05 9.03 5.42 3.23 8.67 5.20 3.36 7.99 4.79 3.65
+23 16 10.03 6.53 2.84 9.98 6.49 3.20 9.57 6.23 3.39 9.19 5.98 3.53 8.47 5.51 3.83
+26 18 10.43 7.12 2.92 10.38 7.09 3.30 9.95 6.80 3.48 9.56 6.53 3.63 8.81 6.02 3.94
+L
+27 19 10.64 7.40 2.94 10.58 7.36 3.31 10.15 7.06 3.50 9.75 6.78 3.65 8.98 6.25 3.96
+30 22 11.28 8.20 3.02 11.22 8.16 3.41 10.76 7.82 3.61 10.33 7.51 3.76 9.52 6.92 4.07
+32 24 11.78 9.01 3.11 11.72 8.97 3.51 11.25 8.60 3.71 10.80 8.26 3.87 9.95 7.61 4.19
+49
+
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 9.77 3.53 9.27 3.63 8.85 3.76 8.48 3.88 8.16 4.01
+-5 -5.6 10.29 3.43 9.75 3.53 9.32 3.65 8.93 3.77 8.59 3.90
+Turbo 0 -0.7 11.18 3.48 10.60 3.58 10.13 3.70 9.71 3.83 9.33 3.96
+7 6 14.91 3.76 14.14 3.86 13.50 4.00 12.94 4.13 12.45 4.27
+10 8 15.66 3.87 14.84 3.98 14.18 4.12 13.59 4.26 13.07 4.40
+-10 -11 9.51 3.51 9.02 3.61 8.61 3.74 8.26 3.87 7.94 3.99
+-5 -5.6 10.01 3.41 9.49 3.51 9.06 3.63 8.69 3.75 8.36 3.88
+H 0 -0.7 10.88 3.46 10.32 3.56 9.85 3.69 9.45 3.81 9.08 3.94
+7 6 14.51 3.74 13.75 3.85 13.14 3.98 12.59 4.11 12.11 4.25
+10 8 15.23 3.85 14.44 3.96 13.79 4.10 13.22 4.24 12.72 4.38
+-10 -11 9.21 3.57 8.73 3.67 8.33 3.80 7.99 3.92 7.68 4.05
+-5 -5.6 9.69 3.46 9.19 3.56 8.77 3.69 8.41 3.81 8.09 3.94
+M 0 -0.7 10.53 3.52 9.99 3.61 9.54 3.74 9.14 3.87 8.79 4.00
+7 6 14.04 3.80 13.31 3.90 12.72 4.04 12.19 4.18 11.72 4.32
+10 8 14.75 3.91 13.98 4.02 13.35 4.16 12.80 4.30 12.31 4.44
+-10 -11 8.75 3.68 8.29 3.78 7.92 3.92 7.59 4.05 7.30 4.18
+-5 -5.6 9.21 3.57 8.73 3.67 8.33 3.80 7.99 3.93 7.68 4.06
+L 0 -0.7 10.01 3.63 9.49 3.73 9.06 3.86 8.69 3.99 8.35 4.12
+7 6 13.34 3.92 12.65 4.03 12.08 4.17 11.58 4.31 11.14 4.45
+10 8 14.01 4.03 13.28 4.15 12.68 4.29 12.16 4.44 11.69 4.58
+GUD140T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 12.49 8.68 3.55 12.42 8.64 4.01 11.92 8.29 4.24 11.44 7.95 4.41 10.50 7.30 4.79
+24 17 13.24 9.71 3.73 13.17 9.66 4.21 12.63 9.27 4.45 12.13 8.90 4.63 11.13 8.17 5.02
+26 18 13.77 10.44 3.84 13.69 10.39 4.33 13.14 9.97 4.58 12.61 9.57 4.77 11.57 8.78 5.17
+Turbo
+27 19 14.04 10.78 3.86 13.97 10.73 4.35 13.40 10.29 4.60 12.86 9.88 4.79 11.80 9.06 5.20
+30 22 14.88 11.79 3.97 14.81 11.73 4.48 14.20 11.25 4.74 13.64 10.80 4.93 12.51 9.91 5.35
+32 24 15.55 12.77 4.09 15.47 12.70 4.61 14.84 12.18 4.87 14.25 11.70 5.08 13.07 10.73 5.51
+20 14 11.99 8.09 3.43 11.93 8.05 3.87 11.44 7.72 4.09 10.98 7.41 4.26 10.12 6.83 4.62
+23 16 12.71 9.10 3.60 12.64 9.05 4.06 12.13 8.69 4.29 11.64 8.34 4.47 10.73 7.69 4.85
+26 18 13.22 9.81 3.70 13.15 9.76 4.18 12.61 9.36 4.42 12.11 8.99 4.60 11.16 8.29 4.99
+H
+27 19 13.48 10.14 3.72 13.41 10.09 4.20 12.86 9.68 4.44 12.35 9.29 4.62 11.38 8.57 5.02
+30 22 14.29 11.12 3.83 14.21 11.06 4.32 13.64 10.61 4.57 13.09 10.19 4.76 12.07 9.39 5.16
+32 24 14.93 12.08 3.94 14.85 12.02 4.45 14.25 11.53 4.70 13.68 11.07 4.90 12.61 10.20 5.31
+50
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 11.39 7.46 3.27 11.33 7.42 3.70 10.87 7.12 3.90 10.43 6.84 4.07 9.62 6.30 4.41
+23 16 12.07 8.44 3.43 12.01 8.39 3.88 11.52 8.05 4.10 11.06 7.73 4.27 10.19 7.13 4.63
+26 18 12.56 9.13 3.53 12.49 9.08 3.99 11.98 8.71 4.22 11.50 8.36 4.39 10.60 7.71 4.76
+M
+27 19 12.81 9.44 3.55 12.74 9.39 4.01 12.22 9.01 4.24 11.73 8.65 4.41 10.81 7.98 4.79
+30 22 13.57 10.38 3.66 13.50 10.33 4.13 12.95 9.91 4.36 12.44 9.51 4.54 11.46 8.77 4.93
+32 24 14.19 11.31 3.76 14.11 11.25 4.25 13.54 10.79 4.49 13.00 10.36 4.68 11.98 9.55 5.07
+20 14 10.48 6.66 3.19 10.42 6.63 3.60 10.00 6.36 3.81 9.60 6.10 3.96 8.85 5.63 4.30
+23 16 11.11 7.57 3.35 11.05 7.53 3.78 10.60 7.23 3.99 10.18 6.94 4.16 9.38 6.40 4.51
+26 18 11.55 8.22 3.45 11.49 8.18 3.89 11.02 7.84 4.11 10.58 7.53 4.28 9.75 6.94 4.64
+L
+27 19 11.78 8.52 3.46 11.72 8.47 3.91 11.24 8.13 4.13 10.79 7.80 4.30 9.95 7.19 4.67
+30 22 12.49 9.39 3.56 12.42 9.34 4.02 11.92 8.96 4.25 11.44 8.60 4.43 10.55 7.93 4.81
+32 24 13.05 10.26 3.67 12.98 10.20 4.14 12.45 9.79 4.38 11.96 9.40 4.56 11.02 8.66 4.95
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 11.22 4.15 10.64 4.27 10.16 4.42 9.74 4.56 9.37 4.72
+-5 -5.6 11.81 4.03 11.20 4.14 10.70 4.29 10.25 4.43 9.86 4.58
+Turbo 0 -0.7 12.84 4.09 12.17 4.20 11.63 4.35 11.15 4.50 10.72 4.65
+7 6 17.12 4.42 16.23 4.54 15.50 4.70 14.86 4.86 14.29 5.02
+10 8 17.98 4.55 17.04 4.68 16.28 4.84 15.60 5.00 15.00 5.17
+-10 -11 10.92 4.13 10.35 4.25 9.89 4.39 9.48 4.54 9.11 4.69
+-5 -5.6 11.49 4.01 10.90 4.12 10.41 4.27 9.98 4.41 9.59 4.56
+H 0 -0.7 12.49 4.07 11.84 4.18 11.31 4.33 10.84 4.48 10.43 4.63
+7 6 16.66 4.40 15.79 4.52 15.08 4.68 14.46 4.83 13.90 5.00
+10 8 17.49 4.53 16.58 4.65 15.84 4.82 15.18 4.98 14.60 5.15
+-10 -11 10.57 4.19 10.02 4.31 9.57 4.46 9.18 4.61 8.82 4.76
+-5 -5.6 11.13 4.07 10.55 4.18 10.07 4.33 9.66 4.48 9.29 4.63
+M 0 -0.7 12.09 4.13 11.47 4.25 10.95 4.40 10.50 4.54 10.09 4.69
+7 6 16.13 4.46 15.29 4.59 14.60 4.75 14.00 4.91 13.46 5.07
+10 8 16.93 4.60 16.05 4.72 15.33 4.89 14.70 5.05 14.13 5.22
+-10 -11 10.04 4.32 9.52 4.44 9.09 4.60 8.72 4.75 8.38 4.91
+-5 -5.6 10.57 4.20 10.02 4.32 9.57 4.47 9.18 4.62 8.82 4.77
+L 0 -0.7 11.49 4.26 10.89 4.38 10.40 4.53 9.97 4.69 9.59 4.84
+7 6 15.32 4.60 14.52 4.73 13.87 4.90 13.30 5.06 12.79 5.23
+10 8 16.09 4.74 15.25 4.87 14.56 5.04 13.96 5.21 13.43 5.39
+51
+
+GUD160T1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 13.51 8.26 4.09 13.44 8.22 4.62 12.90 7.89 4.88 12.38 7.57 5.09 11.36 6.95 5.52
+24 17 14.32 9.46 4.29 14.25 9.41 4.85 13.67 9.03 5.12 13.12 8.67 5.34 12.04 7.95 5.79
+26 18 14.90 10.31 4.42 14.82 10.26 4.99 14.22 9.84 5.27 13.65 9.45 5.49 12.52 8.67 5.96
+Turbo
+27 19 15.19 10.70 4.44 15.11 10.64 5.02 14.50 10.21 5.30 13.92 9.80 5.52 12.77 8.99 5.99
+30 22 16.11 11.84 4.57 16.02 11.77 5.16 15.37 11.29 5.46 14.76 10.84 5.68 13.54 9.95 6.17
+32 24 16.83 12.99 4.71 16.74 12.92 5.32 16.06 12.39 5.62 15.42 11.90 5.85 14.15 10.92 6.35
+20 14 12.97 7.69 3.95 12.90 7.65 4.46 12.38 7.34 4.71 11.88 7.05 4.91 10.95 6.50 5.32
+23 16 13.75 8.86 4.14 13.68 8.82 4.68 13.12 8.46 4.94 12.60 8.12 5.15 11.61 7.48 5.59
+26 18 14.30 9.69 4.27 14.23 9.64 4.82 13.65 9.25 5.09 13.10 8.88 5.30 12.08 8.18 5.75
+H
+27 19 14.59 10.07 4.29 14.51 10.01 4.84 13.92 9.61 5.11 13.36 9.22 5.33 12.32 8.50 5.78
+30 22 15.46 11.17 4.41 15.38 11.11 4.98 14.76 10.66 5.26 14.17 10.23 5.48 13.06 9.43 5.95
+32 24 16.16 12.29 4.54 16.07 12.23 5.13 15.42 11.73 5.42 14.80 11.26 5.64 13.64 10.38 6.12
+20 14 12.32 7.09 3.77 12.26 7.05 4.26 11.76 6.76 4.50 11.29 6.49 4.69 10.41 5.98 5.08
+23 16 13.06 8.21 3.96 12.99 8.17 4.47 12.47 7.84 4.72 11.97 7.52 4.92 11.03 6.94 5.33
+26 18 13.59 9.01 4.07 13.51 8.96 4.60 12.96 8.60 4.86 12.45 8.25 5.06 11.47 7.61 5.49
+M
+27 19 13.86 9.37 4.09 13.78 9.32 4.62 13.22 8.94 4.88 12.70 8.59 5.09 11.70 7.91 5.52
+30 22 14.69 10.43 4.21 14.61 10.37 4.76 14.02 9.95 5.03 13.46 9.55 5.23 12.40 8.81 5.68
+32 24 15.35 11.51 4.34 15.27 11.45 4.90 14.65 10.99 5.17 14.06 10.55 5.39 12.96 9.72 5.85
+20 14 11.34 6.32 3.68 11.28 6.28 4.15 10.82 6.03 4.39 10.39 5.79 4.57 9.57 5.33 4.96
+23 16 12.02 7.37 3.86 11.95 7.33 4.35 11.47 7.03 4.60 11.01 6.75 4.79 10.15 6.22 5.20
+26 18 12.50 8.11 3.97 12.43 8.07 4.48 11.93 7.74 4.74 11.45 7.43 4.93 10.55 6.85 5.35
+L
+27 19 12.75 8.45 3.99 12.68 8.40 4.50 12.17 8.06 4.76 11.68 7.74 4.96 10.77 7.13 5.38
+30 22 13.51 9.43 4.11 13.44 9.38 4.64 12.90 9.00 4.90 12.38 8.64 5.10 11.41 7.96 5.54
+32 24 14.12 10.45 4.23 14.05 10.39 4.77 13.48 9.97 5.04 12.94 9.57 5.25 11.93 8.82 5.70
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 12.31 5.03 11.67 5.17 11.14 5.36 10.68 5.54 10.27 5.72
+-5 -5.6 12.96 4.89 12.28 5.02 11.73 5.20 11.25 5.37 10.81 5.55
+Turbo 0 -0.7 14.08 4.96 13.35 5.10 12.75 5.28 12.22 5.45 11.75 5.64
+7 6 18.78 5.36 17.80 5.51 17.00 5.70 16.30 5.89 15.67 6.09
+10 8 19.72 5.52 18.69 5.67 17.85 5.87 17.11 6.07 16.46 6.27
+-10 -11 11.98 5.01 11.35 5.15 10.84 5.33 10.40 5.51 10.00 5.69
+-5 -5.6 12.61 4.86 11.95 5.00 11.41 5.17 10.94 5.35 10.52 5.53
+H 0 -0.7 13.70 4.94 12.99 5.07 12.41 5.25 11.89 5.43 11.44 5.61
+7 6 18.27 5.33 17.32 5.48 16.54 5.67 15.86 5.86 15.25 6.06
+10 8 19.18 5.49 18.19 5.64 17.37 5.84 16.65 6.04 16.01 6.24
+52
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 11.59 5.08 10.99 5.23 10.50 5.41 10.06 5.59 9.68 5.78
+-5 -5.6 12.20 4.94 11.57 5.07 11.05 5.25 10.59 5.43 10.19 5.61
+M 0 -0.7 13.26 5.01 12.57 5.15 12.01 5.33 11.51 5.51 11.07 5.69
+7 6 17.69 5.41 16.77 5.56 16.01 5.76 15.35 5.95 14.76 6.15
+10 8 18.57 5.57 17.60 5.73 16.81 5.93 16.12 6.13 15.50 6.33
+-10 -11 11.01 5.24 10.44 5.39 9.97 5.58 9.56 5.77 9.19 5.96
+-5 -5.6 11.59 5.09 10.99 5.23 10.50 5.42 10.06 5.60 9.68 5.79
+L 0 -0.7 12.60 5.17 11.95 5.31 11.41 5.50 10.94 5.68 10.52 5.87
+7 6 16.80 5.58 15.93 5.74 15.21 5.94 14.58 6.14 14.02 6.34
+10 8 17.64 5.75 16.72 5.91 15.97 6.12 15.31 6.32 14.72 6.53
+Symbols:
+DB: Dry bulb temperature
+WB: Wet bulb temperature
+TC: Total cooling(heating) capacity
+SHC: Sensible heat capacity
+PI: Power input (compressor + indoor fan motor + outdoor fan motor)
+1. The above data are based on the following conditions.
+— Power Supply Equivalent Piping Length
+Indoor 230V ~50Hz Standard Piping Length
+2. Capacities are net, including a deduction for cooling ( an addition for heating) for indoor fan motor heat.
+6.1.2 Duct Type
+GUD35P1/A-S ＆ GUD35PS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 3.26 2.47 0.80 3.24 2.45 0.90 3.11 2.35 0.95 2.99 2.26 0.99 2.74 2.08 1.07
+24 17 3.46 2.72 0.83 3.44 2.71 0.94 3.30 2.60 1.00 3.17 2.49 1.04 2.91 2.29 1.13
+26 18 3.60 2.90 0.86 3.58 2.89 0.97 3.43 2.77 1.02 3.29 2.66 1.07 3.02 2.44 1.16
+Turbo
+27 19 3.67 2.99 0.86 3.65 2.97 0.97 3.50 2.85 1.03 3.36 2.74 1.07 3.08 2.51 1.16
+30 22 3.89 3.24 0.89 3.87 3.22 1.00 3.71 3.09 1.06 3.56 2.97 1.10 3.27 2.73 1.20
+32 24 4.06 3.48 0.92 4.04 3.46 1.03 3.88 3.32 1.09 3.72 3.19 1.14 3.42 2.93 1.23
+20 14 3.13 2.30 0.77 3.11 2.29 0.87 2.99 2.20 0.92 2.87 2.11 0.95 2.64 1.94 1.03
+23 16 3.32 2.55 0.81 3.30 2.54 0.91 3.17 2.43 0.96 3.04 2.34 1.00 2.80 2.16 1.09
+26 18 3.45 2.73 0.83 3.43 2.71 0.94 3.29 2.60 0.99 3.16 2.50 1.03 2.91 2.30 1.12
+H
+27 19 3.52 2.81 0.83 3.50 2.79 0.94 3.36 2.68 0.99 3.23 2.57 1.04 2.97 2.37 1.12
+30 22 3.73 3.06 0.86 3.71 3.04 0.97 3.56 2.92 1.02 3.42 2.80 1.07 3.15 2.58 1.16
+32 24 3.90 3.29 0.88 3.88 3.27 1.00 3.72 3.14 1.05 3.57 3.02 1.10 3.29 2.78 1.19
+20 14 2.97 2.12 0.73 2.96 2.11 0.83 2.84 2.03 0.87 2.73 1.95 0.91 2.51 1.79 0.99
+23 16 3.15 2.36 0.77 3.14 2.35 0.87 3.01 2.26 0.92 2.89 2.17 0.96 2.66 2.00 1.04
+26 18 3.28 2.54 0.79 3.26 2.52 0.89 3.13 2.42 0.94 3.00 2.32 0.98 2.77 2.14 1.07
+M
+27 19 3.34 2.62 0.80 3.33 2.60 0.90 3.19 2.50 0.95 3.06 2.40 0.99 2.82 2.21 1.07
+30 22 3.55 2.85 0.82 3.53 2.84 0.92 3.38 2.72 0.98 3.25 2.61 1.02 2.99 2.41 1.10
+32 24 3.71 3.08 0.84 3.69 3.07 0.95 3.54 2.94 1.01 3.39 2.82 1.05 3.13 2.60 1.14
+53
+
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 2.74 1.90 0.71 2.72 1.89 0.81 2.61 1.81 0.85 2.51 1.74 0.89 2.31 1.60 0.96
+23 16 2.90 2.12 0.75 2.89 2.11 0.85 2.77 2.03 0.89 2.66 1.95 0.93 2.45 1.79 1.01
+26 18 3.02 2.28 0.77 3.00 2.27 0.87 2.88 2.18 0.92 2.76 2.09 0.96 2.55 1.93 1.04
+L
+27 19 3.08 2.36 0.78 3.06 2.35 0.88 2.94 2.25 0.92 2.82 2.16 0.96 2.60 1.99 1.05
+30 22 3.26 2.58 0.80 3.24 2.57 0.90 3.11 2.46 0.95 2.99 2.36 0.99 2.75 2.18 1.08
+32 24 3.41 2.79 0.82 3.39 2.78 0.93 3.25 2.67 0.98 3.12 2.56 1.02 2.88 2.36 1.11
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 2.90 0.88 2.75 0.91 2.62 0.94 2.51 0.97 2.42 1.00
+-5 -5.6 3.05 0.86 2.89 0.88 2.76 0.91 2.65 0.94 2.54 0.97
+Turbo 0 -0.7 3.31 0.87 3.14 0.89 3.00 0.93 2.88 0.96 2.77 0.99
+7 6 4.42 0.94 4.19 0.97 4.00 1.00 3.84 1.03 3.69 1.07
+10 8 4.64 0.97 4.40 1.00 4.20 1.03 4.03 1.06 3.87 1.10
+-10 -11 2.82 0.88 2.67 0.90 2.55 0.93 2.45 0.97 2.35 1.00
+-5 -5.6 2.97 0.85 2.81 0.88 2.69 0.91 2.57 0.94 2.48 0.97
+H 0 -0.7 3.22 0.87 3.06 0.89 2.92 0.92 2.80 0.95 2.69 0.98
+7 6 4.30 0.94 4.08 0.96 3.89 1.00 3.73 1.03 3.59 1.06
+10 8 4.51 0.96 4.28 0.99 4.09 1.02 3.92 1.06 3.77 1.09
+-10 -11 2.73 0.89 2.59 0.92 2.47 0.95 2.37 0.98 2.28 1.01
+-5 -5.6 2.87 0.87 2.72 0.89 2.60 0.92 2.49 0.95 2.40 0.98
+M 0 -0.7 3.12 0.88 2.96 0.90 2.83 0.94 2.71 0.97 2.60 1.00
+7 6 4.16 0.95 3.94 0.98 3.77 1.01 3.61 1.04 3.47 1.08
+10 8 4.37 0.98 4.14 1.01 3.96 1.04 3.79 1.08 3.65 1.11
+-10 -11 2.59 0.92 2.46 0.95 2.35 0.98 2.25 1.01 2.16 1.05
+-5 -5.6 2.73 0.89 2.59 0.92 2.47 0.95 2.37 0.98 2.28 1.01
+L 0 -0.7 2.96 0.91 2.81 0.93 2.68 0.96 2.57 1.00 2.47 1.03
+7 6 3.95 0.98 3.75 1.01 3.58 1.04 3.43 1.08 3.30 1.11
+10 8 4.15 1.01 3.94 1.04 3.76 1.07 3.60 1.11 3.46 1.15
+54
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD50P1/A-S ＆ GUD50PS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 4.66 3.19 1.14 4.64 3.17 1.28 4.45 3.05 1.35 4.27 2.92 1.41 3.92 2.68 1.53
+24 17 4.94 3.58 1.19 4.91 3.56 1.34 4.71 3.42 1.42 4.53 3.28 1.48 4.15 3.01 1.61
+26 18 5.14 3.85 1.23 5.11 3.83 1.38 4.90 3.68 1.46 4.71 3.53 1.52 4.32 3.24 1.65
+Turbo
+27 19 5.24 3.98 1.23 5.21 3.96 1.39 5.00 3.80 1.47 4.80 3.65 1.53 4.40 3.35 1.66
+30 22 5.55 4.36 1.27 5.52 4.34 1.43 5.30 4.16 1.51 5.09 3.99 1.58 4.67 3.66 1.71
+32 24 5.80 4.73 1.31 5.77 4.70 1.47 5.54 4.51 1.56 5.32 4.33 1.62 4.88 3.97 1.76
+20 14 4.47 2.97 1.10 4.45 2.96 1.24 4.27 2.84 1.31 4.10 2.73 1.36 3.78 2.51 1.48
+23 16 4.74 3.35 1.15 4.72 3.34 1.30 4.52 3.20 1.37 4.34 3.07 1.43 4.00 2.83 1.55
+26 18 4.93 3.62 1.18 4.91 3.60 1.34 4.71 3.46 1.41 4.52 3.32 1.47 4.16 3.06 1.59
+H
+27 19 5.03 3.75 1.19 5.00 3.73 1.34 4.80 3.58 1.42 4.61 3.43 1.48 4.25 3.16 1.60
+30 22 5.33 4.11 1.22 5.30 4.09 1.38 5.09 3.92 1.46 4.88 3.77 1.52 4.50 3.47 1.65
+32 24 5.57 4.47 1.26 5.54 4.45 1.42 5.32 4.27 1.50 5.10 4.10 1.57 4.71 3.78 1.70
+20 14 4.25 2.74 1.05 4.23 2.73 1.18 4.06 2.62 1.25 3.89 2.51 1.30 3.59 2.32 1.41
+23 16 4.50 3.11 1.10 4.48 3.09 1.24 4.30 2.97 1.31 4.13 2.85 1.36 3.80 2.63 1.48
+26 18 4.68 3.37 1.13 4.66 3.35 1.28 4.47 3.21 1.35 4.29 3.09 1.40 3.96 2.84 1.52
+M
+27 19 4.78 3.49 1.14 4.75 3.47 1.28 4.56 3.33 1.35 4.38 3.20 1.41 4.04 2.95 1.53
+30 22 5.07 3.84 1.17 5.04 3.82 1.32 4.83 3.66 1.39 4.64 3.52 1.45 4.28 3.24 1.58
+32 24 5.29 4.19 1.20 5.27 4.17 1.36 5.05 4.00 1.43 4.85 3.84 1.49 4.47 3.54 1.62
+20 14 3.91 2.45 1.02 3.89 2.44 1.15 3.73 2.34 1.22 3.58 2.24 1.27 3.30 2.07 1.37
+23 16 4.14 2.79 1.07 4.12 2.78 1.21 3.95 2.66 1.28 3.80 2.56 1.33 3.50 2.36 1.44
+26 18 4.31 3.03 1.10 4.29 3.02 1.24 4.11 2.89 1.31 3.95 2.78 1.37 3.64 2.56 1.48
+L
+27 19 4.40 3.14 1.11 4.37 3.13 1.25 4.20 3.00 1.32 4.03 2.88 1.37 3.71 2.66 1.49
+30 22 4.66 3.47 1.14 4.64 3.45 1.29 4.45 3.31 1.36 4.27 3.18 1.42 3.94 2.93 1.54
+32 24 4.87 3.80 1.17 4.84 3.78 1.32 4.65 3.63 1.40 4.46 3.48 1.46 4.11 3.21 1.58
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 4.05 1.41 3.84 1.45 3.67 1.50 3.52 1.55 3.38 1.61
+-5 -5.6 4.27 1.37 4.05 1.41 3.86 1.46 3.70 1.51 3.56 1.56
+Turbo 0 -0.7 4.64 1.39 4.40 1.43 4.20 1.48 4.03 1.53 3.87 1.58
+7 6 6.19 1.50 5.86 1.55 5.60 1.60 5.37 1.65 5.16 1.71
+10 8 6.49 1.55 6.16 1.59 5.88 1.65 5.64 1.70 5.42 1.76
+-10 -11 3.95 1.41 3.74 1.45 3.57 1.50 3.42 1.55 3.29 1.60
+-5 -5.6 4.15 1.36 3.94 1.40 3.76 1.45 3.60 1.50 3.47 1.55
+H 0 -0.7 4.51 1.39 4.28 1.42 4.09 1.47 3.92 1.52 3.77 1.57
+7 6 6.02 1.50 5.71 1.54 5.45 1.59 5.22 1.65 5.02 1.70
+10 8 6.32 1.54 5.99 1.58 5.72 1.64 5.49 1.69 5.27 1.75
+55
+
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 3.82 1.43 3.62 1.47 3.46 1.52 3.31 1.57 3.19 1.62
+-5 -5.6 4.02 1.39 3.81 1.42 3.64 1.47 3.49 1.52 3.36 1.57
+M 0 -0.7 4.37 1.41 4.14 1.45 3.96 1.50 3.79 1.55 3.65 1.60
+7 6 5.83 1.52 5.52 1.56 5.27 1.62 5.06 1.67 4.86 1.73
+10 8 6.12 1.56 5.80 1.61 5.54 1.66 5.31 1.72 5.11 1.78
+-10 -11 3.63 1.47 3.44 1.51 3.28 1.57 3.15 1.62 3.03 1.67
+-5 -5.6 3.82 1.43 3.62 1.47 3.46 1.52 3.31 1.57 3.19 1.62
+L 0 -0.7 4.15 1.45 3.94 1.49 3.76 1.54 3.60 1.59 3.46 1.65
+7 6 5.53 1.57 5.25 1.61 5.01 1.67 4.80 1.72 4.62 1.78
+10 8 5.81 1.61 5.51 1.66 5.26 1.72 5.04 1.77 4.85 1.83
+GUD71PH1/A-S ＆ GUD71PHS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 6.62 5.10 1.48 6.58 5.07 1.67 6.31 4.87 1.77 6.06 4.67 1.84 5.56 4.29 2.00
+24 17 7.01 5.61 1.56 6.98 5.58 1.76 6.69 5.35 1.86 6.43 5.14 1.93 5.90 4.71 2.10
+26 18 7.29 5.97 1.60 7.26 5.94 1.81 6.96 5.70 1.91 6.68 5.47 1.99 6.13 5.02 2.16
+Turbo
+27 19 7.44 6.14 1.61 7.40 6.11 1.82 7.10 5.86 1.92 6.82 5.63 2.00 6.25 5.16 2.17
+30 22 7.89 6.65 1.66 7.84 6.62 1.87 7.53 6.35 1.98 7.23 6.09 2.06 6.63 5.59 2.23
+32 24 8.24 7.13 1.71 8.20 7.09 1.93 7.86 6.80 2.03 7.55 6.53 2.12 6.93 5.99 2.30
+20 14 6.35 4.76 1.43 6.32 4.73 1.62 6.06 4.54 1.71 5.82 4.36 1.78 5.36 4.02 1.93
+23 16 6.73 5.26 1.50 6.70 5.23 1.69 6.43 5.02 1.79 6.17 4.82 1.87 5.69 4.44 2.02
+26 18 7.00 5.61 1.55 6.97 5.58 1.74 6.68 5.35 1.84 6.42 5.14 1.92 5.91 4.74 2.08
+H
+27 19 7.14 5.78 1.55 7.10 5.75 1.75 6.82 5.51 1.85 6.54 5.29 1.93 6.03 4.88 2.09
+30 22 7.57 6.27 1.60 7.53 6.24 1.80 7.22 5.99 1.91 6.94 5.75 1.99 6.39 5.30 2.15
+32 24 7.91 6.74 1.65 7.87 6.71 1.86 7.55 6.44 1.96 7.25 6.18 2.04 6.68 5.70 2.22
+20 14 6.03 4.39 1.37 6.00 4.37 1.54 5.76 4.19 1.63 5.53 4.02 1.70 5.10 3.71 1.84
+23 16 6.40 4.88 1.43 6.36 4.85 1.62 6.10 4.65 1.71 5.86 4.47 1.78 5.40 4.12 1.93
+26 18 6.65 5.22 1.48 6.62 5.19 1.67 6.35 4.98 1.76 6.09 4.78 1.83 5.62 4.41 1.99
+M
+27 19 6.79 5.38 1.48 6.75 5.35 1.67 6.48 5.13 1.77 6.22 4.93 1.84 5.73 4.54 2.00
+30 22 7.19 5.86 1.53 7.15 5.83 1.72 6.86 5.59 1.82 6.59 5.37 1.90 6.07 4.95 2.06
+32 24 7.52 6.31 1.57 7.48 6.28 1.77 7.17 6.02 1.87 6.89 5.78 1.95 6.35 5.33 2.12
+20 14 5.55 3.92 1.33 5.52 3.90 1.50 5.30 3.75 1.59 5.09 3.60 1.65 4.69 3.31 1.80
+23 16 5.88 4.38 1.40 5.85 4.36 1.58 5.62 4.18 1.67 5.39 4.01 1.74 4.97 3.70 1.88
+26 18 6.12 4.70 1.44 6.09 4.67 1.62 5.84 4.48 1.72 5.61 4.31 1.79 5.17 3.97 1.94
+L
+27 19 6.24 4.85 1.45 6.21 4.82 1.63 5.96 4.63 1.72 5.72 4.44 1.80 5.27 4.10 1.95
+30 22 6.62 5.29 1.49 6.58 5.27 1.68 6.31 5.05 1.77 6.06 4.85 1.85 5.59 4.47 2.01
+32 24 6.91 5.72 1.53 6.88 5.69 1.73 6.60 5.46 1.83 6.34 5.24 1.90 5.84 4.83 2.06
+56
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 5.79 1.77 5.49 1.82 5.24 1.88 5.03 1.94 4.83 2.01
+-5 -5.6 6.10 1.71 5.78 1.76 5.52 1.82 5.29 1.89 5.09 1.95
+Turbo 0 -0.7 6.63 1.74 6.28 1.79 6.00 1.85 5.75 1.91 5.53 1.98
+7 6 8.84 1.88 8.38 1.93 8.00 2.00 7.67 2.07 7.38 2.14
+10 8 9.28 1.94 8.80 1.99 8.40 2.06 8.05 2.13 7.74 2.20
+-10 -11 5.64 1.76 5.34 1.81 5.10 1.87 4.89 1.93 4.70 2.00
+-5 -5.6 5.93 1.71 5.62 1.75 5.37 1.82 5.15 1.88 4.95 1.94
+H 0 -0.7 6.45 1.73 6.11 1.78 5.84 1.84 5.60 1.90 5.38 1.97
+7 6 8.60 1.87 8.15 1.92 7.78 1.99 7.46 2.06 7.18 2.13
+10 8 9.03 1.93 8.56 1.98 8.17 2.05 7.84 2.12 7.53 2.19
+-10 -11 5.46 1.78 5.17 1.83 4.94 1.90 4.74 1.96 4.55 2.03
+-5 -5.6 5.74 1.73 5.44 1.78 5.20 1.84 4.98 1.90 4.79 1.97
+M 0 -0.7 6.24 1.76 5.92 1.81 5.65 1.87 5.42 1.93 5.21 2.00
+7 6 8.32 1.90 7.89 1.95 7.53 2.02 7.22 2.09 6.95 2.16
+10 8 8.74 1.96 8.28 2.01 7.91 2.08 7.59 2.15 7.29 2.22
+-10 -11 5.18 1.84 4.91 1.89 4.69 1.96 4.50 2.02 4.33 2.09
+-5 -5.6 5.46 1.79 5.17 1.84 4.94 1.90 4.74 1.96 4.55 2.03
+L 0 -0.7 5.93 1.81 5.62 1.86 5.37 1.93 5.15 1.99 4.95 2.06
+7 6 7.91 1.96 7.50 2.01 7.16 2.08 6.86 2.15 6.60 2.23
+10 8 8.30 2.02 7.87 2.07 7.52 2.15 7.21 2.22 6.93 2.29
+GUD85PH1/A-S ＆ GUD85PHS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 7.92 5.84 1.93 7.88 5.81 2.18 7.56 5.57 2.30 7.26 5.35 2.40 6.66 4.91 2.60
+24 17 8.40 6.47 2.03 8.35 6.44 2.29 8.01 6.17 2.42 7.69 5.93 2.52 7.06 5.44 2.73
+26 18 8.73 6.92 2.09 8.69 6.88 2.35 8.33 6.60 2.49 8.00 6.34 2.59 7.34 5.81 2.81
+Turbo
+27 19 8.91 7.13 2.10 8.86 7.09 2.37 8.50 6.80 2.50 8.16 6.53 2.60 7.49 5.99 2.83
+30 22 9.44 7.75 2.16 9.39 7.71 2.44 9.01 7.40 2.57 8.65 7.10 2.68 7.94 6.51 2.91
+32 24 9.87 8.34 2.22 9.81 8.30 2.51 9.42 7.96 2.65 9.04 7.64 2.76 8.29 7.01 2.99
+20 14 7.60 5.45 1.86 7.56 5.42 2.10 7.26 5.20 2.22 6.97 4.99 2.31 6.42 4.60 2.51
+23 16 8.06 6.06 1.95 8.02 6.03 2.21 7.69 5.79 2.33 7.39 5.56 2.43 6.81 5.12 2.63
+26 18 8.38 6.50 2.01 8.34 6.46 2.27 8.00 6.20 2.40 7.68 5.95 2.50 7.08 5.49 2.71
+H
+27 19 8.55 6.70 2.02 8.51 6.67 2.28 8.16 6.40 2.41 7.83 6.14 2.51 7.22 5.66 2.73
+30 22 9.06 7.31 2.08 9.02 7.27 2.35 8.65 6.98 2.48 8.30 6.70 2.59 7.65 6.17 2.81
+32 24 9.47 7.89 2.14 9.42 7.85 2.42 9.04 7.53 2.56 8.68 7.23 2.66 8.00 6.66 2.89
+57
+
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 7.22 5.03 1.78 7.19 5.00 2.01 6.89 4.80 2.12 6.62 4.61 2.21 6.10 4.24 2.40
+23 16 7.66 5.62 1.87 7.62 5.59 2.11 7.31 5.37 2.23 7.02 5.15 2.32 6.47 4.75 2.52
+26 18 7.96 6.04 1.92 7.92 6.01 2.17 7.60 5.77 2.29 7.30 5.54 2.39 6.73 5.10 2.59
+M
+27 19 8.12 6.24 1.93 8.08 6.21 2.18 7.75 5.96 2.30 7.44 5.72 2.40 6.86 5.27 2.60
+30 22 8.61 6.82 1.99 8.57 6.79 2.24 8.22 6.51 2.37 7.89 6.25 2.47 7.27 5.76 2.68
+32 24 9.00 7.39 2.05 8.95 7.35 2.31 8.59 7.05 2.44 8.24 6.77 2.54 7.60 6.24 2.76
+20 14 6.65 4.49 1.73 6.61 4.47 1.96 6.34 4.29 2.07 6.09 4.11 2.15 5.61 3.79 2.34
+23 16 7.05 5.05 1.82 7.01 5.02 2.05 6.72 4.82 2.17 6.45 4.63 2.26 5.95 4.26 2.45
+26 18 7.33 5.44 1.87 7.29 5.41 2.11 6.99 5.19 2.23 6.71 4.99 2.33 6.19 4.60 2.52
+L
+27 19 7.47 5.63 1.88 7.43 5.60 2.12 7.13 5.37 2.24 6.85 5.16 2.34 6.31 4.75 2.54
+30 22 7.92 6.17 1.94 7.88 6.14 2.19 7.56 5.89 2.31 7.26 5.65 2.41 6.69 5.21 2.61
+32 24 8.28 6.70 1.99 8.23 6.66 2.25 7.90 6.39 2.38 7.58 6.14 2.48 6.99 5.66 2.69
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 6.15 1.99 5.83 2.04 5.57 2.11 5.34 2.18 5.14 2.26
+-5 -5.6 6.48 1.93 6.14 1.98 5.87 2.05 5.62 2.12 5.41 2.19
+Turbo 0 -0.7 7.04 1.96 6.68 2.01 6.38 2.08 6.11 2.15 5.88 2.23
+7 6 9.39 2.11 8.90 2.17 8.50 2.25 8.15 2.33 7.84 2.40
+10 8 9.86 2.18 9.35 2.24 8.93 2.32 8.56 2.40 8.23 2.48
+-10 -11 5.99 1.98 5.68 2.03 5.42 2.10 5.20 2.17 5.00 2.25
+-5 -5.6 6.30 1.92 5.98 1.97 5.71 2.04 5.47 2.11 5.26 2.18
+H 0 -0.7 6.85 1.95 6.50 2.00 6.20 2.07 5.95 2.14 5.72 2.21
+7 6 9.14 2.10 8.66 2.16 8.27 2.24 7.93 2.31 7.62 2.39
+10 8 9.59 2.17 9.09 2.23 8.68 2.31 8.33 2.38 8.01 2.46
+-10 -11 5.80 2.01 5.50 2.06 5.25 2.14 5.03 2.21 4.84 2.28
+-5 -5.6 6.10 1.95 5.78 2.00 5.52 2.07 5.30 2.14 5.09 2.21
+M 0 -0.7 6.63 1.98 6.29 2.03 6.00 2.10 5.76 2.17 5.54 2.25
+7 6 8.84 2.14 8.38 2.20 8.01 2.27 7.68 2.35 7.38 2.43
+10 8 9.29 2.20 8.80 2.26 8.41 2.34 8.06 2.42 7.75 2.50
+-10 -11 5.51 2.07 5.22 2.13 4.99 2.20 4.78 2.28 4.60 2.35
+-5 -5.6 5.80 2.01 5.50 2.07 5.25 2.14 5.03 2.21 4.84 2.28
+L 0 -0.7 6.30 2.04 5.97 2.10 5.70 2.17 5.47 2.24 5.26 2.32
+7 6 8.40 2.20 7.96 2.26 7.61 2.34 7.29 2.42 7.01 2.50
+10 8 8.82 2.27 8.36 2.33 7.99 2.41 7.66 2.49 7.36 2.58
+58
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD100PH1/A-S ＆ GUD100PHS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 9.79 7.89 2.32 9.73 7.85 2.62 9.34 7.53 2.76 8.96 7.23 2.88 8.23 6.44 3.23
+24 17 10.37 8.62 2.43 10.32 8.57 2.74 9.90 8.22 2.90 9.50 7.89 3.02 8.72 7.06 3.39
+26 18 10.79 9.13 2.50 10.73 9.08 2.83 10.29 8.71 2.99 9.88 8.37 3.11 9.07 7.50 3.49
+Turbo
+27 19 11.00 9.38 2.52 10.94 9.33 2.84 10.50 8.95 3.00 10.08 8.59 3.12 9.25 7.72 3.50
+30 22 11.66 10.12 2.59 11.60 10.07 2.92 11.13 9.66 3.09 10.69 9.27 3.22 9.80 8.35 3.61
+32 24 12.19 10.80 2.67 12.12 10.74 3.01 11.63 10.31 3.18 11.17 9.89 3.31 10.25 8.93 3.71
+20 14 9.39 7.36 2.24 9.34 7.32 2.52 8.96 7.03 2.67 8.61 6.75 2.78 7.93 6.03 3.11
+23 16 9.96 8.08 2.35 9.90 8.03 2.65 9.50 7.71 2.80 9.12 7.40 2.91 8.41 6.65 3.27
+26 18 10.36 8.58 2.41 10.30 8.54 2.73 9.88 8.19 2.88 9.49 7.86 3.00 8.74 7.09 3.36
+H
+27 19 10.56 8.82 2.43 10.51 8.78 2.74 10.08 8.42 2.89 9.68 8.08 3.01 8.92 7.29 3.38
+30 22 11.20 9.54 2.50 11.14 9.49 2.82 10.68 9.11 2.98 10.26 8.74 3.10 9.46 7.91 3.48
+32 24 11.70 10.21 2.57 11.64 10.16 2.90 11.17 9.75 3.07 10.72 9.36 3.19 9.88 8.49 3.58
+20 14 8.92 6.80 2.13 8.88 6.76 2.41 8.52 6.49 2.55 8.18 6.23 2.65 7.54 5.57 2.97
+23 16 9.46 7.49 2.24 9.41 7.45 2.53 9.03 7.15 2.67 8.67 6.86 2.78 7.99 6.17 3.12
+26 18 9.84 7.98 2.31 9.79 7.94 2.60 9.39 7.62 2.75 9.01 7.31 2.86 8.31 6.59 3.21
+M
+27 19 10.03 8.21 2.32 9.98 8.17 2.62 9.58 7.84 2.76 9.19 7.53 2.88 8.47 6.79 3.23
+30 22 10.64 8.91 2.38 10.58 8.86 2.69 10.15 8.50 2.84 9.75 8.16 2.96 8.98 7.38 3.32
+32 24 11.12 9.56 2.46 11.06 9.51 2.77 10.61 9.12 2.93 10.18 8.76 3.05 9.39 7.95 3.42
+20 14 8.21 6.08 2.08 8.17 6.05 2.35 7.83 5.80 2.48 7.52 5.57 2.59 6.93 4.98 2.90
+23 16 8.70 6.73 2.18 8.66 6.69 2.46 8.30 6.42 2.60 7.97 6.16 2.71 7.35 5.54 3.04
+26 18 9.05 7.19 2.25 9.00 7.15 2.54 8.64 6.86 2.68 8.29 6.59 2.79 7.64 5.94 3.13
+L
+27 19 9.23 7.41 2.26 9.18 7.37 2.55 8.81 7.07 2.69 8.46 6.79 2.81 7.80 6.12 3.15
+30 22 9.79 8.05 2.32 9.73 8.01 2.62 9.34 7.68 2.77 8.97 7.38 2.89 8.26 6.67 3.24
+32 24 10.23 8.67 2.39 10.17 8.62 2.70 9.76 8.27 2.85 9.37 7.94 2.97 8.64 7.20 3.33
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 8.33 2.47 7.89 2.54 7.54 2.63 7.23 2.72 6.95 2.81
+-5 -5.6 8.76 2.40 8.31 2.47 7.94 2.55 7.61 2.64 7.32 2.73
+Turbo 0 -0.7 9.53 2.44 9.03 2.50 8.63 2.59 8.27 2.68 7.95 2.77
+7 6 12.70 2.63 12.04 2.71 11.50 2.80 11.03 2.89 10.60 2.99
+10 8 13.34 2.71 12.64 2.79 12.08 2.88 11.58 2.98 11.13 3.08
+59
+
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 8.10 2.46 7.68 2.53 7.33 2.62 7.03 2.71 6.76 2.80
+-5 -5.6 8.53 2.39 8.08 2.46 7.72 2.54 7.40 2.63 7.12 2.71
+H 0 -0.7 9.27 2.42 8.79 2.49 8.39 2.58 8.05 2.67 7.74 2.76
+7 6 12.36 2.62 11.72 2.69 11.19 2.79 10.73 2.88 10.32 2.98
+10 8 12.98 2.70 12.30 2.77 11.75 2.87 11.26 2.97 10.83 3.07
+-10 -11 7.84 2.50 7.43 2.57 7.10 2.66 6.81 2.75 6.55 2.84
+-5 -5.6 8.26 2.42 7.83 2.49 7.47 2.58 7.17 2.67 6.89 2.76
+M 0 -0.7 8.97 2.46 8.51 2.53 8.12 2.62 7.79 2.71 7.49 2.80
+7 6 11.96 2.66 11.34 2.73 10.83 2.83 10.38 2.92 9.99 3.02
+10 8 12.56 2.74 11.91 2.81 11.37 2.91 10.90 3.01 10.48 3.11
+-10 -11 7.45 2.58 7.06 2.65 6.75 2.74 6.47 2.83 6.22 2.93
+-5 -5.6 7.84 2.50 7.43 2.57 7.10 2.66 6.81 2.75 6.55 2.84
+L 0 -0.7 8.52 2.54 8.08 2.61 7.72 2.70 7.40 2.79 7.11 2.88
+7 6 11.37 2.74 10.77 2.82 10.29 2.92 9.87 3.01 9.49 3.12
+10 8 11.93 2.82 11.31 2.90 10.80 3.00 10.36 3.10 9.96 3.21
+GUD125PH1/A-S ＆ GUD125PHS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 11.28 8.19 2.77 11.22 8.15 3.12 10.76 7.82 3.30 10.33 7.51 3.44 9.48 6.89 3.73
+24 17 11.95 9.10 2.90 11.89 9.05 3.28 11.41 8.68 3.46 10.95 8.34 3.60 10.05 7.65 3.91
+26 18 12.43 9.74 2.99 12.37 9.69 3.37 11.86 9.29 3.56 11.39 8.92 3.71 10.45 8.19 4.03
+Turbo
+27 19 12.68 10.04 3.00 12.61 9.99 3.39 12.10 9.58 3.58 11.62 9.20 3.73 10.66 8.44 4.05
+30 22 13.44 10.93 3.09 13.37 10.87 3.49 12.83 10.43 3.69 12.31 10.02 3.84 11.30 9.19 4.16
+32 24 14.05 11.79 3.18 13.97 11.73 3.59 13.40 11.25 3.79 12.87 10.80 3.95 11.81 9.91 4.29
+20 14 10.83 7.64 2.67 10.77 7.60 3.01 10.33 7.29 3.18 9.92 7.00 3.31 9.14 6.45 3.60
+23 16 11.47 8.53 2.80 11.41 8.48 3.16 10.95 8.14 3.34 10.51 7.81 3.48 9.69 7.20 3.77
+26 18 11.93 9.15 2.88 11.87 9.10 3.25 11.39 8.73 3.44 10.93 8.38 3.58 10.08 7.73 3.88
+H
+27 19 12.17 9.44 2.90 12.11 9.39 3.27 11.62 9.01 3.45 11.15 8.65 3.60 10.28 7.98 3.90
+30 22 12.90 10.31 2.98 12.83 10.26 3.37 12.31 9.84 3.56 11.82 9.45 3.70 10.90 8.71 4.02
+32 24 13.48 11.15 3.07 13.41 11.09 3.46 12.87 10.64 3.66 12.35 10.22 3.81 11.39 9.42 4.14
+20 14 10.28 7.05 2.55 10.23 7.01 2.88 9.81 6.73 3.04 9.42 6.46 3.16 8.68 5.95 3.43
+23 16 10.90 7.91 2.67 10.84 7.86 3.02 10.40 7.54 3.19 9.99 7.24 3.32 9.21 6.68 3.60
+26 18 11.34 8.51 2.75 11.28 8.47 3.11 10.82 8.12 3.28 10.39 7.80 3.42 9.57 7.19 3.71
+M
+27 19 11.56 8.79 2.76 11.50 8.75 3.12 11.04 8.39 3.30 10.59 8.06 3.43 9.77 7.43 3.73
+30 22 12.26 9.63 2.85 12.19 9.57 3.21 11.70 9.19 3.39 11.23 8.82 3.54 10.35 8.13 3.84
+32 24 12.81 10.44 2.93 12.74 10.39 3.31 12.22 9.96 3.49 11.74 9.56 3.64 10.82 8.82 3.95
+60
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 9.46 6.30 2.48 9.41 6.26 2.80 9.03 6.01 2.96 8.67 5.77 3.09 7.99 5.32 3.35
+23 16 10.03 7.10 2.61 9.98 7.06 2.94 9.57 6.77 3.11 9.19 6.50 3.24 8.47 5.99 3.51
+26 18 10.43 7.66 2.68 10.38 7.62 3.03 9.95 7.31 3.20 9.56 7.02 3.33 8.81 6.47 3.61
+L
+27 19 10.64 7.93 2.70 10.58 7.89 3.04 10.15 7.57 3.21 9.75 7.26 3.35 8.98 6.69 3.63
+30 22 11.28 8.70 2.77 11.22 8.66 3.13 10.76 8.30 3.31 10.33 7.97 3.45 9.52 7.35 3.74
+32 24 11.78 9.47 2.86 11.72 9.42 3.22 11.25 9.03 3.41 10.80 8.67 3.55 9.95 7.99 3.85
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 9.77 3.27 9.27 3.36 8.85 3.48 8.48 3.59 8.16 3.71
+-5 -5.6 10.29 3.17 9.75 3.26 9.32 3.38 8.93 3.49 8.59 3.61
+Turbo 0 -0.7 11.18 3.22 10.60 3.31 10.13 3.43 9.71 3.54 9.33 3.66
+7 6 14.91 3.48 14.14 3.57 13.50 3.70 12.94 3.82 12.45 3.95
+10 8 15.66 3.58 14.84 3.68 14.18 3.81 13.59 3.94 13.07 4.07
+-10 -11 9.51 3.25 9.02 3.34 8.61 3.46 8.26 3.58 7.94 3.69
+-5 -5.6 10.01 3.16 9.49 3.24 9.06 3.36 8.69 3.47 8.36 3.59
+H 0 -0.7 10.88 3.20 10.32 3.29 9.85 3.41 9.45 3.52 9.08 3.64
+7 6 14.51 3.46 13.75 3.56 13.14 3.68 12.59 3.80 12.11 3.93
+10 8 15.23 3.56 14.44 3.66 13.79 3.79 13.22 3.92 12.72 4.05
+-10 -11 9.21 3.30 8.73 3.39 8.33 3.51 7.99 3.63 7.68 3.75
+-5 -5.6 9.69 3.20 9.19 3.29 8.77 3.41 8.41 3.52 8.09 3.64
+M 0 -0.7 10.53 3.25 9.99 3.34 9.54 3.46 9.14 3.58 8.79 3.70
+7 6 14.04 3.51 13.31 3.61 12.72 3.74 12.19 3.86 11.72 3.99
+10 8 14.75 3.62 13.98 3.72 13.35 3.85 12.80 3.98 12.31 4.11
+-10 -11 8.75 3.40 8.29 3.50 7.92 3.62 7.59 3.74 7.30 3.87
+-5 -5.6 9.21 3.30 8.73 3.40 8.33 3.52 7.99 3.63 7.68 3.76
+L 0 -0.7 10.01 3.35 9.49 3.45 9.06 3.57 8.69 3.69 8.35 3.81
+7 6 13.34 3.62 12.65 3.72 12.08 3.85 11.58 3.98 11.14 4.12
+10 8 14.01 3.73 13.28 3.84 12.68 3.97 12.16 4.10 11.69 4.24
+61
+
+GUD140PH1/A-S ＆ GUD140PHS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 12.49 9.83 3.48 12.42 9.78 3.92 11.92 9.38 4.15 11.44 9.01 4.32 10.50 8.27 4.69
+24 17 13.24 10.78 3.65 13.17 10.72 4.12 12.63 10.29 4.35 12.13 9.87 4.53 11.13 9.06 4.92
+26 18 13.77 11.45 3.75 13.69 11.39 4.24 13.14 10.92 4.48 12.61 10.49 4.66 11.57 9.62 5.06
+Turbo
+27 19 14.04 11.77 3.77 13.97 11.71 4.26 13.40 11.23 4.50 12.86 10.78 4.69 11.80 9.89 5.09
+30 22 14.88 12.72 3.88 14.81 12.66 4.38 14.20 12.14 4.63 13.64 11.66 4.83 12.51 10.70 5.23
+32 24 15.55 13.61 4.00 15.47 13.54 4.51 14.84 12.99 4.77 14.25 12.47 4.97 13.07 11.44 5.39
+20 14 11.99 9.18 3.35 11.93 9.13 3.79 11.44 8.76 4.00 10.98 8.41 4.17 10.12 7.75 4.52
+23 16 12.71 10.10 3.52 12.64 10.05 3.97 12.13 9.64 4.20 11.64 9.26 4.37 10.73 8.53 4.74
+26 18 13.22 10.76 3.62 13.15 10.70 4.09 12.61 10.27 4.32 12.11 9.86 4.50 11.16 9.09 4.88
+H
+27 19 13.48 11.07 3.64 13.41 11.01 4.11 12.86 10.57 4.34 12.35 10.14 4.52 11.38 9.35 4.91
+30 22 14.29 12.00 3.75 14.21 11.94 4.23 13.64 11.45 4.47 13.09 10.99 4.66 12.07 10.13 5.05
+32 24 14.93 12.87 3.86 14.85 12.80 4.35 14.25 12.28 4.60 13.68 11.79 4.79 12.61 10.87 5.20
+20 14 11.39 8.47 3.20 11.33 8.43 3.62 10.87 8.08 3.82 10.43 7.76 3.98 9.62 7.15 4.32
+23 16 12.07 9.37 3.36 12.01 9.32 3.79 11.52 8.94 4.01 11.06 8.58 4.17 10.19 7.91 4.53
+26 18 12.56 10.01 3.46 12.49 9.95 3.90 11.98 9.55 4.12 11.50 9.17 4.30 10.60 8.45 4.66
+M
+27 19 12.81 10.31 3.48 12.74 10.25 3.92 12.22 9.84 4.15 11.73 9.44 4.32 10.81 8.70 4.68
+30 22 13.57 11.20 3.58 13.50 11.14 4.04 12.95 10.69 4.27 12.44 10.26 4.44 11.46 9.46 4.82
+32 24 14.19 12.05 3.68 14.11 11.99 4.16 13.54 11.50 4.39 13.00 11.04 4.58 11.98 10.17 4.96
+20 14 10.48 7.57 3.12 10.42 7.53 3.52 10.00 7.23 3.72 9.60 6.94 3.88 8.85 6.39 4.21
+23 16 11.11 8.42 3.27 11.05 8.37 3.70 10.60 8.03 3.91 10.18 7.71 4.07 9.38 7.11 4.41
+26 18 11.55 9.01 3.37 11.49 8.96 3.81 11.02 8.60 4.02 10.58 8.26 4.19 9.75 7.61 4.54
+L
+27 19 11.78 9.29 3.39 11.72 9.24 3.82 11.24 8.87 4.04 10.79 8.51 4.21 9.95 7.85 4.57
+30 22 12.49 10.12 3.49 12.42 10.07 3.94 11.92 9.66 4.16 11.44 9.28 4.33 10.55 8.55 4.70
+32 24 13.05 10.92 3.59 12.98 10.87 4.05 12.45 10.42 4.28 11.96 10.01 4.46 11.02 9.22 4.84
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 11.22 3.97 10.64 4.09 10.16 4.23 9.74 4.37 9.37 4.52
+-5 -5.6 11.81 3.86 11.20 3.97 10.70 4.11 10.25 4.24 9.86 4.38
+Turbo 0 -0.7 12.84 3.92 12.17 4.03 11.63 4.17 11.15 4.31 10.72 4.45
+7 6 17.12 4.23 16.23 4.35 15.50 4.50 14.86 4.65 14.29 4.81
+10 8 17.98 4.36 17.04 4.48 16.28 4.64 15.60 4.79 15.00 4.95
+62
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 10.92 3.95 10.35 4.06 9.89 4.21 9.48 4.35 9.11 4.49
+-5 -5.6 11.49 3.84 10.90 3.95 10.41 4.08 9.98 4.22 9.59 4.36
+H 0 -0.7 12.49 3.90 11.84 4.01 11.31 4.15 10.84 4.28 10.43 4.43
+7 6 16.66 4.21 15.79 4.33 15.08 4.48 14.46 4.63 13.90 4.78
+10 8 17.49 4.33 16.58 4.46 15.84 4.61 15.18 4.77 14.60 4.93
+-10 -11 10.57 4.01 10.02 4.13 9.57 4.27 9.18 4.41 8.82 4.56
+-5 -5.6 11.13 3.90 10.55 4.01 10.07 4.15 9.66 4.29 9.29 4.43
+M 0 -0.7 12.09 3.96 11.47 4.07 10.95 4.21 10.50 4.35 10.09 4.50
+7 6 16.13 4.27 15.29 4.39 14.60 4.55 14.00 4.70 13.46 4.85
+10 8 16.93 4.40 16.05 4.52 15.33 4.68 14.70 4.84 14.13 5.00
+-10 -11 10.04 4.14 9.52 4.26 9.09 4.40 8.72 4.55 8.38 4.70
+-5 -5.6 10.57 4.02 10.02 4.13 9.57 4.28 9.18 4.42 8.82 4.57
+L 0 -0.7 11.49 4.08 10.89 4.19 10.40 4.34 9.97 4.49 9.59 4.64
+7 6 15.32 4.41 14.52 4.53 13.87 4.69 13.30 4.84 12.79 5.01
+10 8 16.09 4.54 15.25 4.66 14.56 4.83 13.96 4.99 13.43 5.16
+GUD160PH1/A-S ＆ GUD160PHS1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 14.91 11.03 4.17 14.83 10.97 4.71 14.23 10.53 4.98 13.66 10.11 5.18 12.53 9.27 5.62
+24 17 15.81 12.21 4.38 15.72 12.15 4.94 15.08 11.66 5.22 14.48 11.19 5.44 13.29 10.27 5.90
+26 18 16.44 13.05 4.50 16.35 12.98 5.09 15.69 12.45 5.37 15.06 11.96 5.60 13.82 10.97 6.07
+Turbo
+27 19 16.77 13.44 4.53 16.68 13.37 5.11 16.00 12.83 5.40 15.36 12.32 5.62 14.09 11.30 6.10
+30 22 17.77 14.62 4.66 17.68 14.54 5.26 16.96 13.95 5.56 16.28 13.39 5.79 14.94 12.29 6.28
+32 24 18.57 15.73 4.80 18.47 15.65 5.42 17.72 15.01 5.72 17.02 14.41 5.96 15.61 13.22 6.47
+20 14 14.31 10.29 4.02 14.24 10.23 4.54 13.66 9.82 4.80 13.11 9.43 5.00 12.09 8.69 5.42
+23 16 15.17 11.45 4.22 15.09 11.39 4.77 14.48 10.92 5.04 13.90 10.49 5.25 12.81 9.67 5.69
+26 18 15.78 12.26 4.35 15.70 12.20 4.91 15.06 11.70 5.18 14.46 11.24 5.40 13.33 10.36 5.86
+H
+27 19 16.10 12.65 4.37 16.01 12.58 4.93 15.36 12.07 5.21 14.75 11.59 5.43 13.59 10.68 5.89
+30 22 17.06 13.79 4.50 16.97 13.71 5.08 16.28 13.16 5.36 15.63 12.63 5.59 14.41 11.64 6.06
+32 24 17.83 14.88 4.63 17.74 14.80 5.23 17.01 14.20 5.52 16.33 13.63 5.75 15.06 12.57 6.24
+20 14 13.60 9.49 3.84 13.53 9.44 4.34 12.98 9.06 4.58 12.46 8.70 4.77 11.48 8.02 5.18
+23 16 14.41 10.61 4.03 14.34 10.56 4.55 13.76 10.13 4.81 13.21 9.72 5.01 12.17 8.96 5.43
+26 18 14.99 11.41 4.15 14.91 11.35 4.68 14.31 10.88 4.95 13.73 10.45 5.16 12.66 9.63 5.59
+M
+27 19 15.29 11.78 4.17 15.21 11.71 4.71 14.59 11.24 4.97 14.01 10.79 5.18 12.91 9.94 5.62
+30 22 16.21 12.87 4.29 16.12 12.80 4.85 15.47 12.28 5.12 14.85 11.79 5.33 13.69 10.87 5.79
+32 24 16.94 13.93 4.42 16.85 13.86 4.99 16.16 13.30 5.27 15.52 12.76 5.49 14.30 11.77 5.96
+63
+
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 12.51 8.48 3.75 12.44 8.44 4.23 11.94 8.09 4.47 11.46 7.77 4.65 10.56 7.16 5.05
+23 16 13.26 9.53 3.93 13.19 9.48 4.44 12.66 9.10 4.69 12.15 8.73 4.88 11.20 8.05 5.30
+26 18 13.79 10.27 4.04 13.72 10.22 4.57 13.16 9.80 4.82 12.64 9.41 5.03 11.65 8.67 5.45
+L
+27 19 14.07 10.62 4.07 13.99 10.56 4.59 13.42 10.13 4.85 12.89 9.73 5.05 11.88 8.97 5.48
+30 22 14.91 11.63 4.18 14.83 11.57 4.72 14.23 11.10 4.99 13.66 10.66 5.20 12.59 9.82 5.64
+32 24 15.58 12.63 4.31 15.50 12.57 4.86 14.87 12.06 5.14 14.28 11.57 5.35 13.16 10.67 5.81
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 12.31 4.15 11.67 4.27 11.14 4.42 10.68 4.56 10.27 4.72
+-5 -5.6 12.96 4.03 12.28 4.14 11.73 4.29 11.25 4.43 10.81 4.58
+Turbo 0 -0.7 14.08 4.09 13.35 4.20 12.75 4.35 12.22 4.50 11.75 4.65
+7 6 18.78 4.42 17.80 4.54 17.00 4.70 16.30 4.86 15.67 5.02
+10 8 19.72 4.55 18.69 4.68 17.85 4.84 17.11 5.00 16.46 5.17
+-10 -11 11.98 4.13 11.35 4.25 10.84 4.39 10.40 4.54 10.00 4.69
+-5 -5.6 12.61 4.01 11.95 4.12 11.41 4.27 10.94 4.41 10.52 4.56
+H 0 -0.7 13.70 4.07 12.99 4.18 12.41 4.33 11.89 4.48 11.44 4.63
+7 6 18.27 4.40 17.32 4.52 16.54 4.68 15.86 4.83 15.25 5.00
+10 8 19.18 4.53 18.19 4.65 17.37 4.82 16.65 4.98 16.01 5.15
+-10 -11 11.59 4.19 10.99 4.31 10.50 4.46 10.06 4.61 9.68 4.76
+-5 -5.6 12.20 4.07 11.57 4.18 11.05 4.33 10.59 4.48 10.19 4.63
+M 0 -0.7 13.26 4.13 12.57 4.25 12.01 4.40 11.51 4.54 11.07 4.69
+7 6 17.69 4.46 16.77 4.59 16.01 4.75 15.35 4.91 14.76 5.07
+10 8 18.57 4.60 17.60 4.72 16.81 4.89 16.12 5.05 15.50 5.22
+-10 -11 11.01 4.32 10.44 4.44 9.97 4.60 9.56 4.75 9.19 4.91
+-5 -5.6 11.59 4.20 10.99 4.32 10.50 4.47 10.06 4.62 9.68 4.77
+L 0 -0.7 12.60 4.26 11.95 4.38 11.41 4.53 10.94 4.69 10.52 4.84
+7 6 16.80 4.60 15.93 4.73 15.21 4.90 14.58 5.06 14.02 5.23
+10 8 17.64 4.74 16.72 4.87 15.97 5.04 15.31 5.21 14.72 5.39
+Symbols:
+DB: Dry bulb temperature
+WB: Wet bulb temperature
+TC: Total cooling(heating) capacity
+SHC: Sensible heat capacity
+PI: Power input (compressor + indoor fan motor + outdoor fan motor)
+1. The above data are based on the following conditions.
+— Power Supply Equivalent Piping Length
+Indoor 230V ~50Hz Standard Piping Length
+2. Capacities are net, including a deduction for cooling ( an addition for heating) for indoor fan motor heat.
+64
+
+U-MATCH SERIES AIR CONDITIONERS
+6.1.3 Floor Ceiling Type
+GUD35ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 3.24 2.86 0.66 3.27 2.89 0.80 3.10 2.74 0.85 2.98 2.63 0.88 2.73 2.41 0.96
+24 17 3.47 3.12 0.69 3.50 3.15 0.84 3.32 2.98 0.89 3.18 2.86 0.93 2.92 2.63 1.00
+26 18 3.64 3.31 0.71 3.68 3.35 0.87 3.48 3.17 0.92 3.34 3.04 0.95 3.07 2.79 1.03
+Turbo
+27 19 3.66 3.33 0.71 3.70 3.37 0.87 3.50 3.19 0.92 3.36 3.06 0.96 3.08 2.81 1.04
+30 22 3.84 3.53 0.74 3.88 3.57 0.90 3.68 3.38 0.95 3.53 3.25 0.99 3.24 2.98 1.07
+32 24 4.03 3.76 0.76 4.08 3.80 0.92 3.86 3.59 0.97 3.70 3.45 1.02 3.40 3.17 1.10
+20 14 3.11 2.67 0.63 3.14 2.70 0.77 2.98 2.56 0.82 2.86 2.45 0.85 2.63 2.26 0.92
+23 16 3.33 2.92 0.67 3.36 2.95 0.81 3.18 2.80 0.86 3.06 2.68 0.89 2.82 2.47 0.97
+26 18 3.49 3.11 0.69 3.53 3.15 0.84 3.34 2.98 0.88 3.21 2.86 0.92 2.96 2.63 1.00
+H
+27 19 3.51 3.14 0.69 3.55 3.17 0.84 3.36 3.00 0.89 3.23 2.88 0.92 2.97 2.66 1.00
+30 22 3.69 3.33 0.71 3.73 3.37 0.86 3.53 3.19 0.91 3.39 3.06 0.95 3.12 2.82 1.03
+32 24 3.87 3.55 0.73 3.91 3.59 0.89 3.70 3.40 0.94 3.56 3.26 0.98 3.28 3.01 1.06
+20 14 2.96 2.47 0.61 2.99 2.50 0.74 2.83 2.36 0.78 2.71 2.27 0.81 2.50 2.09 0.88
+23 16 3.16 2.71 0.64 3.20 2.74 0.78 3.02 2.59 0.82 2.90 2.49 0.85 2.68 2.30 0.93
+26 18 3.32 2.90 0.65 3.36 2.93 0.80 3.18 2.77 0.84 3.05 2.66 0.88 2.81 2.45 0.95
+M
+27 19 3.34 2.92 0.66 3.37 2.95 0.80 3.19 2.79 0.85 3.06 2.68 0.88 2.82 2.47 0.96
+30 22 3.50 3.11 0.68 3.54 3.14 0.83 3.35 2.97 0.87 3.22 2.85 0.91 2.97 2.63 0.99
+32 24 3.68 3.32 0.70 3.72 3.36 0.85 3.52 3.18 0.90 3.38 3.05 0.94 3.11 2.81 1.01
+20 14 2.87 2.33 0.59 2.90 2.35 0.72 2.74 2.23 0.76 2.63 2.14 0.79 2.43 1.97 0.86
+23 16 3.07 2.57 0.62 3.10 2.60 0.76 2.93 2.46 0.80 2.82 2.36 0.83 2.60 2.18 0.90
+26 18 3.22 2.75 0.64 3.25 2.78 0.78 3.08 2.63 0.82 2.96 2.53 0.86 2.73 2.33 0.93
+L
+27 19 3.24 2.78 0.64 3.27 2.81 0.78 3.10 2.66 0.83 2.97 2.55 0.86 2.74 2.35 0.93
+30 22 3.40 2.96 0.66 3.43 2.99 0.80 3.25 2.83 0.85 3.12 2.72 0.89 2.88 2.51 0.96
+32 24 3.57 3.17 0.68 3.61 3.21 0.83 3.41 3.04 0.88 3.28 2.92 0.91 3.02 2.69 0.99
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 2.90 0.79 2.75 0.82 2.62 0.85 2.51 0.87 2.42 0.90
+-5 -5.6 3.05 0.77 2.89 0.79 2.76 0.82 2.65 0.85 2.54 0.88
+Turbo 0 -0.7 3.31 0.78 3.14 0.81 3.00 0.83 2.88 0.86 2.77 0.89
+7 6 4.42 0.85 4.19 0.87 4.00 0.90 3.84 0.93 3.69 0.96
+10 8 4.64 0.87 4.40 0.90 4.20 0.93 4.03 0.96 3.87 0.99
+65
+
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 2.82 0.79 2.67 0.81 2.55 0.84 2.45 0.87 2.35 0.90
+-5 -5.6 2.97 0.77 2.81 0.79 2.69 0.82 2.57 0.84 2.48 0.87
+H 0 -0.7 3.22 0.78 3.06 0.80 2.92 0.83 2.80 0.86 2.69 0.89
+7 6 4.30 0.84 4.08 0.87 3.89 0.90 3.73 0.93 3.59 0.96
+10 8 4.51 0.87 4.28 0.89 4.09 0.92 3.92 0.95 3.77 0.99
+-10 -11 2.73 0.80 2.59 0.83 2.47 0.85 2.37 0.88 2.28 0.91
+-5 -5.6 2.87 0.78 2.72 0.80 2.60 0.83 2.49 0.86 2.40 0.89
+M 0 -0.7 3.12 0.79 2.96 0.81 2.83 0.84 2.71 0.87 2.60 0.90
+7 6 4.16 0.85 3.94 0.88 3.77 0.91 3.61 0.94 3.47 0.97
+10 8 4.37 0.88 4.14 0.90 3.96 0.94 3.79 0.97 3.65 1.00
+-10 -11 2.59 0.83 2.46 0.85 2.35 0.88 2.25 0.91 2.16 0.94
+-5 -5.6 2.73 0.80 2.59 0.83 2.47 0.86 2.37 0.88 2.28 0.91
+L 0 -0.7 2.96 0.82 2.81 0.84 2.68 0.87 2.57 0.90 2.47 0.93
+7 6 3.95 0.88 3.75 0.91 3.58 0.94 3.43 0.97 3.30 1.00
+10 8 4.15 0.91 3.94 0.93 3.76 0.97 3.60 1.00 3.46 1.03
+GUD50ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 4.94 3.42 1.17 4.91 3.40 1.32 4.71 3.27 1.39 4.53 3.14 1.45 4.15 2.88 1.57
+24 17 5.24 3.83 1.22 5.21 3.81 1.38 5.00 3.66 1.46 4.80 3.51 1.52 4.40 3.22 1.65
+26 18 5.45 4.12 1.26 5.42 4.10 1.42 5.20 3.93 1.50 4.99 3.77 1.56 4.58 3.46 1.70
+Turbo
+27 19 5.55 4.25 1.27 5.52 4.23 1.43 5.30 4.06 1.51 5.09 3.90 1.57 4.67 3.58 1.71
+30 22 5.89 4.65 1.30 5.86 4.63 1.47 5.62 4.44 1.55 5.39 4.26 1.62 4.95 3.91 1.76
+32 24 6.15 5.04 1.34 6.12 5.01 1.51 5.87 4.81 1.60 5.64 4.62 1.67 5.17 4.24 1.81
+20 14 4.74 3.19 1.13 4.72 3.17 1.27 4.52 3.04 1.34 4.34 2.92 1.40 4.00 2.69 1.52
+23 16 5.03 3.59 1.18 5.00 3.57 1.33 4.80 3.43 1.41 4.60 3.29 1.47 4.24 3.03 1.59
+26 18 5.23 3.87 1.22 5.20 3.85 1.37 4.99 3.69 1.45 4.79 3.55 1.51 4.41 3.27 1.64
+H
+27 19 5.33 4.00 1.22 5.30 3.98 1.38 5.09 3.82 1.46 4.88 3.67 1.52 4.50 3.38 1.65
+30 22 5.65 4.39 1.26 5.62 4.37 1.42 5.39 4.19 1.50 5.18 4.02 1.56 4.77 3.71 1.69
+32 24 5.91 4.77 1.29 5.87 4.74 1.46 5.64 4.55 1.54 5.41 4.37 1.61 4.99 4.03 1.74
+20 14 4.50 2.94 1.07 4.48 2.93 1.21 4.30 2.81 1.28 4.13 2.69 1.33 3.80 2.48 1.45
+23 16 4.77 3.33 1.13 4.75 3.31 1.27 4.56 3.18 1.34 4.37 3.05 1.40 4.03 2.81 1.52
+26 18 4.97 3.60 1.16 4.94 3.58 1.31 4.74 3.44 1.38 4.55 3.30 1.44 4.19 3.04 1.56
+M
+27 19 5.07 3.73 1.17 5.04 3.71 1.32 4.83 3.56 1.39 4.64 3.41 1.45 4.28 3.15 1.57
+30 22 5.37 4.10 1.20 5.34 4.08 1.36 5.12 3.91 1.43 4.92 3.75 1.49 4.53 3.46 1.62
+32 24 5.61 4.47 1.24 5.58 4.44 1.40 5.35 4.26 1.47 5.14 4.09 1.54 4.74 3.77 1.67
+66
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 4.14 2.63 1.05 4.12 2.61 1.18 3.95 2.51 1.25 3.80 2.41 1.30 3.50 2.22 1.41
+23 16 4.39 2.99 1.10 4.37 2.97 1.24 4.19 2.85 1.31 4.02 2.74 1.37 3.71 2.52 1.48
+26 18 4.57 3.24 1.13 4.54 3.23 1.28 4.36 3.09 1.35 4.19 2.97 1.41 3.86 2.74 1.52
+L
+27 19 4.66 3.36 1.14 4.64 3.34 1.28 4.45 3.21 1.36 4.27 3.08 1.41 3.94 2.84 1.53
+30 22 4.94 3.70 1.17 4.91 3.68 1.32 4.71 3.54 1.40 4.53 3.39 1.45 4.17 3.13 1.58
+32 24 5.16 4.05 1.20 5.13 4.03 1.36 4.93 3.87 1.44 4.73 3.71 1.50 4.36 3.42 1.62
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 4.05 1.24 3.84 1.27 3.67 1.32 3.52 1.36 3.38 1.41
+-5 -5.6 4.27 1.20 4.05 1.23 3.86 1.28 3.70 1.32 3.56 1.36
+Turbo 0 -0.7 4.64 1.22 4.40 1.25 4.20 1.30 4.03 1.34 3.87 1.38
+7 6 6.19 1.32 5.86 1.35 5.60 1.40 5.37 1.45 5.16 1.50
+10 8 6.49 1.36 6.16 1.39 5.88 1.44 5.64 1.49 5.42 1.54
+-10 -11 3.95 1.23 3.74 1.26 3.57 1.31 3.42 1.35 3.29 1.40
+-5 -5.6 4.15 1.19 3.94 1.23 3.76 1.27 3.60 1.31 3.47 1.36
+H 0 -0.7 4.51 1.21 4.28 1.25 4.09 1.29 3.92 1.33 3.77 1.38
+7 6 6.02 1.31 5.71 1.35 5.45 1.39 5.22 1.44 5.02 1.49
+10 8 6.32 1.35 5.99 1.39 5.72 1.43 5.49 1.48 5.27 1.53
+-10 -11 3.82 1.25 3.62 1.28 3.46 1.33 3.31 1.37 3.19 1.42
+-5 -5.6 4.02 1.21 3.81 1.25 3.64 1.29 3.49 1.33 3.36 1.38
+M 0 -0.7 4.37 1.23 4.14 1.26 3.96 1.31 3.79 1.35 3.65 1.40
+7 6 5.83 1.33 5.52 1.37 5.27 1.41 5.06 1.46 4.86 1.51
+10 8 6.12 1.37 5.80 1.41 5.54 1.46 5.31 1.51 5.11 1.56
+-10 -11 3.63 1.29 3.44 1.32 3.28 1.37 3.15 1.42 3.03 1.46
+-5 -5.6 3.82 1.25 3.62 1.29 3.46 1.33 3.31 1.37 3.19 1.42
+L 0 -0.7 4.15 1.27 3.94 1.30 3.76 1.35 3.60 1.40 3.46 1.44
+7 6 5.53 1.37 5.25 1.41 5.01 1.46 4.80 1.51 4.62 1.56
+10 8 5.81 1.41 5.51 1.45 5.26 1.50 5.04 1.55 4.85 1.60
+67
+
+GUD71ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 6.62 5.89 1.57 6.58 5.86 1.77 6.31 5.63 1.87 6.06 5.40 1.95 5.56 4.96 2.11
+24 17 7.01 6.35 1.65 6.98 6.31 1.86 6.69 6.06 1.96 6.43 5.81 2.04 5.90 5.33 2.22
+26 18 7.29 6.66 1.69 7.26 6.63 1.91 6.96 6.36 2.02 6.68 6.11 2.10 6.13 5.60 2.28
+Turbo
+27 19 7.44 6.82 1.70 7.40 6.79 1.92 7.10 6.51 2.03 6.82 6.25 2.11 6.25 5.73 2.29
+30 22 7.89 7.30 1.75 7.84 7.26 1.98 7.53 6.97 2.09 7.23 6.69 2.18 6.63 6.14 2.36
+32 24 8.24 7.71 1.80 8.20 7.67 2.04 7.86 7.36 2.15 7.55 7.07 2.24 6.93 6.48 2.43
+20 14 6.35 5.51 1.51 6.32 5.48 1.71 6.06 5.25 1.80 5.82 5.04 1.88 5.36 4.65 2.04
+23 16 6.73 5.95 1.59 6.70 5.92 1.79 6.43 5.68 1.89 6.17 5.45 1.97 5.69 5.02 2.14
+26 18 7.00 6.26 1.63 6.97 6.23 1.84 6.68 5.98 1.95 6.42 5.74 2.03 5.91 5.29 2.20
+H
+27 19 7.14 6.42 1.64 7.10 6.38 1.85 6.82 6.12 1.96 6.54 5.88 2.04 6.03 5.42 2.21
+30 22 7.57 6.88 1.69 7.53 6.85 1.91 7.22 6.57 2.02 6.94 6.31 2.10 6.39 5.81 2.28
+32 24 7.91 7.29 1.74 7.87 7.25 1.96 7.55 6.96 2.08 7.25 6.68 2.16 6.68 6.16 2.35
+20 14 6.03 5.09 1.44 6.00 5.06 1.63 5.76 4.86 1.72 5.53 4.66 1.79 5.10 4.30 1.95
+23 16 6.40 5.52 1.52 6.36 5.49 1.71 6.10 5.27 1.81 5.86 5.06 1.88 5.40 4.66 2.04
+26 18 6.65 5.83 1.56 6.62 5.80 1.76 6.35 5.56 1.86 6.09 5.34 1.94 5.62 4.92 2.10
+M
+27 19 6.79 5.98 1.57 6.75 5.94 1.77 6.48 5.70 1.87 6.22 5.47 1.95 5.73 5.05 2.11
+30 22 7.19 6.42 1.61 7.15 6.39 1.82 6.86 6.13 1.92 6.59 5.88 2.00 6.07 5.42 2.18
+32 24 7.52 6.82 1.66 7.48 6.79 1.88 7.17 6.51 1.98 6.89 6.25 2.06 6.35 5.76 2.24
+20 14 5.55 4.55 1.41 5.52 4.53 1.59 5.30 4.34 1.68 5.09 4.17 1.75 4.69 3.84 1.90
+23 16 5.88 4.96 1.48 5.85 4.93 1.67 5.62 4.73 1.76 5.39 4.54 1.84 4.97 4.19 1.99
+26 18 6.12 5.25 1.52 6.09 5.22 1.72 5.84 5.01 1.81 5.61 4.81 1.89 5.17 4.43 2.05
+L
+27 19 6.24 5.39 1.53 6.21 5.36 1.73 5.96 5.14 1.82 5.72 4.94 1.90 5.27 4.55 2.06
+30 22 6.62 5.80 1.57 6.58 5.77 1.78 6.31 5.54 1.88 6.06 5.32 1.95 5.59 4.90 2.12
+32 24 6.91 6.18 1.62 6.88 6.15 1.83 6.60 5.90 1.93 6.34 5.67 2.01 5.84 5.22 2.18
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 5.58 1.68 5.29 1.72 5.05 1.79 4.84 1.85 4.65 1.91
+-5 -5.6 5.87 1.63 5.56 1.67 5.31 1.73 5.09 1.79 4.90 1.85
+Turbo 0 -0.7 6.38 1.65 6.05 1.70 5.78 1.76 5.54 1.82 5.32 1.88
+7 6 8.51 1.79 8.06 1.84 7.70 1.90 7.38 1.96 7.10 2.03
+10 8 8.93 1.84 8.47 1.89 8.09 1.96 7.75 2.02 7.45 2.09
+-10 -11 5.42 1.67 5.14 1.72 4.91 1.78 4.71 1.84 4.53 1.90
+-5 -5.6 5.71 1.62 5.41 1.67 5.17 1.72 4.96 1.78 4.77 1.84
+H 0 -0.7 6.21 1.65 5.88 1.69 5.62 1.75 5.39 1.81 5.18 1.87
+7 6 8.28 1.78 7.85 1.83 7.49 1.89 7.18 1.95 6.91 2.02
+10 8 8.69 1.83 8.24 1.88 7.87 1.95 7.54 2.01 7.25 2.08
+68
+
+U-MATCH SERIES AIR CONDITIONERS
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 5.25 1.69 4.98 1.74 4.75 1.80 4.56 1.86 4.38 1.93
+-5 -5.6 5.53 1.65 5.24 1.69 5.00 1.75 4.80 1.81 4.61 1.87
+M 0 -0.7 6.01 1.67 5.70 1.72 5.44 1.78 5.22 1.84 5.01 1.90
+7 6 8.01 1.80 7.59 1.85 7.25 1.92 6.95 1.98 6.69 2.05
+10 8 8.41 1.86 7.97 1.91 7.61 1.98 7.30 2.04 7.02 2.11
+-10 -11 4.99 1.75 4.73 1.80 4.52 1.86 4.33 1.92 4.16 1.99
+-5 -5.6 5.25 1.70 4.98 1.74 4.75 1.81 4.56 1.87 4.38 1.93
+L 0 -0.7 5.71 1.72 5.41 1.77 5.17 1.83 4.95 1.89 4.76 1.96
+7 6 7.61 1.86 7.21 1.91 6.89 1.98 6.61 2.05 6.35 2.11
+10 8 7.99 1.92 7.58 1.97 7.23 2.04 6.94 2.11 6.67 2.18
+GUD85ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 7.92 6.66 1.93 7.88 6.63 2.18 7.56 6.36 2.30 7.26 6.10 2.40 6.66 5.60 2.60
+24 17 8.40 7.23 2.03 8.35 7.19 2.29 8.01 6.90 2.42 7.69 6.62 2.52 7.06 6.08 2.73
+26 18 8.73 7.63 2.09 8.69 7.59 2.35 8.33 7.28 2.49 8.00 6.99 2.59 7.34 6.42 2.81
+Turbo
+27 19 8.91 7.83 2.10 8.86 7.79 2.37 8.50 7.47 2.50 8.16 7.17 2.60 7.49 6.58 2.83
+30 22 9.44 8.42 2.16 9.39 8.37 2.44 9.01 8.03 2.57 8.65 7.71 2.68 7.94 7.07 2.91
+32 24 9.87 8.94 2.22 9.81 8.90 2.51 9.42 8.53 2.65 9.04 8.19 2.76 8.29 7.52 2.99
+20 14 7.60 6.22 1.86 7.56 6.19 2.10 7.26 5.93 2.22 6.97 5.70 2.31 6.42 5.25 2.51
+23 16 8.06 6.78 1.95 8.02 6.74 2.21 7.69 6.47 2.33 7.39 6.21 2.43 6.81 5.72 2.63
+26 18 8.38 7.17 2.01 8.34 7.14 2.27 8.00 6.85 2.40 7.68 6.57 2.50 7.08 6.06 2.71
+H
+27 19 8.55 7.36 2.02 8.51 7.33 2.28 8.16 7.03 2.41 7.83 6.75 2.51 7.22 6.22 2.73
+30 22 9.06 7.94 2.08 9.02 7.89 2.35 8.65 7.57 2.48 8.30 7.27 2.59 7.65 6.70 2.81
+32 24 9.47 8.46 2.14 9.42 8.41 2.42 9.04 8.07 2.56 8.68 7.75 2.66 8.00 7.14 2.89
+20 14 7.22 5.74 1.78 7.19 5.71 2.01 6.89 5.48 2.12 6.62 5.26 2.21 6.10 4.85 2.40
+23 16 7.66 6.29 1.87 7.62 6.25 2.11 7.31 6.00 2.23 7.02 5.76 2.32 6.47 5.31 2.52
+26 18 7.96 6.67 1.92 7.92 6.64 2.17 7.60 6.37 2.29 7.30 6.11 2.39 6.73 5.63 2.59
+M
+27 19 8.12 6.86 1.93 8.08 6.82 2.18 7.75 6.54 2.30 7.44 6.28 2.40 6.86 5.79 2.60
+30 22 8.61 7.41 1.99 8.57 7.37 2.24 8.22 7.07 2.37 7.89 6.79 2.47 7.27 6.25 2.68
+32 24 9.00 7.91 2.05 8.95 7.87 2.31 8.59 7.55 2.44 8.24 7.25 2.54 7.60 6.68 2.76
+69
+
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 6.65 5.14 1.73 6.61 5.11 1.96 6.34 4.90 2.07 6.09 4.71 2.15 5.61 4.34 2.34
+23 16 7.05 5.65 1.82 7.01 5.62 2.05 6.72 5.39 2.17 6.45 5.17 2.26 5.95 4.77 2.45
+26 18 7.33 6.01 1.87 7.29 5.98 2.11 6.99 5.73 2.23 6.71 5.51 2.33 6.19 5.07 2.52
+L
+27 19 7.47 6.18 1.88 7.43 6.15 2.12 7.13 5.90 2.24 6.85 5.66 2.34 6.31 5.22 2.54
+30 22 7.92 6.69 1.94 7.88 6.66 2.19 7.56 6.39 2.31 7.26 6.13 2.41 6.69 5.65 2.61
+32 24 8.28 7.17 1.99 8.23 7.14 2.25 7.90 6.85 2.38 7.58 6.57 2.48 6.99 6.06 2.69
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 6.37 1.99 6.04 2.04 5.77 2.11 5.53 2.18 5.32 2.26
+-5 -5.6 6.71 1.93 6.36 1.98 6.07 2.05 5.82 2.12 5.60 2.19
+Turbo 0 -0.7 7.29 1.96 6.91 2.01 6.60 2.08 6.33 2.15 6.08 2.23
+7 6 9.72 2.11 9.21 2.17 8.80 2.25 8.44 2.33 8.11 2.40
+10 8 10.21 2.18 9.68 2.24 9.24 2.32 8.86 2.40 8.52 2.48
+-10 -11 6.20 1.98 5.88 2.03 5.61 2.10 5.38 2.17 5.17 2.25
+-5 -5.6 6.53 1.92 6.19 1.97 5.91 2.04 5.66 2.11 5.45 2.18
+H 0 -0.7 7.09 1.95 6.72 2.00 6.42 2.07 6.16 2.14 5.92 2.21
+7 6 9.46 2.10 8.97 2.16 8.56 2.24 8.21 2.31 7.89 2.39
+10 8 9.93 2.17 9.41 2.23 8.99 2.31 8.62 2.38 8.29 2.46
+-10 -11 6.00 2.01 5.69 2.06 5.43 2.14 5.21 2.21 5.01 2.28
+-5 -5.6 6.32 1.95 5.99 2.00 5.72 2.07 5.48 2.14 5.27 2.21
+M 0 -0.7 6.87 1.98 6.51 2.03 6.22 2.10 5.96 2.17 5.73 2.25
+7 6 9.16 2.14 8.68 2.20 8.29 2.27 7.95 2.35 7.64 2.43
+10 8 9.61 2.20 9.11 2.26 8.70 2.34 8.34 2.42 8.02 2.50
+-10 -11 5.70 2.07 5.40 2.13 5.16 2.20 4.95 2.28 4.76 2.35
+-5 -5.6 6.00 2.01 5.69 2.07 5.43 2.14 5.21 2.21 5.01 2.28
+L 0 -0.7 6.52 2.04 6.18 2.10 5.91 2.17 5.66 2.24 5.44 2.32
+7 6 8.70 2.20 8.25 2.26 7.87 2.34 7.55 2.42 7.26 2.50
+10 8 9.13 2.27 8.66 2.33 8.27 2.41 7.93 2.49 7.62 2.58
+70
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD100ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 9.79 7.37 2.27 9.73 7.34 2.56 9.34 7.04 2.71 8.96 6.76 2.82 8.23 6.20 3.06
+24 17 10.37 8.14 2.38 10.32 8.10 2.69 9.90 7.77 2.84 9.50 7.46 2.96 8.72 6.84 3.21
+26 18 10.79 8.68 2.45 10.73 8.64 2.77 10.29 8.28 2.93 9.88 7.95 3.05 9.07 7.30 3.31
+Turbo
+27 19 11.00 8.94 2.46 10.94 8.89 2.78 10.50 8.53 2.94 10.08 8.19 3.06 9.25 7.51 3.32
+30 22 11.66 9.70 2.54 11.60 9.65 2.86 11.13 9.26 3.03 10.69 8.89 3.15 9.80 8.16 3.42
+32 24 12.19 10.42 2.61 12.12 10.37 2.95 11.63 9.95 3.12 11.17 9.55 3.25 10.25 8.76 3.52
+20 14 9.39 6.88 2.19 9.34 6.84 2.47 8.96 6.56 2.61 8.61 6.30 2.72 7.93 5.81 2.95
+23 16 9.96 7.63 2.30 9.90 7.59 2.60 9.50 7.28 2.74 9.12 6.99 2.86 8.41 6.44 3.10
+26 18 10.36 8.16 2.37 10.30 8.12 2.67 9.88 7.79 2.82 9.49 7.48 2.94 8.74 6.89 3.19
+H
+27 19 10.56 8.41 2.38 10.51 8.37 2.68 10.08 8.03 2.84 9.68 7.70 2.95 8.92 7.10 3.21
+30 22 11.20 9.15 2.45 11.14 9.10 2.76 10.68 8.73 2.92 10.26 8.38 3.04 9.46 7.73 3.30
+32 24 11.70 9.86 2.52 11.64 9.81 2.85 11.17 9.41 3.01 10.72 9.03 3.13 9.88 8.33 3.40
+20 14 8.92 6.35 2.09 8.88 6.32 2.36 8.52 6.06 2.50 8.18 5.82 2.60 7.54 5.36 2.82
+23 16 9.46 7.08 2.19 9.41 7.04 2.48 9.03 6.75 2.62 8.67 6.48 2.73 7.99 5.97 2.96
+26 18 9.84 7.59 2.26 9.79 7.55 2.55 9.39 7.24 2.69 9.01 6.95 2.81 8.31 6.41 3.05
+M
+27 19 10.03 7.83 2.27 9.98 7.79 2.56 9.58 7.47 2.71 9.19 7.17 2.82 8.47 6.61 3.06
+30 22 10.64 8.54 2.34 10.58 8.50 2.64 10.15 8.15 2.79 9.75 7.83 2.90 8.98 7.21 3.15
+32 24 11.12 9.23 2.41 11.06 9.18 2.72 10.61 8.81 2.87 10.18 8.46 2.99 9.39 7.79 3.24
+20 14 8.21 5.67 2.04 8.17 5.64 2.30 7.83 5.41 2.43 7.52 5.20 2.53 6.93 4.79 2.75
+23 16 8.70 6.35 2.14 8.66 6.32 2.42 8.30 6.06 2.55 7.97 5.82 2.66 7.35 5.36 2.88
+26 18 9.05 6.83 2.20 9.00 6.80 2.49 8.64 6.52 2.63 8.29 6.26 2.74 7.64 5.77 2.97
+L
+27 19 9.23 7.06 2.21 9.18 7.02 2.50 8.81 6.74 2.64 8.46 6.47 2.75 7.80 5.96 2.98
+30 22 9.79 7.72 2.28 9.73 7.68 2.57 9.34 7.37 2.72 8.97 7.07 2.83 8.26 6.52 3.07
+32 24 10.23 8.37 2.35 10.17 8.32 2.65 9.76 7.99 2.80 9.37 7.67 2.91 8.64 7.07 3.16
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 8.33 2.65 7.89 2.72 7.54 2.82 7.23 2.91 6.95 3.01
+-5 -5.6 8.76 2.57 8.31 2.64 7.94 2.74 7.61 2.83 7.32 2.92
+Turbo 0 -0.7 9.53 2.61 9.03 2.68 8.63 2.78 8.27 2.87 7.95 2.97
+7 6 12.70 2.82 12.04 2.90 11.50 3.00 11.03 3.10 10.60 3.20
+10 8 13.34 2.90 12.64 2.99 12.08 3.09 11.58 3.19 11.13 3.30
+-10 -11 8.10 2.64 7.68 2.71 7.33 2.80 7.03 2.90 6.76 3.00
+-5 -5.6 8.53 2.56 8.08 2.63 7.72 2.72 7.40 2.81 7.12 2.91
+H 0 -0.7 9.27 2.60 8.79 2.67 8.39 2.76 8.05 2.86 7.74 2.95
+7 6 12.36 2.81 11.72 2.88 11.19 2.99 10.73 3.09 10.32 3.19
+10 8 12.98 2.89 12.30 2.97 11.75 3.07 11.26 3.18 10.83 3.28
+71
+
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 7.84 2.68 7.43 2.75 7.10 2.85 6.81 2.94 6.55 3.04
+-5 -5.6 8.26 2.60 7.83 2.67 7.47 2.76 7.17 2.86 6.89 2.95
+M 0 -0.7 8.97 2.64 8.51 2.71 8.12 2.81 7.79 2.90 7.49 3.00
+7 6 11.96 2.85 11.34 2.93 10.83 3.03 10.38 3.13 9.99 3.24
+10 8 12.56 2.93 11.91 3.02 11.37 3.12 10.90 3.23 10.48 3.33
+-10 -11 7.45 2.76 7.06 2.84 6.75 2.94 6.47 3.03 6.22 3.14
+-5 -5.6 7.84 2.68 7.43 2.75 7.10 2.85 6.81 2.95 6.55 3.04
+L 0 -0.7 8.52 2.72 8.08 2.80 7.72 2.89 7.40 2.99 7.11 3.09
+7 6 11.37 2.94 10.77 3.02 10.29 3.13 9.87 3.23 9.49 3.34
+10 8 11.93 3.03 11.31 3.11 10.80 3.22 10.36 3.33 9.96 3.44
+GUD125ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 11.28 8.11 2.83 11.22 8.06 3.20 10.76 7.74 3.38 10.33 7.43 3.52 9.48 6.81 3.82
+24 17 11.95 9.02 2.97 11.89 8.97 3.36 11.41 8.61 3.55 10.95 8.26 3.69 10.05 7.58 4.01
+26 18 12.43 9.66 3.06 12.37 9.61 3.46 11.86 9.22 3.65 11.39 8.85 3.80 10.45 8.12 4.13
+Turbo
+27 19 12.68 9.97 3.08 12.61 9.91 3.47 12.10 9.51 3.67 11.62 9.13 3.82 10.66 8.38 4.15
+30 22 13.44 10.86 3.17 13.37 10.80 3.58 12.83 10.37 3.78 12.31 9.95 3.94 11.30 9.13 4.27
+32 24 14.05 11.72 3.26 13.97 11.66 3.68 13.40 11.19 3.89 12.87 10.74 4.05 11.81 9.86 4.39
+20 14 10.83 7.56 2.74 10.77 7.52 3.09 10.33 7.21 3.26 9.92 6.93 3.40 9.14 6.38 3.69
+23 16 11.47 8.45 2.87 11.41 8.41 3.24 10.95 8.06 3.42 10.51 7.74 3.56 9.69 7.14 3.87
+26 18 11.93 9.08 2.95 11.87 9.03 3.33 11.39 8.67 3.52 10.93 8.32 3.67 10.08 7.67 3.98
+H
+27 19 12.17 9.38 2.97 12.11 9.33 3.35 11.62 8.95 3.54 11.15 8.59 3.69 10.28 7.92 4.00
+30 22 12.90 10.25 3.06 12.83 10.19 3.45 12.31 9.78 3.64 11.82 9.39 3.80 10.90 8.65 4.12
+32 24 13.48 11.09 3.15 13.41 11.03 3.55 12.87 10.59 3.75 12.35 10.16 3.91 11.39 9.37 4.24
+20 14 10.28 6.97 2.61 10.23 6.94 2.95 9.81 6.65 3.11 9.42 6.39 3.24 8.68 5.89 3.52
+23 16 10.90 7.84 2.74 10.84 7.79 3.09 10.40 7.48 3.27 9.99 7.18 3.40 9.21 6.62 3.69
+26 18 11.34 8.45 2.82 11.28 8.40 3.18 10.82 8.06 3.36 10.39 7.74 3.50 9.57 7.13 3.80
+M
+27 19 11.56 8.73 2.83 11.50 8.68 3.20 11.04 8.33 3.38 10.59 8.00 3.52 9.77 7.37 3.82
+30 22 12.26 9.56 2.92 12.19 9.51 3.29 11.70 9.13 3.48 11.23 8.76 3.62 10.35 8.08 3.93
+32 24 12.81 10.39 3.00 12.74 10.33 3.39 12.22 9.91 3.58 11.74 9.51 3.73 10.82 8.77 4.05
+20 14 9.46 6.23 2.55 9.41 6.20 2.87 9.03 5.94 3.04 8.67 5.71 3.16 7.99 5.26 3.43
+23 16 10.03 7.04 2.67 9.98 7.00 3.02 9.57 6.71 3.19 9.19 6.45 3.32 8.47 5.94 3.60
+26 18 10.43 7.61 2.75 10.38 7.57 3.10 9.95 7.26 3.28 9.56 6.97 3.42 8.81 6.42 3.71
+L
+27 19 10.64 7.87 2.76 10.58 7.83 3.12 10.15 7.51 3.30 9.75 7.21 3.43 8.98 6.65 3.72
+30 22 11.28 8.65 2.84 11.22 8.60 3.21 10.76 8.25 3.39 10.33 7.92 3.53 9.52 7.30 3.83
+32 24 11.78 9.42 2.93 11.72 9.37 3.31 11.25 8.99 3.49 10.80 8.63 3.64 9.95 7.95 3.95
+72
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 9.77 3.36 9.27 3.45 8.85 3.57 8.48 3.69 8.16 3.81
+-5 -5.6 10.29 3.26 9.75 3.35 9.32 3.47 8.93 3.58 8.59 3.70
+Turbo 0 -0.7 11.18 3.31 10.60 3.40 10.13 3.52 9.71 3.64 9.33 3.76
+7 6 14.91 3.57 14.14 3.67 13.50 3.80 12.94 3.93 12.45 4.06
+10 8 15.66 3.68 14.84 3.78 14.18 3.91 13.59 4.05 13.07 4.18
+-10 -11 9.51 3.34 9.02 3.43 8.61 3.55 8.26 3.67 7.94 3.79
+-5 -5.6 10.01 3.24 9.49 3.33 9.06 3.45 8.69 3.56 8.36 3.68
+H 0 -0.7 10.88 3.29 10.32 3.38 9.85 3.50 9.45 3.62 9.08 3.74
+7 6 14.51 3.55 13.75 3.65 13.14 3.78 12.59 3.91 12.11 4.04
+10 8 15.23 3.66 14.44 3.76 13.79 3.89 13.22 4.02 12.72 4.16
+-10 -11 9.21 3.39 8.73 3.48 8.33 3.61 7.99 3.73 7.68 3.85
+-5 -5.6 9.69 3.29 9.19 3.38 8.77 3.50 8.41 3.62 8.09 3.74
+M 0 -0.7 10.53 3.34 9.99 3.43 9.54 3.55 9.14 3.67 8.79 3.80
+7 6 14.04 3.61 13.31 3.71 12.72 3.84 12.19 3.97 11.72 4.10
+10 8 14.75 3.72 13.98 3.82 13.35 3.95 12.80 4.09 12.31 4.22
+-10 -11 8.75 3.50 8.29 3.59 7.92 3.72 7.59 3.84 7.30 3.97
+-5 -5.6 9.21 3.39 8.73 3.49 8.33 3.61 7.99 3.73 7.68 3.86
+L 0 -0.7 10.01 3.44 9.49 3.54 9.06 3.67 8.69 3.79 8.35 3.91
+7 6 13.34 3.72 12.65 3.82 12.08 3.96 11.58 4.09 11.14 4.23
+10 8 14.01 3.83 13.28 3.94 12.68 4.08 12.16 4.21 11.69 4.35
+GUD140ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 12.49 9.99 3.32 12.42 9.94 3.75 11.92 9.53 3.96 11.44 9.15 4.13 10.50 8.40 4.48
+24 17 13.24 10.93 3.48 13.17 10.87 3.93 12.63 10.43 4.16 12.13 10.01 4.33 11.13 9.18 4.70
+26 18 13.77 11.59 3.59 13.69 11.52 4.05 13.14 11.06 4.28 12.61 10.61 4.46 11.57 9.74 4.84
+Turbo
+27 19 14.04 11.90 3.60 13.97 11.84 4.07 13.40 11.36 4.30 12.86 10.91 4.48 11.80 10.01 4.86
+30 22 14.88 12.85 3.71 14.81 12.79 4.19 14.20 12.27 4.43 13.64 11.78 4.61 12.51 10.80 5.00
+32 24 15.55 13.73 3.82 15.47 13.65 4.31 14.84 13.10 4.56 14.25 12.58 4.75 13.07 11.54 5.15
+20 14 11.99 9.33 3.20 11.93 9.28 3.62 11.44 8.90 3.82 10.98 8.54 3.98 10.12 7.87 4.32
+23 16 12.71 10.24 3.36 12.64 10.19 3.80 12.13 9.77 4.01 11.64 9.38 4.18 10.73 8.65 4.53
+26 18 13.22 10.89 3.46 13.15 10.83 3.91 12.61 10.39 4.13 12.11 9.98 4.30 11.16 9.20 4.66
+H
+27 19 13.48 11.20 3.48 13.41 11.14 3.93 12.86 10.69 4.15 12.35 10.26 4.32 11.38 9.46 4.69
+30 22 14.29 12.12 3.58 14.21 12.06 4.04 13.64 11.57 4.27 13.09 11.11 4.45 12.07 10.24 4.83
+32 24 14.93 12.98 3.69 14.85 12.91 4.16 14.25 12.39 4.40 13.68 11.89 4.58 12.61 10.96 4.97
+73
+
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 11.39 8.61 3.06 11.33 8.56 3.45 10.87 8.22 3.65 10.43 7.89 3.80 9.62 7.27 4.12
+23 16 12.07 9.50 3.21 12.01 9.45 3.62 11.52 9.07 3.83 11.06 8.70 3.99 10.19 8.02 4.33
+26 18 12.56 10.13 3.30 12.49 10.07 3.73 11.98 9.67 3.94 11.50 9.28 4.11 10.60 8.55 4.45
+M
+27 19 12.81 10.43 3.32 12.74 10.37 3.75 12.22 9.95 3.96 11.73 9.55 4.13 10.81 8.80 4.48
+30 22 13.57 11.31 3.42 13.50 11.25 3.86 12.95 10.80 4.08 12.44 10.37 4.25 11.46 9.55 4.61
+32 24 14.19 12.15 3.52 14.11 12.09 3.97 13.54 11.60 4.20 13.00 11.13 4.37 11.98 10.26 4.74
+20 14 10.48 7.70 2.98 10.42 7.66 3.37 10.00 7.35 3.56 9.60 7.05 3.71 8.85 6.50 4.02
+23 16 11.11 8.53 3.13 11.05 8.49 3.53 10.60 8.14 3.73 10.18 7.82 3.89 9.38 7.20 4.22
+26 18 11.55 9.12 3.22 11.49 9.07 3.64 11.02 8.71 3.84 10.58 8.36 4.00 9.75 7.70 4.34
+L
+27 19 11.78 9.40 3.24 11.72 9.35 3.65 11.24 8.97 3.86 10.79 8.61 4.02 9.95 7.94 4.36
+30 22 12.49 10.23 3.33 12.42 10.17 3.76 11.92 9.76 3.97 11.44 9.37 4.14 10.55 8.64 4.49
+32 24 13.05 11.01 3.43 12.98 10.96 3.87 12.45 10.51 4.09 11.96 10.09 4.26 11.02 9.30 4.62
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 11.22 3.71 10.64 3.81 10.16 3.95 9.74 4.08 9.37 4.22
+-5 -5.6 11.81 3.60 11.20 3.70 10.70 3.83 10.25 3.96 9.86 4.09
+Turbo 0 -0.7 12.84 3.66 12.17 3.76 11.63 3.89 11.15 4.02 10.72 4.15
+7 6 17.12 3.95 16.23 4.06 15.50 4.20 14.86 4.34 14.29 4.49
+10 8 17.98 4.07 17.04 4.18 16.28 4.33 15.60 4.47 15.00 4.62
+-10 -11 10.92 3.69 10.35 3.79 9.89 3.93 9.48 4.06 9.11 4.19
+-5 -5.6 11.49 3.58 10.90 3.68 10.41 3.81 9.98 3.94 9.59 4.07
+H 0 -0.7 12.49 3.64 11.84 3.74 11.31 3.87 10.84 4.00 10.43 4.13
+7 6 16.66 3.93 15.79 4.04 15.08 4.18 14.46 4.32 13.90 4.46
+10 8 17.49 4.05 16.58 4.16 15.84 4.30 15.18 4.45 14.60 4.60
+-10 -11 10.57 3.75 10.02 3.85 9.57 3.99 9.18 4.12 8.82 4.26
+-5 -5.6 11.13 3.64 10.55 3.74 10.07 3.87 9.66 4.00 9.29 4.13
+M 0 -0.7 12.09 3.69 11.47 3.79 10.95 3.93 10.50 4.06 10.09 4.20
+7 6 16.13 3.99 15.29 4.10 14.60 4.24 14.00 4.38 13.46 4.53
+10 8 16.93 4.11 16.05 4.22 15.33 4.37 14.70 4.52 14.13 4.67
+-10 -11 10.04 3.86 9.52 3.97 9.09 4.11 8.72 4.25 8.38 4.39
+-5 -5.6 10.57 3.75 10.02 3.86 9.57 3.99 9.18 4.12 8.82 4.26
+L 0 -0.7 11.49 3.81 10.89 3.91 10.40 4.05 9.97 4.19 9.59 4.33
+7 6 15.32 4.11 14.52 4.23 13.87 4.38 13.30 4.52 12.79 4.67
+10 8 16.09 4.24 15.25 4.35 14.56 4.51 13.96 4.66 13.43 4.81
+74
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD160ZD1/A-S
+Cooling
+Indoor air Outdoor dry bulb temperature ℃
+Fan temperature 25 30 35 40 46
+speed ℃ TC SHC PI TC SHC PI TC SHC PI TC SHC PI TC SHC PI
+DB WB kW kW kW kW kW kW kW kW kW kW kW kW kW kW kW
+20 14 14.91 9.62 4.09 14.83 9.57 4.62 14.23 9.18 4.88 13.66 8.82 5.09 12.53 8.09 5.52
+24 17 15.81 10.91 4.29 15.72 10.85 4.85 15.08 10.41 5.12 14.48 10.00 5.34 13.29 9.17 5.79
+26 18 16.44 11.82 4.42 16.35 11.76 4.99 15.69 11.28 5.27 15.06 10.83 5.49 13.82 9.94 5.96
+Turbo
+27 19 16.77 12.24 4.44 16.68 12.17 5.02 16.00 11.68 5.30 15.36 11.21 5.52 14.09 10.29 5.99
+30 22 17.77 13.47 4.57 17.68 13.40 5.16 16.96 12.86 5.46 16.28 12.34 5.68 14.94 11.32 6.17
+32 24 18.57 14.70 4.71 18.47 14.62 5.32 17.72 14.03 5.62 17.02 13.47 5.85 15.61 12.36 6.35
+20 14 14.31 8.97 3.95 14.24 8.92 4.46 13.66 8.56 4.71 13.11 8.21 4.91 12.09 7.57 5.32
+23 16 15.17 10.22 4.14 15.09 10.17 4.68 14.48 9.75 4.94 13.90 9.36 5.15 12.81 8.63 5.59
+26 18 15.78 11.11 4.27 15.70 11.05 4.82 15.06 10.60 5.09 14.46 10.18 5.30 13.33 9.38 5.75
+H
+27 19 16.10 11.52 4.29 16.01 11.45 4.84 15.36 10.99 5.11 14.75 10.55 5.33 13.59 9.72 5.78
+30 22 17.06 12.71 4.41 16.97 12.64 4.98 16.28 12.13 5.26 15.63 11.64 5.48 14.41 10.73 5.95
+32 24 17.83 13.91 4.54 17.74 13.84 5.13 17.01 13.28 5.42 16.33 12.75 5.64 15.06 11.75 6.12
+20 14 13.60 8.26 3.77 13.53 8.22 4.26 12.98 7.88 4.50 12.46 7.57 4.69 11.48 6.98 5.08
+23 16 14.41 9.47 3.96 14.34 9.42 4.47 13.76 9.04 4.72 13.21 8.68 4.92 12.17 8.00 5.33
+26 18 14.99 10.33 4.07 14.91 10.27 4.60 14.31 9.86 4.86 13.73 9.46 5.06 12.66 8.72 5.49
+M
+27 19 15.29 10.72 4.09 15.21 10.66 4.62 14.59 10.23 4.88 14.01 9.82 5.09 12.91 9.05 5.52
+30 22 16.21 11.87 4.21 16.12 11.80 4.76 15.47 11.32 5.03 14.85 10.87 5.23 13.69 10.02 5.68
+32 24 16.94 13.03 4.34 16.85 12.96 4.90 16.16 12.43 5.17 15.52 11.94 5.39 14.30 11.00 5.85
+20 14 12.51 7.37 3.68 12.44 7.33 4.15 11.94 7.03 4.39 11.46 6.75 4.57 10.56 6.22 4.96
+23 16 13.26 8.50 3.86 13.19 8.46 4.35 12.66 8.11 4.60 12.15 7.79 4.79 11.20 7.18 5.20
+26 18 13.79 9.30 3.97 13.72 9.25 4.48 13.16 8.88 4.74 12.64 8.52 4.93 11.65 7.85 5.35
+L
+27 19 14.07 9.67 3.99 13.99 9.61 4.50 13.42 9.22 4.76 12.89 8.86 4.96 11.88 8.16 5.38
+30 22 14.91 10.73 4.11 14.83 10.67 4.64 14.23 10.24 4.90 13.66 9.83 5.10 12.59 9.06 5.54
+32 24 15.58 11.82 4.23 15.50 11.76 4.77 14.87 11.28 5.04 14.28 10.83 5.25 13.16 9.98 5.70
+Heating
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 12.31 4.24 11.67 4.36 11.14 4.51 10.68 4.66 10.27 4.82
+-5 -5.6 12.96 4.12 12.28 4.23 11.73 4.38 11.25 4.53 10.81 4.68
+Turbo 0 -0.7 14.08 4.18 13.35 4.29 12.75 4.44 12.22 4.59 11.75 4.75
+7 6 18.78 4.51 17.80 4.64 17.00 4.80 16.30 4.96 15.67 5.13
+10 8 19.72 4.65 18.69 4.78 17.85 4.94 17.11 5.11 16.46 5.28
+-10 -11 11.98 4.22 11.35 4.34 10.84 4.49 10.40 4.64 10.00 4.79
+-5 -5.6 12.61 4.09 11.95 4.21 11.41 4.36 10.94 4.50 10.52 4.65
+H 0 -0.7 13.70 4.16 12.99 4.27 12.41 4.42 11.89 4.57 11.44 4.72
+7 6 18.27 4.49 17.32 4.61 16.54 4.78 15.86 4.94 15.25 5.10
+10 8 19.18 4.62 18.19 4.75 17.37 4.92 16.65 5.08 16.01 5.25
+75
+
+Indoor dry bulb temperature ℃
+Outdoor air
+Fan 16 18 20 22 24
+temperature ℃
+speed TC PI TC PI TC PI TC PI TC PI
+DB WB kW kW kW kW kW kW kW kW kW kW
+-10 -11 11.59 4.28 10.99 4.40 10.50 4.56 10.06 4.71 9.68 4.87
+-5 -5.6 12.20 4.16 11.57 4.27 11.05 4.42 10.59 4.57 10.19 4.72
+M 0 -0.7 13.26 4.22 12.57 4.34 12.01 4.49 11.51 4.64 11.07 4.79
+7 6 17.69 4.56 16.77 4.68 16.01 4.85 15.35 5.01 14.76 5.18
+10 8 18.57 4.69 17.60 4.82 16.81 4.99 16.12 5.16 15.50 5.33
+-10 -11 11.01 4.42 10.44 4.54 9.97 4.70 9.56 4.86 9.19 5.02
+-5 -5.6 11.59 4.29 10.99 4.41 10.50 4.56 10.06 4.71 9.68 4.87
+L 0 -0.7 12.60 4.35 11.95 4.47 11.41 4.63 10.94 4.78 10.52 4.95
+7 6 16.80 4.70 15.93 4.83 15.21 5.00 14.58 5.17 14.02 5.34
+10 8 17.64 4.84 16.72 4.98 15.97 5.15 15.31 5.32 14.72 5.50
+Symbols:
+DB: Dry bulb temperature
+WB: Wet bulb temperature
+TC: Total cooling(heating) capacity
+SHC: Sensible heat capacity
+PI: Power input (compressor + indoor fan motor + outdoor fan motor)
+1. The above data are based on the following conditions.
+— Power Supply Equivalent Piping Length
+Indoor 230V ~50Hz Standard Piping Length
+2. Capacities are net, including a deduction for cooling ( an addition for heating) for indoor fan motor heat.
+76
+
+U-MATCH SERIES AIR CONDITIONERS
+6.2 Pipe Length Drop Capacity Correction
+GUD35T1/A-S; GUD35P1/A-S; GUD35PS1/A-S; GUD35ZD1/A-S
+Cooling Heating
+Hn(m) Hn(m)
+0.95 1.0
+15 15
+1.0
+L(m)
+L(m) 0 15 30
+0 15 30
+1.0
+15
+Hm(m)
+15
+Hm(m) 0.95
+GUD50T1/A-S; GUD50T1/A1-S; GUD50P1/A-S; GUD50PS1/A-S; GUD50ZD1/A-S
+GUD71T1/A-S;GUD71PH1/A-S; GUD71PHS1/A-S; GUD71ZD1/A-S
+Cooling Heating
+GUD85T1/A-S;GUD85PH1/A-S; GUD85PHS1/A-S; GUD85ZD1/A-S
+Cooling Heating
+77
+
+GUD100T1/A-S;GUD100PH1/A-S; GUD100PHS1/A-S; GUD100ZD1/A-S
+GUD125T1/A-S;GUD125PH1/A-S; GUD125PHS1/A-S; GUD125ZD1/A-S
+GUD140T1/A-S;GUD140PH1/A-S; GUD140PHS1/A-S; GUD140ZD1/A-S
+GUD160T1/A-S;GUD160PH1/A-S; GUD160PHS1/A-S; GUD160ZD1/A-S
+Cooling Heating
+Hn(m) 0.90 0.85 0.8 Hn(m) 1.0
+30 30
+0.95
+1.0
+0 30 75 L(m) 0 30 75 L(m)
+1.0
+0.95
+30
+30 Hm(m)
+Hm(m) 0.90 0.85 0.8
+Symbols: Notes:
+L：Length of connection pipe 1. Above figures indicate the capacity change rate of a
+Hn：Vertical rise (ODU below IDU) standard indoor unit system under maximum load in
+Hm：Vertical drop (ODU above IDU) standard conditions.
+α：Capacity correction factor 2. Under partial load, the capacity change rate indicated above
+will have a very small deviation.
+3. Capacity calculation method for cooling/heating
+Cooling/heating capacity = the corresponding capacity in the table of cooling/
+heating performance × Capacity correction factor
+78
+
+U-MATCH SERIES AIR CONDITIONERS
+7 AIR VOLUME STATIC PRESSURE CURVE
+7.1 Common Duct Type
+GUD35P1/A-S & GUD35PS1/A-S
+GUD50P1/A-S & GUD50PS1/A-S
+79
+
+Notes:
+1. The external static pressure (ESP) can be changed in 5 levels by the remote controller.
+2. The default ESP mode setting is P05 which is the rated ESP.
+3. The remote controller can be used to change turbo, H, M and L.
+Static pressure
+Super high speed High speed Medium speed Low speed
+selection
+P03 S09 S08 S06 S04
+P04 S10 S09 S07 S05
+P05 S11 S10 S08 S06
+P06 S12 S11 S09 S07
+P07 S13 S12 S10 S08
+7.2 High Static Pressure Duct Type
+GUD71PH1/A-S & GUD71PHS1/A-S
+80
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD85PH1/A-S & GUD85PHS1/A-S
+GUD100PH1/A-S & GUD100PHS1/A-S
+81
+
+GUD125PH1/A-S & GUD125PHS1/A-S
+GUD140PH1/A-S & GUD140PHS1/A-S
+82
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD160PH1/A-S & GUD160PHS1/A-S
+Notes:
+1. The external static pressure (ESP) can be changed in 9 levels by the remote controller.
+2. The default ESP mode setting is P05 which is the rated ESP.
+3. The remote controller can be used to change turbo, H, M and L.
+Static pressure
+Super high speed High speed Medium speed Low speed
+selection
+P01 S05 S03 S02 S01
+P02 S06 S04 S03 S02
+P03 S07 S05 S04 S03
+P04 S08 S06 S05 S04
+P05 S09 S07 S06 S05
+P06 S10 S08 S07 S06
+83
+
+8 AIRFLOW CHART
+8.1 Cassette Type
+GUD35T1/A-S;GUD50T1/A-S;GUD50T1/A1-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+84
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating air velocity
+Unit: m/s(ft/s)
+GUD71T1/A-S GUD85T1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+85
+
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+GUD100T1/A-S; GUD125T1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+86
+
+U-MATCH SERIES AIR CONDITIONERS
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+87
+
+GUD140T1/A-S;GUD160T1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+88
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating air velocity
+Unit: m/s(ft/s)
+8.2 Floor Ceiling Type
+GUD35ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+89
+
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+GUD50ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+90
+
+U-MATCH SERIES AIR CONDITIONERS
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+91
+
+GUD71ZD1/A-S; GUD85ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+92
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating air velocity
+Unit: m/s(ft/s)
+GUD100ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+93
+
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+GUD125ZD1/A-S;
+Cooling temperature
+Unit: ℃ ( ℉ )
+94
+
+U-MATCH SERIES AIR CONDITIONERS
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+95
+
+GUD140ZD1/A-S;GUD160ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+96
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating air velocity
+Unit: m/s(ft/s)
+GUD35ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+97
+
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+GUD50ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+98
+
+U-MATCH SERIES AIR CONDITIONERS
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+99
+
+GUD71ZD1/A-S;GUD85ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+100
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating air velocity
+Unit: m/s(ft/s)
+GUD100ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+101
+
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+GUD125ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+102
+
+U-MATCH SERIES AIR CONDITIONERS
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+Heating air velocity
+Unit: m/s(ft/s)
+103
+
+GUD140ZD1/A-S;GUD160ZD1/A-S
+Cooling temperature
+Unit: ℃ ( ℉ )
+Cooling air velocity
+Unit: m/s(ft/s)
+Heating temperature
+Unit: ℃ ( ℉ )
+104
+
+U-MATCH SERIES AIR CONDITIONERS
+Heating air velocity
+Unit: m/s(ft/s)
+9 NOISE
+9.1 Cassette Type
+Turbo H M L
+Model
+dB(A) dB(A) dB(A) dB(A)
+GUD35T1/A-S 36 35 33 29
+GUD50T1/A-S 36 35 33 31
+GUD50T1/A1-S 43 41 39 35
+GUD71T1/A-S 39 38 36 34
+GUD85T1/A-S 47 46 42 38
+105
+
+Turbo H M L
+Model
+dB(A) dB(A) dB(A) dB(A)
+GUD100T1/A-S 43 41 39 38
+GUD125T1/A-S 48 46 43 39
+GUD140T1/A-S 50 48 45 41
+GUD160T1/A-S 52 50 48 44
+Notes:
+1. Above data was measured under standard conditions. Power specification: 230V ~50Hz.
+2. Above data was measured in a semi-anechoic room.
+3. Decibels will be varied with the change of external factors, for instance, the room structure. Please refer
+to the actual measurement.
+9.2 Duct Type
+Turbo H M L
+Model
+dB(A) dB(A) dB(A) dB(A)
+GUD35P1/A-S
+35 33 32 30
+GUD35PS1/A-S
+GUD50P1/A-S
+36 35 33 31
+GUD50PS1/A-S
+GUD71PH1/A-S
+37 35 33 31
+GUD71PHS1/A-S
+GUD85PH1/A-S
+43 41 39 37
+GUD85PHS1/A-S
+GUD100PH1/A-S
+39 38 37 36
+GUD100PHS1/A-S
+GUD125PH1/A-S
+43 42 41 40
+GUD125PHS1/A-S
+106
+
+U-MATCH SERIES AIR CONDITIONERS
+Turbo H M L
+Model
+dB(A) dB(A) dB(A) dB(A)
+GUD140PH1/A-S
+43 42 40 38
+GUD140PHS1/A-S
+GUD160PH1/A-S
+46 44 42 40
+GUD160PHS1/A-S
+Notes:
+1. Above data was measured under standard conditions. Power specification: 230V ~50Hz.
+2. Above data was measured in a semi-anechoic room.
+3. Decibels will be varied with the change of external factors, for instance, the room structure. Please refer
+to the actual measurement.
+9.3 Floor Ceiling Type
+Turbo H M L
+Model
+dB(A) dB(A) dB(A) dB(A)
+GUD35ZD1/A-S 35 34 31 28
+GUD50ZD1/A-S 41 40 38 36
+GUD71ZD1/A-S 41 39 37 35
+GUD85ZD1/A-S 46 45 43 39
+GUD100ZD1/A-S 48 46 45 43
+GUD125ZD1/A-S 45 43 40 38
+GUD140ZD1/A-S 51 48 45 43
+GUD160ZD1/A-S 53 51 48 44
+Notes:
+1. Above data was measured under standard conditions. Power specification: 230V ~50Hz.
+2. Above data was measured in a semi-anechoic room.
+3. Decibels will be varied with the change of external factors, for instance, the room structure. Please refer
+to the actual measurement.
+107
+
+9.4 Outdoor Unit
+Sound pressure level Power supply
+Model
+dB(A) （V,Ph,Hz）
+GUD35W1/NhA-S 48
+GUD50W1/NhA-S 52
+GUD71W1/NhA-S 55
+GUD85W1/NhA-S 57 230V ~50Hz
+GUD100W1/NhA-S 57
+GUD125W1/NhA-S 58
+GUD140W1/NhA-S 59
+GUD100W1/NhA-X 57
+GUD125W1/NhA-X 58
+400V 3N~50Hz
+GUD140W1/NhA-X 59
+GUD160W1/NhA-X 60
+Notes:
+1. Above data was measured under standard conditions.
+2. Above data was measured in a semi-anechoic room.
+3. Decibels will be varied with the change of external factors, for instance, the room structure. Please refer
+to the actual measurement.
+108
+
+U-MATCH SERIES AIR CONDITIONERS
+10 DIMENSIONS AND INSTALLATION SITE
+10.1 Cassette Type
+GUD35T1/A-S; GUD50T1/A1-S
+Unit: mm
+Dimensions
+A B C D E F G H I
+Model
+GUD35T1/A-S
+620 580 570 505 550 260 140 530 530
+GUD50T1/A1-S
+109
+
+GUD50T1/A-S, GUD71T1/A-S, GUD85T1/A-S GUD100T1/A-S, GUD125T1/A-S, GUD140T1/A-S,
+GUD160T1/A-S
+Unit: mm
+Dimensions
+A B C D E F G
+Model
+GUD50T1/A-S
+GUD71T1/A-S 950 890 840 680 780 200 135
+GUD85T1/A-S
+GUD100T1/A-S
+950 890 840 680 780 240 135
+GUD125T1/A-S
+GUD140T1/A-S
+950 890 840 680 780 290 135
+GUD160T1/A-S
+110
+
+U-MATCH SERIES AIR CONDITIONERS
+10.1.2 Installation Location
+Unit: mm
+Model H(mm)
+GUD35T1/A-S
+295
+GUD50T1/A1-S
+GUD50T1/A-S
+GUD71T1/A-S 235
+GUD85T1/A-S
+GUD100T1/A-S
+275
+GUD125T1/A-S
+GUD140T1/A-S
+325
+GUD160T1/A-S
+111
+
+10.2 Duct Type
+10.2.1 Dimensions
+GUD35P1/A-S,GUD35PS1/A-S,GUD50P1/A-S,GUD50PS1/A-S.
+GUD71PH1/A-S;GUD71PHS1/A-S;GUD85PH1/A-S;GUD85PHS1/A-S;
+GUD100PH1/A-S;GUD100PHS1/A-S;GUD125PH1/A-S;GUD125PHS1/A-S;
+GUD140PH1/A-S;GUD140PHS1/A-S;GUD160PH1/A-S;GUD160PHS1/A-S.
+Unit: mm
+Dimensions
+A B C D E F
+Model
+GUD35P1/A-S
+760 415 700 200 450 486
+GUD35PS1/A-S
+GUD50P1/A-S
+1060 415 1000 200 450 486
+GUD50PS1/A-S
+GUD71PH1/A-S
+942 590 900 260 655 692
+GUD71PHS1/A-S
+GUD85PH1/A-S
+942 590 900 260 655 692
+GUD85PHS1/A-S
+GUD100PH1/A-S
+1381 585 1340 260 655 697
+GUD100PHS1/A-S
+GUD125PH1/A-S
+1381 585 1340 260 655 697
+GUD125PHS1/A-S
+112
+
+U-MATCH SERIES AIR CONDITIONERS
+Dimensions
+A B C D E F
+Model
+GUD140PH1/A-S
+1440 500 1400 300 700 754
+GUD140PHS1/A-S
+GUD160PH1/A-S
+1440 500 1400 300 700 754
+GUD160PHS1/A-S
+10.2.2 Installation Location
+Unit: mm
+10.3 Floor Ceiling Type
+10.3.1 Dimensions
+113
+
+Unit: mm
+Dimensions
+A B C D E
+Model
+GUD35ZD1/A-S 870 235 812 280 665
+GUD50ZD1/A-S 870 235 812 280 665
+GUD71ZD1/A-S 1200 235 1142 280 665
+GUD85ZD1/A-S 1200 235 1142 280 665
+GUD100ZD1/A-S 1200 235 1142 280 665
+GUD125ZD1/A-S 1570 235 1512 280 665
+GUD140ZD1/A-S 1570 235 1512 280 665
+GUD160ZD1/A-S 1570 235 1512 280 665
+10.3.2 Installation Location
+Unit: mm
+114
+
+U-MATCH SERIES AIR CONDITIONERS
+10.4 Outdoor Unit
+10.4.1 Dimensions
+Unit: mm
+Dimensions
+A B C D E F G
+Model
+GUD35W1/NhA-S 732 330 553 455 310 675 285
+GUD50W1/NhA-S 802 350 555 512 331 745 300
+GUD71W1/NhA-S 958 402 660 570 371 889 340
+GUD85W1/NhA-S 958 402 660 570 371 889 340
+GUD100W1/NhA-S 1020 427 820 635 396 940 370
+GUD100W1/NhA-X 1020 427 820 635 396 940 370
+GUD125W1/NhA-S 1020 427 820 635 396 940 370
+GUD125W1/NhA-X 1020 427 820 635 396 940 370
+GUD140W1/NhA-S 1020 427 820 635 396 940 370
+GUD140W1/NhA-X 1020 427 820 635 396 940 370
+GUD160W1/NhA-X 1070 427 960 755 396 990 370
+115
+
+10.4.2 Installation Location
+1) When one outdoor unit is to be installed.
+(mm)
+A~E H H H
+b d
+a b c d e
+B — — ≥100 — — —
+A,B,C, — ≥300 ≥100 ≥100 — —
+B,E — — ≥100 — — ≥1000
+A,B,C,E — ≥300 ≥150 ≥150 — ≥1000
+D — — — — ≥1000 —
+D,E — — — — ≥1000 ≥1000
+H <H H >H — ≥100 — ≥1000 —
+b d d
+B,D
+H >H H <H — ≥100 — ≥1000 —
+b d d
+H ≤1/2H — ≥250 — ≥2000 ≥1000
+b
+H <H 1/2H<H ≤H — ≥250 — ≥2000 ≥1000
+b d b
+B,D,E
+H >H Prohibited
+b
+H ≤1/2H — ≥100 — ≥2000 ≥1000
+d
+H >H 1/2H<H ≤H — ≥200 — ≥2000 ≥1000
+b d d
+H >H Prohibited
+d
+2) When two or more outdoor units are to be installed side by side.
+Unit:mm
+116
+
+U-MATCH SERIES AIR CONDITIONERS
+(mm)
+A~E H H H
+b d
+a b c d e
+A,B,C — ≥300 ≥300 ≥1000 — —
+A,B,C,E — ≥300 ≥300 ≥1000 — ≥1000
+D — — — — ≥2000 —
+D,E — — — — ≥2000 ≥1000
+H <H H >H — ≥300 — ≥2000 —
+b d d
+B,D H ≤1/2H — ≥250 — ≥2000 —
+d
+H >H
+b d 1/2H<H ≤H — ≥300 — ≥2500 —
+d
+H ≤1/2H — ≥300 — ≥2000 ≥1000
+b
+H <H 1/2H<H ≤H — ≥300 — ≥2500 ≥1000
+b d b
+B,D,E H b >H Prohibited
+H ≤1/2H — ≥250 — ≥2500 ≥1000
+d
+H >H 1/2H<H ≤H — ≥300 — ≥2500 ≥1000
+b d d
+H >H Prohibited
+d
+3) When outdoor units are installed in rows.
+Unit:mm
+H H (mm)
+b
+H ≤1/2H b≥250
+b
+1/2H<H ≤H b≥300
+b
+H >H Prohibited
+b
+117
+
+4) When outdoor units are installed one above another.
+Unit:mm
+10.5 Controller
+XE7A-24/H
+YAP1F7
+118
+
+U-MATCH SERIES AIR CONDITIONERS
+10.5.1 Dimensional Drawing of YAP1F7
+Unit:mm
+10.5.2 Dimensional Drawing of XE7A-24/H
+Unit:mm
+119
+
+11 ELECTRICAL INSTALLATION
+11.1 Electrical Parameters
+Min. sectional area of power
+Power supply Fuse capacity
+Model cord
+V/Ph/Hz A mm²
+Indoor unit 220-240V ~50/60Hz 3.15 1.0
+Power supply Circuit breaker capacity Min. sectional area of power cord
+Model
+V/Ph/Hz A mm²
+GUD35W1/NhA-S 16 1.5
+GUD50W1/NhA-S 16 1.5
+GUD71W1/NhA-S 20 2.5
+GUD85W1/NhA-S 220-240V ~50/60Hz 20 2.5
+GUD100W1/NhA-S 32 4.0
+GUD125W1/NhA-S 32 4.0
+GUD140W1/NhA-S 32 4.0
+GUD100W1/NhA-X 16 1.5
+GUD125W1/NhA-X 16 1.5
+380-415V 3N~50/60Hz
+GUD140W1/NhA-X 16 1.5
+GUD160W1/NhA-X 16 1.5
+Notes:
+1. Fuse is located on the main board.
+2. Install a circuit breaker near the outdoor units with at least 3mm contact gap. The units must be able to
+be plugged or unplugged.
+3. Circuit breaker and power cord specifications listed in the above table are determined based on the
+maximum power input of the units.
+4. Supply cords of parts of appliances for outdoor use shall not be lighter than polychloroprene sheathed
+flexible cord (code designation 60245 IEC 57).
+5. Specifications of circuit breaker are based on a working condition where the working temperature is 40°C.
+If working condition changes, please adjust the specifications according to applicable local standards.
+6. Adopt 1.0mm² power cords between indoor and outdoor units. The maximum length of 35-85 units is
+30m and the maximum length of 100-160 units is 75m. Please select a proper length according to local
+conditions. To be in compliance EN 55014, it is necessary to use 8 meters long wire.
+7. Adopt 2pcs of 0.75mm² power cords to be the communication cords between wired controller and
+indoor unit. The maximum length is 30m. Please select a proper length according to local conditions.
+Communication cords must not be twisted together. To be in compliance EN 55014, it is necessary to use
+8 meters long wire.
+8. The wire gauge of communication cord should not be less than 0.75mm². It’s recommended to use
+0.75mm² power cords as the communication cords.
+120
+
+U-MATCH SERIES AIR CONDITIONERS
+11.2 Wiring Diagram
+11.2.1 Cassette Type
+Single-phase unit: GUD35W1/NhA-S, GUD50W1/NhA-S, GUD71W1/NhA-S, GUD85W1/NhA-S.
+GUD35T1/A-S+GUD35W1/NhA-S
+GUD50T1/A1-S+GUD50W1/NhA-S
+GUD50T1/A-S+GUD50W1/NhA-S
+① Power cords 3×1.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+GUD71T1/A-S+GUD71W1/NhA-S
+GUD85T1/A-S+GUD85W1/NhA-S
+① Power cords 3×2.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+Single-phase unit: GUD100W1/NhA-S, GUD125W1/NhA-S, GUD140W1/NhA-S
+GUD100T1/A-S+GUD100W1/NhA-S
+GUD125T1/A-S+GUD125W1/NhA-S
+GUD140T1/A-S+GUD140W1/NhA-S
+① Power cords 3×4.0mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+121
+
+Three-phase unit: GUD100W1/NhA-X, GUD125W1/NhA-X, GUD140W1/NhA-X, GUD160W1/NhA-X.
+GUD100T1/A-S+GUD100W1/NhA-X
+GUD125T1/A-S+GUD125W1/NhA-X
+GUD140T1/A-S+GUD140W1/NhA-X
+GUD160T1/A-S+GUD160W1/NhA-X
+① Power cords 5×1.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+11.2.2 Duct Type
+Single-phase unit: GUD35W1/NhA-S, GUD50W1/NhA-S.
+GUD35P1/A-S+GUD35W1/NhA-S
+GUD35PS1/A-S+GUD35W1/NhA-S
+GUD50P1/A-S+GUD50W1/NhA-S
+GUD50PS1/A-S+GUD50W1/NhA-S
+① Power cords 3×1.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+122
+
+U-MATCH SERIES AIR CONDITIONERS
+Single-phase unit: GUD71W1/NhA-S, GUD85W1/NhA-S.
+GUD71PH1/A-S+GUD71W1/NhA-S
+GUD71PHS1/A-S+GUD71W1/NhA-S
+GUD85PH1/A-S+GUD85W1/NhA-S
+GUD85PHS1/A-S+GUD85W1/NhA-S
+① Power cords 3×2.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+Single-phase unit: GUD100W1/NhA-S, GUD125W1/NhA-S, GUD140W1/NhA-S.
+GUD100PH1/A-S+GUD100W1/NhA-S
+GUD100PHS1/A-S+GUD100W1/NhA-S
+GUD125PH1/A-S+GUD125W1/NhA-S
+GUD125PHS1/A-S+GUD125W1/NhA-S
+GUD140PH1/A-S+GUD140W1/NhA-S
+GUD140PHS1/A-S+GUD140W1/NhA-S
+① Power cords 3×4.0mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+123
+
+Three-phase unit: GUD100W1/NhA-X, GUD125W1/NhA-X,GUD140W1/NhA-X,GUD160W1/NhA-X.
+GUD100PH1/A-S+GUD100W1/NhA-X
+GUD100PHS1/A-S+GUD100W1/NhA-X
+GUD125PH1/A-S+GUD125W1/NhA-X
+GUD125PHS1/A-S+GUD125W1/NhA-X
+GUD140PH1/A-S+GUD140W1/NhA-X
+GUD140PHS1/A-S+GUD140W1/NhA-X
+GUD160PH1/A-S+GUD160W1/NhA-X
+GUD160PHS1/A-S+GUD160W1/NhA-X
+① Power cords 5×1.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+11.2.3 Floor Ceiling Type
+Single-phase unit: GUD35W1/NhA-S,GUD50W1/NhA-S,GUD71W1/NhA-S,GUD85W1/NhA-S.
+GUD35ZD1/A-S+GUD35W1/NhA-S
+GUD50ZD1/A-S+GUD50W1/NhA-S
+① Power cords 3×1.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+124
+
+U-MATCH SERIES AIR CONDITIONERS
+GUD71ZD1/A-S+GUD71W1/NhA-S
+GUD85ZD1/A-S+GUD85W1/NhA-S
+① Power cords 3×2.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+Single-phase unit: GUD100W1/NhA-S,GUD125W1/NhA-S,GUD140W1/NhA-S.
+GUD100ZD1/A-S+GUD100W1/NhA-S
+GUD125ZD1/A-S+GUD125W1/NhA-S
+GUD140ZD1/A-S+GUD140W1/NhA-S
+① Power cords 3×4.0mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+Three-phase unit:GUD100W1/NhA-X,GUD125W1/NhA-X,GUD140W1/NhA-X,GUD160W1/NhA-X
+GUD100ZD1/A-S +GUD100W1/NhA-X
+GUD125ZD1/A-S +GUD125W1/NhA-X
+GUD140ZD1/A-S +GUD140W1/NhA-X
+GUD160ZD1/A-S +GUD160W1/NhA-X
+① Power cords 5×1.5mm²
+② Power cords 4×1.0mm²
+③ Communication cords 2×0.75mm²
+125
+
+12 LIST OF STANDARD AND OPTIONAL PARTS
+— Cassette type Duct type Floor ceiling type
+Wired Controller XE7A-24/H
+○ ● ○
+Product code:NC20700190
+Wired Controller XE7A-24/HC (WIFI)
+○ ○ ○
+Product code:NC20700260
+Remote Controller YAP1F7(WiFi)
+● ○ ●
+Product code:305001060060
+YAN1F1
+○ ○ ○
+Product code:30510474
+YAA1FB6(WiFi)
+○ ○ ○
+Product code:305001000078
+WiFi Module
+○ ○ ○
+Product code:(under development)
+Centralized Controller
+(up to 36 indoor unit) CE52–24/F(C)
+○ ○ ○
+Product code:MC207052
+Modbus Gateway ME50-00/EG(M)
+○ ○ ○
+Product code:NC20000010
+Dry Contact Gateway
+○ ○ ○
+Product code:(under development)
+JS13
+○ ○ ○
+Product code:NC25000030
+Gate control LE60-24/H1
+○ ○ ○
+Product code:NC20700210
+the Communication Wire of Indoor Unit and
+○ ○ ○
+Outdoor Unit
+the Communication Wire of Indoor Unit and
+○ ○ ○
+Wire Controller
+Note: ●means standard, ○means optional.
+Gree reserves the right to modify the specifications without prior notice. Please confirm the final specifications
+with our local distributor.
+126
+
+SJ00592076

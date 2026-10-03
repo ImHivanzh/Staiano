@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1 --port 3015",
     "build": "next build",
@@ -15,13 +18,20 @@
     "test:e2e": "playwright test",
     "catalog:update:cordivari": "tsx scripts/catalog-import/radiators.ts --cordivari",
     "catalog:update:global": "tsx scripts/catalog-import/radiators.ts --global",
-    "catalog:update:ecoclima": "tsx scripts/catalog-import/ecoclima.ts"
+    "catalog:update:ecoclima": "tsx scripts/catalog-import/ecoclima.ts",
+    "postinstall": "node scripts/sync-pdf-worker.mjs",
+    "catalog:update:hvac": "tsx scripts/catalog-import/hvac.ts",
+    "catalog:update:split": "tsx scripts/catalog-import/split.ts",
+    "dwg:build": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File deploy/build-dwg.ps1"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "@react-three/drei": "^10.7.0",
     "@react-three/fiber": "^9.5.0",
+    "dxf-parser": "^1.1.2",
     "next": "16.3.8",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "three": "^0.183.0",

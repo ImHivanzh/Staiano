@@ -3,6 +3,21 @@ import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { airTerminalCatalogSchema } from "@/domain/catalogs/air-terminal-schema";
 import { acousticUpperBound, sizeAirTerminal } from "./size";
 const family = airTerminalCatalog.families[0];
+it("EADD published airflow ranges remain auditable but do not invent acoustic operating points", () => {
+  const eadd = airTerminalCatalog.families.find(
+    (f) => f.familyCode === "EADD",
+  )!;
+  expect(
+    eadd.variants.find((v) => v.id === "ecoclima-eadd-80")
+      ?.publishedAirflowRangeM3h,
+  ).toEqual([15, 60]);
+  expect(
+    eadd.variants.find((v) => v.id === "ecoclima-eadd-200")
+      ?.publishedAirflowRangeM3h,
+  ).toEqual([240, 350]);
+  expect(eadd.variants.every((v) => v.operatingPoints.length === 0)).toBe(true);
+  expect(sizeAirTerminal(40, 1, eadd, "supply")).toEqual([]);
+});
 describe("EVVMC celle ufficiali senza interpolazione", () => {
   it("normalizza sei diametri, conserva apertura negativa e rumore", () => {
     const f = airTerminalCatalog.families.find(

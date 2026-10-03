@@ -880,3 +880,61 @@ input[type="checkbox"] {
   background: var(--carta-3);
   color: var(--testo-tenue);
 }
+.pannello-canalizzato,
+.pannello-terminali {
+  border-top: 1px solid var(--bordo);
+  margin-top: 24px;
+  padding-top: 8px;
+}
+.pannello-canalizzato fieldset {
+  padding: 12px;
+  border: 1px solid var(--bordo);
+  border-radius: var(--r-p);
+  margin: 16px 0;
+}
+.pannello-canalizzato legend {
+  font-size: 12px;
+}
+.ambiente-servito {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 12px;
+  margin: 8px 0;
+}
+.gallery-stanza {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.gallery-stanza .stile-terminale {
+  padding: 10px;
+}
+.gallery-stanza .stile-terminale img {
+  height: 70px;
+}
+.terminale-pianta {
+  cursor: move;
+  fill: var(--tinta-tenue);
+  stroke: var(--tinta);
+}
+.terminale-pianta.return {
+  fill: var(--verde-tenue);
+  stroke: var(--verde);
+}
+.terminale-pianta.scelto {
+  stroke: var(--marchio-blu);
+  fill: var(--tinta-linea);
+}
+.anteprima-modello {
+  width: 100%;
+  height: 430px;
+  margin: 20px 0;
+  border: 1px solid var(--bordo);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.tabella-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 16px 0;
+}

@@ -4,7 +4,7 @@ export const sourceMetadataSchema = z.object({
   sourceUrl: z.url(),
   sourceType: z.enum(["pdf", "html", "excel"]),
   documentRevision: z.string().nullable(),
-  retrievedAt: z.iso.datetime({ offset: true }),
+  retrievedAt: z.iso.datetime({ offset: true }).nullable(),
   importedAt: z.iso.datetime({ offset: true }),
   sha256: z.string().length(64),
   page: z.number().int().positive().nullable(),

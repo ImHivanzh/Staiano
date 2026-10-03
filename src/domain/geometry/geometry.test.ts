@@ -32,6 +32,81 @@ const rectangle = () => {
   });
 };
 describe("geometria e creazione manuale", () => {
+  it("snap parallelo e a45° conservano la direzione scelta e la distanza", () => {
+    const wall = {
+      ...rectangle().walls[0],
+      start: { x: 0, y: 0 },
+      end: { x: 4, y: 2 },
+    };
+    const options = {
+      enabled: true,
+      orthogonal: false,
+      parallel: true,
+      angle45: false,
+      grid: false,
+      stepM: 0.1,
+      toleranceM: 0.15,
+    };
+    const anchor = { x: 10, y: 10 },
+      point = { x: 14, y: 12.08 };
+    const parallel = snapPoint(point, [wall], anchor, options).point;
+    expect((parallel.y - anchor.y) / (parallel.x - anchor.x)).toBeCloseTo(
+      0.5,
+      8,
+    );
+    expect(distance(anchor, parallel)).toBeCloseTo(distance(anchor, point), 8);
+    const diagonal = snapPoint({ x: 14, y: 13.97 }, [], anchor, {
+      ...options,
+      parallel: false,
+      angle45: true,
+    }).point;
+    expect(diagonal.x - anchor.x).toBeCloseTo(diagonal.y - anchor.y, 8);
+  });
+  it("ogni parte di una stanza divisa eredita altezza e impianto originali", () => {
+    const p = rectangle();
+    const original = updateRoom(p, p.rooms[0].id, {
+      heightM: 3.4,
+      systemType: "ducted",
+    });
+    const divided = addWall(
+      original,
+      original.floors[0].id,
+      { x: 2, y: 0 },
+      { x: 2, y: 4.1 },
+    );
+    expect(divided.rooms).toHaveLength(2);
+    expect(
+      divided.rooms.every(
+        (room) => room.heightM === 3.4 && room.systemType === "ducted",
+      ),
+    ).toBe(true);
+    expect(
+      divided.rooms.every(
+        (room) => room.designLoadW === room.netAreaM2 * 3.4 * 35,
+      ),
+    ).toBe(true);
+  });
+  it("unione con altezze diverse richiede scelta esplicita e aggiorna volume/carico", () => {
+    const p = rectangle();
+    const adjacent = addAdjacentRoom(p, p.walls[1].id, 3, "Camera", 2.9);
+    expect(() =>
+      mergeRooms(adjacent, adjacent.rooms[0].id, adjacent.rooms[1].id),
+    ).toThrow(/altezze diverse/);
+    const merged = mergeRooms(
+      adjacent,
+      adjacent.rooms[0].id,
+      adjacent.rooms[1].id,
+      2.8,
+    );
+    expect(merged.rooms).toHaveLength(1);
+    expect(merged.rooms[0].heightM).toBe(2.8);
+    expect(merged.rooms[0].volumeM3).toBeCloseTo(
+      merged.rooms[0].netAreaM2 * 2.8,
+    );
+    expect(merged.rooms[0].designLoadW).toBeCloseTo(
+      merged.rooms[0].netAreaM2 * 2.8 * 35,
+    );
+  });
   it("calcola rettangolo e poligono irregolare", () => {
     expect(
       area([
@@ -113,13 +188,16 @@ describe("geometria e creazione manuale", () => {
     expect(p.rooms[0].netAreaM2).toBeLessThan(18);
     expect(p.rooms[0].netAreaM2).toBeGreaterThan(16);
   });
-  it("nessuna stanza per contorno aperto; avviso chiusura", () => {
+  it("contorno aperto mantiene ultima stanza come geometria non risolta", () => {
     const p = rectangle();
     const next = recomputeProject({ ...p, walls: p.walls.slice(0, 3) });
-    expect(next.rooms).toHaveLength(0);
+    expect(next.rooms).toHaveLength(1);
+    expect(next.rooms[0].geometryStatus).toBe("unresolved");
     expect(
       validateProject(next).some(
-        (c) => c.code === "closure" && c.status === "warning",
+        (c) =>
+          (c.code === "closure" || c.code === "geometry") &&
+          c.status !== "valid",
       ),
     ).toBe(true);
   });

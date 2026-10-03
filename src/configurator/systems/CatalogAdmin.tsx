@@ -2,6 +2,10 @@
 import { radiatorCatalogs } from "@/domain/catalogs/radiators";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { AirTerminalCalculator } from "./AirTerminalCalculator";
+import { Models3DPanel } from "./Models3DPanel";
+import { hvacCatalog } from "@/domain/catalogs/hvac";
+import { splitCatalog } from "@/domain/catalogs/splits";
+import { CommercialCatalog } from "./CommercialCatalog";
 export function CatalogAdmin() {
   return (
     <main className="pagina cataloghi">
@@ -10,6 +14,64 @@ export function CatalogAdmin() {
         Snapshot verificati. I calcoli usano dati locali e non richiedono
         Internet.
       </p>
+      <Models3DPanel />
+      <CommercialCatalog />
+      <section className="catalogo-scheda">
+        <h3>Climatizzazione · cataloghi locali</h3>
+        <p className="nota">
+          Canalizzato: {hvacCatalog.products.length} abbinamenti reali ·{" "}
+          {hvacCatalog.version}
+          <br />
+          Split: {splitCatalog.indoorUnits.length} modelli interni e{" "}
+          {splitCatalog.combinations.length} combinazioni mono/multi pubblicate
+          · {splitCatalog.version}
+        </p>
+        {["Daikin", "Mitsubishi Electric", "Gree"].map((brand) => {
+          const units = splitCatalog.indoorUnits.filter(
+            (unit) => unit.manufacturer === brand,
+          );
+          const sources = [
+            ...new Map(
+              units.map((unit) => [
+                unit.sourceMetadata.sourceUrl,
+                unit.sourceMetadata,
+              ]),
+            ).values(),
+          ];
+          return (
+            <div key={brand}>
+              <h4>{brand}</h4>
+              <p className="nota">
+                {units.length} modelli split ·{" "}
+                {
+                  splitCatalog.combinations.filter(
+                    (c) => c.manufacturer === brand,
+                  ).length
+                }{" "}
+                abbinamenti approvati acquisiti
+              </p>
+              {sources.map((source) => (
+                <p className="nota" key={source.sha256}>
+                  <a href={source.sourceUrl} target="_blank" rel="noreferrer">
+                    Fonte ufficiale · {source.documentRevision}
+                  </a>
+                  <br />
+                  SHA256 {source.sha256.slice(0, 12)}… ·{" "}
+                  {source.retrievedAt
+                    ? new Date(source.retrievedAt).toLocaleDateString("it-IT")
+                    : "Data acquisizione non registrata"}
+                </p>
+              ))}
+            </div>
+          );
+        })}
+        <p className="nota">
+          Combinazioni multisplit controllate sulle tabelle del produttore,
+          comprese le capacità per singola unità. Una fonte regionale non
+          conferma disponibilità commerciale in Italia; i codici restano quelli
+          pubblicati.
+        </p>
+      </section>
       <section className="catalogo-scheda">
         <h3>Ecoclima · {airTerminalCatalog.version}</h3>
         <p className="nota">
@@ -70,9 +132,11 @@ export function CatalogAdmin() {
                         </small>
                       </td>
                       <td>
-                        {new Date(source.retrievedAt).toLocaleDateString(
-                          "it-IT",
-                        )}
+                        {source.retrievedAt
+                          ? new Date(source.retrievedAt).toLocaleDateString(
+                              "it-IT",
+                            )
+                          : "Non registrata"}
                       </td>
                     </tr>
                   );
@@ -82,8 +146,8 @@ export function CatalogAdmin() {
           </table>
           <p className="nota">
             Codici delle configurazioni complete non disponibili nello snapshot:
-            nessun codice commerciale inventato. Global: pressione e temperatura
-            massime non ancora normalizzate. Cordivari: ingombro con tappi,
+            nessun codice commerciale inventato. Global: limiti di esercizio
+            acquisiti dalle istruzioni originali. Cordivari: ingombro con tappi,
             valvole escluse.
           </p>
         </section>

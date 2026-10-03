@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Project, Room } from "@/schemas/project";
 import {
   radiatorCatalogs,
   radiatorProducts,
 } from "@/domain/catalogs/radiators";
-import { sizeRadiators, type RadiatorSolution } from "@/domain/radiators/size";
+import {
+  type RadiatorSolution,
+  type RadiatorProgress,
+} from "@/domain/radiators/size";
+import { sizeRadiatorsInWorker } from "@/domain/radiators/size-client";
 import { applyRadiatorSolution } from "@/domain/radiators/apply";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber, numberFromForm } from "@/utils/format";
@@ -16,18 +20,52 @@ export function RadiatorPanel({
   room: Room;
   project: Project;
 }) {
-  const [manufacturer, setManufacturer] = useState("Cordivari"),
+  const installed = project.radiators.filter(
+    (radiator) => radiator.roomId === room.id,
+  );
+  const savedManufacturer =
+    new Set(installed.map((radiator) => radiator.manufacturer)).size === 1
+      ? (installed[0]?.manufacturer ?? "")
+      : "";
+  const savedFamily =
+    new Set(installed.map((radiator) => radiator.family)).size === 1
+      ? (installed[0]?.family ?? "")
+      : "";
+  const [manufacturer, setManufacturer] = useState(savedManufacturer),
     [solutions, setSolutions] = useState<RadiatorSolution[] | null>(null),
-    [wallId, setWallId] = useState<string | null>(null);
+    [solutionSignature, setSolutionSignature] = useState<string | null>(null),
+    [wallId, setWallId] = useState<string | null>(null),
+    [searching, setSearching] = useState(false),
+    [progress, setProgress] = useState<RadiatorProgress | null>(null);
+  const searchController = useRef<AbortController | null>(null);
+  const requestId = useRef(0);
+  useEffect(
+    () => () => {
+      searchController.current?.abort();
+    },
+    [room.id, room.designLoadW, room.heightM, room.geometryStatus],
+  );
+  const roomSignature = `${room.id}|${room.designLoadW}|${room.heightM}|${room.geometryStatus}`;
+  const visibleSolutions =
+    solutionSignature === roomSignature ? solutions : null;
   const { commit, setError } = useProjectStore();
   const families = [
     ...new Set(
       radiatorProducts
-        .filter((p) => p.manufacturer === manufacturer)
+        .filter((p) => !manufacturer || p.manufacturer === manufacturer)
         .map((p) => p.family),
     ),
   ];
-  const installed = project.radiators.filter((r) => r.roomId === room.id);
+  if (room.geometryStatus === "unresolved")
+    return (
+      <section className="pannello-radiatori">
+        <h3>Dimensiona radiatori</h3>
+        <p className="avviso attenzione">
+          Chiudi il contorno della stanza: superficie e fabbisogno devono essere
+          ricalcolati.
+        </p>
+      </section>
+    );
   if (!project.floors.find((f) => f.id === room.floorId)?.scaleVerified)
     return (
       <section className="pannello-radiatori">
@@ -37,51 +75,90 @@ export function RadiatorPanel({
         </p>
       </section>
     );
-  function search(e: React.FormEvent<HTMLFormElement>) {
+  async function search(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget),
       optional = (name: string) =>
         data.get(name) ? numberFromForm(data.get(name)) : undefined;
     const selectedWall = String(data.get("wallId"));
     setWallId(selectedWall || null);
+    searchController.current?.abort();
+    const controller = new AbortController();
+    searchController.current = controller;
+    const currentRequest = ++requestId.current;
+    setSearching(true);
+    setSolutions(null);
+    setProgress(null);
     try {
-      setSolutions(
-        sizeRadiators(
-          room.designLoadW,
-          radiatorProducts,
-          numberFromForm(data.get("deltaT")),
-          {
-            manufacturer,
-            family: String(data.get("family")),
-            numberOfRadiators: numberFromForm(data.get("number")),
-            maxWidthMm: optional("maxWidth"),
-            maxHeightMm: optional("maxHeight"),
-            maxDepthMm: optional("maxDepth"),
-            minElements: optional("minElements"),
-            maxElements: optional("maxElements"),
-          },
-        ),
+      const found = await sizeRadiatorsInWorker(
+        room.designLoadW,
+        radiatorProducts,
+        numberFromForm(data.get("deltaT")),
+        {
+          manufacturer,
+          family: String(data.get("family")),
+          numberOfRadiators: data.get("number")
+            ? numberFromForm(data.get("number"))
+            : 1,
+          maxWidthMm: optional("maxWidth"),
+          maxHeightMm: Math.min(
+            optional("maxHeight") ?? Infinity,
+            room.heightM * 1000 - 100,
+          ),
+          maxDepthMm: optional("maxDepth"),
+          minElements: optional("minElements"),
+          maxElements: optional("maxElements"),
+        },
+        controller.signal,
+        (value) => {
+          if (currentRequest === requestId.current) setProgress(value);
+        },
       );
+      if (currentRequest !== requestId.current) return;
+      setSolutions(found);
+      setSolutionSignature(roomSignature);
       setError(null);
     } catch (e) {
+      if (
+        currentRequest !== requestId.current ||
+        (e instanceof DOMException && e.name === "AbortError")
+      )
+        return;
       setError(
         e instanceof Error ? e.message : "Dimensionamento radiatori fallito.",
       );
+    } finally {
+      if (currentRequest === requestId.current) setSearching(false);
     }
   }
   return (
     <section className="pannello-radiatori">
       <h3>Dimensiona radiatori</h3>
       <p className="nota">
+        Quota iniziale di disegno: base a 0,10 m dal pavimento. Verificare le
+        distanze di installazione nelle istruzioni del modello.
+      </p>
+      <p className="nota">
         Cataloghi ufficiali locali. Famiglia scelta dall&apos;operatore.
       </p>
-      <form onSubmit={search} onChange={() => setSolutions(null)}>
+      <form
+        onSubmit={search}
+        onChange={() => {
+          searchController.current?.abort();
+          requestId.current++;
+          setSearching(false);
+          setSolutions(null);
+          setProgress(null);
+        }}
+      >
         <label className="campo">
           <span>Marca radiatori</span>
           <select
+            aria-label="Marca radiatori"
             value={manufacturer}
             onChange={(e) => setManufacturer(e.target.value)}
           >
+            <option value="">Qualsiasi marca</option>
             {radiatorCatalogs.map((c) => (
               <option key={c.manufacturer}>{c.manufacturer}</option>
             ))}
@@ -89,7 +166,13 @@ export function RadiatorPanel({
         </label>
         <label className="campo">
           <span>Famiglia radiatori</span>
-          <select key={manufacturer} name="family">
+          <select
+            key={manufacturer}
+            name="family"
+            aria-label="Famiglia radiatori"
+            defaultValue={manufacturer === savedManufacturer ? savedFamily : ""}
+          >
+            <option value="">Qualsiasi famiglia</option>
             {families.map((f) => (
               <option key={f}>{f}</option>
             ))}
@@ -100,12 +183,13 @@ export function RadiatorPanel({
             <span>Numero radiatori</span>
             <input
               name="number"
+              aria-label="Numero radiatori"
               type="number"
               min="1"
               max="10"
-              defaultValue="1"
-              required
+              defaultValue={installed.length || 1}
             />
+            <small className="nota">Se vuoto: 1 radiatore.</small>
           </label>
           <label className="campo">
             <span>ΔT progetto (K)</span>
@@ -158,51 +242,93 @@ export function RadiatorPanel({
             </label>
           </div>
         </details>
-        <button className="bottone chiara" type="submit">
-          Trova radiatori compatibili
+        <button className="bottone chiara" type="submit" disabled={searching}>
+          {searching ? "Ricerca radiatori…" : "Trova radiatori compatibili"}
         </button>
+        {searching && (
+          <button
+            className="bottone piccolo"
+            type="button"
+            onClick={() => {
+              searchController.current?.abort();
+              requestId.current++;
+              setSearching(false);
+              setProgress(null);
+            }}
+          >
+            Annulla ricerca
+          </button>
+        )}
       </form>
-      {solutions?.length === 0 && (
+      {searching && (
+        <p className="nota" role="status">
+          Ricerca completa in corso.
+          {progress
+            ? ` ${progress.phase} · ${formatNumber(progress.states, 0)} stati verificati.${progress.bestPowerW !== null ? ` Potenza provvisoria ${formatNumber(progress.bestPowerW)} W.` : ""}`
+            : " Preparazione calcolo…"}{" "}
+          Le soluzioni saranno applicabili al termine della verifica.
+        </p>
+      )}
+      {visibleSolutions?.length === 0 && (
         <div className="avviso attenzione">
           Nessuna configurazione commerciale soddisfa fabbisogno e vincoli.
           Aumenta numero radiatori o modifica i vincoli.
         </div>
       )}
-      {solutions?.slice(0, 3).map((solution, index) => (
-        <div className="soluzione-radiatore" key={solution.variant.id}>
+      {visibleSolutions?.slice(0, 3).map((solution, index) => (
+        <div
+          className="soluzione-radiatore"
+          key={solution.units
+            .map((u) => `${u.variant.id}:${u.elements}`)
+            .join("|")}
+        >
           <span className="etichetta tinta">
             {index === 0 ? "Consigliata" : `Alternativa ${index}`}
           </span>
-          <h3>{solution.variant.model}</h3>
+          <h3>
+            {[
+              ...new Set(solution.units.map((u) => u.variant.manufacturer)),
+            ].join(" + ")}{" "}
+            ·{" "}
+            {new Set(solution.units.map((u) => u.variant.id)).size > 1
+              ? `${[...new Set(solution.units.map((u) => u.variant.family))].join(" + ")} · combinazione mista`
+              : solution.variant.model}
+          </h3>
           <p>
             {solution.elements.length} radiatori ·{" "}
             {solution.elements.join(" + ")} elementi
-            {solution.variant.columns
-              ? ` · ${solution.variant.columns} colonne`
-              : ""}
           </p>
           <strong>
             {formatNumber(solution.totalPowerW / 1000)} kW · +
             {formatNumber(solution.marginPercent, 1)}%
           </strong>
-          <p className="nota">
-            Larghezze: {solution.widthsMm.join(" / ")} mm
-            <br />
-            Altezza: {solution.variant.heightMm} mm · Profondità:{" "}
-            {solution.variant.depthMm} mm
-            <br />
-            Interasse: {solution.variant.interaxisMm} mm · ΔT {solution.deltaTK}{" "}
-            K<br />
-            Peso:{" "}
-            {solution.variant.weightKg === null
-              ? "Dato non disponibile"
-              : `${formatNumber(solution.variant.weightKg * solution.elements.reduce((a, b) => a + b, 0))} kg`}
-            <br />
-            Acqua:{" "}
-            {solution.variant.waterContentL === null
-              ? "Dato non disponibile"
-              : `${formatNumber(solution.variant.waterContentL * solution.elements.reduce((a, b) => a + b, 0))} l`}
-          </p>
+          {solution.units.map((unit, unitIndex) => (
+            <p className="nota" key={unitIndex}>
+              {unitIndex + 1}. {unit.variant.manufacturer} {unit.variant.model}{" "}
+              · {unit.elements} elementi
+              {unit.variant.columns ? ` · ${unit.variant.columns} colonne` : ""}
+              <br />
+              Ingombro L × H × P: {unit.widthMm} × {unit.variant.heightMm} ×{" "}
+              {unit.variant.depthMm} mm
+              <br />
+              Interasse: {unit.variant.interaxisMm} mm ·{" "}
+              {formatNumber(unit.powerW)} W a ΔT {solution.deltaTK} K<br />
+              Peso:{" "}
+              {unit.variant.weightKg === null
+                ? "Dato non disponibile"
+                : `${formatNumber(unit.variant.weightKg * unit.elements)} kg`}{" "}
+              · Acqua:{" "}
+              {unit.variant.waterContentL === null
+                ? "Dato non disponibile"
+                : `${formatNumber(unit.variant.waterContentL * unit.elements)} l`}
+            </p>
+          ))}
+          {!solution.searchComplete && (
+            <p className="avviso attenzione">
+              Risultato non definitivo. Attendere il completamento della ricerca
+              prima di applicare la soluzione.
+            </p>
+          )}
           <details>
             <summary>Calcolo e fonte</summary>
             {solution.log.map((line, i) => (
@@ -210,18 +336,29 @@ export function RadiatorPanel({
                 {line}
               </p>
             ))}
-            <p className="nota">{solution.variant.widthNote}</p>
-            <a
-              className="fonte-catalogo"
-              href={solution.variant.sourceMetadata.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Scheda originale produttore
-            </a>
+            {[
+              ...new Map(
+                solution.units.map((u) => [u.variant.id, u.variant]),
+              ).values(),
+            ].map((variant) => (
+              <div key={variant.id}>
+                <p className="nota">
+                  {variant.model}: {variant.widthNote}
+                </p>
+                <a
+                  className="fonte-catalogo"
+                  href={variant.sourceMetadata.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Scheda originale produttore · {variant.model}
+                </a>
+              </div>
+            ))}
           </details>
           <button
             className="bottone pieno"
+            disabled={!solution.searchComplete}
             onClick={() => {
               commit((p) =>
                 applyRadiatorSolution(p, room.id, solution, wallId),

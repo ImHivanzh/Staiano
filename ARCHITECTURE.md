@@ -85,3 +85,52 @@ Un avvio locale su 127.0.0.1:3015; futura pubblicazione separata dal dominio.
 - https://github.com/gdsestimating/dxf-parser (licenza MIT)
 - https://github.com/mozilla/pdf.js (licenza Apache-2.0)
 - https://github.com/Hopding/pdf-lib (licenza MIT)
+
+## ADR 008 — conservazione e revisioni
+
+Schema v2 conserva il contorno precedente con geometryStatus=unresolved quando
+un edit apre o invalida una stanza. Non cancella apparecchi; sizing e totali
+correnti richiedono geometria chiusa. Eliminare esplicitamente una stanza elimina
+i relativi dispositivi con conferma/undo. Divisione eredita altezza e metadati;
+unione con altezze diverse richiede una quota risultante scelta dall’operatore.
+
+Le istanze portano la revisione esatta del catalogo. Registry storici per
+radiatori, Ecoclima, canalizzati e split impediscono di validare contro una
+revisione nuova. Legacy senza quota/montaggio/punto resta null/unknown e richiede
+riconfigurazione, mantenendo identità e dati salvati. Envelope fisici con quota
+verticale distinguono sovrapposizioni effettive dagli apparecchi sovrapposti in
+pianta a quote diverse.
+
+## ADR 009 — capacità split e asset
+
+Monosplit e multisplit sono cataloghi separati dal canalizzato. La selezione usa
+le capacità simultanee pubblicate per singola unità e combinazione approvata;
+non deduce compatibilità dalla somma nominale. Le anomalie di fonte sono
+quarantinate. La quota split iniziale (sommità0.10m sotto soffitto) è scelta di
+disegno esplicita, non distanza di installazione certificata dal produttore.
+
+OBJ Cordivari ufficiali convertiti in GLB con trasformazione rigida e mm→m,
+nessuno stretching. Mesh con quote discordanti usabili solo in preview; ingombro
+di progetto dal catalogo. Diritti di redistribuzione pubblica non presunti.
+
+PDF e CAD restano locali: worker PDF distribuito e sincronizzato postinstall;
+nessuna azione JavaScript PDF, XREF remoto, OCR o contenuto eseguito dall’import.
+
+## ADR010 — DWG permissivo locale
+
+ACadSharp3.8.0 MIT, package bloccato e DLL/notice/SHA distribuiti. Processo.NET
+isolato dal renderer e dal motore, nessuna shell, memoria512MB, job30s e
+input/output32MB. Il DXFUTF8prodotto passa nel worker esistente. Entità non
+supportate sono avvisi, mai reinterpretate con dati inventati. ODA commerciale
+resta disattivato; il parser MIT non richiede account o licenze a pagamento.
+Hostname e origine HTTPS Caddy sono controllati esplicitamente, inclusi header
+forwarded da host autorizzati. Host pubblici/esterni non accettati.
+
+## ADR011 — ottimalità e interazione
+
+Nessun budget di ricerca che trasformi un risultato provvisorio in definitivo.
+Lattice nominale dei decimali pubblicati e ricerca completa agli altriΔT;
+confronti su potenze originali, width/volume/bilanciamento, fonte per batteria.
+Workerprogresso/annullamento mantiene l’editor fluido. Se l’utente interrompe,
+nessun risultato incompleto è applicabile. Vincoli liberi non restringono
+silenziosamente marca/famiglia; dati installati ripristinati nel pannello.

@@ -1,19 +1,21 @@
 import { projectSchema, type Project } from "@/schemas/project";
 import { recomputeProject } from "@/domain/project";
+import { refreshDuctedBindings } from "@/domain/ducted/refresh";
+import { refreshSplitBindings } from "@/domain/air-conditioning/refresh";
 
 export const MAX_PROJECT_BYTES = 32 * 1024 * 1024;
 export function migrateProject(data: unknown): unknown {
   if (typeof data !== "object" || data === null || !("schemaVersion" in data))
     throw new Error("Formato progetto non riconosciuto.");
   const version = (data as { schemaVersion: unknown }).schemaVersion;
-  if (typeof version !== "number" || version > 1)
+  if (typeof version !== "number" || version > 2)
     throw new Error(
       "Versione progetto non supportata. Aggiornare l'applicazione.",
     );
   if (version === 0) {
     const old = data as Record<string, unknown>;
     // v0 stored the same geometry; v1 introduced separate supply/return counts.
-    return {
+    return migrateProject({
       ...old,
       schemaVersion: 1,
       rooms: Array.isArray(old.rooms)
@@ -23,9 +25,38 @@ export function migrateProject(data: unknown): unknown {
             returnPoints: r.returnPoints ?? 1,
           }))
         : old.rooms,
+    });
+  }
+  if (version === 1) {
+    const old = data as Record<string, unknown>;
+    return {
+      ...old,
+      schemaVersion: 2,
+      airTerminals: Array.isArray(old.airTerminals)
+        ? old.airTerminals.map((item: Record<string, unknown>) => ({
+            ...item,
+            systemId: item.systemId ?? null,
+            mounting: item.mounting ?? "unknown",
+            shape: item.shape ?? "unknown",
+            elevationM: item.elevationM ?? null,
+            operatingPointIndex: item.operatingPointIndex ?? null,
+            noiseUpperBoundDbA: item.noiseUpperBoundDbA ?? null,
+            noiseLabel:
+              item.noiseLabel ??
+              (item.noiseDbA == null
+                ? "Dato non disponibile"
+                : String(item.noiseDbA)),
+            pressureDropPa: item.pressureDropPa ?? null,
+            throwM: item.throwM ?? null,
+            openingMm: item.openingMm ?? null,
+            pointIndex: item.pointIndex ?? null,
+            unitIndex: item.unitIndex ?? null,
+            legacyUnverified: true,
+          }))
+        : [],
     };
   }
-  if (version !== 1)
+  if (version !== 2)
     throw new Error("Migration mancante per questa versione progetto.");
   return data;
 }
@@ -35,7 +66,9 @@ export function parseProject(data: unknown): Project {
     throw new Error(
       `Progetto non valido: ${parsed.error.issues[0]?.message ?? "schema errato"}.`,
     );
-  return recomputeProject(parsed.data);
+  return refreshSplitBindings(
+    refreshDuctedBindings(recomputeProject(parsed.data)),
+  );
 }
 export function decodeProject(text: string): Project {
   if (new TextEncoder().encode(text).byteLength > MAX_PROJECT_BYTES)
@@ -49,7 +82,13 @@ export function decodeProject(text: string): Project {
   return parseProject(data);
 }
 export function encodeProject(p: Project): string {
-  return JSON.stringify(projectSchema.parse(recomputeProject(p)), null, 2);
+  return JSON.stringify(
+    projectSchema.parse(
+      refreshSplitBindings(refreshDuctedBindings(recomputeProject(p))),
+    ),
+    null,
+    2,
+  );
 }
 export function downloadFile(name: string, data: Blob) {
   const url = URL.createObjectURL(data),

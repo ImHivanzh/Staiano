@@ -1,0 +1,6 @@
+# Imported inside the existing *.internal.staianopoint.com wildcard block.
+# The existing Let's Encrypt DNS-01 certificate and renewal policy cover this host.
+@hvac host hvac.internal.staianopoint.com
+handle @hvac {
+    reverse_proxy 127.0.0.1:3015
+}

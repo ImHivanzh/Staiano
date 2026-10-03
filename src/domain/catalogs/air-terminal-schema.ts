@@ -27,6 +27,13 @@ export const airTerminalVariantSchema = z.object({
   operatingPoints: z.array(operatingPointSchema),
   nominalDiameterMm: z.number().positive().optional(),
   originalDimensionsMm: z.record(z.string(), z.number().finite()).optional(),
+  publishedAirflowRangeM3h: z
+    .tuple([z.number().nonnegative(), z.number().positive()])
+    .refine(([low, high]) => low <= high)
+    .optional(),
+  faceWidthMm: z.number().positive().nullable().optional(),
+  faceHeightMm: z.number().positive().nullable().optional(),
+  bodyDepthMm: z.number().positive().nullable().optional(),
 });
 export const airTerminalFamilySchema = z.object({
   manufacturer: z.string().min(1),
@@ -41,6 +48,9 @@ export const airTerminalFamilySchema = z.object({
   operatingConditions: z.string(),
   variants: z.array(airTerminalVariantSchema).min(1),
   sourceMetadata: sourceMetadataSchema,
+  mountings: z.array(z.enum(["wall", "ceiling"])).optional(),
+  shape: z.enum(["rectangle", "circle"]).optional(),
+  geometryNote: z.string().optional(),
 });
 export const airTerminalCatalogSchema = z
   .object({

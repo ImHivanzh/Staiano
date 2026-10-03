@@ -7,8 +7,23 @@ import {
 } from "./geometry/primitives";
 import { overlappingPolygons } from "./geometry/rooms";
 import { roomWallSpan } from "./geometry/placement";
-import { radiatorProducts } from "./catalogs/radiators";
+import { radiatorProductAtVersion } from "./catalogs/radiators";
 import { elementOutputAtDeltaT, radiatorWidth } from "./radiators/size";
+import { airTerminalFamilyAtVersion } from "./catalogs/air-terminals";
+import { hvacProductAtVersion } from "./catalogs/hvac";
+import { ductedRoomAllocation } from "./ducted/apply";
+import { footprintInsideRoom } from "./geometry/footprint";
+import {
+  legacyTerminalCheck,
+  needsTerminalReconfiguration,
+} from "./air-terminals/legacy";
+import { validateSplitSystem } from "./air-conditioning/validate";
+import {
+  projectDeviceEnvelopes,
+  deviceEnvelopeInsideRoom,
+  deviceEnvelopesOverlap,
+} from "./geometry/device-envelope";
+import { deviceCodes } from "@/services/export/device-codes";
 export type Check = {
   code: string;
   status: "valid" | "warning" | "invalid";
@@ -17,6 +32,7 @@ export type Check = {
 };
 export function validateProject(p: Project): Check[] {
   const checks: Check[] = [];
+  const codes = deviceCodes(p);
   for (const f of p.floors)
     checks.push({
       code: "scale",
@@ -34,7 +50,11 @@ export function validateProject(p: Project): Check[] {
       ? `${badWalls.length} muri non validi`
       : `${p.walls.length} muri validi`,
   });
-  const used = new Set(p.rooms.flatMap((r) => r.wallIds));
+  const used = new Set(
+    p.rooms
+      .filter((r) => r.geometryStatus !== "unresolved")
+      .flatMap((r) => r.wallIds),
+  );
   const open = p.walls.filter((w) => !used.has(w.id));
   if (open.length)
     checks.push({
@@ -51,11 +71,15 @@ export function validateProject(p: Project): Check[] {
     });
   for (const r of p.rooms) {
     const valid =
-      area(r.polygon) > 0 && !selfIntersects(r.polygon) && r.heightM > 0;
+      r.geometryStatus !== "unresolved" &&
+      r.wallIds.length >= 3 &&
+      area(r.polygon) > 0 &&
+      !selfIntersects(r.polygon) &&
+      r.heightM > 0;
     checks.push({
       code: "geometry",
       status: valid ? "valid" : "invalid",
-      message: `${r.name || "Senza nome"}: geometria ${valid ? "valida" : "non valida"}`,
+      message: `${r.name || "Senza nome"}: geometria ${valid ? "valida" : r.geometryStatus === "unresolved" ? "da richiudere; ultimo contorno e apparecchi conservati" : "non valida"}`,
       entityId: r.id,
     });
     checks.push({
@@ -75,6 +99,20 @@ export function validateProject(p: Project): Check[] {
         entityId: r.id,
       });
     const radiators = p.radiators.filter((d) => d.roomId === r.id);
+    const systemKinds = new Set<string>(
+      p.hvacSystems.filter((s) => s.roomIds.includes(r.id)).map((s) => s.type),
+    );
+    if (radiators.length) systemKinds.add("radiator");
+    if (
+      systemKinds.size > 1 ||
+      p.hvacSystems.filter((system) => system.roomIds.includes(r.id)).length > 1
+    )
+      checks.push({
+        code: "multipleSystems",
+        status: "warning",
+        entityId: r.id,
+        message: `${r.name}: più impianti presenti; verificare gli apparecchi da mantenere.`,
+      });
     if (r.systemType === "radiator") {
       const outputW = radiators.reduce((sum, d) => sum + d.outputW, 0);
       checks.push({
@@ -86,6 +124,29 @@ export function validateProject(p: Project): Check[] {
     }
   }
   let overlap = 0;
+  for (const opening of p.openings) {
+    const wall = p.walls.find((w) => w.id === opening.wallId);
+    const height =
+      wall?.height ??
+      (Math.max(
+        0,
+        ...p.rooms
+          .filter((r) => r.wallIds.includes(opening.wallId))
+          .map((r) => r.heightM),
+      ) ||
+        p.projectSettings.defaultHeightM);
+    const valid =
+      wall &&
+      opening.offsetM + opening.widthM <=
+        distance(wall.start, wall.end) + 1e-7 &&
+      opening.heightM <= height + 1e-7;
+    checks.push({
+      code: "openingDimensions",
+      status: valid ? "valid" : "invalid",
+      entityId: opening.id,
+      message: `${opening.type === "door" ? "Porta" : "Finestra"}: apertura ${valid ? "entro lunghezza e altezza della parete" : "fuori dall’ingombro della parete; correggere le quote"}.`,
+    });
+  }
   for (let i = 0; i < p.rooms.length; i++)
     for (let j = i + 1; j < p.rooms.length; j++)
       if (
@@ -125,8 +186,109 @@ export function validateProject(p: Project): Check[] {
         entityId: d.id,
       });
   }
+  const envelopes = projectDeviceEnvelopes(p);
+  for (const envelope of envelopes) {
+    const room = p.rooms.find((r) => r.id === envelope.roomId);
+    const ceiling = p.airTerminals.some(
+      (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
+    );
+    checks.push({
+      code: "deviceEnvelope",
+      status:
+        room && deviceEnvelopeInsideRoom(envelope, room, ceiling)
+          ? "valid"
+          : "invalid",
+      entityId: envelope.deviceId,
+      message: `${codes.get(envelope.deviceId)}: ingombro completo entro la stanza e quota di installazione`,
+    });
+  }
+  const collisions = new Map<string, { count: number; peers: string[] }>();
+  for (let i = 0; i < envelopes.length; i++)
+    for (let j = i + 1; j < envelopes.length; j++) {
+      if (!deviceEnvelopesOverlap(envelopes[i], envelopes[j])) continue;
+      for (const [current, other] of [
+        [envelopes[i], envelopes[j]],
+        [envelopes[j], envelopes[i]],
+      ]) {
+        const hit = collisions.get(current.deviceId) ?? { count: 0, peers: [] };
+        hit.count++;
+        if (hit.peers.length < 3) hit.peers.push(codes.get(other.deviceId)!);
+        collisions.set(current.deviceId, hit);
+      }
+    }
+  for (const [id, hit] of collisions)
+    checks.push({
+      code: "deviceCollision",
+      status: "invalid",
+      entityId: id,
+      message: `${codes.get(id)}: ${hit.count} sovrapposizioni fisiche con ${hit.peers.join(", ")}${hit.count > hit.peers.length ? ` e altri ${hit.count - hit.peers.length} apparecchi` : ""}.`,
+    });
+  for (const system of p.hvacSystems.filter((s) => s.type === "split"))
+    checks.push(...validateSplitSystem(p, system));
+  for (const system of p.hvacSystems.filter((s) => s.type === "ducted")) {
+    const product = hvacProductAtVersion(
+        system.productId,
+        system.catalogVersion,
+      ),
+      load = p.rooms
+        .filter((r) => system.roomIds.includes(r.id))
+        .reduce((n, r) => n + r.designLoadW, 0);
+    checks.push({
+      code: "machineCatalog",
+      status: product?.pairingVerified ? "valid" : "invalid",
+      message: `${product?.indoorModel ?? system.productId}: abbinamento da catalogo`,
+      entityId: system.id,
+    });
+    checks.push({
+      code: "machinePower",
+      status:
+        product &&
+        product.coolingCapacityW >= load &&
+        (product.heatingCapacityW ?? 0) >= load
+          ? "valid"
+          : "invalid",
+      message: `${product?.indoorModel ?? system.productId}: capacità per carico ${Math.round(load)}W`,
+      entityId: system.id,
+    });
+    checks.push({
+      code: "machineAirflow",
+      status: product?.airflowOptions.some(
+        (f) => f.airflowM3h === system.airflowM3h,
+      )
+        ? "valid"
+        : "invalid",
+      message: `${system.productId}: portata da produttore`,
+      entityId: system.id,
+    });
+    for (const roomId of system.roomIds) {
+      const allocation = ductedRoomAllocation(p, roomId);
+      if (!allocation) continue;
+      for (const use of ["supply", "return"] as const) {
+        const terms = p.airTerminals.filter(
+            (t) =>
+              t.roomId === roomId &&
+              t.systemId === system.id &&
+              t.use === use &&
+              !needsTerminalReconfiguration(t),
+          ),
+          available = terms.reduce((n, t) => n + t.availableAirflowM3h, 0),
+          required = terms.reduce((n, t) => n + t.requiredAirflowM3h, 0);
+        checks.push({
+          code: `${use}Airflow`,
+          status:
+            terms.length &&
+            available >= allocation.airflowM3h &&
+            Math.abs(required - allocation.airflowM3h) < 1e-6
+              ? "valid"
+              : "invalid",
+          message: `${p.rooms.find((r) => r.id === roomId)?.name}: ${use === "supply" ? "mandata" : "ripresa"} ${Math.round(available)}m³/h / ${Math.round(allocation.airflowM3h)}m³/h`,
+          entityId: roomId,
+        });
+      }
+    }
+  }
   for (const r of p.radiators) {
-    const product = radiatorProducts.find((v) => v.id === r.productId);
+    const product = radiatorProductAtVersion(r.productId, r.catalogVersion);
     let expected: number | null = null;
     if (product)
       try {
@@ -172,17 +334,87 @@ export function validateProject(p: Project): Check[] {
       entityId: r.id,
     });
   }
-  for (const t of p.airTerminals)
+  for (const t of p.airTerminals) {
+    const legacyCheck = legacyTerminalCheck(t);
+    if (legacyCheck) {
+      checks.push(legacyCheck);
+      continue;
+    }
+    const family = airTerminalFamilyAtVersion(t.family, t.catalogVersion),
+      variant = family?.variants.find((v) => v.id === t.productId),
+      op =
+        t.operatingPointIndex === null
+          ? undefined
+          : variant?.operatingPoints[t.operatingPointIndex],
+      noise = t.noiseDbA ?? t.noiseUpperBoundDbA;
     checks.push({
       code: "noise",
-      status:
-        t.noiseDbA === null
-          ? "warning"
-          : t.noiseDbA <= 37
-            ? "valid"
-            : "invalid",
-      message: `${t.productId}: ${t.noiseDbA === null ? "rumore non disponibile" : `${t.noiseDbA} dB(A)`}`,
+      status: noise === null ? "warning" : noise <= 37 ? "valid" : "invalid",
+      message: `${t.productId}: ${noise === null ? "rumore non disponibile" : `${t.noiseLabel} dB(A)`}`,
       entityId: t.id,
     });
+    checks.push({
+      code: "terminalCatalog",
+      status:
+        op &&
+        op.quality === "valid" &&
+        op.noiseDbA === t.noiseDbA &&
+        op.noiseUpperBoundDbA === t.noiseUpperBoundDbA &&
+        op.pressureDropPa === t.pressureDropPa
+          ? "valid"
+          : "invalid",
+      message: `${t.productId}: dati originali del punto selezionato`,
+      entityId: t.id,
+    });
+    const expected = op
+      ? family?.isLinearPerMeter
+        ? ((op.airflowPerMeterM3h ?? 0) * t.widthMm) / 1000
+        : op.airflowM3h
+      : null;
+    checks.push({
+      code: "terminalCapacity",
+      status:
+        expected !== null &&
+        Math.abs(expected - t.availableAirflowM3h) < 1e-5 &&
+        t.availableAirflowM3h >= t.requiredAirflowM3h
+          ? "valid"
+          : "invalid",
+      message: `${t.productId}: portata sufficiente e verificata`,
+      entityId: t.id,
+    });
+    const room = p.rooms.find((r) => r.id === t.roomId);
+    if (t.mounting === "ceiling" && room)
+      checks.push({
+        code: "terminalFootprint",
+        status: footprintInsideRoom(
+          room,
+          t.position,
+          t.widthMm / 1000,
+          t.heightMm / 1000,
+          t.rotation,
+        )
+          ? "valid"
+          : "invalid",
+        message: `${t.productId}: ingombro entro il contorno stanza`,
+        entityId: t.id,
+      });
+    if (t.depthMm === null)
+      checks.push({
+        code: "terminalDepth",
+        status: "warning",
+        message: `${t.productId}: ingombro assiale completo non disponibile`,
+        entityId: t.id,
+      });
+    if (
+      op?.referenceLengthM &&
+      Math.abs(t.widthMm / 1000 - op.referenceLengthM) > 1e-7
+    )
+      checks.push({
+        code: "acousticReference",
+        status: "warning",
+        message: `${t.productId}: rumore riferito a ${op.referenceLengthM}m; linea reale ${t.widthMm / 1000}m da verificare`,
+        entityId: t.id,
+      });
+  }
   return checks;
 }

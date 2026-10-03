@@ -5,8 +5,25 @@ export async function readRaster(
   if (file.size > 15 * 1024 * 1024)
     throw new Error("Immagine troppo grande. Limite 15 MB.");
   if (!["image/png", "image/jpeg", "image/webp"].includes(file.type))
+    throw new Error("Usare PNG, JPEG o WebP per lo sfondo immagine.");
+  const signature = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+  const png =
+    signature[0] === 137 &&
+    signature[1] === 80 &&
+    signature[2] === 78 &&
+    signature[3] === 71;
+  const jpeg =
+    signature[0] === 255 && signature[1] === 216 && signature[2] === 255;
+  const webp =
+    String.fromCharCode(...signature.slice(0, 4)) === "RIFF" &&
+    String.fromCharCode(...signature.slice(8, 12)) === "WEBP";
+  if (
+    (file.type === "image/png" && !png) ||
+    (file.type === "image/jpeg" && !jpeg) ||
+    (file.type === "image/webp" && !webp)
+  )
     throw new Error(
-      "Usare PNG, JPEG o WebP. Import CAD/PDF previsto nelle prossime milestone.",
+      "Il contenuto del file non corrisponde al formato immagine dichiarato.",
     );
   const dataUrl = await new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
@@ -34,6 +51,6 @@ export async function readRaster(
     metersPerPixel: 10 / img.width,
     origin: { x: 0, y: 0 },
     opacity: 0.5,
-    filename: file.name,
+    filename: file.name.slice(0, 255),
   };
 }

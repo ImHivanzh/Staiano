@@ -63,7 +63,7 @@ describe("formato e archivio", () => {
       }),
     };
     const next = parseProject(old);
-    expect(next.schemaVersion).toBe(1);
+    expect(next.schemaVersion).toBe(2);
     expect(next.rooms[0].supplyPoints).toBe(1);
   });
   it("salva, ricarica, recupera precedente, duplica ed elimina", async () => {

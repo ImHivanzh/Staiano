@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CURRENT_SCHEMA_VERSION = 1;
+export const CURRENT_SCHEMA_VERSION = 2;
 const id = z.string().min(1).max(120);
 const finite = z.number().finite();
 export const pointSchema = z.object({
@@ -41,7 +41,8 @@ export const roomSchema = z.object({
   floorId: id,
   name: z.string().max(100),
   polygon: z.array(pointSchema).min(3).max(1000),
-  wallIds: z.array(id).min(3).max(1000),
+  wallIds: z.array(id).max(1000),
+  geometryStatus: z.enum(["closed", "unresolved"]).default("closed"),
   netAreaM2: finite.nonnegative(),
   perimeterM: finite.nonnegative(),
   centroid: pointSchema,
@@ -67,7 +68,7 @@ const placement = z.object({
 });
 export const projectSchema = z
   .object({
-    schemaVersion: z.literal(1),
+    schemaVersion: z.literal(2),
     id,
     name: z.string().trim().min(1).max(150),
     createdAt: z.iso.datetime(),
@@ -124,6 +125,25 @@ export const projectSchema = z
           noiseDbA: finite.nonnegative().nullable(),
           theoreticalLengthM: finite.positive().nullable(),
           family: z.string().max(100),
+          depthMm: finite.positive().nullable(),
+          systemId: id.nullable(),
+          mounting: z.enum(["wall", "ceiling", "unknown"]),
+          shape: z.enum(["rectangle", "circle", "unknown"]),
+          elevationM: finite.positive().max(30).nullable(),
+          operatingPointIndex: z
+            .number()
+            .int()
+            .nonnegative()
+            .max(500)
+            .nullable(),
+          noiseUpperBoundDbA: finite.nonnegative().nullable(),
+          noiseLabel: z.string().max(50),
+          pressureDropPa: finite.nonnegative().nullable(),
+          throwM: finite.nonnegative().nullable(),
+          openingMm: finite.nullable(),
+          pointIndex: z.number().int().nonnegative().max(100).nullable(),
+          unitIndex: z.number().int().nonnegative().max(1000).nullable(),
+          legacyUnverified: z.boolean().default(false),
         }),
       )
       .max(2000),
@@ -198,6 +218,20 @@ export const projectSchema = z
         ctx.addIssue({
           code: "custom",
           message: "Sistema con stanza inesistente",
+        });
+    for (const t of p.airTerminals)
+      if (
+        t.systemId &&
+        !p.hvacSystems.some(
+          (s) =>
+            s.id === t.systemId &&
+            s.type === "ducted" &&
+            s.roomIds.includes(t.roomId),
+        )
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Terminale senza sistema canalizzato coerente",
         });
   });
 

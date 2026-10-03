@@ -1,64 +1,91 @@
-# Verifica incremento — 3 ottobre 2026
+# Verifica del rilascio — 3 ottobre 2026
 
-## Prove eseguite
+Produzione: https://hvac.internal.staianopoint.com. Build `rIJ9Q0cKcLKDrGOZ5lOKh`.
+Node 24.14, Next 16.3.8, React 19.3, TypeScript strict.
 
-- `npm test`: 44 test su geometria netta, termico, connessioni, split/merge,
-  multipiano, schema/migrazione, IndexedDB, recovery, undo/redo, radiatori e aria.
-- `npm run typecheck`: TypeScript strict senza errori.
-- `npm run lint`: ESLint senza errori o warning all'ultima verifica completa.
-- `npm run build`: build produzione Next.js 16.3.8 riuscita.
-- `npm run test:e2e`: 5 flussi reali in Edge, tutti passati anche su produzione
-  `http://127.0.0.1:3016`, dopo rimozione del ciclo fra worker e codec.
-- Screenshot ispezionati: editor desktop1440 e tablet800, modello3D estruso,
-  gallery con foto ufficiali locali. Corrette leggibilità quote, icone e frame3D.
+## Gate
 
-## Flussi browser coperti
+- 129 unit test su 20 file superati.
+- TypeScript strict, ESLint senza warning/errori e build produzione superati.
+- 18 E2E Edge sull'ultima build HTTPS Caddy superati senza ignorare errori TLS.
+- Audit npm delle dipendenze runtime: zero vulnerabilità; NuGet senza segnalazioni.
+- Prettier: sorgenti, test e documenti principali conformi.
 
-1. Gallery Ecoclima: portata480m³/h,2punti, scelta indipendente EDLS/EBLF,
-   dati di lunghezza teorica/commerciale e fotografie caricate localmente.
-2. Radiatori: GlobalVIP,2apparecchi, dimensionamento, posizione, salvataggio,
-   reload e controlli distinti su prodotto, resa, potenza, ΔT e ingombro.
-3. Manuale: rettangolo netto5×4m, h2,70m,1890W; h3m produce2100W;
-   quota6×4m, undo/redo, import/export.hvacproj e3D senza errori JavaScript.
-4. File con versione futura: errore utile, progetto corrente conservato;
-   recupero autosave precedente e duplicazione da archivio.
-5. Editor800px: contorno libero pentagonale chiuso con cinque pareti;
-   nessun overflow orizzontale della pagina.
+Copertura browser: creazione manuale, rettangoli e forme irregolari, muro inclinato
+con quota di 4,23 m, quote e altezze, copia e spostamento stanza, undo e contorno
+aperto, archivio e recupero, import/export, gallery Ecoclima, radiatori, canalizzato,
+split, DXF/PDF, DWG nativo MIT e file danneggiato, dossier PDF, GLB ufficiali e
+smartphone a 390 px. Nessuna AI/OCR, login o dipendenza cloud obbligatoria.
 
-## Fonti e fixture reali
+## Cataloghi originali
 
-- Cordivari:135varianti Ardesia,27altezze×5colonne, revisioni2025 collegate
-  dal sito ufficiale. Tabelle per elemento, profondità66/107/148/189/230mm,
-  passo46mm e tappi+24mm verificati sui disegni originali.
-- Global:5VIP,7Oscar,7OscarTondo. Schede complete, listino giugno2026,
-  certificati ufficiali conservati; Km/n e dimensioni originali.
-- Ecoclima:5 famiglie normalizzate EDLS, EBLF, EGQ, ETA, EVVMC/EVVMB;144 varianti,
-  490 operating point.12punti discordanti restano originali e sono esclusi
-  dall'autoselezione. Limiti/intervalli acustici non diventano valori inventati.
-- URL,hashSHA256,revisioni e date in manifest,discovery e sourceMetadata.
-  Fonti non disponibili non vengono sostituite con dati da rivenditori.
+154 radiatori: 135 Ardesia a 2–6 colonne e 19 Global VIP/Oscar/Tondo. Vincoli
+reali e larghezze con tappi; Global 16 bar/110 °C dalle istruzioni ufficiali.
+Revisioni storiche conservate per le istanze salvate.
 
-## Limitazioni da chiudere prima del completamento generale
+Ecoclima: 7 famiglie, 160 varianti, 534 punti, 16 punti in quarantena. Foto originali
+locali, Q/m e unità discrete, limite acustico di 37 nel motore, lunghezze teoriche
+e commerciali e pose. EADD conserva le portate a intervallo; i punti acustici
+assenti non sono inventati. Nove pagine commerciali con prezzi originali restano
+separate dai calcoli e dalla distinta. Date HTML non registrate: null, esplicite
+nell'interfaccia e nel PDF.
 
-- Cataloghi e workflow canalizzato/split Daikin,MitsubishiElectric,Gree
-  ancora da implementare. Nessuna compatibilità multisplit inventata.
-- Terminali: calcolatore reale nel catalogo; assegnazione automatica da
-  macchina, persistenza delle scelte, posizionamento2D/3D ancora mancanti.
-- EVVMC/EVVMB: normalizzati sei diametri e celle raggruppate, incluse aperture negative del cono.
-  EADD/EGS: pagine originali individuate, prestazioni sufficienti non acquisite.
-- RumoreEDLS riferito a1m: rumore complessivo per altre lunghezze o più unità
-  rimane da verificare. EDLS ripresa non usa impropriamente dati di mandata.
-- Radiatori: combinazioni con numero elementi diverso, ma stessa variante
-  per stanza. Ricerca tra varianti miste ancora da estendere.
-- Vincoli valvole/accessori oltre ingombro con tappi, collisioni tra apparecchi
-  e aggiornamento posizione dopo ogni trasformazione geometrica da completare.
-- Import rasterPNG/JPEG/WebP e calibrazione presenti; PDF/DXF/DWG ancora mancanti.
-  DWG richiede scelta esplicita di parser/licenza o conversione esterna.
-- Worker importprogetto presente; benchmark100muri/50stanze/100apparecchi,
-  test su storagequota, testmobile, focusdialoghi e hardening ancora mancanti.
-- Dossier PDF, distinta materiali e screenshot esportabile ancora mancanti.
+21 abbinamenti canalizzati reali di tre marchi; 24 split e 2403 combinazioni
+mono/multi con capacità simultanee per stanza. SKU regionali e disponibilità
+italiana espliciti. 18 OBJ Ardesia convertiti in 24,8 MB di GLB, hash e dimensioni
+controllati. La larghezza mesh supera di 9,2 mm quella catalogata: anteprima
+disponibile, esclusa dalla posa verificata. Archivio Gree Revit acquisito,
+senza sostituire modelli estranei ai GUD. Nessun dato tecnico sintetico.
 
-## Stato operativo
+## Geometria, prestazioni e PDF
 
-Server sviluppo attivo su 3015. Build produzione verificata su 3016 e poi fermata. L'obiettivo resta
-attivo: questo report prova l'incremento, non il completamento dell'intero brief.
+Stanze nette, multipiano, adiacenza, divisione/unione, snap e misure verificati.
+La divisione eredita l'altezza; l'unione con altezze diverse richiede una scelta
+esplicita. La ricalibrazione conserva gli ingombri fisici. Contorni aperti
+conservano dati e apparecchi; lo stato irrisolto blocca il dimensionamento.
+Campi legacy ignoti restano null/unknown. Collisioni verificate in pianta e quota.
+
+Fixture con 200 muri, 50 stanze e 100 radiatori reali: ricalcolo, validazione,
+repository, reload e orbit 3D superati. Campionamento durante orbit: mediana
+frame 8,3 ms, P95 circa 8,6 ms, interazione 151 ms. Risultati riferiti alla macchina
+di verifica. Metriche in output/verification/browser-performance.json.
+
+Dossier reale di 11 pagine in output/pdf/staiano-dossier-verifica.pdf: copertina
+con logo, riepilogo, A3 vettoriale con codici e legenda, schede stanza, impianti,
+terminali, radiatori, materiali con locali e prestazioni, controlli, fonti con SHA
+e disclaimer richiesto. Tutte le pagine renderizzate e ispezionate; zero caratteri
+fuori pagina. Forme circolari, quote sconosciute e codici sopra gli ingombri verificati.
+
+## HTTPS Caddy
+
+DNS: 192.168.178.9. Caddy 2.11.4 usa il wildcard Let's Encrypt esistente con
+rinnovo DNS-01. Proxy HVAC verso 127.0.0.1:3015 aggiunto con ETag; nove route
+precedenti preservate. Il file principale differisce solo per l'import HVAC;
+backup conservato. Token Cloudflare protetto da ACL non letto o modificato.
+
+Verifica TLS standard senza bypass: SAN `*.internal.staianopoint.com`, scadenza
+4 dicembre 2026, home e logo HTTP 200, HSTS ereditato. Server produzione senza
+finestra; PID e build ID in .cache/production-server.json.
+Prova aggiornata in output/verification/https.json.
+
+## Ricerca e limiti dichiarati
+
+Il solver radiatori effettua ricerca completa fino alla prova di ottimalità oppure
+all'annullamento esplicito: nessun limite automatico di stati o timeout.
+A ΔT nominale usa una rappresentazione esatta dei decimali pubblicati; ad altri
+ΔT continua la ricerca completa nel worker. Potenze originali conservate, deficit
+vietato. Marca e famiglia libere permettono combinazioni fra produttori;
+ogni batteria conserva fonte e versione. Oracle brute force con 3–5 batterie
+a ΔT 50/40 e casi reali con 10 batterie verificati. La complessità può richiedere
+tempo, senza bloccare l'editor.
+
+DWG nativo con ACadSharp 3.8.0 MIT e .NET 8 o superiore locale: binario reale,
+layer e unità, stanza di 15,96 m², autosave e reload verificati via HTTPS.
+ODA commerciale disattivato; nessuna licenza ODA richiesta al parser MIT.
+Runtime di circa 1,4 MB, notice e hash inclusi. Helper con memoria di 512 MB,
+timeout di 30 s, input/output di 32 MB e controllo di host e origine.
+
+Versioni e proxy non supportati richiedono correzione o esportazione, senza
+geometrie inventate. Dati catalogo originali mancanti restano espliciti.
+Prima di redistribuire pubblicamente verificare i diritti degli asset produttore.
+Nessuna pubblicazione esterna eseguita. Audit completo in docs/REQUIREMENTS-AUDIT.md.

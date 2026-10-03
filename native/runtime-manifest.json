@@ -1,0 +1,34 @@
+{
+  "library": "ACadSharp",
+  "version": "3.8.0",
+  "license": "MIT",
+  "sourceCommit": "3a1c66b9932f9e2dbfbbf3f03660c97d52e49b02",
+  "packageUrl": "https://www.nuget.org/packages/ACadSharp/3.8.0",
+  "files": [
+    {
+      "name": "DwgBridge.dll",
+      "bytes": 10752,
+      "sha256": "26eceec57c6bbd48f8159b69161201785173910add7576683e864585bd68b976"
+    },
+    {
+      "name": "ACadSharp.dll",
+      "bytes": 1426944,
+      "sha256": "13544512673b3124a8d6452ab02a3a8e11d40da05a1c6a8b586c14da3b322d22"
+    },
+    {
+      "name": "DwgBridge.deps.json",
+      "bytes": 984,
+      "sha256": "ce5dddc85d13e546c7f96de02720b3b701686fbb55c5c7232a6bcd2ae85e03f4"
+    },
+    {
+      "name": "DwgBridge.runtimeconfig.json",
+      "bytes": 375,
+      "sha256": "c4a84cdd787cb31aaa46e8282f7d288f0641fdaa4252ac78979340131c8b9110"
+    },
+    {
+      "name": "ACadSharp-MIT.txt",
+      "bytes": 1072,
+      "sha256": "3ca5f3195b1f3056543596f7bb413bb143484c53ca9def699af8f7964f509190"
+    }
+  ]
+}

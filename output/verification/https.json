@@ -1,0 +1,27 @@
+{
+  "verifiedAt": "2026-10-03T19:59:19.1215607+02:00",
+  "domain": "hvac.internal.staianopoint.com",
+  "dns": "192.168.178.9",
+  "httpsStatus": 200,
+  "logoStatus": 200,
+  "issuer": "CN=YE1, O=Let's Encrypt, C=US",
+  "san": "Nome DNS=*.internal.staianopoint.com",
+  "expires": "2026-12-04T09:34:42.0000000+01:00",
+  "thumbprint": "0C4560097AC0AC71C057FF151102A2032BFAB02D",
+  "validation": "SslStream standard and Edge Playwright; no TLS bypass",
+  "runtimeRouteAdded": "staiano-hvac",
+  "otherRoutesPreserved": 9,
+  "serverBuild": "rIJ9Q0cKcLKDrGOZ5lOKh",
+  "unitTests": 129,
+  "httpsE2E": 18,
+  "dwg": {
+    "available": true,
+    "installed": true,
+    "licensed": true,
+    "engine": "acadsharp",
+    "converter": "ACadSharp 3.8.0",
+    "license": "MIT",
+    "odaCommercialEnabled": false,
+    "message": "Lettore DWG locale MIT disponibile. Verificare layer, assi e scala prima dell’importazione."
+  }
+}

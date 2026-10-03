@@ -1,0 +1,42 @@
+[
+  {
+    "name": "mitsubishi-pead",
+    "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/documents/import/scheda_tecnica_5027.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
+    "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
+    "pageCount": 2
+  },
+  {
+    "name": "daikin-residential-2025",
+    "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+    "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+    "pageCount": 300
+  },
+  {
+    "name": "gree-eu-catalogue",
+    "sourceUrl": "https://global.gree.com/upload/files/2022/4/2022_EU_Residential_Air_Conditioner_Catalogue.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T02:41:21.849601+00:00",
+    "sha256": "36b595e6b549afe032a2b6acf0da54fda9e5fd6d8ad5697b7e0cfbad196ac56d",
+    "pageCount": 53
+  },
+  {
+    "name": "gree-service",
+    "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/SM-NEW-U-MATCH_2022.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T02:41:35.885700+00:00",
+    "sha256": "e763a8517b9aa26f095432b9b7f0253ae0ffea65a0c5cfdeacd54af103ea3379",
+    "pageCount": 210
+  },
+  {
+    "name": "gree-technical-sales",
+    "sourceUrl": "https://gree-bulgaria.com/manuals/service/U-Match_6_technical_sales_guide.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
+    "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
+    "pageCount": 129
+  }
+]

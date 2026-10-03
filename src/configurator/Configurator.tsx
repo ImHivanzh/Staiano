@@ -30,14 +30,17 @@ import {
   createProject,
   duplicateProject,
   newId,
-  recomputeProject,
 } from "@/domain/project";
 import { validateProject } from "@/domain/validation";
-import { add } from "@/domain/geometry/primitives";
+import {
+  duplicateSelection,
+  removeSelection,
+} from "@/domain/geometry/selection";
 import { exportProject } from "@/services/project/format";
 import { importProjectFile } from "@/services/import/project-file";
 import { flushSave, repository, saveCurrent } from "@/services/project/session";
-import { readRaster } from "@/services/import/raster";
+import { applyPlanImport } from "@/domain/geometry/import-plan";
+import type { ImportedPlan } from "@/services/import/plan-types";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { Editor2D } from "./editor2d/Editor2D";
 import { Properties } from "./properties/Properties";
@@ -48,6 +51,13 @@ const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), {
   ssr: false,
   loading: () => <div className="vuoto">Caricamento modello 3D…</div>,
 });
+const PlanImportWizard = dynamic(
+  () =>
+    import("./import/PlanImportWizard").then(
+      (module) => module.PlanImportWizard,
+    ),
+  { ssr: false },
+);
 const tools: {
   id: Tool;
   label: string;
@@ -70,6 +80,9 @@ export function Configurator() {
   const [rectangleOpen, setRectangleOpen] = useState(false),
     [ready, setReady] = useState(false),
     [newDialog, setNewDialog] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
+  const [planFile, setPlanFile] = useState<File | undefined>(undefined);
   const fileInput = useRef<HTMLInputElement>(null),
     rasterInput = useRef<HTMLInputElement>(null),
     started = useRef(false);
@@ -157,65 +170,18 @@ export function Configurator() {
   }, []);
   function copySelection() {
     const store = useProjectStore.getState();
-    store.commit((p) => {
-      const chosen = new Set(
-        store.selection.flatMap((s) =>
-          s.kind === "wall"
-            ? [s.id]
-            : (p.rooms.find((r) => r.id === s.id)?.wallIds ?? []),
-        ),
-      );
-      const walls = p.walls
-        .filter((w) => chosen.has(w.id))
-        .map((w) => ({
-          ...w,
-          id: newId(),
-          start: add(w.start, { x: 1, y: 1 }),
-          end: add(w.end, { x: 1, y: 1 }),
-        }));
-      return recomputeProject({ ...p, walls: [...p.walls, ...walls] });
-    });
+    store.commit((project) => duplicateSelection(project, store.selection));
   }
   function deleteSelection() {
     const store = useProjectStore.getState();
     if (
       !store.selection.length ||
       !window.confirm(
-        "Eliminare gli elementi selezionati? Le stanze aperte saranno ricalcolate. Puoi annullare con Ctrl+Z.",
+        "Eliminare la selezione? Eliminare una stanza rimuove i suoi apparecchi; aprire un contorno conserva i dispositivi. Ctrl+Z annulla.",
       )
     )
       return;
-    store.commit((p) => {
-      const selectedRooms = new Set(
-        store.selection.filter((s) => s.kind === "room").map((s) => s.id),
-      );
-      const wallIds = new Set(
-        store.selection.filter((s) => s.kind === "wall").map((s) => s.id),
-      );
-      const deviceIds = new Set(
-        store.selection.filter((s) => s.kind === "device").map((s) => s.id),
-      );
-      for (const r of p.rooms.filter((r) => selectedRooms.has(r.id)))
-        for (const id of r.wallIds)
-          if (
-            !p.rooms.some(
-              (other) =>
-                !selectedRooms.has(other.id) && other.wallIds.includes(id),
-            )
-          )
-            wallIds.add(id);
-      return recomputeProject({
-        ...p,
-        walls: p.walls.filter((w) => !wallIds.has(w.id)),
-        rooms: p.rooms.filter((r) => !selectedRooms.has(r.id)),
-        radiators: p.radiators.filter((r) => !deviceIds.has(r.id)),
-        airTerminals: p.airTerminals.filter((r) => !deviceIds.has(r.id)),
-        hvacSystems: p.hvacSystems.map((system) => ({
-          ...system,
-          indoorUnits: system.indoorUnits.filter((r) => !deviceIds.has(r.id)),
-        })),
-      });
-    });
+    store.commit((project) => removeSelection(project, store.selection));
   }
   async function newProject(
     mode: "manual" | "import",
@@ -230,7 +196,10 @@ export function Configurator() {
       setPage("editor");
       setNewDialog(false);
       if (mode === "manual") setRectangleOpen(true);
-      else rasterInput.current?.click();
+      else {
+        setPlanFile(undefined);
+        setPlanOpen(true);
+      }
     } catch (e) {
       s.setError(
         e instanceof Error ? e.message : "Creazione progetto fallita.",
@@ -276,42 +245,30 @@ export function Configurator() {
       s.setError("Salvataggio con nome fallito.");
     }
   }
-  async function importRaster(file: File) {
-    try {
-      const background = await readRaster(file);
-      const state = useProjectStore.getState();
-      if (!state.project) return;
-      const floorId = state.activeFloorId;
-      if (
-        state.project.floors.find((f) => f.id === floorId)?.background &&
-        !window.confirm(
-          "Sostituire lo sfondo del piano? La geometria resta conservata.",
-        )
+  function importRaster(file: File) {
+    setPlanFile(file);
+    setPlanOpen(true);
+  }
+  function acceptPlan(plan: ImportedPlan) {
+    const state = useProjectStore.getState();
+    if (!state.project) return;
+    if (
+      plan.background &&
+      state.project.floors.find((f) => f.id === state.activeFloorId)
+        ?.background &&
+      !window.confirm(
+        "Sostituire lo sfondo del piano? La geometria resta conservata.",
       )
-        return;
-      s.commit((p) => ({
-        ...p,
-        floors: p.floors.map((f) =>
-          f.id === floorId ? { ...f, background, scaleVerified: false } : f,
-        ),
-        sourceFilesMetadata: [
-          ...p.sourceFilesMetadata.filter((f) => f.floorId !== floorId),
-          {
-            id: newId(),
-            filename: file.name,
-            mimeType: file.type,
-            sizeBytes: file.size,
-            importedAt: new Date().toISOString(),
-            floorId,
-            sourceType: "raster",
-          },
-        ],
-      }));
-      s.setTool("calibrate");
-    } catch (e) {
-      s.setError(
-        e instanceof Error ? e.message : "Importazione planimetria fallita.",
-      );
+    )
+      return;
+    state.commit((project) =>
+      applyPlanImport(project, state.activeFloorId, plan),
+    );
+    if (!useProjectStore.getState().error) {
+      setPlanOpen(false);
+      setPlanFile(undefined);
+      setPage("editor");
+      state.setTool("select");
     }
   }
   const checks = p ? validateProject(p) : [],
@@ -336,7 +293,7 @@ export function Configurator() {
       <input
         ref={rasterInput}
         type="file"
-        accept="image/png,image/jpeg,image/webp"
+        accept=".dxf,.pdf,.dwg,image/png,image/jpeg,image/webp"
         hidden
         data-testid="raster-file"
         onChange={(e) => {
@@ -530,6 +487,23 @@ export function Configurator() {
           <div className="comandi-progetto">
             <button
               className="bottone tenue piccolo"
+              disabled={pdfBusy}
+              onClick={() => {
+                setPdfBusy(true);
+                void import("@/services/pdf/download")
+                  .then(({ downloadDossier }) => downloadDossier(p))
+                  .catch(() =>
+                    s.setError(
+                      "PDF non generato. Verificare il progetto e riprovare.",
+                    ),
+                  )
+                  .finally(() => setPdfBusy(false));
+              }}
+            >
+              <DownloadSimple /> {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
+            </button>
+            <button
+              className="bottone tenue piccolo"
               onClick={() => void saveAs()}
             >
               Salva con nome
@@ -583,7 +557,7 @@ export function Configurator() {
               <button onClick={() => void newProject("import")}>
                 <UploadSimple size={32} />
                 <strong>Importa planimetria</strong>
-                <span>PNG o JPEG: calibra la scala e ricalca i muri.</span>
+                <span>DXF, PDF o immagini: verifica scala e geometrie.</span>
               </button>
             </div>
             <p className="nota">
@@ -877,9 +851,12 @@ export function Configurator() {
                 </label>
                 <button
                   className="bottone piccolo tenue"
-                  onClick={() => rasterInput.current?.click()}
+                  onClick={() => {
+                    setPlanFile(undefined);
+                    setPlanOpen(true);
+                  }}
                 >
-                  Importa sfondo
+                  Importa planimetria
                 </button>
                 {floor?.background && (
                   <button
@@ -921,15 +898,27 @@ export function Configurator() {
               <div>
                 <strong>{p.rooms.length}</strong> ambienti <span>·</span>{" "}
                 <strong>
-                  {formatNumber(p.rooms.reduce((n, r) => n + r.netAreaM2, 0))}
+                  {formatNumber(
+                    p.rooms
+                      .filter((r) => r.geometryStatus === "closed")
+                      .reduce((n, r) => n + r.netAreaM2, 0),
+                  )}
                 </strong>{" "}
                 m² netti <span>·</span>{" "}
                 <strong>
                   {formatNumber(
-                    p.rooms.reduce((n, r) => n + r.designLoadW, 0) / 1000,
+                    p.rooms
+                      .filter((r) => r.geometryStatus === "closed")
+                      .reduce((n, r) => n + r.designLoadW, 0) / 1000,
                   )}
                 </strong>{" "}
                 kW
+                {p.rooms.some((r) => r.geometryStatus === "unresolved") && (
+                  <span className="nota">
+                    {" "}
+                    · Totali dei soli ambienti chiusi
+                  </span>
+                )}
               </div>
               <button
                 onClick={() => setPage("checks")}
@@ -1058,6 +1047,16 @@ export function Configurator() {
             </form>
           </section>
         </div>
+      )}
+      {planOpen && (
+        <PlanImportWizard
+          initialFile={planFile}
+          onClose={() => {
+            setPlanOpen(false);
+            setPlanFile(undefined);
+          }}
+          onImport={acceptPlan}
+        />
       )}
       {newDialog && (
         <div className="sfondo-dialogo">

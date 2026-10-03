@@ -1,71 +1,45 @@
-# Stato per proseguire l'obiettivo
+# Checkpoint di rilascio
 
-Obiettivo attivo: completare tutto il brief allegato. Non fermarsi alla base.
-Creazione manuale e colori/logo forniti dall'utente sono requisiti prioritari.
+Rilascio verificato il 3 ottobre 2026: 129 unit test su 20 file, 18 E2E Edge su HTTPS,
+TypeScript strict, lint e build superati. Audit npm runtime: zero vulnerabilità.
+NuGet non segnala vulnerabilità. Prove in VERIFICATION.md e output/verification;
+matrice dell'intero brief in docs/REQUIREMENTS-AUDIT.md.
 
-## Verificato
+URL: https://hvac.internal.staianopoint.com. Build in produzione:
+`rIJ9Q0cKcLKDrGOZ5lOKh`. Prima di riavviare consultare
+`.cache/production-server.json` e verificare PID, comando e listener.
+Il certificato wildcard Let's Encrypt esistente copre il dominio; Caddy mantiene
+il rinnovo DNS-01. Le nove route precedenti sono preservate. L'import HVAC è
+persistito nel Caddyfile globale con backup. Il token Cloudflare protetto da ACL
+non è stato letto o modificato.
 
-44 unit test, 5 E2E sia dev sia produzione,strict,lint,build. Report VERIFICATION.md.
-Next16.3.8,React19.3,Three/R3F,Zod,Zustand,IndexedDB,PlaywrightEdge.
-Editor manuale,Snap,quote nette/asse,adjacency,split/merge,multipiano,undo/recovery.
-154varianti radiatori reali;144 terminali Ecoclima, 490 punti, 12 quarantinati.
+Cataloghi: 154 radiatori, 160 terminali con 534 punti e 16 punti in quarantena,
+21 abbinamenti canalizzati, 24 split con 2403 combinazioni approvate. Nove pagine
+commerciali restano separate dai calcoli. Fonti originali e storico per istanza.
+I 18 GLB Cordivari sono disponibili in anteprima: l'incongruenza di larghezza
+di 9,2 mm è dichiarata e impedisce la posa verificata della mesh.
+Il PDF reale contiene 11 pagine; nominali e ingombri sono distinti.
+Nessun carattere fuori pagina. Licenza Inter OFL inclusa.
 
-## Prossimo lavoro
+Radiatori: ricerca completa, rappresentazione esatta dei decimali nominali e
+ricerca completa ad altri ΔT. Nessun limite automatico di stati; worker con
+progresso e annullamento. L'applicazione richiede la prova di ottimalità.
+Marca e famiglia libere consentono combinazioni miste; ogni unità conserva
+fonte e revisione.
 
-1. Completare milestone 6: EADD/EGS, dimensioni reali/profondità terminali,
-   persistenza della scelta e posizionamento. Poi collegare tutto a canalizzato.
-2. Milestone7: cataloghi ufficiali macchine, motore distribuzione proporzionale,
-   selezione macchina per marca e mandata/ripresa separate per stanza.
-3. Milestone8: split e multisplit solo con dati combinazioni ufficiali.
-4. Milestone9: dossierPDF e materiali; poi hardening10 e limiti del report.
+DWG nativo: ACadSharp 3.8.0 MIT con .NET 8 o superiore. Binario reale, API,
+wizard e persistenza verificati. ODA commerciale disattivato.
+Runtime, notice e hash inclusi.
 
-## Fonti iniziali per canalizzato
+Schema v2: campi legacy sconosciuti conservati, contorni aperti preservati e
+dimensionamento bloccato, snap, quote, adiacenza, divisione/unione, piani,
+copia/spostamento/undo, ricalibrazione e collisioni in pianta e quota verticale.
+Nessuna AI/OCR, login o prezzo nel calcolo. Dati mancanti ed errori espliciti.
 
-- Daikin tabella ufficiale:
-  https://www.daikin.it/it_it/cerca-prodotto/product.table.html/fba-a%289%29---rzasg-mv1.html
-- Daikin2025:
-  https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf
-- Mitsubishi PEAD-MJA2:
-  https://climatizzazione.mitsubishielectric.it/sites/default/files/documents/import/scheda_tecnica_5027.pdf
-- Gree: ricerca ufficiale ancora necessaria. Non importare dati senza provenienza.
-- Attenzione: DaikinFBA-A semplice è indicato fuori produzione. Verificare
-  lo stato dei modelli prima della selezione automatica; non confondere FBA-A9.
-
-## Tooling
-
-Shell sandbox si è guastata con `helper_unknown_error: setup refresh had errors`.
-Le esecuzioni autorizzate con require_escalated hanno funzionato. Nessuna
-reiezione dell'auto-review. CUA/IAB fallisce per lo stesso errore; UI verificata
-con Playwright sull'app locale e screenshot locali. Edge installato, Chromium
-bundled Playwright non installato: usare channelmsedge già configurato.
-
-Python bundle:
-`C:\Users\Daniele\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe`
-conpdfplumber,Pillow. Installer npm usa cache locale.npm-cache (ignorata).
-Serverdevsession94119; serverproduzionesession28841 (3016). Riavviare produzione
-dopo nuove build; non dichiarare che un processo esistente serve il nuovo bundle.
-
-## Invarianti da preservare
-
-- Mai AI nel runtime, nessun login/APIesterna obbligatoria.
-- Quote in metri, cataloghi mm, calcoli W senza rounding intermedio.
-- Muri assi; stanze facce interne. `recomputeProject` materializza giunzioni.
-- Worker importa codec puro. FactoryWorker inservices/import/project-file.ts:
-  non reintrodurre ciclo format.ts-worker che blocca Turbopack.
-- Snapshotcatalogo identificati dal contenuto; nessun modello sintetico.
-- EDLSrev03:3feritoie30mm primoQ305, non315 della revisione precedente.
-- Rumore `<20` o range resta esplicito; autoselezione usa upperbound≤37.
-- Grafica comune inpublic/sistema.css copia immutata del design-system.
-  Logo effettivo inpublic/logo.svg;paletteblu/ciano/verde e Inter locale.
-- AGENTS.md generato daNext: leggere guide innode_modules/next/dist/docs
-  per nuove modifiche al framework. Non cambiare altri gestionali oCaddy.
-
-## Lavoro immediato ancora non registrato come prova
-
-Ultime modifiche: blocco radiatori se scala non verificata; reportdiff confronta
-prodotti normalizzati per evitare falsi positivi da ordine delle chiavi; quota
-esatta non si accorcia per chiusura automatica. Eseguire test mirati e gates.
-
-EVVMC/EVVMB già normalizzati: usare ecoclima-valves-extract.py per le celle PDF, poi importer Ecoclima. 45 righe originali; la tabella condivisa 150/160 è applicata a entrambi i diametri. Foto locali e relative fonti in public/catalog.
-
-Stato aggiornato: server produzione 28841 fermato dopo verifica; resta attivo server sviluppo 94119 sulla porta 3015. Ultimi gates: 44 unit test, 5 E2E, lint, formatter e build passati. Riprendere dal lavoro rimanente, senza rifare la base.
+Tooling Windows: il helper predefinito non funziona; le esecuzioni approvate con
+`require_escalated` funzionano. Non aggirare il controllo automatico. Dopo un
+timeout è ammesso un solo retry. Edge Playwright verifica TLS senza bypass.
+Python bundled dispone di pdfplumber e Pillow. Usare Git safe.directory per
+comando e limitare gli output. Consultare le guide Next in
+node_modules/next/dist/docs prima di modifiche al framework.
+Non redistribuire pubblicamente asset produttore senza verificare i diritti.

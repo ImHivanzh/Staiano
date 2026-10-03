@@ -1,0 +1,13 @@
+{
+  "sourceName": "daikin-residential-2025",
+  "sourceSha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+  "page": 90,
+  "revision": "Catalogo Residenziale edizione20250429,p.90",
+  "verification": "Celle unite verificate visivamente su render PDF: FBA100/125/140 condividono 1400×245×800;125/140 condividono portate23.5/29/34 e pressione50/150. Solo combinazioni monofase MV originali, suffisso(1) non disambiguato.",
+  "products": [
+    {"indoorModel":"FBA71A9","outdoorModel":"RZASG71MV1","coolingCapacityW":6800,"heatingCapacityW":7500,"widthMm":1000,"heightMm":245,"depthMm":800,"airflowOptionsM3min":[12.5,15,18],"staticPressurePa":30},
+    {"indoorModel":"FBA100A","outdoorModel":"RZASG100MV(1)","coolingCapacityW":9500,"heatingCapacityW":10800,"widthMm":1400,"heightMm":245,"depthMm":800,"airflowOptionsM3min":[23,26,29],"staticPressurePa":40},
+    {"indoorModel":"FBA125A","outdoorModel":"RZASG125MV(1)","coolingCapacityW":12100,"heatingCapacityW":13500,"widthMm":1400,"heightMm":245,"depthMm":800,"airflowOptionsM3min":[23.5,29,34],"staticPressurePa":50},
+    {"indoorModel":"FBA140A","outdoorModel":"RZASG140MV(1)","coolingCapacityW":13400,"heatingCapacityW":15500,"widthMm":1400,"heightMm":245,"depthMm":800,"airflowOptionsM3min":[23.5,29,34],"staticPressurePa":50}
+  ]
+}

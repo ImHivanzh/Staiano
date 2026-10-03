@@ -11,3 +11,13 @@ playwright-report/
 catalog-data/sources/**/*.html
 catalog-data/sources/**/*.pdf
 catalog-data/sources/**/*.png
+catalog-data/sources/models3d/*.obj
+catalog-data/sources/models3d/*.zip
+tmp/
+.cache/
+.env.local
+native/**/bin/
+native/**/obj/
+native/runtime/*.exe
+native/runtime/*.pdb
+deploy/caddy/Caddyfile.proposed

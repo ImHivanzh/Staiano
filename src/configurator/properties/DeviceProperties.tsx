@@ -8,6 +8,8 @@ import {
   roomWallSpan,
 } from "@/domain/geometry/placement";
 import { formatNumber, numberFromForm } from "@/utils/format";
+import { TerminalProperties } from "./TerminalProperties";
+import { SplitProperties } from "./SplitProperties";
 export function DeviceProperties({
   project,
   id,
@@ -17,7 +19,14 @@ export function DeviceProperties({
 }) {
   const device = project.radiators.find((r) => r.id === id),
     { commit } = useProjectStore();
-  if (!device) return null;
+  if (!device)
+    return project.hvacSystems.some((s) =>
+      s.indoorUnits.some((u) => u.id === id),
+    ) ? (
+      <SplitProperties project={project} id={id} />
+    ) : (
+      <TerminalProperties project={project} id={id} />
+    );
   const room = project.rooms.find((r) => r.id === device.roomId),
     product = radiatorProducts.find((p) => p.id === device.productId);
   if (!room) return null;

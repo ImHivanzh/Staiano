@@ -196,6 +196,11 @@ export function reconcileRooms(
             shared === face.wallIds.length;
           return {
             r,
+            eligible:
+              exact ||
+              shared >= 2 ||
+              pointInPolygon(r.centroid, face.centerPolygon) ||
+              pointInPolygon(center, r.polygon),
             score:
               (exact ? 1000 : 0) +
               shared * 10 +
@@ -203,16 +208,25 @@ export function reconcileRooms(
               (pointInPolygon(center, r.polygon) ? 50 : 0),
           };
         })
-        .filter((c) => c.score > 0)
+        .filter((c) => c.eligible && c.score > 0)
         .toSorted((a, b) => b.score - a.score);
       const old = candidates[0]?.r;
       if (old) used.add(old.id);
+      const parent =
+        old ??
+        previous.find(
+          (room) =>
+            room.floorId === floorId && pointInPolygon(center, room.polygon),
+        );
       const netAreaM2 = area(face.polygon),
-        heightM = old?.heightM ?? defaultHeightM;
+        heightM = parent?.heightM ?? defaultHeightM;
       return {
         id: old?.id ?? crypto.randomUUID(),
         floorId,
-        name: old?.name ?? `Ambiente ${i + 1}`,
+        name:
+          old?.name ??
+          (parent ? `${parent.name} — parte ${i + 1}` : `Ambiente ${i + 1}`),
+        geometryStatus: "closed",
         polygon: face.polygon,
         wallIds: face.wallIds,
         netAreaM2,
@@ -220,15 +234,19 @@ export function reconcileRooms(
         centroid: center,
         heightM,
         ...calculateThermal(netAreaM2, heightM),
-        systemType: old?.systemType ?? "none",
-        supplyPoints: old?.supplyPoints ?? 1,
-        returnPoints: old?.returnPoints ?? 1,
+        systemType: parent?.systemType ?? "none",
+        supplyPoints: parent?.supplyPoints ?? 1,
+        returnPoints: parent?.returnPoints ?? 1,
       };
     },
   );
 }
 
 export function overlappingPolygons(a: Point[], b: Point[]) {
+  for (const polygon of [a, b]) {
+    const center = centroid(polygon);
+    if (pointInPolygon(center, a) && pointInPolygon(center, b)) return true;
+  }
   if (
     a.some((p) => pointInPolygon(p, b)) ||
     b.some((p) => pointInPolygon(p, a))

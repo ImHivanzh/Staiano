@@ -1,25 +1,21 @@
 # Roadmap e criteri di completamento
 
-Ogni milestone richiede comportamento reale, salvataggio, reload, validazione,
-test ed errori gestiti. Una schermata o funzione isolata non chiude una milestone.
+Il criterio resta quello del brief: comportamento reale, salvataggio, reload,
+validazione, test ed errori gestiti. Obiettivo complessivo attivo finché l’audit
+non prova tutti i requisiti, senza scambiare limiti dichiarati per dati verificati.
 
-| Milestone           | Risultato richiesto                                                        | Stato effettivo                                                                                   |
-| ------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| 1 Fondamenta        | Next strict, schema, IndexedDB, autosave/recovery, import/export, archivio | Verificata                                                                                        |
-| 2 Geometria/manuale | Muri, quote, snap, stanze nette, adiacenza, split/merge, multipiano        | Base operativa; hardening in corso                                                                |
-| 3 3D                | Estrusione, camere, selezione sincronizzata, isolamento, apparecchi        | Muri, stanze e radiatori verificati; altri apparecchi con 7–8                                     |
-| 4 Termico           | Superficie netta × altezza × 35, formule e aggiornamento                   | Verificata                                                                                        |
-| 5 Radiatori         | Ardesia 2–6, VIP, Oscar, ΔT, vincoli, combinazioni, posizionamento         | In corso: 154 varianti reali, solver e 2D/3D verificati; varianti miste e collisioni da estendere |
-| 6 Ecoclima          | Fonti, gallery, operating point, rumore, lunghezze, mandata/ripresa        | In corso: 144 varianti, 490 punti, gallery e calcoli; persistenza e posizionamento da collegare   |
-| 7 Canalizzato       | Cataloghi tre marchi, selezione macchina, portate, terminali               | Da implementare                                                                                   |
-| 8 Split             | Tre marchi, mono/multisplit da matrici ufficiali, posizionamento           | Da implementare                                                                                   |
-| 9 PDF               | Dossier, pianta, schede, materiali, controlli, nota convenzionale          | Da implementare                                                                                   |
-| 10 Hardening        | Import PDF/DXF/DWG, sicurezza, performance, UX e verifiche                 | In corso: raster, worker progetto e test; resto da completare                                     |
+| Milestone     | Stato corrente e prove                                                                                                                                                                                          |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 Fondamenta  | Schema v2, migrazioni, repository IndexedDB, autosave seriale, recovery e CRUD/import-export: unit ed E2E verificati.                                                                                           |
+| 2 Geometria   | Creazione manuale primo livello, quote nette/esatte, snap, irregolari/adiacenti, divisione/unione con altezze esplicite, gruppo copia/drag: verificati. Contorni incompleti conservati e bloccati tecnicamente. |
+| 3 3D          | Stanze/muri/apparecchi, alto/prospettiva/isola/sezione, syncselection e grande scena: verificati in Edge. 18 modelli ufficiali in preview, incongruenza quote esplicita.                                        |
+| 4 Termico     | Area netta × altezza ×35 fisso, Watt e BTU corretti, aggiornamenti e formule visibili: verificati.                                                                                                              |
+| 5 Radiatori   | 154 varianti reali, ΔT, vincoli, combinazioni miste/alternative e posizionamento: verificati. Ricerca completa con prova di ottimalità, progress/cancel e marchi/famiglie liberi.                               |
+| 6 Ecoclima    | 7famiglie,160varianti,534punti (16quarantinati), gallery e ingombri, mandata/ripresa e punti persistenti: verificati. EADD prestazioni assenti escluso.                                                         |
+| 7 Canalizzato | 21abbinamenti reali3marchi, portate/pressione/capacità/riparto, punti e controlli: unit/E2E verificati.                                                                                                         |
+| 8 Split       | 24interni,2403combinazioni mono/multi originali3marchi, capacità simultanee/pose/refresh/reload: verificati; fonti regionali e disponibilità esplicite.                                                         |
+| 9 PDF         | Dossier locale reale con logo, A3 vettoriale, schede, materiali/locali/prestazioni, controlli/fonti/note: unit/E2E e render verificati.                                                                         |
+| 10 Hardening  | DXF/PDF/raster,200muri/50stanze/100devices, legacy/null/history, collisioni e responsive: verificati. Audit finale e gate produzione verificati; DWG nativo MIT con subset/versioni dichiarati.                 |
 
-## Primo task del brief
-
-Documenti architetturali, tipi, schema, formato, autosave/import/export, primo
-editor manuale, termico, test e avvio reale eseguiti. Proseguire senza sostituire
-le parti funzionanti con mock. L'obiettivo generale resta attivo.
-
-Risultati e limiti in VERIFICATION.md. Stato per proseguire in CONTINUATION.md.
+Prove in VERIFICATION.md; tracciamento completo in docs/REQUIREMENTS-AUDIT.md.
+Non introdurre AI, mock tecnici, prezzi nel calcolo o dati catalogo inventati.

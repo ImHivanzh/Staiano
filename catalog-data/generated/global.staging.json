@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-03-global-b1a71df9b284",
+  "version": "2026-10-03-global-1c10523537ee",
   "manufacturer": "Global",
   "products": [
     {
@@ -36,8 +36,8 @@
       "waterContentL": 0.59,
       "weightKg": 2.19,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -45,7 +45,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -84,8 +84,8 @@
       "waterContentL": 0.53,
       "weightKg": 2.05,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -93,7 +93,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -134,8 +134,8 @@
       "waterContentL": 0.49,
       "weightKg": 1.66,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -143,7 +143,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -184,8 +184,8 @@
       "waterContentL": 0.39,
       "weightKg": 1.62,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -193,7 +193,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -234,8 +234,8 @@
       "waterContentL": 0.35,
       "weightKg": 1.13,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -243,7 +243,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -280,8 +280,8 @@
       "waterContentL": 0.76,
       "weightKg": 3.86,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -289,7 +289,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -326,8 +326,8 @@
       "waterContentL": 0.69,
       "weightKg": 3.53,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -335,7 +335,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -372,8 +372,8 @@
       "waterContentL": 0.62,
       "weightKg": 3.18,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -381,7 +381,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -418,8 +418,8 @@
       "waterContentL": 0.56,
       "weightKg": 2.8,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -427,7 +427,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -464,8 +464,8 @@
       "waterContentL": 0.49,
       "weightKg": 2.43,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -473,7 +473,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -510,8 +510,8 @@
       "waterContentL": 0.42,
       "weightKg": 2.05,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -519,7 +519,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -556,8 +556,8 @@
       "waterContentL": 0.41,
       "weightKg": 1.99,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -565,7 +565,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -602,8 +602,8 @@
       "waterContentL": 0.76,
       "weightKg": 3.86,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -611,7 +611,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -648,8 +648,8 @@
       "waterContentL": 0.69,
       "weightKg": 3.53,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -657,7 +657,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -694,8 +694,8 @@
       "waterContentL": 0.62,
       "weightKg": 3.18,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -703,7 +703,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -740,8 +740,8 @@
       "waterContentL": 0.56,
       "weightKg": 2.8,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -749,7 +749,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -786,8 +786,8 @@
       "waterContentL": 0.49,
       "weightKg": 2.43,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -795,7 +795,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -832,8 +832,8 @@
       "waterContentL": 0.42,
       "weightKg": 2.05,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -841,7 +841,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -878,8 +878,8 @@
       "waterContentL": 0.41,
       "weightKg": 1.99,
       "nominalFlowKgh": null,
-      "maxPressureBar": null,
-      "maxTemperatureC": null,
+      "maxPressureBar": 16,
+      "maxTemperatureC": 110,
       "connections": "1\"",
       "sourceMetadata": {
         "manufacturer": "Global",
@@ -887,7 +887,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T01:10:59.374Z",
+        "importedAt": "2026-10-03T08:42:35.095Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }

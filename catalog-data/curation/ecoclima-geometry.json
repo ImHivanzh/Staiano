@@ -1,0 +1,52 @@
+{
+  "EDLS": {
+    "mountings": [
+      "ceiling"
+    ],
+    "shape": "rectangle",
+    "faceWidthAdditionMm": 0,
+    "faceHeightAdditionMm": 0,
+    "linearFaceHeightBaseMm": 40,
+    "linearFaceHeightPerSlotMm": 40,
+    "linearFaceHeightExtraFor30MmPerSlot": 10,
+    "bodyDepthMm": 60,
+    "page": 3,
+    "note": "Profilo verticale60mm; E=80/90 per1feritoia,120/140 per2,160/190 per3. LunghezzaL commerciale.",
+    "sourceSha256": "7f043fc11f9904e80f2eb1078893d17f97cf157da2bf70a77d32169f1995c2d9"
+  },
+  "EBLF": {
+    "mountings": [
+      "wall"
+    ],
+    "shape": "rectangle",
+    "faceWidthAdditionMm": -1,
+    "faceHeightAdditionMm": -1,
+    "bodyDepthMm": 40,
+    "page": 2,
+    "note": "Ingombro (L-1)×(H-1), profondità40mm senza serranda. Serranda esclusa.",
+    "sourceSha256": "65bfe317cde324f4c9d6d27f98b6235a3a12c5ec86552200395edb62f6d8909b"
+  },
+  "EGQ": {
+    "mountings": [
+      "wall",
+      "ceiling"
+    ],
+    "shape": "rectangle",
+    "faceWidthAdditionMm": 35,
+    "faceHeightAdditionMm": 35,
+    "bodyDepthMm": 61,
+    "page": 2,
+    "note": "Cornice(L+35)×(H+35), profondità36+25=61mm. Serranda e plenum esclusi.",
+    "sourceSha256": "c87a297cf2b07762665819366f03b42b8b12c20588e3c9a315c628b5f765a315"
+  },
+  "EVVMC": {
+    "mountings": [
+      "ceiling"
+    ],
+    "shape": "circle",
+    "bodyDepthMm": null,
+    "page": 1,
+    "note": "Faccia diametroA verificata. Ingombro assiale complessivo variabile con aperturaS: non normalizzato; dimensioniA..E conservate.",
+    "sourceSha256": "dbb60155c748325de10b263df50d374eade56a7c2992cece5486800913e22cb4"
+  }
+}

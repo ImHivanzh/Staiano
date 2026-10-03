@@ -1,0 +1,152 @@
+{
+  "manufacturer": "Gree",
+  "sourcePage": "https://www.greeitalia.it/download",
+  "sourceUrl": "https://service.argoonline.it//area_riservata/WebDocTec/gree.argoclima.com/FilesBIM.zip",
+  "sha256": "ebc5981b2458c02b44589d3d26522659c8336a197e66ef8c6d6fdd28b7165844",
+  "bytes": 33865431,
+  "format": "Revit RFA archive",
+  "status": "retained-original-not-used",
+  "reason": "Revit geometry; GMV/Versati families do not match normalized GUD machines",
+  "files": [
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND(45-50)GB6B-T.rfa",
+      "bytes": 1306624
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND(56-71)GB6B-T.rfa",
+      "bytes": 1298432
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND112-160ZDB-T.rfa",
+      "bytes": 335872
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND15-36GB6B-T.rfa",
+      "bytes": 1286144
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND22-50CA-T.rfa",
+      "bytes": 356352
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND28-56ZDB-T.rfa",
+      "bytes": 389120
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV-IDU-wall-fc-console/GMV-ND63-90ZDB-T.rfa",
+      "bytes": 335872
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV5 HOME/GMV-S\uff08120-160\uff09WLA-S.rfa",
+      "bytes": 1187840
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV5 HOME/GMV-S\uff08224-280\uff09WA-X.rfa",
+      "bytes": 2310144
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV5 HOME/NRQD16GA-S.rfa",
+      "bytes": 286720
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV5 HOME/NRZ16GA-S.rfa",
+      "bytes": 425984
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV5 HOME/SXVD200LCJ2A-K.rfa",
+      "bytes": 290816
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV5 HOME/SXVD300LCJ2A-K.rfa",
+      "bytes": 290816
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/GMV-224-280-335WMH-X(1).rfa",
+      "bytes": 1294336
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/GMV-400-450-504-560-615WMH-X(1).rfa",
+      "bytes": 1748992
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/GMV-VQ224-280-335WMC-X(1).rfa",
+      "bytes": 1273856
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/GMV-VQ400-450-504-560-615-680WMC-X(1).rfa",
+      "bytes": 3391488
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/NCHS1D(1).rfa",
+      "bytes": 438272
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/NCHS2D(1).rfa",
+      "bytes": 446464
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/NCHS4D(1).rfa",
+      "bytes": 458752
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/NCHS8D(1).rfa",
+      "bytes": 483328
+    },
+    {
+      "name": "FILE BIM revit - selected/GMV6-GMV6HR-ODU/NRQR16-30LA-T(1).rfa",
+      "bytes": 397312
+    },
+    {
+      "name": "FILE BIM revit - selected/MODULAR CHILLER/LSQWRF35VMNhA-M.rfa",
+      "bytes": 1675264
+    },
+    {
+      "name": "FILE BIM revit - selected/MODULAR CHILLER/LSQWRF60VMNhA-M.rfa",
+      "bytes": 1769472
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRGRS-CQ8.0\u300110.0PdNhH(2)-E(M)(O).rfa",
+      "bytes": 1114112
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ12-16PdNhH-E\uff08M\uff09(O).rfa",
+      "bytes": 925696
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ4-10PdNhH2-E(I)&amp;GRS-CQ12-16PdNhH-E(I)&amp;GRS-CQ8-16PdNhH-M(I).rfa",
+      "bytes": 401408
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ4-16PdGNhH2-E(I)&amp;GRS-CQ8-16PdGNhH2-M(I).rfa",
+      "bytes": 380928
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ4.0PdGNhH-E(I);GRS-CQ6.0PdGNhH-E(I);GRS-CQ8.0PdGNhH-E(I);GRS-CQ10PdGNhH-E(I).rfa",
+      "bytes": 397312
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ4.0PdNhH-E(I)\uff1bGRS-CQ6.0PdNhH-E(I)\uff1bGRS-CQ8.0PdNhH-E(I)\uff1bGRS-CQ10PdNhH-E(I).rfa",
+      "bytes": 507904
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ4.0\u30016.0PdNhH-E(O).rfa",
+      "bytes": 2195456
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ4.0\u30016.0PdNhH\uff082\uff09-E(O).rfa",
+      "bytes": 724992
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 3 SPLIT - A-I-O/GRS-CQ8.0\u300110PdNhH-E(O).rfa",
+      "bytes": 2695168
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 4/4-6kW.rfa",
+      "bytes": 2048000
+    },
+    {
+      "name": "FILE BIM revit - selected/VERSATI 4/8-16kW.rfa",
+      "bytes": 1839104
+    }
+  ]
+}

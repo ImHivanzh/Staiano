@@ -409,7 +409,177 @@ for (const code of ["EBLF", "ETA"]) {
     sourceMetadata: s.metadata,
   });
 }
+{
+  const htmlData = JSON.parse(
+    await readFile(path.join(dir, "html-tables.json"), "utf8"),
+  ) as Record<
+    string,
+    { sourceUrl: string; sha256: string; tables: string[][][] }
+  >;
+  const original = htmlData.EGS,
+    rows = original.tables[0],
+    variants: AirTerminalVariant[] = [];
+  for (const row of rows) {
+    const index = row.findIndex((s) => /^\d+x\d+$/.test(s));
+    if (index < 0) continue;
+    const [w, h] = row[index].split("x").map(Number),
+      area = Number(row[index + 1].replace(",", ".")),
+      flows = row.slice(index + 2, index + 6).map(Number);
+    if (flows.length !== 4 || flows.some((n) => !Number.isFinite(n)))
+      throw new Error("EGS operating row incomplete");
+    variants.push({
+      id: `ecoclima-egs-${w}x${h}`,
+      widthMm: w,
+      heightMm: h,
+      depthMm: null,
+      lengthMm: null,
+      slotWidthMm: null,
+      slotCount: null,
+      commercialLengthsMm: [],
+      effectiveAreaM2: area,
+      faceWidthMm: w,
+      faceHeightMm: h,
+      bodyDepthMm: null,
+      operatingPoints: flows.map((q, i) =>
+        point(
+          q,
+          i + 2,
+          [3, 6, 10, 15][i],
+          ["20/25", "25/30", "30/35", "35/40"][i],
+          null,
+          area,
+        ),
+      ),
+    });
+  }
+  if (variants.length !== 11) throw new Error("EGS dimensional table changed");
+  catalog.families.push({
+    manufacturer: "Ecoclima",
+    familyCode: "EGS",
+    name: "Griglia stampata in acciaio",
+    description:
+      "Griglia di mandata o aspirazione in acciaio grigio, per climatizzazione e ventilazione.",
+    type: "grille",
+    mountingType: "Parete",
+    use: ["supply", "return"],
+    isLinearPerMeter: false,
+    image: null,
+    mountings: ["wall"],
+    shape: "rectangle",
+    geometryNote:
+      "Dimensioni frontali nominali L×H dal produttore. Spessore completo non disponibile.",
+    operatingConditions:
+      "Dati originali HTML, rumore come intervallo. Punti discordanti con sezione×velocità conservati e non selezionabili.",
+    variants,
+    sourceMetadata: {
+      manufacturer: "Ecoclima",
+      sourceUrl: original.sourceUrl,
+      sourceType: "html",
+      documentRevision: null,
+      retrievedAt: null,
+      importedAt: now,
+      sha256: original.sha256,
+      page: null,
+    },
+  });
+  const eadd = htmlData.EADD,
+    eaddVariants: AirTerminalVariant[] = eadd.tables[0].slice(1).map((row) => {
+      const nominal = Number(row[0].split("-")[1]),
+        [A, B, C, F] = row.slice(1).map((n) => Number(n.replace(",", ".")));
+      const flowRow = eadd.tables[1].find(
+        (line) => line[0] === `EADD-${nominal}`,
+      );
+      const range = flowRow?.[1]?.match(/^(\d+)\s*-\s*(\d+)$/);
+      if (!range)
+        throw new Error(`EADD-${nominal}: published airflow range missing`);
+      return {
+        id: `ecoclima-eadd-${nominal}`,
+        widthMm: null,
+        heightMm: null,
+        depthMm: null,
+        lengthMm: null,
+        slotWidthMm: null,
+        slotCount: null,
+        commercialLengthsMm: [],
+        effectiveAreaM2: null,
+        nominalDiameterMm: nominal,
+        originalDimensionsMm: { A, B, C, F },
+        publishedAirflowRangeM3h: [Number(range[1]), Number(range[2])],
+        operatingPoints: [],
+      };
+    });
+  if (eaddVariants.length !== 5)
+    throw new Error("EADD dimensional table changed");
+  catalog.families.push({
+    manufacturer: "Ecoclima",
+    familyCode: "EADD",
+    name: "Diffusore a quattro lati in ABS",
+    description:
+      "Diffusore bianco con attacco circolare e deflettori mobili sui quattro lati.",
+    type: "diffuser",
+    mountingType: "Parete o soffitto",
+    use: ["supply"],
+    isLinearPerMeter: false,
+    image: null,
+    operatingConditions:
+      "Dimensioni originali pubblicate. Portata e rumorosità non disponibili nello snapshot: nessuna selezione automatica.",
+    variants: eaddVariants,
+    sourceMetadata: {
+      manufacturer: "Ecoclima",
+      sourceUrl: eadd.sourceUrl,
+      sourceType: "html",
+      documentRevision: null,
+      retrievedAt: null,
+      importedAt: now,
+      sha256: eadd.sha256,
+      page: null,
+    },
+  });
+}
 airTerminalCatalogSchema.parse(catalog);
+const geometrySpecs = JSON.parse(
+  await readFile(
+    path.join(root, "catalog-data/curation/ecoclima-geometry.json"),
+    "utf8",
+  ),
+) as Record<
+  string,
+  {
+    sourceSha256: string;
+    mountings: ("wall" | "ceiling")[];
+    shape: "rectangle" | "circle";
+    faceWidthAdditionMm?: number;
+    faceHeightAdditionMm?: number;
+    bodyDepthMm: number | null;
+    note: string;
+  }
+>;
+for (const family of catalog.families) {
+  const geometry = geometrySpecs[family.familyCode];
+  if (!geometry) continue;
+  if (geometry.sourceSha256 !== family.sourceMetadata.sha256)
+    throw new Error(
+      `Geometry revision changed for ${family.familyCode}. Reverify drawings before import.`,
+    );
+  family.mountings = geometry.mountings;
+  family.shape = geometry.shape;
+  family.geometryNote = geometry.note;
+  for (const variant of family.variants) {
+    variant.bodyDepthMm = geometry.bodyDepthMm;
+    if (family.isLinearPerMeter) {
+      variant.faceWidthMm = null;
+      variant.faceHeightMm =
+        40 + (variant.slotCount ?? 0) * (variant.slotWidthMm === 30 ? 50 : 40);
+    } else {
+      variant.faceWidthMm =
+        (variant.widthMm ?? 0) + (geometry.faceWidthAdditionMm ?? 0);
+      variant.faceHeightMm =
+        family.shape === "circle"
+          ? variant.faceWidthMm
+          : (variant.heightMm ?? 0) + (geometry.faceHeightAdditionMm ?? 0);
+    }
+  }
+}
 const imageSources = JSON.parse(
   await readFile(path.join(root, "public/catalog/image-sources.json"), "utf8"),
 ) as Record<string, { path: string }>;
@@ -435,6 +605,35 @@ await mkdir(output, { recursive: true });
 const target = path.join(output, "ecoclima.json"),
   staging = path.join(output, "ecoclima.staging.json");
 await writeFile(staging, JSON.stringify(catalog, null, 2));
+const oldCatalog = existsSync(target)
+  ? airTerminalCatalogSchema.parse(JSON.parse(await readFile(target, "utf8")))
+  : null;
+const oldVariants = new Map(
+  oldCatalog?.families.flatMap((family) =>
+    family.variants.map((v) => [v.id, v] as const),
+  ) ?? [],
+);
+const newVariants = airTerminalCatalogSchema
+  .parse(catalog)
+  .families.flatMap((family) => family.variants);
+const diff = {
+  added: newVariants.filter((v) => !oldVariants.has(v.id)).map((v) => v.id),
+  changed: newVariants
+    .filter(
+      (v) =>
+        oldVariants.has(v.id) &&
+        JSON.stringify(oldVariants.get(v.id)) !== JSON.stringify(v),
+    )
+    .map((v) => v.id),
+  removed: [...oldVariants.keys()].filter(
+    (id) => !newVariants.some((v) => v.id === id),
+  ),
+};
+await writeFile(
+  path.join(output, "ecoclima.report.json"),
+  JSON.stringify(diff, null, 2),
+);
+console.log(JSON.stringify(diff));
 console.log(
   JSON.stringify({
     importedFamilies: catalog.families.length,
@@ -446,17 +645,22 @@ console.log(
       .flatMap((f) => f.variants.flatMap((v) => v.operatingPoints))
       .filter((p) => p.quality === "review").length,
     warnings: [
-      "Profile depths not normalized",
-      "EGS/EADD performance not available",
+      "EGS/ETA/EADD/EVVMC axial depth not available; explicit null",
+      "EADD published flow range preserved; acoustic operating points unavailable, excluded from automatic selection",
     ],
     errors: 0,
   }),
 );
 if (process.argv.includes("--apply")) {
+  const historyPath = path.join(output, "ecoclima-history.json");
+  const history = existsSync(historyPath)
+    ? JSON.parse(await readFile(historyPath, "utf8"))
+    : {};
   if (existsSync(target)) {
     const previous = airTerminalCatalogSchema.parse(
       JSON.parse(await readFile(target, "utf8")),
     );
+    history[previous.version] = previous;
     const oldIds = previous.families.flatMap((f) =>
         f.variants.map((v) => v.id),
       ),
@@ -469,6 +673,8 @@ if (process.argv.includes("--apply")) {
       throw new Error("Removed variants detected. Review before applying.");
     await copyFile(target, path.join(output, "ecoclima.previous.json"));
   }
+  history[catalog.version] = catalog;
+  await writeFile(historyPath, JSON.stringify(history, null, 2));
   await copyFile(staging, target);
   console.log("Applied official Ecoclima snapshot.");
 } else console.log("Staged only. Review, then use --apply.");

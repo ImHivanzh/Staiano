@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-03-global-1",
+  "version": "2026-10-03-global-b1a71df9b284",
   "manufacturer": "Global",
   "products": [
     {
@@ -45,7 +45,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -93,7 +93,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -143,7 +143,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -193,7 +193,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -243,7 +243,7 @@
         "sourceType": "pdf",
         "documentRevision": "vipIT24",
         "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
         "page": 2
       }
@@ -289,7 +289,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -335,7 +335,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -381,7 +381,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -427,7 +427,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -473,7 +473,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -519,7 +519,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -565,7 +565,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -611,7 +611,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -657,7 +657,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -703,7 +703,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -749,7 +749,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -795,7 +795,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -841,7 +841,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }
@@ -887,7 +887,7 @@
         "sourceType": "pdf",
         "documentRevision": "Oscar/OscarTondo — 2025",
         "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
-        "importedAt": "2026-10-03T00:44:01.812Z",
+        "importedAt": "2026-10-03T01:10:59.374Z",
         "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
         "page": 4
       }

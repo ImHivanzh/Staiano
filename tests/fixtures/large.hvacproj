@@ -1,0 +1,7237 @@
+{
+  "schemaVersion": 2,
+  "id": "2fd317df-eaa0-4e48-8f26-098d2190cd21",
+  "name": "Verifica 50 ambienti",
+  "createdAt": "2026-10-03T08:15:42.442Z",
+  "updatedAt": "2026-10-03T08:15:42.442Z",
+  "floors": [
+    {
+      "id": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Piano terra",
+      "elevationM": 0,
+      "scaleVerified": true,
+      "background": null
+    }
+  ],
+  "walls": [
+    {
+      "id": "8b2a908a-253f-4ca3-9d17-94baf78273c6",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 0
+      },
+      "end": {
+        "x": 5.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "89cad6cf-d8f4-4724-b100-e161ab6f70db",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 0
+      },
+      "end": {
+        "x": 5.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1434cb99-02d5-4c9e-a98d-61551da6cfbb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 0,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "abb5aba9-2a45-4c14-8842-a7e1bfed5e61",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 4.3
+      },
+      "end": {
+        "x": 0,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "66b93204-c311-4268-a856-f04adc0c2281",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 0
+      },
+      "end": {
+        "x": 12.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c95e08a3-6209-47fe-9fe3-890cd7881b50",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 0
+      },
+      "end": {
+        "x": 12.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "49373b36-647a-43bf-b3b2-fa6665286a57",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 7,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3d2863eb-3a98-4447-8584-1a99d3d610fe",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 4.3
+      },
+      "end": {
+        "x": 7,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "a01f18ba-8afe-4f5d-a7b2-0e038dfede1c",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 0
+      },
+      "end": {
+        "x": 19.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "4867bfc6-a3bc-4485-88e3-599b094a6298",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 0
+      },
+      "end": {
+        "x": 19.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5d208904-c0cc-4aae-90e3-abcc964f4166",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 14,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "fa8d339a-a88b-4657-90ac-abe4450cd959",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 4.3
+      },
+      "end": {
+        "x": 14,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "52585585-95d6-4de2-9d62-2eba7f550ac1",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 0
+      },
+      "end": {
+        "x": 26.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "14c8f0ed-3ced-45c1-81e9-e6e3393716da",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 0
+      },
+      "end": {
+        "x": 26.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "441f7ff3-4f98-4354-973b-f759e2181f9f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 21,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f3255b96-4d96-43ec-8042-cfbec6f179c9",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 4.3
+      },
+      "end": {
+        "x": 21,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "60c43338-cd2e-4360-95a2-05ea3b38f677",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 0
+      },
+      "end": {
+        "x": 33.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "bc19bb48-dadd-4645-9a97-ea8a60c14fe9",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 0
+      },
+      "end": {
+        "x": 33.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "8632118a-41bf-4072-be6d-ff08cccfe3be",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 28,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "39c98d4a-325e-423f-b109-af0c05c82d19",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 4.3
+      },
+      "end": {
+        "x": 28,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5e0f3c76-6c2a-45ab-9339-833455a52023",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 0
+      },
+      "end": {
+        "x": 40.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "846ba5ad-e9e7-4b21-a2c2-e3d04d41042b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 0
+      },
+      "end": {
+        "x": 40.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "dfed8033-f22e-47b7-aab4-9ef748ab2fee",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 35,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "31e58c10-aca0-4f19-b16a-ab9abd4737dd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 4.3
+      },
+      "end": {
+        "x": 35,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "477e8633-c637-44ce-8bae-a07e4cb20ed8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 0
+      },
+      "end": {
+        "x": 47.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e1a248ac-0aff-46b3-9238-18161d7c026f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 0
+      },
+      "end": {
+        "x": 47.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f52c1e84-842e-436e-973e-3dae8b57c98a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 42,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "9ca68ef5-d3ea-4cde-b0a3-32198b747d14",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 4.3
+      },
+      "end": {
+        "x": 42,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d3017364-ab3d-481f-874b-eb24dbab7ecb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 0
+      },
+      "end": {
+        "x": 54.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "26af79dc-41fd-434f-bf67-89701c22fe11",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 0
+      },
+      "end": {
+        "x": 54.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "25c2847e-c1dc-4c82-a2af-0ca738afd0e2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 49,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "481cd58b-480f-4b34-9292-2b5e5793b159",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 4.3
+      },
+      "end": {
+        "x": 49,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "594967a9-9793-4a61-8fa5-0f09ea4ff0e0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 0
+      },
+      "end": {
+        "x": 61.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "7bdc4413-6874-4295-bfdd-e959293ba124",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 0
+      },
+      "end": {
+        "x": 61.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "78d91b0b-541a-46d8-84a0-b324e0cbb902",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 56,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6b6e0255-da02-4f24-9aa5-94eb05e4ee88",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 4.3
+      },
+      "end": {
+        "x": 56,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "7c3ab544-a2ca-4242-8336-5367b08b8ba0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 0
+      },
+      "end": {
+        "x": 68.3,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f9870e1c-a965-4882-9823-85a40c895ebe",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 0
+      },
+      "end": {
+        "x": 68.3,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "40c9c025-3767-46ac-b0c5-2cbcec42a013",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 63,
+        "y": 4.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "878c4750-1f5c-4a67-8cce-26698d9ad2c1",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 4.3
+      },
+      "end": {
+        "x": 63,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "72226ab1-8449-4382-bada-effad72eb2d3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 6
+      },
+      "end": {
+        "x": 5.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3f26f7cc-0708-4bcf-876a-027af128f44e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 6
+      },
+      "end": {
+        "x": 5.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "192a175c-806a-49ce-b302-18c09041be1d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 0,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b0daccd9-52ce-4573-9506-0cb93567bd99",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 10.3
+      },
+      "end": {
+        "x": 0,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f87dbc2b-ef38-489b-abd8-cd0c50bfe178",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 6
+      },
+      "end": {
+        "x": 12.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e4716419-1f9d-4498-95c7-3f2dd9417983",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 6
+      },
+      "end": {
+        "x": 12.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e22bfccd-7b02-42ea-bb9e-cb212994704c",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 7,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "a3c9c790-6752-43e8-bd5c-d142bcbdd000",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 10.3
+      },
+      "end": {
+        "x": 7,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "8a475fd9-8954-4844-9ac2-08cb9cc97373",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 6
+      },
+      "end": {
+        "x": 19.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "cad5edf4-7ed3-4d9c-b976-823cf72d5e86",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 6
+      },
+      "end": {
+        "x": 19.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "2c3e2a72-be89-4394-9fe1-216043e35759",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 14,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d68d54ca-d514-49c0-8cf1-60365e4b29e8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 10.3
+      },
+      "end": {
+        "x": 14,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "792af675-b902-456a-bd1a-c53b49e55328",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 6
+      },
+      "end": {
+        "x": 26.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "17ed761a-bce6-46dd-a101-02ed0dbcf471",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 6
+      },
+      "end": {
+        "x": 26.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d3a5e5c6-7158-4655-b64d-8187906e9da4",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 21,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e3d0ec45-3de4-40cc-88db-e71d235a79ac",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 10.3
+      },
+      "end": {
+        "x": 21,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "0f0eb4f9-50e5-4257-816e-46dba4b44182",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 6
+      },
+      "end": {
+        "x": 33.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "adb853d0-735d-4a14-86e4-2569b60d9a19",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 6
+      },
+      "end": {
+        "x": 33.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b39ea0d9-f00c-45dc-9697-06cecb678b17",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 28,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "61de681d-8b86-4f81-9561-6aee77b4bdf8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 10.3
+      },
+      "end": {
+        "x": 28,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "bad5805d-64e2-45b7-804d-db1800a7ed68",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 6
+      },
+      "end": {
+        "x": 40.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "71b875cf-ced9-4d41-af49-029239c183bc",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 6
+      },
+      "end": {
+        "x": 40.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "aaf71a53-4314-4c52-a66a-b254c1d7dc7f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 35,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ba929f4d-9894-44d9-8e26-6bb96cd81106",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 10.3
+      },
+      "end": {
+        "x": 35,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "878e3134-91ac-451d-aedb-a15a5874393a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 6
+      },
+      "end": {
+        "x": 47.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "fb3d748a-bc56-47d9-a7fa-cbb9da97053f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 6
+      },
+      "end": {
+        "x": 47.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "864b224e-4ca6-4af5-a170-fee2ecbf9b55",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 42,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ffbe699d-d4c4-4f5e-a33a-9bf239070e3b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 10.3
+      },
+      "end": {
+        "x": 42,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "74819d78-de8e-475b-b144-ca997cb54bd4",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 6
+      },
+      "end": {
+        "x": 54.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ce723275-482d-4028-bf71-28a6b78b609f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 6
+      },
+      "end": {
+        "x": 54.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "054d918f-4b87-46a7-b035-b100fec52171",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 49,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "618a548a-e1c6-4632-8051-a98a471ec9a4",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 10.3
+      },
+      "end": {
+        "x": 49,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "718016bb-1f20-4c10-9d4c-de94ec6e8496",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 6
+      },
+      "end": {
+        "x": 61.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "21f51925-ec43-4881-bfaf-0428867790e5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 6
+      },
+      "end": {
+        "x": 61.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ccdd7941-b877-48b3-b8df-137340c14a26",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 56,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e3b0abb3-720f-4218-a5fb-104713b7e5c8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 10.3
+      },
+      "end": {
+        "x": 56,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "aa54b6e1-be00-4635-8302-f082af28dd76",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 6
+      },
+      "end": {
+        "x": 68.3,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "63a54dd6-0399-435c-9d63-0785880dfd83",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 6
+      },
+      "end": {
+        "x": 68.3,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d089b5b7-5b2f-479d-840d-59b4e4196880",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 10.3
+      },
+      "end": {
+        "x": 63,
+        "y": 10.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "30b54a61-19b6-4faf-8ebb-e376f224c4a1",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 10.3
+      },
+      "end": {
+        "x": 63,
+        "y": 6
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "2ee572c9-81ba-4dd9-aa57-e5f3ed7693b5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 12
+      },
+      "end": {
+        "x": 5.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "078ac3cf-94e2-4a7b-821a-697616440bd2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 12
+      },
+      "end": {
+        "x": 5.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6a8d1413-e9a8-4f36-9475-10b805bbe8fd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 0,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "66f917ed-9446-4efc-96d5-2af4479e8844",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 16.3
+      },
+      "end": {
+        "x": 0,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c7287d6e-a26f-486c-8179-f5398a3e71e8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 12
+      },
+      "end": {
+        "x": 12.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5ffb38c4-7660-4a8e-855a-826f24318c64",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 12
+      },
+      "end": {
+        "x": 12.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "34585fe7-288f-4906-83ae-fda7ad4e1b28",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 7,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1da9732c-c5a0-4835-b198-d299279fbea5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 16.3
+      },
+      "end": {
+        "x": 7,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "64a14087-74d0-42ea-8532-97b1dfd175de",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 12
+      },
+      "end": {
+        "x": 19.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c1248c94-78c0-425a-a6cc-3194a812e3e0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 12
+      },
+      "end": {
+        "x": 19.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "dfa64a89-3c3b-46ae-84be-e552747c8e00",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 14,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c67afbe1-c2ec-4330-85da-144632ec379e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 16.3
+      },
+      "end": {
+        "x": 14,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "664ea1f1-3d36-458e-83f6-bb4fa0b5d518",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 12
+      },
+      "end": {
+        "x": 26.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f8e30588-feef-44a2-80b1-716dc0218939",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 12
+      },
+      "end": {
+        "x": 26.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5633f83c-b62a-4f43-bf52-acf2f6f48ff2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 21,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6ba3ea39-247e-4d9d-9f8e-30bd2d4f2d27",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 16.3
+      },
+      "end": {
+        "x": 21,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c22594c9-a352-40c7-89a5-239d3ac81bd5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 12
+      },
+      "end": {
+        "x": 33.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6ebdb624-1b08-4eaa-97d1-0ef0aafea170",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 12
+      },
+      "end": {
+        "x": 33.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "af8418b1-5e96-452a-b446-a43d59df0de0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 28,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b4a999c3-d2ab-4a25-931f-9c9352d7c08c",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 16.3
+      },
+      "end": {
+        "x": 28,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "15c22372-a3c9-431c-9d8f-b31dda7ce2a4",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 12
+      },
+      "end": {
+        "x": 40.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "9ac73132-b878-4b55-bcaa-188a6f5eab75",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 12
+      },
+      "end": {
+        "x": 40.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "9b5e68ae-8d51-45b7-9049-77c183abda9f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 35,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "4d9b1d2c-af85-4145-be8e-df653f13b5e9",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 16.3
+      },
+      "end": {
+        "x": 35,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "336dbf53-55c0-4030-b420-0e26f3171ac0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 12
+      },
+      "end": {
+        "x": 47.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b8f4d367-54e7-4d71-bec8-b34bc3518383",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 12
+      },
+      "end": {
+        "x": 47.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f251ac8b-b136-41cc-bacc-e07bc1b2c072",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 42,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ced46989-3b9d-49fa-b3dc-9ed89716bbf3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 16.3
+      },
+      "end": {
+        "x": 42,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1aac5f0c-9e95-48d4-a6d1-1910cf8e369a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 12
+      },
+      "end": {
+        "x": 54.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5311c6b5-0e2b-43bf-ab98-dfe014c209cc",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 12
+      },
+      "end": {
+        "x": 54.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3f409a6d-4681-406c-a3e9-6a6b039a2ab1",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 49,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c98f2db9-b39e-4014-9906-6c74b4252d36",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 16.3
+      },
+      "end": {
+        "x": 49,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "251e9c44-1d02-49f5-89e6-d7d92a2dd851",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 12
+      },
+      "end": {
+        "x": 61.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "2944b518-f9fb-4860-9612-cfeaf1740070",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 12
+      },
+      "end": {
+        "x": 61.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "7c18b8cd-cc2f-490e-9292-e99f02d56b40",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 56,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "9abca380-63fb-40c4-b45a-bbe12ea24c96",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 16.3
+      },
+      "end": {
+        "x": 56,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "357526f0-6e6e-48c6-91b8-f780a1a4c14d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 12
+      },
+      "end": {
+        "x": 68.3,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b554a8f3-def7-4c7f-8e3a-f489b405fc81",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 12
+      },
+      "end": {
+        "x": 68.3,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3edfd711-afc0-4784-b287-39263a677403",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 16.3
+      },
+      "end": {
+        "x": 63,
+        "y": 16.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3dbd638d-2bb7-4f38-b6bf-9cedef1abbf2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 16.3
+      },
+      "end": {
+        "x": 63,
+        "y": 12
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "599a7eee-5bb2-4b46-844e-2fd1be5e71d4",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 18
+      },
+      "end": {
+        "x": 5.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c189ee6b-4caf-4298-bf15-bc0df09c1878",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 18
+      },
+      "end": {
+        "x": 5.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c3a09b7b-a72e-4e2e-9b00-99eac790c8f3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 0,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "48ff5257-e0a3-4dfb-a19b-86d11d921d27",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 22.3
+      },
+      "end": {
+        "x": 0,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "57acb089-eb4c-4494-ab67-1d6c83503af2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 18
+      },
+      "end": {
+        "x": 12.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "24678a50-7895-479e-8bad-4c62663e9f11",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 18
+      },
+      "end": {
+        "x": 12.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c515fb23-b559-4bce-b9f6-2cb27dc08260",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 7,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "eb358fee-1d7d-4977-b628-b6f603e1f719",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 22.3
+      },
+      "end": {
+        "x": 7,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "833b99f5-2679-4d99-9859-04d865b3b977",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 18
+      },
+      "end": {
+        "x": 19.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "729a79dc-1e13-4170-a972-bab152a64785",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 18
+      },
+      "end": {
+        "x": 19.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "06610515-1f15-4b04-90fc-270e8aaa448a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 14,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "78b4b9ff-01d9-4a4d-94fa-bbd1b48107ea",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 22.3
+      },
+      "end": {
+        "x": 14,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "029ca545-d83b-41b4-9a88-b3b4c66b1a02",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 18
+      },
+      "end": {
+        "x": 26.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "42f0b33c-0a5b-4de4-b00c-288c2ca12137",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 18
+      },
+      "end": {
+        "x": 26.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d1f08c6b-19fe-45a6-8362-0f8217d9b9c5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 21,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "a2677cae-d36a-45ba-9680-8c6984d7d619",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 22.3
+      },
+      "end": {
+        "x": 21,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3206808d-0fb8-466d-8d12-134801ca48cf",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 18
+      },
+      "end": {
+        "x": 33.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5f0deb8f-735a-4963-b9f0-aaac95c9c8b5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 18
+      },
+      "end": {
+        "x": 33.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1d5ca520-13a2-4965-bdf7-e1aa79915f4f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 28,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d1b5a1a4-61ff-4951-a35c-56d24272ea26",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 22.3
+      },
+      "end": {
+        "x": 28,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1e7719a8-b254-4503-bec5-538fcceaa03a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 18
+      },
+      "end": {
+        "x": 40.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f119ca64-6178-46a7-b237-d1183e0367fe",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 18
+      },
+      "end": {
+        "x": 40.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "9813274e-0305-440c-916a-333590800b45",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 35,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "a6e2dd7b-0cd2-451f-942b-65103860ca6b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 22.3
+      },
+      "end": {
+        "x": 35,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "a5ff6f48-cd24-449b-854a-dd2a89b9baa7",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 18
+      },
+      "end": {
+        "x": 47.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "015c1d17-6f00-4343-9349-f42c87e90acd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 18
+      },
+      "end": {
+        "x": 47.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "57ad0fe3-595a-41b0-b59c-b680f9391dd6",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 42,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d56b5143-6f71-4573-bc50-3da5ce2dce04",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 22.3
+      },
+      "end": {
+        "x": 42,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6323946a-5180-4a4d-b1e9-02894b591442",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 18
+      },
+      "end": {
+        "x": 54.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "af48855b-60a9-4053-9716-3f62a78594e3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 18
+      },
+      "end": {
+        "x": 54.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "be76f359-cc3e-4d77-be6d-7b43cd1d3fb3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 49,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5f6e096d-bfd1-4b61-9cca-131de2ddc967",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 22.3
+      },
+      "end": {
+        "x": 49,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3a4f9851-0bce-4c76-a5a8-4617ad0d2358",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 18
+      },
+      "end": {
+        "x": 61.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "0a53d3f0-a4dc-42c9-a503-8edac157c2d6",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 18
+      },
+      "end": {
+        "x": 61.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "4bfac8d4-0b6e-455b-8ff8-e4d4297e9222",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 56,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e65e860e-5302-474f-8750-1e668a8c81d6",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 22.3
+      },
+      "end": {
+        "x": 56,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "86e5d266-e020-49ae-9326-b31fa13e2cbd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 18
+      },
+      "end": {
+        "x": 68.3,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6eafc759-8ce2-4e9e-8fd4-6e851e38df12",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 18
+      },
+      "end": {
+        "x": 68.3,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ee380ed7-1f80-4b3d-b63b-0b37c8e9c2a2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 22.3
+      },
+      "end": {
+        "x": 63,
+        "y": 22.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5982f4b1-3eff-4715-8253-8d2b118de30a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 22.3
+      },
+      "end": {
+        "x": 63,
+        "y": 18
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5aaeea7d-5437-49dd-a0eb-08ac5720353b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 24
+      },
+      "end": {
+        "x": 5.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "cde7903d-183e-4be4-bca8-b102e2b3a011",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 24
+      },
+      "end": {
+        "x": 5.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1e879087-3bf4-4d18-895d-ebbdaec250e9",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 5.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 0,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "5c8532e5-d07a-4952-8ed0-244bb20cc727",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 0,
+        "y": 28.3
+      },
+      "end": {
+        "x": 0,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "72e50493-8596-4771-88b6-407f9b2b7a12",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 24
+      },
+      "end": {
+        "x": 12.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "700df6f4-bc35-4bf5-9654-825aebfc14fe",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 24
+      },
+      "end": {
+        "x": 12.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "70e3e202-36a8-4deb-aa71-9b799a3ece33",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 12.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 7,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c986705d-cdb9-4b7f-aece-3ec5a5187948",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 7,
+        "y": 28.3
+      },
+      "end": {
+        "x": 7,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "4f863ef9-d305-4197-90eb-61542c87b781",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 24
+      },
+      "end": {
+        "x": 19.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "ffabc710-e9ac-4b89-aee1-499fb09bfcb4",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 24
+      },
+      "end": {
+        "x": 19.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "643aaec7-289a-45e1-bd45-0d054c03d19e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 19.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 14,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c5f84d71-5551-459a-800e-3b023235f4b0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 14,
+        "y": 28.3
+      },
+      "end": {
+        "x": 14,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b0398bba-3ed2-4691-aa66-70e454aa2697",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 24
+      },
+      "end": {
+        "x": 26.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c3959f01-2eba-403e-9a52-b0d14937b4a9",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 24
+      },
+      "end": {
+        "x": 26.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "2b01ec1f-56ab-4702-acad-5171b81869a5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 26.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 21,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6b9a467b-44bf-47d5-a54c-cc4675d7608a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 21,
+        "y": 28.3
+      },
+      "end": {
+        "x": 21,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "10014d51-870c-4a8c-bf83-fdeb7a6524ba",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 24
+      },
+      "end": {
+        "x": 33.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "0f8c0497-eddd-43b1-8cc6-4417fd146238",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 24
+      },
+      "end": {
+        "x": 33.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "47a9d0af-f217-45a2-b235-338ea65e2bc1",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 33.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 28,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "8a9ab41d-b81e-49a3-9540-ae8764f0958b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 28,
+        "y": 28.3
+      },
+      "end": {
+        "x": 28,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "08f848dd-d7df-46b3-a586-e5f415a7fb41",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 24
+      },
+      "end": {
+        "x": 40.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "4453df39-0a88-46db-a75f-447e905a803d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 24
+      },
+      "end": {
+        "x": 40.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "23395500-9283-4496-8bb2-749f41bf6771",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 40.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 35,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "9a6d8894-76a6-476d-b3af-92389d13fea7",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 35,
+        "y": 28.3
+      },
+      "end": {
+        "x": 35,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "385b1d7e-2b9a-4a1b-b576-574fae6def36",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 24
+      },
+      "end": {
+        "x": 47.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "a59e963f-315a-495b-8739-d209886804f5",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 24
+      },
+      "end": {
+        "x": 47.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b344a984-fe90-4361-a657-30917792e1e1",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 47.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 42,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b0421f05-702f-403a-938c-10787f39b31b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 42,
+        "y": 28.3
+      },
+      "end": {
+        "x": 42,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "2c8825db-915a-4e8f-b4c1-3a3d1c9c9198",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 24
+      },
+      "end": {
+        "x": 54.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "aaa6741c-f5f1-4a02-8036-38595f20c23b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 24
+      },
+      "end": {
+        "x": 54.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "24655c56-7351-4b04-b569-f250543b441b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 54.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 49,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "f21a0487-3d43-49e7-8e56-73b372e144f2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 49,
+        "y": 28.3
+      },
+      "end": {
+        "x": 49,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "1d74edb5-8025-471f-b447-f88758b244c0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 24
+      },
+      "end": {
+        "x": 61.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d5ce8354-9782-4863-b8e2-bff467e5ab9d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 24
+      },
+      "end": {
+        "x": 61.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "d8185cac-dd00-463b-b8b2-7d2e4a617854",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 61.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 56,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "b1b76fa1-d293-45b2-a631-36959e5f3497",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 56,
+        "y": 28.3
+      },
+      "end": {
+        "x": 56,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "56a2244c-558b-4b62-8c45-24fc9aec9018",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 24
+      },
+      "end": {
+        "x": 68.3,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "4b6a0fb5-4140-4f45-a21e-4bb2f465c92e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 24
+      },
+      "end": {
+        "x": 68.3,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "e0b8d7f6-8437-47b6-918e-aaff488d0533",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 68.3,
+        "y": 28.3
+      },
+      "end": {
+        "x": 63,
+        "y": 28.3
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "163b5fd5-0a07-4911-b90d-3a367217923d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "start": {
+        "x": 63,
+        "y": 28.3
+      },
+      "end": {
+        "x": 63,
+        "y": 24
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    }
+  ],
+  "rooms": [
+    {
+      "id": "d3db2701-9bb9-4798-887c-6741e3f4d47f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 1",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 0.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "8b2a908a-253f-4ca3-9d17-94baf78273c6",
+        "89cad6cf-d8f4-4724-b100-e161ab6f70db",
+        "1434cb99-02d5-4c9e-a98d-61551da6cfbb",
+        "abb5aba9-2a45-4c14-8842-a7e1bfed5e61"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999993,
+      "perimeterM": 17.999999999999996,
+      "centroid": {
+        "x": 2.6499999999999995,
+        "y": 2.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.999999999999986,
+      "designLoadW": 1889.9999999999995,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "94d3176f-2f75-45a8-8ee5-edb98e5ed4bb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 2",
+      "polygon": [
+        {
+          "x": 7.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 12.15,
+          "y": 0.15
+        },
+        {
+          "x": 12.15,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 7.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "66b93204-c311-4268-a856-f04adc0c2281",
+        "c95e08a3-6209-47fe-9fe3-890cd7881b50",
+        "49373b36-647a-43bf-b3b2-fa6665286a57",
+        "3d2863eb-3a98-4447-8584-1a99d3d610fe"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999993,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 9.65,
+        "y": 2.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.999999999999986,
+      "designLoadW": 1889.9999999999995,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "dc90cb0b-ae85-4593-a346-c7dccce43fba",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 3",
+      "polygon": [
+        {
+          "x": 14.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 0.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 14.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "a01f18ba-8afe-4f5d-a7b2-0e038dfede1c",
+        "4867bfc6-a3bc-4485-88e3-599b094a6298",
+        "5d208904-c0cc-4aae-90e3-abcc964f4166",
+        "fa8d339a-a88b-4657-90ac-abe4450cd959"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 16.65,
+        "y": 2.149999999999999
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "fb680445-a7aa-4c22-95c0-027c473b82b8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 4",
+      "polygon": [
+        {
+          "x": 21.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 0.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 21.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "52585585-95d6-4de2-9d62-2eba7f550ac1",
+        "14c8f0ed-3ced-45c1-81e9-e6e3393716da",
+        "441f7ff3-4f98-4354-973b-f759e2181f9f",
+        "f3255b96-4d96-43ec-8042-cfbec6f179c9"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000014,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 23.65,
+        "y": 2.1500000000000004
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000004,
+      "designLoadW": 1890.0000000000016,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "3febc9b4-3684-4862-9c8a-848ab28920fd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 5",
+      "polygon": [
+        {
+          "x": 28.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 33.15,
+          "y": 0.15
+        },
+        {
+          "x": 33.15,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 28.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "60c43338-cd2e-4360-95a2-05ea3b38f677",
+        "bc19bb48-dadd-4645-9a97-ea8a60c14fe9",
+        "8632118a-41bf-4072-be6d-ff08cccfe3be",
+        "39c98d4a-325e-423f-b109-af0c05c82d19"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 30.649999999999984,
+        "y": 2.149999999999998
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "a3ff6fe8-fd46-4ce5-864b-fc42ffa35c04",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 6",
+      "polygon": [
+        {
+          "x": 35.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 40.15,
+          "y": 0.15
+        },
+        {
+          "x": 40.15,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 35.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "5e0f3c76-6c2a-45ab-9339-833455a52023",
+        "846ba5ad-e9e7-4b21-a2c2-e3d04d41042b",
+        "dfed8033-f22e-47b7-aab4-9ef748ab2fee",
+        "31e58c10-aca0-4f19-b16a-ab9abd4737dd"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 37.65,
+        "y": 2.149999999999999
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "12df58be-f3fa-4654-8695-2f5d0b12d5ac",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 7",
+      "polygon": [
+        {
+          "x": 42.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 47.15,
+          "y": 0.15
+        },
+        {
+          "x": 47.15,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 42.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "477e8633-c637-44ce-8bae-a07e4cb20ed8",
+        "e1a248ac-0aff-46b3-9238-18161d7c026f",
+        "f52c1e84-842e-436e-973e-3dae8b57c98a",
+        "9ca68ef5-d3ea-4cde-b0a3-32198b747d14"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.99999999999997,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 44.650000000000034,
+        "y": 2.1500000000000012
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.99999999999993,
+      "designLoadW": 1889.9999999999975,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "ac769623-b18c-4c9d-812f-eb900c434d9d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 8",
+      "polygon": [
+        {
+          "x": 49.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 54.15,
+          "y": 0.15
+        },
+        {
+          "x": 54.15,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 49.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "d3017364-ab3d-481f-874b-eb24dbab7ecb",
+        "26af79dc-41fd-434f-bf67-89701c22fe11",
+        "25c2847e-c1dc-4c82-a2af-0ca738afd0e2",
+        "481cd58b-480f-4b34-9292-2b5e5793b159"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 51.65,
+        "y": 2.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "74140a47-b33d-4c25-a4ef-1c668618f5fa",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 9",
+      "polygon": [
+        {
+          "x": 56.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 61.15,
+          "y": 0.15
+        },
+        {
+          "x": 61.15,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 56.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "594967a9-9793-4a61-8fa5-0f09ea4ff0e0",
+        "7bdc4413-6874-4295-bfdd-e959293ba124",
+        "78d91b0b-541a-46d8-84a0-b324e0cbb902",
+        "6b6e0255-da02-4f24-9aa5-94eb05e4ee88"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999986,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 58.65000000000004,
+        "y": 2.1500000000000017
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.999999999999964,
+      "designLoadW": 1889.9999999999989,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "0eea0c7d-57d6-4cd0-9425-347e6b99e340",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 10",
+      "polygon": [
+        {
+          "x": 63.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 0.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 63.15,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "7c3ab544-a2ca-4242-8336-5367b08b8ba0",
+        "f9870e1c-a965-4882-9823-85a40c895ebe",
+        "40c9c025-3767-46ac-b0c5-2cbcec42a013",
+        "878c4750-1f5c-4a67-8cce-26698d9ad2c1"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 17.999999999999986,
+      "centroid": {
+        "x": 65.6499999999999,
+        "y": 2.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "014014f3-1161-4d3d-9dbb-161eb5568f8f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 11",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 6.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 6.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 10.15
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "72226ab1-8449-4382-bada-effad72eb2d3",
+        "3f26f7cc-0708-4bcf-876a-027af128f44e",
+        "192a175c-806a-49ce-b302-18c09041be1d",
+        "b0daccd9-52ce-4573-9506-0cb93567bd99"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999996,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 2.6499999999999995,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.99999999999999,
+      "designLoadW": 1889.9999999999998,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "a0a5c810-b908-43c4-81bf-ad57f5322dd8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 12",
+      "polygon": [
+        {
+          "x": 7.15,
+          "y": 6.15
+        },
+        {
+          "x": 12.15,
+          "y": 6.15
+        },
+        {
+          "x": 12.15,
+          "y": 10.15
+        },
+        {
+          "x": 7.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "f87dbc2b-ef38-489b-abd8-cd0c50bfe178",
+        "e4716419-1f9d-4498-95c7-3f2dd9417983",
+        "e22bfccd-7b02-42ea-bb9e-cb212994704c",
+        "a3c9c790-6752-43e8-bd5c-d142bcbdd000"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999996,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 9.649999999999999,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.99999999999999,
+      "designLoadW": 1889.9999999999998,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "3e6f5e55-f5ea-49c6-88c6-0cbdcbe5e05e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 13",
+      "polygon": [
+        {
+          "x": 14.15,
+          "y": 6.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 6.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 10.15
+        },
+        {
+          "x": 14.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "8a475fd9-8954-4844-9ac2-08cb9cc97373",
+        "cad5edf4-7ed3-4d9c-b976-823cf72d5e86",
+        "2c3e2a72-be89-4394-9fe1-216043e35759",
+        "d68d54ca-d514-49c0-8cf1-60365e4b29e8"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000014,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 16.650000000000002,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000004,
+      "designLoadW": 1890.0000000000016,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "31dfa79c-7896-4757-8be7-a0966c28e0f2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 14",
+      "polygon": [
+        {
+          "x": 21.15,
+          "y": 6.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 6.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 10.15
+        },
+        {
+          "x": 21.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "792af675-b902-456a-bd1a-c53b49e55328",
+        "17ed761a-bce6-46dd-a101-02ed0dbcf471",
+        "d3a5e5c6-7158-4655-b64d-8187906e9da4",
+        "e3d0ec45-3de4-40cc-88db-e71d235a79ac"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 23.650000000000002,
+        "y": 8.150000000000004
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "6e28d04c-8fe4-4cda-a3e9-2dc9e47f4cad",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 15",
+      "polygon": [
+        {
+          "x": 28.15,
+          "y": 6.15
+        },
+        {
+          "x": 33.15,
+          "y": 6.15
+        },
+        {
+          "x": 33.15,
+          "y": 10.15
+        },
+        {
+          "x": 28.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "0f0eb4f9-50e5-4257-816e-46dba4b44182",
+        "adb853d0-735d-4a14-86e4-2569b60d9a19",
+        "b39ea0d9-f00c-45dc-9697-06cecb678b17",
+        "61de681d-8b86-4f81-9561-6aee77b4bdf8"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000057,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 30.649999999999974,
+        "y": 8.149999999999997
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000156,
+      "designLoadW": 1890.0000000000055,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "41684962-3ad3-40ab-872e-cf53ce372458",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 16",
+      "polygon": [
+        {
+          "x": 35.15,
+          "y": 6.15
+        },
+        {
+          "x": 40.15,
+          "y": 6.15
+        },
+        {
+          "x": 40.15,
+          "y": 10.15
+        },
+        {
+          "x": 35.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "bad5805d-64e2-45b7-804d-db1800a7ed68",
+        "71b875cf-ced9-4d41-af49-029239c183bc",
+        "aaf71a53-4314-4c52-a66a-b254c1d7dc7f",
+        "ba929f4d-9894-44d9-8e26-6bb96cd81106"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 37.65,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "8f190c0e-54e0-4293-b18f-e328a4ea4d8d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 17",
+      "polygon": [
+        {
+          "x": 42.15,
+          "y": 6.15
+        },
+        {
+          "x": 47.15,
+          "y": 6.15
+        },
+        {
+          "x": 47.15,
+          "y": 10.15
+        },
+        {
+          "x": 42.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "878e3134-91ac-451d-aedb-a15a5874393a",
+        "fb3d748a-bc56-47d9-a7fa-cbb9da97053f",
+        "864b224e-4ca6-4af5-a170-fee2ecbf9b55",
+        "ffbe699d-d4c4-4f5e-a33a-9bf239070e3b"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 44.65,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "dc5b5e36-f8cd-4890-895f-00658c4dff1a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 18",
+      "polygon": [
+        {
+          "x": 49.15,
+          "y": 6.15
+        },
+        {
+          "x": 54.15,
+          "y": 6.15
+        },
+        {
+          "x": 54.15,
+          "y": 10.15
+        },
+        {
+          "x": 49.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "74819d78-de8e-475b-b144-ca997cb54bd4",
+        "ce723275-482d-4028-bf71-28a6b78b609f",
+        "054d918f-4b87-46a7-b035-b100fec52171",
+        "618a548a-e1c6-4632-8051-a98a471ec9a4"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000057,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 51.64999999999998,
+        "y": 8.149999999999995
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000156,
+      "designLoadW": 1890.0000000000055,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "45fc2751-4204-47dd-92de-7e24b316d013",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 19",
+      "polygon": [
+        {
+          "x": 56.15,
+          "y": 6.15
+        },
+        {
+          "x": 61.15,
+          "y": 6.15
+        },
+        {
+          "x": 61.15,
+          "y": 10.15
+        },
+        {
+          "x": 56.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "718016bb-1f20-4c10-9d4c-de94ec6e8496",
+        "21f51925-ec43-4881-bfaf-0428867790e5",
+        "ccdd7941-b877-48b3-b8df-137340c14a26",
+        "e3b0abb3-720f-4218-a5fb-104713b7e5c8"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 58.65,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "80cf3a48-fd42-47a9-a6a0-c787ef6faa2d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 20",
+      "polygon": [
+        {
+          "x": 63.15,
+          "y": 6.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 6.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 10.15
+        },
+        {
+          "x": 63.15,
+          "y": 10.15
+        }
+      ],
+      "wallIds": [
+        "aa54b6e1-be00-4635-8302-f082af28dd76",
+        "63a54dd6-0399-435c-9d63-0785880dfd83",
+        "d089b5b7-5b2f-479d-840d-59b4e4196880",
+        "30b54a61-19b6-4faf-8ebb-e376f224c4a1"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000057,
+      "perimeterM": 17.999999999999986,
+      "centroid": {
+        "x": 65.6499999999999,
+        "y": 8.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000156,
+      "designLoadW": 1890.0000000000055,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "5d08a775-1fd7-435c-ae32-ff8631ce7c8a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 21",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 12.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 12.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "2ee572c9-81ba-4dd9-aa57-e5f3ed7693b5",
+        "078ac3cf-94e2-4a7b-821a-697616440bd2",
+        "6a8d1413-e9a8-4f36-9475-10b805bbe8fd",
+        "66f917ed-9446-4efc-96d5-2af4479e8844"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000004,
+      "perimeterM": 18,
+      "centroid": {
+        "x": 2.6499999999999995,
+        "y": 14.150000000000002
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000014,
+      "designLoadW": 1890.0000000000005,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "0354fb55-86af-49ff-a2fd-5806d1897d34",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 22",
+      "polygon": [
+        {
+          "x": 7.15,
+          "y": 12.15
+        },
+        {
+          "x": 12.15,
+          "y": 12.15
+        },
+        {
+          "x": 12.15,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 7.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "c7287d6e-a26f-486c-8179-f5398a3e71e8",
+        "5ffb38c4-7660-4a8e-855a-826f24318c64",
+        "34585fe7-288f-4906-83ae-fda7ad4e1b28",
+        "1da9732c-c5a0-4835-b198-d299279fbea5"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 9.650000000000004,
+        "y": 14.150000000000002
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "34164ca7-862b-4730-a103-c183f6eb2b46",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 23",
+      "polygon": [
+        {
+          "x": 14.15,
+          "y": 12.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 12.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 14.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "64a14087-74d0-42ea-8532-97b1dfd175de",
+        "c1248c94-78c0-425a-a6cc-3194a812e3e0",
+        "dfa64a89-3c3b-46ae-84be-e552747c8e00",
+        "c67afbe1-c2ec-4330-85da-144632ec379e"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.00000000000003,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 16.65,
+        "y": 14.149999999999997
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000008,
+      "designLoadW": 1890.0000000000027,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "f77c5305-a66d-4127-856a-1dfd24240d41",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 24",
+      "polygon": [
+        {
+          "x": 21.15,
+          "y": 12.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 12.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 21.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "664ea1f1-3d36-458e-83f6-bb4fa0b5d518",
+        "f8e30588-feef-44a2-80b1-716dc0218939",
+        "5633f83c-b62a-4f43-bf52-acf2f6f48ff2",
+        "6ba3ea39-247e-4d9d-9f8e-30bd2d4f2d27"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.00000000000001,
+      "centroid": {
+        "x": 23.650000000000013,
+        "y": 14.150000000000004
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "e2befec1-d4fb-4726-b655-874eb1033ce0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 25",
+      "polygon": [
+        {
+          "x": 28.15,
+          "y": 12.15
+        },
+        {
+          "x": 33.15,
+          "y": 12.15
+        },
+        {
+          "x": 33.15,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 28.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "c22594c9-a352-40c7-89a5-239d3ac81bd5",
+        "6ebdb624-1b08-4eaa-97d1-0ef0aafea170",
+        "af8418b1-5e96-452a-b446-a43d59df0de0",
+        "b4a999c3-d2ab-4a25-931f-9c9352d7c08c"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 30.65000000000001,
+        "y": 14.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "7f2ae53d-90b6-43ed-a36f-0a5ccb57066a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 26",
+      "polygon": [
+        {
+          "x": 35.15,
+          "y": 12.15
+        },
+        {
+          "x": 40.15,
+          "y": 12.15
+        },
+        {
+          "x": 40.15,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 35.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "15c22372-a3c9-431c-9d8f-b31dda7ce2a4",
+        "9ac73132-b878-4b55-bcaa-188a6f5eab75",
+        "9b5e68ae-8d51-45b7-9049-77c183abda9f",
+        "4d9b1d2c-af85-4145-be8e-df653f13b5e9"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 37.65,
+        "y": 14.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "7a78a2d6-e8fd-40f6-bef2-f57e75b36122",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 27",
+      "polygon": [
+        {
+          "x": 42.15,
+          "y": 12.15
+        },
+        {
+          "x": 47.15,
+          "y": 12.15
+        },
+        {
+          "x": 47.15,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 42.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "336dbf53-55c0-4030-b420-0e26f3171ac0",
+        "b8f4d367-54e7-4d71-bec8-b34bc3518383",
+        "f251ac8b-b136-41cc-bacc-e07bc1b2c072",
+        "ced46989-3b9d-49fa-b3dc-9ed89716bbf3"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 44.65000000000003,
+        "y": 14.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "ece6d273-1e79-4007-a1b0-ea5ff08dd130",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 28",
+      "polygon": [
+        {
+          "x": 49.15,
+          "y": 12.15
+        },
+        {
+          "x": 54.15,
+          "y": 12.15
+        },
+        {
+          "x": 54.15,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 49.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "1aac5f0c-9e95-48d4-a6d1-1910cf8e369a",
+        "5311c6b5-0e2b-43bf-ab98-dfe014c209cc",
+        "3f409a6d-4681-406c-a3e9-6a6b039a2ab1",
+        "c98f2db9-b39e-4014-9906-6c74b4252d36"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 51.65000000000003,
+        "y": 14.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "5bb6e059-2985-490d-854c-f1fc1c4a8b00",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 29",
+      "polygon": [
+        {
+          "x": 56.15,
+          "y": 12.15
+        },
+        {
+          "x": 61.15,
+          "y": 12.15
+        },
+        {
+          "x": 61.15,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 56.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "251e9c44-1d02-49f5-89e6-d7d92a2dd851",
+        "2944b518-f9fb-4860-9612-cfeaf1740070",
+        "7c18b8cd-cc2f-490e-9292-e99f02d56b40",
+        "9abca380-63fb-40c4-b45a-bbe12ea24c96"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000004,
+      "centroid": {
+        "x": 58.65,
+        "y": 14.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "e1f2cebf-7077-48b3-a706-6b813e82f1e7",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 30",
+      "polygon": [
+        {
+          "x": 63.15,
+          "y": 12.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 12.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 16.150000000000002
+        },
+        {
+          "x": 63.15,
+          "y": 16.150000000000002
+        }
+      ],
+      "wallIds": [
+        "357526f0-6e6e-48c6-91b8-f780a1a4c14d",
+        "b554a8f3-def7-4c7f-8e3a-f489b405fc81",
+        "3edfd711-afc0-4784-b287-39263a677403",
+        "3dbd638d-2bb7-4f38-b6bf-9cedef1abbf2"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 17.99999999999999,
+      "centroid": {
+        "x": 65.64999999999996,
+        "y": 14.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "7b71fb42-ab54-48b5-944b-30cf079d670d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 31",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 18.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 18.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "599a7eee-5bb2-4b46-844e-2fd1be5e71d4",
+        "c189ee6b-4caf-4298-bf15-bc0df09c1878",
+        "c3a09b7b-a72e-4e2e-9b00-99eac790c8f3",
+        "48ff5257-e0a3-4dfb-a19b-86d11d921d27"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.00000000000002,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 2.6499999999999995,
+        "y": 20.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000064,
+      "designLoadW": 1890.0000000000023,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "b639fc39-58e3-4cde-a77e-13059f8e4826",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 32",
+      "polygon": [
+        {
+          "x": 7.15,
+          "y": 18.15
+        },
+        {
+          "x": 12.15,
+          "y": 18.15
+        },
+        {
+          "x": 12.15,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 7.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "57acb089-eb4c-4494-ab67-1d6c83503af2",
+        "24678a50-7895-479e-8bad-4c62663e9f11",
+        "c515fb23-b559-4bce-b9f6-2cb27dc08260",
+        "eb358fee-1d7d-4977-b628-b6f603e1f719"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000057,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 9.649999999999999,
+        "y": 20.14999999999999
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000156,
+      "designLoadW": 1890.0000000000055,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "bfa63b28-bc27-4bfb-8b1c-7aa1a4f7751f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 33",
+      "polygon": [
+        {
+          "x": 14.15,
+          "y": 18.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 18.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 14.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "833b99f5-2679-4d99-9859-04d865b3b977",
+        "729a79dc-1e13-4170-a972-bab152a64785",
+        "06610515-1f15-4b04-90fc-270e8aaa448a",
+        "78b4b9ff-01d9-4a4d-94fa-bbd1b48107ea"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000057,
+      "perimeterM": 18.00000000000001,
+      "centroid": {
+        "x": 16.64999999999999,
+        "y": 20.14999999999999
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000156,
+      "designLoadW": 1890.0000000000055,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "02a6b14c-fbd4-4789-b450-0fe2d0a64c92",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 34",
+      "polygon": [
+        {
+          "x": 21.15,
+          "y": 18.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 18.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 21.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "029ca545-d83b-41b4-9a88-b3b4c66b1a02",
+        "42f0b33c-0a5b-4de4-b00c-288c2ca12137",
+        "d1f08c6b-19fe-45a6-8362-0f8217d9b9c5",
+        "a2677cae-d36a-45ba-9680-8c6984d7d619"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000014,
+      "centroid": {
+        "x": 23.650000000000013,
+        "y": 20.150000000000016
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "e6177b2f-8246-4903-96c9-1a616d8ebd64",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 35",
+      "polygon": [
+        {
+          "x": 28.15,
+          "y": 18.15
+        },
+        {
+          "x": 33.15,
+          "y": 18.15
+        },
+        {
+          "x": 33.15,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 28.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "3206808d-0fb8-466d-8d12-134801ca48cf",
+        "5f0deb8f-735a-4963-b9f0-aaac95c9c8b5",
+        "1d5ca520-13a2-4965-bdf7-e1aa79915f4f",
+        "d1b5a1a4-61ff-4951-a35c-56d24272ea26"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000057,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 30.64999999999998,
+        "y": 20.149999999999988
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.000000000000156,
+      "designLoadW": 1890.0000000000055,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "955d3bba-4606-477f-9338-a558aaa76abb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 36",
+      "polygon": [
+        {
+          "x": 35.15,
+          "y": 18.15
+        },
+        {
+          "x": 40.15,
+          "y": 18.15
+        },
+        {
+          "x": 40.15,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 35.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "1e7719a8-b254-4503-bec5-538fcceaa03a",
+        "f119ca64-6178-46a7-b237-d1183e0367fe",
+        "9813274e-0305-440c-916a-333590800b45",
+        "a6e2dd7b-0cd2-451f-942b-65103860ca6b"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000114,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 37.649999999999935,
+        "y": 20.149999999999977
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000031,
+      "designLoadW": 1890.000000000011,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "3e231db4-c7f8-4fd1-ac73-157afe9eb24e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 37",
+      "polygon": [
+        {
+          "x": 42.15,
+          "y": 18.15
+        },
+        {
+          "x": 47.15,
+          "y": 18.15
+        },
+        {
+          "x": 47.15,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 42.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "a5ff6f48-cd24-449b-854a-dd2a89b9baa7",
+        "015c1d17-6f00-4343-9349-f42c87e90acd",
+        "57ad0fe3-595a-41b0-b59c-b680f9391dd6",
+        "d56b5143-6f71-4573-bc50-3da5ce2dce04"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000114,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 44.64999999999993,
+        "y": 20.149999999999977
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000031,
+      "designLoadW": 1890.000000000011,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "7e1ad7ee-f65b-4d76-a618-fec6b030824a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 38",
+      "polygon": [
+        {
+          "x": 49.15,
+          "y": 18.15
+        },
+        {
+          "x": 54.15,
+          "y": 18.15
+        },
+        {
+          "x": 54.15,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 49.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "6323946a-5180-4a4d-b1e9-02894b591442",
+        "af48855b-60a9-4053-9716-3f62a78594e3",
+        "be76f359-cc3e-4d77-be6d-7b43cd1d3fb3",
+        "5f6e096d-bfd1-4b61-9cca-131de2ddc967"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 51.65000000000003,
+        "y": 20.14999999999999
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "e0396537-654a-418a-afef-a54c343df8a3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 39",
+      "polygon": [
+        {
+          "x": 56.15,
+          "y": 18.15
+        },
+        {
+          "x": 61.15,
+          "y": 18.15
+        },
+        {
+          "x": 61.15,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 56.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "3a4f9851-0bce-4c76-a5a8-4617ad0d2358",
+        "0a53d3f0-a4dc-42c9-a503-8edac157c2d6",
+        "4bfac8d4-0b6e-455b-8ff8-e4d4297e9222",
+        "e65e860e-5302-474f-8750-1e668a8c81d6"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 58.65,
+        "y": 20.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "e74fe0dc-ec13-4979-ab07-f356a4256101",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 40",
+      "polygon": [
+        {
+          "x": 63.15,
+          "y": 18.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 18.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 22.150000000000002
+        },
+        {
+          "x": 63.15,
+          "y": 22.150000000000002
+        }
+      ],
+      "wallIds": [
+        "86e5d266-e020-49ae-9326-b31fa13e2cbd",
+        "6eafc759-8ce2-4e9e-8fd4-6e851e38df12",
+        "ee380ed7-1f80-4b3d-b63b-0b37c8e9c2a2",
+        "5982f4b1-3eff-4715-8253-8d2b118de30a"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.000000000000227,
+      "perimeterM": 17.999999999999993,
+      "centroid": {
+        "x": 65.64999999999976,
+        "y": 20.149999999999924
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000062,
+      "designLoadW": 1890.0000000000216,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "7f9c93d9-7ef8-4a95-8bee-db0aea0ed56b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 41",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 24.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 24.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "5aaeea7d-5437-49dd-a0eb-08ac5720353b",
+        "cde7903d-183e-4be4-bca8-b102e2b3a011",
+        "1e879087-3bf4-4d18-895d-ebbdaec250e9",
+        "5c8532e5-d07a-4952-8ed0-244bb20cc727"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20.00000000000003,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 2.6499999999999995,
+        "y": 26.149999999999988
+      },
+      "heightM": 2.7,
+      "volumeM3": 54.00000000000008,
+      "designLoadW": 1890.0000000000027,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "b178474f-d45b-4cd2-b432-9e21196441ef",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 42",
+      "polygon": [
+        {
+          "x": 7.15,
+          "y": 24.15
+        },
+        {
+          "x": 12.15,
+          "y": 24.15
+        },
+        {
+          "x": 12.15,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 7.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "72e50493-8596-4771-88b6-407f9b2b7a12",
+        "700df6f4-bc35-4bf5-9654-825aebfc14fe",
+        "70e3e202-36a8-4deb-aa71-9b799a3ece33",
+        "c986705d-cdb9-4b7f-aece-3ec5a5187948"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.99999999999997,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 9.650000000000006,
+        "y": 26.150000000000023
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.99999999999993,
+      "designLoadW": 1889.9999999999975,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "9fa21d7c-8b1f-4ca0-98da-ba797ad9ec8d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 43",
+      "polygon": [
+        {
+          "x": 14.15,
+          "y": 24.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 24.15
+        },
+        {
+          "x": 19.150000000000002,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 14.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "4f863ef9-d305-4197-90eb-61542c87b781",
+        "ffabc710-e9ac-4b89-aee1-499fb09bfcb4",
+        "643aaec7-289a-45e1-bd45-0d054c03d19e",
+        "c5f84d71-5551-459a-800e-3b023235f4b0"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.00000000000001,
+      "centroid": {
+        "x": 16.65000000000001,
+        "y": 26.150000000000016
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "d0f7dee5-1e88-4ad1-a7b3-f2340a7b04ea",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 44",
+      "polygon": [
+        {
+          "x": 21.15,
+          "y": 24.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 24.15
+        },
+        {
+          "x": 26.150000000000002,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 21.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "b0398bba-3ed2-4691-aa66-70e454aa2697",
+        "c3959f01-2eba-403e-9a52-b0d14937b4a9",
+        "2b01ec1f-56ab-4702-acad-5171b81869a5",
+        "6b9a467b-44bf-47d5-a54c-cc4675d7608a"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999886,
+      "perimeterM": 18.000000000000014,
+      "centroid": {
+        "x": 23.65000000000006,
+        "y": 26.15000000000006
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.999999999999694,
+      "designLoadW": 1889.9999999999893,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "230cac75-adfd-47e9-9d29-6f3e2f0575dd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 45",
+      "polygon": [
+        {
+          "x": 28.15,
+          "y": 24.15
+        },
+        {
+          "x": 33.15,
+          "y": 24.15
+        },
+        {
+          "x": 33.15,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 28.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "10014d51-870c-4a8c-bf83-fdeb7a6524ba",
+        "0f8c0497-eddd-43b1-8cc6-4417fd146238",
+        "47a9d0af-f217-45a2-b235-338ea65e2bc1",
+        "8a9ab41d-b81e-49a3-9540-ae8764f0958b"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 30.65000000000001,
+        "y": 26.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "1f681539-b231-43a2-87ce-288f6ccbb886",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 46",
+      "polygon": [
+        {
+          "x": 35.15,
+          "y": 24.15
+        },
+        {
+          "x": 40.15,
+          "y": 24.15
+        },
+        {
+          "x": 40.15,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 35.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "08f848dd-d7df-46b3-a586-e5f415a7fb41",
+        "4453df39-0a88-46db-a75f-447e905a803d",
+        "23395500-9283-4496-8bb2-749f41bf6771",
+        "9a6d8894-76a6-476d-b3af-92389d13fea7"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 37.65000000000001,
+        "y": 26.150000000000016
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "dc547c9a-5382-4625-b4c3-ab5688524944",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 47",
+      "polygon": [
+        {
+          "x": 42.15,
+          "y": 24.15
+        },
+        {
+          "x": 47.15,
+          "y": 24.15
+        },
+        {
+          "x": 47.15,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 42.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "385b1d7e-2b9a-4a1b-b576-574fae6def36",
+        "a59e963f-315a-495b-8739-d209886804f5",
+        "b344a984-fe90-4361-a657-30917792e1e1",
+        "b0421f05-702f-403a-938c-10787f39b31b"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 44.65000000000003,
+        "y": 26.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "a820cd09-d954-468d-b825-911afe5ff47d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 48",
+      "polygon": [
+        {
+          "x": 49.15,
+          "y": 24.15
+        },
+        {
+          "x": 54.15,
+          "y": 24.15
+        },
+        {
+          "x": 54.15,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 49.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "2c8825db-915a-4e8f-b4c1-3a3d1c9c9198",
+        "aaa6741c-f5f1-4a02-8036-38595f20c23b",
+        "24655c56-7351-4b04-b569-f250543b441b",
+        "f21a0487-3d43-49e7-8e56-73b372e144f2"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 51.65,
+        "y": 26.150000000000016
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "e6f1dea4-e4ee-4987-ba38-39298f20480f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 49",
+      "polygon": [
+        {
+          "x": 56.15,
+          "y": 24.15
+        },
+        {
+          "x": 61.15,
+          "y": 24.15
+        },
+        {
+          "x": 61.15,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 56.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "1d74edb5-8025-471f-b447-f88758b244c0",
+        "d5ce8354-9782-4863-b8e2-bff467e5ab9d",
+        "d8185cac-dd00-463b-b8b2-7d2e4a617854",
+        "b1b76fa1-d293-45b2-a631-36959e5f3497"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 20,
+      "perimeterM": 18.000000000000007,
+      "centroid": {
+        "x": 58.65000000000003,
+        "y": 26.150000000000016
+      },
+      "heightM": 2.7,
+      "volumeM3": 54,
+      "designLoadW": 1890,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    },
+    {
+      "id": "af6e6d43-0cb0-4a40-9d82-0087c68d9d31",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "name": "Ambiente 50",
+      "polygon": [
+        {
+          "x": 63.15,
+          "y": 24.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 24.15
+        },
+        {
+          "x": 68.14999999999999,
+          "y": 28.150000000000002
+        },
+        {
+          "x": 63.15,
+          "y": 28.150000000000002
+        }
+      ],
+      "wallIds": [
+        "56a2244c-558b-4b62-8c45-24fc9aec9018",
+        "4b6a0fb5-4140-4f45-a21e-4bb2f465c92e",
+        "e0b8d7f6-8437-47b6-918e-aaff488d0533",
+        "163b5fd5-0a07-4911-b90d-3a367217923d"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 19.999999999999773,
+      "perimeterM": 17.999999999999993,
+      "centroid": {
+        "x": 65.65000000000023,
+        "y": 26.150000000000116
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.99999999999939,
+      "designLoadW": 1889.9999999999786,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1
+    }
+  ],
+  "openings": [],
+  "hvacSystems": [],
+  "radiators": [
+    {
+      "id": "c9947a7a-d3ca-4cf3-b935-5fd02a668e2e",
+      "roomId": "d3db2701-9bb9-4798-887c-6741e3f4d47f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "8b2a908a-253f-4ca3-9d17-94baf78273c6",
+      "position": {
+        "x": 0.45000000000000007,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063519e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "18fcc199-03a5-441c-9a3a-a3a506710ae3",
+      "roomId": "d3db2701-9bb9-4798-887c-6741e3f4d47f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "8b2a908a-253f-4ca3-9d17-94baf78273c6",
+      "position": {
+        "x": 1.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063519e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "b266c99a-ac89-42f9-9ef7-078c4a97f1a5",
+      "roomId": "94d3176f-2f75-45a8-8ee5-edb98e5ed4bb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "66b93204-c311-4268-a856-f04adc0c2281",
+      "position": {
+        "x": 7.45,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "02a394ce-19ae-44a8-9fb4-141de3548d27",
+      "roomId": "94d3176f-2f75-45a8-8ee5-edb98e5ed4bb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "66b93204-c311-4268-a856-f04adc0c2281",
+      "position": {
+        "x": 8.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "dc8ab3e1-d428-49cf-821b-820c245f600b",
+      "roomId": "dc90cb0b-ae85-4593-a346-c7dccce43fba",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "a01f18ba-8afe-4f5d-a7b2-0e038dfede1c",
+      "position": {
+        "x": 14.450000000000001,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063515e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "9f9ce932-a557-4b28-93f0-0607515f7fec",
+      "roomId": "dc90cb0b-ae85-4593-a346-c7dccce43fba",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "a01f18ba-8afe-4f5d-a7b2-0e038dfede1c",
+      "position": {
+        "x": 15.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063515e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "86cbfc6c-8658-422c-b85f-eb32c4f105a7",
+      "roomId": "fb680445-a7aa-4c22-95c0-027c473b82b8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "52585585-95d6-4de2-9d62-2eba7f550ac1",
+      "position": {
+        "x": 21.45,
+        "y": 0.2175000000000003
+      },
+      "rotation": -7.216449660063513e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "0712c61c-9be2-460c-8428-0431e2c4ac68",
+      "roomId": "fb680445-a7aa-4c22-95c0-027c473b82b8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "52585585-95d6-4de2-9d62-2eba7f550ac1",
+      "position": {
+        "x": 22.15,
+        "y": 0.21750000000000025
+      },
+      "rotation": -7.216449660063513e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "50a46627-35f0-4197-8340-077a01541906",
+      "roomId": "3febc9b4-3684-4862-9c8a-848ab28920fd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "60c43338-cd2e-4360-95a2-05ea3b38f677",
+      "position": {
+        "x": 28.45,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "25c9c8e6-1750-4f5c-b0c8-36fb60bbe421",
+      "roomId": "3febc9b4-3684-4862-9c8a-848ab28920fd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "60c43338-cd2e-4360-95a2-05ea3b38f677",
+      "position": {
+        "x": 29.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "9a77f88d-38b1-449c-b63e-ae82fb151aa3",
+      "roomId": "a3ff6fe8-fd46-4ce5-864b-fc42ffa35c04",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "5e0f3c76-6c2a-45ab-9339-833455a52023",
+      "position": {
+        "x": 35.449999999999996,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "ee4684d8-6c9b-4d4c-bb09-de00c257dedb",
+      "roomId": "a3ff6fe8-fd46-4ce5-864b-fc42ffa35c04",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "5e0f3c76-6c2a-45ab-9339-833455a52023",
+      "position": {
+        "x": 36.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "9214aacb-c0f8-4f7b-a34a-4dd1f9854dbe",
+      "roomId": "12df58be-f3fa-4654-8695-2f5d0b12d5ac",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "477e8633-c637-44ce-8bae-a07e4cb20ed8",
+      "position": {
+        "x": 42.449999999999996,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "e91d0441-9350-4485-b98e-d960cb6e2e42",
+      "roomId": "12df58be-f3fa-4654-8695-2f5d0b12d5ac",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "477e8633-c637-44ce-8bae-a07e4cb20ed8",
+      "position": {
+        "x": 43.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "f6f4aaa2-d035-46f6-a9be-7a82741f618c",
+      "roomId": "ac769623-b18c-4c9d-812f-eb900c434d9d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "d3017364-ab3d-481f-874b-eb24dbab7ecb",
+      "position": {
+        "x": 49.449999999999996,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "21e04338-1ca1-4883-9ad3-2001bc12ef8f",
+      "roomId": "ac769623-b18c-4c9d-812f-eb900c434d9d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "d3017364-ab3d-481f-874b-eb24dbab7ecb",
+      "position": {
+        "x": 50.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "fa1cb144-5766-437b-bf84-eadf506a2958",
+      "roomId": "74140a47-b33d-4c25-a4ef-1c668618f5fa",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "594967a9-9793-4a61-8fa5-0f09ea4ff0e0",
+      "position": {
+        "x": 56.449999999999996,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "c1c68fdd-af6c-45e2-a198-715e0fe5b6c7",
+      "roomId": "74140a47-b33d-4c25-a4ef-1c668618f5fa",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "594967a9-9793-4a61-8fa5-0f09ea4ff0e0",
+      "position": {
+        "x": 57.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063518e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "28916ce4-15a4-4417-9bf0-5735877572f1",
+      "roomId": "0eea0c7d-57d6-4cd0-9425-347e6b99e340",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "7c3ab544-a2ca-4242-8336-5367b08b8ba0",
+      "position": {
+        "x": 63.449999999999996,
+        "y": 0.21750000000000033
+      },
+      "rotation": -7.216449660063528e-17,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "6947613f-e004-4166-9a89-dfb1d66ba68d",
+      "roomId": "0eea0c7d-57d6-4cd0-9425-347e6b99e340",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "7c3ab544-a2ca-4242-8336-5367b08b8ba0",
+      "position": {
+        "x": 64.15,
+        "y": 0.21750000000000028
+      },
+      "rotation": -7.216449660063528e-17,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d60b7160-9064-400b-8344-fd1bc5004899",
+      "roomId": "014014f3-1161-4d3d-9dbb-161eb5568f8f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "72226ab1-8449-4382-bada-effad72eb2d3",
+      "position": {
+        "x": 0.45000000000000007,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "2193a936-b394-4c73-bc76-56e853725c8e",
+      "roomId": "014014f3-1161-4d3d-9dbb-161eb5568f8f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "72226ab1-8449-4382-bada-effad72eb2d3",
+      "position": {
+        "x": 1.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "257657c9-d017-471f-b27d-0b847737c77b",
+      "roomId": "a0a5c810-b908-43c4-81bf-ad57f5322dd8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "f87dbc2b-ef38-489b-abd8-cd0c50bfe178",
+      "position": {
+        "x": 7.45,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "b71a69ae-f1f4-4de2-9aa4-f1fd1d297521",
+      "roomId": "a0a5c810-b908-43c4-81bf-ad57f5322dd8",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "f87dbc2b-ef38-489b-abd8-cd0c50bfe178",
+      "position": {
+        "x": 8.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "3c713271-766b-4abd-9cc4-b4cd6740cd39",
+      "roomId": "3e6f5e55-f5ea-49c6-88c6-0cbdcbe5e05e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "8a475fd9-8954-4844-9ac2-08cb9cc97373",
+      "position": {
+        "x": 14.450000000000001,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "cdadaedd-acfe-48e9-afd6-6fd0c6cc4687",
+      "roomId": "3e6f5e55-f5ea-49c6-88c6-0cbdcbe5e05e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "8a475fd9-8954-4844-9ac2-08cb9cc97373",
+      "position": {
+        "x": 15.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "4d47447c-70aa-4a0d-9d56-0a1af48e4e1c",
+      "roomId": "31dfa79c-7896-4757-8be7-a0966c28e0f2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "792af675-b902-456a-bd1a-c53b49e55328",
+      "position": {
+        "x": 21.45,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "2336b99b-a5e8-4d36-9c6b-84559a70c6f7",
+      "roomId": "31dfa79c-7896-4757-8be7-a0966c28e0f2",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "792af675-b902-456a-bd1a-c53b49e55328",
+      "position": {
+        "x": 22.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "b08802ca-2d8a-4a53-b57f-a0eeaec920fa",
+      "roomId": "6e28d04c-8fe4-4cda-a3e9-2dc9e47f4cad",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "0f0eb4f9-50e5-4257-816e-46dba4b44182",
+      "position": {
+        "x": 28.45,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "e2e54597-0fe5-48e1-b46b-fa712d96ba0b",
+      "roomId": "6e28d04c-8fe4-4cda-a3e9-2dc9e47f4cad",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "0f0eb4f9-50e5-4257-816e-46dba4b44182",
+      "position": {
+        "x": 29.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "3add9184-e25d-4998-85a5-b5a6d0687e80",
+      "roomId": "41684962-3ad3-40ab-872e-cf53ce372458",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "bad5805d-64e2-45b7-804d-db1800a7ed68",
+      "position": {
+        "x": 35.449999999999996,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "62452f07-f478-48a7-9d92-2e3b48ffced8",
+      "roomId": "41684962-3ad3-40ab-872e-cf53ce372458",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "bad5805d-64e2-45b7-804d-db1800a7ed68",
+      "position": {
+        "x": 36.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "883855a8-96fc-44cc-ad32-50d32b2e7088",
+      "roomId": "8f190c0e-54e0-4293-b18f-e328a4ea4d8d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "878e3134-91ac-451d-aedb-a15a5874393a",
+      "position": {
+        "x": 42.449999999999996,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "9f33cfb0-a84a-48a9-ab49-b3fff7cb440d",
+      "roomId": "8f190c0e-54e0-4293-b18f-e328a4ea4d8d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "878e3134-91ac-451d-aedb-a15a5874393a",
+      "position": {
+        "x": 43.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "e6c9870f-8076-4ed6-ac98-43975dafa079",
+      "roomId": "dc5b5e36-f8cd-4890-895f-00658c4dff1a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "74819d78-de8e-475b-b144-ca997cb54bd4",
+      "position": {
+        "x": 49.449999999999996,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "541d19cc-243d-4b2c-89b1-99ca3839f0e2",
+      "roomId": "dc5b5e36-f8cd-4890-895f-00658c4dff1a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "74819d78-de8e-475b-b144-ca997cb54bd4",
+      "position": {
+        "x": 50.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "c7bf4e58-e7fa-4089-8287-fb94491bdbd4",
+      "roomId": "45fc2751-4204-47dd-92de-7e24b316d013",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "718016bb-1f20-4c10-9d4c-de94ec6e8496",
+      "position": {
+        "x": 56.449999999999996,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "492c2515-8d95-4b4a-a9fc-5e7e8d74ec88",
+      "roomId": "45fc2751-4204-47dd-92de-7e24b316d013",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "718016bb-1f20-4c10-9d4c-de94ec6e8496",
+      "position": {
+        "x": 57.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "c2c30ade-fa95-46af-a3d6-5da1d41114cd",
+      "roomId": "80cf3a48-fd42-47a9-a6a0-c787ef6faa2d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "aa54b6e1-be00-4635-8302-f082af28dd76",
+      "position": {
+        "x": 63.449999999999996,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "80b80cdd-272c-42cc-9833-f4f07e910708",
+      "roomId": "80cf3a48-fd42-47a9-a6a0-c787ef6faa2d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "aa54b6e1-be00-4635-8302-f082af28dd76",
+      "position": {
+        "x": 64.15,
+        "y": 6.2175
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d33885dd-614d-4e7b-b49e-ae8413b34753",
+      "roomId": "5d08a775-1fd7-435c-ae32-ff8631ce7c8a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "2ee572c9-81ba-4dd9-aa57-e5f3ed7693b5",
+      "position": {
+        "x": 0.45000000000000007,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "5f93f493-5428-4757-b2cf-83a0eb631714",
+      "roomId": "5d08a775-1fd7-435c-ae32-ff8631ce7c8a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "2ee572c9-81ba-4dd9-aa57-e5f3ed7693b5",
+      "position": {
+        "x": 1.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "956a3f72-eb5e-441d-acf2-34947f722d45",
+      "roomId": "0354fb55-86af-49ff-a2fd-5806d1897d34",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "c7287d6e-a26f-486c-8179-f5398a3e71e8",
+      "position": {
+        "x": 7.45,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "17784a27-5879-4000-8f12-0b784ee7c99a",
+      "roomId": "0354fb55-86af-49ff-a2fd-5806d1897d34",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "c7287d6e-a26f-486c-8179-f5398a3e71e8",
+      "position": {
+        "x": 8.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "ceaf2e3b-9235-4ed3-b434-4f313947a57f",
+      "roomId": "34164ca7-862b-4730-a103-c183f6eb2b46",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "64a14087-74d0-42ea-8532-97b1dfd175de",
+      "position": {
+        "x": 14.450000000000001,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "97e45d88-f0fe-4675-bf9f-7d7075980fd6",
+      "roomId": "34164ca7-862b-4730-a103-c183f6eb2b46",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "64a14087-74d0-42ea-8532-97b1dfd175de",
+      "position": {
+        "x": 15.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "7a1432e3-66b4-42e0-883c-6d41719fd35c",
+      "roomId": "f77c5305-a66d-4127-856a-1dfd24240d41",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "664ea1f1-3d36-458e-83f6-bb4fa0b5d518",
+      "position": {
+        "x": 21.45,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "a1ff0f2d-de63-42b2-a0e2-74253edb42b2",
+      "roomId": "f77c5305-a66d-4127-856a-1dfd24240d41",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "664ea1f1-3d36-458e-83f6-bb4fa0b5d518",
+      "position": {
+        "x": 22.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "f27b6b62-cca1-4c70-a0a4-26a2f9940b04",
+      "roomId": "e2befec1-d4fb-4726-b655-874eb1033ce0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "c22594c9-a352-40c7-89a5-239d3ac81bd5",
+      "position": {
+        "x": 28.45,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "a8b0ec47-332d-47c1-8490-5e3148b605e5",
+      "roomId": "e2befec1-d4fb-4726-b655-874eb1033ce0",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "c22594c9-a352-40c7-89a5-239d3ac81bd5",
+      "position": {
+        "x": 29.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "9ddcfa60-d37d-4c01-b0a2-39207215a854",
+      "roomId": "7f2ae53d-90b6-43ed-a36f-0a5ccb57066a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "15c22372-a3c9-431c-9d8f-b31dda7ce2a4",
+      "position": {
+        "x": 35.449999999999996,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d067fd56-521d-4c9c-b78f-f8dac1b1ae57",
+      "roomId": "7f2ae53d-90b6-43ed-a36f-0a5ccb57066a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "15c22372-a3c9-431c-9d8f-b31dda7ce2a4",
+      "position": {
+        "x": 36.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "8019b1b8-2ee8-444c-a85e-ee9dd25b58df",
+      "roomId": "7a78a2d6-e8fd-40f6-bef2-f57e75b36122",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "336dbf53-55c0-4030-b420-0e26f3171ac0",
+      "position": {
+        "x": 42.449999999999996,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "06e341d2-dbcd-42d6-b5a2-8819c4249b54",
+      "roomId": "7a78a2d6-e8fd-40f6-bef2-f57e75b36122",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "336dbf53-55c0-4030-b420-0e26f3171ac0",
+      "position": {
+        "x": 43.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "9a89d518-8c45-4b7c-aefe-245813570f96",
+      "roomId": "ece6d273-1e79-4007-a1b0-ea5ff08dd130",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "1aac5f0c-9e95-48d4-a6d1-1910cf8e369a",
+      "position": {
+        "x": 49.449999999999996,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "79e9f5d8-c1b1-4102-b6c3-9874ec489931",
+      "roomId": "ece6d273-1e79-4007-a1b0-ea5ff08dd130",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "1aac5f0c-9e95-48d4-a6d1-1910cf8e369a",
+      "position": {
+        "x": 50.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "826e2381-1910-4506-9cd3-f0d81a49f404",
+      "roomId": "5bb6e059-2985-490d-854c-f1fc1c4a8b00",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "251e9c44-1d02-49f5-89e6-d7d92a2dd851",
+      "position": {
+        "x": 56.449999999999996,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "b2846fe9-ff73-4ad0-ac61-29fd66b1ae69",
+      "roomId": "5bb6e059-2985-490d-854c-f1fc1c4a8b00",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "251e9c44-1d02-49f5-89e6-d7d92a2dd851",
+      "position": {
+        "x": 57.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "45d712f9-19d5-42da-bb2e-4861021b73e0",
+      "roomId": "e1f2cebf-7077-48b3-a706-6b813e82f1e7",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "357526f0-6e6e-48c6-91b8-f780a1a4c14d",
+      "position": {
+        "x": 63.449999999999996,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "4e4d312e-b673-46f6-bf58-97e9df4f4555",
+      "roomId": "e1f2cebf-7077-48b3-a706-6b813e82f1e7",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "357526f0-6e6e-48c6-91b8-f780a1a4c14d",
+      "position": {
+        "x": 64.15,
+        "y": 12.217500000000001
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "68de3167-f443-48bf-8f0c-989006f52ea2",
+      "roomId": "7b71fb42-ab54-48b5-944b-30cf079d670d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "599a7eee-5bb2-4b46-844e-2fd1be5e71d4",
+      "position": {
+        "x": 0.45000000000000007,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "a75e6315-fc50-4019-83bb-b562490f69cf",
+      "roomId": "7b71fb42-ab54-48b5-944b-30cf079d670d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "599a7eee-5bb2-4b46-844e-2fd1be5e71d4",
+      "position": {
+        "x": 1.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "659537a6-93a6-4a8b-a00e-ece4e25b13dc",
+      "roomId": "b639fc39-58e3-4cde-a77e-13059f8e4826",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "57acb089-eb4c-4494-ab67-1d6c83503af2",
+      "position": {
+        "x": 7.45,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "81627196-3344-49c6-89d3-c3bc0de07968",
+      "roomId": "b639fc39-58e3-4cde-a77e-13059f8e4826",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "57acb089-eb4c-4494-ab67-1d6c83503af2",
+      "position": {
+        "x": 8.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "cb8fab42-8503-4584-bd2e-1bded34d358d",
+      "roomId": "bfa63b28-bc27-4bfb-8b1c-7aa1a4f7751f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "833b99f5-2679-4d99-9859-04d865b3b977",
+      "position": {
+        "x": 14.450000000000001,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "bb91a9fa-a089-4022-a9a1-53acbd0de1bb",
+      "roomId": "bfa63b28-bc27-4bfb-8b1c-7aa1a4f7751f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "833b99f5-2679-4d99-9859-04d865b3b977",
+      "position": {
+        "x": 15.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "55d561e3-cd7a-41e0-9f86-fdc29703749c",
+      "roomId": "02a6b14c-fbd4-4789-b450-0fe2d0a64c92",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "029ca545-d83b-41b4-9a88-b3b4c66b1a02",
+      "position": {
+        "x": 21.45,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "67dbc4e2-0421-46ed-a0df-cf428c402e5a",
+      "roomId": "02a6b14c-fbd4-4789-b450-0fe2d0a64c92",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "029ca545-d83b-41b4-9a88-b3b4c66b1a02",
+      "position": {
+        "x": 22.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "67cbd14f-1b01-4717-af6c-5eab8f4b6040",
+      "roomId": "e6177b2f-8246-4903-96c9-1a616d8ebd64",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "3206808d-0fb8-466d-8d12-134801ca48cf",
+      "position": {
+        "x": 28.45,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "c32989e2-d33c-488b-a0d9-05979771a941",
+      "roomId": "e6177b2f-8246-4903-96c9-1a616d8ebd64",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "3206808d-0fb8-466d-8d12-134801ca48cf",
+      "position": {
+        "x": 29.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "5340667e-38e1-4c92-ba7d-fe145c347736",
+      "roomId": "955d3bba-4606-477f-9338-a558aaa76abb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "1e7719a8-b254-4503-bec5-538fcceaa03a",
+      "position": {
+        "x": 35.449999999999996,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "fb8e388c-cbe5-4698-bebe-790162477eb2",
+      "roomId": "955d3bba-4606-477f-9338-a558aaa76abb",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "1e7719a8-b254-4503-bec5-538fcceaa03a",
+      "position": {
+        "x": 36.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "cd64ed33-cd80-4c30-976f-aad71223a964",
+      "roomId": "3e231db4-c7f8-4fd1-ac73-157afe9eb24e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "a5ff6f48-cd24-449b-854a-dd2a89b9baa7",
+      "position": {
+        "x": 42.449999999999996,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d91cb043-e841-4bd2-83a7-ef0d2c5e3e7e",
+      "roomId": "3e231db4-c7f8-4fd1-ac73-157afe9eb24e",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "a5ff6f48-cd24-449b-854a-dd2a89b9baa7",
+      "position": {
+        "x": 43.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "e3c617cd-a6b4-4e4f-9246-cfb54a7db1c8",
+      "roomId": "7e1ad7ee-f65b-4d76-a618-fec6b030824a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "6323946a-5180-4a4d-b1e9-02894b591442",
+      "position": {
+        "x": 49.449999999999996,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "c164ec88-fb67-42f1-a601-6d473f9f0850",
+      "roomId": "7e1ad7ee-f65b-4d76-a618-fec6b030824a",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "6323946a-5180-4a4d-b1e9-02894b591442",
+      "position": {
+        "x": 50.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "23bb3a60-f32c-454c-9572-aa94cbc21854",
+      "roomId": "e0396537-654a-418a-afef-a54c343df8a3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "3a4f9851-0bce-4c76-a5a8-4617ad0d2358",
+      "position": {
+        "x": 56.449999999999996,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "19de0a50-ea55-47ef-b2e8-476c9c1e8e1c",
+      "roomId": "e0396537-654a-418a-afef-a54c343df8a3",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "3a4f9851-0bce-4c76-a5a8-4617ad0d2358",
+      "position": {
+        "x": 57.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "5ee4c0b5-63b9-4024-a97e-2f7e249886d9",
+      "roomId": "e74fe0dc-ec13-4979-ab07-f356a4256101",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "86e5d266-e020-49ae-9326-b31fa13e2cbd",
+      "position": {
+        "x": 63.449999999999996,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "1adafe0a-f2f8-44a6-ba84-92b489f12c98",
+      "roomId": "e74fe0dc-ec13-4979-ab07-f356a4256101",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "86e5d266-e020-49ae-9326-b31fa13e2cbd",
+      "position": {
+        "x": 64.15,
+        "y": 18.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "73a4f36e-e74d-4763-8933-961f45ffa6dd",
+      "roomId": "7f9c93d9-7ef8-4a95-8bee-db0aea0ed56b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "5aaeea7d-5437-49dd-a0eb-08ac5720353b",
+      "position": {
+        "x": 0.45000000000000007,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "b36ba492-4f54-4ee8-8896-1698e5fc8c5c",
+      "roomId": "7f9c93d9-7ef8-4a95-8bee-db0aea0ed56b",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "5aaeea7d-5437-49dd-a0eb-08ac5720353b",
+      "position": {
+        "x": 1.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d12219a5-f1ce-41e8-97f3-9ea1334f7ed1",
+      "roomId": "b178474f-d45b-4cd2-b432-9e21196441ef",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "72e50493-8596-4771-88b6-407f9b2b7a12",
+      "position": {
+        "x": 7.45,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "dad4cffd-8ea7-4152-b48b-6368255fd6a8",
+      "roomId": "b178474f-d45b-4cd2-b432-9e21196441ef",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "72e50493-8596-4771-88b6-407f9b2b7a12",
+      "position": {
+        "x": 8.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d936db78-1387-4856-a011-c23aa48acfcb",
+      "roomId": "9fa21d7c-8b1f-4ca0-98da-ba797ad9ec8d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "4f863ef9-d305-4197-90eb-61542c87b781",
+      "position": {
+        "x": 14.450000000000001,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "eb136007-b02a-4598-966c-9425d6fa3bec",
+      "roomId": "9fa21d7c-8b1f-4ca0-98da-ba797ad9ec8d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "4f863ef9-d305-4197-90eb-61542c87b781",
+      "position": {
+        "x": 15.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "61b48109-b323-407b-9e45-bf235e15fc32",
+      "roomId": "d0f7dee5-1e88-4ad1-a7b3-f2340a7b04ea",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "b0398bba-3ed2-4691-aa66-70e454aa2697",
+      "position": {
+        "x": 21.45,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "b5dacaf4-0ec3-4215-986c-e0db96b5ec37",
+      "roomId": "d0f7dee5-1e88-4ad1-a7b3-f2340a7b04ea",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "b0398bba-3ed2-4691-aa66-70e454aa2697",
+      "position": {
+        "x": 22.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "1a758c02-0176-4d11-9d79-65752d24ef36",
+      "roomId": "230cac75-adfd-47e9-9d29-6f3e2f0575dd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "10014d51-870c-4a8c-bf83-fdeb7a6524ba",
+      "position": {
+        "x": 28.45,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "28088063-3fa3-41c5-ae81-35f849ede026",
+      "roomId": "230cac75-adfd-47e9-9d29-6f3e2f0575dd",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "10014d51-870c-4a8c-bf83-fdeb7a6524ba",
+      "position": {
+        "x": 29.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "4e5c7fa0-e508-4b43-96c7-d4b1b5a5f4b1",
+      "roomId": "1f681539-b231-43a2-87ce-288f6ccbb886",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "08f848dd-d7df-46b3-a586-e5f415a7fb41",
+      "position": {
+        "x": 35.449999999999996,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d50e464a-03ba-403b-b938-57577d8fd47b",
+      "roomId": "1f681539-b231-43a2-87ce-288f6ccbb886",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "08f848dd-d7df-46b3-a586-e5f415a7fb41",
+      "position": {
+        "x": 36.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "33d8c1af-f34f-4d8e-a113-84b01eb9a257",
+      "roomId": "dc547c9a-5382-4625-b4c3-ab5688524944",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "385b1d7e-2b9a-4a1b-b576-574fae6def36",
+      "position": {
+        "x": 42.449999999999996,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "acaa7ae0-8002-41b4-a25d-fbdd701415f7",
+      "roomId": "dc547c9a-5382-4625-b4c3-ab5688524944",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "385b1d7e-2b9a-4a1b-b576-574fae6def36",
+      "position": {
+        "x": 43.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "d262e736-917d-4abf-accd-a9698e9718bd",
+      "roomId": "a820cd09-d954-468d-b825-911afe5ff47d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "2c8825db-915a-4e8f-b4c1-3a3d1c9c9198",
+      "position": {
+        "x": 49.449999999999996,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "e8afa047-d266-46f5-a076-a090bc85907b",
+      "roomId": "a820cd09-d954-468d-b825-911afe5ff47d",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "2c8825db-915a-4e8f-b4c1-3a3d1c9c9198",
+      "position": {
+        "x": 50.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "7d4c2766-4201-4f4e-8b1f-c17c82200331",
+      "roomId": "e6f1dea4-e4ee-4987-ba38-39298f20480f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "1d74edb5-8025-471f-b447-f88758b244c0",
+      "position": {
+        "x": 56.449999999999996,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "642753dc-29e1-4c78-8475-08c0c1f961fc",
+      "roomId": "e6f1dea4-e4ee-4987-ba38-39298f20480f",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "1d74edb5-8025-471f-b447-f88758b244c0",
+      "position": {
+        "x": 57.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "1a0f1490-7e9a-406b-8df7-9d69f01a9ed6",
+      "roomId": "af6e6d43-0cb0-4a40-9d82-0087c68d9d31",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "56a2244c-558b-4b62-8c45-24fc9aec9018",
+      "position": {
+        "x": 63.449999999999996,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 400,
+      "heightMm": 440,
+      "depthMm": 95,
+      "productId": "global-vip-350",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 5,
+      "outputW": 470,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    },
+    {
+      "id": "17e25a85-9054-4b0b-b25c-192dce7265d9",
+      "roomId": "af6e6d43-0cb0-4a40-9d82-0087c68d9d31",
+      "floorId": "4d43ad09-7a1a-4f26-bea6-21b755626224",
+      "wallId": "56a2244c-558b-4b62-8c45-24fc9aec9018",
+      "position": {
+        "x": 64.15,
+        "y": 24.217499999999998
+      },
+      "rotation": 0,
+      "widthMm": 800,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-b1a71df9b284",
+      "elements": 10,
+      "outputW": 1420,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    }
+  ],
+  "airTerminals": [],
+  "projectSettings": {
+    "radiatorDeltaTK": 50,
+    "defaultHeightM": 2.7,
+    "internalWallThicknessM": 0.1,
+    "externalWallThicknessM": 0.3,
+    "coefficientWm3": 35,
+    "maxNoiseDbA": 37
+  },
+  "catalogVersions": {
+    "Global": "2026-10-03-global-b1a71df9b284"
+  },
+  "sourceFilesMetadata": []
+}

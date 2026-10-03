@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import type { Point } from "@/schemas/project";
+import type { Point, Selection } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
-import { addWall, moveWall, recomputeProject } from "@/domain/project";
+import { addWall, moveWall } from "@/domain/project";
+import { rescaleFloor } from "@/domain/geometry/rescale-floor";
 import {
   add,
   bounds,
@@ -14,17 +15,20 @@ import {
 } from "@/domain/geometry/primitives";
 import { formatNumber } from "@/utils/format";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
+import { translateSelection } from "@/domain/geometry/selection";
+import { deviceCodes } from "@/services/export/device-codes";
 import { ArrowsOut, Minus, Plus } from "@phosphor-icons/react";
 
 type View = { x: number; y: number; w: number; h: number };
 type Drag = {
-  type: "pan" | "wall" | "device";
+  type: "pan" | "wall" | "device" | "group";
   pointerId: number;
   anchor: Point;
   view: View;
   wallId?: string;
   deviceId?: string;
   delta: Point;
+  selection?: Selection[];
 };
 export function Editor2D() {
   const {
@@ -207,30 +211,7 @@ export function Editor2D() {
       if (real > 0 && distance(anchor, hit) > 0.01 && floor?.background) {
         const factor = real / distance(anchor, hit),
           origin = floor.background.origin;
-        const transform = (v: Point) =>
-          add(origin, scale(subtract(v, origin), factor));
-        commit((p) =>
-          recomputeProject({
-            ...p,
-            floors: p.floors.map((f) =>
-              f.id === activeFloorId && f.background
-                ? {
-                    ...f,
-                    scaleVerified: true,
-                    background: {
-                      ...f.background,
-                      metersPerPixel: f.background.metersPerPixel * factor,
-                    },
-                  }
-                : f,
-            ),
-            walls: p.walls.map((w) =>
-              w.floorId === activeFloorId
-                ? { ...w, start: transform(w.start), end: transform(w.end) }
-                : w,
-            ),
-          }),
-        );
+        commit((p) => rescaleFloor(p, activeFloorId, factor, origin));
         useProjectStore.getState().setTool("select");
       } else if (real !== 0)
         useProjectStore
@@ -266,8 +247,18 @@ export function Editor2D() {
   }
   function onUp(e: React.PointerEvent<SVGSVGElement>) {
     const d = drag.current;
+    if (
+      d?.type === "group" &&
+      d.selection &&
+      distance(d.delta, { x: 0, y: 0 }) > 0.001
+    )
+      commit((project) => translateSelection(project, d.selection!, d.delta));
     if (d?.type === "device" && d.deviceId && project) {
-      const item = project.radiators.find((r) => r.id === d.deviceId);
+      const item = [
+        ...project.radiators,
+        ...project.airTerminals,
+        ...project.hvacSystems.flatMap((system) => system.indoorUnits),
+      ].find((r) => r.id === d.deviceId);
       if (item && distance(d.delta, { x: 0, y: 0 }) > 0.001)
         commit((p) =>
           movePlacedDevice(p, d.deviceId!, add(item.position, d.delta)),
@@ -284,11 +275,58 @@ export function Editor2D() {
     if (svg.current?.hasPointerCapture(e.pointerId))
       svg.current.releasePointerCapture(e.pointerId);
   }
+  function beginDeviceDrag(e: React.PointerEvent, id: string) {
+    if (tool !== "select") return;
+    e.stopPropagation();
+    const prior = useProjectStore.getState().selection;
+    const group =
+      !e.shiftKey && prior.length > 1 && prior.some((s) => s.id === id);
+    if (!group) select({ kind: "device", id }, e.shiftKey);
+    if (e.shiftKey) return;
+    svg.current?.setPointerCapture(e.pointerId);
+    drag.current = {
+      type: group ? "group" : "device",
+      selection: group ? prior : undefined,
+      deviceId: id,
+      pointerId: e.pointerId,
+      anchor: world(e.clientX, e.clientY),
+      view,
+      delta: { x: 0, y: 0 },
+    };
+  }
   const selectedWall = walls.find((w) => w.id === drag.current?.wallId);
+  const groupSelection =
+    drag.current?.type === "group" ? (drag.current.selection ?? []) : [];
+  const groupWalls = walls.filter(
+    (w) =>
+      groupSelection.some((s) => s.kind === "wall" && s.id === w.id) ||
+      rooms.some(
+        (r) =>
+          groupSelection.some((s) => s.kind === "room" && s.id === r.id) &&
+          r.wallIds.includes(w.id),
+      ),
+  );
+  const codes = project ? deviceCodes(project) : new Map<string, string>();
+  const previewDevice = (device: {
+    id: string;
+    roomId: string;
+    wallId: string | null;
+    position: Point;
+  }) =>
+    delta &&
+    (drag.current?.deviceId === device.id ||
+      groupSelection.some(
+        (s) =>
+          s.id === device.id || (s.kind === "room" && s.id === device.roomId),
+      ) ||
+      groupWalls.some((w) => w.id === device.wallId))
+      ? add(device.position, delta)
+      : device.position;
   const previewPoint = (p: Point) =>
     delta &&
-    selectedWall &&
-    (samePoint(p, selectedWall.start) || samePoint(p, selectedWall.end))
+    ((selectedWall &&
+      (samePoint(p, selectedWall.start) || samePoint(p, selectedWall.end))) ||
+      groupWalls.some((w) => samePoint(p, w.start) || samePoint(p, w.end)))
       ? add(p, delta)
       : p;
   const instructions =
@@ -363,10 +401,29 @@ export function Editor2D() {
         {rooms.map((r) => (
           <g
             key={r.id}
+            transform={
+              delta &&
+              groupSelection.some((s) => s.kind === "room" && s.id === r.id)
+                ? `translate(${delta.x} ${delta.y})`
+                : undefined
+            }
             onPointerDown={(e) => {
               if (tool === "select") {
                 e.stopPropagation();
-                select({ kind: "room", id: r.id }, e.shiftKey);
+                const prior = useProjectStore.getState().selection;
+                const group = !e.shiftKey && prior.some((s) => s.id === r.id);
+                if (!group) select({ kind: "room", id: r.id }, e.shiftKey);
+                if (!e.shiftKey) {
+                  svg.current?.setPointerCapture(e.pointerId);
+                  drag.current = {
+                    type: "group",
+                    pointerId: e.pointerId,
+                    anchor: world(e.clientX, e.clientY),
+                    view,
+                    delta: { x: 0, y: 0 },
+                    selection: group ? prior : [{ kind: "room", id: r.id }],
+                  };
+                }
               }
             }}
           >
@@ -421,11 +478,17 @@ export function Editor2D() {
               onPointerDown={(e) => {
                 if (tool !== "select") return;
                 e.stopPropagation();
-                select({ kind: "wall", id: w.id }, e.shiftKey);
+                const prior = useProjectStore.getState().selection;
+                const group =
+                  !e.shiftKey &&
+                  prior.length > 1 &&
+                  prior.some((s) => s.id === w.id);
+                if (!group) select({ kind: "wall", id: w.id }, e.shiftKey);
                 if (!e.shiftKey) {
                   svg.current?.setPointerCapture(e.pointerId);
                   drag.current = {
-                    type: "wall",
+                    type: group ? "group" : "wall",
+                    selection: group ? prior : undefined,
                     wallId: w.id,
                     pointerId: e.pointerId,
                     anchor: world(e.clientX, e.clientY),
@@ -478,30 +541,14 @@ export function Editor2D() {
         })}
         {project?.radiators
           .filter((d) => d.floorId === activeFloorId)
-          .map((d, i) => {
-            const pos =
-              drag.current?.deviceId === d.id && delta
-                ? add(d.position, delta)
-                : d.position;
+          .map((d) => {
+            const pos = previewDevice(d);
             return (
               <g
                 key={d.id}
                 data-testid="radiator-2d"
                 transform={`translate(${pos.x} ${pos.y}) rotate(${(d.rotation * 180) / Math.PI})`}
-                onPointerDown={(e) => {
-                  if (tool !== "select") return;
-                  e.stopPropagation();
-                  select({ kind: "device", id: d.id });
-                  svg.current?.setPointerCapture(e.pointerId);
-                  drag.current = {
-                    type: "device",
-                    deviceId: d.id,
-                    pointerId: e.pointerId,
-                    anchor: world(e.clientX, e.clientY),
-                    view,
-                    delta: { x: 0, y: 0 },
-                  };
-                }}
+                onPointerDown={(e) => beginDeviceDrag(e, d.id)}
               >
                 <rect
                   x={-d.widthMm / 2000}
@@ -522,7 +569,93 @@ export function Editor2D() {
                   fontSize={u * 11}
                   className="quota-pianta"
                 >
-                  R{i + 1}
+                  {codes.get(d.id)}
+                </text>
+              </g>
+            );
+          })}
+        {project?.airTerminals
+          .filter((t) => t.floorId === activeFloorId)
+          .map((t) => {
+            const pos = previewDevice(t),
+              faceDepth =
+                t.mounting === "ceiling" ? t.heightMm : (t.depthMm ?? 0),
+              code = codes.get(t.id);
+            return (
+              <g
+                key={t.id}
+                data-testid={`terminal-${t.use}`}
+                transform={`translate(${pos.x} ${pos.y}) rotate(${(t.rotation * 180) / Math.PI})`}
+                onPointerDown={(e) => beginDeviceDrag(e, t.id)}
+              >
+                {t.shape === "circle" && t.mounting === "ceiling" ? (
+                  <circle
+                    r={t.widthMm / 2000}
+                    className={`terminale-pianta ${t.use} ${selection.some((s) => s.id === t.id) ? "scelto" : ""}`}
+                    strokeWidth={u * 1.5}
+                  />
+                ) : (
+                  <rect
+                    x={-t.widthMm / 2000}
+                    y={-faceDepth / 2000}
+                    width={t.widthMm / 1000}
+                    height={Math.max(faceDepth / 1000, u * 3)}
+                    className={`terminale-pianta ${t.use} ${selection.some((s) => s.id === t.id) ? "scelto" : ""}`}
+                    strokeWidth={u * 1.5}
+                  />
+                )}
+                <text
+                  x={0}
+                  y={faceDepth / 2000 + u * 14}
+                  textAnchor="middle"
+                  fontSize={u * 11}
+                  className="quota-pianta"
+                >
+                  {code}
+                </text>
+              </g>
+            );
+          })}
+        {project?.hvacSystems
+          .flatMap((system) => system.indoorUnits)
+          .filter((d) => d.floorId === activeFloorId)
+          .map((d) => {
+            const pos = previewDevice(d);
+            return (
+              <g
+                key={d.id}
+                data-testid="split-2d"
+                transform={`translate(${pos.x} ${pos.y}) rotate(${(d.rotation * 180) / Math.PI})`}
+                onPointerDown={(e) => beginDeviceDrag(e, d.id)}
+              >
+                <rect
+                  x={-d.widthMm / 2000}
+                  y={-d.depthMm / 2000}
+                  width={d.widthMm / 1000}
+                  height={d.depthMm / 1000}
+                  rx={0.025}
+                  strokeWidth={u * 1.5}
+                  fill={
+                    selection.some((s) => s.id === d.id) ? "#b3ddef" : "#ffffff"
+                  }
+                  stroke="#365aa8"
+                />
+                <line
+                  x1={-d.widthMm / 2000 + 0.04}
+                  x2={d.widthMm / 2000 - 0.04}
+                  y1={d.depthMm / 2000 - 0.035}
+                  y2={d.depthMm / 2000 - 0.035}
+                  stroke="#00aeef"
+                  strokeWidth={u}
+                />
+                <text
+                  x={0}
+                  y={d.depthMm / 2000 + u * 13}
+                  textAnchor="middle"
+                  fontSize={u * 11}
+                  className="quota-pianta"
+                >
+                  {codes.get(d.id)}
                 </text>
               </g>
             );

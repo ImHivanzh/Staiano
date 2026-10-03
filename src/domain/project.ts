@@ -11,15 +11,17 @@ import {
   samePoint,
   scale,
   subtract,
+  projection,
 } from "@/domain/geometry/primitives";
-import { reconcileRooms } from "@/domain/geometry/rooms";
+import { reconcileRooms, overlappingPolygons } from "@/domain/geometry/rooms";
+import { followWallTransforms } from "@/domain/geometry/follow-walls";
 import { calculateThermal } from "@/domain/thermal/calculate";
 
 export const newId = () => crypto.randomUUID();
 export function createProject(name = "Nuovo progetto"): Project {
   const now = new Date().toISOString();
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id: newId(),
     name,
     createdAt: now,
@@ -53,6 +55,7 @@ export function createProject(name = "Nuovo progetto"): Project {
 }
 export function recomputeProject(project: Project): Project {
   const p = structuredClone(project);
+  const previousRooms = structuredClone(p.rooms);
   // Materialize junctions so each boundary segment has independent identity.
   // Otherwise deleting a shared section could also delete an exterior wall.
   const expanded = new Map<string, string[]>();
@@ -100,6 +103,28 @@ export function recomputeProject(project: Project): Project {
   p.rooms = p.floors.flatMap((f) =>
     reconcileRooms(p.walls, p.rooms, f.id, p.projectSettings.defaultHeightM),
   );
+  // An unfinished edit must never silently discard the room or its devices.
+  // Keep last closed geometry explicitly unresolved, with current valid wall references.
+  const closedRooms = [...p.rooms];
+  const survivingWalls = new Map(p.walls.map((wall) => [wall.id, wall]));
+  for (const old of previousRooms) {
+    if (!p.floors.some((floor) => floor.id === old.floorId)) continue;
+    if (closedRooms.some((room) => room.id === old.id)) continue;
+    const represented = closedRooms.some(
+      (room) =>
+        room.floorId === old.floorId &&
+        (pointInPolygon(old.centroid, room.polygon) ||
+          overlappingPolygons(old.polygon, room.polygon)),
+    );
+    if (represented) continue;
+    p.rooms.push({
+      ...old,
+      geometryStatus: "unresolved",
+      wallIds: [
+        ...new Set(old.wallIds.flatMap((id) => expanded.get(id) ?? [id])),
+      ].filter((id) => survivingWalls.get(id)?.floorId === old.floorId),
+    });
+  }
   // Keep associated devices when a room splits/merges, using their actual position.
   const reassociate = <
     T extends {
@@ -121,10 +146,25 @@ export function recomputeProject(project: Project): Project {
         return {
           ...item,
           roomId: room?.id ?? item.roomId,
-          wallId:
-            item.wallId && p.walls.some((w) => w.id === item.wallId)
-              ? item.wallId
-              : null,
+          wallId: item.wallId
+            ? (p.walls
+                .filter(
+                  (w) =>
+                    expanded.get(item.wallId!)?.includes(w.id) &&
+                    (!room || room.wallIds.includes(w.id)),
+                )
+                .sort(
+                  (a, b) =>
+                    distance(
+                      item.position,
+                      projection(item.position, a.start, a.end),
+                    ) -
+                    distance(
+                      item.position,
+                      projection(item.position, b.start, b.end),
+                    ),
+                )[0]?.id ?? null)
+            : null,
         };
       })
       .filter((item) => p.rooms.some((r) => r.id === item.roomId));
@@ -135,9 +175,45 @@ export function recomputeProject(project: Project): Project {
     .map((s) => ({
       ...s,
       indoorUnits: reassociate(s.indoorUnits),
-      roomIds: s.roomIds.filter((id) => p.rooms.some((r) => r.id === id)),
+      roomIds:
+        s.type === "split" && s.indoorUnits.length
+          ? [...new Set(reassociate(s.indoorUnits).map((u) => u.roomId))]
+          : p.rooms
+              .filter(
+                (room) =>
+                  s.roomIds.includes(room.id) ||
+                  previousRooms.some(
+                    (old) =>
+                      s.roomIds.includes(old.id) &&
+                      old.floorId === room.floorId &&
+                      (!previousRooms.some((r) => r.id === room.id) ||
+                        !p.rooms.some((r) => r.id === old.id)) &&
+                      (pointInPolygon(room.centroid, old.polygon) ||
+                        overlappingPolygons(old.polygon, room.polygon)),
+                  ),
+              )
+              .map((room) => room.id),
     }))
     .filter((s) => s.roomIds.length > 0);
+  const systemIds = new Set(p.hvacSystems.map((s) => s.id));
+  p.airTerminals = p.airTerminals.map((t) => ({
+    ...t,
+    systemId: t.systemId && systemIds.has(t.systemId) ? t.systemId : null,
+  }));
+  p.rooms = p.rooms.map((room) => ({
+    ...room,
+    systemType: p.hvacSystems.some(
+      (s) => s.type === "ducted" && s.roomIds.includes(room.id),
+    )
+      ? "ducted"
+      : p.hvacSystems.some(
+            (s) => s.type === "split" && s.roomIds.includes(room.id),
+          )
+        ? "split"
+        : p.radiators.some((r) => r.roomId === room.id)
+          ? "radiator"
+          : room.systemType,
+  }));
   return p;
 }
 export function addWall(
@@ -237,7 +313,7 @@ export function moveWall(p: Project, wallId: string, delta: Point): Project {
               : w.end,
         },
   );
-  return recomputeProject({ ...p, walls });
+  return recomputeProject(followWallTransforms(p, walls));
 }
 export function addAdjacentRoom(
   p: Project,
@@ -296,18 +372,20 @@ export function resizeWall(
       lengthM / distance(selected.start, selected.end),
     ),
   );
-  return recomputeProject({
-    ...p,
-    walls: p.walls.map((w) =>
-      w.floorId !== selected.floorId
-        ? w
-        : {
-            ...w,
-            start: samePoint(w.start, selected.end) ? end : w.start,
-            end: samePoint(w.end, selected.end) ? end : w.end,
-          },
+  return recomputeProject(
+    followWallTransforms(
+      p,
+      p.walls.map((w) =>
+        w.floorId !== selected.floorId
+          ? w
+          : {
+              ...w,
+              start: samePoint(w.start, selected.end) ? end : w.start,
+              end: samePoint(w.end, selected.end) ? end : w.end,
+            },
+      ),
     ),
-  });
+  );
 }
 export function resizeRectangularRoom(
   p: Project,
@@ -338,22 +416,24 @@ export function resizeRectangularRoom(
     x: v.x + (Math.abs(v.x - axes.maxX) < 1e-5 ? dx : 0),
     y: v.y + (Math.abs(v.y - axes.maxY) < 1e-5 ? dy : 0),
   });
-  return recomputeProject({
-    ...p,
-    walls: p.walls.map((w) =>
-      w.floorId !== r.floorId
-        ? w
-        : {
-            ...w,
-            start: points.some((v) => samePoint(v, w.start))
-              ? transform(w.start)
-              : w.start,
-            end: points.some((v) => samePoint(v, w.end))
-              ? transform(w.end)
-              : w.end,
-          },
+  return recomputeProject(
+    followWallTransforms(
+      p,
+      p.walls.map((w) =>
+        w.floorId !== r.floorId
+          ? w
+          : {
+              ...w,
+              start: points.some((v) => samePoint(v, w.start))
+                ? transform(w.start)
+                : w.start,
+              end: points.some((v) => samePoint(v, w.end))
+                ? transform(w.end)
+                : w.end,
+            },
+      ),
     ),
-  });
+  );
 }
 export function updateRoom(
   p: Project,
@@ -381,17 +461,39 @@ export function mergeRooms(
   p: Project,
   firstId: string,
   secondId: string,
+  resultingHeightM?: number,
 ): Project {
   const a = p.rooms.find((r) => r.id === firstId),
     b = p.rooms.find((r) => r.id === secondId);
   if (!a || !b || a.floorId !== b.floorId)
     throw new Error("Selezionare due stanze dello stesso piano.");
+  if (a.geometryStatus === "unresolved" || b.geometryStatus === "unresolved")
+    throw new Error("Richiudere i contorni prima di unire gli ambienti.");
+  if (resultingHeightM === undefined && a.heightM !== b.heightM)
+    throw new Error(
+      "Le stanze hanno altezze diverse. Indicare l’altezza del nuovo ambiente.",
+    );
+  const heightM = resultingHeightM ?? a.heightM;
+  if (!Number.isFinite(heightM) || heightM <= 0 || heightM > 30)
+    throw new Error("Altezza risultante positiva, massimo 30 m.");
   const shared = a.wallIds.filter((id) => b.wallIds.includes(id));
   if (!shared.length) throw new Error("Le stanze non condividono una parete.");
-  return recomputeProject({
+  const result = recomputeProject({
     ...p,
     walls: p.walls.filter((w) => !shared.includes(w.id)),
   });
+  const merged = result.rooms.find(
+    (room) =>
+      room.floorId === a.floorId &&
+      room.geometryStatus === "closed" &&
+      pointInPolygon(a.centroid, room.polygon) &&
+      pointInPolygon(b.centroid, room.polygon),
+  );
+  if (!merged)
+    throw new Error("L’unione non genera un contorno chiuso valido.");
+  merged.heightM = heightM;
+  Object.assign(merged, calculateThermal(merged.netAreaM2, heightM));
+  return result;
 }
 export function duplicateProject(
   p: Project,

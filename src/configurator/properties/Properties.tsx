@@ -10,8 +10,9 @@ import {
 } from "@/domain/project";
 import { bounds, distance } from "@/domain/geometry/primitives";
 import { formatNumber, numberFromForm } from "@/utils/format";
-import { RadiatorPanel } from "@/configurator/systems/RadiatorPanel";
+import { RoomSystems } from "@/configurator/systems/RoomSystems";
 import { DeviceProperties } from "./DeviceProperties";
+import { followWallTransforms } from "@/domain/geometry/follow-walls";
 
 export function Properties() {
   const { project: p, selection, commit, setError } = useProjectStore();
@@ -39,7 +40,7 @@ export function Properties() {
               : w
                 ? "Parete"
                 : deviceId
-                  ? "Radiatore"
+                  ? "Apparecchio"
                   : "Seleziona un elemento"}
         </h2>
       </div>
@@ -55,6 +56,13 @@ export function Properties() {
           key={`${r.id}-${r.heightM}-${r.netAreaM2}`}
           className="corpo-proprieta"
         >
+          {r.geometryStatus === "unresolved" && (
+            <p role="status" className="nota">
+              Contorno da richiudere. Superficie, volume e fabbisogno mostrano
+              l’ultima geometria chiusa; apparecchi conservati. Correggere i
+              muri prima di dimensionare.
+            </p>
+          )}
           <dl className="dati-stanza">
             <div>
               <dt>Superficie netta</dt>
@@ -173,18 +181,29 @@ export function Properties() {
             <button
               className="bottone"
               onClick={() => {
+                let height: number | undefined;
+                if (rooms[0].heightM !== rooms[1].heightM) {
+                  const entered = window.prompt(
+                    `Altezze diverse: ${rooms[0].heightM} m e ${rooms[1].heightM} m. Altezza del nuovo ambiente (m):`,
+                    String(rooms[0].heightM),
+                  );
+                  if (entered === null) return;
+                  height = numberFromForm(entered);
+                }
                 if (
                   window.confirm(
                     "Eliminare la parete condivisa e unire le due stanze? Operazione annullabile.",
                   )
                 )
-                  commit((p) => mergeRooms(p, rooms[0].id, rooms[1].id));
+                  commit((p) =>
+                    mergeRooms(p, rooms[0].id, rooms[1].id, height),
+                  );
               }}
             >
               Unisci le due stanze
             </button>
           )}
-          <RadiatorPanel room={r} project={p} />
+          <RoomSystems key={r.id} room={r} project={p} />
           <details open>
             <summary>Come è stato calcolato?</summary>
             <p className="formula">
@@ -216,12 +235,14 @@ export function Properties() {
                     ? resizeWall(p, w.id, numberFromForm(data.get("length")))
                     : p;
                 const ids = new Set(walls.map((w) => w.id));
-                return recomputeProject({
-                  ...resized,
-                  walls: resized.walls.map((v) =>
-                    ids.has(v.id) ? { ...v, thickness, type } : v,
+                return recomputeProject(
+                  followWallTransforms(
+                    resized,
+                    resized.walls.map((v) =>
+                      ids.has(v.id) ? { ...v, thickness, type } : v,
+                    ),
                   ),
-                });
+                );
               });
             }}
           >

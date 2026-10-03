@@ -1,11 +1,12 @@
 "use client";
 import { Component, useEffect, useMemo, useState } from "react";
 import { Canvas, useThree, useFrame } from "@react-three/fiber";
-import { Grid, OrbitControls } from "@react-three/drei";
+import { Grid, OrbitControls, Line } from "@react-three/drei";
 import * as THREE from "three";
 import { useProjectStore } from "@/stores/project-store";
 import type { Room } from "@/schemas/project";
 import { bounds, distance } from "@/domain/geometry/primitives";
+import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
 
 class WebGLError extends Component<
   { children: React.ReactNode },
@@ -119,13 +120,14 @@ export default function Viewer3D() {
         (!isolated || !selectedRoom || selectedRoom.wallIds.includes(w.id)),
     ) ?? [];
   const box = bounds(walls.flatMap((w) => [w.start, w.end]));
+  const centerY = Math.max(0, ...rooms.map((r) => r.heightM)) / 2;
   const centerX = (box.minX + box.maxX) / 2,
     centerZ = (box.minY + box.maxY) / 2;
   const center = useMemo<[number, number, number]>(
-    () => [centerX, 0, centerZ],
-    [centerX, centerZ],
+    () => [centerX, centerY, centerZ],
+    [centerX, centerY, centerZ],
   );
-  const size = Math.max(box.maxX - box.minX, box.maxY - box.minY);
+  const size = Math.max(box.maxX - box.minX, box.maxY - box.minY, centerY * 4);
   return (
     <div className="area-editor vista-3d" data-testid="viewer-3d">
       <div className="comandi-3d">
@@ -188,9 +190,14 @@ export default function Viewer3D() {
             const height = cutaway
               ? 0.7
               : (w.height ??
-                rooms.find((r) => r.wallIds.includes(w.id))?.heightM ??
-                p?.projectSettings.defaultHeightM ??
-                2.7);
+                (Math.max(
+                  0,
+                  ...rooms
+                    .filter((r) => r.wallIds.includes(w.id))
+                    .map((r) => r.heightM),
+                ) ||
+                  p?.projectSettings.defaultHeightM ||
+                  2.7));
             return (
               <mesh
                 key={w.id}
@@ -245,6 +252,133 @@ export default function Viewer3D() {
                   }
                 />
               </mesh>
+            ))}
+          {p?.hvacSystems
+            .flatMap((system) => system.indoorUnits)
+            .filter(
+              (d) =>
+                d.floorId === activeFloorId &&
+                (!isolated || !selectedRoom || d.roomId === selectedRoom.id),
+            )
+            .map((d) => {
+              const room = p.rooms.find((r) => r.id === d.roomId);
+              if (!room) return null;
+              return (
+                <group
+                  key={d.id}
+                  position={[
+                    d.position.x,
+                    splitCenterElevationM(room, d),
+                    d.position.y,
+                  ]}
+                  rotation={[0, -d.rotation, 0]}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    select({ kind: "device", id: d.id });
+                  }}
+                >
+                  <mesh>
+                    <boxGeometry
+                      args={[
+                        d.widthMm / 1000,
+                        d.heightMm / 1000,
+                        d.depthMm / 1000,
+                      ]}
+                    />
+                    <meshStandardMaterial
+                      color={
+                        selection.some((s) => s.id === d.id)
+                          ? "#b3ddef"
+                          : "#ffffff"
+                      }
+                    />
+                  </mesh>
+                  <mesh
+                    position={[0, -d.heightMm / 3000, d.depthMm / 2000 + 0.001]}
+                  >
+                    <boxGeometry
+                      args={[d.widthMm / 1000 - 0.08, 0.025, 0.008]}
+                    />
+                    <meshStandardMaterial color="#365aa8" />
+                  </mesh>
+                </group>
+              );
+            })}
+          {p?.airTerminals
+            .filter(
+              (t) =>
+                t.mounting !== "unknown" &&
+                t.elevationM !== null &&
+                !t.legacyUnverified &&
+                t.floorId === activeFloorId &&
+                (!isolated || !selectedRoom || t.roomId === selectedRoom.id),
+            )
+            .map((t) => (
+              <mesh
+                key={t.id}
+                position={[
+                  t.position.x,
+                  (t.elevationM ?? 0) +
+                    (t.mounting === "ceiling" ? (t.depthMm ?? 0) / 2000 : 0),
+                  t.position.y,
+                ]}
+                rotation={
+                  t.mounting === "ceiling"
+                    ? [-Math.PI / 2, 0, -t.rotation]
+                    : [0, -t.rotation, 0]
+                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  select({ kind: "device", id: t.id });
+                }}
+              >
+                {t.depthMm !== null ? (
+                  <boxGeometry
+                    args={[
+                      t.widthMm / 1000,
+                      t.heightMm / 1000,
+                      t.depthMm / 1000,
+                    ]}
+                  />
+                ) : t.shape === "circle" ? (
+                  <circleGeometry args={[t.widthMm / 2000, 32]} />
+                ) : (
+                  <planeGeometry args={[t.widthMm / 1000, t.heightMm / 1000]} />
+                )}
+                <meshStandardMaterial
+                  color={
+                    selection.some((s) => s.id === t.id)
+                      ? "#365aa8"
+                      : t.use === "supply"
+                        ? "#00aeef"
+                        : "#54ba51"
+                  }
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+            ))}
+          {p?.airTerminals
+            .filter(
+              (t) =>
+                t.mounting !== "unknown" &&
+                t.elevationM !== null &&
+                !t.legacyUnverified &&
+                t.floorId === activeFloorId &&
+                (!isolated || !selectedRoom || t.roomId === selectedRoom.id),
+            )
+            .map((t) => (
+              <Line
+                key={`projection-${t.id}`}
+                points={[
+                  [t.position.x, 0.03, t.position.y],
+                  [t.position.x, t.elevationM ?? 0, t.position.y],
+                ]}
+                color="#ccd3de"
+                lineWidth={1}
+                dashed
+                dashSize={0.08}
+                gapSize={0.06}
+              />
             ))}
           <Camera top={top} center={center} size={size} />
           <RenderMarker />

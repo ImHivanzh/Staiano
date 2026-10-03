@@ -1,0 +1,50 @@
+{
+  "sourceName": "daikin-residential-2025",
+  "sourceSha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+  "page": 57,
+  "revision": "Catalogo Residenziale edizione20250429,p.57",
+  "products": [
+    {
+      "indoorModel": "FBA35A9",
+      "outdoorModel": "RXM35A9",
+      "coolingCapacityW": 3400,
+      "heatingCapacityW": 4000,
+      "widthMm": 700,
+      "heightMm": 245,
+      "depthMm": 800,
+      "airflowOptionsM3min": [
+        10.5,
+        12.5,
+        15.0
+      ]
+    },
+    {
+      "indoorModel": "FBA50A9",
+      "outdoorModel": "RXM50A(9)",
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 5500,
+      "widthMm": 700,
+      "heightMm": 245,
+      "depthMm": 800,
+      "airflowOptionsM3min": [
+        10.5,
+        12.5,
+        15.0
+      ]
+    },
+    {
+      "indoorModel": "FBA60A9",
+      "outdoorModel": "RXM60A",
+      "coolingCapacityW": 5700,
+      "heatingCapacityW": 7000,
+      "widthMm": 1000,
+      "heightMm": 245,
+      "depthMm": 800,
+      "airflowOptionsM3min": [
+        12.5,
+        15.0,
+        18.0
+      ]
+    }
+  ]
+}

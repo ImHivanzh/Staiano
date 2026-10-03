@@ -106,6 +106,13 @@ if (brand === "Cordivari") {
     const name =
         family === "VIP" ? "global-vip-technical" : "global-oscar-technical",
       text = await readFile(path.join(sourceDir, `${name}.txt`), "utf8");
+    const limits = text.match(
+      /(\d+)°\s*C con pressione di esercizio[^\r\n]*?-\s*(\d+)\s*Bar\./,
+    );
+    if (!limits)
+      throw new Error(
+        `Operating limits missing from official ${name} document`,
+      );
     const rows = [
       ...new Set(
         text
@@ -167,8 +174,8 @@ if (brand === "Cordivari") {
         waterContentL,
         weightKg,
         nominalFlowKgh: null,
-        maxPressureBar: null,
-        maxTemperatureC: null,
+        maxPressureBar: Number(limits[2]),
+        maxTemperatureC: Number(limits[1]),
         connections: '1"',
         sourceMetadata: metadata(
           name,
@@ -242,7 +249,16 @@ if (process.argv.includes("--apply")) {
     throw new Error(
       "Removed products detected. Review report; use --allow-removal only after explicit review.",
     );
-  if (old) await copyFile(target, target.replace(".json", ".previous.json"));
+  const historyPath = path.join(outputDir, "radiator-history.json");
+  const history = existsSync(historyPath)
+    ? JSON.parse(await readFile(historyPath, "utf8"))
+    : {};
+  if (old) {
+    history[old.version] = old;
+    await copyFile(target, target.replace(".json", ".previous.json"));
+  }
+  history[catalog.version] = catalog;
+  await writeFile(historyPath, JSON.stringify(history, null, 2));
   await copyFile(staging, target);
   console.log(`Applied ${target}`);
 } else console.log("Staged only. Review report, then run with --apply.");

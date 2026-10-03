@@ -2,6 +2,8 @@ import { create } from "zustand";
 import type { Project, Selection } from "@/schemas/project";
 import { projectSchema } from "@/schemas/project";
 import { recomputeProject } from "@/domain/project";
+import { refreshDuctedBindings } from "@/domain/ducted/refresh";
+import { refreshSplitBindings } from "@/domain/air-conditioning/refresh";
 import type { SnapOptions } from "@/domain/geometry/primitives";
 
 export type Tool = "select" | "wall" | "measure" | "pan" | "calibrate";
@@ -56,7 +58,9 @@ export const useProjectStore = create<State>((set, get) => ({
   showDimensions: true,
   load(p) {
     set({
-      project: projectSchema.parse(recomputeProject(p)),
+      project: projectSchema.parse(
+        refreshSplitBindings(refreshDuctedBindings(recomputeProject(p))),
+      ),
       activeFloorId: p.floors[0].id,
       selection: [],
       past: [],
@@ -71,7 +75,9 @@ export const useProjectStore = create<State>((set, get) => ({
     const state = get();
     if (!state.project) return;
     try {
-      const next = fn(structuredClone(state.project));
+      const next = refreshSplitBindings(
+        refreshDuctedBindings(fn(structuredClone(state.project))),
+      );
       next.updatedAt = new Date().toISOString();
       const valid = projectSchema.parse(next);
       const ids = new Set(

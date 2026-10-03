@@ -1,0 +1,2068 @@
+INDOOR UNIT
+No. OBH937
+SERVICE MANUAL
+Models
+MSZ-AY15VG
+- ET1
+MSZ-AY20VG
+- ET1
+MSZ-AY15VGK
+- E1 , ET1
+MSZ-AY20VGK
+- E1 , ET1
+MSZ-AY15VGKP
+- E1 , ET1
+MSZ-AY20VGKP
+- E1 , ET1
+Outdoor unit service manual
+MUZ-AY•VG Series (OBH938)
+MXZ-F•VF Series (OBH790)
+CONTENTS
+1. TECHNICAL CHANGES ······························ 3
+2. PART NAMES AND FUNCTIONS ·················· 4
+3. SPECIFICATION ········································ 5
+4. NOISE CRITERIA CURVES ·························· 6
+5. OUTLINES AND DIMENSIONS ····················· 7
+6. WIRING DIAGRAM ····································· 8
+7. REFRIGERANT SYSTEM DIAGRAM ············ 11
+8. SERVICE FUNCTIONS ·······························12
+9. MICROPROCESSOR CONTROL ··················18
+10. TROUBLESHOOTING ································26
+11. DISASSEMBLY INSTRUCTIONS ··················42
+PARTS CATALOG (OBB937)
+
+Use the specified refrigerant only
+Never use any refrigerant other than that specified.
+Doing so may cause a burst, an explosion, or fire when the unit is being used, serviced, or disposed of.
+Correct refrigerant is specified in the manuals and on the spec labels provided with our products.
+We will not be held responsible for mechanical failure, system malfunction, unit breakdown or accidents caused by failure to
+follow the instructions.
+<Preparation before the repair service>
+Prepare the proper tools.
+Prepare the proper protectors.
+Provide adequate ventilation.
+After stopping the operation of the air conditioner, turn off the power-supply breaker and pull the power plug.
+Discharge the capacitor before the work involving the electric parts.
+<Precautions during the repair service>
+Do not perform the work involving the electric parts with wet hands.
+Do not pour water into the electric parts.
+Do not touch the refrigerant.
+Do not touch the hot or cold areas in the refrigeration cycle.
+W hen the repair or the inspection of the circuit needs to be done without turning off the power, exercise great caution not to
+touch the live parts.
+WARNING
+• When the refrigeration circuit has a leak, do not execute pump down with the compressor.
+• When pumping down the refrigerant, stop the compressor before disconnecting the refrigerant pipes.
+The compressor may burst if air etc. get into it.
+• When opening or closing the valve below freezing temperatures, refrigerant may spurt out from the gap
+between the valve stem and the valve body, resulting in injuries.
+OBH937 2
+
+1 TECHNICAL CHANGES
+These models are compatible with the outdoor units with low standby power control.
+Connecting these models to the MUZ-AY·VG series outdoor units enables the low standby power control.
+These models may be connected to the MUZ-AY·VG series after once connected to the MXZ series and operated, for example
+because of relocation. In that case, the MUZ-AY·VG series outdoor units will not operate without taking a step. Follow the proce-
+dure “Deleting the memorized abnormal condition” described in 10-2.1.
+MSZ-AY15VG - ET1
+MSZ-AY20VG - ET1
+MSZ-AY15VGK - E1 , ET1
+MSZ-AY20VGK - E1 , ET1
+MSZ-AY15VGKP - E1 , ET1
+MSZ-AY20VGKP - E1 , ET1
+1. New model
+OBH937 3
+
+2 PART NAMES AND FUNCTIONS
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+Air purifying device
+Front panel (VGKP type only)
+Air inlet
+Wi-Fi interface
+(VGK/VGKP type only)
+Air fi lter
+Air cleaning filter
+(V Blocking Filter,
+VGKP type: option)
+Spec name plate *1 Emergency
+*1 The manufacturing year Horizontal vane operation switch
+and month is indicated
+on the spec name plate. Fan guard
+Air outlet
+Remote controller
+Heat exchanger
+Operation indicator lamp
+Air purifying lamp (VGKP type only)
+Remote control receiving section
+ACCESSORIES
+MSZ-AY15VG
+MSZ-AY20VG MSZ-AY15VGKP
+Model
+MSZ-AY15VGK MSZ-AY20VGKP
+MSZ-AY20VGK
+(1) Installation plate 1 1
+(2) Installation plate fixing screw 4 × 25 mm 5 5
+(3) Wireless remote controller 1 1
+(4) Felt tape (For left or left-rear piping) 1 1
+(5) Battery (AAA) for (3) 2 2
+(6) Air cleaning filter 2 —
+OBH937 4
+
+3 SPECIFICATION
+MSZ-AY15VG MSZ-AY20VG
+Indoor model MSZ-AY15VGK MSZ-AY20VGK
+MSZ-AY15VGKP MSZ-AY20VGKP
+Power supply Single phase 230 V, 50 Hz
+5
+lacirtcelE
+atad
+Power Cooling 17 19
+W
+input *1 Heating 17 19
+Running Cooling 0.17 0.19
+A
+current *1 Heating 0.17 0.19
+naF
+rotom
+Model RC0J25-DB
+Cooling 0.17 0.19
+Current *1 A
+Heating 0.17 0.19
+Dimensions W × H × D mm 760 × 250 × 199
+Weight kg VG/VGK: 8.9 VGKP: 9.1
+skramer
+laicepS
+Air direction 5
+woflriA
+gnilooC
+Super High 366 396
+High 312 312
+Med. m3/h 264 264
+Low 222 222
+Silent 168 168
+gnitaeH
+Super High 366 426
+High 324 324
+Med. m3/h 270 270
+Low 234 234
+Silent 168 168
+level
+dnuoS
+gnilooC
+Super High 40 42
+High 35 35
+Med. dB(A) 30 30
+Low 26 26
+Silent 19 19
+gnitaeH
+Super High 40 42
+High 35 35
+Med. dB(A) 30 30
+Low 26 26
+Silent 19 19
+deeps
+naF
+gnilooC
+Super High 1,410 1,510
+High 1,240 1,240
+Med. rpm 1,070 1,070
+Low 930 930
+Silent 750 750
+gnitaeH
+Super High 1,410 1,600
+High 1,280 1,280
+Med. rpm 1,100 1,100
+Low 980 980
+Silent 750 750
+Fan speed regulator 5
+Remote controller model SH23E
+NOTE: Test conditions are based on ISO 5151.
+Cooling: Indoor Dry-bulb temperature 27°C Wet-bulb temperature 19°C
+Outdoor Dry-bulb temperature 35°C
+Heating: Indoor Dry-bulb temperature 20°C
+Outdoor Dry-bulb temperature 7°C Wet-bulb temperature 6°C
+*1 Measured under rated operating frequency.
+Specifications and rating conditions of main electric parts
+Fuse (F11) T3.15AL250V
+Horizontal vane motor (MV1, MV2) 12 V DC
+Varistor (NR11) 470 V
+Terminal block (TB) 3P
+OBH937
+
+4 NOISE CRITERIA CURVES
+MSZ-AY15VG MSZ-AY20VG
+MSZ-AY15VGK MSZ-AY20VGK
+MSZ-AY15VGKP MSZ-AY20VGKP
+90
+80
+70
+NC-70
+60
+NC-60
+50
+NC-50
+40
+NC-40
+30
+NC-30
+20
+NC-20
+10
+63 125 250 500 1000 2000 4000 8000
+Test conditions INDOOR UNIT
+Cooling: Dry-bulb temperature 27°C WALL
+Wet-bulb temperature 19°C 1m
+Heating: Dry-bulb temperature 20°C
+0.8m
+MICROPHONE
+6
+RAB
+ORCIM
+2000.0
+er
+Bd
+,LEVEL
+ERUSSERP
+DNUOS
+DNAB
+EVATCO
+FAN SPEED FUNCTION SPL(dB(A)) LINE
+COOLING 40
+Super High
+HEATING 40
+NC-10
+BAND CENTER FREQUENCIES, Hz
+OBH937
+
+5 OUTLINES AND DIMENSIONS
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP Unit: mm
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+OBH937 7
+
+6 WIRING DIAGRAM
+MSZ-AY15VG - ET1 MSZ-AY20VG - ET1
+İÇ ÜNİTE İÇ ÜNİTE ELEKTRONİK
+SEMBOL PARÇA ADI SEMBOL PARÇA ADI
+TERMİNAL KARTI KONTROL KARTI
+SİGORTA ODA SICAKLIK
+(T3.15AL250V) TERMİSTÖRÜ
+BORU SICAKLIK
+FAN MOTORU
+TERMİSTÖRÜ(ANA)
+KANAT MOTORU BORU SICAKLIK
+(YATAY ÜST) TERMİSTÖRÜ(YARDIMCI)
+KA (Y N A A T T A M Y O A T L O T R ) U TERMİNAL BLOĞU
+VARİSTÖR RÖLE
+RESİSTÖR
+NOTLAR:
+1. Dış ünite elektronik kablolaması için dış ünite elektronik
+SİVİÇ/BUZZER kablo devre şemasını referans alınız.
+KARTI 2. Sadece bakır besleme Terminal bloğu
+kablosu kullanın
+GÖSTERGE 3. Sembolleri gösterir Konektör
+KARTI Detaylar için SERVİS KILAVUZUNA bakınız
+Arıza durumunun detaylı çözümü için arıza geri çağırma
+ALICI fonksiyonu ile kontrol ediniz.
+DIŞ ÜNİTEYE KARTI Arıza geri çağırma fonksiyonu için SERVİS MANUELİNE bakınız
+OBH937 8
+
+MSZ-AY15VGK - E1 MSZ-AY20VGK - E1
+MSZ-AY15VGK - ET1 MSZ-AY20VGK - ET1
+OBH937 9
+
+MSZ-AY15VGKP - E1 MSZ-AY20VGKP - E1
+MSZ-AY15VGKP - ET1 MSZ-AY20VGKP - ET1
+OBH937 10
+
+7 REFRIGERANT SYSTEM DIAGRAM
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP Unit: mm
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+Refrigerant pipe ø9.52
+(with heat insulator)
+Indoor coil
+Indoor
+thermistor
+heat
+exchanger RT12 (main) Flared connection
+Indoor coil
+thermistor
+RT13 (sub)
+Room temperature
+thermistor
+RT11
+Flared connection
+Refrigerant pipe ø6.35
+(with heat insulator)
+Refrigerant flow in cooling
+Refrigerant flow in heating
+OBH937 11
+
+8 SERVICE FUNCTIONS
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+8-1. TIMER SHORT MODE
+For service, the following set time can be shortened by bridging the timer short mode point on the electronic control P.C.
+board. (Refer to 10-7.)
+• The set time for the ON/OFF timer can be reduced to 1 second for each minute.
+• After the breaker is turned on, the time for starting the compressor, which normally takes 3 minutes, can be reduced to 3
+seconds. Restarting the compressor, which takes 3 minutes, cannot be reduced.
+8-2. HOW TO SET REMOTE CONTROLLER EXCLUSIVELY FOR A PARTICULAR INDOOR UNIT
+A maximum of 4 indoor units with wireless remote controllers can be used in a room.
+To operate the indoor units individually with each remote controller, assign a number to each remote controller according to
+the number of the indoor unit.
+This setting can be set only when all the following conditions are met:
+• The remote controller is powered OFF.
+• Weekly timer is not set.
+• Weekly timer is not being edited.
+(1) Hold down button on the remote controller for 2 seconds to enter the pairing mode.
+(2) Press button again and assign a number to each remote controller.
+Each press of button advances the number in the following order: 1 → 2 → 3 → 4.
+(3) Press button to complete the pairing setting.
+8-3. AUTO RESTART FUNCTION
+When the indoor unit is controlled with the remote controller, the operation mode, the set temperature, and the fan speed are
+memorized by the indoor electronic control P.C. board. “AUTO RESTART FUNCTION” automatically starts operation in the
+same mode just before the shutoff of the main power.
+Operation
+If the main power has been cut, the operation settings remain.
+After the power is restored, the unit restarts automatically according to the memory.
+(However, it takes at least 3 minutes for the compressor to start running.)
+How to disable “AUTO RESTART FUNCTION”
+Turn off the main power for the unit.
+Cut the jumper wire to JR77 on the indoor electronic control P.C. board. (Refer to 10-7.)
+Indoor electronic
+control P.C. board JR77
+12
+)M(102DL
+NOTE:
+• The operation settings are memorized when 10 seconds has passed after the indoor unit was operated with the remote
+controller.
+• If main power is turned OFF or a power failure occurs while AUTO START/STOP timer is active, the timer setting is
+cancelled.
+• If the unit has been off with the remote controller before power failure, the auto restart function does not work as the power
+button of the remote controller is OFF.
+• To prevent breaker OFF due to the rush of starting current, systematize other home appliance not to turn ON at the same
+time.
+• When some air conditioners are connected to the same supply system, if they are operated before power failure, the start-
+ing current of all the compressors may flow simultaneously at restart.
+Therefore, the special counter-measures are required to prevent the main voltage-drop or the rush of the starting current by
+adding to the system that allows the units to start one by one.
+OBH937
+
+8-4. Wi-Fi INTERFACE SETTING UP (VGK/VGKP type only)
+This Wi-Fi interface, communicates the status information 3-1. Setting up in WPS-PUSH mode
+and controls the commands from the MELCloud by
+To enter the mode WPS-Push mode
+connecting to the indoor unit.
+(1) Hold down the Temperature
+Front panel Front panel for 5 seconds.
+(2) Select “¯ 2” by pressing
+Temperature and as shown
+on the right.
+(3) Point the remote controller
+toward the indoor unit and press
+the .
+3-1.1. Connect the router to the air conditioner.
+Make sure that the LED indication is as shown
+below.
+Push WPS button of the router within 2 minutes
+after the mode selection has completed.
+Wi-Fi cover The WPS-PUSH mode will return to initial state if
+Wi-Fi interface
+WPS button is not pressed for 2 minutes.
+1. Wi-Fi interface introduction Connecting
+NET LED (Green) Router The LED lights up for 3 seconds
+It shows the network state. then blinks twice.
+(Refer to 8-4.3-3. NET LED.) A beep sounds as the LED blinks.
+This series of actions is repeated.
+2. Setting up
+Set up a connection between the Wi-Fi interface and the
+router.
+NOTE: 3-1-2. LED indication will be as shown below when
+Setup is possible only after operating the air conditioner connection between the router and Wi-Fi
+using the wireless remote controller. interface is completed and connection to
+MELCloud starts.
+For MELCloud User Manual, please go to the website
+below.
+Connected
+https://www.melcloud.com/Support
+3. Selecting a mode
+Connecting
+The Wi-Fi interface has to be paired with the router in The LED lights up for 5 seconds
+order for communication between the indoor unit and and then a beep sounds for 1 second.
+MELCloud to begin. There are 2 methods of pairing the
+Wi-Fi interface with the router:
+MELCloud
+• WPS-PUSH mode
+• Access Point mode
+The mode to be set depends on whether your router has
+If the indication LED does not change or blinks 5 times,
+the WPS button.
+connection fails. Please reset connection and setup the
+Use the pairing mode most suitable for your system.
+Wi-Fi interface and the router again.
+Follow the instructions below to set the pairing mode with
+Main causes that WPS failed are as follows.
+Remote controller.
+Communication distance (from the Wi-Fi interface to
+Set up the Wi-Fi interface and the router again when the
+router), router settings (encryption, authentication, limit
+router has been replaced.
+of connections, etc.)
+NOTE:
+To reset connection and set up the Wi-Fi interface
+and the router again
+(1) Hold down the Temperature
+for 5 seconds.
+(2) Select “_ 2” by pressing
+Temperature and .
+(3) Point the remote controller
+toward the indoor unit and press
+the .
+(4) The indoor unit beeps 3 times
+when resetting is complete.
+OBH937 13
+
+3-2. Setting up in Access Point mode 3-2.3. Register the information of the router on the air
+Complete the setting up in the Access Point mode within conditioner.
+10 minutes. In the displayed window, select Dynamic in
+Access Point mode
+DHCP (*1) and enter the information of router,
+To enter the mode
+then tap the Submit button.
+(1) Hold down the Temperature
+for 5 seconds. Connecting
+(2) Select “¯ 1” by pressing
+Temperature and as shown
+on the right. (*1) Connecting
+(3) Point the remote controller
+toward the indoor unit unit and Router
+press the . MELCloud
+NOTE:
+3-2.1. Connect your smartphone to the air conditioner. • If you want to use Static, select Static in DHCP (*1) and
+Make sure that the LED indication is as shown below. enter the information of router and network, then tap the
+On the Wi-Fi Setting Screen on your smartphone, Submit button.
+select SSID and enter KEY, which are printed on the • LED indication will return to initial state, if the connection
+information label. fails.
+• LED blinking and beep sounds will stop when the
+connection is completed.
+Connecting
+3-2.4. LED indication will be as shown below when
+SS M KKSS A EE III C DDDYY :::::: XXMXMX XX XXEE XX XX--XX XX XXXX XX XXXX XX XXXX XX XXXX XX XXXX XX XXXX XX XXXX X XXXX X XXXX c c o o n m n p e l c e t t i e o d n a b n e d t w c e o e n n n e th c e ti o ro n u t t o e r M a E n L d C W lo i u -F d i s in ta te rt r s fa . ce is
+ES.WO.
+Wi-Fi interface Other Smartphone The LED lights up for 3 seconds
+Connected
+then blinks once.
+A beep sounds as the LED blinks.
+This series of actions is repeated.
+Connecting
+NOTE:
+The LED lights up for 5 seconds and
+• Check Wi-Fi setting of your smartphone if SSID does not then a beep sounds for 1 second.
+appear on it.
+• Enter KEY again if SSID appears on your smartphone, NOTE:
+but it cannot connect to the Wi-Fi interface. It may take several minutes to show the indication above.
+• The LED indication does not change or blinks 5 times if The LED indication does not change or blinks 5 times if
+connection fails. In that case, reset connection and set connection fails.
+up the Wi-Fi interface and the router again. In that case, reset connection and set up the Wi-Fi interface
+and the router again.
+3-2.2. Access URL (http://192.168.11.1/network) by any of
+the following methods to display the setting screen.
+(1) Scan the matrix barcode on the information label.
+(2) Type the URL (http://192.168.11.1/network) in the
+web browser.
+Information label
+MAC:XXXXXXXXXXXX
+ID:XXXXXXXXXX
+SSID:ME-XXXXXXXXXX
+KEY:XXXXXXXXXXXX
+E S . W O. Other
+Wi-Fi interface
+OBH937 14
+
+3-3. NET LED NOTE:
+NET LED blinking indicates that the Wi-Fi interface is • Ensure that the router supports the WPA2-AES
+communicating with the router. encryption setting before starting the Wi-Fi interface
+setup.
+3-4. When it doesnʼt connect well • The End user should read and accept the terms and
+conditions of the Wi-Fi service before using this Wi-Fi
+Check the following, and pair the Wi-Fi interface and
+interface.
+the router according to Selecting a mode.
+• To complete connection of this Wi-Fi interface to the
+Wi-Fi service, the router may be required.
+• Make sure that the communication distance is not too
+• This Wi-Fi interface will not commence transmission
+far between the Wi-Fi interface and the router.
+of any operational data from the system until the End
+• Make sure that the router uses WPA2-AES encryp-
+user registers and accepts the terms and conditions
+tion.
+of the Wi-Fi service.
+• Make sure that the number of connected devices to
+• This Wi-Fi interface should not be installed and
+the router does not exceed the limit.
+connected to any Mitsubishi Electric system which is
+• Make sure that DHCP is enabled, or check IP
+to provide application critical cooling or heating.
+address setting of the Wi-Fi interface.
+• At the time of relocation or disposal, reset the Wi-Fi
+• Check DNS settings of the router, or check DNS
+interface to the factory default.
+address of the Wi-Fi interface.
+• Check if the router is connected to internet.
+• Set up the Wi-Fi interface after operating the air For the latest information regarding MELCloud from
+Mitsubishi Electric Corporation, please visit
+conditioner using the wirelessremote controller at
+www.melcloud.com.
+least once.
+If the connection fails even after checking the above,
+.
+set up the Wi-Fi interface and the router again by the
+following method.
+• Hold down the Temperature for 5 seconds.
+• Select “_ 2” by pressing Temperature and .
+• Point the remote controller toward the indoor unit and
+press the .
+• The indoor unit beeps 3 times when resetting is
+complete.
+[About trademarks]
+• WPS is the connection via Wi-Fi Protected Setup.
+• “Wi-Fi”, “Wi-Fi Protected Setup™”, “WPA2™” are
+trademarks or registered trademarks of the Wi-Fi
+Alliance®.
+The Wi-Fi interface uses Open Source Software.
+To view the Open Source software licence(s), please
+go to the following website whilst connected to the
+Wi-Fi interface during the Access Point mode.
+http://192.168.11.1/license
+OBH937 15
+
+8-5. CHANGING THE CORRECTION VALUE OF THE ROOM TEMPERATURE (THE INLET TEMPERATURE)
+The correction value of the room temperature can be adjusted in the range of 2 to 5 °C with the remote controller.
+Normally, the temperature at the room temperature sensor might become higher than that around feet because warm air
+tends to accumulate around an indoor unit during heating operation.
+Thus, if you correct the room temperature to the temperature about 2 °C lower than that detected by the room temperature
+sensor, the air conditioner capacity during heating operation increases, which suppresses a decrease in the temperature
+around feet.
+The optimal correction values of the room temperature, however, might differ depending on the installation environments
+such as installation height of the indoor unit or the ceiling height, so adjust the correction value of the room temperature in
+the range of 2 to 5 °C with the remote controller.
+NOTE 1: The room will be warmer if you set the correction value of the room temperature to 5°C.
+1. How to change the correction value of the room temperature
+(1) Press [ OFF/ON] button on the remote controller to turn the indoor unit off. (Figure 1)
+(2) Point the remote controller at the indoor unit.
+While you hold down [ MODE] and [ TEMP ] at the same time, press [ RESET], and keep holding
+[ MODE] and [ TEMP ] to indicate the correction value of the room temperature that was set the last time with the
+remote controller (Figure 2 shows 2°C at factory setting).
+NOTE 2: Point the remote controller at the indoor unit while working in the procedure (3) and (4) like the procedure (2).
+(3) Press [ TEMP ] or [ TEMP ] to change the correction value of the room temperature.
+(4) Set the correction value of the room temperature to the desired value, and then press [ OFF/ON] button on the
+remote controller to turn the indoor unit off. (Figure 1)
+TEMP [ ] TEMP [ ] TEMP [ ]
+[Figure 1] [Figure 2]
+TEMP [ ] TEMP [ ] TEMP [ ]
+OBH937 16
+
+2. Writing the correction value of the room temperature on the wiring diagram
+After setting the correction value of the room temperature (the inlet air temperature), follow 11. DISASSEMBLY
+INSTRUCTIONS to disassemble the indoor unit, and then write the correction value (any of 3, 4, or 5) on the wiring dia-
+gram with a ballpoint pen, etc.
+(e.g. The numerical value is described in the bold square.) (Figure 3)
+If the indoor electronic control P.C. board is replaced in servicing, the correction value is reset. The numerical value (any
+of 3, 4, or 5) described on the wiring diagram will be needed when a service man sets the correction value again after
+replacing the P.C. board.
+NOTE 3: The instruction for setting the correction value again is attached to the indoor electronic control P.C. board of the
+service part as well.
+[Figure 3]
+If you cut the jumper wire JR24 (Refer to 10-7.), a correction value of the room temperature during heating operation turns
+to 0°C regardless of the correction commands from the remote controller. (Figure 4)
+JR24
+[Figure 4]
+17
+CN112
+CN10A
+CN151
+CN111
+CN211
+MODEL MSZ-AY15/20VGKP WIRING DIAGRAM
+Bold square
+Indoor electronic
+control P.C. board
+OBH937
+
+9 MICROPROCESSOR CONTROL
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+WIRELESS REMOTE CONTROLLER
+Signal transmitting section
+Distance of signal:
+About 6 m
+Beep(s) is (are) heard from
+the indoor unit when the
+Battery replacement indicator signal is received.
+Operation select button Fan speed control button
+Operation display section
+ECONO COOL button Vane control button
+Purifier button
+(VGKP type only)
+I-SAVE button
+Time, timer set buttons
+NIGHT MODE button Forward button
+Backward button
+Temperature buttons Off/On (stop/operate)
+button
+Weekly timer set buttons
+Lid
+Slide the lid down
+to open the remote
+controller. Slide it down
+further to get to the
+weekly timer buttons.
+Reset button
+Self clean button
+Clock button
+NOTE: Last setting will be stored after the unit is turned OFF with the remote controller. Indoor unit receives the signal of the
+remote controller with beeps.
+INDOOR UNIT DISPLAY SECTION
+Operation indicator lamp
+The operation indicator at the right side of the indoor unit indicates the operation state.
+• The following indication applies regardless of shape of the indication.
+Indication Operation state Room temperature
+The unit is operating to reach the set About 2°C or more away from set Lit
+temperature (VG, VGK only) temperature
+Blinking
+The room temperature is approaching
+the set temperature (VG, VGK only) About 1 to 2°C from set temperature Not lit
+Right lamp lights during clean operation.
+—
+Refer to 9-14.
+Standby mode
+—
+(Only during multi system operation)
+OBH937 18
+
+9-1. COOL ( ) OPERATION
+(1) Press Off/On(stop/operate) button.
+Operation indicator lamp of the indoor unit turns on with a beep tone.
+(2) Select COOL mode with Operation select button.
+(3) Press Temperature buttons (TEMP or button) to select the desired temperature. The setting range is 16 - 31°C.
+1. Coil frost prevention
+The compressor operational frequency is controlled by the temperature of the indoor heat exchanger to prevent the coil
+from frosting.
+When the temperature of indoor heat exchanger becomes too low, the coil frost prevention mode works.
+The indoor fan operates at the set speed and the compressor stops. This mode continues until the temperature of indoor
+heat exchanger rises.
+2. Low outside temperature operation
+When the outside temperature is lower, low outside temperature operation starts, and the outdoor fan slows or stops.
+9-2. DRY ( ) OPERATION
+(1) Press Off/On(stop/operate) button.
+Operation indicator lamp of the indoor unit turns on with a beep tone.
+(2) Select DRY mode with Operation select button.
+(3) The set temperature is determined from the initial room temperature.
+1. Coil frost prevention
+Coil frost prevention works the same way as that in COOL mode. (9-1.1.)
+2. Low outside temperature operation
+Low outside temperature operation works the same way as that in COOL mode. (9-1.2.)
+9-3. FAN ( ) OPERATION
+(1) Operation indicator lamp of the indoor unit turns on with a beep tone.
+(2) Select FAN mode with Operation select button.
+(3) Select the desired fan speed. When AUTO, it becomes Low.
+Only indoor fan operates.
+Outdoor unit does not operate.
+9-4. HEAT ( ) OPERATION
+(1) Press Off/On(stop/operate) button.
+Operation indicator lamp of the indoor unit turns on with a beep tone.
+(2) Select HEAT mode with Operation select button.
+(3) Press Temperature buttons (TEMP or button) to select the desired temperature. The setting range is 10 - 31°C.
+1. Cold air prevention control
+When the compressor is not operating or is starting, and the temperature of indoor heat exchanger and/or the room tem-
+perature is low or when defrosting is being done, the indoor fan will stop or rotate in Very Low speed.
+2. High pressure protection
+The compressor operational frequency is controlled by the temperature of the indoor heat exchanger to prevent the con-
+densing pressure from increasing excessively.
+When the temperature of indoor heat exchanger becomes too high, the high pressure protection works.
+The indoor fan operates following the cold air prevention control. This mode continues until the temperature of indoor heat
+exchanger falls.
+3. Defrosting
+Defrosting starts when the temperature of outdoor heat exchanger becomes too low.
+The compressor stops once, the indoor/outdoor fans stop, the 4-way valve reverses, and the compressor re-starts.
+This mode continues until the temperature of outdoor heat exchanger rises or the fixed time passes.
+OBH937 19
+
+9-5. AUTO CHANGE OVER ∙∙∙ AUTO MODE OPERATION
+Once desired temperature is set, unit operation is switched automatically between COOL and HEAT operation.
+Mode selection
+(1) Initial mode
+When unit starts the operation with AUTO operation from OFF:
+• If the room temperature is higher than the set temperature, operation starts in COOL mode.
+• If the room temperature is equal to or lower than the set temperature, operation starts in HEAT mode.
+(2) Mode change
+COOL mode changes to HEAT mode when about 15 minutes has passed with the room temperature 1°C below the set
+temperature.
+HEAT mode changes to COOL mode when about 15 minutes has passed with the room temperature 1°C above the set
+temperature.
+NOTE 1
+If 2 or more indoor units are operating in multi system, there might be a case that the indoor unit, which is operating in
+(AUTO), cannot change over to the other operating mode (COOL ↔ HEAT) and becomes a state of standby.
+Refer to NOTE 2 “FOR MULTI SYSTEM AIR CONDITIONER”.
+NOTE 2
+FOR MULTI SYSTEM AIR CONDITIONER OUTDOOR UNIT: MXZ series
+Multi system air conditioner can connect 2 or more indoor units with one outdoor unit.
+• When you try to operate 2 or more indoor units with one outdoor unit simultaneously, one for the cooling and the others
+for heating, the operation mode of the indoor unit that operates first is selected. Other indoor units cannot operate, and
+operation indicator lamp blinks as shown in the figure below. In this case, please set all the indoor units to the same
+operation mode.
+OPERATION INDICATOR
+Lit
+Blinking
+Not lit
+• When indoor unit starts the operation while the defrosting of outdoor unit is being done, it takes a few minutes (max. 10
+minutes) to blow out the warm air.
+• In HEAT operation, though indoor unit that does not operate may get warm or the sound of refrigerant flowing may be
+heard, they are not malfunction. The reason is that the refrigerant continuously flows into it.
+9-6. AUTO VANE OPERATION
+1. Horizontal vane
+(1) Vane motor drive
+These models are equipped with a stepping motor for the horizontal vane. The rotating direction, speed, and angle of
+the motor are controlled by pulse signals (approximately 12 V) transmitted from indoor microprocessor.
+(2) The horizontal vane angle and mode change as follows by pressing Vane control button.
+AUTO 1 2 3 4 5 SWING
+(3) Positioning
+To confirm the standard position, the vane moves until it touches the vane stopper. Then the vane is set to the selected
+angle.
+Confirming of standard position is performed in the following cases:
+(a) When the operation starts or finishes (including timer operation).
+(b) When the test run starts.
+(c) When standby mode (only during multi system operation) starts or finishes.
+(4) VANE AUTO ( ) mode
+In VANE AUTO mode, the microprocessor automatically determines the vane angle to make the optimum room temper-
+ature distribution.
+In COOL and DRY operation In HEAT operation
+Vane angle is fixed to Horizontal position. Vane angle is fixed to Angle 4.
+Horizontal
+position
+4
+OBH937 20
+
+(5) STOP (operation OFF) and ON TIMER standby
+In the following cases, the horizontal vane returns to the closed position.
+(a) When Off/On(stop/operate) button is pressed (POWER OFF).
+(b) When the operation is stopped by the emergency operation.
+(c) When ON TIMER is ON standby.
+(6) Dew prevention
+During COOL or DRY operation with the vane angle at Angle 4 or 5 when the compressor cumulative operation time
+exceeds 1 hour, the vane angle automatically changes to Angle 1 for dew prevention.
+(7) SWING ( ) mode
+By selecting SWING mode with Vane control button, the horizontal vane swings vertically.
+(8) Cold air prevention in HEAT operation
+The horizontal vane position is set to Upward.
+NOTE: When 2 or more indoor units are operated with multi outdoor unit, even if any indoor unit turns thermostat off, this
+control does not work in the indoor unit.
+(9) ECONO COOL ( ) operation (ECONOmical operation)
+When ECONO COOL button is pressed in COOL mode, set temperature is automatically set 2°C higher by the micropro-
+cessor. However, the temperature on the LCD screen on the remote controller is not changed.
+Also the horizontal vane swings in various cycle.
+SWING operation makes you feel cooler than set temperature. So, even though the set temperature is higher, the air con-
+ditioner can keep comfort. As a result, energy can be saved.
+To cancel this operation, select a different mode or press one of the following buttons in ECONO COOL operation:
+ECONO COOL, Vane control button.
+9-7. TIMER OPERATION
+1. How to set the time
+(1) Check that the current time is set correctly.
+NOTE: Timer operation will not work without setting the current time. Initially “0:00” blinks at the current time display of
+TIME MONITOR, so set the current time correctly with Clock button.
+How to set the current time
+(a) Press the Clock button.
+(b) Press the Time set buttons ( and ) to set the current time.
+• Each time Forward button ( ) is pressed, the set time increases by 1 minute, and each time Backward button
+( ) is pressed, the set time decreases by 1 minute.
+• Pressing those buttons longer, the set time increases/decreases by 10 minutes.
+(c) Press the Clock button.
+(2) Press Off/On(stop/operate) button to start the air conditioner.
+(3) Set the time of timer.
+ON timer setting
+(a) Press ON TIMER button( ) during operation.
+(b) Set the time of the timer using Time set buttons ( and ).*
+OFF timer setting
+(a) Press OFF TIMER button ( ) during operation.
+(b) Set the time of the timer using Time set buttons ( and ).*
+* Each time Forward button ( ) is pressed, the set time increases by 10 minutes: each time Backward button ( )
+is pressed, the set time decreases by 10 minutes.
+2. To release the timer
+To release ON timer, press ON TIMER button ( ).
+To release OFF timer, press OFF TIMER button( ).
+TIMER is cancelled and the display of set time disappears.
+OBH937 21
+
+PROGRAM TIMER
+• OFF timer and ON timer can be used in combination. The set time that is reached first will operate first.
+• “ ” and “ ” display shows the order of OFF timer and ON timer operation.
+(Example 1) The current time is 8:00 PM. (Example 2) The current time is 11:00 AM.
+The unit turns off at 11:00 PM, and on at 6:00 AM. The unit turns on at 5:00 PM, and off at 9:00 PM.
+NOTE: If the main power is turned OFF or a power failure occurs while ON/OFF timer is active, the timer setting is cancelled. As
+these models are equipped with an auto restart function, the air conditioner starts operating with timer cancelled when
+power is restored.
+9-8. WEEKLY TIMER OPERATION
+• A maximum of 4 ON or OFF timers can be set for individual days of the week.
+• A maximum of 28 ON or OFF timers can be set for a week.
+NOTE:
+• The simple ON/OFF timer setting is available while the weekly timer is on. In this case, the ON/OFF timer has priority over the
+weekly timer; the weekly timer operation will start again after the simple ON/OFF timer is complete.
+• When the weekly timer is set, temperature cannot be set to 10°C.
+• The weekly timer operation and I-SAVE operation cannot be used together.
+1. How to set the weekly timer
+* Make sure that the current time and day are set correctly.
+(1) Press button to enter the weekly timer setting mode.
+* blinks.
+(2) Press and buttons to select setting day and number.
+E.g. : [Mon Tue ... Sun]
+and [1] are selected.
+Pressing selects the day of Pressing selects
+the week to be set. the setting number.
+* All days can be selected.
+OBH937 22
+
+(3) Press , , and buttons to set ON/OFF, time, and temperature.
+E.g. : [ON], [6:00]
+and [24°C] are
+selected.
+Pressing
+selects ON/OFF timer.
+Pressing Pressing
+adjusts the time. adjusts the
+Pressing temperature.
+deletes timer setting.
+* Hold down the button to change the time quickly.
+Press and buttons to continue setting the timer for other days and/or numbers.
+(4) Press button to complete and transmit the weekly timer setting.
+* which was blinking
+goes out, and the current
+time will be displayed.
+NOTE:
+• Press button to transmit the setting information of weekly timer to the indoor unit. Point the remote controller
+toward the indoor unit for 3 seconds.
+• When setting the timer for more than one day of the week or one number, button does not have to be pressed
+per each setting. Press button once after all the settings are complete. All the weekly timer settings will be
+saved.
+• Press button to enter the weekly timer setting mode, and press and hold button for 5 seconds to erase all
+weekly timer settings. Point the remote controller toward the indoor unit.
+(5) Press button to turn the weekly timer ON. ( lights.)
+• When the weekly timer is ON, the day of the week whose timer setting is complete, will light.
+Press button again to turn the weekly timer OFF. ( goes out.)
+NOTE:
+The saved settings will not be cleared when the weekly timer is turned OFF.
+2. Checking weekly timer setting
+(1) Press button to enter the weekly timer setting mode.
+* blinks.
+(2) Press or buttons to view the setting of the particular day or number.
+(3) Press button to exit the weekly timer setting.
+NOTE:
+When all days of the week are selected to view the settings and a different setting is included among them,
+will be displayed.
+9-9. NIGHT MODE ( ) OPERATION
+NIGHT MODE changes the brightness of the operation indicator, disables the beep sound and limits the noise level of the
+outdoor unit.
+(1) Press NIGHT MODE button during operation to activate NIGHT MODE ( ).
+• The operation indicator lamp dims.
+• The beep sound will be disabled except that emitted when the operation is started or stopped.
+• Noise level of the outdoor unit will be lower than that mentioned in SPECIFICATIONS.(Except the connection to MXZ.)
+(2) Press NIGHT MODE button to cancel NIGHT MODE ( ).
+NOTE:
+• The cooling / heating capacity may drop.
+• Noise level of the outdoor unit may not change after startup of the unit, during the protection operation, or depending on
+other operating conditions.
+• The fan speed of the indoor unit will not change.
+• The operation indicator lamp will be hard to be seen in a bright room.
+• Noise level of the outdoor unit will not decrease during Multi system operation.
+• Operating POWERFUL operation during NIGHT MODE operation will increase the noise level of the outdoor unit.
+• Noise level of the outdoor unit will not decrease during Multi system operation.
+OBH937 23
+
+9-10. I-SAVE ( ) OPERATION
+1. How to set I-SAVE operation
+(1) Press Off/On(stop/operate) button.
+(2) Select COOL, HEAT, ECONO COOL or NIGHT MODE.
+(3) Press I-SAVE button.
+(4) Set the temperature, fan speed, and airflow direction for I-SAVE operation.
+NOTE:
+• I-SAVE operation cannot be selected during DRY or AUTO mode operation.
+• The setting range of HEAT mode I-SAVE operation is 10°C and 16 - 31°C.
+• 2 groups of setting can be saved. (One for COOL/ECONO COOL, one for HEAT)
+• I-SAVE operation and the weekly timer operation cannot be used together.
+2. How to cancel operation
+• Press I-SAVE button again.
+• I-SAVE operation can also be cancelled by pressing Operation select button to change the operation mode.
+The preferred setting can be saved for the next time with a single press of I-SAVE button.
+9-11. EMERGENCY/TEST OPERATION
+In the case of test run operation or emergency operation, use the emergency operation switch on the right side of the indoor
+unit. Emergency operation is available when the remote controller is missing or has failed, or when the batteries in the
+remote controller are running down. The unit will start and Operation indicator lamp will light up.
+The first 30 minutes of operation is the test run operation. This operation is for servicing. The indoor fan runs at High speed
+and the temperature control does not work. After 30 minutes of test run operation, the system shifts to EMERGENCY COOL/
+HEAT MODE with a set temperature of 24°C. The fan speed shifts to Med. The coil frost prevention works even in the test
+run or the emergency operation. In the test run or emergency operation, the horizontal vane operates in VANE AUTO ( )
+mode. Emergency operation continues until the emergency operation switch is pressed once or twice or the unit receives any
+signal from the remote controller. In the latter case, normal operation will start.
+NOTE: Do not press the emergency operation switch during normal operation.
+Operation mode COOL/HEAT
+Set temperature 24°C
+Fan speed Med.
+Horizontal vane Auto
+The operation mode is indicated by the
+Operation indicator lamp as following
+Operation indicator lamp
+EMERGENCY COOL
+↓
+Lit
+EMERGENCY HEAT
+Not lit
+↓
+STOP
+9-12. 3-MINUTE TIME DELAY OPERATION
+When the system turns OFF, compressor will not restart for 3 minutes as 3-minute time delay function operates to protect
+compressor from overload.
+9-13. AIR PURIFYING ( ) OPERATION (MSZ-AY·VGKP)
+In the AIR PURIFYING operation, the indoor unit built-in device reduces airborne fungi, viruses, mold, and allergens.
+(1) Press PURIFIER button to start AIR PURIFYING operation.
+• AIR PURIFYING lamp turns on. (Display section)
+(2) Press PURIFIER button again to cancel AIR PURIFYING operation.
+• AIR PURIFYING lamp turns off. (Display section)
+NOTE:
+• Never touch the air purifying device during operation. Although the air purifying device is safety-conscious design, touching
+this device could be the cause of trouble as this device discharge high voltage electricity.
+• A “hissing” sound may be heard during the air purifying operation. This sound is produced when plasma is being dis-
+charged. This is not a malfunction.
+• AIR PURIFYING lamp does not turn on if the front panel is not closed completely.
+OBH937 24
+
+9-14. SELF CLEAN OPERATION
+The self clean operation helps to keep the unit clean and prevents mold growth by performing fan operation for about 25 min-
+utes. It is recommended to keep self clean operation active at all times.
+(1) Press Self clean button to activate self clean operation.
+• The unit performs self clean operation when it is stopped with the Off/On(stop/operate) button or off timer after cooling
+operation/dry operation. Operation indicator lamp turns on. (Display section)
+• The self clean operation is not performed when: cool mode/dry mode is operated less than 3 minutes.
+(2) Press Self clean button again to deactivate self clean operation.
+• Pressing Off/On(stop/operate) button does not deactivate self clean operation.
+NOTE:
+• The fan is stopped for the first 3 minutes of self clean operation.
+• During multi system operation, air from the unit may become warm. In this case, the self clean operation is cancelled auto-
+matically to prevent undesirable rise in room temperature.
+OBH937 25
+
+10 TROUBLESHOOTING
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+10-1. CAUTIONS ON TROUBLESHOOTING
+1. Before troubleshooting, check the following
+1) Check the power supply voltage.
+2) Check the indoor/outdoor connecting wire for miswiring.
+2. Take care of the following during servicing
+1) Before servicing the air conditioner, be sure to turn OFF the main unit first with the remote controller, and then after
+confirming the horizontal vane is closed, turn OFF the breaker and/or disconnect the power plug.
+2) Be sure to turn OFF the power supply before removing the front panel, the cabinet, the top panel, and the P.C. board.
+3) When removing the P.C. board, hold the edge of the board with care NOT to apply stress on the components.
+4) When connecting or disconnecting the connectors, hold the connector housing. DO NOT pull the lead wires.
+<Incorrect> <Correct>
+Lead wiring Connector housing
+3. Troubleshooting procedure
+1) Check if the Operation indicator lamp on the indoor unit is blinking ON and OFF to indicate an abnormality.
+To make sure, check how many times the operation indicator is blinking ON and OFF before starting service work.
+2) Before servicing, verify that all connectors and terminals are connected properly.
+3) When the electronic control P.C. board seems to be defective, check for disconnection of the copper foil pattern and
+burnt or discolored components.
+4) When troubleshooting, refer to 10-2., 10-3. and 10-4.
+4. How to replace batteries
+Weak batteries may cause the remote controller malfunction.
+In this case, replace the batteries to operate the remote controller normally.
+Remove the front lid and insert batteries. Press Reset button with a fine-tipped object, and then
+Then reattach the front lid. use the remote controller.
+Insert the negative pole of the
+batteries first. Check if the polarity RESET button
+of the batteries is correct.
+NOTE: 1. If Reset button is not pressed, the remote controller may not operate correctly.
+2. This remote controller has a circuit to automatically reset the microprocessor when batteries are replaced.
+This function is equipped to prevent the microprocessor from malfunctioning due to the voltage drop caused by the
+battery replacement.
+3. Do not use the leaking batteries.
+OBH937 26
+
+10-2. FAILURE MODE RECALL FUNCTION
+Outline of the function
+This air conditioner can memorize the abnormal condition which has occurred once.
+Even though LED indication listed on the troubleshooting check table (10-4.) disappears, the memorized failure details can
+be recalled.
+1. Flow chart of failure mode recall function for the indoor/outdoor unit
+Operational procedure
+The cause of abnormality cannot be found because the abnormality does not recur.
+Setting up the failure mode recall function
+Turn ON the power supply.
+<Preparation of the remote controller>
+While pressing both Operation select button and TEMP button on the remote
+controller at the same time, press Reset button.
+First, release Reset button.
+Hold down the other 2 buttons for another 3 seconds.
+Make sure that the indicators on the LCD screen shown in the right figure are all
+displayed. Then release the buttons.
+Press Off/On(stop/operate) button of the remote controller (the set temperature is
+displayed) with the remote controller headed towards the indoor unit. *1
+Does left lamp of Operation indicator lamp on the indoor Indoor unit is normal.
+unit blink at the interval of 0.5 seconds? But the outdoor unit might be abnormal because there are some
+Blinks: Either indoor or outdoor unit is abnormal. Beep is abnormalities that cannot be recalled with this way.
+No
+emitted at the same timing as the blinking of left lamp of Check if outdoor unit is abnormal according to the detailed outdoor
+(OFF)
+Operation indicator lamp. *2 unit failure mode recall function.
+Yes *1 Regardless of normal or abnormal condition, a short beep is emitted
+Judgment of indoor/outdoor abnormality (Blinks) once the signal is received.
+Before blinking, does left lamp of Operation
+indicator lamp stay ON for 3 seconds?
+When it stays ON for 3 seconds (without beep): Yes
+The outdoor unit is abnormal.
+No
+The outdoor unit is abnormal.
+The indoor unit is abnormal. Check the blinking pattern, and identify the abnormal point by referring
+Check the blinking pattern, and identify the abnormal point by referring to the table of outdoor unit failure mode recall function.
+to the table of indoor unit failure mode recall function. (Refer to 10-2.4) (Refer to outdoor unit service manual.)
+Make sure to check at least 2 consecutive blinking cycles. *2 Make sure to check at least 2 consecutive blinking cycles. *3
+Releasing the failure mode recall function
+Release the failure mode recall function by the following procedures.
+Turn OFF the power supply and turn it ON again.
+Press Reset button of the remote controller.
+Repair the failure parts.
+Deleting the memorized abnormal condition
+After repairing the unit, recall the failure mode again according to “Setting up the failure mode recall
+function” mentioned above.
+Press Off/On(stop/operate) button of the remote controller (the set temperature is displayed) with
+the remote controller headed towards the indoor unit. *4 The information regarding whether the connected
+Press the emergency operation switch so that the memorized abnormal condition is deleted. *4 outdoor unit is a low-standby-power model or a non-
+Release the failure mode recall function according to “Releasing the failure mode recall function” low-standby-power model will also be initialized.
+mentioned above. (Default= compatible with a low-standby-power model)
+NOTE: 1. Make sure to release the failure mode recall function after it is set up, otherwise the unit cannot operate properly.
+2. If the abnormal condition is not deleted from the memory, the last abnormal condition is kept memorized.
+*2. Blinking pattern when the indoor unit is abnormal:
+Blinking at 0.5- Blinking at 0.5-
+2.5-second OFF second interval 2.5-second OFF second interval
+ON
+OFF
+Beeps Beeps Beeps
+Repeated cycle Repeated cycle Repeated cycle
+*3. Blinking pattern when the outdoor unit is abnormal:
+Blinking at 0.5- Blinking at 0.5-
+2.5-second OFF 3-second ON second interval 2.5-second OFF 3-second ON second interval
+ON
+OFF
+No beep Beeps No beep Beeps
+Repeated cycle Repeated cycle Repeated cycle
+OBH937 27
+
+2. Flow chart of AIR PURIFYING power failure mode recall function (MSZ-AY•VGKP)
+Operational procedure
+The air purifying device might be abnormal.
+Check if the air purifying device is abnormal according to the following procedures.
+Make sure that the remote controller is set to the failure mode recall function.
+With the remote controller headed towards the indoor unit, press TEMP or *1. Regardless of normal or abnormal condition,
+TEMP button to adjust the set temperature to 23 °C. *1 a short beep is emitted as the signal is received.
+Does POWER lamp on the indoor unit blink
+at the interval of 0.5 seconds?
+Blinks: The air purifying device is abnormal.
+No
+Beep is emitted at the same timing as the
+(OFF)
+blinking of POWER lamp. *2
+Yes
+(Blinks)
+The air purifying device is abnormal.
+Check the blinking pattern, and identify the abnormal point with the table of
+The air purifying device is normal.
+AIR PURIFYING power failure mode recall function (10-2.5.).
+Make sure to check at least 2 consecutive blinking cycles. *2
+Releasing the failure mode recall function
+Release the failure mode recall function by the following procedures. Release the failure mode recall function
+Turn OFF the power supply and turn it ON again. according to the left mentioned procedure.
+Press RESET button of the remote controller.
+Repair the failure parts.
+Deleting the memorized abnormal condition
+After repairing the unit, recall the failure mode again according to “Setting up the failure mode recall function”
+mentioned above.
+Press Off/On (stop/operate) button of the remote controller (the set temperature is displayed) with the remote
+controller headed towards the indoor unit.
+Press the emergency operation switch so that the memorized abnormal condition is deleted.
+Release the failure mode recall function according to “Releasing the failure mode recall function” mentioned
+above.
+NOTE 1: Make sure to release the failure mode recall function after it is set up, otherwise the unit cannot operate properly.
+NOTE 2: If the abnormal condition is not deleted from the memory, the last abnormal condition is kept memorized.
+*2. Blinking pattern when the air purifying device is abnormal:
+Blinking at 0.5- Blinking at 0.5-
+2.5-second OFF second interval 2.5-second OFF second interval
+ON
+OFF
+Beeps Beeps Beeps
+Repeated cycle Repeated cycle Repeated cycle
+3. AIR PURIFYING power operation check
+AIR PURIFYING power operation goes ON when PURIFIER button on the remote controller is pressed
+with any set temperature displayed during failure mode recall function.
+Check the operation display section of the remote controller to confirm that AIR PURIFYING power operation is activated.
+While AIR PURIFYING lamp stays OFF, it means normal.
+Blinking AIR PURIFYING lamp means abnormal, the AIR PURIFYING power operation is not conducted.
+AIR PURIFYING lamp Remedy
+Continuously blinking Follow “Check of AIR PURIFYING power” to identify the error. (Refer to 10-6. .)
+AIR PURIFYING power control circuit on the indoor electronic control P.C. board is out of order.
+2-time blink
+(Refer to 10-6. .)
+NOTE: Perform the above mentioned check with the front panel closed. The interlock switch (Air purifying device) works by
+opening front panel and the AIR PURIFYING power is cut.
+OBH937 28
+
+4. Table of indoor unit failure mode recall function
+Left lamp of
+Abnormal point
+Operation Condition Remedy
+(Failure mode)
+indicator lamp
+Not lit Normal — —
+The room temperature thermistor short or
+1-time blink every Room tempera- Refer to the characteristics of the room temperature
+open circuit is detected every 8 seconds dur-
+0.5-second ture thermistor thermistor (10-7.).
+ing operation.
+2-time blink Indoor coil The indoor coil thermistor short or open circuit Refer to the characteristics of the main indoor coil
+2.5-second OFF thermistor is detected every 8 seconds during operation. thermistor, the sub indoor coil thermistor (10-7.).
+• Refer to 10-6. “How to check miswiring and serial
+3-time blink The serial signal from outdoor unit is not signal error”.
+Serial signal
+2.5-second OFF received for a maximum of 6 minutes. • Refer to “Check of compressor protector” of outdoor
+unit service manual.
+The rotational frequency feedback signal is
+11-time blink
+Indoor fan motor not emitted during the 12 seconds the indoor Refer to 10-6. “Check of indoor fan motor”.
+2.5-second OFF
+fan operation.
+It cannot properly read data in the nonvolatile
+12-time blink Indoor control
+memory of the indoor electronic control P.C. Replace the indoor electronic control P.C. board.
+2.5-second OFF system
+board.
+NOTE: Blinking patterns of this mode differ from the ones of TROUBLESHOOTING CHECK TABLE (10-4.).
+5. Table of indoor unit failure mode recall function (When recalled at a set temperature of 23°C)
+Table of AIR PURIFYING power failure mode recall function
+Abnormal point
+POWER lamp Condition Remedy
+(Failure mode)
+When AIR PURIFYING power cannot be turned OFF
+AIR PURIFYING
+1-time blink even if the AIR PURIFYING operation is turned OFF
+power control
+with the remote controller.
+When the voltage between CN1T1 (+) and (GND)
+Electrode
+2-time blink on the electronic P.C. board falls below 1.2 V
+(Spark discharge)
+(spark discharge judgment voltage).
+Electrode When the voltage between CN1T1 (+) and (GND) Refer to 10-6. “Check of AIR PURIFYING
+3-time blink (Abnormal electric on the electronic P.C. board falls by 1.2 V below power”.
+discharge error 1) the normal voltage value (2.5 V).
+Electrode When the voltage between CN1T1 (+) and (GND)
+4-time blink (Abnormal electric on the electronic P.C. board falls significantly.
+discharge error 2) (0.4 V / 0.5 ms)
+AIR PURIFYING When the voltage between CN1T1 (+) and (GND)
+5-time blink
+power on the electronic P.C. board rises above 3.2 V.
+NOTE1 : Blinking patterns of this mode differ from the ones of TROUBLESHOOTING CHECK TABLE (10-4.).
+NOTE2 : As soon as an abnormality is detected, AIR PURIFYING power goes OFF, therefore measuring instrument which
+records the voltage wave is required in order to perform the above mentioned voltage measurement.
+OBH937 29
+
+10-3. INSTRUCTION OF TROUBLESHOOTING
+1. Check of the unit. *2 There is possibility that diesel explosion may occur due to the air mixed in the refrigerant circuit.
+First, ensure that there are no leakage points on the valves, flare connections, etc. that allow the
+air to flow into the refrigerant circuit, or no blockage points (e.g. clogged or closed valves) in the
+refrigerant circuit that cause an increase in pressure.
+If there is no abnormal point like above and the system operates cooling and heating modes nor-
+mally, the indoor thermistor might have a problem, resulting in false detection.
+Check both the indoor coil thermistor and the room temperature thermistor, and replace faulty
+Start
+thermistor(s), if any.
+NOTE: Do not start the operation again without repair to prevent hazards.
+Indoor unit operates. Indoor unit operates. Indoor unit does not Operation indicator lamp
+Outdoor unit does not Outdoor unit does not receive the signal from on the indoor unit is
+operate. operate normally. remote controller. blinking ON and OFF.
+Outdoor unit Outdoor unit Unit does not Indoor unit Indoor unit does *1 “Test Run operation” means
+operates only does not operate operates when not operate when the operation within 30 min-
+in Test Run operate even normally in the emergency the emergency utes after the emergency
+operation. *1 in Test Run COOL or operation switch operation switch
+operation switch is pressed.
+operation. *1 HEAT mode. is pressed. is pressed.
+If blinking of Operation indicator
+lamp cannot be checked, it can
+be checked with failure mode
+Check room Refer to “How Refer to Refer to 10-6. 1. Check indoor/outdoor recall function.
+temperature to check “Check of R.V. “Check of remote connecting wire.
+thermistor. inverter/ coil”. controller and (Check if the power is
+Refer to 10-7. compressor”. indoor electronic supplied to the indoor
+“Test point control P.C. unit.)
+diagram and board”. 2. Refer to 10-6.
+voltage”. “Check of indoor P.C.
+board and indoor fan Refer to outdoor unit
+motor”. service manual.
+Left lamp Left lamp Left lamp Left lamp Left lamp Left lamp Left lamp Left lamp Left lamp
+2-time blink Blink on and off 2-time blink 3-time blink 4-time blink 5-time blink 6-time blink 7-time blink 14-time blink
+cause: at 0.5-second Cause: Cause: Cause: Cause: Cause: Cause: or more
+indoor unit intervals Indoor unit Indoor unit Indoor unit Outdoor unit Outdoor unit Outdoor unit Cause:
+• Trouble of AIR Cause: • Trouble of • Trouble of • Trouble of • Outdoor • Trouble of • Trouble of Outdoor unit
+PURIFYING Indoor/Outdoor room indoor fan indoor unit power system thermistor in outdoor • Other
+power control unit temperature / motor control abnormality outdoor unit control abnormality
+• Miswiring or indoor coil system system Indoor/
+trouble of thermistor Outdoor unit
+serial signal • Trouble of
+thermistors
+*2
+Refer to Refer to 10-6. Check room Refer to 10-6. Replace the Refer to “How Refer to Replace the • Check “Flow
+10-6. “How to temperature “Check of indoor to check “Check of inverter P.C. chart of the
+“Check of AIR check thermistor and indoor fan electronic inverter/ outdoor board or the detailed
+PURIFYING miswiring and indoor coil motor”. control P.C. compressor” thermistors” outdoor outdoor unit
+power”. serial signal thermistor. board. of outdoor unit of outdoor unit electronic failure mode
+error”. Refer to 10-7. service service control P.C. recall function.”
+Refer to “Test point manual. manual. board. • Check
+“Check of diagram and thermistors.
+compressor voltage”. Refer to “Test
+protector” of point diagram
+outdoor unit and voltage” in
+service the service
+manual. manual of
+indoor and
+outdoor unit.
+OBH937 30
+
+2. Check of Wi-Fi interface (MSZ-AY·VGK/VGKP)
+Follow the procedure below if the air conditioner cannot be monitored or controlled with a device such as a smartphone.
+Did the LED indication blink 10 times after you There is a problem in a communication between the air
+selected the setting of the Wi-Fi interface and the conditioner and the Wi-Fi interface.
+Yes
+router? • Operate the air conditioner with the remote controller
+No once.
+• If the situation does not improve, replace the Wi-Fi
+interface.
+• If the situation does not improve even after you replace
+the Wi-Fi interface, replace the indoor P.C.board.
+* After replacing the indoor P.C. board, perform a test run
+once, and then set up the Wi-Fi communication. (Refer to
+8-4. Wi-Fi INTERFACE SETTING UP.)
+Incomplete connection between the indoor unit and the
+outdoor unit causes an error on the pairing mode.
+Has the setting up in WPS-PUSH mode or in Refer to the OPERATING INSTRUCTIONS and set up a
+Access Point mode been completed? No connection between the Wi-Fi interface and the router.
+Yes
+Did the LED indication and the buzzer operate There is a problem in a communication between the air
+properly after you set up a connection between the conditioner and the router.
+No
+Wi-Fi interface and the router? • Make sure that the communication distance is not too far
+Yes between the air conditioner and the router.
+• Make sure that the router is compatible with WPA2-AES
+To reset connection and set up the Wi-Fi interface and the encryption.
+router again • Make sure that the SSID consists of the combination of
+(1) Hold down the Temperature for alphabets and numbers.
+5 seconds. • If the problem persists even after you check above, follow
+(2) Select “_ 2” by pressing Temperature the instructions of A , and then set up a connection
+between the Wi-Fi interface and the router again.
+and .
+(3) Point the remote controller toward
+the indoor unit and press the .
+(4) The indoor unit beeps 3 times when
+resetting is complete.
+Is the air conditioner registered with the MELCloud There is a problem in a communication between the air
+application? No conditioner and the MELCloud.
+Yes • Make sure that the number of the connected devices to
+the router does not exceed the limit.
+• Make sure that DHCP setting is enabled.
+• Make sure that DNS setting of the router and DNS
+address of the Wi-Fi interface are correct.
+• Make sure that the router is connected to the internet.
+• Make sure that the communication is not limited with
+security of the router.
+• If the problem persist even after you check above, follow
+the instructions of A , and then set up a connection
+between the Wi-Fi interface and the router again.
+Refer to the OPERATING INSTRUCTIONS or If the situation does not improve
+MELCloud support page. after you review above
+https://www.mitsubishielectric.com/ldg/ibim/
+https://www.melcloud.com/Support
+OBH937 31
+
+10-4. TROUBLESHOOTING CHECK TABLE
+Before taking measures, make sure that the symptom reappears for accurate troubleshooting.
+When the indoor unit has started operation and detected an abnormality of the following condition (the first detection after the
+power ON), the indoor fan motor turns OFF and Operation indicator lamp blinks.
+OPERATION INDICATOR
+Lit
+Blinking
+Not lit
+Abnormal
+No. Operation indicator lamp Symptom Condition Remedy
+point
+Left lamp blinks. • Refer to 10-6. “How to check
+0.5-second ON The serial signal from the outdoor unit is not miswiring and serial signal
+Miswiring or
+received for 6 minutes. error”.
+1 The indoor unit is connected to a low-standby- • Refer to NOTE.
+serial signal 0.5-second OFF power model after once connected to a non- • Refer to “Check of compressor
+low-standby-power model. protector” of outdoor unit ser-
+vice manual.
+Indoor coil Left lamp blinks.
+• Refer to the characteristics of
+thermistor 2-time blink
+The indoor coil or the room temperature indoor coil thermistor, and the
+2 Room
+thermistor is short or open circuit. room temperature thermistor.
+temperature
+2.5-second OFF (10-7.)
+thermistor
+Left lamp blinks.
+3-time blink
+Indoor fan The rotational frequency feedback signal is • Refer to 10-6. “Check of
+3
+motor not emitted during the indoor fan operation. indoor fan motor”.
+2.5-second OFF
+Left lamp blinks.
+Indoor 4-time blink It cannot properly read data in the nonvolatile
+• Replace the indoor electronic
+4 control memory of the indoor electronic control P.C.
+control P.C. board.
+system board.
+2.5-second OFF
+Left lamp blinks. • Refer to “How to check of
+It consecutively occurs 3 times that the com-
+Outdoor 5-time blink Indoor unit and pressor stops for overcurrent protection or inverter/compressor”.
+5 power outdoor unit do startup failure protection within 1 minute after Refer to outdoor unit service
+system 2.5-second OFF not operate. startup. • m Ch a e n c u k a l the stop valve.
+Left lamp blinks.
+• Refer to “Check of outdoor
+6-time blink
+Outdoor The outdoor thermistors short or open circuit thermistor”.
+6
+thermistors during the compressor operation. Refer to outdoor unit service
+manual.
+2.5-second OFF
+Left lamp blinks. • Replace the inverter P.C. board
+Outdoor 7-time blink It cannot properly read data in the nonvolatile or the outdoor electronic control
+7 control memory of the inverter P.C. board or the out- P.C. board.
+system door electronic control P.C. board. Refer to outdoor unit service
+2.5-second OFF manual.
+Left lamp blinks. • Check the stop valve.
+14-time blink or more • Check the 4-way valve.
+• Check the abnormality in detail
+using the failure mode recall
+An abnormality other than the above is function for outdoor unit.
+Other 2.5-second OFF detected. • Refer to “TEST POINT
+8 abnormality An abnormality of the indoor thermistors, the DIAGRAM AND VOLTAGE” on
+*2 on 10-3 defrost thermistor or ambient temperature the service manual of indoor
+thermistor is detected. and outdoor unit for the charac-
+teristics of the thermistors. (Do
+not start the operation again
+without repair to prevent
+hazards.)
+• Check the blinking pattern of the
+Outdoor Left lamp lights up. Outdoor unit It cannot properly read data in the nonvolatile LED on the inverter P.C. board
+9 control does not memory of the inverter P.C. board or the out-
+or the outdoor electronic control
+system operate. door electronic control P.C. board.
+P.C. board.
+NOTE: The indoor unit may have been connected to a non-low-standby-power model outdoor unit. To use a low-standby-power
+model, clear the error history by referring to “Deleting the memorized abnormal condition” described in 10-2.1. When the
+error history is being cleared, the connection information also will be initialized. The indoor unit will be compatible with a
+low-standby-power model after initialization. If the operation indicator lamp continues to blink as shown in No.1 after the
+procedure, refer to 10-6. “How to check miswiring and serial error”.
+OBH937 32
+
+OPERATION INDICATOR
+Lit
+Blinking
+Not lit
+Abnormal
+No. Operation indicator lamp Symptom Condition Remedy
+point
+Left lamp lights and lower lamp blinks. The operation mode of the each indoor unit is
+MXZ type Outdoor unit
+differently set to COOL (includes DRY) and • Unify the operation mode.
+Operation operates but
+1 HEAT at the same time, the operation mode of Refer to outdoor unit service
+mode 2.5-second OFF indoor unit does the indoor unit that has operated at first has manual.
+setting not operate.
+the priority.
+OPERATION INDICATOR
+Lit
+Blinking
+Not lit
+Abnormal
+No. Operation indicator lamp Symptom Condition Remedy
+point
+AIR AIR PURIFYING lamp blinks.
+Indoor unit and When AIR PURIFYING power cannot be
+PURIFYING • Refer to 10-6. “Check of AIR
+1 outdoor unit do turned OFF even if the AIR PURIFYING
+power PURIFYING power”.
+control 2.5-second OFF not operate. operation is turned OFF by remote controller.
+10-5. TROUBLESHOOTING CRITERION OF MAIN PARTS
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+Part name Check method and criterion Figure
+Room temperature Measure the resistance with a mulitmeter.
+thermistor (RT11)
+Indoor coil thermistor Refer to 10-7. “Test point diagram and voltage”, “Indoor electronic control
+(RT12, RT13) P.C. board”, for the chart of thermistor.
+Indoor fan motor (MF) Refer to 10-6. “Check of indoor fan motor.”
+Vane motor (MV1, MV2) Measure the resistance between the terminals with a mulitmeter. YLW
+(Temperature: 10 - 30°C) ROTOR
+YLW
+Color of the lead wire Normal RED
+RED - YLW 223 - 268 Ω
+YLW YLW
+OBH937 33
+
+10-6. TROUBLESHOOTING FLOW
+A Check of indoor fan motor
+The indoor fan motor error has occurred, and the indoor fan does not operate.
+Turn OFF the power supply.
+Pay enough attention to the high voltage on the fan motor connector.
+Turn ON the power supply, wait 5 seconds or more, and then press the
+emergency operation switch.
+Measure the supply voltage as follows within 12 seconds after the emer-
+gency operation switch is pressed.
+Is there any foreign matter that interferes If more than 12 seconds pass, turn OFF the power supply and turn it ON
+the rotation of the line flow fan? No again, then measure the voltage. *
+<Indoor electronic control P.C. board>
+1. Measure the voltage between CN211 (+) and (–).
+Yes 2. Measure the voltage between CN211 (+) and (–).
+* If more than 12 seconds pass after the emergency operation switch is
+pressed, the voltage measured at 2. above goes 0 V DC although the
+Remove the foreign matter and
+indoor P.C. board is normal.
+adjust the line flow fan.
+Does the voltage between CN211
+(+) and (–) on the indoor electronic
+Is there 325 V DC
+control P.C. board rise to the range of
+between CN211 (+) Replace the indoor fan motor.
+Yes 2 to 6 V DC within 12 seconds after Yes
+and (–) ?
+the emergency operation switch is
+pressed?
+No
+No
+Replace the indoor
+electronic control P.C. board.
+The indoor fan motor error has occurred, and the indoor fan repeats “12-second ON and 30-second OFF” 3 times, and then stops.
+Measure the voltage between CN211
+(+) and (–) while the fan motor is
+rotating.
+Is it unchanged holding Replace the indoor electronic
+0 or 15 V DC? No control P.C. board.
+(Changed)
+Yes
+(Unchanged)
+Replace the indoor fan motor.
+Indoor terminal
+P.C. board
+Indoor electronic
+control P.C. board LD201(M)
+Fuse (F11) R111
+Varistor LD201(T)
+(NR11)
+GND CN211
+OBH937 34
+
+B Check of remote controller and indoor electronic control P.C. board
+*Check if the remote controller is exclusive for this air conditioner.
+Press Off/On(stop/operate) button on the
+*1 Look at the image of the signal transmitting section of the
+remote controller.
+remote controller through the monitor of a digital camera
+or a camera phone. It is normal if the LED of the signal
+transmitting section lights up when the Off/On(stop/oper-
+ate) button on the remote controller is pressed. However,
+Is LCD display on the remote controller it may be difficult to see the illuminated LED of the signal
+Replace the batteries. (Refer to 10-1.4.)
+visible? No transmitting section with a smartphone camera.
+(Not clear)
+Yes *2 If the inverter fluorescent light is turned on when the room
+is cool, the unit may have difficulty receiving the signal
+from the remote controller or may not be able to operate
+Remove the batteries, then put them back
+with it; if the inverter fluorescent light is turned on when
+and press Reset button. (Refer to 10-1.4.)
+the room is warm, the unit may be able to operate with the
+Check if the unit operates with the remote
+remote controller.
+controller.
+Turn ON a radio to AM and press Off/On
+Does the unit operate with the remote
+(stop/operate) button on the remote
+controller? No
+controller. *1
+Yes
+OK
+Is noise heard from radio? Replace the remote controller.
+No
+Yes
+Stop the transmission of signal
+Is a signal transmitted from a remote between the different device and its
+controller of a different device? Yes remote controller.
+No
+Are there any fluorescent lights of
+• Reinstall the unit away from lights.
+inverter or rapid-start type within the
+Yes • Attach a filter on receiving part.
+range of 1 m? *2
+No
+Measure the voltage between receiver P.C. board connector CN301 No.2(+) and No.3(-)
+when the remote controller button is pressed.
+Replace the indoor electronic
+Is the voltage approximately 4 V DC - 5 V DC?
+Yes control P.C. board.
+No
+Replace the receiver P.C board .
+OBH937 35
+
+C Check of indoor P.C. board and indoor fan motor
+Turn OFF the power supply.
+Remove indoor fan motor connector CN211
+and vane motor connector CN151 from the Measure the resistance between
+Short circuit:
+indoor electronic control P.C. board and CN211 and of the indoor fan motor
+Replace the indoor fan motor.
+turn ON the power supply. connector.
+Does the unit operate with the remote
+Measure the resistance of the vane Short circuit:
+controller?
+motor coil. Replace the vane motor and the indoor
+Does Operation indicator lamp light up by Yes
+Refer to 10-5. electronic control P.C. board.
+pressing the emergency operation switch?
+No
+Replace the varistor (NR11)
+and fuse (F11). *3
+Yes
+Is the varistor (NR11)
+burnt and the fuse (F11)
+No
+blown?
+Turn OFF the power supply.
+Check both “parts side” and “pattern Be sure to check both the fuse
+side” of the indoor electronic control and the varistor in any case.
+P.C. board visually.
+Is the fuse (F11) blown
+only? No
+Yes
+*1. The fan motor connector’s lead wire is red, whereas
+is black.
+Measure the resistance between *2. Connect “+” of the mulitmeter to fan motor connector’s
+CN211 (+) and (-) of indoor fan lead wire, and “-” to lead wire, otherwise the
+motor connector. *1, *2 resistance cannot be measured properly.
+*3. Please replace the fuse after removing the indoor
+electronic control P.C. board from the electrical box.
+Replace the fuse (F11) and the
+Is the resistance 1MΩ or more?
+No indoor fan motor. *3
+Yes
+Replace the fuse (F11). *3
+Measure the resistance of resistor Is the resistance of resistor Replace the indoor electronic
+(R111) on the indoor electronic (R111) approximately 4 Ω? No control P.C. board and the
+control P.C. board. indoor fan motor.
+Yes
+Replace the indoor electronic control P.C. board.
+Indoor terminal
+P.C. board
+Indoor electronic
+control P.C. board LD201(M)
+Fuse (F11) R111
+Varistor LD201(T)
+(NR11)
+GND CN211
+OBH937 36
+
+D How to check miswiring and serial signal error
+MUZ Type Turn the main power supply
+OFF.
+Is there rated voltage in the power supply? Check the power supply.
+No
+Yes
+Check for incorrect indoor-outdoor connecting wiring.
+Was the indoor unit ever connected to
+Yes the Multi (MXZ) series and operated No
+(turned on)?
+The connection information to the Multi series is stored
+in the indoor unit. Refer to “Deleting the memorized
+abnormal condition” described in 10-2.1 to clear the error
+history. When the error history is being cleared, the con-
+nection information also will be initialized. The indoor
+unit will be compatible with a low-standby-power model
+after initialization.
+OK • Turn OFF inverter-controlled lighting equipment.
+• Turn OFF the power supply and then turn ON again.
+• Press the emergency operation switch.
+• Reinstall either the unit or the light
+Is serial signal error indicated away from each other.
+6 minutes later? No • Attach a filter on remote control
+receiving section of the indoor unit.
+Yes
+Turn the main power supply ON.
+Check for miswiring, broken wires, and loose
+wire connection between the main power
+Is there rated voltage between outdoor terminal block S1 and S2? supply and outdoor terminal block S1 and
+No
+Yes between the main power supply and outdoor
+terminal block S2.
+Wait for 2 or more minutes after the main power supply is turned on.
+Touch S2 and S3 with multimeter probes and start the emergency operation.
+When the emergency operation starts, does the rated voltage occur for Replace the indoor electronic
+2 seconds between indoor terminal block S2 and S3? No control P.C. board.
+Yes
+Does the left lamp of Operation indicator
+lamp on the indoor unit blink continuously
+Does the outdoor LED light up?
+6 minutes after the emergency operation No No
+starts? Yes
+Yes
+Confirm that the thermostat is OFF
+and wiring is not loose.
+Does the outdoor LED blink 6 times? Replace the outdoor inverter P.C. board. *1
+No
+Yes
+Does DC (6 V or more) occur between
+Replace the outdoor inverter P.C. board. *1
+indoor terminal block S2 and S3? No
+Yes
+Replace the indoor electronic
+control P.C. board. *1
+*1. Electric charge may remain immediately after the main power supply is turned OFF. Perform the procedure after 3 minutes.
+OBH937 37
+
+MXZ Type
+LED indication Turn OFF the power supply.
+for communication status
+Communication status is indicated
+by the LED. Is there rated voltage in Check the power
+the power supply? No supply.
+Unit status
+Blinking: normal communication
+Lit: abnormal communication or Yes
+not connected Turn ON the power supply.
+Pattern 1 and 2 is repeatedly displayed
+alternately. Each pattern is displayed for
+10 seconds. Is there rated voltage between
+N O T E : " i L n i d t" i c in a t t e h e a b ta n b o l r e m b a e l l c o o w m d m o u e n s i c n a o t t i on. o S u 2 t ? door terminal block S1 and No Check the wiring.
+Yes
+Outdoor control P.C. board Press EMERGENCY OPERATION switch once.
+LED1 LED2 LED3
+Does the upper lamp of OPERATION
+Blinking I < N C D o I n C fi A rm TO at R io n la m of p t h o e n p th o e w e in r d t o o o th r e u n in it d l o ig o h r t u u n p i ? t> No
+Pattern LED 1 LED 2 LED 3 Yes
+1 s U t n a i t t u A s U st n a i t t u B s Lit I p s o t o h r e c r o e n a ta n c y t , m o is r w w i i r r i e n g,
+2 U st n a i t t u C s U st n a i t t u D s Not lit Is serial signal error indicated 6 minutes later? No d in i d sc o o o n r/ n o e u c td ti o o o n r o f the Yes Correct them.
+3 U st n a i t t u E s Blinking Yes connecting wire?
+No
+· Turn OFF inverter-controlled lighting equipment.
+· Turn OFF the power supply and then turn ON again.
+· Press the emergency operation switch.
+Is serial signal · Reinstall either the unit or the light
+error indicated away from each other.
+6 minutes later? No · A re tt c a e c iv h i n a g f i s lt e e c r t o io n n r o e f m th o e te i n c d o o n o tr r o u l nit.
+Yes
+Turn OFF the power supply.
+Check once more if the indoor/outdoor
+connecting wire is not miswiring. *1 Miswiring may damage indoor electronic control
+Bridge the outdoor terminal block S2 and P.C. board during the operation.
+S3. *1 Be sure to confirm the wiring is correct before the
+operation starts.
+Turn ON the power supply.
+Does the LED on the outdoor control P.C.
+board repeat "3.6-second-OFF Replace the outdoor control P.C. board.
+and 0.8-second-ON quick blinking"? No *2
+(Lit or not lit)
+Yes *2 Be careful of the residual
+voltage of smoothing capacitor.
+Turn OFF the power supply.
+Remove the bridge between
+outdoor terminal block S2 and S3.
+Turn ON the power supply.
+Is there amplitude of 10 to 20 V DC No
+between outdoor terminal block S2
+and S3? <Confirmation of serial
+signal>
+Yes
+Is there any error of the
+Is there rated voltage between indoor/outdoor connecting wire, Replace the
+i < n C d o o n o f r i r t m er a m ti i o n n a l o b f l p o o ck w e S r 1 v a o n lt d a g S e 2 > ? No s in u t c e h rm a e s d t i h a e te d c a o m n a n g e e c t o io f n th , e p o w o i r re, Yes i c n o d n o n o e r c /o ti u n t g d o w o ir r e.
+contact to the terminal block?
+Yes
+No
+Replace the indoor electronic control P.C. board.
+Be sure to release the failure-mode
+recall function after checking.
+OBH937 38
+
+E Check of AIR PURIFYING power
+After performing the check, make sure to release the failure mode recall function.
+High voltage (approximately 5.8kV) is generated during
+Turn ON the power supply. AIR PURIFYING power operation.
+Pay careful attention and never touch the air purifying device
+and the high-voltage lead part.
+Does AIR PURIFYING lamp
+Replace the indoor electronic control P.C. board.
+blink 2-time with unit stopping? Yes
+No
+Make sure that the front panel is firmly closed.
+While pressing both Operation select button and TEMP button
+on the remote controller at the same time, press RESET button.
+First, release RESET button.
+Hold down the other two buttons for another 3 seconds.
+Make sure that the indicators on the LCD screen shown in the right
+figure are all displayed. Then release the buttons.
+Press Off/On (stop/operate) button.
+(the set temperature is displayed)
+And press PURIFIER button once with the remote controller
+headed towards the indoor unit. *1
+AIR PURIFYING operation is selected.
+The AIR PURIFYING power operation check mode is set.
+(Refer to 10-2.5.)
+*1 Regardless of normal or abnormal
+condition, a short beep is emitted
+once the signal is received.
+AIR PURIFYING power supply is normal.
+Does AIR PURIFYING lamp stay OFF, or Working of the interlock switch (Air purifying device)
+continuously blink? OFF due to uncomplete close of the front panel could cause
+Continuously blinking. 2-time blink.
+*2 Turn AIR PURIFYING power OFF and ON again.
+(For turning OFF AIR PURIFYING power, refer to 10-2.3.)
+(If it goes normal without turning OFF and ON, AIR PURIFYING lamp does not go OFF.)
+Remove the air purifying device, Abnormal discharge may occur due to much dirt on the air
+firmly close the front panel, and then perform purifying device, clean it.
+AIR PURIFYING power operation check. *2 After cleaning, make sure to attach the air purifying device
+Does AIR PURIFYING lamp stay OFF, or OFF since it is completely dry.
+continuously blink? If AIR PURIFYING power operation check is performed with
+the air purifying device wet, protection gets active and AIR
+Continuously blinking.
+PURIFYING lamp blinks continuously as well.
+Turn OFF the power supply, and check
+the interlock switch (Air purifying device). Firmly fix the interlock switch (Air purifying device).
+No
+Is it firmly fixed?
+Yes
+Work and Not-work the interlock switch
+(Air purifying device) using something like a screw
+driver, and measure the resistance between
+Replace the interlock switch (Air purifying device).
+CN1R1 and on the indoor electronic control No
+P.C. board. Does the interlock switch
+(Air purifying device) function?
+Yes
+Keep the interlock switch (Air purifying device)
+Not-work (close) using something like a screw
+driver.
+Turn ON the power supply. Is the voltage between Replace the indoor electronic control P.C. board.
+No
+CN1T1 (+) and (GND) on the electronic
+12.5 V DC is generated.
+control P.C. board) 0V with the unit stopping?
+(Refer to 10-7.)
+Yes
+Set the AIR PURIFYING power failure mode
+recall function. (Refer to 10-2.2)
+When AIR PURIFYING power turns Replace the indoor electronic control P.C. board,
+ON by pressing PURIFIER button once, is there after check of the wiring of CN1T1 on the indoor electronic
+No
+12.5 V DC between CN1T1 (+) and (GND)? control P.C. board.
+Yes
+Replace the air purifying device.
+OBH937 39
+
+F Electromagnetic noise enters into TV sets or radios
+Is the unit earthed? Earth the unit.
+No
+Yes
+Is the distance between the antennas
+Extend the distance between the antennas and
+and the indoor unit within 3 m, or is the
+the indoor unit, and/or the antennas and the out-
+distance between the antennas and the Yes
+door unit.
+outdoor unit within 3 m?
+No
+Is the distance between the TV sets or
+Extend the distance between the TV sets and/or
+radios and the indoor unit within 1 m, or
+radios and the indoor unit, or the TV sets or
+is the distance between the TV sets or Yes
+radios and the outdoor unit.
+radios and the outdoor unit within 3 m?
+No
+Are the antennas damaged?
+Is the coaxial cable damaged? Replace or repair the antenna.
+Is there any poor contact in the antenna Yes Replace or repair the coaxial cable.
+wiring?
+No
+Is the indoor/outdoor connecting wire of Extend the distance between the indoor/outdoor
+the air conditioner and the wiring of the connecting wire of the air conditioner and the
+Yes
+antennas close? wiring of the antennas.
+No
+Even if all of the above conditions are fulfilled, the electromagnetic noise may enter, depending on the electric field strength
+or the installation condition (combination of specific conditions such as antennas or wiring).
+Check the following before asking for service.
+1. Devices affected by the electromagnetic noise
+TV sets, radios (FM/AM broadcast, shortwave)
+2. Channel, frequency, broadcast station affected by the electromagnetic noise
+3. Channel, frequency, broadcast station unaffected by the electromagnetic noise
+4. Layout of:
+indoor/outdoor unit of the air conditioner, indoor/outdoor wiring, earth wire, antennas, wiring from antennas, receiver
+5. Electric field intensity of the broadcast station affected by the electromagnetic noise
+6. Presence or absence of amplifier such as booster
+7. Operation condition of air conditioner when the electromagnetic noise enters in
+1) Turn OFF the power supply once, and then turn ON the power supply. In this situation, check for the electromagnetic
+noise.
+2) Within 3 minutes after turning ON the power supply, press Off/On(stop/operate) button on the remote controller for
+power ON, and check for the electromagnetic noise.
+3) After a short time (3 minutes later after turning ON), the outdoor unit starts running. During operation, check for the
+electromagnetic noise.
+4) Press Off/On(stop/operate) button on the remote controller for power OFF, when the outdoor unit stops but the indoor/
+outdoor communication still runs on. In this situation, check for the electromagnetic noise.
+OBH937 40
+
+10-7. TEST POINT DIAGRAM AND VOLTAGE
+Indoor terminal P.C. board, Indoor electronic control P.C. board, Switch/buzzer P.C. board,
+Display P.C. board, Receiver P.C. board
+MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+Room temperature thermistor (RT11)
+Indoor coil thermistor (RT12, RT13)
+Temperature (°C)
+41
+)Ωk(
+ecnatsiseR
+Indoor terminal P.C.Board
+To disable “Auto restart function”
+cut the Jumper wire to JR77.
+Fuse
+(Refer to 8-3.)
+(F11)
+Indoor electronic control P.C. board
+Varistor
+(NR11)
+Timer short mode point
+(Refer to 8-1.)
+Indoor coil thermistor
+RT12, RT13 (CN112)
+Resistor (R111)
+Receiver P.C.Board
+Indoor fan motor
+Display P.C. board
+(CN211)
+(+)0 or 15 V DC
+(+)3-6 V DC
+15 V DC
+Switch/buzzer P.C. board (–) GND (high-
+voltage DC)
+325 V DC
+Vane motor Room temperature 5 V DC GND 12 V DC
+Emergency operation
+(CN151) thermistor RT11
+switch (E.O.SW) (SW1)
+(CN111)
+OBH937
+
+11 DISASSEMBLY INSTRUCTIONS
+<Detaching method of the terminal with locking mechanism>
+The terminal which has the locking mechanism can be detached as shown below.
+There are 2 types of the terminal with locking mechanism.
+The terminal without locking mechanism can be detached by pulling it out.
+Check the shape of the terminal before detaching.
+(1) Slide the sleeve and check if there is a locking lever or not. (2) The terminal with the connector shown below
+has the locking mechanism.
+Sleeve
+Slide the sleeve. Hold the sleeve, and
+Pull the terminal while pull out the terminal slowly.
+pushing the locking lever.
+Locking lever
+Connector
+11-1. MSZ-AY15VG MSZ-AY15VGK MSZ-AY15VGKP
+MSZ-AY20VG MSZ-AY20VGK MSZ-AY20VGKP
+: Indicates the visible parts in the photos/figures.
+NOTE: Turn OFF the power supply before disassembly. : Indicates the invisible parts in the photos/figures.
+OPERATING PROCEDURE PHOTOS/FIGURES
+1. Removing the panel Photo 1
+(1) Remove the horizontal vanes.
+Horizontal vanes Front panel A
+(2) Remove the screw caps of the panel. Remove the
+screws.
+(3) Unhook the lower part ( ) of the panel.
+(4) Hold the lower part of both ends of the panel and pull it
+slightly toward you, and then remove the panel by
+pushing it upward.
+Screws of the panel
+OBH937 42
+
+OPERATING PROCEDURE PHOTOS/FIGURES
+2. Removing the indoor electronic control P.C. Photo 2 Screw of the air purifying device
+board, receiver P.C. board, display P.C. board, (VGKP only) Wi-Fi interface (VGK/VGKP only)
+switch/buzzer P.C. board, Wi-Fi interface and air Screw of
+purifying device the electrical
+(1) Remove the panel (Refer to section 1) and the corner cover
+box.
+(2) Remove the screw of the V.A. clamp. Remove the V.A.
+clamp and the indoor/outdoor connecting wire. Screw of the
+(Photo 2) V.A. clamp
+(3) Remove the screw of the electrical cover, and then the
+electrical cover. (Photo 2)
+(4) Disconnect the following connector (Photo 3):
+<Indoor electronic control P.C. board>
+CN110 (Wi-Fi interface) (VGK/VGKP only)
+CN1T1 (Air purifying device) (VGKP only)
+(5) Remove the lead wire of the Wi-Fi interface from the
+hook of the display and receiver P.C. board holder.
+Remove the Wi-Fi interface.
+(6) Remove the fixing screw of the air purifying device.
+(7) Remove the air purifying device.
+Photo 3 Release this catch to
+(8) Disconnect the following connectors on the electronic
+Wi-Fi interface Earth wire to the remove the electronic
+control P.C. board:
+(VGK/VGKP only) heat exchanger control P.C. board.
+CN211 (Indoor fan motor)
+CN112 (Indoor coil thermistor)
+CN151 (Horizontal vane motor)
+CN10A (Switch/buzzer, display and receiver P.C. board) Indoor
+CN2T1 (Interlock switch (Air purifying device)) electronic control
+(VGKP only) P.C. board
+(9) Remove the display and receiver P.C. board holder.
+(Photo 3)
+(10) Unhook the catches, open the cover of the display and Fixing screw of
+receiver P.C. board holder. (Photo 5) the electrical box
+(11) Remove the receiver P.C. board, display P.C. board and
+switch/buzzer P.C. board. (Photo 6)
+(12) Remove the earth wire connected to the indoor elec-
+tronic control P.C. board from the electrical box.
+(Photo 3)
+Earth wire to the
+NOTE: MSZ-AY have locking mechanism.
+indoor electronic
+(13) Pull out the electronic control P.C. board from the elec-
+control P.C. board
+trical box.
+Display and receiver
+P.C. board holder
+Photo 4
+Room temperature
+thermistor (RT11)
+Be sure to install this thermistor in the proper direction.
+OBH937 43
+
+OPERATING PROCEDURE PHOTOS/FIGURES
+3. Removing the electrical box Photo 5
+(1) Remove the panel (Refer to section 1) and the corner
+box.
+(2) Remove the indoor/outdoor connecting wire, electrical Front cover of
+cover and earth wire connected to the indoor heat the display and
+exchanger from the electrical box. (Photo 2, 3) receiver P.C.
+(3) Remove the Wi-Fi interface, air purifying device, and board holder
+display and receiver P.C. board holder.
+(Refer to section 2)
+(4) Disconnect the following connectors on the electronic
+control P.C. board:
+CN211 (Fan motor)
+CN112 (Indoor coil thermistor)
+CN151 (Horizontal vane motor)
+(5) Remove the fixing screw of the electrical box. (Photo 3)
+(6) Unhook the catches of the electrical box, and pull out Catches
+the electrical box.
+Photo 6
+Switch/buzzer P.C. board
+4. Removing the nozzle assembly
+(1) Remove the panel (Refer to section 1) and the corner
+box.
+(2) Remove the V.A. clamp. (Photo 2)
+(3) Remove the electrical cover. (Photo 2)
+(4) Disconnect the following connector on the electronic
+control P.C. board:
+CN151 (Horizontal vane motor)
+(5) Pull out the drain hose from the nozzle assembly and
+remove the nozzle assembly.
+Display P.C. board Receiver P.C. board
+5. Removing the horizontal vane motor Photo 7
+(1) Remove the nozzle assembly (Refer to section 4).
+Screws of the horizontal
+(2) Remove the screw of the lead cover and remove the
+vane motor unit cover
+lead cover.
+(3) Remove the screws of the horizontal vane motor unit,
+and pull out the horizontal vane motor unit. Lead cover
+(4) Remove the screws of the horizontal vane motor unit
+cover.
+(5) Remove the horizontal vane motors from the horizontal
+vane motor unit.
+(6) Disconnect the connectors from the horizontal vane
+motor.
+Screws of the horizontal Screw of the
+vane motor unit lead cover
+OBH937 44
+
+OPERATING PROCEDURE PHOTOS/FIGURES
+6. Removing the indoor fan motor and the line flow Photo 8
+Catches of the water cover
+fan
+(1) Remove the panel (Refer to section 1) and the corner
+box.
+Motor band
+(2) Remove the display and receiver P.C. board holder, the
+electrical box (Refer to section 3) and the nozzle
+assembly (Refer to section 4).
+(3) Remove the screws fixing the motor bed. (Photo 8)
+(4) Loosen the screw fixing the line flow fan. (Photo 9)
+(5) Push the upper part of the water cover and unhook the
+catch.
+Screws of the
+(6) Pull the water cover to the right to remove it.
+motor bed
+(7) Remove the motor bed together with fan motor and
+motor band.
+(8) Release the hooks of the motor band. Remove the
+motor band. Pull out the indoor fan motor.
+(9) Remove the screws fixing the left side of the heat
+exchanger. (Photo 10)
+Photo 9
+(10) Lift the heat exchanger, and pull out the line flow fan to
+the lower-left.
+* When attaching the line flow fan, screw the line flow
+fan so 5 mm gap is provided between the right end of
+the line flow fan and the right wall of the air passage of
+the box (Figure 1).
+Figure 1
+Screw of the
+line flow fan
+Photo 10
+5 mm
+Screws of the
+left side of the
+heat exchanger
+OBH937 45
+
+Fixing the indoor coil thermistor
+* There are 2 forms of parts for fixing the indoor coil thermistor.
+When fixing the indoor coil thermistor to
+the clip-shape/holder-shape part, the
+Clip shape Holder shape lead wire should point down.
+About the
+same length
+Position and procedure for mounting the clip-shape part
+1. Set the indoor coil 2. Check the (marked) 3. Mount the clip-shape
+thermistor in the center mounting position. part.
+of the clip-shape part.
+NOTE:
+Take care to avoid loss and accidental falling of the clip-shape part inside the unit.
+Mount the clip-shape part on the marked position.
+Do not pull the lead wire when removing the indoor coil thermistor.
+HEAD OFFICE: TOKYO BUILDING., 2-7-3, MARUNOUCHI, CHIYODA-KU, TOKYO 100-8310, JAPAN
+© Copyright 2023 MITSUBISHI ELECTRIC CORPORATION
+Published: Aug. 2023. No. OBH937
+Made in Japan Specifications are subject to change without notice.
+46

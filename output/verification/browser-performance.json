@@ -1,0 +1,8 @@
+{
+  "walls": 200,
+  "rooms": 50,
+  "devices": 100,
+  "animationFrameMedianMs": 8.300000071525574,
+  "animationFrameP95Ms": 8.600000023841858,
+  "orbitInteractionMs": 151
+}
