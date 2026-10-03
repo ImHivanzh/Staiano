@@ -1,0 +1,45 @@
+{
+  "name": "staiano-hvac",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3015",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3015",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write src tests *.json *.md",
+    "format:check": "prettier --check src tests *.json *.md",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "catalog:update:cordivari": "tsx scripts/catalog-import/radiators.ts --cordivari",
+    "catalog:update:global": "tsx scripts/catalog-import/radiators.ts --global",
+    "catalog:update:ecoclima": "tsx scripts/catalog-import/ecoclima.ts"
+  },
+  "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
+    "@react-three/drei": "^10.7.0",
+    "@react-three/fiber": "^9.5.0",
+    "next": "16.3.8",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "three": "^0.183.0",
+    "zod": "^4.3.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/three": "^0.183.0",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "16.3.8",
+    "fake-indexeddb": "^6.2.0",
+    "prettier": "^3.7.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0"
+  }
+}

@@ -1,0 +1,95 @@
+VALVOLE DI
+VENTILAZIONE PER LA
+MANDATA DELL’ARIA
+Serie EVVMC - EVVMB
+Valvole di mandata costruite in acciaio verniciato di colore bianco, con
+cono centrale regolabile.
+CARATTERISTICHE
+Materiale: acciaio.
+Finitura EVVMC: verniciato bianco RAL 9010.
+Finitura EVVMB: verniciato bianco RAL 9016.
+Installazione: con viti non apparenti.
+IMPIEGO
+Montati a soffitto, direttamente a canale, per la mandata dell’aria in locali di servizio, bagni e negozi.
+NOMENCLATURA CODICE
+EVVMC Valvole di ventilazione per la mandata dell'aria verniciate bianco RAL 9010.
+EVVMB Valvole di ventilazione per la mandata dell'aria verniciate bianco RAL 9016.
+Grandezza: 80-100-125-150-160-200
+EVVMC 150
+DIMENSIONI
+Modello A (mm) B (mm) C (mm) D (mm) E (mm)
+EVVMC - EVVMB 80 116 80 38 105 79
+EVVMC - EVVMB 100 140 93 38 125 99
+EVVMC - EVVMB 125 166 112 45 150 124
+EVVMC - EVVMB 150 203 137 50 175 149
+EVVMC - EVVMB 160 210 148 50 186 159
+EVVMC - EVVMB 200 250 195 56 225 199
+PAG 1 - VALVOLE DI VENTILAZIONE PER LA MANDATA DELL’ARIA
+SERIE EVVMC - EVVMB - AGGIORNAMENTO 01/2024
+
+DATI DI FUNZIONAMENTO
+Apertura “S” Perdita di
+Modello m³/h dB(A)
+(mm) carico (Pa)
+Vk: velocità efficace (m/s)
+6 36 23
+m³/h: portata
+60 3 45 26
+Pa: perdite di carico in Pascal
+0 68 31
+L(m): lancio in metri calcolato
+9 45 28 con installazione a filo soffitto e
+EVVMC - EVVMB 80
+6 60 30 velocità terminale 0,25 m/s
+80
+3 76 34 dB(A): indice di rumorosità
+0 120 37
+100 12 80 35
+10 50 25
+100 5 90 28
+0 180 35
+EVVMC - EVVMB 100 10 70 28
+125
+5 140 34
+10 100 33
+150
+5 200 38
+6 38 21
+3 48 24
+130
+0 70 28
+-3 100 31
+EVVMC - EVVMB 125 6 55 27
+160 3 75 28
+0 110 34
+9 70 30
+190
+6 110 34
+5 46 22
+160 0 70 24
+-5 120 30
+5 70 25
+190 0 100 28
+-5 180 35
+EVVMC - EVVMB 150 / 160 10 55 24
+5 85 28
+220
+0 130 32
+-5 180 35
+10 70 27
+250 5 130 32
+0 180 35
+10 35 22
+0 65 32
+300
+-5 88 30
+-10 140 36
+EVVMC - EVVMB 200
+10 49 26
+350
+0 100 34
+10 55 28
+400
+0 120 35
+PAG 2 - VALVOLE DI VENTILAZIONE PER LA MANDATA DELL’ARIA
+SERIE EVVMC - EVVMB - AGGIORNAMENTO 01/2024

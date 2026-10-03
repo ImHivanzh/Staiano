@@ -1,0 +1,143 @@
+GRIGLIA DI RIPRESA A
+MAGLIA QUADRA 13x13
+mm CON FILTRO
+Serie EGQ-PUSH
+Griglia di ripresa a maglia quadra 13x13 mm da controsoffitto con doppia cornice ad apertura a cerniere e sistema
+push-pull per l’agevole alloggiamento e la sostituzione del filtro.
+CARATTERISTICHE
+Materiale: alluminio.
+Finitura: anodizzato naturale.
+Fissaggio: con viti su cornice interna.
+Filtro: classe COARSE (G2) spessore 12 mm.
+Apertura/chiusura: con sistema push-pull.
+IMPIEGO
+Griglia per la ripresa dell’aria esterna o in ambiente dove sia consigliata una pre-filtrazione di polvere.
+Perdita di carico iniziale inferiore a 40 Pa con velocità di 1,5 m/s sul filtro.
+INSTALLAZIONE
+L’installazione viene eseguita fissando il telaio esterno della griglia al muro mediante viti o, per applicazione su
+controsoffitti modulari 600x600, in appoggio alla struttura metallica al posto del pannello.
+ACCESSORI
+- EPZ plenum zincato;
+- EPI plenum isolato;
+A RICHIESTA
+Chiusura con vite o con calamite;
+verniciatura colore bianco RAL 9016 o altri colori RAL a scelta;
+dimensioni speciali;
+grigliato a maglia quadra 13x13 mm inclinata a 45°.
+NOMENCLATURA CODICE
+EGQ-PUSH: Griglia di ripresa a maglia 13x13mm con filtro
+Grandezza L x H
+L (mm) = 200-300-400-500-600-800-1000
+H (mm) = 200-300-400-500-600
+EGQ-PUSH 600 x 400
+PAG 1 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON
+FILTRO SERIE EGQ-PUSH - AGGIORNAMENTO 01/2024
+
+DIMENSIONI
+SEZIONE EFFICACE
+L
+H
+200 300 400 500 600 800 1000
+sezione efficace della griglia m²
+200 0,018 0,031 0,045 0,058 0,071 0,098 0,124
+300 0,031 0,054 0,078 0,101 0,124 0,170 0,217
+400 0,045 0,078 0,111 0,144 0,177 0,243 0,309
+500 0,058 0,101 0,144 0,187 0,230 0,315 0,401
+600 0,071 0,124 0,177 0,230 0,282 0,388 0,493
+DATI DI FUNZIONAMENTO
+V L
+H
+m/s 200 300 400 500 600 800 1000
+Velocità frontale
+portata m³/h
+sul filtro
+1,5 63 121 180 238 296 413 530
+200
+2 84 162 240 317 395 551 706
+1,5 121 234 346 458 571 795 1020
+300
+2 162 312 461 611 761 1060 1360
+1,5 180 346 512 679 845 1178 1510
+400
+2 240 461 683 905 1127 1570 2014
+1,5 238 458 679 899 1119 1560 2000
+500
+2 317 611 905 1199 1492 2080 2667
+1,5 296 571 845 1119 1394 1942 2491
+600
+2 395 761 1127 1492 1858 2590 3321
+m³/h: portata
+Pa: perdite di carico in Pascal
+dB(A): indice di rumorosità
+L: larghezza
+H: altezza
+Tutte le dimensioni sono espresse in mm.
+Si consiglia la velocità dell’aria sul filtro di 1,5 m/s per contenere le perdite di carico e mantenere l’efficienza di
+filtrazione;
+i dati di portata in tabella si riferiscono alla griglia con il filtro.
+PAG 2 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO
+SERIE EGQ-PUSH - AGGIORNAMENTO 01/2024
+
+DATI DI FUNZIONAMENTO VERSIONE DA
+CONTROSOFFITTO A QUADROTTI
+dimensioni sezione sezione Velocità
+portata
+esterno efficace efficace frontale
+modello aria
+cornice della griglia del filtro sul filtro
+mm m² m² m/s m³/h
+1,5 1180
+EGQ-PUSH 595x595 0,229 0,218
+2 1570
+INDICE DI RUMOROSITA’
+V
+dB(A)
+m/s
+1,5 <20
+2 20/25
+PERDITA DI CARICO (Pa)
+V
+Pa
+m/s
+1,5 25/30
+2 45/50
+PAG 3 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO
+SERIE EGQ-PUSH - AGGIORNAMENTO 01/2024
+
+PLENUM
+stacco superiore stacco laterale
+modello
+n° n° E F
+L1 x H1 P1 Ø d P2 Ø d
+stacchi stacchi
+200x200 200 1 198 300 1 198 80 12
+300x200 200 1 198 300 1 198 80 12
+Tutte le misure sono
+400x200 200 1 198 300 1 198 80 12
+espresse in mm.
+500x200 200 1 198 300 1 198 80 12
+600x200 200 2 198 300 2 198 80 12
+800x200 200 2 198 300 2 198 80 12
+1000x200 200 2 198 300 2 198 80 12
+300x300 200 1 248 350 1 248 80 12
+400x300 200 1 248 350 1 248 80 12
+500x300 200 1 248 350 1 248 80 12
+600x300 200 2 198 350 2 248 80 12
+800x300 200 2 248 350 2 248 80 12
+1000x300 200 2 248 350 2 248 80 12
+400x400 200 1 298 350 1 298 80 12
+500x400 200 1 298 350 1 298 80 12
+600x400 200 2 198 350 2 248 80 12
+800x400 200 2 298 350 2 298 80 12
+1000x400 200 2 298 400 2 298 80 12
+PLENUM PER GRIGLIA VERSIONE DA CONTROSOFFITTO A QUADROTTI
+modello stacco laterale
+E F
+L1 x H1 P2 n° stacchi Ø d
+560x560 300 1 250 80 12
+PAG 4 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO
+SERIE EGQ-PUSH - AGGIORNAMENTO 01/2024
+
+INSTALLAZIONE
+PAG 5 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO
+SERIE EGQ-PUSH - AGGIORNAMENTO 01/2024

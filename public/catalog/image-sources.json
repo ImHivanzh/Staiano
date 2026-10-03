@@ -1,0 +1,44 @@
+{
+  "EDLS": {
+    "path": "/catalog/edls.png",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/4eb/cbe/005/thumb__550_550_0_0_fill.png",
+    "sha256": "82ed76f0c2db378ecaf8864a1472565fd25f421cde1d2e07915916b128b5693f",
+    "retrievedAt": "2026-10-03T01:01:52.661867+00:00"
+  },
+  "EVVMC": {
+    "path": "/catalog/evvmc.png",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/856/8e6/99c/thumb__550_550_0_0_fill.png",
+    "sha256": "ddfbbd9c08bd02e6161a638c7e13bc363072f78068c58e5eb28c192e11d76718",
+    "retrievedAt": "2026-10-03T01:01:53.130317+00:00"
+  },
+  "EBLF": {
+    "path": "/catalog/eblf.png",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/f84/12f/16c/thumb__550_550_0_0_fill.png",
+    "sha256": "82ebfc6c2d7ba41592868e86065acad771d871a4f38e6236d7b198ac610ae8f6",
+    "retrievedAt": "2026-10-03T01:01:53.500171+00:00"
+  },
+  "EGQ": {
+    "path": "/catalog/egq.jpg",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/3d1/ab3/3b7/thumb__550_550_0_0_fill.jpg",
+    "sha256": "09bbccf5eb3a4ddbab0b8a658fe523deb23beb986af59bc77dcd57dce3b3ccf8",
+    "retrievedAt": "2026-10-03T01:01:53.797271+00:00"
+  },
+  "ETA": {
+    "path": "/catalog/eta.jpg",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/3ea/72f/a90/thumb__550_550_0_0_fill.jpg",
+    "sha256": "10cd7d8a87921569a111b6f3373e5975f27d13a28b7a80f1c868bbc84deb6785",
+    "retrievedAt": "2026-10-03T01:01:54.020257+00:00"
+  },
+  "EGS": {
+    "path": "/catalog/egs.png",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/24e/a44/107/thumb__550_550_0_0_fill.png",
+    "sha256": "21eeb9dab4a19a3316781adaa1111a30866a54d2f936d7f6f4717d3c0b932f18",
+    "retrievedAt": "2026-10-03T01:01:54.498049+00:00"
+  },
+  "EADD": {
+    "path": "/catalog/eadd.jpg",
+    "sourceUrl": "https://www.ecoclima.com/storage/app/resized/3c1/9b1/63c/thumb__550_550_0_0_fill.jpg",
+    "sha256": "649322c2db30bec4e551976cef648c25c147858ffc2669cf959b995145802f57",
+    "retrievedAt": "2026-10-03T01:01:54.770592+00:00"
+  }
+}

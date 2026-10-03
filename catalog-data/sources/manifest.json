@@ -1,0 +1,82 @@
+[
+  {
+    "name": "global-vip-certificate",
+    "sourceUrl": "https://www.globalradiatori.it/download/Prodotti/cert_res_vip_ita.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:33:56.590690+00:00",
+    "sha256": "5f167d5a32e0d4768e2245b5f2c5247075c167fe75cc78095eb23d3173e96470",
+    "pageCount": 2
+  },
+  {
+    "name": "global-oscar-certificate",
+    "sourceUrl": "https://www.globalradiatori.it/download/Prodotti/cert_res_oscar_ita.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:33:56.861568+00:00",
+    "sha256": "107655b96815b7054b6c4f979d0396c9d9e20ff04270eee2254eec8fadbdb4b5",
+    "pageCount": 4
+  },
+  {
+    "name": "global-listino-2026",
+    "sourceUrl": "https://www.globalradiatori.it/download/listino/ListinoIT_giugno26.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:00.061190+00:00",
+    "sha256": "ae26b7deb3e4143734bac5731b5503b00d039356a28c1a9f1c5e9f761462af2c",
+    "pageCount": 32
+  },
+  {
+    "name": "global-vip-technical",
+    "sourceUrl": "https://www.globalradiatori.it/uploads/blog/00231_17116211450.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:01.663756+00:00",
+    "sha256": "e01738dc7f01745a0dfe85371ede715cab62a7e16b97bcdf2b735922df559842",
+    "pageCount": 4
+  },
+  {
+    "name": "global-oscar-technical",
+    "sourceUrl": "https://www.globalradiatori.it/uploads/blog/00232_17447968780.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:03.662348+00:00",
+    "sha256": "a9b9de36d02d246298ceea1315565f100b8ef82c5eb0dd6e21d5482f85a01fac",
+    "pageCount": 6
+  },
+  {
+    "name": "cordivari-ardesia-2",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-2-colonne_R25-2025.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:05.776301+00:00",
+    "sha256": "e0ccd69c926daddc0eb6a860f99a948b63ef9aae5f7770854a6ae59a68c16d12",
+    "pageCount": 4
+  },
+  {
+    "name": "cordivari-ardesia-3",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-3-colonne_05-2025.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:07.865219+00:00",
+    "sha256": "ad81d5b2c626eebb10dc6ec7b7fdfa35dafbd8dca1f3fabbf6766b261fac6663",
+    "pageCount": 4
+  },
+  {
+    "name": "cordivari-ardesia-4",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-4-colonne_05-2025.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:09.993309+00:00",
+    "sha256": "79ba2a220ce18b04895e6fbefc307fde0192c1ab20a56c98368250b8621fa2fc",
+    "pageCount": 4
+  },
+  {
+    "name": "cordivari-ardesia-5",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-5-colonne_05-2025.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:12.150853+00:00",
+    "sha256": "6857de58843b680d1b7fc7580e21e1145143b1139c6f5e880e99831985b4ba47",
+    "pageCount": 4
+  },
+  {
+    "name": "cordivari-ardesia-6",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-6-colonne_05-2025.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T00:34:14.302954+00:00",
+    "sha256": "ed71d7c17578e14a29e8c8066aacdddebb1bd6a572adc7f9682ead30f3c0df46",
+    "pageCount": 4
+  }
+]

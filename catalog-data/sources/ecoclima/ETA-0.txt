@@ -1,0 +1,79 @@
+GRIGLIE DI TRANSITO IN
+ALLUMINIO
+Serie ETA
+Griglie con particolare profilo antiluce in alluminio con passo 20 mm per consentire un’ottimale circolazione
+dell’aria da un locale all’altro.
+CARATTERISTICHE
+Materiale: alluminio.
+Finitura: anodizzato naturale.
+Installazione: fissaggio con viti frontali.
+Massima grandezza: 1000 mm x 1000 mm.
+IMPIEGO
+Montata su pareti divisorie o porte, consente una ottimale circolazione dell’aria e garantisce un equilibrio di
+pressione in locali adiacenti di edifici climatizzati con sistemi centralizzati ad aria.
+MODELLI
+ETA1: griglia completa di controcornice;
+ETA2: griglia senza controcornice.
+NOMENCLATURA CODICE
+ETA1: griglia completa di controcornice;
+ETA2: griglia senza controcornice.
+Dimensioni L x H
+300x100
+400x100
+500x100
+600x100
+ETA1 600 x 400
+300x160
+400x160
+500x160
+600x160
+300x200
+400x200
+500x200
+600x200
+300x300
+400x300
+500x300
+600x300
+600x400
+600x600
+PPAAGG 11 -- GGRRIIGGLLIIEE DDII TTRRAANNSSIITTOO IINN AALLLLUUMMIINNIIOO
+SSEERRIIEE EETTAA -- AAGGGGIIOORRNNAAMMEENNTTOO 0011//22002233
+
+DIMENSIONI
+DATI DI FUNZIONAMENTO
+sezione portata m³/h
+dimensioni LxH efficace Vk (m/s)
+m² 0,8 1 1,5
+300x100 0,007 20 25 37 Vk: velocità efficace (m/s)
+m³/h: portata
+400x100 0,010 29 36 54
+Pa: perdite di carico in Pascal
+500x100 0,012 35 43 65
+dB(A): indice di rumorosità
+600x100 0,015 43 54 80
+300x160 0,015 43 54 80
+L: larghezza
+400x160 0,020 57 72 108
+H: altezza
+500x160 0,025 72 90 135 Tutte le dimensioni sono espresse in mm
+600x160 0,030 86 108 162
+300x200 0,019 54 68 103
+400x200 0,026 75 93 140
+500x200 0,033 95 118 178
+600x200 0,040 115 144 216
+300x300 0,031 89 112 167
+400x300 0,043 123 154 232
+500x300 0,054 155 195 292
+600x300 0,065 187 234 350
+600x400 0,090 260 325 485
+600x600 0,139 400 500 750
+Pa 7 10 20
+dB(A) 25/30 30/35 40/45
+DETTAGLIO FORI
+PAG 2 - GRIGLIE DI TRANSITO IN ALLUMINIO
+SERIE ETA - AGGIORNAMENTO 01/2023
+
+INSTALLAZIONE
+PAG 3 - GRIGLIE DI TRANSITO IN ALLUMINIO
+SERIE ETA - AGGIORNAMENTO 01/2023

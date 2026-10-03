@@ -1,0 +1,327 @@
+{
+  "source": {
+    "filename": "EVVMC-2bb5f55f-0.pdf",
+    "label": "Scheda tecnica EVVMC - EVVMB rev1-2024 \n                                                         Download",
+    "sourceUrl": "https://www.ecoclima.com/attach/Scheda%20tecnica%20EVVMC%20-%20EVVMB%20rev1-2024/attachment-translations/scheda-tecnica-evvmc-evvmb-rev1-2024_it.pdf",
+    "retrievedAt": "2026-10-03T00:50:36.316944+00:00",
+    "sha256": "dbb60155c748325de10b263df50d374eade56a7c2992cece5486800913e22cb4",
+    "pageCount": 2
+  },
+  "points": [
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 60.0,
+      "openingMm": 6.0,
+      "pressureDropPa": 36.0,
+      "noiseDbA": 23.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 60.0,
+      "openingMm": 3.0,
+      "pressureDropPa": 45.0,
+      "noiseDbA": 26.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 60.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 68.0,
+      "noiseDbA": 31.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 80.0,
+      "openingMm": 9.0,
+      "pressureDropPa": 45.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 80.0,
+      "openingMm": 6.0,
+      "pressureDropPa": 60.0,
+      "noiseDbA": 30.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 80.0,
+      "openingMm": 3.0,
+      "pressureDropPa": 76.0,
+      "noiseDbA": 34.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 80.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 120.0,
+      "noiseDbA": 37.0
+    },
+    {
+      "model": "EVVMC - EVVMB 80",
+      "airflowM3h": 100.0,
+      "openingMm": 12.0,
+      "pressureDropPa": 80.0,
+      "noiseDbA": 35.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 100.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 50.0,
+      "noiseDbA": 25.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 100.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 90.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 100.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 180.0,
+      "noiseDbA": 35.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 125.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 70.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 125.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 140.0,
+      "noiseDbA": 34.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 150.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 100.0,
+      "noiseDbA": 33.0
+    },
+    {
+      "model": "EVVMC - EVVMB 100",
+      "airflowM3h": 150.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 200.0,
+      "noiseDbA": 38.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 130.0,
+      "openingMm": 6.0,
+      "pressureDropPa": 38.0,
+      "noiseDbA": 21.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 130.0,
+      "openingMm": 3.0,
+      "pressureDropPa": 48.0,
+      "noiseDbA": 24.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 130.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 70.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 130.0,
+      "openingMm": -3.0,
+      "pressureDropPa": 100.0,
+      "noiseDbA": 31.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 160.0,
+      "openingMm": 6.0,
+      "pressureDropPa": 55.0,
+      "noiseDbA": 27.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 160.0,
+      "openingMm": 3.0,
+      "pressureDropPa": 75.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 160.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 110.0,
+      "noiseDbA": 34.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 190.0,
+      "openingMm": 9.0,
+      "pressureDropPa": 70.0,
+      "noiseDbA": 30.0
+    },
+    {
+      "model": "EVVMC - EVVMB 125",
+      "airflowM3h": 190.0,
+      "openingMm": 6.0,
+      "pressureDropPa": 110.0,
+      "noiseDbA": 34.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 160.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 46.0,
+      "noiseDbA": 22.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 160.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 70.0,
+      "noiseDbA": 24.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 160.0,
+      "openingMm": -5.0,
+      "pressureDropPa": 120.0,
+      "noiseDbA": 30.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 190.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 70.0,
+      "noiseDbA": 25.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 190.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 100.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 190.0,
+      "openingMm": -5.0,
+      "pressureDropPa": 180.0,
+      "noiseDbA": 35.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 220.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 55.0,
+      "noiseDbA": 24.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 220.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 85.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 220.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 130.0,
+      "noiseDbA": 32.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 220.0,
+      "openingMm": -5.0,
+      "pressureDropPa": 180.0,
+      "noiseDbA": 35.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 250.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 70.0,
+      "noiseDbA": 27.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 250.0,
+      "openingMm": 5.0,
+      "pressureDropPa": 130.0,
+      "noiseDbA": 32.0
+    },
+    {
+      "model": "EVVMC - EVVMB 150 / 160",
+      "airflowM3h": 250.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 180.0,
+      "noiseDbA": 35.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 300.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 35.0,
+      "noiseDbA": 22.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 300.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 65.0,
+      "noiseDbA": 32.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 300.0,
+      "openingMm": -5.0,
+      "pressureDropPa": 88.0,
+      "noiseDbA": 30.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 300.0,
+      "openingMm": -10.0,
+      "pressureDropPa": 140.0,
+      "noiseDbA": 36.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 350.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 49.0,
+      "noiseDbA": 26.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 350.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 100.0,
+      "noiseDbA": 34.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 400.0,
+      "openingMm": 10.0,
+      "pressureDropPa": 55.0,
+      "noiseDbA": 28.0
+    },
+    {
+      "model": "EVVMC - EVVMB 200",
+      "airflowM3h": 400.0,
+      "openingMm": 0.0,
+      "pressureDropPa": 120.0,
+      "noiseDbA": 35.0
+    }
+  ]
+}

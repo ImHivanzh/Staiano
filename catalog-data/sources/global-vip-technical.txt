@@ -1,0 +1,293 @@
+vip
+2/41
+TI
+-
+4202
+ozraM
+A C C E S S O R I
+A001 mensola diritta zincata
+TAPPO CIECO O RIDUZIONE 1”
+A005 verniciata
+A006 zincata
+A020 verniciata con guarnizione
+A237 appendino bianco in silicone
+MENSOLA A SQUADRA
+A238 appendino cromato
+A003 da avvitare zincata
+A004 bianca plasti cata KIT RIDUZIONI CON GUARNIZIONI
+IN SILICONE E VALVOLA ORIENTABILE
+A043 3/8” per radiatori da 200/D a A009 nipples 1”
+800 mm - bianche o cromate
+A046 1/2” per radiatori da 200/D a
+A025 mensola con tassello 800 mm - bianche, cromate
+ad espansione 170 mm o colori speciali
+bianca o colori speciali A048 3/4” per radiatori da 200/D a
+(coppia) 800 mm - bianche o cromate R A D I A T O R I I N A L L U M I N I O
+PORTASALVIETTE A013 valvola a galleggiante
+A201 48 cm bianco sfogo aria 1”
+A202 48 cm cromato
+A207 32 cm bianco
+A208 32 cm cromato
+A027 mensole universali FIANCATA VALVOLA MANUALE
+bianche - blister (coppia) LATERALE SFOGO ARIA
+BIANCA A012 1/8”
+KIT RIDUZIONI CON GUARNIZIONI IN A039 1/4”
+A071 mod. 350 SILICONE E VALVOLA CON VOLANTINO A040 3/8”
+A072 mod. 500 A190 3/8” per radiatori da 200/D A050 1/2”
+A073 mod. 600
+a 800 mm, bianche
+A074 mod. 700
+A192 1/2” per radiatori da 200/D
+A075 mod. 800
+a 800 mm, bianche
+A029 mensole a squadra
+bianche - blister (coppia)
+A041 valvola manuale sfogo
+aria 1/2”
+A010 bomboletta
+spray bianco
+MENSOLA o colori speciali
+A PARETE GUARNIZIONE
+A007 per tappi mm 1,50
+A033 800 mm A008 per nipples mm 1,00 A042 valvola automatica sfogo
+A034 700 mm A021 in silicone per tappi aria 1/2” cromata
+A035 600 mm o riduzioni
+A036 500 mm
+A018 liquido
+A037 350 mm
+Cillit HS 23
+Combi
+A038 valvola manuale sfogo
+aria 1/2” cromata
+A079 leva per chiavi di montaggio
+A017 pennarello bianco A080 chiave di montaggio mm 500
+A015 staffa bianca a pavimento RAL 9010 A081 chiave di montaggio mm 800 A019 chiave per tappi
+cod. 10 cod. 11 cod. 12 cod. 01 cod. 05 cod. 06 cod. 07 cod. 08 cod. 09 cod. 14
+bianco bianco sablé bianco avorio beige quarzo grigio scuro grigio argento ruggine nero
+opaco lucido opaco opaco opaco opaco opaco opaco
+RAL 9010 RAL 9016 mat RAL 1013 metallizzato metallizzato metallizzato metallizzato metallizzato mat
+colore standard colori speciali vedi Cartella Colori
+I colori si intendono indicativi. Per ragioni tecniche di stampa non è possibile riprodurre fedelmente le
+vernici utilizzate. La tinta dei prodotti forniti può differire da quella riportata nel presente catalogo.
+GLOBAL di Fardelli Ottorino & C. s.r.l.
+24060 ROGNO (BG) ITALIA • via Rondinera, 51
+tel. ++39 035977111 • fax ++39 035977110
+UNI
+EN ISO
+14001:2015
+globalradiatori.it • info@globalradiatori.it
+
+dimensioni mm Ø peso a contenuto potenze termiche EN 442 esponente coef ciente
+modello A B C D attacchi vuoto acqua ∆T 50°C ∆T 30°C n Km
+Kg circa litri
+altezza totale lunghezza profondità interasse Watt Watt
+VIP 800 890 80 95 800 1” 2,19 0,59 180 91 1,32365 1,01441
+VIP 700 790 80 95 700 1” 2,05 0,53 161 82 1,32283 0,91188
+VIP 600 690 80 95 600 1” 1,66 0,49 142 72 1,32201 0,80797
+VIP 500 590 80 95 500 1” 1,62 0,39 123 63 1,32118 0,70243
+vip VIP 350 440 80 95 350 1” 1,13 0,35 94 48 1,31996 0,54042
+* 1 Watt = 0,863 Kcal/h
+La potenza termica dei radiatori GLOBAL è quella risultante dalle prove effettuate dal Dipartimento
+di Energetica presso la Facoltà di Ingegneria del Politecnico di Milano secondo la Norma EN 442. 05
+EN 442
+ESEMPIO DI CALCOLO PER ∆T DIVERSI
+Per calcolare la potenza termica (P) di un radiatore per valori di ∆T diversi da 50°C si deve utilizzare
+l’equazione caratteristica: P=Km · ∆Tn
+Ad esempio per il modello 600 a ∆T = 60°C (cid:128) P= 0,80797 · 601,32201 = 181 Watt
+VALORI DI POTENZE TERMICHE CON ∆T DIVERSI
+modello ∆T 20°C ∆T 25°C ∆T 30°C ∆T 35°C ∆T 40°C ∆T 45°C ∆T 50°C ∆T 55°C ∆T 60°C
+VIP 800 53 72 91 112 134 156 180 204 229
+VIP 700 48 64 82 101 120 140 161 183 205
+VIP 600 42 57 72 89 106 124 142 161 181
+VIP 500 37 49 63 77 92 107 123 140 157
+VIP 350 28 38 48 59 70 82 94 107 120
+Nella posa dei radiatori si ottiene la resa termica prevista osservando le distanze di seguito precisate:
+≥ cm 3 dalla parete
+≥ cm 10 dal pavimento
+≥ cm 10 dalla mensola o sotto nestra
+Per evitare che le dilatazioni termiche dell’impianto provochino rumorosità in corrispondenza dei corpi scaldanti si consiglia
+l’impiego di mensole plasti cate per il sostegno dei radiatori (artt. A004, A025, A027 o A029 del nostro catalogo).
+≥ 3 ≥ 10
+ISTRUZIONI PER LA CORRETTA INSTALLAZIONE, USO E MANUTENZIONE
+✓ I radiatori modello VIP trovano utile impiego in tutti gli impianti ad acqua calda e vapore  no a
+110° C con pressione di esercizio  no a 1600 K Pascal - 16 Bar.
+✓ Possono essere installati indifferentemente negli impianti con tubazioni in ferro, rame o
+materiali termoplastici.
+✓ Al  ne di preservare gli impianti da processi di incrostazione e corrosione si deve controllare il
+pH dell’acqua (preferibilmente tra 6,5 e 8) e introdurre un inibitore passivante tipo Cillit-Hs 23 Al
+o similari nella quantità consigliata dal produttore.
+✓ Si devono installare valvole di sfogo aria automatiche o manuali su ogni radiatore.
+BASSA TEMPERATURA I radiatori Global si possono installare in abbinamento a caldaie normali o a condensazione, a ✓ Si eviti di chiudere completamente le valvole di intercettazione dei radiatori allo scopo di
+metano, gasolio, legna o pellet, con funzionamento sia normale sia a bassa temperatura o con pompe di calore. permettere all’eventuale gas che potrebbe esserci all’interno degli stessi di fuoriuscire
+RESA TERMICA ELEVATA Garantita dalle prove effettuate secondo la Norma EN 442 dal Politecnico di Milano. L’elevata tramite la valvola automatica sfogo aria obbligatoria in ogni impianto di riscaldamento,
+resa termica consente l’installazione di radiatori ad ingombro contenuto ed un ef ciente utilizzo anche negli impianti a evitando così possibili sovrapressioni che potrebbero danneggiare i radiatori.
+bassa temperatura.
+✓ Qualora si voglia escludere una o più batterie dal circuito si deve montare su ciascuna
+RISPARMIO ENERGETICO E MASSIMO CONFORT Con i radiatori Global la regolazione della temperatura è facile e
+poco costosa. In poco tempo, secondo le esigenze personali, si ottiene la temperatura ideale in ogni ambiente. batteria una valvola automatica di sfogo aria. ≥ 10
+✓ Per una buona conservazione della verniciatura è necessario che i radiatori, prima e dopo
+LUNGHISSIMA DURATA Il materiale impiegato garantisce la massima resistenza come dimostrato dall’impiego
+nell’industria automobilistica ed aerospaziale. Il trattamento con doppia verniciatura a bagno anaforesi e successivamente l’installazione, non vengano tenuti in ambienti molto umidi, all’interno di docce, nelle saune,
+con polveri epossipoliestere assicura una super cie perfetta nel tempo e protetta dalle ossidazioni. nei bagni turchi, in prossimità di piscine, etc... Un’eventuale distacco di vernice in un punto
+MINOR TEMPO DI INSTALLAZIONE La leggerezza dell’alluminio consente maggior facilità e rapidità d’installazione. del radiatore potrebbe favorire la formazione dell’ossido di alluminio e far staccare comple-
+QUALITÀ CERTIFICATA L’ICIM ha certi cato nel 1994 (Norma ISO 9001) il Sistema di Qualità Aziendale GLOBAL e nel tamente la vernice.
+2001 (Norma ISO 14001) il Sistema di Gestione Ambientale. Non utilizzare umidi catori in terracotta porosa.
+✓ Per la pulizia esterna del radiatore è necessario evitare l’uso di prodotti abrasivi o chimica-
+mente corrosivi/aggressivi di qualsiasi natura: consigliamo acqua e detergenti neutri.
+Compiere l’operazione a radiatore freddo per conservare l’originaria brillantezza della vernice.
+✓ Non posizionare sui radiatori pesi e/o oggetti. Non adibire i radiatori ad usi impropri che
+GLOBAL garantisce i propri radiatori per 10 anni dalla data di produzione esulino dalla loro natura di corpi scaldanti (es: uso panca/appoggio, uso scala, per addos-
+sarvi mobili o oggetti).
+(stampigliata sulla parte laterale di ogni elemento) La garanzia è operante alla condizione che l’installazione e l’impianto a cui il prodotto è collegato siano eseguiti da
+La garanzia convenzionale prestata consiste e dà diritto esclusivamente alla personale abilitato/quali cato ed a regola d’arte e nel rispetto delle norme e prescrizioni di settore vigenti; nonchè alla
+sostituzione gratuita del radiatore che, a causa di vizi originari consistenti in condizione che siano altresì rispettate le avvertenze ed istruzioni per la corretta installazione, uso e manutenzione del
+difetti del materiale o di fabbricazione, si riveli inservibile all’uso a cui ordinaria- prodotto indicate nella documentazione tecnica al paragrafo istruzioni per la corretta installazione, uso e manutenzione,
+mente è destinato. Il radiatore in sostituzione viene consegnato franco rivendi- consultabili e scaricabili anche nella sezione INFO TECNICHE dal sito globalradiatori.it. La garanzia è regolata dalle ul-
+tore che ha effettuato la vendita al cliente  nale od al suo installatore. teriori condizioni riportate nel catalogo tecnico e nella sezione GARANZIA CONVENZIONALE del sito globalradiatori.it FORTE LEGGERO ELEGANTE
+
+dimensioni mm Ø peso a contenuto potenze termiche EN 442 esponente coef ciente
+modello A B C D attacchi vuoto acqua ∆T 50°C ∆T 30°C n Km
+Kg circa litri
+altezza totale lunghezza profondità interasse Watt Watt
+VIP 800 890 80 95 800 1” 2,19 0,59 180 91 1,32365 1,01441
+VIP 700 790 80 95 700 1” 2,05 0,53 161 82 1,32283 0,91188
+VIP 600 690 80 95 600 1” 1,66 0,49 142 72 1,32201 0,80797
+VIP 500 590 80 95 500 1” 1,62 0,39 123 63 1,32118 0,70243
+vip VIP 350 440 80 95 350 1” 1,13 0,35 94 48 1,31996 0,54042
+* 1 Watt = 0,863 Kcal/h
+La potenza termica dei radiatori GLOBAL è quella risultante dalle prove effettuate dal Dipartimento
+di Energetica presso la Facoltà di Ingegneria del Politecnico di Milano secondo la Norma EN 442. 05
+EN 442
+ESEMPIO DI CALCOLO PER ∆T DIVERSI
+Per calcolare la potenza termica (P) di un radiatore per valori di ∆T diversi da 50°C si deve utilizzare
+l’equazione caratteristica: P=Km · ∆Tn
+Ad esempio per il modello 600 a ∆T = 60°C (cid:128) P= 0,80797 · 601,32201 = 181 Watt
+VALORI DI POTENZE TERMICHE CON ∆T DIVERSI
+modello ∆T 20°C ∆T 25°C ∆T 30°C ∆T 35°C ∆T 40°C ∆T 45°C ∆T 50°C ∆T 55°C ∆T 60°C
+VIP 800 53 72 91 112 134 156 180 204 229
+VIP 700 48 64 82 101 120 140 161 183 205
+VIP 600 42 57 72 89 106 124 142 161 181
+VIP 500 37 49 63 77 92 107 123 140 157
+VIP 350 28 38 48 59 70 82 94 107 120
+Nella posa dei radiatori si ottiene la resa termica prevista osservando le distanze di seguito precisate:
+≥ cm 3 dalla parete
+≥ cm 10 dal pavimento
+≥ cm 10 dalla mensola o sotto nestra
+Per evitare che le dilatazioni termiche dell’impianto provochino rumorosità in corrispondenza dei corpi scaldanti si consiglia
+l’impiego di mensole plasti cate per il sostegno dei radiatori (artt. A004, A025, A027 o A029 del nostro catalogo).
+≥ 3 ≥ 10
+ISTRUZIONI PER LA CORRETTA INSTALLAZIONE, USO E MANUTENZIONE
+✓ I radiatori modello VIP trovano utile impiego in tutti gli impianti ad acqua calda e vapore  no a
+110° C con pressione di esercizio  no a 1600 K Pascal - 16 Bar.
+✓ Possono essere installati indifferentemente negli impianti con tubazioni in ferro, rame o
+materiali termoplastici.
+✓ Al  ne di preservare gli impianti da processi di incrostazione e corrosione si deve controllare il
+pH dell’acqua (preferibilmente tra 6,5 e 8) e introdurre un inibitore passivante tipo Cillit-Hs 23 Al
+o similari nella quantità consigliata dal produttore.
+✓ Si devono installare valvole di sfogo aria automatiche o manuali su ogni radiatore.
+BASSA TEMPERATURA I radiatori Global si possono installare in abbinamento a caldaie normali o a condensazione, a ✓ Si eviti di chiudere completamente le valvole di intercettazione dei radiatori allo scopo di
+metano, gasolio, legna o pellet, con funzionamento sia normale sia a bassa temperatura o con pompe di calore. permettere all’eventuale gas che potrebbe esserci all’interno degli stessi di fuoriuscire
+RESA TERMICA ELEVATA Garantita dalle prove effettuate secondo la Norma EN 442 dal Politecnico di Milano. L’elevata tramite la valvola automatica sfogo aria obbligatoria in ogni impianto di riscaldamento,
+resa termica consente l’installazione di radiatori ad ingombro contenuto ed un ef ciente utilizzo anche negli impianti a evitando così possibili sovrapressioni che potrebbero danneggiare i radiatori.
+bassa temperatura.
+✓ Qualora si voglia escludere una o più batterie dal circuito si deve montare su ciascuna
+RISPARMIO ENERGETICO E MASSIMO CONFORT Con i radiatori Global la regolazione della temperatura è facile e
+poco costosa. In poco tempo, secondo le esigenze personali, si ottiene la temperatura ideale in ogni ambiente. batteria una valvola automatica di sfogo aria. ≥ 10
+✓ Per una buona conservazione della verniciatura è necessario che i radiatori, prima e dopo
+LUNGHISSIMA DURATA Il materiale impiegato garantisce la massima resistenza come dimostrato dall’impiego
+nell’industria automobilistica ed aerospaziale. Il trattamento con doppia verniciatura a bagno anaforesi e successivamente l’installazione, non vengano tenuti in ambienti molto umidi, all’interno di docce, nelle saune,
+con polveri epossipoliestere assicura una super cie perfetta nel tempo e protetta dalle ossidazioni. nei bagni turchi, in prossimità di piscine, etc... Un’eventuale distacco di vernice in un punto
+MINOR TEMPO DI INSTALLAZIONE La leggerezza dell’alluminio consente maggior facilità e rapidità d’installazione. del radiatore potrebbe favorire la formazione dell’ossido di alluminio e far staccare comple-
+QUALITÀ CERTIFICATA L’ICIM ha certi cato nel 1994 (Norma ISO 9001) il Sistema di Qualità Aziendale GLOBAL e nel tamente la vernice.
+2001 (Norma ISO 14001) il Sistema di Gestione Ambientale. Non utilizzare umidi catori in terracotta porosa.
+✓ Per la pulizia esterna del radiatore è necessario evitare l’uso di prodotti abrasivi o chimica-
+mente corrosivi/aggressivi di qualsiasi natura: consigliamo acqua e detergenti neutri.
+Compiere l’operazione a radiatore freddo per conservare l’originaria brillantezza della vernice.
+✓ Non posizionare sui radiatori pesi e/o oggetti. Non adibire i radiatori ad usi impropri che
+GLOBAL garantisce i propri radiatori per 10 anni dalla data di produzione esulino dalla loro natura di corpi scaldanti (es: uso panca/appoggio, uso scala, per addos-
+sarvi mobili o oggetti).
+(stampigliata sulla parte laterale di ogni elemento) La garanzia è operante alla condizione che l’installazione e l’impianto a cui il prodotto è collegato siano eseguiti da
+La garanzia convenzionale prestata consiste e dà diritto esclusivamente alla personale abilitato/quali cato ed a regola d’arte e nel rispetto delle norme e prescrizioni di settore vigenti; nonchè alla
+sostituzione gratuita del radiatore che, a causa di vizi originari consistenti in condizione che siano altresì rispettate le avvertenze ed istruzioni per la corretta installazione, uso e manutenzione del
+difetti del materiale o di fabbricazione, si riveli inservibile all’uso a cui ordinaria- prodotto indicate nella documentazione tecnica al paragrafo istruzioni per la corretta installazione, uso e manutenzione,
+mente è destinato. Il radiatore in sostituzione viene consegnato franco rivendi- consultabili e scaricabili anche nella sezione INFO TECNICHE dal sito globalradiatori.it. La garanzia è regolata dalle ul-
+tore che ha effettuato la vendita al cliente  nale od al suo installatore. teriori condizioni riportate nel catalogo tecnico e nella sezione GARANZIA CONVENZIONALE del sito globalradiatori.it FORTE LEGGERO ELEGANTE
+
+vip
+2/41
+TI
+-
+4202
+ozraM
+A C C E S S O R I
+A001 mensola diritta zincata
+TAPPO CIECO O RIDUZIONE 1”
+A005 verniciata
+A006 zincata
+A020 verniciata con guarnizione
+A237 appendino bianco in silicone
+MENSOLA A SQUADRA
+A238 appendino cromato
+A003 da avvitare zincata
+A004 bianca plasti cata KIT RIDUZIONI CON GUARNIZIONI
+IN SILICONE E VALVOLA ORIENTABILE
+A043 3/8” per radiatori da 200/D a A009 nipples 1”
+800 mm - bianche o cromate
+A046 1/2” per radiatori da 200/D a
+A025 mensola con tassello 800 mm - bianche, cromate
+ad espansione 170 mm o colori speciali
+bianca o colori speciali A048 3/4” per radiatori da 200/D a
+(coppia) 800 mm - bianche o cromate R A D I A T O R I I N A L L U M I N I O
+PORTASALVIETTE A013 valvola a galleggiante
+A201 48 cm bianco sfogo aria 1”
+A202 48 cm cromato
+A207 32 cm bianco
+A208 32 cm cromato
+A027 mensole universali FIANCATA VALVOLA MANUALE
+bianche - blister (coppia) LATERALE SFOGO ARIA
+BIANCA A012 1/8”
+KIT RIDUZIONI CON GUARNIZIONI IN A039 1/4”
+A071 mod. 350 SILICONE E VALVOLA CON VOLANTINO A040 3/8”
+A072 mod. 500 A190 3/8” per radiatori da 200/D A050 1/2”
+A073 mod. 600
+a 800 mm, bianche
+A074 mod. 700
+A192 1/2” per radiatori da 200/D
+A075 mod. 800
+a 800 mm, bianche
+A029 mensole a squadra
+bianche - blister (coppia)
+A041 valvola manuale sfogo
+aria 1/2”
+A010 bomboletta
+spray bianco
+MENSOLA o colori speciali
+A PARETE GUARNIZIONE
+A007 per tappi mm 1,50
+A033 800 mm A008 per nipples mm 1,00 A042 valvola automatica sfogo
+A034 700 mm A021 in silicone per tappi aria 1/2” cromata
+A035 600 mm o riduzioni
+A036 500 mm
+A018 liquido
+A037 350 mm
+Cillit HS 23
+Combi
+A038 valvola manuale sfogo
+aria 1/2” cromata
+A079 leva per chiavi di montaggio
+A017 pennarello bianco A080 chiave di montaggio mm 500
+A015 staffa bianca a pavimento RAL 9010 A081 chiave di montaggio mm 800 A019 chiave per tappi
+cod. 10 cod. 11 cod. 12 cod. 01 cod. 05 cod. 06 cod. 07 cod. 08 cod. 09 cod. 14
+bianco bianco sablé bianco avorio beige quarzo grigio scuro grigio argento ruggine nero
+opaco lucido opaco opaco opaco opaco opaco opaco
+RAL 9010 RAL 9016 mat RAL 1013 metallizzato metallizzato metallizzato metallizzato metallizzato mat
+colore standard colori speciali vedi Cartella Colori
+I colori si intendono indicativi. Per ragioni tecniche di stampa non è possibile riprodurre fedelmente le
+vernici utilizzate. La tinta dei prodotti forniti può differire da quella riportata nel presente catalogo.
+GLOBAL di Fardelli Ottorino & C. s.r.l.
+24060 ROGNO (BG) ITALIA • via Rondinera, 51
+tel. ++39 035977111 • fax ++39 035977110
+UNI
+EN ISO
+14001:2015
+globalradiatori.it • info@globalradiatori.it
