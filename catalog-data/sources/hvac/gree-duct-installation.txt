@@ -1,0 +1,1997 @@
+Owner's Manual
+Original Instructions
+Air Conditioners
+DC Inverter U-match Series Duct Type Unit
+Models:
+Indoor Unit Outdoor Unit
+GUD35P1/A-S GUD35PS1/A-S GUD35W1/NhA-S
+GUD50P1/A-S GUD50PS1/A-S GUD50W1/NhA-S
+GUD71PH1/A-S GUD71PHS1/A-S GUD71W1/NhA-S
+GUD85PH1/A-S GUD85PHS1/A-S GUD85W1/NhA-S
+GUD100PH1/A-S GUD100PHS1/A-S GUD100W1/NhA-S GUD100W1/NhA-X
+GUD125PH1/A-S GUD125PHS1/A-S GUD125W1/NhA-S GUD125W1/NhA-X
+GUD140PH1/A-S GUD140PHS1/A-S GUD140W1/NhA-S GUD140W1/NhA-X
+GUD160PH1/A-S GUD160PHS1/A-S GUD160W1/NhA-X
+
+To Users
+Thank you for selecting Gree product. Please read this instruction manual
+carefully before installing and using the product, so as to master and correctly use
+the product. In order to guide you to correctly install and use our product and
+achieve expected operating effect, we hereby instruct as below:
+(1) This appliance can be used by children aged from 8 years and above and
+persons with reduced physical, sensory or mental capabilities or lack of
+experience and knowledge if they have been given supervision or
+instruction concerning use of the appliance in a safe way and understand
+the hazards involved. Children shall not play with the appliance. Cleaning
+and user maintenance shall not be made by children without supervision.
+(2) In order to ensure reliability of product, the product may consume some
+power under stand-by status for maintaining normal communication of
+system and preheating refrigerant and lubricant. If the product is not to be
+used for long, cut off the power supply; please energize and preheat the
+unit in advance before reusing it.
+(3) Please properly select the model according to actual using environment,
+otherwise it may impact the using convenience.
+(4) If the product needs to be installed, moved or maintained, please contact
+our designated dealer or local service center for professional support.
+Users should not disassemble or maintain the unit by themselves,
+otherwise it may cause relative damage, and our company will bear no
+responsibilities.
+(5) All the illustrations and information in the instruction manual are only for
+reference. In order to make the product better, we will continuously
+conduct improvement and innovation. If there is adjustment in the product,
+please subject to actual product.
+(6) If the supply cord is damaged, it must be replaced by the manufacturer, its
+service agent or similarly qualified persons in order to avoid a hazard.
+
+Exception Clauses
+Manufacturer will bear no responsibilities when personal injury or property loss
+is caused by the following reasons:
+(1) Damage the product due to improper use or misuse of the product.
+(2) Alter, change, maintain or use the product with other equipment without
+abiding by the instruction manual of manufacturer.
+(3) After verification, the defect of product is directly caused by corrosive gas.
+(4) After verification, defects are due to improper operation during
+transportation of product.
+(5) Operate, repair, maintain the unit without abiding by instruction manual or
+related regulations.
+(6) After verification, the problem or dispute is caused by the quality
+specification or performance of parts and components that produced by
+other manufacturers.
+(7) The damage is caused by natural calamities, bad using environment or
+force majeure.
+
+Contents
+1 Safety Notice (Please be sure to abide them) ................. 1
+2 Installation .......................................................................... 5
+2.1 Installation Preparation ........................................................... 5
+2.2 Unit Installation...................................................................... 14
+2.3 Electrical Installation ............................................................. 34
+2.4 Check after Installation .......................................................... 45
+2.5 Product Operating Range ..................................................... 45
+2.6 Test Running ......................................................................... 45
+3 Product Introduction ....................................................... 47
+3.1 Overall Layout ....................................................................... 47
+3.2 Standard Accessories ........................................................... 48
+4 Installation of Controller ................................................. 49
+5 Maintenance ..................................................................... 49
+5.1 Failures Not Caused by Faults of the AC .............................. 49
+5.2 Error Code ............................................................................ 52
+5.3 Unit Maintenance .................................................................. 55
+5.4 Notice on Maintenance ......................................................... 56
+5.5 After-sales Services .............................................................. 63
+This marking indicates that this product should not be disposed with
+other household wastes throughout the EU. To prevent possible harm
+to the environment or human health from uncontrolled waste disposal,
+recycle it responsibly to promote the sustainable reuse of material
+resources. To return your used device, please use the return and collection systems
+or contact the retailer where the product was purchased. They can take this product
+for environmental safe recycling.
+
+DC Inverter U-match Series Duct Type Unit
+1 Safety Notice (Please be sure to abide them)
+SPECIAL WARNING:
+(1) Be sure to comply with national gas regulations.
+(2) Do not pierce or burn.
+(3) Do not use means to accelerate the defrosting process or to clean, other
+than those recommended by the manufacturer.
+(4) Be aware that refrigerants may not contain an odor.
+(5) Appliance shall be installed, operated and stored in a room with a floor
+area larger than ―X‖ m2 (―X‖ see section 2.1.1).
+(6) The appliance shall be stored in a room without continuously operating
+ignition sources (for example: open flames, an operating gas appliance or
+an operating electric heater).
+PROHIBITED: This sign indicates that the items must be prohibited.
+Improper operation may cause severe damage or death to people.
+WARNING: If not abide them strictly, it may cause severe damage to the
+unit or the people.
+NOTE: If not abide them strictly, it may cause slight or medium damage to
+the unit or the people.
+OBSERVED: This sign indicates that the items must be observed.
+Improper operation may cause damage to people or property.
+WARNING:
+This product can’t be installed at corrosive, inflammable or explosive
+environment or the place with special requirements, such as kitchen. Otherwise, it
+will affect the normal operation or shorten the service life of the unit, or even cause
+fire hazard or serious injury. As for the above special places, please adopt special
+air conditioner with anti-corrosive or anti-explosion function.
+1
+
+DC Inverter U-match Series Duct Type Unit
+Please read this operating manual carefully before operating the unit.
+The air conditioner is charged with inflammable refrigerant R32 (GWP:
+675).
+Before using the air conditioner, please read the instruction manual.
+Before installing the air conditioner, please read the instruction manual.
+Before repairing the air conditioner, please read the instruction manual.
+The figures in this manual may be different with the material objects,
+please refer to the material objects for reference.
+PROHIBITED!
+(1) The air conditioner should be grounded to avoid electric shock. Do not connect
+the ground wire to gas pipe, water pipe, lightning arrester or telephone wire.
+(2) The appliance shall be stored in a well-ventilated area where the room size
+corresponds to the room area as specified for operation.
+(3) The appliance shall be stored in a room without continuously operating open
+flames (for example an operating gas appliance) and ignition sources (for
+example an operating electric heater).
+(4) According to federal/state/local laws and regulations, all packages and
+transportation materials, including nails, metal or wooden parts, and plastic
+packing material, must be treated in a safe way.
+WARNING!
+(1) Please install according to this instruction manual. Installation must be
+performed in accordance with the requirement of NEC and CEC by authorized
+personnel only.
+(2) Any person who is involved with working on or breaking into a refrigerant
+circuit should hold a current valid certificate from an industry-accredited
+assessment authority, which authorises their competence to handle
+refrigerants safely in accordance with an industry recognised assessment
+specification.
+(3) Servicing shall only be performed as recommended by the equipment
+manufacturer. Maintenance and repair requiring the assistance of other skilled
+personnel shall be carried out under the supervision of the person competent
+in the use of flammable refrigerants.
+(4) The appliance shall be installed in accordance with national wiring regulations.
+(5) The fixed wires connecting to the appliance must be configured with all-pole
+disconnection device under voltage grade III according to wiring rules.
+2
+
+DC Inverter U-match Series Duct Type Unit
+WARNING!
+(6) Air conditioner should be stored with protective measures against mechanical
+damage caused by accident.
+(7) If the installation space for air conditioner pipe is too small, adopt a protective
+measure to prevent the pipe from physical damage.
+(8) During installation, use the specialized accessories and components,
+otherwise water leakage, electric shock or fire hazard may occur.
+(9) Please install the air conditioner in a secure place that can withstand the
+weight of air conditioner. Insecure installation may cause the air conditioner
+falling down and lead to injury.
+(10) Be sure to adopt independent power circuit. If the power cord is damaged, it
+must be repaired by the manufacturer, service agent or other professional
+agents.
+(11) The air conditioner can be cleaned only after it is turned off and
+power-disconnected, otherwise electric shock may occur.
+(12) The air conditioner is not intended to be cleaned or maintained by children
+without supervision.
+(13) Do not alter the setting of pressure sensor or other protective devices. If the
+protective devices are short-circuited or changed against rules, fire hazard or
+even explosion may occur.
+(14) Do not operate the air conditioner with wet hands. Do not wash or sprinkle
+water on the air conditioner, otherwise malfunction or electric shock will occur.
+(15) Do not dry the filter with naked flame or an air blower; otherwise the filter will
+be out of shape.
+(16) If the unit is to be installed in a small space, please adopt protective measures
+to prevent the concentration of refrigerant from exceeding the allowable safety
+limit; excessive refrigerant leakage may lead to explosion.
+(17) When installing or re-installing the air conditioner, please keep the refrigerant
+circuit away from substances other than the specified refrigerant, such as air.
+Any presence of foreign substances will cause abnormal pressure change or
+even explosion, resulting in injury.
+(18) Only professionals are allowed to carry on daily maintenance.
+(19) Before contacting any wire, make sure power is cut off.
+(20) Do not let any inflammable objects near the unit.
+(21) Do not use organic solvent to clean the air conditioner.
+(22) If you need to replace a component, please ask a professional to repair with a
+component supplied by the original manufacturer so as to ensure the unit’s
+quality.
+(23) Improper operation may get the unit broken, hit by electric shock or cause fire.
+3
+
+DC Inverter U-match Series Duct Type Unit
+WARNING!
+(24) Do not make the air conditioner wet or electric shock may be lead, ensure that
+the air conditioner will not be cleaned by water rinsing under any
+circumstance.
+(25) When you do not connect the duct, you need to provide an extra protective net
+to avoid touching the basic insulation.
+NOTES!
+(1) Do not put a finger or other objects into the air inlet or air return grill.
+(2) Please adopt safety protection measures before touching the refrigerant pipe;
+otherwise your hands may be hurt.
+(3) Please arrange the drain pipe according to the instruction manual.
+(4) Never stop the air conditioner by directly cutting off the power.
+(5) Please select the proper copper pipe according to the requirement for pipe
+thickness.
+(6) Indoor unit can only be installed indoors while outdoor unit can be installed
+either indoors or outdoors. Never install the air conditioner in the following
+places:
+1) Places with oil smoke or volatile liquid: plastic parts may deteriorate and fall
+off or even cause water leakage.
+2) Places with corrosive gas: copper pipe or the welding parts may be
+corroded and cause refrigerant leakage.
+(7) Adopt proper measures to protect the outdoor unit from small animals because
+they may damage the electric components and cause malfunction of the air
+conditioner.
+(8) Before cleaning, please make sure the unit is stopped. Cut the circuit breaker
+and remove the power socket, otherwise, electric shock may occur.
+(9) Do not wash the air conditioner with water, otherwise fire hazard or electric
+shock may occur.
+(10) When cleaning the filter, please be careful of your steps. If you need to work
+high above the ground, please be extremely careful.
+OBSERVED!
+(1) If wired control is to be used, it should be connected first before powering up
+the unit, otherwise the wired control may not be able to use.
+(2) When installing the indoor unit, keep it away from television, wireless waves,
+and fluorescent.
+(3) Only use soft dry cloth or slightly wet cloth with neutral detergent to clean the
+casing of the air conditioner.
+(4) Before operating the unit under low temperature, connect it to power for 8
+hours. If it is stopped for a short time, for example, one night, do not cut off the
+power (This is to protect the compressor).
+4
+
+DC Inverter U-match Series Duct Type Unit
+2 Installation
+2.1 Installation Preparation
+2.1.1 Notice on Installation
+(1) Notice on Refrigerant Concentration before Installation.
+This air conditioner uses R32 refrigerant. The construction area for installation,
+operation and storage of the air conditioner must be larger than the minimum
+construction area. The minimum area for installation is determined by:
+1) Refrigerant charging quantity for the entire system (ex-factory
+charging quantity + additional charging quantity).
+2) Checking out in the applicable tables:
+A. For indoor unit, confirm the model of indoor unit and check the
+corresponding table.
+B. For outdoor unit that is installed or placed indoors, select the
+corresponding table according to the height of the room.
+Height of the room Select the applicable table
+<1.8m Floor standing type
+≥1.8m Wall mounted type
+3) Refer to the following table to check out the minimum construction
+area.
+Ceiling type Wall mounted type Floor standing type
+Weight Weight Weight
+Area (m²) Area (m)² Area (m)²
+(kg) (kg) (kg)
+<1.224 — <1.224 — <1.224 —
+1.224 0.956 1.224 1.43 1.224 12.9
+1.4 1.25 1.4 1.87 1.4 16.8
+1.6 1.63 1.6 2.44 1.6 22.0
+1.8 2.07 1.8 3.09 1.8 27.8
+2.0 2.55 2.0 3.81 2.0 34.3
+2.2 3.09 2.2 4.61 2.2 41.5
+2.4 3.68 2.4 5.49 2.4 49.4
+2.6 4.31 2.6 6.44 2.6 58.0
+2.8 5.00 2.8 7.47 2.8 67.3
+3.0 5.74 3.0 8.58 3.0 77.2
+5
+
+DC Inverter U-match Series Duct Type Unit
+Ceiling type Wall mounted type Floor standing type
+Weight Weight Weight
+Area (m²) Area (m)² Area (m)²
+(kg) (kg) (kg)
+3.2 6.54 3.2 9.76 3.2 87.9
+3.4 7.38 3.4 11.0 3.4 99.2
+3.6 8.27 3.6 12.4 3.6 111
+3.8 9.22 3.8 13.8 3.8 124
+4.0 10.2 4.0 15.3 4.0 137
+4.2 11.3 4.2 16.8 4.2 151
+4.4 12.4 4.4 18.5 4.4 166
+4.6 13.5 4.6 20.2 4.6 182
+4.8 14.7 4.8 22.0 4.8 198
+5.0 16.0 5.0 23.8 5.0 215
+5.2 17.3 5.2 25.8 5.2 232
+5.4 18.6 5.4 27.8 5.4 250
+5.6 20.0 5.6 29.9 5.6 269
+5.8 21.5 5.8 32.1 5.8 289
+6.0 23.0 6.0 34.3 6.0 309
+6.2 24.5 6.2 36.6 6.2 330
+6.4 26.1 6.4 39.1 6.4 351
+6.6 27.8 6.6 41.5 6.6 374
+6.8 29.5 6.8 44.1 6.8 397
+7.0 31.3 7.0 46.7 7.0 420
+7.2 33.1 7.2 49.4 7.2 445
+7.4 34.9 7.4 52.2 7.4 470
+7.6 36.9 7.6 55.1 7.6 496
+7.8 38.8 7.8 58.0 7.8 522
+8.0 40.8 8.0 61.0 8.0 549
+(2) When installing an outdoor unit with single or double fans, hold the handle
+and then lift it up slowly (Do not touch the condenser with your hand or
+other objects). If you hold only one side of the casing, the casing may be
+pulled out of shape, so please hold the base of the unit as well. During
+installation, be sure to use the components specified in the instruction
+manual.
+6
+
+DC Inverter U-match Series Duct Type Unit
+(3) Please use the charging machine specialized for R32 refrigerant before
+charging, keep the refrigerant tank in an upright position. After charging,
+stick a label on the air conditioner saying no excessive charging.
+(4) The following tools will be used: 1) Liquid-level gauge; 2) Screwdriver; 3)
+Electric driven rotary hammer; 4) Drill; 5) Pipe expander; 6) Torque
+wrench; 7) Open-end wrench; 8) Pipe cutter; 9) Leak detector; 10)
+Vacuum pump; 11) Pressure gauge; 12) Universal meter; 13) Hexagon
+wrench; 14) Tapeline.
+2.1.2 Selection of Installation Location
+WARNING!
+(1) If the outdoor unit will be exposed in strong wind, it must be securely located,
+otherwise it may fall down.
+(2) Install the air conditioner at a place where the inclination is less than 5°.
+(3) Do not install the unit at a place with direct sunlight.
+(4) Do not install the unit at a place with leakage of inflammable gas.
+Selection of Installation Location for Indoor Unit (Select a location
+pursuant to the following condition).
+(1) Air inlet and outlet of the indoor unit should be away from obstacles to
+make sure the unit’s air flow can reach the entire room. Do not install the
+unit in a kitchen or a laundry.
+(2) Install the unit in a room without naked flame, fire source or the risk of
+getting the refrigerant on fire.
+(3) Select a location that can withstand 4 times the unit weight without
+increasing operating noise and vibration.
+(4) The installation location must be level.
+(5) The indoor piping length and wiring length should be within the allowable
+range.
+(6) Select a place that can easily drain condensate and connect to the drain
+system of the air conditioner.
+(7) If hoisting screw bolts are to be used, check whether the installation
+location is safe enough. If not safe, reinforce the location before
+installation.
+7
+
+DC Inverter U-match Series Duct Type Unit
+(8) Indoor unit, power cord, connecting wires and communication cords
+should be at least 1m from television and radio. This is to prevent image
+interference or noise (Even at a distance of 1m, a very strong electric
+wave may still generate noise).
+Selection of Installation Location for Outdoor Unit (Select a location
+pursuant to the following condition).
+(1) Noise and air flow produced by the outdoor unit will not disturb the
+neighbors.
+(2) Select a location that is safe and away from animals and plants. If not,
+please add safety fences to protect the unit.
+(3) Install at a place with good ventilation. Make sure the outdoor unit stays at
+a well-ventilated place with no obstacles nearby that may obstruct the air
+inlet and outlet.
+(4) The installation location should be able to withstand the weight and
+vibration of outdoor unit and allow the installation to be carried out safely.
+(5) Avoid installing at a place with leakage of inflammable gas, oil smoke or
+corrosive gas.
+(6) Keep it away from strong wind because strong wind will affect the outdoor
+fan and lead to insufficient air flow volume and thus affecting the unit’s
+performance.
+(7) Install the outdoor unit at a place that is convenient for it to be connected
+to the indoor unit.
+(8) Away from any object that may get the air conditioner generating noise.
+(9) Install the outdoor unit at a place where condensate can be easily
+drained.
+2.1.3 Unit Dimension
+WARNING!
+(1) Install the indoor unit in a location which can withstand a load of at least five
+times the weight of the main unit and which will not amplify sound or vibration.
+(2) If the installation location is not strong enough, the indoor unit may fall and
+cause injuries.
+(3) If the job is done with the panel frame only, there is a risk that the unit will
+come loose. Please take care.
+8
+
+DC Inverter U-match Series Duct Type Unit
+(1) Indoor Unit
+GUD35P1/A-S,GUD35PS1/A-S,GUD50P1/A-S,GUD50PS1/A-S,
+GUD140PH1/A-S,GUD140PHS1/A-S, GUD160PH1/A-S, GUD160PHS1/A-S.
+GUD71PH1/A-S,GUD71PHS1/A-S,GUD85PH1/A-S,GUD85PHS1/A-S
+GUD100PH1/A-S,GUD100PHS1/A-S,GUD125PH1/A-S,GUD125PHS1/A-S.
+Unit: mm
+Dimensions
+A B C D E F
+Model
+GUD35P1/A-S
+760 415 700 200 450 486
+GUD35PS1/A-S
+GUD50P1/A-S
+1060 415 1000 200 450 486
+GUD50PS1/A-S
+GUD71PH1/A-S
+942 590 900 260 655 692
+GUD71PHS1/A-S
+9
+
+DC Inverter U-match Series Duct Type Unit
+Dimensions
+A B C D E F
+Model
+GUD85PH1/A-S
+942 590 900 260 655 692
+GUD85PHS1/A-S
+GUD100PH1/A-S
+1381 585 1340 260 655 697
+GUD100PHS1/A-S
+GUD125PH1/A-S
+1381 585 1340 260 655 697
+GUD125PHS1/A-S
+GUD140PH1/A-S
+1440 500 1400 300 700 754
+GUD140PHS1/A-S
+GUD160PH1/A-S
+1440 500 1400 300 700 754
+GUD160PHS1/A-S
+NOTE!
+Drilling of ceiling opening and installation of air conditioner must be performed by
+professionals!
+(2) Outdoor Unit
+GUD35W1/NhA-S,GUD50W1/NhA-S,GUD71W1/NhA-S, GUD85W1/NhA-S,
+GUD100W1/NhA-S,GUD100W1/NhA-X,GUD125W1/NhA-S,
+GUD125W1/NhA-X, GUD140W1/NhA-S, GUD140W1/NhA-X,
+GUD160W1/NhA-X
+10
+
+DC Inverter U-match Series Duct Type Unit
+Unit: mm
+Dimensions
+A B C D E F G
+Model
+GUD35W1/NhA-S 732 330 553 455 310 675 285
+GUD50W1/NhA-S 802 350 555 512 331 745 300
+GUD71W1/NhA-S 958 402 660 570 371 889 340
+GUD85W1/NhA-S 958 402 660 570 371 889 340
+GUD100W1/NhA-S 1020 427 820 635 396 940 370
+GUD100W1/NhA-X 1020 427 820 635 396 940 370
+GUD125W1/NhA-S 1020 427 820 635 396 940 370
+GUD125W1/NhA-X 1020 427 820 635 396 940 370
+GUD140W1/NhA-S 1020 427 820 635 396 940 370
+GUD140W1/NhA-X 1020 427 820 635 396 940 370
+GUD160W1/NhA-X 1070 427 960 755 396 990 370
+2.1.4 Diagram of Unit Installation Space and Location
+(1) Diagram of installation space and location for outdoor unit (Notice: for best
+performance of the outdoor unit, make sure its installation space
+conforms to the following installation dimensions).
+1) When one outdoor unit is to be installed.
+(mm)
+A~E H H H
+b d
+a b c d e
+B — — ≥100 — — —
+A,B,C, — ≥300 ≥100 ≥100 — —
+B,E — — ≥100 — — ≥1000
+11
+
+DC Inverter U-match Series Duct Type Unit
+(mm)
+A~E H H H
+b d
+a b c d e
+A,B,C,E — ≥300 ≥150 ≥150 — ≥1000
+D — — — — ≥1000 —
+D,E — — — — ≥1000 ≥1000
+H <H H >H — ≥100 — ≥1000 —
+b d d
+B,D
+H >H H <H — ≥100 — ≥1000 —
+b d d
+H ≤1/2H — ≥250 — ≥2000 ≥1000
+b
+H <H 1/2H<H ≤H — ≥250 — ≥2000 ≥1000
+b d b
+H >H Prohibited
+b
+B,D,E
+H ≤1/2H — ≥100 — ≥2000 ≥1000
+d
+H >H 1/2H<H ≤H — ≥200 — ≥2000 ≥1000
+b d d
+H >H Prohibited
+d
+2) When two or more outdoor units are to be installed side by side.
+Unit: mm
+(mm)
+A~E H H H
+b d
+a b c d e
+A,B,C — ≥300 ≥300 ≥1000 — —
+A,B,C,E — ≥300 ≥300 ≥1000 — ≥1000
+D — — — — ≥2000 —
+D,E — — — — ≥2000 ≥1000
+H <H H >H — ≥300 — ≥2000 —
+b d d
+B,D H ≤1/2H — ≥250 — ≥2000 —
+d
+H >H
+b d
+1/2H<H ≤H — ≥300 — ≥2500 —
+d
+12
+
+DC Inverter U-match Series Duct Type Unit
+(mm)
+A~E H H H
+b d
+a b c d e
+H ≤1/2H — ≥300 — ≥2000 ≥1000
+b
+H <H 1/2H<H ≤H — ≥300 — ≥2500 ≥1000
+b d b
+H >H Prohibited
+b
+B,D,E
+H ≤1/2H — ≥250 — ≥2500 ≥1000
+d
+H >H 1/2H<H ≤H — ≥300 — ≥2500 ≥1000
+b d d
+H >H Prohibited
+d
+3) When outdoor units are installed in rows.
+Unit: mm
+H H (mm)
+b
+H ≤1/2H b≥250
+b
+1/2H<H ≤H b≥300
+b
+H >H Prohibited
+b
+13
+
+DC Inverter U-match Series Duct Type Unit
+4) When outdoor units are installed one above another.
+Unit: mm
+(2) Diagram of installation location and space for indoor unit (Notice: for the
+best performance of indoor unit, make sure its installation space conforms
+to the following installation dimensions).
+Unit: mm
+2.2 Unit Installation
+2.2.1 Indoor Unit Installation
+2.2.1.1 Preparation for Installing the Indoor Unit
+NOTES!
+(1) Please tighten the nut and bolt to prevent the air conditioner from falling down.
+(2) The unit might be loose if fixing the panel rack only. Be careful during
+installation.
+14
+
+DC Inverter U-match Series Duct Type Unit
+(1) Install the bolts to the ceiling at a place strong enough to hang the unit.
+Mark the bolt positions from the installation template. With a concrete drill
+for 12.7mm diameter holes. See the following figure.
+Unit:mm
+(2) Insert the anchor bolts into the drilled holes, and drive the pins completely
+into the anchor bolts with a hammer. See the following figure.
+(3) Install the hanger to the unit. See the following figure.
+15
+
+DC Inverter U-match Series Duct Type Unit
+(4) Pass the unit hangers over the bolts installed to the ceiling and install the
+unit with the special nut. See the following figure.
+Unit:mm
+2.2.1.2 Leveling
+After installing the indoor unit, level detection of the unit shall be conducted.
+Place the unit horizontally and leave the left and right side with a downward slope of
+1/100~1/50 in drainage direction, as shown below.
+2.2.2 Outdoor Unit Installation
+(1) If the outdoor unit is installed on a solid ground such as concrete, use
+M10 screw bolts and nuts to secure the unit and make sure the unit
+stands erect and level.
+(2) Do not install it on top of the building.
+(3) If it vibrates and causes noise, please add rubber cushion between the
+outdoor unit and the installation base.
+(4) When the outdoor unit is in heating or defrosting, it needs to drain water.
+When installing the drain pipe, plug the accompanied drainage connector
+to the drainage hole on the chassis of the outdoor unit. Then connect a
+drain hose to the drainage connector (If drainage connector is used, the
+16
+
+DC Inverter U-match Series Duct Type Unit
+outdoor unit should be at least 10cm from the installation ground). See
+the following figures.
+(5) Plugs and drainage connector are not recommended if there is an
+electrical heater on the chassis.
+2.2.3 Connection Pipe Installation
+2.2.3.1 Installation Notice and Requirement on Connection Pipe
+Installation of Ordinary Nut and Tamperproof box
+Unfold the connecting pipe and bend the connecting pipe according to the
+required length. Open the nut cover on the indoor unit’s pipe and align the conical
+mouth of the connecting pipe with the center of the indoor unit’s pipe. Tighten the
+nut by hand and then tighten it with a torque wrench. The connecting pipe of indoor
+unit must be installed with the tamperproof box that is included in delivery. Once
+installed, the tamperproof box cannot be removed. If you need to break the
+connection between indoor and outdoor units, cut the connector. Replace with a
+new one and weld again.
+17
+
+DC Inverter U-match Series Duct Type Unit
+NOTES!
+(1) The air conditioner must be installed in a room that is larger than the minimum
+room area. And it is not allowed to use in a room that has running fire.
+(2) Before break the connection pipes between indoor and outdoor units，eliminate
+the refrigerant first and make sure there is no fire source or potential fire
+source in the maintenance area. And make sure the area is well-ventilated.
+(3) The tamperproof box should not be overlapped during installation and must be
+completely covered with the accompanied insulated pipe before wrapping.
+Installation method: Connect the connection pipes first to the indoor unit and
+then to the outdoor unit. When bending a connection pipe, be careful not to damage
+the pipe. Do not over-tighten the screw nut, otherwise leakage will occur. Besides,
+the outside of connection pipe should be added with a layer of insulating cotton to
+protect it from mechanical damage during installation, maintenance and
+transportation.
+Size of Fitting
+Item Maximum Biggest drop
+Pipe(inch)
+pipe length between indoor and
+Liquid Gas
+Model (m) outdoor units (m)
+pipe pipe
+GUD35P1/A-S
+Φ3/8 30 15
+GUD35PS1/A-S
+Ф1/4
+GUD50P1/A-S
+Φ1/2 30 20
+GUD50PS1/A-S
+GUD71PH1/A-S
+50 25
+GUD71PHS1/A-S
+GUD85PH1/A-S
+50 25
+GUD85PHS1/A-S
+GUD100PH1/A-S
+75 30
+GUD100PHS1/A-S
+Φ3/8 Φ5/8
+GUD125PH1/A-S
+75 30
+GUD125PHS1/A-S
+GUD140PH1/A-S
+75 30
+GUD140PHS1/A-S
+GUD160PH1/A-S
+75 30
+GUD160PHS1/A-S
+Connection pipe should adopt water-proof insulating material. Its wall thickness
+should be 0.5-1.0mm and the pipe wall should be able to withstand 6.0MPa. The
+longer the connection pipe is the worse cooling and heating performance it has.
+18
+
+DC Inverter U-match Series Duct Type Unit
+2.2.3.2 Pipe Flaring
+(1) Cut the connection pipe with a pipe cutter.
+(2) The mouth of connection pipe should face downward. Remove burrs with
+the cut surface so that the chips do not enter the pipe.
+(3) Remove the cut-off valve of outdoor unit and take out the flare nut from
+the bag of indoor unit accessories. Then fit the flare nut on the pipe and
+use a flaring tool to flare the mouth of connection pipe.
+(4) Check whether the flaring part has cracked. (See the figure below)
+2.2.3.3 Pipe Bending
+(1) The pipes are shaped by your hands. Be careful not to collapse them.
+(2) Do not bend the pipes in an angle more than 90°.
+(3) If the pipe is repeatedly bent or extended, it will become hard and difficult
+to be bent or extended. So do not bend or extend the pipe for more than 3
+times.
+(4) When bending the pipe, do not bend it excessively, otherwise it will get
+broken. As shown beside, use a sharp cutter to cut the heat insulating
+pipe and bend it after the pipe is exposed. After bending, place the heat
+insulating pipe back on the pipeline and fix it with adhesive tape.
+19
+
+DC Inverter U-match Series Duct Type Unit
+2.2.3.4 Connection Pipe of Indoor and Outdoor Units
+NOTES!
+(1) Connect the pipe to the unit. Please follow the instructions stated in the figures
+below. Use both spanner and torque wrench.
+(2) When connecting the tapered screw nut, first apply chilled machine oil on its
+inner and outer surface and then screw it up for 3~4 circles.
+(3) Confirm the tightening torque by referring to the following table (If the screw
+nut is over-twisted, it may be damaged and cause leakage).
+(4) Check whether gas leakage occurs to the connection pipe and then apply
+thermal insulation, as shown below.
+(5) Wind sponge around the joint of gas pipe and heat insulation sheath of gas
+collecting pipe.
+(6) Be sure to connect gas pipe after liquid pipe is connected.
+(7) The installation of pipe-work shall be kept to a minimum.
+(8) Pipe-work shall be protected from physical damage and shall not be installed
+in an unventilated space.
+20
+
+DC Inverter U-match Series Duct Type Unit
+Pipe diameter (inch) Tightening torque (Nm· )
+Ф1/4 15-30
+Ф3/8 35-40
+Ф1/2 45-50
+Ф5/8 60-65
+Ф3/4 70-75
+Ф7/8 80-85
+Screw on the flare nut of the flaring connecting pipe on the outdoor unit valve.
+The method of screwing the flare nut is the same with that for indoor unit.
+21
+
+DC Inverter U-match Series Duct Type Unit
+2.2.3.5 Thermal Insulation of Pipe Joint (Only for indoor unit)
+Stick coupler heat insulation (large and small) to the place where connecting
+pipes.
+2.2.4 Connection Pipe Vacuum Pumping and Leak Detection
+2.2.4.1 Vacuum Pumping
+NOTE!
+Make sure the outlet of vacuum pump is away from fire source and is
+well-ventilated.
+(1) Remove the caps of the liquid valve, gas valve and also the service port.
+(2) Connect the hose at the low pressure side of the manifold valve assembly
+to the service port of the unit’s gas valve, and meanwhile the gas and
+liquid valves should be kept closed in case of refrigerant leak.
+(3) Connect the hose used for evacuation to the vacuum pump.
+(4) Open the switch at the lower pressure side of the manifold valve
+assembly and start the vacuum pump. Meanwhile, the switch at the high
+pressure side of the manifold valve assembly should be kept closed,
+otherwise evacuation would fail.
+(5) The evacuation duration depends on the unit’s capacity, generally.
+22
+
+DC Inverter U-match Series Duct Type Unit
+Model Time(min)
+GUD35P1/A-S
+GUD35PS1/A-S
+20
+GUD50P1/A-S
+GUD50PS1/A-S
+GUD71PH1/A-S
+GUD71PHS1/A-S
+GUD85PH1/A-S
+30
+GUD85PHS1/A-S
+GUD100PH1/A-S
+GUD100PHS1/A-S
+GUD125PH1/A-S
+GUD125PHS1/A-S
+GUD140PH1/A-S
+45
+GUD140PHS1/A-S
+GUD160PH1/A-S
+GUD160PHS1/A-S
+And verify if the pressure gauge at the low pressure side of the manifold valve
+assembly reads -0.1MPa (-750mmHg), if not, it indicates there is leak somewhere.
+Then, close the switch fully and then stop the vacuum pump.
+(6) Wait for 10min to see if the system pressure can remain unchanged. If the
+pressure increase, there may be leakage.
+(7) Slightly open the liquid valve and let some refrigerant go to the connection
+pipe to balance the pressure inside and outside of the connection pipe, so
+that air will not come into the connection pipe when removing the hose.
+Note that the gas and liquid valve can be opened fully only after the
+manifold valve assembly is removed.
+(8) Place back the caps of the liquid valve, gas valve and also the service
+port.
+23
+
+DC Inverter U-match Series Duct Type Unit
+NOTE:
+For large-size units, there are maintenance ports for liquid valve and gas valve.
+During evacuation, you may connect the two hoses of the branch valve assembly to
+the maintenance ports to speed up the evacuation.
+2.2.4.2 Leak Detection Methods
+The following leak detection methods are deemed acceptable for systems
+containing flammable refrigerants.
+Electronic leak detectors shall be used to detect flammable refrigerants, but the
+sensitivity may not be adequate, or may need re-calibration (Detection equipment
+shall be calibrated in a refrigerant-free area).
+Ensure that the detector is not a potential source of ignition and is suitable for
+the refrigerant used. Leak detection equipment shall be set at a percentage of the
+LFL of the refrigerant and shall be calibrated to the refrigerant employed and the
+appropriate percentage of gas (25% maximum) is confirmed.
+Leak detection fluids are suitable for use with most refrigerants but the use of
+detergents containing chlorine shall be avoided as the chlorine may react with the
+refrigerant and corrode the copper pipe-work.
+If a leak is suspected, all naked flames shall be removed / extinguished. If a
+leakage of refrigerant is found which requires brazing, all of the refrigerant shall be
+recovered from the system, or isolated (by means of shut off valves) in a part of the
+system remote from the leak. Oxygen free nitrogen (OFN) shall then be purged
+through the system both before and during the brazing process.
+2.2.5 Refrigerant Adding
+NOTE!
+Before and during operation, use an appropriate refrigerant leak detector to
+monitor the operation area and make sure the technicians can be well aware of
+any potential or actual leakage of inflammable gas. Make sure the leak detecting
+device is applicable to inflammable refrigerant. For example, it should be free of
+sparks, completely sealed and safe in nature.
+See the following table for the amount of additional refrigerant.
+24
+
+DC Inverter U-match Series Duct Type Unit
+Unnecessary Additional
+Item Standard
+Charge Pipe Refrigerant Amount
+Model Pipe Length
+Length for Extra Pipe
+GUD35W1/NhA-S
+16g/m
+GUD50W1/NhA-S
+GUD71W1/NhA-S
+GUD85W1/NhA-S
+5.0m ≤7.0m
+GUD100W1/NhA-S
+20g/m
+GUD100W1/NhA-X
+GUD125W1/NhA-S
+GUD125W1/NhA-X
+GUD140W1/NhA-S
+GUD140W1/NhA-X 7.5m ≤9.5m 35g/m
+GUD160W1/NhA-X
+2.2.6 Installation of Drain Pipe
+(1) It is not allowed to connect the condensate drain pipe into waste pipe or
+other pipelines which are likely to produce corrosive or peculiar smell to
+prevent the smell from entering indoors or corrupt the unit.
+(2) It is not allowed to connect the condensate drain pipe into rain pipe to
+prevent rain water from pouring in and cause property loss or personal
+injury.
+(3) Condensate drain pipe should be connected into special drain system for
+air conditioner.
+2.2.6.1 Indoor Side Drain Pipe
+NOTE!
+Install the drain hose in accordance with the instructions in this installation manual
+and keep the area warm enough to prevent condensation. Problems with the
+piping may lead to water leaks.
+(1) Install the drain hose with downward gradient (1/100 to 1/50) and no
+risers or traps are used for the hose. See the following figure.
+(2) Be sure there is no crack or leak on the drain hose to avoid the formation
+of air pocket. See the following figure.
+25
+
+DC Inverter U-match Series Duct Type Unit
+(3) When the hose is long, install supporters. See the following figure.
+Unit: mm
+(4) Always use the drain hose which has been insulated properly.
+(5) Use a suitable drain hose.
+(6) There is a drain port on both the left and right sides. Select the drain port
+to match the local conditions. See the following figure.
+(7) When the unit is shipped from the factory, the drain port is defaulted to be
+the one on the left side (electric box side).
+(8) When using the drain port on the right side of the unit, reinstall the drain
+cap to the left side drain port. See the following figure.
+(9) Be sure to insulate where the drain port and the drain hose is connected.
+See the following figure.
+26
+
+DC Inverter U-match Series Duct Type Unit
+(10) The unused drain port also should be insulated properly. See the
+following figure.
+(11) There is adhesive on one side of the insulation so that after removing the
+protective paper over it the insulation can be directly attached to the drain
+hose.
+2.2.6.2 Outdoor Side Drain Pipe
+(1) If the outdoor unit is underneath the indoor unit, arrange the pipeline
+according to the following diagram.
+1) Drain hose should be placed on the ground and its end should not be
+immersed into water. The whole pipeline should be supported and
+fixed onto the wall.
+2) Wind the insulating tape from bottom to top.
+3) The whole pipeline should be wound with insulating tape and fixed
+onto the wall with saddles.
+27
+
+DC Inverter U-match Series Duct Type Unit
+(2) If the outdoor unit is above the indoor unit, arrange the pipeline according
+to the following diagram.
+1) Wind the insulating tape from bottom to top.
+2) The whole pipeline should be wound together to avoid water returning
+to the room.
+3) Use saddles to fix the whole pipeline onto the wall.
+2.2.6.3 Drain Riser with Pump Unit Considerations
+(1) For the unit with the condensate pump, only one drain port at the side
+close to the electric box is prepared and only through it the drain hose can
+be connected.
+Item Drain pipe
+Model (inside dimension)(mm)
+GUD35P1/A-S
+GUD35PS1/A-S
+GUD50P1/A-S
+GUD50PS1/A-S
+GUD71PH1/A-S
+GUD71PHS1/A-S
+GUD85PH1/A-S
+GUD85PHS1/A-S
+Ф26
+GUD100PH1/A-S
+GUD100PHS1/A-S
+GUD125PH1/A-S
+GUD125PHS1/A-S
+GUD140PH1/A-S
+GUD140PHS1/A-S
+GUD160PH1/A-S
+GUD160PHS1/A-S
+28
+
+DC Inverter U-match Series Duct Type Unit
+(2) For the unit with the condensate pump, two drain ports at the bottom are
+defaulted to be factory plugged with drain caps. After the installation of
+the drain hose, these two drain ports also need to be insulated properly
+with the same way aforementioned.
+(3) The lifted installation height of drainage pipe is less than 1,000mm, as is
+shown in the following figure.
+Unit: mm
+The vertical height of the drain hose should be 75mm or less so that it is
+unnecessary for the drain port to withstand additional force.
+Unit: mm
+When multiple drain hoses are used, their installation should be performed as
+shown in the figure below.
+Unit: mm
+29
+
+DC Inverter U-match Series Duct Type Unit
+NOTE: The specification of the selected merged drainage pipe shall be
+appropriate for the operation capacity of the unit.
+(4) Drain branch should be connected to the vertical or horizontal part of the
+main drain pipe.
+(5) Horizontal pipe should not be connected to the vertical pipe that is on the
+same level. It should be connected in the following way:
+1) Attach the 3-way connection of the drainage pipe joint.
+2) Attach the drain elbow.
+3) Attach the horizontal pipe.
+2.2.6.4 Check Drainage
+After piping work is finished, check if drainage flows smoothly.
+As shown in the figure, add approximately 1liter of water slowly into the drain
+pan and check drainage flow during COOL running.
+30
+
+DC Inverter U-match Series Duct Type Unit
+2.2.7 Installation of the Duct
+2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet
+Supply Air Outlet
+Return Air Inlet
+Unit: mm
+Item Supply Air Outlet Return Air Inlet
+Model A B C D
+GUD35P1/A-S
+122 585 700 200
+GUD35PS1/A-S
+GUD50P1/A-S
+122 885 1000 200
+GUD50PS1/A-S
+GUD71PH1/A-S
+215 740 871 234
+GUD71PHS1/A-S
+GUD85PH1/A-S
+215 740 871 234
+GUD85PHS1/A-S
+GUD100PH1/A-S
+215 1153 1188 220
+GUD100PHS1/A-S
+GUD125PH1/A-S
+215 1153 1188 220
+GUD125PHS1/A-S
+GUD140PH1/A-S
+197 1151 1362 264
+GUD140PHS1/A-S
+GUD160PH1/A-S
+197 1151 1362 264
+GUD160PHS1/A-S
+2.2.7.2 Return Air Method
+(1) The default ex-factory return air method is from the back. The return air
+cover shall be installed at the bottom of the unit, as is shown in the
+following figure.
+31
+
+DC Inverter U-match Series Duct Type Unit
+(2) If the downward return air method is adopted, then install the return air
+cover at the back of the unit after dismantling it.
+(3) Connect the return duct to the return air inlet of indoor unit with rivet, and
+the other side shall be connected to the return air inlet. For the
+convenience of free height adjustment, canvas duct can be made and
+reinforced with iron wire to a folding shape.
+(4) The noise of downward return air is obvious bigger than that of rear return
+air. For downward return air, silencer and static pressure carton shall be
+added to conduct noise reduction treatment.
+2.2.7.3 Installation of Supply Air Duct and Return Air Duct
+Installation method shall be selected by entirely considering the conditions of
+buildings, maintenance, etc.as is shown in the following figure.
+NOTE:
+The return air pipe must be connected to the air duct, and the internal
+components cannot be touched by hands after installation. During installation and
+maintenance of the unit, the disassembly must be done by the professionals.
+2.2.7.4 Installation of Fresh Air Duct
+(1) While connecting the fresh air duct, cut off the fresh air baffle plate as is
+shown in the following figure. If the fresh air duct is not used, block the
+gap of fresh air baffle plate with sponge.
+32
+
+DC Inverter U-match Series Duct Type Unit
+(2) Install the round flange so that it can be connected to the fresh air duct, as
+is shown in the following figure.
+(3) The air duct and round flange duct shall be concealed and kept warm
+well.
+(4) The fresh air is the air after filtration.
+NOTES:
+①. The supply air duct, return air duct and fresh air duct shall have thermal
+insulation layer to prevent heat leakage and condensation. Stick the plastic
+nail to the air duct, then attach the heat preservation cotton with tinfoil and fix it
+with plastic nail cover, finally, seal the connection joint with tinfoil tape tightly;
+other materials with good thermal insulation effect can also be used.
+②. Each supply air duct and return air duct shall be fixed on the floor prefabricated
+slab with iron support; the air duct joint shall be tightly sealed with glue to
+prevent leakage.
+③. The design and construction of air duct shall meet related national engineering
+specifications and requirements.
+④. The distance between the edge of return air duct and wall is suggested to be
+above 150mm, add filter screen for the return air inlet.
+⑤. Noise reduction and shock absorption shall be considered in air duct design
+and construction. Moreover, the noise source shall avoid the crowd, e.g. the
+return air inlet shall never be designed at the top of the user (office and rest
+area).
+33
+
+DC Inverter U-match Series Duct Type Unit
+2.3 Electrical Installation
+2.3.1 Requirement and Notice on Electrical Installation
+WARNING:
+The electrical installation for the air conditioner should observe the following
+requirements:
+①. The electrical installation must be conducted by professionals in compliance
+with local laws and regulations and the instructions in this manual. Never
+extend the power cord. The electric circuit must be equipped with a circuit
+breaker and air switch both with sufficient capacity.
+②. The unit’s operating power must be within the nominal range stated in the
+instruction manual. Use a specialized power circuit for the air conditioner. Do
+not draw power from another power circuit.
+③. The air conditioner circuit should be at least 1.5m away from any inflammable
+surface.
+④. The external power cord, connection wire of indoor and outdoor units and the
+communication cords must be effectively fixed.
+⑤. The external power cord, connection wire of indoor and outdoor units and the
+communication cords can’t directly contact any hot objects. For example: they
+must not contact chimney pipes, warm gas pipes or other hot objects.
+⑥. The external power cord, communication cords, and the connection wire of
+indoor and outdoor units must not be squeezed. Never pull, stretch or bend the
+wires.
+⑦. The external power cord, communication cords and the connection wire of
+indoor and outdoor units must not collide with any metal beam or edge on the
+ceiling, or touch any metal burrs or sharp metal edge around.
+⑧. Connect wires correspondingly by referring to the circuit diagram labeled on
+the unit or electric box. Screws must be tightened up. Slipped screws must be
+replaced by specialized flat-head screws.
+⑨. Please use the power cables that are delivered along with the air conditioner.
+Do not change the power cables arbitrarily. Do not change the length and
+terminals of the power cables. If you want to change the power cables, please
+contact Gree’s local service center.
+34
+
+DC Inverter U-match Series Duct Type Unit
+⑩. Wiring terminals should be connected firmly to the terminal board. Loose
+connection is forbidden.
+⑪. After the electrical installation is finished, please use wire clamps to secure the
+power cord, connection wire of indoor and outdoor units and the
+communication cords. Make sure the wires are not clamped too tight.
+⑫. The wire gauge of power cord should be large enough. Damaged power cord
+or other wires must be replaced by specialized wires. Wiring work must be
+done according to national wiring rules and regulations.
+2.3.2 Electrical Parameters
+2.3.2.1 Wire Specifications and Fuse Capacity
+Min. sectional
+Fuse
+Power supply area of power
+Model capacity
+cord
+V/Ph/Hz A mm²
+Indoor unit 220-240V ~50/60Hz 3.15 1.0
+Circuit Min. sectional
+Power supply breaker area of power
+Model
+capacity cord
+V/Ph/Hz A mm2
+GUD35W1/NhA-S 16 1.5
+GUD50W1/NhA-S 16 1.5
+GUD71W1/NhA-S 20 2.5
+GUD85W1/NhA-S 220-240V ~50/60Hz 20 2.5
+GUD100W1/NhA-S 32 4.0
+GUD125W1/NhA-S 32 4.0
+GUD140W1/NhA-S 32 4.0
+GUD100W1/NhA-X 16 1.5
+GUD125W1/NhA-X 16 1.5
+380-415V 3N~50/60Hz
+GUD140W1/NhA-X 16 1.5
+GUD160W1/NhA-X 16 1.5
+NOTES:
+①. Fuse is located on the main board.
+35
+
+DC Inverter U-match Series Duct Type Unit
+②. Install a circuit breaker near the outdoor units with at least 3mm contact gap.
+The units must be able to be plugged or unplugged.
+③. Circuit breaker and power cord specifications listed in the above table are
+determined based on the maximum power input of the units.
+④. Supply cords of parts of appliances for outdoor use shall not be lighter than
+polychloroprene sheathed flexible cord (code designation 60245 IEC 57).
+⑤. Specifications of circuit breaker are based on a working condition where the
+working temperature is 40°C. If working condition changes, please adj ust the
+specifications according to national standards.
+⑥. Adopt 1.0mm ²power cords between indoor and outdoor units. The maximum
+length of 35-85 units is 30m and the maximum length of 100-160 units is 75m.
+Please select a proper length according to local conditions. To be in
+compliance EN 55014, it is necessary to use 8 meters long wire.
+⑦. Adopt 2pc of 0.75mm ²power cords to be the communication cords between
+wired controller and indoor unit. The maximum length is 30m. Please select a
+proper length according to local conditions. Communication cords must not be
+twisted together. To be in compliance EN 55014, it is necessary to use 8
+meters long wire.
+⑧. The wire gauge of communication cord should not be less than 0.75mm². It’s
+recommended to use 0.75mm ²power cords as the communication cords.
+⑨. It's required to adopt the shielded wire for the communication cable between
+the indoor unit and the centralized controller; when connection is finished, the
+shielding layer should be reliably grounded.
+2.3.3 Connection of Power Cord and Communication Cord
+(1) For solid wires (as shown below):
+1) Use wire cutters to cut off the wire end and then peel away about
+25mm of the insulation layer.
+2) Use a screwdriver to unscrew the terminal screw on the terminal
+board.
+3) Use nippers to bend the solid wire into a ring that fits the terminal
+screw.
+4) Form a proper ring and then put it on the terminal board. Use a
+screwdriver to tighten up the terminal screw.
+36
+
+DC Inverter U-match Series Duct Type Unit
+(2) For strand wires (as shown below):
+1) Use wire cutters to cut off the wire end and then peel away about
+10mm of the insulation layer.
+2) Use a screwdriver to unscrew the terminal screw on the terminal
+board.
+3) Use a round terminal fastener or clamp to fix the round terminal firmly
+on the peeled wire end.
+4) Locate the round terminal conduit. Use a screwdriver to replace it and
+tighten up the terminal screw (as shown below).
+Unit: mm
+(3) How to connect the connection wire and power cord.
+Lead the connection wire and power cord through the insulation tube. Then fix
+the wires with wire clamps (as shown in the following figure).
+For the indoor unit whose packaging materials are with the buckle magnetic
+37
+
+DC Inverter U-match Series Duct Type Unit
+ring. The engineering electric wires (live wire, neutral wire, earthing wire and
+communication cable) should pass through the buckle magnetic ring before entering
+into the unit. The magnetic ring should be fixed reliably by cable tie. The
+engineering wires and buckle magnetic ring are not allowed to touch sharp edges.
+(Note: Only for GUD140PHS1/A-S, GUD140PH1/A-S, GUD160PHS1/A-S,
+GUD160PH1/A-S units.)
+Buckle magnetic ring shall be added in the power line communication cord of
+outdoor and indoor unit. The added buckle magnetic ring shall be fixed at the outlet
+of power line communication cord near the outdoor unit side; detailed operation step
+for the magnetic buckle is as follow:
+1) Limit the fixation location of buckle magnetic ring at the outlet of
+power line communication cord near the outdoor unit side with a
+cable tie (refer to the mark 4 in the following picture) to prevent the
+buckle magnetic ring from sliding along the power line communication
+cord;
+2) Then clasp the buckle magnetic ring to the location of power line
+communication cord confirmed with cable tie, after that, re-fix it with a
+cable tie (refer to the mark 3 in the following picture)
+(Note:Only for GUD140W1/NhA-X, GUD160W1/NhA-X units.)
+38
+
+DC Inverter U-match Series Duct Type Unit
+WARNING!
+(1) Before working, please check whether the indoor and outdoor units are
+powered on.
+(2) Match the terminal numbers and wire colors with the colors indicated in the
+indoor unit.
+(3) Wrong wire connection may burn the electrical components.
+(4) Connect the wires firmly to the wiring box. Incomplete installation may lead to
+fire hazard.
+(5) Please use wire clamps to secure the external covers of connecting wires.
+(Insulators must be clamped securely; otherwise, electric leakage may occur.)
+(6) Ground wire should be connected.
+(4) Wire between indoor and outdoor units.
+Single-phase unit: GUD35W1/NhA-S, GUD50W1/NhA-S.
+GUD35P1/A-S+GUD35W1/NhA-S,
+GUD35PS1/A-S+GUD35W1/NhA-S
+GUD50P1/A-S+GUD50W1/NhA-S,
+GUD50PS1/A-S+GUD50W1/NhA-S
+①. Power cords 3×1.5mm2
+②. Power cords 4×1.0mm2
+③. Communication cords 2×0.75mm2
+39
+
+DC Inverter U-match Series Duct Type Unit
+Single-phase unit: GUD71W1/NhA-S, GUD85W1/NhA-S
+GUD71PH1/A-S+GUD71W1/NhA-S,
+GUD71PHS1/A-S+GUD71W1/NhA-S
+GUD85PH1/A-S+GUD85W1/NhA-S,
+GUD85PHS1/A-S+GUD85W1/NhA-S
+①. Power cords 3×2.5mm2
+②. Power cords 4×1.0mm2
+③. Communication cords 2×0.75mm2
+Single-phase unit: GUD100W1/NhA-S, GUD125W1/NhA-S.
+GUD140W1/NhA-S
+40
+
+DC Inverter U-match Series Duct Type Unit
+GUD100PH1/A-S+GUD100W1/NhA-S,
+GUD100PHS1/A-S+GUD100W1/NhA-S
+GUD125PH1/A-S+GUD125W1/NhA-S,
+GUD125PHS1/A-S+GUD125W1/NhA-S
+GUD140PH1/A-S+GUD140W1/NhA-S,
+GUD140PHS1/A-S+GUD140W1/NhA-S
+①. Power cords 3×4.0mm2
+②. Power cords 4×1.0mm2
+③. Communication cords 2×0.75mm2
+Three-phase unit: GUD100W1/NhA-X, GUD125W1/NhA-X,
+GUD140W1/NhA-X, GUD160W1/NhA-X
+GUD100PH1/A-S+GUD100W1/NhA-X,
+GUD100PHS1/A-S+GUD100W1/NhA-X
+GUD125PH1/A-S+GUD125W1/NhA-X,
+GUD125PHS1/A-S+GUD125W1/NhA-X
+GUD140PH1/A-S+GUD140W1/NhA-X,
+GUD140PHS1/A-S+GUD140W1/NhA-X
+GUD160PH1/A-S+GUD160W1/NhA-X,
+GUD160PHS1/A-S+GUD160W1/NhA-X
+①. Power cords 5×1.5mm2
+②. Power cords 4×1.0mm2
+③. Communication cords 2×0.75mm2
+(5) Electrical wiring of indoor unit and outdoor unit.
+WARNING!
+(1) High and low voltage wires should be led through different rubber rings of the
+electric box cover.
+41
+
+DC Inverter U-match Series Duct Type Unit
+WARNING!
+(2) Do not bundle up the connection wire and communication wire of wired control
+or lay them side by side, otherwise errors will occur.
+(3) High and low voltage wires should be secured separately. Secure the former
+ones with big clamps and the latter ones with small clamps.
+(4) Use screws to tighten up the connection wires and power cords of indoor and
+outdoor units on the terminal board. Wrong connection may lead to fire hazard.
+(5) If the connection wires of indoor unit (outdoor unit) and power cords are not
+correctly connected, the air conditioner may get damaged.
+(6) Ground the indoor and outdoor units through connecting the ground wire.
+(7) The units should comply with applicable local and national rules and
+regulations on power consumption.
+(8) When connecting the power cord, make sure the phase sequence of the power
+supply matches with the corresponding terminals, otherwise the compressor
+will get reversed and operate abnormally.
+1) Indoor side
+Take off the electric box cover from the sub-assembly of electric box.
+Then connect the wires. Connect the connection wires of indoor unit
+according to the corresponding marks.
+Model: GUD35P1/A-S, GUD35PS1/A-S, GUD50P1/A-S,
+GUD50PS1/A-S.
+42
+
+DC Inverter U-match Series Duct Type Unit
+Model: GUD71PH1/A-S, GUD71PHS1/A-S, GUD85PH1/A-S,
+GUD85PHS1/A-S.
+Model: GUD100PH1/A-S, GUD100PHS1/A-S, GUD125PH1/A-S,
+GUD125PHS1/A-S, GUD140PH1/A-S, GUD140PHS1/A-S,
+GUD160PH1/A-S, GUD160PHS1/A-S.
+43
+
+DC Inverter U-match Series Duct Type Unit
+2) Outdoor side
+Remove the big handle/front panel of the outdoor unit and insert one
+end of the communication cord and the power cord to the terminal
+board.
+Wire routing of outdoor unit:
+GUD35W1/NhA-S,GUD50W1/NhA-S,GUD71W1/NhA-S,
+GUD85W1/NhA-S.
+Single-phase: GUD100W1/NhA-S,GUD125W1/NhA-S,
+GUD140W1/NhA-S
+Three-phase unit: GUD100W1/NhA-X,GUD125W1/NhA-X,
+GUD140W1/NhA-X,GUD160W1/NhA-X.
+44
+
+DC Inverter U-match Series Duct Type Unit
+2.4 Check after Installation
+Check Items after Installation.
+Check items Possible events due to improper installation
+Is the main body installed
+The unit may fall down, vibrate or produce noise.
+securely?
+Did you do water leakage test? Cooling capacity may become unsatisfactory.
+Is the unit well insulated from
+Condensate, water drops may occur.
+heat?
+Does water drainage go well? Condensate, water drops may occur.
+Is the voltage consistent with The unit may fail or its components may get
+that stated on the nameplate? burned.
+Are the wires and pipes installed The unit may fail or its components may get
+correctly? burned.
+Has the unit been safely
+Risk of electric leakage.
+grounded?
+Do the specifications of wires The unit may fail or its components may get
+comply with the requirement? burned.
+Is there any obstacle blocking
+the air inlet and outlet of the Cooling capacity may become unsatisfactory.
+indoor or outdoor units?
+Have you recorded the length of
+The refrigerant charging amount can’t be
+refrigerant pipe and the
+controlled.
+refrigerant charging amount?
+2.5 Product Operating Range
+— Cooling Heating
+Outdoor temperature DB(°C) -20~52 -20~24
+Indoor temperature DB/WB(°C)
+32/23 27/-
+(Maximum)
+2.6 Test Running
+Preparation before connecting the power:
+(1) Power must not be connected if the installation work is not completed.
+(2) Control circuit is correct and all the wires are firmly connected.
+(3) Cut-off valves of the gas pipe and liquid pipe are open.
+(4) The inside of the unit should be clean. Take irrelevant objects out if there
+is any.
+(5) After checking, re-install the front side plate.
+45
+
+DC Inverter U-match Series Duct Type Unit
+Operation after connecting the power:
+(1) If all the above works are finished, power on the unit.
+(2) If the outside temperature is more than 30°C , heating mode can’t be
+enabled.
+(3) Make sure the indoor and outdoor units can run normally.
+(4) If there’s sound of liquid shock when the compressor is running, then stop
+the air conditioner immediately. Wait until the electric heating belt is
+heated enough, and then restart the air conditioner.
+(5) Feel the air flow of the indoor unit to see if it is normal.
+(6) Press the swing button or speed control button on remote control or wired
+control to see if the fan can run normally.
+NOTES：
+①. If you use remote control to turn off the unit and then immediately turn the unit
+on again, compressor will need 3min to restart. Even if you press ―ON/OFF‖
+button on the remote control, it won’t be started up right away.
+②. If there’s no display on the wired control, it’s probably because the connection
+wire between the indoor unit and wired control is not connected. Please check
+again.
+46
+
+DC Inverter U-match Series Duct Type Unit
+3 Product Introduction
+3.1 Overall Layout
+NOTES:
+①. The connection pipe, drain pipe, power cord, and duct for this unit should be
+prepared by the user.
+②. The unit is standard equipped with rectangular duct.
+47
+
+DC Inverter U-match Series Duct Type Unit
+3.2 Standard Accessories
+Indoor Unit Accessories
+No. Name Appearance Q'ty Usage
+1 Wired Controller 1 To control the indoor unit.
+To fix the hook on the
+2 Nut with Washer 4
+cabinet of the unit.
+To be used together with the
+3 Nut 4 hanger bolt for installing the
+unit.
+To be used together with the
+4 Washer 4 hanger bolt for installing the
+unit.
+5 Insulation 1 To insulate the gas pipe.
+6 Insulation 1 To insulate the liquid pipe.
+7 Fastener 8 To fasten the sponge.
+8 Sponge 2 To insulate the drain pipe.
+To prevent the removal of
+Ordinary Nut+ the gas pipe connecting nut
+9 + 1
+Tamperproof box (Refer to the fittings included
+in delivery.)
+To prevent the removal of
+Ordinary Nut+ the liquid pipe connecting
+10 + 1
+Tamperproof box nut (Refer to the fittings
+included in delivery.)
+For engineering installation.
+(only GUD140PHS1/A-S,
+Buckle magnetic
+11 + 1+1 GUD140PH1/A-S,
+ring+ Cable tie
+GUD160PHS1/A-S,
+GUD160PH1/A-S)
+48
+
+DC Inverter U-match Series Duct Type Unit
+Outdoor Unit Accessories
+No. Name Appearance Q'ty Usage
+0 or 3 or To plug the unused drain
+1 Drain Plug or
+4 or 5 hole.
+Drainage To connect with the hard
+2 or 1
+Connector PVC drain pipe.
+For engineering
+Buckle magnetic installation. (only
+3 + 1+2
+ring+ Cable tie GUD140W1/NhA-X,
+GUD160W1/NhA-X)
+4 Installation of Controller
+Refer to the wired controller or remote controller manual.
+5 Maintenance
+5.1 Failures Not Caused by Faults of the AC
+(1) If your air conditioner fails to function normally, please first check the
+following items before maintenance:
+Problem Cause Corrective measure
+If you turn off the unit and then
+immediately turn it on, in order to
+protect the compressor and avoid Please wait for a while.
+system overload, compressor will
+delay running for 3min.
+Connect wires according to
+Wire connection is wrong.
+the wiring diagram.
+The air
+Replace the fuse or switch on
+conditioner Fuse or circuit breaker is broken.
+the circuit breaker.
+can't run.
+Restart after power is
+Power failure.
+resumed.
+Power plug is loose. Re-insert the power plug.
+Remote control has low battery. Replace the batteries.
+49
+
+DC Inverter U-match Series Duct Type Unit
+Problem Cause Corrective measure
+Clear the obstacles and keep
+Air inlet and outlet of indoor or
+the room for indoor and
+outdoor units have been blocked.
+outdoor units well ventilated.
+Improper temperature setting Reset a proper temperature.
+Fan speed is too low. Reset a proper fan speed.
+Change the direction of air
+Air flow direction is not right.
+louvers.
+Doors or windows are open. Close them.
+Bad cooling or
+Put on curtains or louvers in
+heating effect. Exposed under direct sunshine.
+front of the windows.
+Too many heat sources in the Remove unnecessary heat
+room. sources.
+Send for a professional to
+Filter is blocked or dirty.
+clean the filter.
+Clear away obstacles that are
+Air inlets or outlets of the units blocking the air inlets and
+are blocked. outlets of indoor and outdoor
+units.
+(2) The following situations are not operation failures.
+Problem Time of occurrence Cause
+If the unit is running under
+Mist comes from high humidity, the wet air in
+During operation.
+the air conditioner. the room will be quickly
+cooled down.
+Defrosting process will
+System switches to heating
+generate some water, which
+mode after defrosting.
+will turn to water vapor.
+The air conditioner
+generates some
+noise. Temperature control will be
+The air conditioner is
+buzzing when it starts
+buzzing at the beginning of
+working. The noise will
+operation.
+become weak 1min later.
+50
+
+DC Inverter U-match Series Duct Type Unit
+Problem Time of occurrence Cause
+When the system is just
+When the unit is turned on, started, the refrigerant is not
+it purrs. stable. About 30s later, the
+purr of the unit becomes low.
+About 20s after the unit first
+It’s the sound of 4-way valve
+enables the heating mode
+switching direction. The sound
+or there is refrigerant
+will disappear after the valve
+brushing sound when
+changes its direction.
+defrosting under heating.
+There is hissing sound
+It’s the sound of gaseous
+when the unit is started or
+refrigerant that stops flowing
+stopped and a slight
+and the sound of drainage
+Dust comes from hissing sound during and
+system.
+the air conditioner. after operation.
+Because of temperature
+There is a sound of
+change, front panel and other
+crunching during and after
+components may be swelled
+operation.
+up and cause abrasion sound.
+There is a hissing sound
+when the unit is turned on Because refrigerant suddenly
+or suddenly stopped during stops flowing or changes the
+operation or after flow direction.
+defrosting.
+The unit starts operation Dust inside the indoor unit
+after being unused for a comes out together with the
+long time. air.
+The air conditioner The room smell or the smell of
+generates some During operation. cigarette comes out through
+smell. the indoor unit.
+NOTE: Check the above items and adopt the corresponding corrective
+measures. If the air conditioner continues to function poorly, please stop the air
+conditioner immediately and contact Gree’s authorized local service center. Ask our
+professional service staff to check and repair the unit.
+51
+
+DC Inverter U-match Series Duct Type Unit
+5.2 Error Code
+WARNING!
+(1) If abnormal things (for example, awful smell) occur, please stop the unit
+immediately and disconnect power. Then contact Gree’s authorized service
+center. If the unit continues to run in abnormal situations, it may get damaged
+and cause electric shock or fire hazard.
+(2) Do not repair the air conditioner by yourself. Improper maintenance will cause
+electric shock or fire hazard. Please contact Gree’s authorized service center
+and send for professional service staff to repair.
+If the display panel or wired control displays an error code, please refer to the
+error code meaning stated in the following table.
+Error
+Error code Error Error
+code
+Outdoor fan IPM module
+A1 LE Compressor overspeed
+protection
+Ac Outdoor fan startup failure LF Power protection
+Outdoor fan Phase-loss
+Ad LP IDU and ODU unmatched
+protection
+ODU error, for specific error
+Outdoor fan current
+AE oE please see the status of ODU
+detection circuit error
+main board indicator
+Outdoor fan out-of-step
+AJ P0 Driver reset protection
+protection
+Wired controller and indoor Compressor phase
+C0 P5
+unit communication failure over-current protection
+Indoor ambient temperature Master control and driver
+C1 P6
+sensor error communication error
+Evaporator temperature Module temperature sensor
+C2 P7
+sensor error circuit failure
+Condenser temperature Driver module temperature
+C3 P8
+sensor error protection
+C4 ODU jumper cap error P9 AC contractor protection
+CJ IDU jumper cap error PA ODU AC current protection
+Discharge temperature
+C6 PE Temperature drift protection
+sensor error
+Condenser
+Driveboard ambient
+C7 meso-temperature sensor PF
+temperature sensor error
+error
+52
+
+DC Inverter U-match Series Duct Type Unit
+Error
+Error code Error Error
+code
+Compressor dial code or
+C8 PH Bus high-voltage protection
+jumper cap abnormal
+Compressor driver memory
+C9 PL Bus low-voltage protection
+chip failure
+Wired controller
+CE PP Input AC voltage error
+temperature sensor error
+Multi-main wired controller
+CP PU Capacitor charging failure
+failure
+Compressor suction DC indoor fan driver bus
+dc q0
+temperature sensor error low-voltage protection
+Wired controller circuit DC indoor fan driver bus
+dH q1
+board abnormal high-voltage protection
+AC sequence protection
+DC indoor fan AC current
+dJ (phase loss or anti-phase q2
+protection
+protection)
+DC indoor fan driver IPM
+E0 Indoor fan error q3
+module protection
+Compressor high pressure DC indoor fan driver PFC
+E1 q4
+protection protection
+Indoor anti-freeze
+E2 q5 DC indoor fan startup failure
+protection
+Refrigerant lack protection
+DC indoor fan Phase-loss
+E3 or compressor low pressure q6
+protection
+protection
+Compressor air discharge DC indoor fan driver reset
+E4 q7
+high-temperature protection protection
+ODU and IDU DC indoor fan over-current
+E6 q8
+communication error protection
+E7 Mode conflict q9 DC indoor fan power protection
+DC indoor fan driver current
+E9 Water-full protection qA
+detection circuit error
+Memory chip reading and DC indoor fan out-of-step
+EE qb
+writing failure protection
+Master control and DC indoor
+EL Emergency stop (fire alarm) qC
+fan driver communication error
+Outdoor ambient DC indoor fan driver module
+F3 qd
+temperature sensor error high temperature protection
+DC indoor fan driver module
+Fo Recycling refrigerant mode qE
+temperature sensor error
+53
+
+DC Inverter U-match Series Duct Type Unit
+Error
+Error code Error Error
+code
+DC indoor fan driver memory
+H1 Ordinary defrosting state qF
+chip error
+DC indoor fan driver charge
+H4 Overload protection qH
+loop error
+IPM module current DC indoor fan driver input AC
+H5 qL
+protection voltage error protection
+Compressor out-of-step DC indoor fan driver electrical
+H7 qo
+protection box temperature sensor error
+DC indoor fan driver AC input
+HC PFC overcurrent protection qp
+zero-crossing protection
+Compressor demagnetize Compressor phase current
+HE U1
+protection circuit detection error
+Compressor phase-loss and
+L3 Outdoor fan 1 error U2
+anti-phase protection
+Wired controller power
+L4 U3 DC bus voltage drop error
+supply circuit poor
+Wired controller power
+L5 supply overcurrent U5 Overall current detection failure
+protection
+One control multi-machine
+L6 endor quantity is U7 4–way valve switch-over error
+inconsistent
+One control multi-machine
+L7 U8 Zero-crossing protection
+endor series is inconsistent
+Outdoor fan overcurrent
+LA Outdoor fan 2 error UL
+protection
+Outdoor ambient temperature
+abnormal(Temperature high
+Lc Compressor startup failure Uo opening heat mode or
+temperature over low open
+refrigeration mode)
+NOTE: When the unit is connected with the wired controller, the error code
+will be simultaneously shown on it.
+54
+
+DC Inverter U-match Series Duct Type Unit
+5.3 Unit Maintenance
+NOTES!
+(1) Before cleaning, please make sure the unit is stopped. Cut the circuit breaker
+and remove the power socket, otherwise, electric shock may occur.
+(2) Do not wash the air conditioner with water, otherwise fire hazard or electric
+shock may occur.
+(3) When cleaning the filter, please be careful of your steps. If you need to work
+high above the ground, please be extremely careful.
+5.3.1 Filter screen cleaning
+Increase the frequency of cleaning if the unit is installed in a room where the air
+is extremely contaminated (As a yardstick for yourself, consider cleaning the filter
+once a half year).
+If dirt becomes impossible to clean, change the air filter. (Air filter for exchange
+is optional.)
+(1) Removing the air filter from the duct.
+(2) Cleaning the air filter.
+Remove dust from the air filter using a vacuum cleaner and gently rinse
+them in cool water. Do not use detergent or hot water to avoid filter shrinking or
+deformation. After cleaning dry them in the shade.
+(3) Replacing the air filter Reinstall the filter as before.
+5.3.2 Heat Exchanger of Outdoor Unit
+Conduct cleaning for the heat exchanger of outdoor unit periodically, clean it
+once at least in every two months. Clean the dust and sundries on the surface of the
+heat exchanger with dust collector and nylon brush, if there’s compressed air
+source; use the compressed air to blow the dust on the surface of the heat
+exchanger. Don’t use tap water for cleaning.
+55
+
+DC Inverter U-match Series Duct Type Unit
+5.3.3 Drainage Pipe
+Periodically check if the drainage pipe is blocked to smooth the condensate
+water.
+5.3.4 Notices at the Beginning of the Using Season
+(1) Check if the air inlet/outlet of indoor/outdoor unit is blocked.
+(2) Check if the ground connection is reliable.
+(3) Check if the battery of remote controller is replaced.
+(4) Check if the air filter screen is properly installed.
+(5) If starting up again after long-term shut down, preset the power switch of
+air conditioner to ―ON‖ status before 8h of operation, to preheat the
+crankcase of outdoor compressor.
+(6) Check if the installation of outdoor unit is firm, if not, please contact with
+Gree appointed maintenance center.
+5.3.5 Maintenance at the End of the Using Season
+(1) Cut off the main power of air conditioner.
+(2) Clean the filter screen, indoor and outdoor unit.
+(3) Clean the dust and sundries in indoor and outdoor unit.
+(4) If the outdoor unit is rusty, coat the rusty location with paint to prevent it
+from expanding.
+5.3.6 Components Replacement
+Components are available in Gree agency or Gree distributors nearby.
+5.4 Notice on Maintenance
+5.4.1 Information on Servicing
+The manual shall contain specific information for service personnel who shall
+be instructed to undertake the following when servicing an appliance that employs a
+flammable refrigerant.
+5.4.1.1 Checks to the Area
+Prior to beginning work on systems containing flammable refrigerants, safety
+checks are necessary to ensure that the risk of ignition is minimized. For repair to
+the refrigerating system, the following precautions shall be complied with prior to
+conducting work on the system.
+56
+
+DC Inverter U-match Series Duct Type Unit
+5.4.1.2 Work Procedure
+Work shall be undertaken under a controlled procedure so as to minimize the
+risk of a flammable gas or vapour being present while the work is being performed.
+5.4.1.3 General Work Area
+All maintenance staff and others working in the local area shall be instructed on
+the nature of work being carried out. Work in confined spaces shall be avoided. The
+area around the workspace shall be sectioned off. Ensure that the conditions within
+the area have been made safe by control of flammable material.
+5.4.1.4 Checking for Presence of Refrigerant
+The area shall be checked with an appropriate refrigerant detector prior to and
+during work, to ensure the technician is aware of potentially flammable
+atmospheres. Ensure that the leak detection equipment being used is suitable for
+use with flammable refrigerants, i.e. non-sparking, adequately sealed or intrinsically
+safe.
+5.4.1.5 Presence of Fire Extinguisher
+If any hot work is to be conducted on the refrigeration equipment or any
+associated parts, appropriate fire extinguishing equipment shall be available to
+hand. Have a dry powder or CO fire extinguisher adjacent to the charging area.
+2
+5.4.1.6 No Ignition Sources
+No person carrying out work in relation to a refrigeration system which involves
+exposing any pipe work that contains or has contained flammable refrigerant shall
+use any sources of ignition in such a manner that it may lead to the risk of fire or
+explosion. All possible ignition sources, including cigarette smoking, should be kept
+sufficiently far away from the site of installation, repairing, removing and disposal,
+during which flammable refrigerant can possibly be released to the surrounding
+space. Prior to work taking place, the area around the equipment is to be surveyed
+to make sure that there are no flammable hazards or ignition risks. ―No Smoking‖
+signs shall be displayed.
+5.4.1.7 Ventilated Area
+Ensure that the area is in the open or that it is adequately ventilated before
+breaking into the system or conducting any hot work. A degree of ventilation shall
+continue during the period that the work is carried out. The ventilation should safely
+57
+
+DC Inverter U-match Series Duct Type Unit
+disperse any released refrigerant and preferably expel it externally into the
+atmosphere.
+5.4.1.8 Checks to the Refrigeration Equipment
+Where electrical components are being changed, they shall be fit for the
+purpose and to the correct specification. At all times the manufacturer’s
+maintenance and service guidelines shall be followed. If in doubt consult the
+manufacturer’s technical department for assistance.
+The following checks shall be applied to installations using flammable
+refrigerants:
+(1) The charge size is in accordance with the room size within which the
+refrigerant containing parts are installed.
+(2) The ventilation machinery and outlets are operating adequately and are
+not obstructed.
+(3) If an indirect refrigerating circuit is being used, the secondary circuit shall
+be checked for the presence of refrigerant.
+(4) Marking to the equipment continues to be visible and legible. Markings
+and signs that are illegible shall be corrected.
+(5) Refrigeration pipe or components are installed in a position where they
+are unlikely to be exposed to any substance which may corrode
+refrigerant containing components, unless the components are
+constructed of materials which are inherently resistant to being corroded
+or are suitably protected against being so corroded.
+5.4.1.9 Checks to electrical devices
+Repair and maintenance to electrical components shall include initial safety
+checks and component inspection procedures. If a fault exists that could
+compromise safety, then no electrical supply shall be connected to the circuit until it
+is satisfactorily dealt with. If the fault cannot be corrected immediately but it is
+necessary to continue operation, an adequate temporary solution shall be used.
+This shall be reported to the owner of the equipment so all parties are advised.
+Initial safety checks shall include:
+(1) That capacitors are discharged: this shall be done in a safe manner to
+avoid possibility of sparking.
+58
+
+DC Inverter U-match Series Duct Type Unit
+(2) That no live electrical components and wiring are exposed while charging,
+recovering or purging the system.
+(3) That there is continuity of earth bonding.
+5.4.2 Repairs to Sealed Components
+(1) During repairs to sealed components, all electrical supplies shall be
+disconnected from the equipment being worked upon prior to any removal
+of sealed covers, etc. If it is absolutely necessary to have an electrical
+supply to equipment during servicing, then a permanently operating form
+of leak detection shall be located at the most critical point to warn of a
+potentially hazardous situation.
+(2) Particular attention shall be paid to the following to ensure that by working
+on electrical components, the casing is not altered in such a way that the
+level of protection is affected. This shall include damage to cables,
+excessive number of connections, terminals not made to original
+specification, damage to seals, incorrect fitting of glands, etc.
+Ensure that apparatus is mounted securely.
+Ensure that seals or sealing materials have not degraded such that they no
+longer serve the purpose of preventing the ingress of flammable atmospheres.
+Replacement parts shall be in accordance with the manufacturer’s specifications.
+NOTE：The use of silicon sealant may inhibit the effectiveness of some types
+of leak detection equipment. Intrinsically safe components do not have to be
+isolated prior to working on them.
+5.4.3 Repair to Intrinsically Safe Components
+Do not apply any permanent inductive or capacitance loads to the circuit
+without ensuring that this will not exceed the permissible voltage and current
+permitted for the equipment in use.
+Intrinsically safe components are the only types that can be worked on while
+live in the presence of a flammable atmosphere. The test apparatus shall be at the
+correct rating.
+Replace components only with parts specified by the manufacturer. Other parts
+may result in the ignition of refrigerant in the atmosphere from a leak.
+59
+
+DC Inverter U-match Series Duct Type Unit
+5.4.4 Cabling
+Check that cabling will not be subject to wear, corrosion, excessive pressure,
+vibration, sharp edges or any other adverse environmental effects. The check shall
+also take into account the effects of ageing or continual vibration from sources such
+as compressors or fans.
+5.4.5 Detection of Flammable Refrigerants
+Under no circumstances shall potential sources of ignition be used in the
+searching for or detection of refrigerant leaks. A halide torch (or any other detector
+using a naked flame) shall not be used.
+5.4.6 Removal and Evacuation
+When breaking into the refrigerant circuit to make repairs – or for any other
+purpose –conventional procedures shall be used. However, it is important that best
+practice is followed since flammability is a consideration. The following procedure
+shall be adhered to:
+(1) Remove refrigerant.
+(2) Purge the circuit with inert gas.
+(3) Evacuate.
+(4) Purge again with inert gas.
+(5) Open the circuit by cutting or brazing.
+The refrigerant charge shall be recovered into the correct recovery cylinders.
+The system shall be ―flushed‖ with OFN to render the unit safe. This process may
+need to be repeated several times. Compressed air or oxygen shall not be used for
+this task.
+Flushing shall be achieved by breaking the vacuum in the system with OFN
+and continuing to fill until the working pressure is achieved, then venting to
+atmosphere, and finally pulling down to a vacuum. This process shall be repeated
+until no refrigerant is within the system. When the final OFN charge is used, the
+system shall be vented down to atmospheric pressure to enable work to take place.
+This operation is absolutely vital if brazing operations on the pipework are to take
+place.
+Ensure that the outlet for the vacuum pump is not close to any ignition sources
+and there is ventilation available.
+60
+
+DC Inverter U-match Series Duct Type Unit
+5.4.7 Charging Procedures
+In addition to conventional charging procedures, the following requirements
+shall be followed.
+(1) Ensure that contamination of different refrigerants does not occur when
+using charging equipment. Hoses or lines shall be as short as possible to
+minimize the amount of refrigerant contained in them.
+(2) Cylinders shall be kept upright.
+(3) Ensure that the refrigeration system is earthed prior to charging the
+system with refrigerant.
+(4) Label the system when charging is complete (if not already).
+(5) Extreme care shall be taken not to overfill the refrigeration system.
+(6) Prior to recharging the system it shall be pressure tested with OFN. The
+system shall be leak tested on completion of charging but prior to
+commissioning. A follow up leak test shall be carried out prior to leaving
+the site.
+5.4.8 Decommissioning
+Before carrying out this procedure, it is essential that the technician is
+completely familiar with the equipment and all its detail. It is recommended good
+practice that all refrigerants are recovered safely. Prior to the task being carried out,
+an oil and refrigerant sample shall be taken in case analysis is required prior to
+re-use of reclaimed refrigerant. It is essential that electrical power is available
+before the task is commenced:
+(1) Become familiar with the equipment and its operation.
+(2) Isolate system electrically.
+(3) Before attempting the procedure ensure that:
+1) Mechanical handling equipment is available, if required, for handling
+refrigerant cylinders.
+2) All personal protective equipment is available and being used
+correctly.
+3) The recovery process is supervised at all times by a competent
+person.
+4) Recovery equipment and cylinders conform to the appropriate
+standards.
+61
+
+DC Inverter U-match Series Duct Type Unit
+(4) Pump down refrigerant system, if possible.
+(5) If a vacuum is not possible, make a manifold so that refrigerant can be
+removed from various parts of the system.
+(6) Make sure that cylinder is situated on the scales before recovery takes
+place.
+(7) Start the recovery machine and operate in accordance with
+manufacturer's instructions.
+(8) Do not overfill cylinders. (No more than 80 % volume liquid charge).
+(9) Do not exceed the maximum working pressure of the cylinder, even
+temporarily.
+(10) When the cylinders have been filled correctly and the process completed,
+make sure that the cylinders and the equipment are removed from site
+promptly and all isolation valves on the equipment are closed off.
+(11) Recovered refrigerant shall not be charged into another refrigeration
+system unless it has been cleaned and checked.
+5.4.9 Labelling
+Equipment shall be labelled stating that it has been de-commissioned and
+emptied of refrigerant. The label shall be dated and signed. Ensure that there are
+labels on the equipment stating the equipment contains flammable refrigerant.
+5.4.10 Recovery
+When removing refrigerant from a system, either for servicing or
+decommissioning, it is recommended good practice that all refrigerants are
+removed safely.
+When transferring refrigerant into cylinders, ensure that only appropriate
+refrigerant recovery cylinders are employed. Ensure that the correct number of
+cylinders for holding the total system charge are available. All cylinders to be used
+are designated for the recovered refrigerant and labelled for that refrigerant (i.e.
+special cylinders for the recovery of refrigerant).
+Cylinders shall be complete with pressure relief valve and associated shut-off
+valves in good working order. Empty recovery cylinders are evacuated and, if
+possible, cooled before recovery occurs.
+The recovery equipment shall be in good working order with a set of
+instructions concerning the equipment that is at hand and shall be suitable for the
+62
+
+DC Inverter U-match Series Duct Type Unit
+recovery of flammable refrigerants. In addition, a set of calibrated weighing scales
+shall be available and in good working order. Hoses shall be complete with leak-free
+disconnect couplings and in good condition. Before using the recovery machine,
+check that it is in satisfactory working order, has been properly maintained and that
+any associated electrical components are sealed to prevent ignition in the event of a
+refrigerant release. Consult manufacturer if in doubt.
+The recovered refrigerant shall be returned to the refrigerant supplier in the
+correct recovery cylinder, and the relevant Waste Transfer Notice arranged. Do not
+mix refrigerants in recovery units and especially not in cylinders.
+If compressors or compressor oils are to be removed, ensure that they have
+been evacuated to an acceptable level to make certain that flammable refrigerant
+does not remain within the lubricant. The evacuation process shall be carried out
+prior to returning the compressor to the suppliers. Only electric heating to the
+compressor body shall be employed to accelerate this process. When oil is drained
+from a system, it shall be carried out safely.
+5.5 After-sales Services
+Any quality or other issues encountered in the purchased air conditioner,
+please contact the local Gree after-sales service department.
+63

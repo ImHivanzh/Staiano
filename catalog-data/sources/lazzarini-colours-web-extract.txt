@@ -1,0 +1,5 @@
+Primary page text read by web tool on 2026-10-04. Direct HTTP subsequently returned 404.
+Source: https://www.lazzariniradiatori.it/Tabella-colori-Lazzarini
+Gloss: 1016, 1021, 1004, 2004, 3000, 3003, 3005, 4006, 4003, 5015, 5017, 5002, 5013, 6003, 6005, 6016, 6032, 6019
+Gloss and matt: 7037, 7012, 9005, 9016, 9002, 1013, 1015, 1014, 1001, 1019, 7006, 8016, 7047, 7004, 7001, 7030, 7023
+Mineral: VOV09 Bianco; VOV15 Quarzo; VOV13 Ametista; VOV16 Azzurrite; VOV08 Tabacco; VOV12 Antracite.

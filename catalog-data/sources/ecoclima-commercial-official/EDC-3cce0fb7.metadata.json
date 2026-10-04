@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve",
+  "code": "EDC",
+  "slug": "edc-1-6-diffusori-multidirezionali-ad-alette-curve",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edc-1-6-diffusori-multidirezionali-ad-alette-curve.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:20.064119+00:00",
+      "filename": "EDC-3cce0fb7.xlsx",
+      "bytes": 8081,
+      "sha256": "2c9ac84551a55002906173c41bdc3aa46f79774671efc9cb34a32e3a13ccc8cf",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 201
+      }
+    }
+  ]
+}

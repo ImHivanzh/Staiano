@@ -1,0 +1,223 @@
+{
+  "filename": "EATM-28483b28.xlsx",
+  "sha256": "31777d8b71a5ae0acdbc0ce976e86338622b96f371960acff31f4d72f708636c",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:28",
+    "modified": "2026-10-04 01:02:28"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 7,
+      "maxColumn": 4,
+      "mergedRanges": [
+        "A1:D1",
+        "A3:D3"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EATM TUBO TELESCOPICO",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Dimensioni e Listino Prezzi",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "Ø1 mm",
+            "Ø2 mm",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EATM-125",
+            125,
+            128,
+            "89,92"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EATM-160",
+            160,
+            163,
+            "98,25"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EATM-200",
+            200,
+            203,
+            "114,60"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EATM TUBO TELESCOPICO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Dimensioni e Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "Ø1 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "Ø2 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D4",
+          "row": 4,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EATM-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": 125,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": 128,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": "89,92",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EATM-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": 160,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": 163,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": "98,25",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EATM-200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": 203,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": "114,60",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

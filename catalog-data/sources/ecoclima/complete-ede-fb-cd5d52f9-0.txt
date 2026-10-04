@@ -1,0 +1,72 @@
+DIFFUSORI A GEOMETRIA
+FISSA
+Serie EDE-FB
+Diffusore ad effetto elicoidale ad alta induzione con alette stampate a profilo curvo. Il diffusore è composto da un pannello di
+supporto nel quale è direttamente ricavata, tramite stampaggio, una rosa di deflettori fissi a profilo curvo che garantiscono
+l’elevato effetto induttivo.
+Queste caratteristiche rendono il diffusore idoneo sia in regime estivo che invernale, anche con elevata differenza di
+temperatura tra l’aria ambiente e quella immessa.
+CARATTERISTICHE
+- Materiale: acciaio.
+- Finitura: verniciato bianco RAL 9016.
+- Installazione: con viti laterali o centrale su ponte di montaggio del plenum.
+IMPIEGO
+Diffusore adatto ad installazione compresa tra i 2,6 a 4 m di altezza.
+ACCESSORI
+- EPZ-EDE-FB plenum zincato con serranda e ponte di fissaggio;
+- EPI-EDE-FB plenum zincato ISOLATO con serranda e ponte di fissaggio;
+- Vite e tappino.
+PAG 1 - DIFFUSORI A GEOMETRIA FISSA
+SERIE EDE-FB - AGGIORNAMENTO 01/2021
+
+NOMENCLATURA CODICE
+-EDE-FB: Diffusori a getto elicoidale ad alta induzione su pannello 600x600 con deflettori fissi curvi.
+300 / 598 - 400 / 598 - 500 / 598 - 600 / 598
+EDE-FB 300 / 598
+DIMENSIONI
+modello L x H ØD C1
+300 / 598 598 x 598 90 260
+400 / 598 598 x 598 117 337
+500 / 598 598 x 598 153 440
+600 / 598 598 x 598 178 537
+Tutte le dimensioni sono espresse in mm.
+PAG 2 - DIFFUSORI A GEOMETRIA FISSA
+SERIE EDE-FB - AGGIORNAMENTO 01/2021
+
+DATI DI FUNZIONAMENTO
+Vk: velocità efficace (m/s)
+modello sezione Vk m/s 2 3 4 5 6 7
+efficace m³/h: portata
+m² Pa: perdite di carico in Pascal
+300 / 598 0,0102 m³/h 74 110 147 184 220 257 L(m): lancio in metri calcolato
+con installazione a filo soffitto
+Pa 4 9 16 25 36 49
+e velocità terminale 0,25 m/s
+L(m) 1,2 1,7 2,3 2,9 3,4 4,0
+dB(A): indice di rumorosità
+dB(A) <20 22 24 28 34 37
+400 / 598 0,0175 m³/h 126 189 252 315 378 441
+Pa 4 9 16 26 37 51
+L(m) 1,5 2,3 3,0 3,8 4,5 5,3
+dB(A) <20 <20 24 28 34 40
+500 / 598 0,0266 m³/h 192 287 383 479 574 670
+Pa 4 9 17 26 38 52
+L(m) 1,9 2,8 3,7 4,6 5,6 6,5
+dB(A) <20 22 30 42 44 47
+600 / 598 0,0374 m³/h 269 404 538 673 808 942
+Pa 4 10 17 27 39 53
+L(m) 2,2 3,3 4,4 5,5 6,6 7,7
+dB(A) <20 22 30 37 42 45
+PLENUM
+modello plenum Tipologia di diffusore Dimensioni esterne Ø d P1 P2 〼 C E
+compatibile L1 x H1
+300 EDE-FB 300 / 598 292x292 146 200 250 260 50
+400 EDE-FB 400 / 598 392x392 198 200 300 360 50
+500 EDE-FB 500 / 598 492x492 198 200 300 460 50
+EDE-FB 300 / 598
+EDE-FB 400 / 598
+600 592x592 248 200 350 560 50
+EDE-FB 500 / 598
+EDE-FB 600 / 598
+PAG 3 - DIFFUSORI A GEOMETRIA FISSA
+SERIE EDE-FB - AGGIORNAMENTO 01/2021

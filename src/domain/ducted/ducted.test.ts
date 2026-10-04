@@ -2,7 +2,11 @@ import { describe, it, expect } from "vitest";
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { selectDuctedMachine, distributeAirflow } from "./calculate";
 import { createProject, addRectangle } from "@/domain/project";
-import { applyDuctedSystem, ductedRoomAllocation } from "./apply";
+import {
+  applyDuctedSystem,
+  ductedRoomAllocation,
+  removeHvacSystem,
+} from "./apply";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { sizeAirTerminal } from "@/domain/air-terminals/size";
 import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
@@ -13,7 +17,206 @@ import { applyRadiatorSolution } from "@/domain/radiators/apply";
 import { sizeRadiators } from "@/domain/radiators/size";
 import { radiatorProducts } from "@/domain/catalogs/radiators";
 import { projectSchema } from "@/schemas/project";
+import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
+import { validateProject } from "@/domain/validation";
 describe("canalizzato, portate e terminali persistenti", () => {
+  it("new systems, geometry refresh and legacy reload always use maximum flow", () => {
+    let p = createProject();
+    p = addRectangle(p, p.floors[0].id, {
+      width: 4.2,
+      length: 3.8,
+      height: 2.7,
+      name: "Camera",
+    });
+    const room = p.rooms[0];
+    p = applyDuctedSystem(p, [room.id], "Mitsubishi Electric", null);
+    expect(p.hvacSystems[0].airflowM3h).toBe(840);
+    const family = airTerminalCatalog.families.find(
+      (f) => f.familyCode === "EDLS",
+    )!;
+    p = applyAirTerminalSolution(
+      p,
+      room.id,
+      p.hvacSystems[0].id,
+      "supply",
+      family.familyCode,
+      sizeAirTerminal(720, 1, family, "supply")[0],
+      "ceiling",
+    );
+    const originals = structuredClone(p.airTerminals);
+    p.hvacSystems[0].airflowM3h = 720;
+    expect(ductedRoomAllocation(p, room.id)?.airflowM3h).toBe(840);
+    expect(
+      validateProject(p).find((c) => c.code === "machineAirflow")?.status,
+    ).toBe("invalid");
+    p = decodeProject(JSON.stringify(p));
+    expect(p.hvacSystems[0].airflowM3h).toBe(840);
+    expect(
+      p.airTerminals.reduce((sum, t) => sum + t.requiredAirflowM3h, 0),
+    ).toBe(840);
+    for (const [index, terminal] of p.airTerminals.entries()) {
+      expect({
+        ...terminal,
+        requiredAirflowM3h: originals[index].requiredAirflowM3h,
+      }).toEqual(originals[index]);
+    }
+    expect(
+      validateProject(p).find((c) => c.code === "supplyAirflow")?.status,
+    ).toBe("invalid");
+    p = refreshDuctedBindings(updateRoom(p, room.id, { heightM: 4 }));
+    const machine = hvacCatalog.products.find(
+      (m) => m.id === p.hvacSystems[0].productId,
+    )!;
+    expect(p.hvacSystems[0].airflowM3h).toBe(
+      maximumAirflowOption(machine)!.airflowM3h,
+    );
+    p.hvacSystems[0].catalogVersion = "missing-historical-revision";
+    const unknown = refreshDuctedBindings(p);
+    expect(unknown.hvacSystems[0].compatibilityStatus).toBe("unverifiable");
+    expect(unknown.airTerminals).toEqual(p.airTerminals);
+    expect(ductedRoomAllocation(unknown, room.id)).toBeNull();
+  });
+  it("unequal room fractions conserve each independent machine's maximum", () => {
+    for (const flow of [840, 900, 600]) {
+      const allocations = distributeAirflow(
+        [
+          { id: "a", designLoadW: 1103, supplyPoints: 3, returnPoints: 2 },
+          { id: "b", designLoadW: 2377, supplyPoints: 2, returnPoints: 3 },
+          { id: "c", designLoadW: 1739, supplyPoints: 1, returnPoints: 1 },
+        ],
+        flow,
+      );
+      expect(allocations.reduce((sum, r) => sum + r.airflowM3h, 0)).toBe(flow);
+      expect(allocations[0].supplyAirflowPerPointM3h).toBe(
+        allocations[0].airflowM3h / 3,
+      );
+      expect(allocations[1].returnAirflowPerPointM3h).toBe(
+        allocations[1].airflowM3h / 3,
+      );
+    }
+  });
+  it("supply and return physical units conserve maximum flow in two autonomous zones", () => {
+    let p = createProject();
+    for (const [name, width, length] of [
+      ["Giorno A", 4, 3],
+      ["Giorno B", 3.7, 3.1],
+      ["Notte A", 3.9, 3.3],
+      ["Notte B", 4.1, 2.9],
+    ] as const)
+      p = addRectangle(p, p.floors[0].id, { name, width, length, height: 2.7 });
+    p = applyDuctedSystem(
+      p,
+      p.rooms.slice(0, 2).map((r) => r.id),
+      "Mitsubishi Electric",
+      null,
+    );
+    p = applyDuctedSystem(
+      p,
+      p.rooms.slice(2).map((r) => r.id),
+      "Gree",
+      null,
+    );
+    for (const room of p.rooms) {
+      const allocation = ductedRoomAllocation(p, room.id)!;
+      for (const use of ["supply", "return"] as const) {
+        const family = airTerminalCatalog.families.find(
+          (f) => f.familyCode === (use === "supply" ? "EDLS" : "EGQ"),
+        )!;
+        p = applyAirTerminalSolution(
+          p,
+          room.id,
+          allocation.system.id,
+          use,
+          family.familyCode,
+          sizeAirTerminal(
+            allocation.airflowM3h,
+            use === "supply" ? 3 : 2,
+            family,
+            use,
+          )[0],
+          family.mountings!.includes("ceiling") ? "ceiling" : "wall",
+        );
+      }
+    }
+    p = decodeProject(encodeProject(refreshDuctedBindings(p)));
+    expect(p.hvacSystems.map((s) => s.airflowM3h)).toEqual([840, 600]);
+    for (const system of p.hvacSystems)
+      for (const use of ["supply", "return"] as const)
+        expect(
+          p.airTerminals
+            .filter((t) => t.systemId === system.id && t.use === use)
+            .reduce((sum, t) => sum + t.requiredAirflowM3h, 0),
+        ).toBe(system.airflowM3h);
+    const untouched = structuredClone(p.hvacSystems[1]);
+    const untouchedTerminals = structuredClone(
+      p.airTerminals.filter((t) => t.systemId === untouched.id),
+    );
+    p = refreshDuctedBindings(updateRoom(p, p.rooms[0].id, { heightM: 4 }));
+    expect(p.hvacSystems[1]).toEqual(untouched);
+    expect(p.airTerminals.filter((t) => t.systemId === untouched.id)).toEqual(
+      untouchedTerminals,
+    );
+  });
+  it("two autonomous ducted systems keep machine, rooms and terminals independent through edits, export and deletion", () => {
+    let p = createProject();
+    for (const name of ["Zona giorno", "Zona notte"])
+      p = addRectangle(p, p.floors[0].id, {
+        width: 4.2,
+        length: 3.8,
+        height: 2.7,
+        name,
+      });
+    const [day, night] = p.rooms;
+    p = applyDuctedSystem(p, [day.id], "Mitsubishi Electric", null);
+    p = applyDuctedSystem(p, [night.id], "Daikin", null);
+    const first = ductedRoomAllocation(p, day.id)!,
+      second = ductedRoomAllocation(p, night.id)!;
+    p.hvacSystems = p.hvacSystems.map((s) => ({
+      ...s,
+      name: s.id === first.system.id ? "Giorno autonomo" : "Notte autonoma",
+    }));
+    const family = airTerminalCatalog.families.find(
+      (f) => f.familyCode === "EDLS",
+    )!;
+    for (const room of [day, night]) {
+      const a = ductedRoomAllocation(p, room.id)!;
+      p = applyAirTerminalSolution(
+        p,
+        room.id,
+        a.system.id,
+        "supply",
+        family.familyCode,
+        sizeAirTerminal(a.airflowM3h, room.supplyPoints, family, "supply")[0],
+        "ceiling",
+      );
+    }
+    const untouched = structuredClone(
+      p.hvacSystems.find((s) => s.id === second.system.id),
+    );
+    const untouchedTerminals = structuredClone(
+      p.airTerminals.filter((t) => t.systemId === second.system.id),
+    );
+    p = refreshDuctedBindings(updateRoom(p, day.id, { heightM: 3.5 }));
+    expect(p.hvacSystems.find((s) => s.id === second.system.id)).toEqual(
+      untouched,
+    );
+    expect(
+      p.airTerminals.filter((t) => t.systemId === second.system.id),
+    ).toEqual(untouchedTerminals);
+    expect(() =>
+      applyDuctedSystem(p, [night.id], "Gree", first.system.id),
+    ).toThrow(/altro sistema/);
+    const restored = decodeProject(encodeProject(p));
+    expect(restored.hvacSystems.map((s) => s.name)).toEqual(
+      p.hvacSystems.map((s) => s.name),
+    );
+    const removed = removeHvacSystem(restored, first.system.id);
+    expect(removed.hvacSystems).toEqual([untouched]);
+    expect(removed.airTerminals).toEqual(untouchedTerminals);
+    expect(ductedRoomAllocation(removed, night.id)?.airflowM3h).toBe(
+      second.airflowM3h,
+    );
+  });
   it("Daikin FBA71–140: merged cells from official PDF p.90", () => {
     const machine = selectDuctedMachine(
       7000,
@@ -190,7 +393,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
     expect(restored.airTerminals).toHaveLength(2);
     expect(
       restored.airTerminals.reduce((n, t) => n + t.requiredAirflowM3h, 0),
-    ).toBeCloseTo(720);
+    ).toBeCloseTo(840);
   });
   it("rifiuta montaggio incompatibile e scala non verificata", () => {
     let p = createProject();

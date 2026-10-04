@@ -1,0 +1,54 @@
+DIFFUSORI CIRCOLARI DA
+PAVIMENTO
+Serie EDFDS
+Diffusore circolare da pavimento, ad alta induzione, robusto e ispezionabile per pulizia.
+Il diffusore è completo di vaschetta.
+CARATTERISTICHE
+Materiale: alluminio anodizzato naturale.
+IMPIEGO
+Cinema, teatri e ovunque sia necessario immettere aria da sottopavimento.
+ACCESSORI
+EPI-EDFDS plenum isolato con serranda
+NOMENCLATURA CODICE
+EDFDS Diffusori circolari da pavimento
+Grandezza: 150-200
+EDFDS 150
+DIMENSIONI
+Ø A Ø B C E E
+modello
+(mm) (mm) (mm) (min.) (max)
+150 190 150 250 x 250 14 32
+200 240 200 300 x 300 14 32
+Tutte le dimensioni sono espresse in mm.
+PAG 1- DIFFUSORI CIRCOLARI DA PAVIMENTO
+SERIE EDFDS - AGGIORNAMENTO 01/2023
+
+DATI DI FUNZIONAMENTO
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio verticale in metri con velocità terminale 0,25 m/s
+dB(A): indice di rumorosità
+modello sezione efficace m² Vk m/s 1,7 2 2,2 2,5 2,8 3,4 3,9 4,8 5,6
+m³/h 30 35 40 45 50 60 70 85 100
+Pa 6 8 11 13 17 24 33 48 67
+dB(A) <20 22 25 28 31 35 39 43 47
+EDFDS 150 0,00495
+-4°C 0,8 0,9 1,1 1,2 1,3 1,6 1,9 2,3 2,7
+L(m) con ΔT -6°C 0,7 0,8 0,9 1,0 1,2 1,4 1,6 2,0 2,3
+-8°C 0,6 0,7 0,8 0,9 1,0 1,2 1,4 1,7 2,0
+modello sezione efficace m² Vk m/s 1,5 1,8 2,1 2,5 2,9 3,4 3,8 4,4 5
+m³/h 50 60 70 85 100 115 130 150 170
+Pa 3 5 7 10 14 18 23 31 40
+dB(A) <20 20 24 29 33 36 39 43 46
+EDFDS 200 0,00945
+-4°C 0,7 0,8 0,9 1,1 1,3 1,5 1,7 2,0 2,3
+L(m) con ΔT -6°C 0,6 0,7 0,8 1,0 1,2 1,3 1,5 1,7 2,0
+-8°C 0,5 0,6 0,7 0,9 1,0 1,2 1,3 1,5 1,7
+PLENUM
+modello Dimensioni L1 x H1 Ø d P1 E F
+EDFDS 150 250x250 98 150 100 14
+EDFDS 200 350x350 123 150 100 14
+Tutte le dimensioni sono espresse in mm.
+PAG 2 - DIFFUSORI CIRCOLARI DA PAVIMENTO
+SERIE EDFDS - AGGIORNAMENTO 01/2023

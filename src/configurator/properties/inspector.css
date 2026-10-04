@@ -1,0 +1,156 @@
+.proprieta .dati-stanza {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 8px;
+  margin-bottom: 8px;
+}
+.proprieta .dati-stanza dd {
+  font-size: 20px;
+}
+.nota-fabbisogno {
+  margin: 0 0 20px;
+}
+.impianto-attuale {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: var(--testo-tenue);
+}
+.impianto-attuale svg {
+  flex-shrink: 0;
+  color: var(--tinta);
+}
+.corpo-proprieta > .azione-inspector {
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--bordo);
+}
+.corpo-proprieta > .azione-inspector > summary {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 17px 0;
+  font-size: 14px;
+  list-style: none;
+}
+.azione-inspector > summary::-webkit-details-marker {
+  display: none;
+}
+.azione-inspector > summary::after {
+  content: "+";
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--testo-tenue);
+}
+.azione-inspector[open] > summary::after {
+  content: "−";
+}
+.azione-inspector > summary > svg {
+  flex-shrink: 0;
+  color: var(--tinta);
+}
+.azione-inspector > summary small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--testo-tenue);
+  margin-top: 4px;
+}
+.azione-inspector > summary:focus-visible,
+.scelta-impianto button:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 3px;
+}
+.dati-secondari {
+  margin: 4px 0 18px;
+}
+.dati-secondari > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+}
+.dati-secondari dt {
+  color: var(--testo-tenue);
+}
+.dati-secondari dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.guida-inspector > svg {
+  color: var(--tinta);
+}
+.guida-inspector h3 {
+  margin: 14px 0 8px;
+  font-size: 18px;
+}
+.guida-inspector p {
+  line-height: 1.7;
+}
+.guida-inspector ol {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+  counter-reset: passo;
+}
+.guida-inspector li {
+  counter-increment: passo;
+  position: relative;
+  padding: 0 0 24px 35px;
+}
+.guida-inspector li::before {
+  content: counter(passo);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--tinta);
+  font-size: 14px;
+  font-weight: 600;
+}
+.guida-inspector li strong,
+.guida-inspector li span {
+  display: block;
+}
+.guida-inspector li span {
+  color: var(--testo-tenue);
+  font-size: 12px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+.scelta-impianto {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 0 18px;
+}
+.scelta-impianto button {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 4px;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  color: var(--testo);
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.scelta-impianto button[aria-pressed="true"] {
+  color: var(--tinta);
+  background: var(--carta-3);
+  border-color: var(--tinta);
+}
+.corpo-proprieta .sistemi-stanza > section > h3 {
+  margin-top: 12px;
+}
+.riepilogo-apparecchio {
+  margin: 12px 0 20px;
+}
+.riepilogo-apparecchio strong {
+  color: var(--tinta);
+  font-size: 22px;
+}

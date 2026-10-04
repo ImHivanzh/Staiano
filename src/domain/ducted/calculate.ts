@@ -1,4 +1,5 @@
 import type { HvacProduct } from "@/domain/catalogs/hvac-schema";
+import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 export function selectDuctedMachine(
   requiredW: number,
   manufacturer: string,
@@ -16,14 +17,13 @@ export function selectDuctedMachine(
         p.coolingCapacityW >= requiredW &&
         p.heatingCapacityW !== null &&
         p.heatingCapacityW >= requiredW &&
-        p.defaultAirflowIndex !== null &&
-        p.airflowOptions[p.defaultAirflowIndex],
+        maximumAirflowOption(p) !== null,
     )
     .sort(
       (a, b) =>
         a.coolingCapacityW - b.coolingCapacityW ||
-        a.airflowOptions[a.defaultAirflowIndex!].airflowM3h -
-          b.airflowOptions[b.defaultAirflowIndex!].airflowM3h,
+        maximumAirflowOption(a)!.airflowM3h -
+          maximumAirflowOption(b)!.airflowM3h,
     );
 }
 export function distributeAirflow(
@@ -52,9 +52,14 @@ export function distributeAirflow(
   )
     throw new Error("Portata, fabbisogni e numero punti devono essere validi.");
   const totalLoadW = rooms.reduce((sum, r) => sum + r.designLoadW, 0);
-  return rooms.map((r) => {
+  let assignedAirflowM3h = 0;
+  return rooms.map((r, index) => {
     const share = r.designLoadW / totalLoadW,
-      airflowM3h = machineAirflowM3h * share;
+      airflowM3h =
+        index === rooms.length - 1
+          ? machineAirflowM3h - assignedAirflowM3h
+          : machineAirflowM3h * share;
+    assignedAirflowM3h += airflowM3h;
     return {
       roomId: r.id,
       totalLoadW,

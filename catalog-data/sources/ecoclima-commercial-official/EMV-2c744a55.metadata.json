@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs",
+  "code": "EMV",
+  "slug": "emv-pfs-diffusore-a-coni-fissi-in-abs",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=emv-pfs-diffusore-a-coni-fissi-in-abs.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.127839+00:00",
+      "filename": "EMV-2c744a55.xlsx",
+      "bytes": 7077,
+      "sha256": "c795d841f901e361e0588e7d4d3319105ae87b2a9c8a865408cb03d10b295008",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 44
+      }
+    }
+  ]
+}

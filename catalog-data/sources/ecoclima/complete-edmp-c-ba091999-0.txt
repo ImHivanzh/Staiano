@@ -1,0 +1,157 @@
+DIFFUSORI A MICRO
+UGELLI ORIENTABILI
+SU PANNELLO
+Serie EDMP
+I diffusori della serie EDMP sono diffusori con micro ugelli orientabili ad alta induzione su pannello QUADRO o RETTANGOLARE con
+design costruttivi diversi a seconda della serie scelta. Vengono utilizzati in mandata sia in condizionamento che in riscaldamento,
+per installazioni a parete, a soffitto (EDMP-P) o addirittura direttamente su canale (EDMP-C).
+I diffusori a micro ugelli orientabili singolarmente ad alta induzione consentono di avere un’elevata velocità di uscita con livelli
+sonori contenuti. Sono quindi idonei per tutte quelle applicazioni che richiedono lanci relativamente consistenti con la possibilità
+di orientare il flusso in modo da avere una elevata profondità di penetrazione in aree specifiche dell’ambiente da climatizzare.
+La presenza dei micro ugelli, garantiscono un’elevata induzione dell’aria ambiente ad opera dell’aria primaria immessa. In sintesi
+questi diffusori offrono la possibilità di lanci consistenti con elevati rapporti di induzione e rappresentano una eccellente soluzione
+tecnologica per due caratteristiche generalmente antagoniste.
+I diffusori sono costituiti da una piastra in acciaio (EDMP-C) e cornice in alluminio e piastra in acciaio (EDMP-P), verniciati con
+polvere a base di resine epossidiche posate elettrostaticamente ed essiccate al forno. Questo tipo di verniciatura risulta resistente
+ad eventuali urti o abrasioni e mantiene inalterate nel tempo le caratteristiche estetiche. Sul pannello trovano alloggiamento i
+micro ugelli in materiale polimerico orientabili singolarmente.
+L’installazione, le regolazioni e la manutenzione sono di semplice esecuzione.
+VARIANTI
+I diffusori del tipo EDMP dispongono di due serie. Le serie disponibili sono:
+• EDMP-P diffusore rettangolare con micro ugelli bianchi disposti su matrice quadra completo di cornice perimetrale.
+• EDMP-C diffusore rettangolare con micro ugelli bianchi disposti su matrice quadra completo di cornice sagomata per
+l’installazione con perfetta aderenza al canale circolare.
+Su richiesta possono essere forniti diffusori con verniciature RAL a scelta (prezzi a richiesta) e micro ugelli di colore nero (gli
+ugelli non possono esser verniciati).
+VOCI DI CAPITOLATO
+Diffusore a microugelli orientabili ad alta induzione su pannello QUADRO o RETTANGOLARE vengono utilizzati in mandata sia in
+condizionamento che in riscaldamento, per installazioni a parete, a soffitto o addirittura direttamente su canale.
+I diffusori a microugelli orientabili singolarmente ad alta induzione consentono di avere un’elevata velocità di uscita con livelli
+sonori contenuti. Sono quindi idonei per tutte quelle applicazioni che richiedono lanci relativamente consistenti con la possibilità
+di orientare il flusso in modo da avere una elevata profondità di penetrazione in aree specifiche dell’ambiente da climatizzare.
+La presenza dei microugelli, garantiscono un’elevata induzione dell’aria ambiente ad opera dell’aria primaria immessa. In sintesi
+questi diffusori offrono la possibilità di lanci consistenti con elevati rapporti di induzione e rappresentano una eccellente soluzione
+tecnologica per due caratteristiche generalmente antagoniste.
+I diffusori sono costituiti da una piastra in acciaio (EDMP-C) e cornice in alluminio e piastra in acciaio (EDMP-P), verniciati con
+polvere a base di resine epossidiche posate elettrostaticamente ed essiccate al forno. Questo tipo di verniciatura risulta resistente
+ad eventuali urti o abrasioni e mantiene inalterate nel tempo le caratteristiche estetiche. Sul pannello trovano alloggiamento i
+microugelli in materiale polimerico orientabili singolarmente.
+L’installazione, le regolazioni e la manutenzione sono di semplice esecuzione. Il fissaggio al plenum è effettuato mediante viti
+laterali. Verniciatura RAL 9016 o RAL a richiesta. Gli ugelli in materiale polimerico sono o bianchi o neri e non possono esser
+verniciati.
+PAG 1 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMP - AGGIORNAMENTO 01/2021
+
+EDMP diffusore rettangolare su pannello con microugelli
+C con cornice sagomata per installazione su canale circolare
+P con cornice perimetrale piana per installazione a parete
+Grandezza L x H
+EDMP-P 500 x 100
+COSTRUZIONE DIFFUSORE
+- Materiale EDMP-P: Piastra in acciaio, cornice in alluminio, micro ugelli materiale polimerico colore bianco.
+- Materiale EDMP-C: Piastra in acciaio, micro ugelli materiale polimerico colore bianco.
+- Finitura superficiale standard: Verniciatura colore bianco RAL 9016, micro ugelli colore bianco (a richiesta colore nero).
+- Finiture superficiali a richiesta: verniciatura del diffusore nei colori RAL a scelta (i micro ugelli non possono esser verniciati).
+- Fissaggio: con viti laterali
+- Altezza d’installazione: da 2,6 a 4,1 m
+EDMP-P
+EDMP-C
+PAG 2 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMP - AGGIORNAMENTO 01/2021
+
+EDMP DATI TECNICI
+Vk L
+H
+6 m/s 200 300 400 500 600 700 800 1000 1200
+N° microugelli disposti in 1 fila 3 5 7 9 11 13 15 19 23
+m3/h 11 18 25 32 39 47 54 68 82
+100
+L(m) 2,0 2,3 2,7 3,0 3,5 3,9 4,0 4,5 5,0
+dB(A) <20 <20 <20 20 21 21 22 23 24
+N° microugelli disposti in 2 file 6 10 14 18 22 26 30 38 46
+m3/h 22 36 50 65 79 93 108 136 165
+150
+L(m) 2,6 3,3 3,8 4,3 4,8 5,3 5,6 6,3 7,0
+dB(A) <20 20 22 23 23 24 25 26 26
+N° microugelli disposti in 3 file 9 15 21 27 33 39 45 57 69
+m3/h 32 54 75 97 118 140 161 204 247
+200
+L(m) 2,9 3,8 4,7 5,3 5,7 6,3 7,0 7,5 8,3
+dB(A) 20 22 23 24 25 26 26 27 28
+N° microugelli disposti in 4 file - 20 28 36 44 52 60 76 92
+m3/h - 72 100 129 158 186 215 273 330
+250
+L(m) - 4,5 5,5 6,5 7,0 7,6 8,2 9,0 10,1
+dB(A) - 23 24 25 26 27 27 28 29
+N° microugelli disposti in 5 file - 25 35 45 55 65 75 95 115
+m3/h - 90 125 161 197 233 269 341 412
+300
+L(m) - 5,3 6,5 6,8 7,6 8,3 8,8 10,0 11,0
+dB(A) - 24 25 26 27 28 28 29 30
+Perdita di carico: 18 Pa
+Sezione efficace: 0,0166 dm2 x N° microugelli
+Vk L
+H
+8 m/s 200 300 400 500 600 700 800 1000 1200
+N° microugelli disposti in 1 fila 3 5 7 9 11 13 15 19 23
+m3/h 14 24 33 43 53 62 72 91 110
+100
+L(m) 2,7 3,3 3,7 4,0 4,7 5,0 5,5 6,3 7,0
+dB(A) 21 23 25 26 26 27 28 29 29
+N° microugelli disposti in 2 file 6 10 14 18 22 26 30 38 46
+m3/h 29 48 67 86 105 124 143 182 220
+150
+L(m) 3,5 4,3 5,3 5,7 6,6 7,2 7,8 8,2 9,5
+dB(A) 24 26 27 28 29 30 30 31 32
+N° microugelli disposti in 3 file 9 15 21 27 33 39 45 57 69
+m3/h 43 72 100 129 158 186 215 273 330
+200
+L(m) 4,0 5,3 6,4 6,5 7,8 8,3 9,0 10,1 11
+dB(A) 26 28 29 30 31 31 32 33 34
+N° microugelli disposti in 4 file - 20 28 36 44 52 60 76 92
+m3/h - 96 134 172 210 249 287 363 440
+250
+L(m) - 6,0 7,0 8,2 9,3 10,2 11,0 11,8 13,5
+dB(A) - 29 30 31 32 33 33 34 35
+N° microugelli disposti in 5 file - 25 35 45 55 65 75 95 115
+m3/h - 120 167 215 263 311 359 454 550
+300
+L(m) - 7,2 8,2 9,5 10,2 11,0 11,8 13,0 15,0
+dB(A) - 30 31 32 33 33 34 35 36
+Perdita di carico: 27 Pa
+Sezione efficace: 0,0166 dm2 x N° microugelli
+PAG 3 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMP - AGGIORNAMENTO 01/2021
+
+Vk L
+H
+10 m/s 200 300 400 500 600 700 800 1000 1200
+N° microugelli disposti in 1 fila 3 5 7 9 11 13 15 19 23
+m3/h 18 30 42 54 66 78 90 114 137
+100
+L(m) 3,4 4,0 4,5 5,0 5,7 6,2 7,0 7,8 9,0
+dB(A) 26 28 29 30 31 31 32 33 34
+N° microugelli disposti in 2 file 6 10 14 18 22 26 30 38 46
+m3/h 36 60 84 108 131 155 179 227 275
+150
+L(m) 4,4 5,4 6,8 7,2 8,3 8,5 9,2 10,3 11,5
+dB(A) 28 30 32 33 34 34 35 36 37
+N° microugelli disposti in 3 file 9 15 21 27 33 39 45 57 69
+m3/h 54 90 125 161 197 233 269 341 412
+200
+L(m) 5,0 6,7 7,8 8,8 10,0 10,2 11,7 13,0 14,0
+dB(A) 30 32 33 34 35 36 36 37 38
+N° microugelli disposti in 4 file - 20 28 36 44 52 60 76 92
+m3/h - 120 167 215 263 311 359 454 550
+250
+L(m) - 7,5 9,0 10,5 12,0 13,0 13,5 14,0 16,5
+dB(A) - 33 35 36 36 37 38 39 39
+N° microugelli disposti in 5 file - 25 35 45 55 65 75 95 115
+m3/h - 149 209 269 329 388 448 568 687
+300
+L(m) - 8,5 10,5 11,5 13,0 13,5 14,5 17,0 18,0
+dB(A) - 34 35 36 37 38 39 39 40
+Perdita di carico: 50 Pa
+Sezione efficace: 0,0166 dm2 x N° microugelli
+PAG 4 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMP - AGGIORNAMENTO 01/2021

@@ -1,0 +1,835 @@
+{
+  "filename": "EAG-5a5c2158.xlsx",
+  "sha256": "19bb1acaf45e8bb76671d079f7325b6362f6bbd27c842cdad10d84667a4b01a8",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:27",
+    "modified": "2026-10-04 01:02:27"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 15,
+      "maxColumn": 9,
+      "mergedRanges": [
+        "E8:E9",
+        "B12:B13",
+        "F12:F13",
+        "B8:B9",
+        "A3:I3",
+        "C10:C11",
+        "A6:A7",
+        "F6:F7",
+        "E10:E11",
+        "B14:B15",
+        "F8:F9",
+        "A12:A13",
+        "C12:C13",
+        "I12:I13",
+        "E6:E7",
+        "D12:D13",
+        "B10:B11",
+        "B6:B7",
+        "A14:A15",
+        "I14:I15",
+        "A8:A9",
+        "C8:C9",
+        "I8:I9",
+        "A4:A5",
+        "I4:I5",
+        "D8:D9",
+        "A10:A11",
+        "I10:I11",
+        "D14:D15",
+        "F14:F15",
+        "D10:D11",
+        "E12:E13",
+        "H4:H5",
+        "A1:I1",
+        "I6:I7",
+        "C6:C7",
+        "D6:D7",
+        "F10:F11",
+        "C14:C15",
+        "E14:E15"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EAG INOX GRIGLIA CON PROTEZIONE ANTIPIOGGIA",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Dati e Listino Prezzi",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "Ø Foro",
+            "ØA",
+            "ØB",
+            "C",
+            "Sezione Efficace",
+            "Portata Aria",
+            "Pa",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "mm",
+            "mm",
+            "mm",
+            "mm",
+            "m2",
+            "m3/h",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EAG-INOX-100",
+            100,
+            97,
+            133,
+            52,
+            "0,0048",
+            75,
+            15,
+            "45,82"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            150,
+            40,
+            null
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "EAG-INOX-125",
+            125,
+            120,
+            165,
+            52,
+            "0,0082",
+            100,
+            15,
+            "57,58"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            200,
+            40,
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "EAG-INOX-150",
+            150,
+            145,
+            192,
+            62,
+            "0,0126",
+            300,
+            30,
+            "67,92"
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            400,
+            40,
+            null
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "EAG-INOX-160",
+            160,
+            155,
+            192,
+            62,
+            "0,0140",
+            400,
+            40,
+            "75,50"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            500,
+            40,
+            null
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "EAG-INOX-200",
+            200,
+            195,
+            253,
+            62,
+            "0,0178",
+            500,
+            40,
+            "126,05"
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            600,
+            40,
+            null
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EAG INOX GRIGLIA CON PROTEZIONE ANTIPIOGGIA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Dati e Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "Ø Foro",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "ØA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D4",
+          "row": 4,
+          "column": 4,
+          "value": "ØB",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E4",
+          "row": 4,
+          "column": 5,
+          "value": "C",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F4",
+          "row": 4,
+          "column": 6,
+          "value": "Sezione Efficace",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G4",
+          "row": 4,
+          "column": 7,
+          "value": "Portata Aria",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H4",
+          "row": 4,
+          "column": 8,
+          "value": "Pa",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I4",
+          "row": 4,
+          "column": 9,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": "mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E5",
+          "row": 5,
+          "column": 5,
+          "value": "mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F5",
+          "row": 5,
+          "column": 6,
+          "value": "m2",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G5",
+          "row": 5,
+          "column": 7,
+          "value": "m3/h",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EAG-INOX-100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": 100,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": 97,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": 133,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E6",
+          "row": 6,
+          "column": 5,
+          "value": 52,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F6",
+          "row": 6,
+          "column": 6,
+          "value": "0,0048",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G6",
+          "row": 6,
+          "column": 7,
+          "value": 75,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H6",
+          "row": 6,
+          "column": 8,
+          "value": 15,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I6",
+          "row": 6,
+          "column": 9,
+          "value": "45,82",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G7",
+          "row": 7,
+          "column": 7,
+          "value": 150,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H7",
+          "row": 7,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "EAG-INOX-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": 125,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": 120,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D8",
+          "row": 8,
+          "column": 4,
+          "value": 165,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E8",
+          "row": 8,
+          "column": 5,
+          "value": 52,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F8",
+          "row": 8,
+          "column": 6,
+          "value": "0,0082",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G8",
+          "row": 8,
+          "column": 7,
+          "value": 100,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H8",
+          "row": 8,
+          "column": 8,
+          "value": 15,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I8",
+          "row": 8,
+          "column": 9,
+          "value": "57,58",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G9",
+          "row": 9,
+          "column": 7,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H9",
+          "row": 9,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "EAG-INOX-150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": 150,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C10",
+          "row": 10,
+          "column": 3,
+          "value": 145,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D10",
+          "row": 10,
+          "column": 4,
+          "value": 192,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E10",
+          "row": 10,
+          "column": 5,
+          "value": 62,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F10",
+          "row": 10,
+          "column": 6,
+          "value": "0,0126",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G10",
+          "row": 10,
+          "column": 7,
+          "value": 300,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H10",
+          "row": 10,
+          "column": 8,
+          "value": 30,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I10",
+          "row": 10,
+          "column": 9,
+          "value": "67,92",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G11",
+          "row": 11,
+          "column": 7,
+          "value": 400,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H11",
+          "row": 11,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": "EAG-INOX-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": 160,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C12",
+          "row": 12,
+          "column": 3,
+          "value": 155,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D12",
+          "row": 12,
+          "column": 4,
+          "value": 192,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E12",
+          "row": 12,
+          "column": 5,
+          "value": 62,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F12",
+          "row": 12,
+          "column": 6,
+          "value": "0,0140",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G12",
+          "row": 12,
+          "column": 7,
+          "value": 400,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H12",
+          "row": 12,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I12",
+          "row": 12,
+          "column": 9,
+          "value": "75,50",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G13",
+          "row": 13,
+          "column": 7,
+          "value": 500,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H13",
+          "row": 13,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "EAG-INOX-200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C14",
+          "row": 14,
+          "column": 3,
+          "value": 195,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D14",
+          "row": 14,
+          "column": 4,
+          "value": 253,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E14",
+          "row": 14,
+          "column": 5,
+          "value": 62,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F14",
+          "row": 14,
+          "column": 6,
+          "value": "0,0178",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G14",
+          "row": 14,
+          "column": 7,
+          "value": 500,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H14",
+          "row": 14,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I14",
+          "row": 14,
+          "column": 9,
+          "value": "126,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G15",
+          "row": 15,
+          "column": 7,
+          "value": 600,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H15",
+          "row": 15,
+          "column": 8,
+          "value": 40,
+          "type": "n",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+Knockout hole.
+ARROW VIEW A
+126 P.C.D.
+500 or more
+Service space
+ARROW VIEW A
+e
+r
+om
+r
+o
+003
+ecaps
+ecivreS
+5-O4.7 HOLE
+041
+170 O100 700
+( )
+492
+4-M4 (CLASS 2)
+542 871
+001 56
+69
+40
+50
+83 901
+3x140=420 32
+515
+031=56x2
+25 800
+301
+179 50
+036
+011
+05
+012
+654
+4x145=590
+738
+6x65=390
+42 155 130 130 120
+59 012
+Suspension bolt
+Fresh air intake position
+Suspension position
+noitisop
+noisnepsuS
+FBA50A
+9
+KJ KC KE KH
+KK
+KF KD
+KA
+KB
+KG
+Item Name Description
+Notes
+KA
+Liquid pipe connection port Ø6.35 flared connection
+1. When installing optional accessories, refer to their respective documentation.
+KB
+Gas pipe connection port Ø12.70 flared connection
+KC VP20 (OD Ø26, ID Ø20) 2. The ceiling depth varies according to the documentation of the specific system.
+Drain pipe connection
+KD /
+Wiring connection
+KE /
+Power supply connection
+KF Drain outlet VP20 (OD Ø26, ID Ø20)
+KG /
+Air filter
+KH /
+Air suction side
+KJ /
+Air discharge side
+KK /
+Nameplate 3D094918B

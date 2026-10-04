@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
+  "code": "EGQIF",
+  "slug": "egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=egqif-griglie-a-maglia-quadra-inclinata-senza-cornice.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.020739+00:00",
+      "filename": "EGQIF-d0774fcc.xlsx",
+      "bytes": 8230,
+      "sha256": "08a37287cd7119668e49b1531f0ff89e27cee558b9e83a19ebd07f574e9f97fe",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 177
+      }
+    }
+  ]
+}

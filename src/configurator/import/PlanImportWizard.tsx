@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Point } from "@/schemas/project";
 import type { ImportedPlan, ParsedPlan } from "@/services/import/plan-types";
 import { readPlanFile } from "@/services/import/plan-file";
@@ -21,8 +21,21 @@ export function PlanImportWizard({
   initialFile?: File;
 }) {
   const dialogRef = useRef<HTMLDivElement>(null),
+    previewRef = useRef<SVGSVGElement>(null),
     fileRef = useRef<HTMLInputElement>(null),
     generation = useRef(0);
+  const [view, setView] = useState<{ zoom: number; center: Point | null }>({
+    zoom: 1,
+    center: null,
+  });
+  const drag = useRef<{
+    pointerId: number;
+    x: number;
+    y: number;
+    center: Point;
+    inverse: DOMMatrix;
+  } | null>(null);
+  const dragged = useRef(false);
   const [file, setFile] = useState<File | null>(initialFile ?? null),
     [plan, setPlan] = useState<ParsedPlan | null>(null),
     [loading, setLoading] = useState(false),
@@ -48,6 +61,8 @@ export function PlanImportWizard({
     setVerified(false);
     setAxisConfirmed(false);
     setPoints([]);
+    setView({ zoom: 1, center: null });
+    drag.current = null;
     setExcluded([]);
     setLayers([]);
     try {
@@ -130,6 +145,45 @@ export function PlanImportWizard({
     height = Math.max(1, maxY - minY),
     margin = Math.max(width, height) * 0.025,
     marker = Math.max(width, height) * 0.007;
+  const fitCenterX = minX + width / 2,
+    fitCenterY = minY + height / 2,
+    center = view.center ?? { x: fitCenterX, y: fitCenterY },
+    viewWidth = (width + margin * 2) / view.zoom,
+    viewHeight = (height + margin * 2) / view.zoom,
+    pointMarker = marker / view.zoom;
+  const zoomAt = useCallback(
+    (factor: number, anchor?: Point) => {
+      setView((old) => {
+        const zoom = Math.max(1, Math.min(16, old.zoom * factor));
+        if (zoom === old.zoom) return old;
+        const previous = old.center ?? { x: fitCenterX, y: fitCenterY };
+        const target = anchor ?? previous;
+        return {
+          zoom,
+          center: {
+            x: target.x + (previous.x - target.x) * (old.zoom / zoom),
+            y: target.y + (previous.y - target.y) * (old.zoom / zoom),
+          },
+        };
+      });
+    },
+    [fitCenterX, fitCenterY],
+  );
+  useEffect(() => {
+    const svg = previewRef.current;
+    if (!svg) return;
+    function wheel(event: WheelEvent) {
+      event.preventDefault();
+      const matrix = svg!.getScreenCTM();
+      if (!matrix || event.deltaY === 0) return;
+      const anchor = new DOMPoint(event.clientX, event.clientY).matrixTransform(
+        matrix.inverse(),
+      );
+      zoomAt(event.deltaY < 0 ? 1.25 : 0.8, anchor);
+    }
+    svg.addEventListener("wheel", wheel, { passive: false });
+    return () => svg.removeEventListener("wheel", wheel);
+  }, [plan, zoomAt]);
   const selected = segments.filter(
     (s) => layers.includes(s.layer) && !excluded.includes(s.id),
   );
@@ -142,7 +196,7 @@ export function PlanImportWizard({
       matrix.inverse(),
     );
     let point: Point = { x: p.x, y: p.y };
-    let nearest = marker * 2;
+    let nearest = pointMarker * 2;
     for (const v of allPoints) {
       const d = Math.hypot(v.x - p.x, v.y - p.y);
       if (d < nearest) {
@@ -275,10 +329,107 @@ export function PlanImportWizard({
                     </button>
                   )}
                 </div>
+                <div className={`${styles.row} ${styles.zoomControls}`}>
+                  <button
+                    className="bottone piccolo tenue"
+                    aria-label="Riduci zoom anteprima"
+                    disabled={view.zoom <= 1}
+                    onClick={() => zoomAt(0.8)}
+                  >
+                    −
+                  </button>
+                  <output aria-label="Zoom anteprima">
+                    {Math.round(view.zoom * 100)}%
+                  </output>
+                  <button
+                    className="bottone piccolo tenue"
+                    aria-label="Aumenta zoom anteprima"
+                    disabled={view.zoom >= 16}
+                    onClick={() => zoomAt(1.25)}
+                  >
+                    +
+                  </button>
+                  <button
+                    className="bottone piccolo tenue"
+                    onClick={() => setView({ zoom: 1, center: null })}
+                  >
+                    Adatta anteprima
+                  </button>
+                </div>
                 <svg
+                  ref={previewRef}
                   className={styles.preview}
-                  viewBox={`${minX - margin} ${minY - margin} ${width + margin * 2} ${height + margin * 2}`}
+                  viewBox={`${center.x - viewWidth / 2} ${center.y - viewHeight / 2} ${viewWidth} ${viewHeight}`}
                   onClick={pick}
+                  onClickCapture={(event) => {
+                    if (dragged.current) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      dragged.current = false;
+                    }
+                  }}
+                  onPointerDown={(event) => {
+                    if (event.button !== 0 && event.button !== 1) return;
+                    if (drag.current) return;
+                    if (event.button === 1) event.preventDefault();
+                    const matrix = event.currentTarget.getScreenCTM();
+                    if (!matrix) return;
+                    dragged.current = false;
+                    drag.current = {
+                      pointerId: event.pointerId,
+                      x: event.clientX,
+                      y: event.clientY,
+                      center,
+                      inverse: matrix.inverse(),
+                    };
+                  }}
+                  onPointerMove={(event) => {
+                    const start = drag.current;
+                    if (!start || start.pointerId !== event.pointerId) return;
+                    if (!dragged.current) {
+                      if (
+                        Math.hypot(
+                          event.clientX - start.x,
+                          event.clientY - start.y,
+                        ) < 4
+                      )
+                        return;
+                      dragged.current = true;
+                      event.currentTarget.setPointerCapture(event.pointerId);
+                    }
+                    const from = new DOMPoint(start.x, start.y).matrixTransform(
+                      start.inverse,
+                    );
+                    const to = new DOMPoint(
+                      event.clientX,
+                      event.clientY,
+                    ).matrixTransform(start.inverse);
+                    setView((old) => ({
+                      ...old,
+                      center: {
+                        x: start.center.x + from.x - to.x,
+                        y: start.center.y + from.y - to.y,
+                      },
+                    }));
+                  }}
+                  onPointerUp={(event) => {
+                    if (drag.current?.pointerId !== event.pointerId) return;
+                    drag.current = null;
+                    if (event.currentTarget.hasPointerCapture(event.pointerId))
+                      event.currentTarget.releasePointerCapture(
+                        event.pointerId,
+                      );
+                  }}
+                  onPointerCancel={() => {
+                    drag.current = null;
+                    dragged.current = false;
+                  }}
+                  onLostPointerCapture={() => {
+                    drag.current = null;
+                  }}
+                  onPointerLeave={() => {
+                    if (!dragged.current) drag.current = null;
+                  }}
                   aria-label="Anteprima planimetria; seleziona due punti per la scala"
                   role="img"
                   style={{
@@ -352,11 +503,16 @@ export function PlanImportWizard({
                   )}
                   {points.map((p, i) => (
                     <g key={i}>
-                      <circle cx={p.x} cy={p.y} r={marker} fill="#d0641a" />
+                      <circle
+                        cx={p.x}
+                        cy={p.y}
+                        r={pointMarker}
+                        fill="#d0641a"
+                      />
                       <text
-                        x={p.x + marker * 1.5}
-                        y={p.y - marker}
-                        fontSize={marker * 3}
+                        x={p.x + pointMarker * 1.5}
+                        y={p.y - pointMarker}
+                        fontSize={pointMarker * 3}
                         fill="#743509"
                       >
                         {i + 1}
@@ -365,6 +521,7 @@ export function PlanImportWizard({
                   ))}
                 </svg>
                 <p className={styles.notice}>
+                  Rotella o +/− per zoomare. Trascina per spostare la vista.{" "}
                   {mode === "calibrate"
                     ? "Clicca due estremi di una misura nota. I punti si agganciano alle estremità dei tracciati CAD."
                     : "Clicca un tracciato per escluderlo o includerlo. Le linee grigie non selezionate restano solo riferimento."}

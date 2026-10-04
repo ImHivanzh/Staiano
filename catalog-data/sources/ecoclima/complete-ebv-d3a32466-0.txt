@@ -1,0 +1,173 @@
+BOCCHETTE DI
+MANDATA
+Serie EBA - EBV passo 20 mm
+Le bocchette serie EBA ed EBV sono di mandata dell’aria con uno o due ordini di alette passo 20 mm singolarmente orientabili,
+in alluminio (EBA) o in acciaio zincato o zincato verniciato bianco RAL 9016 (EBV).
+Sono impiegate nelle installazioni a parete o a canale in mandata, sia in riscaldamento che in condizionamento.
+VARIANTI
+Le varianti previste riguardano la configurazione degli ordini di alette.
+LE SERIE DISPONIBILI SONO:
+-EBA VO bocchetta di mandata a doppio ordine di alette (le frontali verticali), in alluminio
+-EBA OV bocchetta di mandata a doppio ordine di alette (le frontali orizzontali), in alluminio
+-EBA V bocchetta di mandata a singolo ordine di alette verticali, in alluminio
+-EBA O bocchetta di mandata a singolo ordine di alette orizzontali, in alluminio
+-EBV VO bocchetta di mandata a doppio ordine di alette (frontali verticali), in acciaio zincato standard o verniciato bianco su
+richiesta
+-EBV OV bocchetta di mandata a doppio ordine di alette (frontali orizzontali), in acciaio zincato standard o verniciato bianco su
+richiesta
+-EBV V bocchetta di mandata a singolo ordine di alette verticali, in acciaio zincato standard o verniciato bianco su richiesta
+-EBV O bocchetta di mandata a singolo ordine di alette orizzontali, in acciaio zincato standard o verniciato bianco su richiesta
+Esempio: la versione VO ha il primo ordine verticale vicino al frontale, il secondo ordine orizzontale all’interno della bocchetta.
+CARATTERISTICHE
+Materiale: alluminio. Dimensioni realizzabili in pezzo unico:
+Finitura: anodizzato naturale.
+Installazione: fissaggio a clips. - min. base 100 mm x altezza 100 mm.
+- max. con base da 100 mm a 1000 mm x altezza 1000 mm
+- max. con base da >1000 mm a 2000 mm x altezza 600mm.
+ACCESSORI
+Serranda di taratura in acciaio Controtelaio a murare in Plenum isolato o non
+SC CT EPI - EPZ
+zincato con alette a movimento acciaio zincato isolato per bocchetta
+contrapposto
+VOCI DI CAPITOLATO
+Bocchette di mandata a singolo o doppio ordine di alette singolarmente orientabili passo 20 mm, in alluminio anodizzato
+naturale (EBA) o in acciaio zincato o zincato verniciato bianco RAL 9016 (EBV), idonee per l’installazione a parete o a canale per
+la mandata dell’aria.
+NOMENCLATURA CODICE
+EBA bocchetta di mandata con alette passo 20 mm, in alluminio.
+EBV bocchetta di mandata con alette passo 20 mm, in acciaio zincato o zincato verniciato bianco.
+VO doppio ordine di alette singolarmente orientabili con frontale verticale.
+OV doppio ordine di alette singolarmente orientabili con frontale orizzontali.
+V singolo ordine di alette verticali orientabili singolarmente.
+O singolo ordine di alette orizzontali orientabili singolarmente.
+Larghezza L (mm)
+Altezza H (mm)
+EBA VO 400 220000
+PPAAGG 11 -- BBOOCCCCHHEETTTTEE DDII MMAANNDDAATTAA
+SSEERRIIEE EEBBAA--EEBBVV -- AAGGGGIIOORRNNAAMMEENNTTOO 0022//22002233
+
+TIPOLOGIA EBA EBV:
+EBA/VO EBA/OV EBA/V EBA/O FORATURA EBA
+EBV/VO EBV/OV EBV/V EBV/O FORATURA EBV
+DIMENSIONI ESTERNO CORNICE:
+PAG 2 - BOCCHETTE DI MANDATA
+SERIE EBA-EBV - AGGIORNAMENTO 02/2023
+
+DATI DI FUNZIONAMENTO:
+Dimensioni Sezione efficace
+m³/h L1 m³/h L1
+LxH m²
+- Vk: velocità efficace (m/s)
+200x100 0,013 100 3 160 5 - m³/h: portata
+- Pa: perdite di carico in Pascal
+300x100 0,018 140 3.7 230 5.6
+- L1 (m): lancio della bocchetta senza
+400x100 0,025 200 4.5 320 6,8 serranda, deflessione delle alette 0°,
+con effetto coanda (soffitto), velocità
+500x100 0,033 260 6 420 8 terminale 0,25 m/sec e Tmax 15°C
+- dB(A): indice di rumorosità
+600x100 0,042 335 6.8 500 9
+700x100 0,053 420 7,7 667 11,9
+200x150 0,020 160 3.6 240 5.4
+LIVELLO POTENZA
+300x150 0,029 230 4.1 370 7
+SONORA dB(A)
+400x150 0,039 310 4.3 500 8
+Vk defl. defl. defl.
+500x150 0,051 400 5 640 9
+m/s 0° 20° 40°
+600x150 0,059 470 5.8 750 9.5
+2.2 15/20 18/23 20/25
+700x150 0,078 617 8,9 982 13,9
+3.5 20/25 23/28 25/30
+800x150 0,086 682 6 1083 11
+v
+200x200 0,026 200 4 300 6
+PERDITA DI CARICO (Pa)
+300x200 0,044 350 5.8 550 8
+400x200 0,057 450 6.5 720 9
+Vk defl. defl. defl.
+500x200 0,071 560 7.5 900 10 m/s 0° 20° 40°
+2.2 4 5.5 7
+600x200 0,086 682 10 1080 11
+3.5 9 13 16
+700x200 0,100 792 10,2 1260 12
+v
+800x200 0,115 910 10.3 1450 13
+1000x200 0,145 1150 10 1830 15.6
+300x300 0,058 460 5.8 730 9
+400x300 0,085 670 6.8 1070 10
+500x300 0,110 870 8.1 1380 12
+600x300 0,136 1080 9.6 1730 15
+700x300 0,158 1250 10 1990 15,5
+800x300 0,178 1410 10.5 2250 16
+1000x300 0,226 1790 13 2860 18
+400x400 0,115 910 8 1430 12
+600x400 0,180 1430 11 2290 17
+700x400 0,210 1660 11,5 2645 17,5
+800x400 0,245 1940 12 3080 18
+1000x400 0,310 2460 16 3940 20
+Vk (m/s) 2,2 3,5
+v
+PAG 3 - BOCCHETTE DI MANDATA
+SERIE EBA-EBV - AGGIORNAMENTO 02/2023
+
+ACCESSORI
+- SERRANDA SC
+- CONTROTELAIO CT
+PAG 4 - BOCCHETTE DI MANDATA
+SERIE EBA-EBV - AGGIORNAMENTO 02/2023
+
+EPI-EPZ PLENUM
+stacco superiore stacco laterale
+modello
+E F
+L1 x H1 n° n°
+P1 Ø d P2 Ø d
+stacchi stacchi
+200x100 200 1 98 200 1 98 80 12
+300x100 200 1 98 200 1 98 80 12
+400x100 200 2 98 200 2 98 80 12
+CARATTERISTICHE
+500x100 200 2 98 200 2 98 80 12
+- Materiale: acciaio
+600x100 200 2 98 200 2 98 80 12
+- Finitura superficiale: zincatura
+700x100 200 2 98 200 2 98 80 12
+- Fissaggio bocchetta: con clips o con viti
+200x150 200 1 148 200 1 148 80 12
+frontali
+300x150 200 1 148 250 1 148 80 12 IMPIEGO
+400x150 200 1 148 250 1 148 80 12
+Da installare con EDC - EBA -EBV- EGA
+- EGQ - EBL, con eventuale isolamento
+500x150 200 2 148 250 2 148 80 12
+esterno.
+600x150 200 2 148 250 2 148 80 12 ACCESSORI
+700x150 200 2 148 250 2 148 80 12
+- rete equalizzatrice
+800x150 200 2 148 250 2 148 80 12 - stacco per flex laterale
+- isolamento interno o esterno ignifugo,
+200x200 200 1 198 300 1 198 80 12 autoestinguente cl. 1
+- serranda su imbocco
+300x200 200 1 198 300 1 198 80 12
+400x200 200 1 198 300 1 198 80 12
+500x200 200 1 198 300 1 198 80 12
+600x200 200 2 198 300 2 198 80 12
+700x200 200 2 198 300 2 198 80 12
+800x200 200 2 198 300 2 198 80 12
+1000x200 200 2 198 300 2 198 80 12
+300x300 200 1 248 350 1 248 80 12
+400x300 200 1 248 350 1 248 80 12
+500x300 200 1 248 350 1 248 80 12
+600x300 200 2 198 350 2 248 80 12
+700x300 200 2 198 350 2 248 80 12
+800x300 200 2 248 350 2 248 80 12
+1000x300 200 2 248 350 2 248 80 12
+400x400 200 1 298 350 1 298 80 12
+600x400 200 2 198 350 2 248 80 12
+800x400 200 2 298 350 2 298 80 12
+700x400 200 2 298 350 2 298 80 12
+1000x400 200 2 298 400 2 298 80 12
+PAG 5 - BOCCHETTE DI MANDATA
+SERIE EBA-EBV - AGGIORNAMENTO 02/2023

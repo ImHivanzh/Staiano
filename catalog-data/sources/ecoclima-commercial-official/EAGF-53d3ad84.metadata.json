@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata",
+  "code": "EAGF",
+  "slug": "eagf-griglia-forellinata",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eagf-griglia-forellinata.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.892442+00:00",
+      "filename": "EAGF-53d3ad84.xlsx",
+      "bytes": 6966,
+      "sha256": "3dd1f13d1e99007e72cc879421a76b9b6ad72a1a616d5ce7e2efba7f58095d67",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 28
+      }
+    }
+  ]
+}

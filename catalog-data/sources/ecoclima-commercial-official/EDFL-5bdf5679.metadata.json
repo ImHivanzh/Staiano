@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
+  "code": "EDFL",
+  "slug": "edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:22.166042+00:00",
+      "filename": "EDFL-5bdf5679.xlsx",
+      "bytes": 10579,
+      "sha256": "55df1204f98b44dfd6d2c519369a30c4f5bf1e1ef050e59088133344c8373b81",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 413
+      }
+    }
+  ]
+}

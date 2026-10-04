@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata",
+  "code": "EDU",
+  "slug": "edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:24.309170+00:00",
+      "filename": "EDU-7ca6e6d6.xlsx",
+      "bytes": 7684,
+      "sha256": "9eda424a1795a76b15339aca02d6c301e7d6d2b5442836ff2deb065fd00e5db3",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 88
+      }
+    }
+  ]
+}

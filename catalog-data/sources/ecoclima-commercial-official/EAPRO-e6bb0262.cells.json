@@ -1,0 +1,147 @@
+{
+  "filename": "EAPRO-e6bb0262.xlsx",
+  "sha256": "3941933bb8bba30d708febf8f92621d16f70b50d3174e1ed87f59bf08af08656",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:28",
+    "modified": "2026-10-04 01:02:28"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 7,
+      "maxColumn": 2,
+      "mergedRanges": [
+        "A3:B3",
+        "A1:B1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EAPRO PROLUNGA TELESCOPICA",
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EAPRO-1263",
+            "13,70"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EAPRO-263",
+            "16,28"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EAPRO-363",
+            "21,87"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EAPRO PROLUNGA TELESCOPICA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EAPRO-1263",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "13,70",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EAPRO-263",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "16,28",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EAPRO-363",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "21,87",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

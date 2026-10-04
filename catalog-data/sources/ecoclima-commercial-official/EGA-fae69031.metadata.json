@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm",
+  "code": "EGA",
+  "slug": "ega-griglie-di-ripresa-in-alluminio-passo-25-mm",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ega-griglie-di-ripresa-in-alluminio-passo-25-mm.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:25.951170+00:00",
+      "filename": "EGA-fae69031.xlsx",
+      "bytes": 9463,
+      "sha256": "60824ed547bdcc0780173cc576e7987b259d35d8cf437714db3e2d54873771a4",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 295
+      }
+    }
+  ]
+}

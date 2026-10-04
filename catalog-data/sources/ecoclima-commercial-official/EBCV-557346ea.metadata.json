@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari",
+  "code": "EBCV",
+  "slug": "ebcv-bocchette-di-mandata-per-canali-circolari",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:16 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ebcv-bocchette-di-mandata-per-canali-circolari.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:16 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:16.330789+00:00",
+      "filename": "EBCV-557346ea.xlsx",
+      "bytes": 8523,
+      "sha256": "80eeee654b13a9ea6e91d08830085cdfa80f7ac24eb4883416179006de485464",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 220
+      }
+    }
+  ]
+}

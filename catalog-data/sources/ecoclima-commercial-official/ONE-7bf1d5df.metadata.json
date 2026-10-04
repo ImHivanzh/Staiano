@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp",
+  "code": "ONE",
+  "slug": "one-box-box-di-distribuzione-in-epp",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=one-box-box-di-distribuzione-in-epp.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.822371+00:00",
+      "filename": "ONE-7bf1d5df.xlsx",
+      "bytes": 6753,
+      "sha256": "091176931347e9f3a583d65cbda34598064839e2e024c964cc7853f346dc88b2",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 8
+      }
+    }
+  ]
+}

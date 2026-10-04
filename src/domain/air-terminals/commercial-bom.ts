@@ -1,0 +1,568 @@
+import type { Project } from "@/schemas/project";
+import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
+import { ecoclimaPriceCatalog } from "@/domain/catalogs/ecoclima-prices";
+import type {
+  EcoclimaPrice,
+  EcoclimaPriceCatalog,
+  TerminalAccessorySpecification,
+  TerminalCommercialOptions,
+} from "@/domain/catalogs/ecoclima-price-schema";
+
+type InstalledTerminal = Project["airTerminals"][number] & {
+  commercialOptions?: TerminalCommercialOptions;
+};
+type BomProject = Pick<Project, "airTerminals" | "hvacSystems">;
+export type EcoclimaBomLine = {
+  id: string;
+  terminalIds: string[];
+  systemId: string | null;
+  familyCode: string;
+  kind: EcoclimaPrice["kind"] | "machine-plenum";
+  label: string;
+  sku: string | null;
+  quantity: number | null;
+  unitPriceCents: number | null;
+  extendedPriceCents: number | null;
+  currency: "EUR";
+  status: "known" | "unknown";
+  reason: string | null;
+  sourceMetadata: EcoclimaPrice["sourceMetadata"] | null;
+  quantitySourceMetadata: EcoclimaPrice["sourceMetadata"] | null;
+};
+export type EcoclimaBom = {
+  catalogVersion: string;
+  revision: string | null;
+  currency: "EUR";
+  taxTreatment: "not-specified-by-source";
+  lines: EcoclimaBomLine[];
+  knownSubtotalCents: number;
+  totalCents: number | null;
+  complete: boolean;
+  missingLineCount: number;
+};
+
+/** Nominal catalogue dimensions are distinct from the rendered outer face. */
+export function terminalCommercialDimensions(terminal: InstalledTerminal) {
+  if (terminal.legacyUnverified) return null;
+  const family = airTerminalFamilyAtVersion(
+    terminal.family,
+    terminal.catalogVersion,
+  );
+  const variant = family?.variants.find(
+    (item) => item.id === terminal.productId,
+  );
+  if (!family || !variant) return null;
+  return {
+    lengthMm: family.isLinearPerMeter ? terminal.widthMm : variant.lengthMm,
+    widthMm: family.isLinearPerMeter ? null : variant.widthMm,
+    heightMm: family.isLinearPerMeter ? null : variant.heightMm,
+    diameterMm:
+      variant.nominalDiameterMm ??
+      (terminal.family === "EBCV"
+        ? (terminal.commercialOptions?.mountingDuctDiameterMm ?? null)
+        : null),
+    slotCount: variant.slotCount,
+    slotWidthMm: variant.slotWidthMm,
+  };
+}
+function dimensionsMatch(
+  dimensions: EcoclimaPrice["dimensions"],
+  actual: ReturnType<typeof terminalCommercialDimensions>,
+) {
+  return (
+    !!actual &&
+    Object.entries(dimensions).every(
+      ([key, value]) =>
+        value === null || value === actual[key as keyof typeof actual],
+    )
+  );
+}
+const commercialPageFamily: Record<string, string> = {
+  EDE1R: "EDE1",
+  EDE2R: "EDE2",
+  "EDRA-PQ": "EDRA",
+  "EDCS-PQ": "EDCS",
+  "EDRC-PQR": "EDRC",
+  "EDRCS-PQR": "EDRCS",
+  "EDRCS THERM": "EDRCS",
+  "EDRCS-PQR THERM": "EDRCS",
+  EDRFQ: "EDRF",
+  EDRFQB: "EDRFB",
+  "EDQV-PQ": "EDQV",
+  "EDSC-CC": "EDSC-C",
+  "EDSC-Q": "EDSC-C",
+  "EDU-M": "EDU",
+  "EDU-F": "EDU",
+  "EDU-LFS": "EDU",
+  "EDU-SM": "EDU-S",
+  "EDEA-SD": "EDEA",
+  "EVVAIR-C": "EVVAIR",
+  "EVVAIR-Q": "EVVAIR",
+  ...Object.fromEntries(
+    [1, 2, 3, 4, 5, 6].map((number) => [`EDC${number}`, "EDC"]),
+  ),
+  ...Object.fromEntries(
+    [
+      "EDFL-10",
+      "EDFL-20",
+      "EDFL-30",
+      "EDFL-40",
+      "EDFL-50",
+      "EDFLB-20",
+      "EDFLB-40",
+      "EDFLB-50",
+    ].map((family) => [family, "EDFL"]),
+  ),
+  ...Object.fromEntries(
+    [
+      "EDFLNA-10",
+      "EDFLNA-20",
+      "EDFLNA-40",
+      "EDFLNA-50",
+      "EDFLBNA-10",
+      "EDFLBNA-20",
+      "EDFLBNA-40",
+      "EDFLBNA-50",
+    ].map((family) => [family, "EDFLNA"]),
+  ),
+};
+function familyMatches(priceFamily: string, family: string) {
+  return (
+    priceFamily.toUpperCase() === family.toUpperCase() ||
+    commercialPageFamily[family] === priceFamily ||
+    (priceFamily === "EDSC" && family.startsWith("EDSC-")) ||
+    (priceFamily === "EDSC-C" && /^(EDSC-CC|EDSC-Q)$/.test(family))
+  );
+}
+export function commercialChoicesForTerminal(
+  terminal: InstalledTerminal,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+) {
+  const dimensions = terminalCommercialDimensions(terminal);
+  const family = airTerminalFamilyAtVersion(
+    terminal.family,
+    terminal.catalogVersion,
+  );
+  const variant = family?.variants.find(
+    (item) => item.id === terminal.productId,
+  );
+  return catalog.prices.filter(
+    (price) =>
+      price.kind === "terminal" &&
+      familyMatches(price.familyCode, terminal.family) &&
+      (dimensionsMatch(price.dimensions, dimensions) ||
+        (terminal.family === "EBCV" &&
+          terminal.commercialOptions?.mountingDuctDiameterMm == null &&
+          !!dimensions &&
+          Object.entries(price.dimensions).every(
+            ([key, value]) =>
+              key === "diameterMm" ||
+              value === null ||
+              value === dimensions[key as keyof typeof dimensions],
+          ))) &&
+      (Object.values(price.dimensions).some((value) => value !== null) ||
+        price.technicalVariantIds.length > 0 ||
+        family?.variants.length === 1) &&
+      (!price.technicalVariantIds.length ||
+        price.technicalVariantIds.includes(terminal.productId)) &&
+      (!price.catalogSizeCode ||
+        price.technicalVariantIds.includes(terminal.productId)) &&
+      (!commercialPageFamily[terminal.family] ||
+        price.modelCode === terminal.family ||
+        variant?.modelCodes?.includes(price.modelCode) ||
+        variant?.modelCode === price.modelCode) &&
+      (!commercialPageFamily[price.modelCode] ||
+        price.modelCode === terminal.family) &&
+      (!/^EDL[SH]B?(10|30)-/.test(price.modelCode) ||
+        terminal.use === "return") &&
+      (!/^EDL[SH]B?(20|40)-/.test(price.modelCode) ||
+        terminal.use === "supply") &&
+      (!terminal.family.startsWith("EDSC-") ||
+        price.modelCode === terminal.family),
+  );
+}
+function matchingPrices(
+  terminal: InstalledTerminal,
+  kind: EcoclimaPrice["kind"],
+  catalog: EcoclimaPriceCatalog,
+  filterOptions = true,
+) {
+  const options = terminal.commercialOptions;
+  const dimensions = terminalCommercialDimensions(terminal);
+  const specification =
+    kind === "insulated-plenum"
+      ? resolveTerminalAccessorySpecification(terminal, catalog)
+      : null;
+  const plenumDimensions = specification?.plenum
+    ? {
+        ...dimensions,
+        widthMm: specification.plenum.lengthMm,
+        heightMm: specification.plenum.widthMm,
+      }
+    : null;
+  const candidates =
+    kind === "terminal"
+      ? commercialChoicesForTerminal(terminal, catalog)
+      : catalog.prices.filter(
+          (price) =>
+            price.kind === kind &&
+            familyMatches(price.familyCode, terminal.family) &&
+            (!price.technicalVariantIds.length ||
+              price.technicalVariantIds.includes(terminal.productId)) &&
+            (!price.catalogSizeCode ||
+              price.technicalVariantIds.includes(terminal.productId)) &&
+            (dimensionsMatch(price.dimensions, dimensions) ||
+              (kind === "insulated-plenum" &&
+                plenumDimensions &&
+                dimensionsMatch(
+                  price.dimensions,
+                  plenumDimensions as NonNullable<typeof dimensions>,
+                ))),
+        );
+  if (!filterOptions) return candidates;
+  return candidates.filter(
+    (price) =>
+      (kind !== "terminal" ||
+        !options?.profileCode ||
+        price.modelCode === options.profileCode) &&
+      (kind !== "terminal" ||
+        !options?.colorCode ||
+        price.colorCode === options.colorCode) &&
+      (kind !== "insulated-plenum" ||
+        !options?.plenumModelCode ||
+        price.modelCode === options.plenumModelCode) &&
+      (!price.connectionPosition ||
+        (!!options?.connectionPosition &&
+          price.connectionPosition === options.connectionPosition)),
+  );
+}
+export function commercialPlenumChoicesForTerminal(
+  terminal: InstalledTerminal,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+) {
+  return matchingPrices(terminal, "insulated-plenum", catalog, false);
+}
+function uniquePrice(candidates: EcoclimaPrice[]) {
+  const keys = new Set(
+    candidates.map(
+      (price) =>
+        `${price.modelCode}|${price.colorCode ?? ""}|${price.connectionPosition ?? ""}|${price.unitPriceCents}|${JSON.stringify(price.dimensions)}|${price.catalogSizeCode ?? ""}`,
+    ),
+  );
+  return keys.size === 1 ? candidates[0] : null;
+}
+export function resolveTerminalAccessorySpecification(
+  terminal: InstalledTerminal,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+): TerminalAccessorySpecification | null {
+  const dimensions = terminalCommercialDimensions(terminal);
+  const family = airTerminalFamilyAtVersion(
+    terminal.family,
+    terminal.catalogVersion,
+  );
+  const variant = family?.variants.find(
+    (item) => item.id === terminal.productId,
+  );
+  const original = variant?.originalDimensionsMm;
+  const alternate =
+    original?.L1 && original?.H1 && dimensions
+      ? {
+          ...dimensions,
+          widthMm: original.L1,
+          heightMm: original.H1,
+        }
+      : null;
+  const matches = catalog.accessorySpecifications.filter(
+    (item) =>
+      familyMatches(item.familyCode, terminal.family) &&
+      (dimensionsMatch(item.dimensions, dimensions) ||
+        (alternate && dimensionsMatch(item.dimensions, alternate))) &&
+      (!item.plenum ||
+        !terminal.commercialOptions?.connectionPosition ||
+        item.plenum.connectionPosition ===
+          terminal.commercialOptions.connectionPosition),
+  );
+  return matches.length === 1 ? matches[0] : null;
+}
+function priceLine(
+  terminal: InstalledTerminal,
+  kind: EcoclimaPrice["kind"],
+  quantity: number | null,
+  catalog: EcoclimaPriceCatalog,
+  quantitySource: EcoclimaPrice["sourceMetadata"] | null = null,
+): EcoclimaBomLine {
+  const candidates = matchingPrices(terminal, kind, catalog);
+  const price = uniquePrice(candidates);
+  const labels = {
+    terminal: "Terminale",
+    "insulated-plenum": "Plenum terminale isolato",
+    "fixing-bridge": "Ponte di fissaggio",
+    "continuity-kit": "Kit di continuità",
+    "fixing-kit": "Kit di fissaggio",
+    accessory: "Accessorio",
+  };
+  const extended =
+    price && quantity !== null ? price.unitPriceCents * quantity : null;
+  if (extended !== null && !Number.isSafeInteger(extended))
+    throw new Error("Importo commerciale fuori intervallo sicuro.");
+  return {
+    id: `${terminal.id}:${kind}`,
+    terminalIds: [terminal.id],
+    systemId: terminal.systemId,
+    familyCode: terminal.family,
+    kind,
+    label: price?.label ?? `${labels[kind]} ${terminal.family}`,
+    sku: price?.modelCode ?? null,
+    quantity,
+    unitPriceCents: price?.unitPriceCents ?? null,
+    extendedPriceCents: extended,
+    currency: "EUR",
+    status: extended === null ? "unknown" : "known",
+    reason:
+      quantity === null
+        ? "Quantità richiesta non verificata nelle istruzioni del costruttore."
+        : price
+          ? null
+          : candidates.length
+            ? "Variante commerciale ambigua: registrare modello, colore e posizione dello stacco."
+            : "Prezzo di listino ufficiale non disponibile per questa misura e variante esatta.",
+    sourceMetadata: price?.sourceMetadata ?? null,
+    quantitySourceMetadata: quantitySource,
+  };
+}
+function adjacentInRun(a: InstalledTerminal, b: InstalledTerminal) {
+  if (
+    a.floorId !== b.floorId ||
+    a.roomId !== b.roomId ||
+    a.systemId !== b.systemId ||
+    a.mounting !== b.mounting ||
+    a.family !== b.family ||
+    Math.abs(a.rotation - b.rotation) > 0.001 ||
+    a.heightMm !== b.heightMm ||
+    a.productId !== b.productId ||
+    a.commercialOptions?.profileCode !== b.commercialOptions?.profileCode ||
+    a.commercialOptions?.colorCode !== b.commercialOptions?.colorCode
+  )
+    return false;
+  const endpoint = (item: InstalledTerminal, sign: number) => ({
+    x: item.position.x + (sign * Math.cos(item.rotation) * item.widthMm) / 2000,
+    y: item.position.y + (sign * Math.sin(item.rotation) * item.widthMm) / 2000,
+  });
+  return [-1, 1].some((signA) =>
+    [-1, 1].some((signB) => {
+      const p = endpoint(a, signA),
+        q = endpoint(b, signB);
+      return Math.hypot(p.x - q.x, p.y - q.y) <= 0.002;
+    }),
+  );
+}
+
+/** Prices never participate in technical sizing or product ranking. */
+export function calculateEcoclimaBom(
+  project: BomProject,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+): EcoclimaBom {
+  const lines: EcoclimaBomLine[] = [],
+    runs = new Map<string, InstalledTerminal[]>();
+  for (const terminal of project.airTerminals as InstalledTerminal[]) {
+    lines.push(priceLine(terminal, "terminal", 1, catalog));
+    const specification = resolveTerminalAccessorySpecification(
+      terminal,
+      catalog,
+    );
+    if (terminal.commercialOptions?.insulatedPlenum !== false)
+      lines.push(priceLine(terminal, "insulated-plenum", 1, catalog));
+    if (
+      specification?.fixingBridgeQuantity ||
+      (terminal.commercialOptions?.fixingBridges !== false &&
+        catalog.prices.some(
+          (price) =>
+            price.kind === "fixing-bridge" &&
+            familyMatches(price.familyCode, terminal.family),
+        ))
+    ) {
+      const line = priceLine(
+        terminal,
+        "fixing-bridge",
+        specification?.fixingBridgeQuantity ?? null,
+        catalog,
+        specification?.fixingBridgeSourceMetadata ??
+          specification?.sourceMetadata ??
+          null,
+      );
+      if (
+        terminal.commercialOptions?.fixingBridges === false &&
+        specification?.fixingBridgeQuantity
+      ) {
+        line.status = "unknown";
+        line.extendedPriceCents = null;
+        line.reason =
+          "Ponti richiesti dalle istruzioni di montaggio: esclusione non compatibile con una distinta completa.";
+      }
+      lines.push(line);
+    }
+    if (specification?.fixingKitQuantity)
+      lines.push(
+        priceLine(
+          terminal,
+          "fixing-kit",
+          specification.fixingKitQuantity,
+          catalog,
+          specification.fixingKitSourceMetadata ?? specification.sourceMetadata,
+        ),
+      );
+    const runId = terminal.commercialOptions?.linearRunId;
+    if (runId) runs.set(runId, [...(runs.get(runId) ?? []), terminal]);
+  }
+  for (const [runId, members] of runs) {
+    if (members.length < 2) continue;
+    const ordered = [...members].sort(
+      (a, b) =>
+        (a.commercialOptions?.linearRunOrder ?? -1) -
+        (b.commercialOptions?.linearRunOrder ?? -1),
+    );
+    const orders = ordered.map(
+      (terminal) => terminal.commercialOptions?.linearRunOrder,
+    );
+    const valid =
+      orders.every((order) => order !== undefined) &&
+      new Set(orders).size === orders.length &&
+      ordered.every(
+        (terminal, index) =>
+          resolveTerminalAccessorySpecification(terminal, catalog)
+            ?.continuitySupported &&
+          (index === 0 || adjacentInRun(ordered[index - 1], terminal)),
+      );
+    const line = priceLine(
+      ordered[0],
+      "continuity-kit",
+      valid ? members.length - 1 : null,
+      catalog,
+      resolveTerminalAccessorySpecification(ordered[0], catalog)
+        ?.sourceMetadata ?? null,
+    );
+    line.id = `run:${runId}:continuity-kit`;
+    line.terminalIds = members.map((terminal) => terminal.id);
+    if (!valid)
+      line.reason =
+        "Linea non verificata: moduli adiacenti, stessa variante, ordine univoco e giunzione ufficiale necessari.";
+    if (
+      members.some(
+        (terminal) => terminal.commercialOptions?.continuityKit === false,
+      )
+    ) {
+      line.status = "unknown";
+      line.extendedPriceCents = null;
+      line.reason =
+        "Kit richiesto per la giunzione ufficiale: esclusione non compatibile con una distinta completa.";
+    }
+    lines.push(line);
+  }
+  for (const system of project.hvacSystems.filter(
+    (item) => item.type === "ducted",
+  ))
+    lines.push({
+      id: `${system.id}:machine-plenum`,
+      terminalIds: [],
+      systemId: system.id,
+      familyCode: "",
+      kind: "machine-plenum",
+      label: `Plenum di mandata macchina ${system.manufacturer}`,
+      sku: null,
+      quantity: 1,
+      unitPriceCents: null,
+      extendedPriceCents: null,
+      currency: "EUR",
+      status: "unknown",
+      reason:
+        "Plenum macchina su misura: prezzo non pubblicato nel listino dei plenum terminali Ecoclima.",
+      sourceMetadata: null,
+      quantitySourceMetadata: null,
+    });
+  const knownSubtotalCents = lines.reduce(
+    (sum, line) => sum + (line.extendedPriceCents ?? 0),
+    0,
+  );
+  if (!Number.isSafeInteger(knownSubtotalCents))
+    throw new Error("Totale commerciale fuori intervallo sicuro.");
+  const missingLineCount = lines.filter(
+    (line) => line.status === "unknown",
+  ).length;
+  return {
+    catalogVersion: catalog.version,
+    revision: catalog.revision,
+    currency: "EUR",
+    taxTreatment: "not-specified-by-source",
+    lines,
+    knownSubtotalCents,
+    totalCents: missingLineCount ? null : knownSubtotalCents,
+    complete: missingLineCount === 0,
+    missingLineCount,
+  };
+}
+
+export type TerminalSupplyConnection = {
+  terminalId: string;
+  terminalPortIndex: number;
+  portCount: number;
+  portDiameterMm: number;
+  airflowM3h: number;
+  plenumModelCode: string;
+  connectionPosition: "lateral" | "upper";
+  publishedDimensionsMm: Record<string, number>;
+  sourceMetadata: EcoclimaPrice["sourceMetadata"];
+};
+
+/** One physical branch for each published terminal-plenum inlet. */
+export function terminalSupplyConnections(
+  project: Pick<Project, "airTerminals">,
+  systemId: string,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+) {
+  const connections: TerminalSupplyConnection[] = [];
+  const issues: { terminalId: string; reason: string }[] = [];
+  for (const terminal of project.airTerminals.filter(
+    (item) => item.systemId === systemId && item.use === "supply",
+  ) as InstalledTerminal[]) {
+    const specification = resolveTerminalAccessorySpecification(
+      terminal,
+      catalog,
+    );
+    const plenum = specification?.plenum;
+    if (!plenum) {
+      issues.push({
+        terminalId: terminal.id,
+        reason:
+          "Plenum e stacchi originali mancanti o posizione dello stacco non registrata.",
+      });
+      continue;
+    }
+    if (
+      !Number.isFinite(terminal.requiredAirflowM3h) ||
+      terminal.requiredAirflowM3h <= 0
+    ) {
+      issues.push({
+        terminalId: terminal.id,
+        reason: "Portata terminale non verificata.",
+      });
+      continue;
+    }
+    for (
+      let terminalPortIndex = 0;
+      terminalPortIndex < plenum.portCount;
+      terminalPortIndex++
+    )
+      connections.push({
+        terminalId: terminal.id,
+        terminalPortIndex,
+        portCount: plenum.portCount,
+        portDiameterMm: plenum.portDiameterMm,
+        airflowM3h: terminal.requiredAirflowM3h / plenum.portCount,
+        plenumModelCode: plenum.modelCode,
+        connectionPosition: plenum.connectionPosition,
+        publishedDimensionsMm: plenum.publishedDimensionsMm,
+        sourceMetadata: plenum.sourceMetadata ?? specification.sourceMetadata,
+      });
+  }
+  return { connections, issues };
+}

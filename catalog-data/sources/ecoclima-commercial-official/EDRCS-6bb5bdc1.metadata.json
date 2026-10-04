@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile",
+  "code": "EDRCS",
+  "slug": "edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:23.609921+00:00",
+      "filename": "EDRCS-6bb5bdc1.xlsx",
+      "bytes": 6820,
+      "sha256": "5ab573f1c1f1b8146e0ba7b39492bc94eaf5b3d0c3fc9bfaee631bc915605031",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 23
+      }
+    }
+  ]
+}

@@ -1,0 +1,646 @@
+{
+  "filename": "EDCS-0025fa83.xlsx",
+  "sha256": "db02478f9a4d865ae941dce0eb27ad64ea8b91dfc7495bb1899caca995a5ff59",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:20",
+    "modified": "2026-10-04 01:02:20"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 16,
+      "maxColumn": 7,
+      "mergedRanges": [
+        "A13:G13",
+        "A3:G3",
+        "A1:G1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EDCS EDCS PQ DIFFUSORI CIRCOLARI A SINGOLO CONO REGOLABILE",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "Diffusore",
+            "EDCS-PQ - Diffusore su pannello 595x595",
+            "SD - Serranda",
+            "EQUA - Equalizzatore",
+            "EPZ-DC - Plenum Zincato",
+            "EPI-DC - Plenum Isolato"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            " ",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            100,
+            "116,01",
+            "145,17",
+            "30,57",
+            "18,55",
+            "57,51",
+            "78,14"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            150,
+            "118,18",
+            "147,37",
+            "30,34",
+            "18,55",
+            "65,43",
+            "88,40"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            160,
+            "125,09",
+            "150,44",
+            "30,34",
+            "18,55",
+            "65,67",
+            "88,68"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            200,
+            "143,06",
+            "166,66",
+            "32,07",
+            "18,55",
+            "74,73",
+            "100,47"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            250,
+            "173,62",
+            "200,52",
+            "37,20",
+            "19,42",
+            "99,39",
+            "128,93"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Listino Prezzi (continua)",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Kit clips di fissaggio per EDCS (3 pz)",
+            "€",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "EDCS 100-160",
+            "10,41",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "EDCS 200-250",
+            "10,98",
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EDCS EDCS PQ DIFFUSORI CIRCOLARI A SINGOLO CONO REGOLABILE",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "Diffusore",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "EDCS-PQ - Diffusore su pannello 595x595",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D4",
+          "row": 4,
+          "column": 4,
+          "value": "SD - Serranda",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E4",
+          "row": 4,
+          "column": 5,
+          "value": "EQUA - Equalizzatore",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F4",
+          "row": 4,
+          "column": 6,
+          "value": "EPZ-DC - Plenum Zincato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G4",
+          "row": 4,
+          "column": 7,
+          "value": "EPI-DC - Plenum Isolato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": " ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E5",
+          "row": 5,
+          "column": 5,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F5",
+          "row": 5,
+          "column": 6,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G5",
+          "row": 5,
+          "column": 7,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": 100,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "116,01",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": "145,17",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": "30,57",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E6",
+          "row": 6,
+          "column": 5,
+          "value": "18,55",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F6",
+          "row": 6,
+          "column": 6,
+          "value": "57,51",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G6",
+          "row": 6,
+          "column": 7,
+          "value": "78,14",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": 150,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "118,18",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "147,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": "30,34",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E7",
+          "row": 7,
+          "column": 5,
+          "value": "18,55",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F7",
+          "row": 7,
+          "column": 6,
+          "value": "65,43",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G7",
+          "row": 7,
+          "column": 7,
+          "value": "88,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": 160,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "125,09",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": "150,44",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D8",
+          "row": 8,
+          "column": 4,
+          "value": "30,34",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E8",
+          "row": 8,
+          "column": 5,
+          "value": "18,55",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F8",
+          "row": 8,
+          "column": 6,
+          "value": "65,67",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G8",
+          "row": 8,
+          "column": 7,
+          "value": "88,68",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "143,06",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C9",
+          "row": 9,
+          "column": 3,
+          "value": "166,66",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D9",
+          "row": 9,
+          "column": 4,
+          "value": "32,07",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E9",
+          "row": 9,
+          "column": 5,
+          "value": "18,55",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F9",
+          "row": 9,
+          "column": 6,
+          "value": "74,73",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G9",
+          "row": 9,
+          "column": 7,
+          "value": "100,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": 250,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "173,62",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C10",
+          "row": 10,
+          "column": 3,
+          "value": "200,52",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D10",
+          "row": 10,
+          "column": 4,
+          "value": "37,20",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E10",
+          "row": 10,
+          "column": 5,
+          "value": "19,42",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F10",
+          "row": 10,
+          "column": 6,
+          "value": "99,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G10",
+          "row": 10,
+          "column": 7,
+          "value": "128,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": "Listino Prezzi (continua)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "Kit clips di fissaggio per EDCS (3 pz)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A15",
+          "row": 15,
+          "column": 1,
+          "value": "EDCS 100-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B15",
+          "row": 15,
+          "column": 2,
+          "value": "10,41",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A16",
+          "row": 16,
+          "column": 1,
+          "value": "EDCS 200-250",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B16",
+          "row": 16,
+          "column": 2,
+          "value": "10,98",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

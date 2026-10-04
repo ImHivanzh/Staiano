@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-griglie-forellinate",
+  "code": "EGF",
+  "slug": "egf-griglie-forellinate",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egf-griglie-forellinate?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egf-griglie-forellinate?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=egf-griglie-forellinate.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:26.243318+00:00",
+      "filename": "EGF-d3ca77e7.xlsx",
+      "bytes": 7979,
+      "sha256": "5b85ee427e3c48b883e4b2d0f3b6f415ade65e195738b0952c538ca72f028f01",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 156
+      }
+    }
+  ]
+}

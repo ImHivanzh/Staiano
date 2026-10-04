@@ -1,0 +1,109 @@
+GRIGLIA FORELLINATA
+CON FILTRO
+Serie EGF-PUSH
+Griglia di ripresa dell’aria a pannello forellinato, con doppia cornice ad apertura a cerniere e sistema push-pull per
+l’agevole alloggiamento e la sostituzione del filtro.
+CARATTERISTICHE
+Telaio perimetrale in alluminio.
+Pannello in acciaio zincato.
+Finitura: verniciatura colore bianco RAL9016.
+Filtro: classe COARSE (G2) spessore 12 mm.
+Apertura/chiusura: con sistema push-pull.
+La maglia forellinata è realizzata secondo le seguenti specifiche:
+-fori tondi alternati a 60°;
+-rapporto vuoto/pieno 46%;
+-diametro dei fori 5mm;
+-distanza tra i centri 7mm.
+INSTALLAZIONE
+L’installazione viene eseguita fissando il telaio esterno della griglia al muro mediante viti.
+IMPIEGO
+Griglia per la ripresa dell’aria in ambienti dove sia consigliata una prefiltrazione.
+Perdita di carico iniziale inferiore a 40 Pa con velocità di 1,5 m/s sul filtro.
+ACCESSORI
+- EPZ plenum zincato;
+- EPI plenum isolato;
+A RICHIESTA
+Chiusura con vite o con calamite.
+NOMENCLATURA CODICE
+EGF-PUSH: Griglia forellinata con filtro
+Grandezza L x H
+L (mm) = 200-300-400-500-600-800-1000
+H (mm) = 200-300-400-500-600
+EGF-PUSH 600 x 400
+PAG 1 - GRIGLIA FORELLINATA CON FILTRO
+SERIE EGF-PUSH - AGGIORNAMENTO 01/2023
+
+DIMENSIONI
+SEZIONE EFFICACE
+L
+H
+200 300 400 500 600 800 1000
+sezione efficace della griglia m²
+200 0,008 0,015 0,021 0,027 0,033 0,046 0,058
+300 0,015 0,025 0,036 0,047 0,058 0,079 0,101
+400 0,021 0,036 0,052 0,067 0,082 0,113 0,144
+500 0,027 0,047 0,067 0,087 0,107 0,147 0,187
+600 0,033 0,058 0,082 0,107 0,132 0,181 0,230
+DATI DI FUNZIONAMENTO
+V L m³/h: portata
+H
+m/s 200 300 400 500 600 800 1000 Pa: perdite di carico in Pascal
+Velocità frontale dB(A): indice di rumorosità
+portata m³/h
+sul filtro
+1,5 63 121 180 238 296 413 530 L: larghezza
+200
+2 84 162 240 317 395 551 706 H: altezza
+Tutte le dimensioni sono
+1,5 121 234 346 458 571 795 1020
+300 espresse in mm.
+2 162 312 461 611 761 1060 1360
+1,5 180 346 512 679 845 1178 1510
+400 Si consiglia la velocità dell’aria
+2 240 461 683 905 1127 1570 2014
+sul filtro di 1,5 m/s per contenere
+1,5 238 458 679 899 1119 1560 2000
+le perdite di carico e mantenere
+500
+2 317 611 905 1199 1492 2080 2667 l’efficienza di filtrazione;
+1,5 296 571 845 1119 1394 1942 2491 i dati di portata in tabella si
+600
+2 395 761 1127 1492 1858 2590 3321 riferiscono alla griglia con il filtro.
+INDICE DI RUMOROSITA’ PERDITA DI CARICO (Pa)
+V V
+dB(A) Pa
+m/s m/s
+1,5 <20 1,5 25/30
+2 20/25 2 45/50
+PAG 2 - GRIGLIA FORELLINATA CON FILTRO
+SERIE EGF-PUSH - AGGIORNAMENTO 01/2023
+
+PLENUM
+stacco superiore stacco laterale
+modello
+n° n° E F
+L1 x H1 P1 Ø d P2 Ø d
+stacchi stacchi
+200x200 200 1 198 300 1 198 80 12
+300x200 200 1 198 300 1 198 80 12
+Tutte le misure sono
+400x200 200 1 198 300 1 198 80 12
+espresse in mm.
+500x200 200 1 198 300 1 198 80 12
+600x200 200 2 198 300 2 198 80 12
+800x200 200 2 198 300 2 198 80 12
+1000x200 200 2 198 300 2 198 80 12
+300x300 200 1 248 350 1 248 80 12
+400x300 200 1 248 350 1 248 80 12
+500x300 200 1 248 350 1 248 80 12
+600x300 200 2 198 350 2 248 80 12
+800x300 200 2 248 350 2 248 80 12
+1000x300 200 2 248 350 2 248 80 12
+400x400 200 1 298 350 1 298 80 12
+500x400 200 1 298 350 1 298 80 12
+600x400 200 2 198 350 2 248 80 12
+800x400 200 2 298 350 2 298 80 12
+1000x400 200 2 298 400 2 298 80 12
+INSTALLAZIONE
+PAG 3 - GRIGLIA FORELLINATA CON FILTRO
+SERIE EGF-PUSH - AGGIORNAMENTO 01/2023

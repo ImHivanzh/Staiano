@@ -1,0 +1,279 @@
+ANTINCENDIO
+DIFFUSIONE
+VMC
+VENTILATORI
+SANIFICAZIONE
+TUBI FLESSIBILI
+TUBI SPIRO
+FILTRAZIONE
+ISOLANTI
+NASTRI & GUARNIZIONI
+REGOLATORI
+ACCESSORI
+EBLF
+Bocchette lineari
+a barre orizzontali fisse senza cornice
+Scheda tecnica
+Rev.00
+
+2 | REV.00
+LXH
+5.
+)1-L(X)1-H(
+5.
+6
+)31-L(X)31-H(
+6
+40
+LXH
+5.
+)1-L(X)1-H(
+5.
+6
+)31-L(X)31-H(
+6
+EBLF 20/0° - EBLF 20/15°
+Dimensioni Sezione efficace Vk 2 m/s Vk 3 m/s Vk 4 m/s
+LxH m2 m³/h L1 m³/h L1 m³/h L1
+400x75 0,015 108 2,4 160 3,6 213 4,8
+500x75 0,019 197 2,5 201 3,8 268 5,1
+600x75 0,022 158 2,6 243 3,9 323 5,2
+800x75 0,030 216 2,8 326 4,2 434 5,6
+1000x75 0,038 274 2,9 408 4,4 545 5,8
+1200x75 0,046 331 3 497 4,5 662 6
+400x100 0,020 144 2,6 216 3,8 292 5,1
+500x100 0,026 230 3,3 276 4,1 367 5,4
+600x100 0,031 281 3,5 332 4,2 443 5,6
+800x100 0,041 374 3,8 446 4,4 595 5,9
+1000x100 0,052 475 3,9 560 4,7 746 6,2
+1200x100 0,062 590 2,6 670 4,8 893 6,4
+400x125 0,026 187 2,7 278 4,1 370 5,4
+500x125 0,032 230 2,8 350 4,2 467 5,6
+600x125 0,039 281 2,9 422 4,4 563 5,9
+800x125 0,052 374 3,1 566 4,7 755 6,2
+1000x125 0,066 475 3,3 711 4,9 947 6,5
+1200x125 0,082 590 3,4 886 5,1 1149 6,9
+400x150 0,031 223 2,8 337 4,2 449 5,6
+500x150 0,039 281 2,9 424 4,4 566 5,9
+600x150 0,047 338 3 512 4,6 682 6,1
+800x150 0,064 461 3,2 687 4,9 916 6,5
+1000x150 0,080 576 3,4 862 5,1 1149 6,8
+1200x150 0,096 691 3,5 1037 5,2 1382 7
+400x200 0,042 302 3 455 4,5 607 6
+500x200 0,053 380 3,1 573 4,7 764 6,2
+600x200 0,064 461 3,2 691 4,9 922 6,5
+800x200 0,086 619 3,4 927 5,2 1237 6,9
+1000x200 0,108 778 3,6 1164 5,4 1552 7,2
+1200x200 0,130 936 3,7 1404 5,6 1872 7,4
+400x300 0,064 461 3,2 691 4,9 922 6,3
+500x300 0,081 583 3,3 875 5,1 1166 6,6
+600x300 0,097 698 3,5 1050 5,3 1400 7
+800x300 0,130 936 3,7 1409 5,6 1879 7,5
+1000x300 0,164 1181 3,9 1768 5,9 2357 7,8
+1200x300 0,198 1426 4,1 2138 6,2 2851 8,3
+400x400 0,084 603 3,4 904 5,1 1205 6,9
+500x400 0,105 753 3,6 1130 5,4 1507 7,2
+600x400 0,126 904 3,7 1356 5,6 1808 7,4
+800x400 0,167 1205 3,9 1808 5,9 2411 7,9
+1000x400 0,209 1507 4,1 2260 6,2 3013 8,2
+1200x400 0,251 1808 7,1 2712 6,4 3616 8,5
+Pa 3 7 12
+dB(A) 15 / 20 28 / 32 38 / 42
+Vk (m/s) velocità efficace L1(m) lancio riferito ad una velocità terminale, distanze superiori correggere il lancio
+m³/h portata aria Vt= 0,25 m/s, montati in prossimità moltiplicandolo x 0,7
+Pa perdite di carico del soffitto (non oltre 3 m); per dB(A) indice di rumorosità
+Dimensioni
+40 37.42
+77.42
+
+EBLF 20/0° - EBLF 20/15°
+DIMENSIONI CON E SENZA SERRANDA SU MURATURA
+Per l’installazione sono necessari il kit di fissaggio composto da 4 staffe, non fornito con l’articolo.
+N.B. per l’installazione su parete in muratura non sono disponibili le altezze 75mm,100 mm.
+• • • • • • • • • • • • • • • •
+• • • •
+ISTRUZIONI DI MONTAGGIO EBLF
+SU MURATURA
+Nel caso di installazione su parete in muratura,
+dopo creato il vano per l’installazione della
+• • • •
+bocchetta, il foro andrà debitamente stuccato
+con calcestruzzo per permettere la successiva
+installazione, e fissaggio tramite viti, delle staffe
+di fissaggio.
+Le staffe possono essere installate, sia
+verticalmente che orizzontalmente, grazie al
+profilo di fissaggio presente in continuità su
+• • tutto il lato della bocchetta. • •
+N.B. per l’installazione su parete in muratura non
+sono disponibili le altezze 75 mm,100 mm.
+• • 3 | REV.00 • •
+• • • •
+Le dimensioni sono espresse in mm. Raggi e smussi non quotati =0.5mm Tolleranze dimensionali non quotate : UNI EN 22768-1 Classe media
+Le quote modificate dalle revisioni precedenti sono cerchiate.
+Titolo: Disegno : Rev: Annulla e sostituisce
+SCHEDA TECNICA EBLF 2.150.001.164 A il dis • eg • n • o • : • •• •• •• •• •• •• •• •••••••••••••••••••••
+Descrizione: Cod.progetto
+VISTE BOCCHETTA EBLF SU MURATURA E CARTOGESSO
+Materiale: Eseguito da: In data: Tavola / Foglio
+• • • •• •• •• •• •• •• •• •• •• ••••••••••••••••••••• P.E.PRINCIPE 04/02/2025 3/5 / A4 • •
+www.adm.ecoclima.com
+PROPIETA' RISERVATA: questo disegno non può essere riprodotto o comunicato Dimensioni/Sviluppo: Trattamenti termici e superficiali: Verifica e Appr. In data: Scala
+a terz L i e a n st c e h s e s a p a s r i z r i i a s l e m rv e a n t d e i s tu e t n e z la a r e a u i t p o r r o iz p z r a i d zi i o ri n tt e i a d r e ig lla o r s e o d c i . L A e D g M ge S . .r.L. - - - - - - - • •• •• •• •• •• •• •• •• •• •••••••••••••••••M••.•B•ROTTO 04/02/2025 1:3
+• • • • • • • • • • • • • • • •
+
+EBLF 20/0° - EBLF 20/15°
+DIMENSIONI CON E SENZA SERRANDA SU CARTONGESSO
+Per l’installazione sono necessari il kit di fissaggio composto da 4 staffe, non fornito con l’articolo
+• • • • • • • • • • • • • • • •
+• • • •
+• • • •
+ISTRUZIONI DI MONTAGGIO EBLF
+SU CARTONGESSO
+Nel caso di installazione su parete in
+cartongesso le staffe andranno posizionate,
+• • • •
+come possibile vedere nel disegno,
+posteriormente alla parete e fissate con viti.
+Le staffe possono essere installate, sia
+verticalmente che orizzontalmente, grazie al
+profilo di fissaggio presente in continuità su
+tutto il lato della bocchetta.
+• • • •
+• • • •
+4 | REV.00
+Le dimensioni sono espresse in mm. Raggi e smussi non quotati =0.5mm Tolleranze dimensionali non quotate : UNI EN 22768-1 Classe media
+Le quote modificate dalle revisioni precedenti sono cerchiate.
+Titolo: Disegno : Rev: Annulla e sostituisce
+SCHEDA TECNICA EBLF 2.150.001.164 A il dis • eg • n • o • : • •• •• •• •• •• •• •• •••••••••••••••••••••
+Descrizione: Cod.progetto
+VISTE BOCCHETTA EBLF SU MURATURA E CARTOGESSO
+Materiale: Eseguito da: In data: Tavola / Foglio
+• • • •• •• •• •• •• •• •• •• •• ••••••••••••••••••••• P.E.PRINCIPE 04/02/2025 3/5 / A4 • •
+www.adm.ecoclima.com
+PROPIETA' RISERVATA: questo disegno non può essere riprodotto o comunicato Dimensioni/Sviluppo: Trattamenti termici e superficiali: Verifica e Appr. In data: Scala
+a terz L i e a n st c e h s e s a p a s r i z r i i a s l e m rv e a n t d e i s tu e t n e z la a r e a u i t p o r r o iz p z r a i d zi i o ri n tt e i a d r e ig lla o r s e o d c i . L A e D g M ge S . .r.L. - - - - - - - • •• •• •• •• •• •• •• •• •• •••••••••••••••••M••.•B•ROTTO 04/02/2025 1:3
+• • • • • • • • • • • • • • • •
+
+ISTRUZIONI DI MONTAGGIO
+DEL KIT PIASTRA SU MURATURA
+LINEA DI PIEGA
+PREMERE
+VERSO IL
+BASSO
+PIANO DI
+APPOGGIO
+STEP 1 - Appoggiare la STEP 2 - Mantenendo la STEP 3 - Sollevare la/e
+superficie “A” della piastra su superficie “A” aderente al linguetta/e
+un piano, lasciando sporgere piano , premere la superficie
+la superficie “B” “B” verso il basso fino ad
+ottenere una piega a 90°
+PIEGA
+SUPERIORE
+STEP 4 - Posizionare la piastra STEP 5 - Forare la STEP 6 - Rimuovere la STEP 7 - Risultato finale
+facendo combaciare l’angolo muratura e fissare la parte in eccesso della della piastra
+della stessa con quello del piastra mediante vite/i e piastra facendola
+foro della parete tassello/i da posizionarsi oscillare fino alla
+come nel disegno totale rimozione
+POSIZIONE DEL KIT PIASTRA H<150 POSIZIONE DEL KIT PIASTRA H>150
+SOLLEVARE LE
+LINGUETTE INDICATE
+SU MURATURA
+(POSIZIONARE LE PIASTRE
+CENTRALMENTE)
+SU MURATURA
+(POSIZIONARE LE PIASTRE
+IN APPOGGIO AGLI ANGOLI)
+SOLLEVARE LE
+LINGUETTE INDICATE
+SOLLEVARE LA/E LINGUETTA/E SOLLEVARE LE
+DETTAGLIO A SECONDO QUANTO INDICATO LINGUETTE INDICATE
+NEL DETTAGLIO A
+5 | REV.00
+
+ISTRUZIONI DI MONTAGGIO
+DEL KIT PIASTRA SU CARTONGESSO
+LINEA DI PIEGA
+PILASTRINO
+PIANO DI PREMERE VERSO
+APPOGGIO IL BASSO
+STEP 1 - Appoggiare la STEP 2 - Mantenendo la STEP 3 - Sollevare la/e STEP 4 - Ruotare
+superficie “A” della piastra su superficie “A” aderente al linguetta/e il pilastrino fino
+un piano, lasciando sporgere piano , premere la superficie ad inserimento
+la superficie “B” “B” verso il basso fino ad dell’uncino all’interno
+ottenere una piega a 90° dello spacco
+SPACCO
+UNCINO
+SEDE DI
+BLOCCAGGIO
+STEP 5 - Far scorrere STEP 6 - Posizionare la STEP 7 - Fissare le viti nella STEP 8 - Risultato finale
+l’uncino all’ interno piastra all’interno della lastra in cartongesso fino della piastra
+dello spacco fino al lastra in cartongesso al raggiungimento dei fori
+raggiungimento della come indicato asolati della piastra
+sede di bloccaggio
+POSIZIONE DEL KIT PIASTRA H<150 POSIZIONE DEL KIT PIASTRA H>150
+SOLLEVARE LE
+LINGUETTE INDICATE
+SU CARTONGESSO
+(POSIZIONARE LE PIASTRE
+CENTRALMENTE) SU CARTONGESSO
+(POSIZIONARE LE PIASTRE
+IN APPOGGIO AGLI ANGOLI)
+SOLLEVARE LE
+LINGUETTE INDICATE
+SOLLEVARE LA/E LINGUETTA/E SOLLEVARE LE
+DETTAGLIO A SECONDO QUANTO INDICATO LINGUETTE INDICATE
+NEL DETTAGLIO A
+6 | REV.00
+
+PIASTRA PER LA RIMOZIONE
+DELLA BOCCHETTA
+STEP 1 - Piegare la parte
+indicata facendola oscillare
+fino alla rimozione della stessa
+ACCESSORIO 1
+STEP 2 - Fare pressione sulla ACCESSORIO 2
+parte indicata fino ad avvenuta
+separazione dei 2 accessori
+ACCESSORIO 1 - PER LO SBLOCCAGGIO ACCESSORIO 2 - PER LA RIMOZIONE DELLA
+DELLE LINGUETTE DELLA PIASTRA GRIGLIA /BOCCHETTA SU PARETE
+2° PIEGA
+1° PIEGA
+7 | REV.00
+
+RIMOZIONE DELLA BOCCHETTA
+1 2 3
+ACCESSORIO 1
+ACCESSORIO 1
+INSERIRE L’ACCESSORIO FAR SCORRERE FAR SCORRERE
+1 LATERALMENTE TRA LA L’ACCESSORIO 1 VERSO L’ACCESSORIO VERSO IL
+BOCCHETTA E PARETE, FINO L’ALTO FINO ALLO SGANCIO BASSO FINO AL COMPLETO
+ALL’APPOGGIO DELLA PARTE DELLA PARTE SUPERIORE SGANCIO DELLA BOCCHETTA
+PIEGATA DELLA BOCCHETTA
+4 5
+RIMUOVERE LA BOCCHETTA
+DALLE PIASTRE DI
+MONTAGGIO
+8 | REV.00
+
+NOMENCLATURA CODICE
+Come ordinare
+EBLF 20/0° 400 200
+EBLS 20/0°: con cornice e barre fisse Larghezza L Altezza H
+Bocchette lineari a barre frontali con deflessione 0°; (mm) (mm)
+orizzontali fisse senza 400 75
+20/15°: con cornice e barre fisse
+cornice frontali con deflessione 15°; 500 100
+600 125
+800 150
+1000 200
+1200 300
+400
+9 | REV.00
+
+Head quarter
+E V C ia O C C a L d IM u A ti S d R i R L ussia, 19 S in a f l o e @ s o e f c fi o c c e l i I m tal a y .com I I I S S S O O O 5 4 9 0 5 0 0 0 0 0 0 1 1 1
+35010 Curtarolo - PADOVA - ITALY
+ISO 14001
+P. +39 049 9620344 Sales office international
+info@ecoclima.com francesca@ecoclima.com ecoclima.com Certified Management System

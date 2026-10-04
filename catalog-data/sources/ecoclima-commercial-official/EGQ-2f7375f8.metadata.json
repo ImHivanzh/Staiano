@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-griglie-a-maglia-quadra",
+  "code": "EGQ",
+  "slug": "egq-griglie-a-maglia-quadra",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-griglie-a-maglia-quadra?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-griglie-a-maglia-quadra?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=egq-griglie-a-maglia-quadra.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:26.667431+00:00",
+      "filename": "EGQ-2f7375f8.xlsx",
+      "bytes": 10826,
+      "sha256": "d7a71caf933656c0d4b56f4c635fe9eb822683a654d4c9decac8220461caa6ea",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 500
+      }
+    }
+  ]
+}

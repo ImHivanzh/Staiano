@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria",
+  "code": "EASY",
+  "slug": "easy-box-plenum-in-abs-per-distribuzione-dellaria",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=easy-box-plenum-in-abs-per-distribuzione-dellaria.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.200023+00:00",
+      "filename": "EASY-fc30baa1.xlsx",
+      "bytes": 7040,
+      "sha256": "9e5de648763bef5d8d3a2e806766b7968f4c107219ceb9b726edffc382280961",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 21
+      }
+    }
+  ]
+}

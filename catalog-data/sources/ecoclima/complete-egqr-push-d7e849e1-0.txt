@@ -1,0 +1,74 @@
+GRIGLIA DI RIPRESA A
+MAGLIA QUADRA 13x13
+mm CON FILTRO E
+CORNICE INTERNA
+DA 15 mm
+Serie EGQR-PUSH
+Griglia di ripresa a maglia quadra 13x13 mm da controsoffitto, con doppia cornice (interna da 15 mm) ad apertura
+a cerniere e sistema push-pull per l’agevole alloggiamento e la sostituzione del filtro.
+CARATTERISTICHE
+Materiale: alluminio.
+Finitura: anodizzato naturale.
+Filtro: classe COARSE (G2) spessore 10 mm.
+Apertura / chiusura: con sistema push-pull.
+INSTALLAZIONE
+L’installazione viene eseguita fissando il telaio esterno della griglia al muro mediante viti o in appoggio su struttura
+per controsoffitti pannellati 600x600 mm.
+IMPIEGO
+Per la ripresa dell’aria esterna o ambiente dove sia consigliata una prefiltrazione di polvere.
+Perdita di carico iniziale inferiore a 40Pa con velocità di 1,5 m/s sul filtro.
+ACCESSORI
+- EPZ plenum zincato;
+- EPI plenum isolato;
+A RICHIESTA
+Verniciatura colore bianco RAL 9016 o altri colori RAL a scelta.
+NOMENCLATURA CODICE
+EGQR-PUSH: Griglia di ripresa a maglia quadra 13x13 mm
+con filtro e cornice interna da 15 mm
+Grandezza ESTERNO CORNICE L x H
+L (mm) = 595 mm - dimensione foro 560 mm
+H (mm) = 595 mm - dimensione foro 560 mm
+EGQR-PUSH 595 x 595
+PAG 1 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO E CORNICE INTERNA DA 15 mm
+SERIE EGQR-PUSH - AGGIORNAMENTO 01/2024
+
+DIMENSIONI
+DATI DI FUNZIONAMENTO
+m³/h: portata
+Pa: perdite di carico in Pascal
+dB(A): indice di rumorosità
+Si consiglia la velocità dell’aria sul filtro di 1,5 m/s per contenere le perdite di carico e mantenere l’efficienza di
+filtrazione;
+i dati di portata in tabella si riferiscono alla griglia con il filtro.
+Tutte le dimensioni sono espresse in mm.
+dimensioni esterno sezione efficace velocità frontale
+portata aria
+modello cornice del filtro sul filtro
+mm m² m/s m³/h
+1,5 1285
+EGQR-PUSH 595x595 0,238
+2 1713
+INDICE DI RUMOROSITA’
+V
+dB(A)
+m/s
+1,5 <20
+2 20/25
+PERDITA DI CARICO (Pa)
+V
+Pa
+m/s
+1,5 25/30
+2 45/50
+PAG 2 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO E CORNICE INTERNA DA 15 mm
+SERIE EGQR-PUSH - AGGIORNAMENTO 01/2024
+
+PLENUM
+modello stacco laterale
+E F
+L1 x H1 P2 n° stacchi Ø d
+560x560 300 1 250 80 12
+Tutte le misure sono espresse in mm.
+INSTALLAZIONE
+PAG 3 - GRIGLIE DI RIPRESA A MAGLIA QUADRA 13X13 mm CON FILTRO E CORNICE INTERNA DA 15 mm
+SERIE EGQR-PUSH - AGGIORNAMENTO 01/2024

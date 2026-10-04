@@ -1,0 +1,727 @@
+{
+  "filename": "EGA6-f8d6b190.xlsx",
+  "sha256": "ab9ea064f6145c6c6b330be45d5b32e7d046d9764f9b1ca4f7cc5a8b19029623",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:26",
+    "modified": "2026-10-04 01:02:26"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 13,
+      "maxColumn": 8,
+      "mergedRanges": [
+        "A5:A6",
+        "B5:H5",
+        "A3:H3",
+        "A1:H1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EGA6 GRIGLIE DI RIPRESA IN ALLUMINIO PASSO 25 CON FILTRO",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Verniciato bianco RAL 9016 +20%.",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "H",
+            "L",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            200,
+            300,
+            400,
+            500,
+            600,
+            800,
+            1000
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            " ",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            200,
+            "68,73",
+            "72,47",
+            "81,75",
+            "94,76",
+            "111,48",
+            "120,91",
+            "144,93"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            300,
+            "72,47",
+            "76,19",
+            "89,44",
+            "104,02",
+            "131,64",
+            "152,27",
+            "179,07"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            400,
+            "83,34",
+            "96,64",
+            "105,16",
+            "131,74",
+            "152,36",
+            "186,21",
+            "211,61"
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            500,
+            "100,33",
+            "109,26",
+            "130,05",
+            "154,73",
+            "180,18",
+            "211,61",
+            "251,93"
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            600,
+            "109,26",
+            "125,61",
+            "149,57",
+            "169,06",
+            "203,12",
+            "243,00",
+            "276,53"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            800,
+            "127,45",
+            "146,52",
+            "174,50",
+            "197,23",
+            "236,94",
+            "283,47",
+            "322,56"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EGA6 GRIGLIE DI RIPRESA IN ALLUMINIO PASSO 25 CON FILTRO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Verniciato bianco RAL 9016 +20%.",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "H",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "L",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": 300,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": 400,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E6",
+          "row": 6,
+          "column": 5,
+          "value": 500,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F6",
+          "row": 6,
+          "column": 6,
+          "value": 600,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G6",
+          "row": 6,
+          "column": 7,
+          "value": 800,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H6",
+          "row": 6,
+          "column": 8,
+          "value": 1000,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": " ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E7",
+          "row": 7,
+          "column": 5,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F7",
+          "row": 7,
+          "column": 6,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G7",
+          "row": 7,
+          "column": 7,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H7",
+          "row": 7,
+          "column": 8,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "68,73",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": "72,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D8",
+          "row": 8,
+          "column": 4,
+          "value": "81,75",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E8",
+          "row": 8,
+          "column": 5,
+          "value": "94,76",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F8",
+          "row": 8,
+          "column": 6,
+          "value": "111,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G8",
+          "row": 8,
+          "column": 7,
+          "value": "120,91",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H8",
+          "row": 8,
+          "column": 8,
+          "value": "144,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": 300,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "72,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C9",
+          "row": 9,
+          "column": 3,
+          "value": "76,19",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D9",
+          "row": 9,
+          "column": 4,
+          "value": "89,44",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E9",
+          "row": 9,
+          "column": 5,
+          "value": "104,02",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F9",
+          "row": 9,
+          "column": 6,
+          "value": "131,64",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G9",
+          "row": 9,
+          "column": 7,
+          "value": "152,27",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H9",
+          "row": 9,
+          "column": 8,
+          "value": "179,07",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": 400,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "83,34",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C10",
+          "row": 10,
+          "column": 3,
+          "value": "96,64",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D10",
+          "row": 10,
+          "column": 4,
+          "value": "105,16",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E10",
+          "row": 10,
+          "column": 5,
+          "value": "131,74",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F10",
+          "row": 10,
+          "column": 6,
+          "value": "152,36",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G10",
+          "row": 10,
+          "column": 7,
+          "value": "186,21",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H10",
+          "row": 10,
+          "column": 8,
+          "value": "211,61",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": 500,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "100,33",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C11",
+          "row": 11,
+          "column": 3,
+          "value": "109,26",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D11",
+          "row": 11,
+          "column": 4,
+          "value": "130,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E11",
+          "row": 11,
+          "column": 5,
+          "value": "154,73",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F11",
+          "row": 11,
+          "column": 6,
+          "value": "180,18",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G11",
+          "row": 11,
+          "column": 7,
+          "value": "211,61",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H11",
+          "row": 11,
+          "column": 8,
+          "value": "251,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": 600,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": "109,26",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C12",
+          "row": 12,
+          "column": 3,
+          "value": "125,61",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D12",
+          "row": 12,
+          "column": 4,
+          "value": "149,57",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E12",
+          "row": 12,
+          "column": 5,
+          "value": "169,06",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F12",
+          "row": 12,
+          "column": 6,
+          "value": "203,12",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G12",
+          "row": 12,
+          "column": 7,
+          "value": "243,00",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H12",
+          "row": 12,
+          "column": 8,
+          "value": "276,53",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": 800,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B13",
+          "row": 13,
+          "column": 2,
+          "value": "127,45",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C13",
+          "row": 13,
+          "column": 3,
+          "value": "146,52",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D13",
+          "row": 13,
+          "column": 4,
+          "value": "174,50",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E13",
+          "row": 13,
+          "column": 5,
+          "value": "197,23",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F13",
+          "row": 13,
+          "column": 6,
+          "value": "236,94",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G13",
+          "row": 13,
+          "column": 7,
+          "value": "283,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H13",
+          "row": 13,
+          "column": 8,
+          "value": "322,56",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

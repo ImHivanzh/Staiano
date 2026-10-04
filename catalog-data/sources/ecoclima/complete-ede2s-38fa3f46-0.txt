@@ -1,0 +1,125 @@
+DIFFUSORI A
+GETTO ELICOIDALE
+REGOLABILE
+Serie EDE2S
+Diffusori a getto elicoidale ad alta induzione su pannello quadro, adatti per installazioni a soffitto.
+Possono essere impiegati sia in condizionamento che in riscaldamento soprattutto in impianti a portata variabile
+anche con elevato numero di ricambi ora.
+I diffusori di questa tipologia consentono un elevato rapporto di induzione (capacità di miscelazione) tra aria
+immessa e aria ambiente.
+Essi sono costituiti da una piastra con diverse feritoie ricavate da lavorazione laser, nelle quali sono alloggiati dei
+deflettori a profilo aerodinamico regolabili.
+L’installazione, le regolazioni e la manutenzione sono di semplice esecuzione.
+CARATTERISTICHE:
+- Materiale: pannello in acciaio con deflettori in materiale polimerico.
+- Finitura superficiale standard: verniciatura pannello RAL 9016 e deflettori RAL 9005.
+- Finitura superficiale: a richiesta verniciatura pannello RAL fuori standard.
+- Fissaggio: con viti laterali o con vite centrale su ponte di montaggio del plenum.
+Il pannello è costituito da lamiera di acciaio verniciata con polvere a base di resine epossidiche posate
+elettrostaticamente ed essiccate a forno.
+Questo tipo di verniciatura risulta resistente ad eventuali urti o abrasioni e mantiene inalterate nel tempo le
+caratteristiche estetiche.
+I deflettori in ABS idonei alle temperature di utilizzo in riscaldamento e condizionamento sono orientabili ed hanno
+la possibilità di effettuare il lancio in orizzontale, verticale oppure con effetto elicoidale.
+Installazione su plenum con viti laterali non apparenti o con ponte interno al plenum e foro centrale sul diffusore.
+IMPIEGO:
+Diffusore ad effetto elicoidale, idoneo ad essere installato in ambienti di altezza compresa tra 2,5 e 4 m sia in
+riscaldamento che in condizionamento.
+L’orientamento dei deflettori può avvenire anche a diffusore montato in modo da poter compiere successive
+regolazioni a impianto funzionante per ottimizzare il flusso d’aria in ambiente.
+I diffusori delle serie EDE possono essere utilizzati anche per la ripresa dell’aria e per questa applicazione possono
+essere forniti senza deflettori.
+Il flusso elicoidale dell’aria immessa può essere orientato in senso orario, in senso antiorario o alternato, variando
+la posizione dei deflettori.
+La regolazione della distribuzione del flusso d’aria avviene agendo manualmente sui deflettori che sono dotati di
+movimento a scatto.
+Il dispositivo di blocco a scatto è stato ideato per garantire il mantenimento della posizione durante il funzionamento.
+ACCESSORI
+Plenum isolato o non isolato, equipaggiato con serranda di regolazione, equalizzatore e ponte di montaggio per
+l’installazione a mezzo vite centrale e raccordo per condotto flessibile laterale o superiore.
+PAG 1 - DIFFUSORI A GETTO ELICOIDALE REGOLABILE
+SERIE EDE2S - AGGIORNAMENTO 01/2021
+
+NOMENCLATURA CODICE:
+EDE2S Diffusore su pannello quadro con deflettori disposti radialmente su contorno circolare
+Modello 600
+EDE2S 600
+DIMENSIONI PANNELLO QUADRO:
+Modello Dimensioni
+EDE2S
+A B
+600 595 595
+REGOLAZIONE DEI DEFLETTORI:
+- Posizione deflettore max lancio orizzontale
+Inclinando il deflettore si ottiene un effetto elicoidale. A seconda del verso in cui vengono inclinati i deflettori si otterrà
+un vortice orario oppure antiorario.
+- Posizione deflettore max lancio verticale
+Mantenendo il deflettore dritto si ottiene un lancio verticale, questa soluzione è particolarmente indicata in fase di
+riscaldamento per ottenere dei lanci profondi.
+PAG 2 - DIFFUSORI A GETTO ELICOIDALE REGOLABILE
+SERIE EDE2S - AGGIORNAMENTO 01/2021
+
+LANCIO ARIA CON DEFLETTORI INCLINATI NEL LATO ROSSO:
+- Lancio con effetto elicoidale
+- Lancio unidirezionale - Lancio bidirezionale
+DATI DI FUNZIONAMENTO:
+Sezione
+Modello Numero
+efficace VK 2 3 4 5 6
+EDE2S deflettori
+Ak m2
+Q 310 465 620 775 930
+Dp 3 7 14 24 38
+600 0,0431 24
+L 1,8 2,6 3,5 4,4 5,3
+dB(A) 20 25 30 35 40
+LEGENDA:
+- Ak [m2] Sezione efficace - Dp [Pa] perdita di carico totale
+- Vk [m/s] Velocità efficace - L [m] Lancio: Lunghezza massima della gittata d’aria
+- Q [m3/h]: volume d’aria per con una velocità terminale pari a 0,25 m/s.
+- dB(A) Livello di potenza sonora ponderata
+FATTORI CORRETTIVI
+Fattore moltiplicativo correttivo del Fattore moltiplicativo correttivo del
+lancio orizzontale non isotermo. lancio verticale non isotermo.
+ΔT[°C] K ΔT[°C] K
+- K: nella tabella viene illustrata
+-10 0,85 -10 0,40
+la variazione della costante
+K (costante da moltiplicare
+0 1 0 1 per il lancio orizzontale non
+isotermo) in riferimento alla
+variazione della temperatura
+10 1,2 10 1,45
+di uscita +10 °C, 0 °C, -10 °C.
+PAG 3 - DIFFUSORI A GETTO ELICOIDALE REGOLABILE
+SERIE EDE2S - AGGIORNAMENTO 01/2021
+
+PLENUM EDE2S:
+COSTRUZIONE PLENUM:
+- Materiale: Acciaio zincato.
+- Varianti disponibili: 1. plenum zincato con serranda e ponte di fissaggio;
+2. plenum zincato con serranda, ponte di fissaggio ed equalizzatore;
+3. plenum zincato ISOLATO con serranda e ponte di fissaggio;
+4. plenum zincato ISOLATO con serranda, ponte di fissaggio ed equalizzatore.
+modello Dimensioni esterne
+Ø d P1 P2 C E
+plenum L1 x H1
+600 592x592 248 200 350 560 50
+PAG 4 - DIFFUSORI A GETTO ELICOIDALE REGOLABILE
+SERIE EDE2S - AGGIORNAMENTO 01/2021
+
+MONTAGGIO CON PLENUM SU CONTROSOFFITTO IN CARTONGESSO
+- Appendere il plenum al soffitto servendosi di apposite staffe o catene fissate sul plenum il cui bordo esterno può
+essere forato;
+- inserire il condotto flessibile sul canotto di raccordo fissandolo con apposita fascetta stringitubo;
+- montare il diffusore o servendosi della vite centrale, avvitandola sul ponte di fissaggio del plenum o di nr. 4 viti
+laterali autoforanti.
+MONTAGGIO IN APPOGGIO AL CONTROSOFFITTO A QUADROTTI
+- Appendere il plenum al soffitto servendosi di apposite staffe o catene fissate sul plenum il cui bordo esterno può
+essere forato;
+- inserire il condotto flessibile sul canotto di raccordo fissandolo con apposita fascetta stringitubo;
+- montare il diffusore o servendosi della vite centrale avvitandola sul ponte di fissaggio del plenum o attraverso le
+nr. 4 viti laterali autoforanti;
+- appoggiare il diffusore già prefissato sul plenum sull’apposito spazio quadrato del controsoffitto.
+PAG 5 - DIFFUSORI A GETTO ELICOIDALE REGOLABILE
+SERIE EDE2S - AGGIORNAMENTO 01/2021

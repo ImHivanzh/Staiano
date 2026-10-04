@@ -1,0 +1,398 @@
+{
+  "filename": "EDSC-29c7607a.xlsx",
+  "sha256": "8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:15",
+    "modified": "2026-10-04 01:02:15"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 8,
+      "maxColumn": 7,
+      "mergedRanges": [
+        "A1:G1",
+        "A3:G3",
+        "A4:A5"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EDSC C EDSC CC EDSC Q DIFFUSORI A SCOMPARSA PER CONTROSOFFITTO IN CARTONGESSO",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "EDSC-C",
+            "EDSC-Q",
+            "EDSC-CC",
+            "EPZ-DC - Plenum Zincato",
+            "EPI-DC - Plenum Isolato",
+            "EARS-PN"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "€",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            100,
+            "134,09",
+            "143,81",
+            "153,54  ",
+            "57,51",
+            "78,14",
+            "134,01  "
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            125,
+            "134,09",
+            "143,81",
+            "153,54  ",
+            "59,03",
+            "87,29",
+            "143,00  "
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            160,
+            "153,54",
+            "-",
+            "-",
+            "65,67",
+            "88,68",
+            "153,55  "
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EDSC C EDSC CC EDSC Q DIFFUSORI A SCOMPARSA PER CONTROSOFFITTO IN CARTONGESSO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "EDSC-C",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "EDSC-Q",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D4",
+          "row": 4,
+          "column": 4,
+          "value": "EDSC-CC",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E4",
+          "row": 4,
+          "column": 5,
+          "value": "EPZ-DC - Plenum Zincato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F4",
+          "row": 4,
+          "column": 6,
+          "value": "EPI-DC - Plenum Isolato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G4",
+          "row": 4,
+          "column": 7,
+          "value": "EARS-PN",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E5",
+          "row": 5,
+          "column": 5,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F5",
+          "row": 5,
+          "column": 6,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G5",
+          "row": 5,
+          "column": 7,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": 100,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "134,09",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": "143,81",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": "153,54  ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E6",
+          "row": 6,
+          "column": 5,
+          "value": "57,51",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F6",
+          "row": 6,
+          "column": 6,
+          "value": "78,14",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G6",
+          "row": 6,
+          "column": 7,
+          "value": "134,01  ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": 125,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "134,09",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "143,81",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": "153,54  ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E7",
+          "row": 7,
+          "column": 5,
+          "value": "59,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F7",
+          "row": 7,
+          "column": 6,
+          "value": "87,29",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G7",
+          "row": 7,
+          "column": 7,
+          "value": "143,00  ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": 160,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "153,54",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": "-",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D8",
+          "row": 8,
+          "column": 4,
+          "value": "-",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E8",
+          "row": 8,
+          "column": 5,
+          "value": "65,67",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F8",
+          "row": 8,
+          "column": 6,
+          "value": "88,68",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G8",
+          "row": 8,
+          "column": 7,
+          "value": "153,55  ",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

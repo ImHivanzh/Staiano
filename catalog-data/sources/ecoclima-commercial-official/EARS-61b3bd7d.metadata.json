@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio",
+  "code": "EARS",
+  "slug": "ears-pn-raccordo-per-attraversamento-solaio",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ears-pn-raccordo-per-attraversamento-solaio.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.288181+00:00",
+      "filename": "EARS-61b3bd7d.xlsx",
+      "bytes": 6720,
+      "sha256": "85eab63f9338250499ed70147a2630f534d996c455198bfac1e12232ba1b223a",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 10
+      }
+    }
+  ]
+}

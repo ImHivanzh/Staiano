@@ -1,0 +1,341 @@
+{
+  "filename": "EDLSV-f8af1f05.xlsx",
+  "sha256": "a8e8283ff5152010f83298a30c9f0a90ba9b2efde15e123e4befba1ae8208435",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:28",
+    "modified": "2026-10-04 01:02:28"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 14,
+      "maxColumn": 4,
+      "mergedRanges": [
+        "A1:D1",
+        "A3:D3",
+        "A10:D10"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EDLSV EDLSVB DIFFUSORI LINEARI A SCOMPARSA",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino prezzi EDLSV verniciato nero RAL9005 con feritoia 30 mm",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Lunghezza (m)",
+            "EDLSV",
+            "EDLSVB",
+            "EPLS"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            " ",
+            "€",
+            "€",
+            "€"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            500,
+            "55,62",
+            "55,62",
+            "88,25"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            800,
+            "63,96",
+            "63,96",
+            "100,74"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Listino Prezzi Accessori",
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Accessori",
+            "€",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "P1-EDL - Ponte di fissaggio",
+            "12,72",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "M76-EASY - Manicotto aggiuntivo per tubo ø 75 mm interno (confezione da 5 pezzi)",
+            "25,99",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "S-EASY - Serranda di regolazione per attacchi ø 63mm o 75mm interno (confezione da 5 pezzi)",
+            "15,58",
+            null,
+            null
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EDLSV EDLSVB DIFFUSORI LINEARI A SCOMPARSA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino prezzi EDLSV verniciato nero RAL9005 con feritoia 30 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Lunghezza (m)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "EDLSV",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "EDLSVB",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D4",
+          "row": 4,
+          "column": 4,
+          "value": "EPLS",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": " ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": 500,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "55,62",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": "55,62",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": "88,25",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": 800,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "63,96",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "63,96",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": "100,74",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "Listino Prezzi Accessori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": "Accessori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": "P1-EDL - Ponte di fissaggio",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": "12,72",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": "M76-EASY - Manicotto aggiuntivo per tubo ø 75 mm interno (confezione da 5 pezzi)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B13",
+          "row": 13,
+          "column": 2,
+          "value": "25,99",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "S-EASY - Serranda di regolazione per attacchi ø 63mm o 75mm interno (confezione da 5 pezzi)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": "15,58",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+DIFFUSORE CIRCOLARE
+A SINGOLO CONO
+REGOLABILE
+Serie EDCS / EDCS-PQ
+Diffusori circolari con regolazione micrometrica a singolo cono (disponibile anche la versione EDCS-PQ su pannello quadrato,
+idoneo ad essere installato su controsoffitti con pannelli 600x600). La regolazione micrometrica della posizione del cono
+centrale mediante vite consente di modificare la direzione del getto d’aria in funzione delle condizioni termiche richieste.
+CARATTERISTICHE
+- Materiale: alluminio e acciao
+- Finitura superficiale standard: verniciatura a polveri epossidiche resistenti ad urti e abrasioni colore Ral 9010
+- Fissaggio: con viti sul collo del diffusore
+- Altezza d’installazione: da 2,7 a 6 m
+VARIANTI
+- EDCS diffusori circolari a coni regolabili
+- EDCS-PQ diffusori circolari a coni regolabili su pannello quadrato 595x595 mm
+IMPIEGO
+Per la ripresa e la mandata degli impianti di climatizzazione.
+ACCESSORI
+- EPZ-DC plenum zincato;
+- EPI-DC plenum isolato;
+- SD serranda; EPI - EDCS Plenum isolato per EDCS SD Serranda di regolazione
+- EQUA equalizzatore;
+- Kit clips di fissaggio.
+EPZ - EDCS Plenum zincato per EDCS EQUA Equalizzatore
+PAG 1 - DIFFUSORI CIRCOLARI A CONI REGOLABILI
+SERIE EDCS / EDCS-PQ - AGGIORNAMENTO 01/2021
+
+COSTRUZIONE CODICE:
+MODELLO:
+EDCS: Diffusore circolare a singolo cono regolabile
+EDCS-PQ: Diffusore circolare a singolo cono regolabile
+su pannello quadro dimensione 595 mm x 595 mm
+GRANDEZZA:
+100 - 150 - 160 - 200 - 250
+EDCS 250
+DIFFUSORE EDCS DIFFUSORE EDCS-PQ:
+DIMENSIONI:
+EDCS EDCS-PQ
+modello
+Ø A Ø B Ø E Ø foro C D G Ø A1 B1 x B1 C1 D1
+100 96 250 195 225 85 33 25 96 595 x 595 85 33
+150 145 330 280 308 90 25 23 146 595 x 595 90 23
+160 156 330 280 308 90 27 23 156 595 x 595 90 28
+200 196 445 370 410 115 37 35 196 595 x 595 115 37
+250 246 535 460 500 135 37 35 246 595 x 595 135 37
+Tutte le dimensioni sono espresse in mm
+DATI DI FUNZIONAMENTO:
+sezione efficace
+Modello Vk 2 3 4 5 6
+m²
+Vk: velocità efficace (m/s)
+m³/h 42 63 84 105 127
+m³/h: portata
+100 0,0059 Pa 7,6 17,2 30,6 47,7 68,7
+Pa: perdite di carico in Pascal
+L(m) 0,4 0,6 0,8 1,0 1,2
+L(m): lancio in metri calcolato con installazione
+m³/h 107 161 216 268 322 a filo soffitto e velocità terminale 0,25 m/s
+150 0,0149 Pa 6,3 14,2 25,2 39,4 56,8 dB(A): indice di rumorosità
+L(m) 0,7 1,1 1,5 1,9 2,2
+m³/h 120 181 241 301 361
+160 0,0167 Pa 6,1 13,8 24,5 38,3 55,1
+L(m) 0,8 1,2 1,7 2,1 2,5
+m³/h 201 301 402 502 602
+200 0,0279 Pa 5,5 12,5 22,2 34,7 49,9
+L(m) 1,2 1,7 2,3 2,9 3,5
+m³/h 323 484 645 806 968
+250 0,0448 Pa 5,0 11,3 20,1 31,5 45,3
+L(m) 1,5 2,4 3,2 4,1 4,9
+indice di rumorosità dB(A) 20 25 30 35 40
+PAG 2 - DIFFUSORI CIRCOLARI A CONI REGOLABILI
+SERIE EDCS / EDCS-PQ - AGGIORNAMENTO 01/2021
+
+SERRANDA DI TARATURA SD (COSTRUZIONE E DIMENSIONI E UTILIZZO):
+- Materiale: acciao
+- Finitura superficiale: zincatura
+Modello ØM N O
+- Fissaggio: con viti al collo del diffusore o alla tubazione 100 95 39 100
+150 145 39 100
+- La serranda di taratura a farfalla SD è idonea al
+160 155 39 100
+montaggio a monte dei diffusori circolari, è realizzata in
+200 195 39 100
+acciaio zincato ed è completa di un meccanismo di
+apertura/chiusura robusto in modo da evitare vibra- 250 245 39 100
+zioni e rumori al passaggio dell’aria.
+- L’installazione, le regolazioni e la manutenzione sono di
+semplice esecuzione.
+- La regolazione della serranda posta sulla sommità del
+diffusore avviene agendo sulla vite di regolazione, attra-
+verso il foro presente sulla barra filettata del diffusore.
+EQUALIZZATORE EQUA CLIPS DI FISSAGGIO
+L’equalizzatore è un accessorio per Clips di fissaggio per installazione
+frammentare l’aria e distribuirla in modo su controsoffitto in cartongesso o
+uniforme all’uscita del diffusore. controsoffitto rigido (3 pezzi per confezione).
+PAG 3 - DIFFUSORI CIRCOLARI A CONI REGOLABILI
+SERIE EDCS / EDCS-PQ - AGGIORNAMENTO 01/2021
+
+PLENUM EPZ-DC EPI-DC
+- Materiale: acciao
+- Finitura superficiale: zincatura
+- Fissaggio: con viti al collo del diffusore o alla tubazione
+- Il plenum per EDRA è idoneo per esser montato sui diffusori a coni circolari
+regolabili. Esso è realizzato in acciaio zincato e può essere rivestito con ma-
+teriale isolante. Può essere dotato di equalizzatore e serranda di taratura con
+leva di apertura e chiusura.
+- Per l’installazione del diffusore sono previste 3 clips di fissaggio da acquista-
+re a parte.
+- La regolazione della serranda posta all’ingresso del plenum avviene mediante
+leva.
+ØB2 Tubo
+ØA2
+modello L H P flessibile C2 D2
+Diffusore
+o rigido
+100 200 200 200 102 95 70 100
+150 250 250 250 152 145 70 100
+160 250 250 250 162 155 70 100
+200 300 300 300 202 195 70 100
+250 350 350 350 252 245 70 100
+VOCI DI CAPITOLATO
+Diffusore circolare EDCS ad elevata induzione a singolo cono regolabile (disponibile anche la versione EDCS-PQ su pannello
+quadrato, idoneo ad essere installato su controsoffitti con pannelli 595x595). La regolazione micrometrica della posizione del
+cono centrale mediante vite consente di modificare la direzione del getto d’aria in funzione delle condizioni termiche richieste.
+ALTEZZA DI INSTALLAZIONE: da 2,7 a 6 m.
+PAG 4 - DIFFUSORI CIRCOLARI A CONI REGOLABILI
+SERIE EDCS / EDCS-PQ - AGGIORNAMENTO 01/2021
+
+SCHEMA DI MONTAGGIO:
+L’installazione, le regolazioni e la manutenzione sono di semplice esecuzione. I coni intermedi sono facilmente estraibili
+mediante rotazione del perno centrale filettato cavo. La regolazione dell’eventuale serranda posta sulla sommità del diffusore
+avviene agendo sulla vite di regolazione, attraverso il foro presente sulla barra filettata del diffusore. Il fissaggio a soffitto è
+effettuato mediante viti dal collo del diffusore.
+Regolazione Cono centrale in posizione bassa: posizione ottimale in condizioni di raffrescamento per avere il maggior raggio di
+diffusione orizzontale senza creare disagio nella zona occupata in locali con altezza ideale tra 3 e 4 m. Con questa configura-
+zione si hanno le migliori condizioni di perdita di carico,velocità e livello sonoro. La differenza di temperatura (DT) massima tra
+l’aria ambiente e l’aria che esce dal diffusore per ottenere le condizioni ottimali di induzione è di 12°C.
+Cono centrale in posizione alta: posizione ottimale per locali particolarmente alti, fino a 6 m ed in condizioni di riscaldamento in
+quanto si ottiene un lancio verticale che si oppone al moto convettivo dell’aria nell’ambiente.
+Fig. 1 Montaggio con serranda a farfalla
+- montare la serranda sul canotto di raccordo mantenendo,
+se possibile, una distanza rispetto al diffusore di un diametro
+nominale ma non meno di 5 cm;
+- svitare i coni centrali dal diffusore e fissare la campana ester-
+na sul raccordo;
+- avvitare i coni centrali alla campana esterna;
+- regolare i coni interni secondo i parametri di diffusione desi-
+derati;
+- regolare la serranda mediante il foro centrale presente sulla
+barra filettata del diffusore.
+Fig. 2 Montaggio su tubo flessibile con serranda a farfalla
+- appendere il diffusore al soffitto o fissarlo sul controsoffitto;
+- fissare la serranda sul canotto di raccordo;
+- applicare il canotto di raccordo all’interno del diffusore;
+- inserire il condotto flessibile sul canotto di raccordo e fissarlo
+mediante fascetta.
+PAG 5 - DIFFUSORI CIRCOLARI A CONI REGOLABILI
+SERIE EDCS / EDCS-PQ - AGGIORNAMENTO 01/2021

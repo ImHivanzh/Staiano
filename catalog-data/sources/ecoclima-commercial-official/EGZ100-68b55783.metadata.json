@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
+  "code": "EGZ100",
+  "slug": "egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=egz100-griglie-di-ripresa-in-acciaio-passo-100-mm.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.326311+00:00",
+      "filename": "EGZ100-68b55783.xlsx",
+      "bytes": 7478,
+      "sha256": "1cf66dea0be60fcac83cafff6598f3ade8ad85d8e5aae6dce376c459e1803d02",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 86
+      }
+    }
+  ]
+}

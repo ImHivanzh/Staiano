@@ -1,0 +1,172 @@
+DIFFUSORI
+MULTIDIREZIONALI
+AD ALETTE CURVE
+Serie EDC
+I diffusori serie EDC sono ad alette curve (comunemente Il materiale utilizzato per la realizzazione dei diffusori serie
+chiamate ad unghia) regolabili singolarmente. Vengono EDC è alluminio anodizzato naturale. Sono disponibili varianti
+impiegati sia in mandata che in ripresa per installazione sia con diversi orientamenti del lancio.
+a soffitto che a controsoffitto.
+CARATTERISTICHE
+- Materiale: Alluminio - Fissaggio standard: con clips (si consiglia l’installazione
+del controtelaio)
+- Finitura superficiale standard: anodizzato naturale
+- Fissaggio a richiesta: con fori per viti frontali sulla cornice
+- Finiture superficiali a richiesta: vernicitura RAL 9016 o
+del diffusore.
+altri colori RAL a scelta.
+IMPIEGO
+Diffusore adatto ad impianti con soffitti bassi o dove sia (effetto soffitto). E’ possibile inoltre orientare il lancio con
+necessario sfruttare al meglio l’effetto coanda variazione di direzione.
+VARIANTI
+La seria EDC dispone delle seguenti varianti:
+• EDC 1 diffusore a 1 via con alette parallele al lato lungo • EDC 4 diffusore a 2 vie con alette parallele al lato corto
+• EDC 2 diffusore a 2 vie con alette parallele al lato lungo • EDC 5 diffusore a 3 vie
+• EDC 3 diffusore a 1 via con alette parallele al lato corto • EDC 6 diffusore a 4 vie
+ACCESSORI
+La serie EDC dispone dei seguenti accessori:
+• SC Serranda di taratura in acciaio zincato con alette a • EPZ Plenum in acciaio zincato
+movimento contrapposto • EPI Plenum in acciaio zincato isolato
+• CT Controtelaio a murare in acciaio zincato
+VOCI DI CAPITOLATO
+Diffusore ad alette curve regolabili singolarmente in Accessori:
+alluminio anodizzato naturale o verniciato con polveri Serranda di taratura SC in acciaio zincato
+epossidiche.Altri colori su richiesta. Controtelaio CT in acciaio zincato
+Plenum EPZ in acciaio zincato, EPI in acciaio zincato isolato
+NOMENCLATURA CODICE
+EDC diffusore ad alette curve regolabili singolarmente in alluminio
+1 diffusore a 1 via con alette parallele al lato lungo
+2 diffusore a 2 vie con alette parallele al lato lungo
+3 diffusore a 1 via con alette parallele al lato corto
+4 diffusore a 2 vie con alette parallele al lato corto
+5 diffusore a 3 vie
+6 diffusore a 4 vie
+Lato A (mm)
+Lato B (mm)
+EDC 2 300 220000
+PAG 1 - DIFFUSORI MULTIDIREZIONALI AD ALETTE CURVE
+SERIE EDC - AGGIORNAMENTO 01/2023
+
+DIMENSIONI
+DATI DI FUNZIONAMENTO
+dimensioni sezione Vk dimensioni sezione Vk
+3 5 7 3 5 7
+LxH efficace m² (m/s) LxH efficace m² (m/s)
+m³/h 80 133 187 m³/h 290 483 677
+L(m) 2 3,5 5,3 L(m) 2,4 3,5 6,5
+200x100 0,0074 400x200 0,0269
+Pa 7 17 30 Pa 7 20 39
+dB(A) <20 24 32 dB(A) 33 40
+m³/h 120 200 280 m³/h 350 583 817
+L(m) 1,8 3,7 5 L(m) 2,5 4,3 6,8
+300x100 0,0111 500x200 0,0324
+Pa 6 17 30 Pa 7 27 33
+dB(A) <20 27 34 dB(A) 32 39
+m³/h 160 267 373 m³/h 450 750 1050
+L(m) 2,5 4 6 L(m) 2,5 5 7
+400x100 0,0148 600x200 0,0417
+Pa 6 20 30 Pa 10 20 40
+dB(A) <20 29 35 dB(A) 22 34 43
+m³/h 200 333 467 m³/h 350 583 817
+L(m) 2,3 4 5,8 L(m) 2,5 4,3 6,8
+500x100 0,0185 300x300 0,0324
+Pa 7 17 32 Pa 7 27 33
+dB(A) <20 28 37 dB(A) 32 39
+m³/h 230 383 537 m³/h 450 750 1050
+L(m) 2,3 4 6 L(m) 2,5 5 7
+600x100 0,0213 400x300 0,0417
+Pa 6 17 30 Pa 10 20 40
+dB(A) <20 28 37 dB(A) 22 34 43
+m³/h 180 300 420 m³/h 590 983 1377
+L(m) 2,3 4 6 L(m) 2,7 4,8 6,5
+300x150 0,0167 500x300 0,0546
+Pa 6 17 35 Pa 7 20 32
+dB(A) <20 28 37 dB(A) 25 35 42
+m³/h 230 383 537 m³/h 680 1133 1587
+L(m) 2,3 4 6 L(m) 2,4 4,3 6,7
+400x150 0,0213 600x300 0,0630
+Pa 6 17 30 Pa 6 17 28
+dB(A) <20 28 37 dB(A) 22 33 41
+m³/h 290 483 677 m³/h 590 983 1377
+L(m) 2,4 3,5 6,5 L(m) 2,7 4,8 6,5
+500x150 0,0269 400x400 0,0546
+Pa 7 20 39 Pa 7 20 32
+dB(A) <20 33 40 dB(A) 25 35 42
+m³/h 350 583 817 m³/h 950 1583 2217
+L(m) 2,5 4,3 6,8 L(m) 2,8 5 7,2
+600x150 0,0324 500x500 0,0880
+Pa 7 27 33 Pa 6 17 30
+dB(A) <20 32 39 dB(A) 24 34 43
+m³/h 230 383 537 m³/h 1360 2267 3173
+L(m) 2,3 4 6 L(m) 2,5 5,5 8
+300x200 0,0213 600x600 0,1259
+Pa 6 17 30 Pa 5 20 30
+dB(A) <20 28 37 dB(A) 23 39 44
+Vk: velocità efficace (m/s) L(m): lancio orizzontale in metri
+calcolato con installazione a filo soffitto
+m³/h: portata
+e velocità terminale 0,25 m/s
+Pa: perdite di carico in Pascal
+dB(A): indice di rumorosità
+PAG 2 - DIFFUSORI MULTIDIREZIONALI AD ALETTE CURVE
+SERIE EDC - AGGIORNAMENTO 01/2023
+
+VARIANTI
+SERRANDA DI TARATURA SC
+Serranda di taratura in acciaio zincato ad
+alette con movimento contrapposto.
+CT CONTROTELAIO
+PAG 3 - DIFFUSORI MULTIDIREZIONALI AD ALETTE CURVE
+SERIE EDC - AGGIORNAMENTO 01/2023
+
+EPZ-EPI: DIMENSIONI PLENUM
+CARATTERISTICHE
+Materiale EPZ: lamiera zincata
+Materiale EPI: lamiera zincata +
+isolamento esterno in polietilene
+EUROCLASSE CE spessore 6mm.
+stacco superiore stacco laterale stacco superiore stacco laterale
+modello modello
+n° n° n° n° E F
+L1 x H1 P1 Ø d P2 Ø d L1 x H1 P1 Ø d P2 Ø d
+stacchi stacchi stacchi stacchi
+200x100 200 1 98 200 1 98 400x200 200 1 198 300 1 198 80 12
+300x100 200 1 98 200 1 98 500x200 200 1 198 300 1 198 80 12
+400x100 200 2 98 200 2 98 600x200 200 2 198 300 2 198 80 12
+500x100 200 2 98 200 2 98 300x300 200 1 248 350 1 248 80 12
+600x100 200 2 98 200 2 98 400x300 200 1 248 350 1 248 80 12
+300x150 200 1 148 250 1 148 500x300 200 1 248 350 1 248 80 12
+400x150 200 1 148 250 1 148 600x300 200 2 198 350 2 248 80 12
+500x150 200 2 148 250 2 148 400x400 200 1 298 400 1 298 80 12
+600x150 200 2 148 250 2 148 500x500 200 2 248 400 2 248 80 12
+300x200 200 1 198 300 1 198 600x600 200 2 298 400 2 298 80 12
+CARATTERISTICHE TECNICHE FATTORI CORRETTIVI
+Fattore moltiplicativo correttivo del Fattore moltiplicativo cor-
+I diffusori multidirezionali con alette curve delle
+lancio orizzontale in funzione della rettivo del lancio orizzonta-
+serie EDC sono idonei all’applicazione in mandata
+velocità terminale le non isotermo
+sia in riscaldamento che in raffrescamento.
+Vengono installati a soffitto ad una altezza varia-
+bile tra i 2,5 e i 3,1 m.
+Vt[m/s] Kv ΔT[°C] K
+Le caratteristiche di funzionamento sono la Tc
+velocità efficace, la perdita di carico totale, il livello
+sonoro ed il lancio. 0,15 1,67 -10 0,85
+0,20 1,25 0 1
+0,25 1,00 10 1,2
+0,30 0,83
+0,35 0,71
+0,40 0,63
+0,45 0,56
+0,50 0,50
+PAG 4 - DIFFUSORI MULTIDIREZIONALI AD ALETTE CURVE
+SERIE EDC - AGGIORNAMENTO 01/2023
+
+INSTALLAZIONE A SOFFITTO
+ΔT[°C] K
+Tc
+-10 0,85
+0 1
+10 1,2
+PAG 5 - DIFFUSORI MULTIDIREZIONALI AD ALETTE CURVE
+SERIE EDC - AGGIORNAMENTO 01/2023

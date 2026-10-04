@@ -1,0 +1,178 @@
+DIFFUSORI QUADRATI A
+4 VIE
+Serie EDQV - EDQV-PQ
+I diffusori serie EDQV EDQV-PQ sono diffusori
+molto versatili e utilizzati principalmente in
+mandata. Il materiale utilizzato per la realizzazione
+dei diffusori è alluminio verniciato RAL9016.
+L’installazione, le regolazioni e la manutenzione
+sono di semplice esecuzione grazie alla possibilità
+di estrarre i coni centrali. Questi diffusori
+rappresentano la soluzione ideale per una rapida esecuzione di impianti di trattamento aria in ambienti dotati di controsoffitto
+normale o modulare.
+Sono realizzati sia in versione standard sia in versione su pannello 595x595 mm per l’installazione entro controsoffitti modulari
+mediante semplice inserimento nella struttura di sostegno.
+Il fissaggio avviene tramite posa nella struttura modulare o mediante delle viti nascoste fissate lateralmente al collo del diffusore.
+I coni centrali sono asportabili con bloccaggio a cannoncino per ottenere la massima semplicità di apertura e chiusura in fase di
+installazione e di collegamento al canale.
+ACCESSORI
+La serie EDQV EDQV-PQ dispone dei seguenti accessori:
+• SCN Serranda di taratura con alette a movimento contrapposto
+• SC Serranda di taratura con alette a movimento contrapposto
+• EPZ EDQ Plenum in acciaio zincato
+• EPI EDQ Plenum in acciaio zincato isolato
+VOCI DI CAPITOLATO
+Diffusore quadrato a 4 vie con coni estraibili per agevolarne installazione e regolazione, costruzione in alluminio a verniciato con
+polveri epossidiche a forno, colore standard bianco RAL 9016 o speciale su richiesta.
+Accessori: Serrande di regolazione SC, SCN in acciaio zincato
+Plenum EPZ EDQ in acciaio zincato, EPI EDQ in acciaio zincato isolato
+NOMENCLATURA CODICE
+EDQV diffusore quadrato a coni estraibili in alluminio
+EDQV-PQ diffusore quadrato a coni estraibili in alluminio su pannello 595x595 mm
+Modelli EDQV: Modelli EDQV-PQ:
+150x150 150x150
+225x225 225x225
+300x300 300x300
+375x375 375x375
+450x450
+525x525
+600x600
+EDQV 225x225
+SC Serranda di taratura ad alette contrapposte in acciaio zincato per EDQV
+SCN Serranda di taratura ad alette contrapposte in acciaio zincato per EDQV-PQ
+Dimensioni nominali MODELLO EDQV EDQV-PQ (mm)
+SCN 30200x3000
+EPZ EDQ Plenum in acciaio zincato
+EPI EDQ Plenum in acciaio zincato isolato
+Dimensioni nominali MODELLO EDQV EDQV-PQ (mm)
+EPI EDQ 30200x3000
+PAG 1 - DIFFUSORI QUADRATI A 4 VIE
+SERIE EDQV EDQV-PQ - AGGIORNAMENTO 02/2024
+
+COSTRUZIONE DIFFUSORE
+- Materiale: Alluminio
+- Finitura superficiale standard: veniciatura
+RAL 9016.
+- Fissaggio: con viti laterali non apparenti sul
+collo del diffusore.
+DIMENSIONI
+EDQV EDQV-PQ
+modello
+AxA BxB CxC DxD ExE AxA BxB CxC DxD ExE
+150x150 140 150 300 50 240 135 145 595 50 235
+tutte le dimensioni sono espresse in mm
+225x225 215 225 375 50 315 210 220 595 50 310
+300x300 290 300 450 50 390 285 295 595 50 385
+375x375 365 375 525 50 465 360 370 595 50 460
+450x450 435 445 595 50 535 - - - - -
+525x525 515 525 675 50 615 - - - - -
+600x600 590 600 750 50 690 - - - - -
+DATI DI FUNZIONAMENTO
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio in metri calcolato con installazione a filo soffitto e velocità terminale 0,25 m/s
+dB(A): indice di rumorosità
+sezione efficace m²
+modello Vk (m/s) 3 4 5 6
+m²
+m3/h 119 158 198 238
+EDQV 150x150
+L(m) 0,8 1,1 1,4 1,6
+0,0110
+Pa 5 10 16 22
+EDQV-PQ 150x150
+dB(A) 25 33 38 42
+m3/h 259 346 432 518
+EDQV 225x225
+L(m) 1,1 1,7 2,1 2,5
+0,0240
+Pa 5 13 23 30
+EDQV-PQ 225x225
+dB(A) 30 39 45 49
+m3/h 410 547 684 821
+EDQV 300x300
+L(m) 1,7 2,2 2,5 3,3
+0,0380
+Pa 7 10 13 23
+EDQV-PQ 300x300
+dB(A) 35 39 43 48
+m3/h 670 893 1116 1339
+EDQV 375x375
+L(m) 2,0 2,5 3,3 3,9
+0,0620
+Pa 7 12 19 25
+EDQV-PQ 375x375
+dB(A) 35 41 47 49
+m3/h 918 1224 1530 1836
+L(m) 2,8 3,8 4,9 5,2
+EDQV 450x450 0,0850
+Pa 7 12 17 25
+dB(A) 36 41 47 49
+m3/h 1069 1426 1762 2138
+L(m) 3,3 4,4 4,7 6,1
+EDQV 525x525 0,099
+Pa 8 14 20 29
+dB(A) 37 41 48 50
+m3/h 1220 1627 2034 2441
+L(m) 3,7 5,1 6,5 6,9
+EDQV 600x600 0,113
+Pa 9 16 23 33
+dB(A) 37 42 48 51
+PAG 2 - DIFFUSORI QUADRATI A 4 VIE
+SERIE EDQV EDQV-PQ - AGGIORNAMENTO 02/2024
+
+CARATTERISTICHE TECNICHE
+I diffusori multidirezionali con coni estraibili serie EDQV sono idonei all’applicazione in mandata sia in riscaldamento che in
+raffrescamento.
+Vengono installati a soffitto ad una altezza variabile tra i 2,5 e i 3,1 m.
+Le caratteristiche di funzionamento sono la velocità efficace, la perdita di carico totale, il livello sonoro ed il lancio. Esse vengo-
+no rappresentate in forma tabellare per ciascuna versione di diffusori in funzione della portata d’aria.
+Il lancio orizzontale isotermo viene riferito alla velocità terminale di 0,25 m/s. Per i diffusori che hanno direzioni di lancio non
+simmetriche vengono forniti i diversi valori del lancio per ciascuna direzione. Per lanci non isotermi o con velocità terminali
+diverse vengono forniti dei coefficienti moltiplicativi di correzione.
+Il livello sonoro viene espresso come livello di potenza sonora ponderata A (LWA) emessa dal diffusore senza alcuna correzione
+ambientale.
+Per calcolare il livello di pressione sonora (LpA) nell’ambiente bisogna considerare la collocazione del diffusore, la distanza dal
+punto di ascolto e le caratteristiche acustiche dell’ambiente in cui il diffusore viene installato.
+EDQV EDQV-PQ SERRANDA DI TARATURA SC / SCN
+tutte le dimensioni sono espresse in mm SCHEMA FUNZIONALE
+- Serranda di taratura in acciaio zincato ad alette con movimento
+contrapposto.
+DIMENSIONI PLENUM
+EDQV EDQV-PQ L1 x H1 Ø d P1 P2 E
+150x150 155x155 125 200 245 50
+225x225 230x230 150 200 270 50
+300x300 305x305 200 200 320 50
+375x375 380x380 200 200 320 50
+450x450 450x450 250 200 370 50
+525x525 530x530 250 200 370 50
+600x600 605x605 300 200 400 50
+PAG 3 - DIFFUSORI QUADRATI A 4 VIE
+SERIE EDQV EDQV-PQ - AGGIORNAMENTO 02/2024
+
+MONTAGGIO CON PLENUM MONTAGGIO IN APPOGGIO
+FISSATO AL SOFFITTO AL CONTROSOFFITTO
+- Appendere il plenum al soffitto servendosi di ap- Appendere il plenum al soffitto servendosi di apposite staffe
+posite staffe o catene fissate sul plenum il cui bordo o catene fissate sul plenum il cui bordo esterno può
+esterno può essere forato; essere forato;
+- inserire il condotto flessibile sul canotto di raccordo - inserire il condotto flessibile sul canotto di raccordo fissan-
+fissandolo con apposita fascetta stringitubo; dolo con apposita fascetta stringitubo;
+- montare il diffusore coni nr. 4 viti laterali autofo- - montare il diffusore con nr. 4 viti laterali autoforanti;
+ranti. - appoggiare il diffusore già prefissato sul plenum sull’appo-
+sito spazio quadrato del controsoffitto o quadrotti.
+FATTORI CORRETTIVI
+Fattore moltiplicativo correttivo del lancio orizzontale Fattore moltiplicativo correttivo del
+in funzione della velocità terminale lancio orizzontale non isotermo
+Vt[m/s] Kv ΔT[°C] K
+Tc
+0,15 1,67 -10 0,85
+0,20 1,25 0 1
+0,25 1,00 10 1,2
+0,30 0,83
+0,35 0,71
+0,40 0,63
+0,45 0,56
+0,50 0,50
+PAG 4 - DIFFUSORI QUADRATI A 4 VIE
+SERIE EDQV EDQV-PQ - AGGIORNAMENTO 02/2024

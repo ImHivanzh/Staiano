@@ -11,6 +11,9 @@ import { distributeAirflow } from "@/domain/ducted/calculate";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import { RoomAirTerminals } from "./RoomAirTerminals";
+import { SupplyPlenumPanel } from "./SupplyPlenumPanel";
+import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
+import { ManualMachineForm } from "./ManualMachineForm";
 export function DuctedPanel({
   project,
   room,
@@ -19,6 +22,9 @@ export function DuctedPanel({
   room: Room;
 }) {
   const allocation = ductedRoomAllocation(project, room.id),
+    savedSystem = project.hvacSystems.find(
+      (s) => s.type === "ducted" && s.roomIds.includes(room.id),
+    ),
     { commit } = useProjectStore();
   const brands = [
     ...new Set(
@@ -28,10 +34,11 @@ export function DuctedPanel({
     ),
   ];
   const [manufacturer, setManufacturer] = useState(
-    allocation?.system.manufacturer ?? brands[0],
+    savedSystem?.manufacturer ?? brands[0],
   );
-  const [servedIds, setServedIds] = useState(
-    allocation?.system.roomIds ?? [room.id],
+  const [servedIds, setServedIds] = useState(savedSystem?.roomIds ?? [room.id]);
+  const [systemName, setSystemName] = useState(
+    savedSystem?.name ?? `Zona ${room.name}`,
   );
   const machine = allocation
     ? hvacProductAtVersion(
@@ -39,9 +46,24 @@ export function DuctedPanel({
         allocation.system.catalogVersion,
       )
     : null;
+  if (savedSystem?.genericMachine)
+    return (
+      <section className="pannello-canalizzato">
+        <ManualMachineForm project={project} roomIds={savedSystem.roomIds} />
+        <SupplyPlenumPanel project={project} systemId={savedSystem.id} />
+        <RoomAirTerminals project={project} room={room} />
+      </section>
+    );
   return (
     <section className="pannello-canalizzato">
       <h3>Sistema canalizzato</h3>
+      <p className="nota">
+        Impianto autonomo ·{" "}
+        {servedIds
+          .map((id) => project.rooms.find((r) => r.id === id)?.name)
+          .filter(Boolean)
+          .join(", ") || "Nessun ambiente scelto"}
+      </p>
       {room.geometryStatus === "unresolved" && (
         <p role="status" className="nota">
           Richiudere il contorno prima di dimensionare l’impianto. Apparecchi e
@@ -49,9 +71,17 @@ export function DuctedPanel({
         </p>
       )}
       <p className="nota">
-        Seleziona la marca e gli ambienti serviti. Macchina scelta dal
-        fabbisogno totale.
+        La macchina viene scelta dal fabbisogno degli ambienti di questa zona.
       </p>
+      <label className="campo">
+        <span>Nome impianto</span>
+        <input
+          aria-label="Nome impianto canalizzato"
+          value={systemName}
+          maxLength={100}
+          onChange={(e) => setSystemName(e.target.value)}
+        />
+      </label>
       <label className="campo">
         <span>Marca canalizzato</span>
         <select
@@ -63,32 +93,46 @@ export function DuctedPanel({
           ))}
         </select>
       </label>
-      <fieldset>
-        <legend>Ambienti serviti</legend>
-        {project.rooms
-          .filter((r) => r.floorId === room.floorId)
-          .map((r) => (
-            <label className="ambiente-servito" key={r.id}>
-              <input
-                type="checkbox"
-                disabled={r.geometryStatus === "unresolved"}
-                checked={servedIds.includes(r.id)}
-                onChange={(e) =>
-                  setServedIds(
-                    e.target.checked
-                      ? [...servedIds, r.id]
-                      : servedIds.filter((id) => id !== r.id),
-                  )
-                }
-              />
-              {r.name} · {formatNumber(r.designLoadW / 1000)} kW
-            </label>
-          ))}
-      </fieldset>
+      <details>
+        <summary>Ambienti serviti · {servedIds.length}</summary>
+        <fieldset>
+          <legend>Ambienti serviti</legend>
+          {project.rooms
+            .filter((r) => r.floorId === room.floorId)
+            .map((r) => {
+              const otherSystem = project.hvacSystems.find(
+                (s) => s.id !== savedSystem?.id && s.roomIds.includes(r.id),
+              );
+              return (
+                <label className="ambiente-servito" key={r.id}>
+                  <input
+                    type="checkbox"
+                    disabled={
+                      r.geometryStatus === "unresolved" || !!otherSystem
+                    }
+                    checked={servedIds.includes(r.id)}
+                    onChange={(e) =>
+                      setServedIds(
+                        e.target.checked
+                          ? [...servedIds, r.id]
+                          : servedIds.filter((id) => id !== r.id),
+                      )
+                    }
+                  />
+                  {r.name} · {formatNumber(r.designLoadW / 1000)} kW
+                  {otherSystem
+                    ? ` · già servita da ${otherSystem.name || otherSystem.manufacturer}`
+                    : ""}
+                </label>
+              );
+            })}
+        </fieldset>
+      </details>
       <button
         className="bottone chiara"
         disabled={
           room.geometryStatus === "unresolved" ||
+          !servedIds.length ||
           servedIds.some(
             (id) =>
               project.rooms.find((r) => r.id === id)?.geometryStatus ===
@@ -96,36 +140,49 @@ export function DuctedPanel({
           )
         }
         onClick={() =>
-          commit((p) =>
-            applyDuctedSystem(
+          commit((p) => {
+            const updated = applyDuctedSystem(
               p,
               servedIds,
               manufacturer,
-              allocation?.system.id ?? null,
-            ),
-          )
+              savedSystem?.id ?? null,
+            );
+            const configured = updated.hvacSystems.find(
+              (s) =>
+                s.type === "ducted" &&
+                s.roomIds.some((id) => servedIds.includes(id)),
+            );
+            return {
+              ...updated,
+              hvacSystems: updated.hvacSystems.map((s) =>
+                s.id === configured?.id
+                  ? { ...s, name: systemName.trim() || `Zona ${room.name}` }
+                  : s,
+              ),
+            };
+          })
         }
       >
-        {allocation ? "Aggiorna sistema canalizzato" : "Configura canalizzato"}
+        {savedSystem ? "Aggiorna sistema canalizzato" : "Configura canalizzato"}
       </button>
-      {project.hvacSystems
-        .filter((system) => system.roomIds.includes(room.id))
-        .map((system) => (
-          <button
-            key={system.id}
-            className="bottone piccolo pericolo"
-            onClick={() => {
-              if (
-                window.confirm(
-                  `Rimuovere il sistema ${system.manufacturer} e i suoi terminali?`,
-                )
+      {savedSystem && (
+        <button
+          className="bottone piccolo pericolo"
+          onClick={() => {
+            if (
+              window.confirm(
+                `Rimuovere ${savedSystem.name || savedSystem.manufacturer} e i suoi terminali?`,
               )
-                commit((p) => removeHvacSystem(p, system.id));
-            }}
-          >
-            Rimuovi sistema {system.manufacturer}
-          </button>
-        ))}
+            )
+              commit((p) => removeHvacSystem(p, savedSystem.id));
+          }}
+        >
+          Rimuovi questo impianto
+        </button>
+      )}
+      {savedSystem && (
+        <SupplyPlenumPanel project={project} systemId={savedSystem.id} />
+      )}
       {machine && allocation && (
         <div className="risultato-canalizzato">
           <h3>{machine.indoorModel}</h3>
@@ -140,8 +197,8 @@ export function DuctedPanel({
               allocation.system.airflowM3h!,
               1,
             )}{" "}
-            m³/h · Velocità{" "}
-            {machine.airflowOptions[machine.defaultAirflowIndex!].label}
+            m³/h · Velocità {maximumAirflowOption(machine)?.option.label} ·
+            massima
             <br />
             Pressione statica {machine.staticPressurePa ?? "Non disponibile"} Pa
           </p>

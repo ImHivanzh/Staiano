@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana",
+  "code": "EMV",
+  "slug": "emv-s-emv-vs-griglia-piana",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=emv-s-emv-vs-griglia-piana.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.127839+00:00",
+      "filename": "EMV-910f7357.xlsx",
+      "bytes": 7114,
+      "sha256": "da5593a67a501f3e5b0000c0c8e6c8c7ad2626f0ecd30c72076baaca357a8166",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 51
+      }
+    }
+  ]
+}

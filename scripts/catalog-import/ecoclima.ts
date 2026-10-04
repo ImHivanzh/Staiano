@@ -536,6 +536,30 @@ for (const code of ["EBLF", "ETA"]) {
     },
   });
 }
+// Supplemental normalizers consume archived primary HTML/PDF sources only.
+// Their absence is an import error: never silently replace the complete snapshot.
+for (const filename of [
+  "normalized-grilles.json",
+  "normalized-diffusers.json",
+  "normalized-vmc.json",
+]) {
+  const supplemental = JSON.parse(
+    await readFile(path.join(dir, filename), "utf8"),
+  ) as { families: AirTerminalFamily[] };
+  for (const candidate of supplemental.families) {
+    if (
+      catalog.families.some(
+        (family) => family.familyCode === candidate.familyCode,
+      )
+    )
+      throw new Error(
+        `Supplemental family duplicates legacy ID: ${candidate.familyCode}`,
+      );
+    catalog.families.push(candidate);
+  }
+}
+catalog.families[0].modelCodes = ["EDLS", "EDLSB"];
+catalog.families[0].finishes = ["RAL9005", "RAL9016"];
 airTerminalCatalogSchema.parse(catalog);
 const geometrySpecs = JSON.parse(
   await readFile(
@@ -584,7 +608,7 @@ const imageSources = JSON.parse(
   await readFile(path.join(root, "public/catalog/image-sources.json"), "utf8"),
 ) as Record<string, { path: string }>;
 for (const family of catalog.families)
-  family.image = imageSources[family.familyCode]?.path ?? null;
+  family.image = imageSources[family.familyCode]?.path ?? family.image;
 catalog.version = `${now.slice(0, 10)}-ecoclima-${createHash("sha256")
   .update(
     JSON.stringify(
@@ -633,7 +657,14 @@ await writeFile(
   path.join(output, "ecoclima.report.json"),
   JSON.stringify(diff, null, 2),
 );
-console.log(JSON.stringify(diff));
+console.log(
+  JSON.stringify({
+    added: diff.added.length,
+    changed: diff.changed.length,
+    removed: diff.removed.length,
+    report: "catalog-data/generated/ecoclima.report.json",
+  }),
+);
 console.log(
   JSON.stringify({
     importedFamilies: catalog.families.length,

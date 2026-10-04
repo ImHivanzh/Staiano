@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
+  "code": "EVVMC",
+  "slug": "evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.714828+00:00",
+      "filename": "EVVMC-842be3bd.xlsx",
+      "bytes": 6869,
+      "sha256": "fb1d458a81631b5980f14051dacb383187e1124fce3d7ae142b0f51b385b85c1",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 26
+      }
+    }
+  ]
+}

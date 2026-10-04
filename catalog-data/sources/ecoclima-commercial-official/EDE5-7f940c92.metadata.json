@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile",
+  "code": "EDE5",
+  "slug": "ede5-diffusori-a-getto-elicoidale-regolabile",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ede5-diffusori-a-getto-elicoidale-regolabile.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:21.167298+00:00",
+      "filename": "EDE5-7f940c92.xlsx",
+      "bytes": 7256,
+      "sha256": "c125297ad19d3f17fdf2aec12851dc9305204b5123bfeb9cba6b08b5d8c0b78a",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 55
+      }
+    }
+  ]
+}

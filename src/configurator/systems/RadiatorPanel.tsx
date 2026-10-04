@@ -159,9 +159,11 @@ export function RadiatorPanel({
             onChange={(e) => setManufacturer(e.target.value)}
           >
             <option value="">Qualsiasi marca</option>
-            {radiatorCatalogs.map((c) => (
-              <option key={c.manufacturer}>{c.manufacturer}</option>
-            ))}
+            {[...new Set(radiatorCatalogs.map((c) => c.manufacturer))].map(
+              (manufacturer) => (
+                <option key={manufacturer}>{manufacturer}</option>
+              ),
+            )}
           </select>
         </label>
         <label className="campo">
@@ -296,7 +298,13 @@ export function RadiatorPanel({
           </h3>
           <p>
             {solution.elements.length} radiatori ·{" "}
-            {solution.elements.join(" + ")} elementi
+            {solution.units
+              .map((unit) =>
+                unit.variant.construction === "fixed"
+                  ? "corpo unico"
+                  : `${unit.elements} elementi`,
+              )
+              .join(" + ")}
           </p>
           <strong>
             {formatNumber(solution.totalPowerW / 1000)} kW · +
@@ -305,7 +313,10 @@ export function RadiatorPanel({
           {solution.units.map((unit, unitIndex) => (
             <p className="nota" key={unitIndex}>
               {unitIndex + 1}. {unit.variant.manufacturer} {unit.variant.model}{" "}
-              · {unit.elements} elementi
+              ·{" "}
+              {unit.variant.construction === "fixed"
+                ? "corpo unico"
+                : `${unit.elements} elementi`}
               {unit.variant.columns ? ` · ${unit.variant.columns} colonne` : ""}
               <br />
               Ingombro L × H × P: {unit.widthMm} × {unit.variant.heightMm} ×{" "}

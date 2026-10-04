@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice",
+  "code": "EBLF",
+  "slug": "eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:18 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:18 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:18.740166+00:00",
+      "filename": "EBLF-f82eef53.xlsx",
+      "bytes": 8558,
+      "sha256": "3c0e7879fac00f46cb792da1fb9dd447b5faa4569e81432477bc82c5d7f04837",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 265
+      }
+    }
+  ]
+}

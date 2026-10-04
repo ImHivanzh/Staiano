@@ -1,0 +1,335 @@
+[
+  {
+    "indoorModels": [
+      "PEAD-M35JA2",
+      "PEAD-M50JA2"
+    ],
+    "sourceName": "mitsubishi-pead-dimensions",
+    "page": 2,
+    "connectionWidthMm": 860,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": null,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 15,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": {
+      "diameterMm": 2.9,
+      "horizontalPitchMm": 100,
+      "horizontalCount": 9,
+      "rows": 2,
+      "verticalPitchMm": null
+    },
+    "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370"
+  },
+  {
+    "indoorModels": [
+      "PEAD-M60JA2",
+      "PEAD-M71JA2"
+    ],
+    "sourceName": "mitsubishi-pead-dimensions",
+    "page": 2,
+    "connectionWidthMm": 1060,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": null,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 15,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": {
+      "diameterMm": 2.9,
+      "horizontalPitchMm": 100,
+      "horizontalCount": 11,
+      "rows": 2,
+      "verticalPitchMm": null
+    },
+    "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370"
+  },
+  {
+    "indoorModels": [
+      "PEAD-M100JA2",
+      "PEAD-M125JA2"
+    ],
+    "sourceName": "mitsubishi-pead-dimensions",
+    "page": 2,
+    "connectionWidthMm": 1360,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": null,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 15,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": {
+      "diameterMm": 2.9,
+      "horizontalPitchMm": 100,
+      "horizontalCount": 14,
+      "rows": 2,
+      "verticalPitchMm": null
+    },
+    "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370"
+  },
+  {
+    "indoorModels": [
+      "PEAD-M140JA2"
+    ],
+    "sourceName": "mitsubishi-pead-dimensions",
+    "page": 2,
+    "connectionWidthMm": 1560,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": null,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 15,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": {
+      "diameterMm": 2.9,
+      "horizontalPitchMm": 100,
+      "horizontalCount": 16,
+      "rows": 2,
+      "verticalPitchMm": null
+    },
+    "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370"
+  },
+  {
+    "indoorModels": [
+      "GUD35PS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 585,
+    "connectionHeightMm": 122,
+    "clearOpeningWidthMm": 585,
+    "clearOpeningHeightMm": 122,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "GUD50PS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 885,
+    "connectionHeightMm": 122,
+    "clearOpeningWidthMm": 885,
+    "clearOpeningHeightMm": 122,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "GUD71PHS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 740,
+    "connectionHeightMm": 215,
+    "clearOpeningWidthMm": 740,
+    "clearOpeningHeightMm": 215,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "GUD85PHS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 740,
+    "connectionHeightMm": 215,
+    "clearOpeningWidthMm": 740,
+    "clearOpeningHeightMm": 215,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "GUD100PHS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 1153,
+    "connectionHeightMm": 215,
+    "clearOpeningWidthMm": 1153,
+    "clearOpeningHeightMm": 215,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "GUD125PHS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 1153,
+    "connectionHeightMm": 215,
+    "clearOpeningWidthMm": 1153,
+    "clearOpeningHeightMm": 215,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "GUD140PHS1/A-S"
+    ],
+    "sourceName": "gree-duct-installation",
+    "page": 35,
+    "connectionWidthMm": 1151,
+    "connectionHeightMm": 197,
+    "clearOpeningWidthMm": 1151,
+    "clearOpeningHeightMm": 197,
+    "collarDepthMm": null,
+    "dimensionBasis": "ductOpening",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+    "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+    "sourceSha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01"
+  },
+  {
+    "indoorModels": [
+      "FBA35A9"
+    ],
+    "sourceName": "daikin-fba35-dimensions",
+    "page": 1,
+    "connectionWidthMm": 515,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": 492,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 25,
+    "dimensionBasis": "flangeMountingSpan",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "3D094988B; air discharge KJ, flange transverse dimensions",
+    "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+    "sourceSha256": "713e4e89dbeee05d001c3d27ad88fca64d23dc6d9d3f7a6a80352088c8ccbc21"
+  },
+  {
+    "indoorModels": [
+      "FBA50A9"
+    ],
+    "sourceName": "daikin-fba50-dimensions",
+    "page": 1,
+    "connectionWidthMm": 515,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": 492,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 25,
+    "dimensionBasis": "flangeMountingSpan",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "3D094918B; air discharge KJ, flange transverse dimensions",
+    "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+    "sourceSha256": "7669dcfa80dfb10b6dbf90ad11da8c0ba08d24a14fec54c18dc2376966aaab52"
+  },
+  {
+    "indoorModels": [
+      "FBA60A9"
+    ],
+    "sourceName": "daikin-fba60-dimensions",
+    "page": 1,
+    "connectionWidthMm": 815,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": 792,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 25,
+    "dimensionBasis": "flangeMountingSpan",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "3D094983B; air discharge KJ, flange transverse dimensions",
+    "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+    "sourceSha256": "a37c977baf47b128ad78332f59719e21028a4fd2220a50c9763e5051092cf14b"
+  },
+  {
+    "indoorModels": [
+      "FBA71A9"
+    ],
+    "sourceName": "daikin-fba71-dimensions",
+    "page": 1,
+    "connectionWidthMm": 815,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": 792,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 25,
+    "dimensionBasis": "flangeMountingSpan",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "3D094915B; air discharge KJ, flange transverse dimensions",
+    "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+    "sourceSha256": "61bcfcfe82b478e60443617f6e822b5e48055b0148e80535889ae192f9df503c"
+  },
+  {
+    "indoorModels": [
+      "FBA100A",
+      "FBA125A",
+      "FBA140A"
+    ],
+    "sourceName": "daikin-fba100-140-dimensions",
+    "page": 1,
+    "connectionWidthMm": 1215,
+    "connectionHeightMm": 178,
+    "clearOpeningWidthMm": 1192,
+    "clearOpeningHeightMm": null,
+    "collarDepthMm": 25,
+    "dimensionBasis": "flangeMountingSpan",
+    "flangeOuterWidthMm": null,
+    "flangeOuterHeightMm": null,
+    "holePattern": null,
+    "drawingReference": "3D094914B; air discharge KJ, flange transverse dimensions",
+    "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+    "sourceSha256": "736a112c48ec45279bfd9b5e245959f5ce6a72cc80d4233ce7ee8c6ef7e1b590"
+  }
+]

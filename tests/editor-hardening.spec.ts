@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-test";
+import { openInspector } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 
@@ -12,6 +13,7 @@ test("smartphone consultation and simple room edits remain usable", async ({
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
+  await openInspector(page, "Modifica stanza");
   await page
     .getByRole("spinbutton", { name: "Altezza stanza", exact: true })
     .fill("3");

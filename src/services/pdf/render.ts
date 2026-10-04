@@ -9,10 +9,19 @@ import type { Project, Point } from "@/schemas/project";
 import { buildDossier, TECHNICAL_NOTE } from "./dossier";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { ductedRoomAllocation } from "@/domain/ducted/apply";
+import { calculateEcoclimaBom } from "@/domain/air-terminals/commercial-bom";
+import { calculateSupplyPlenum, PLENUM_SOURCES } from "@/domain/ducted/plenum";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
 } from "@/domain/catalogs/splits";
+import type { ProjectPanorama } from "@/services/render3d/export";
+
+export type DossierRenderOptions = {
+  logoSvg?: string;
+  generatedAt?: Date;
+  renderImages?: readonly ProjectPanorama[];
+};
 
 const blue = rgb(0.212, 0.353, 0.659),
   cyan = rgb(0, 0.682, 0.937),
@@ -37,7 +46,7 @@ const safe = (s: string) =>
 
 export async function renderDossierPdf(
   project: Project,
-  options: { logoSvg?: string; generatedAt?: Date } = {},
+  options: DossierRenderOptions = {},
 ): Promise<Uint8Array> {
   const data = buildDossier(project),
     p = data.project;
@@ -743,7 +752,7 @@ export async function renderDossierPdf(
       [
         [
           n(load / 1000, 3),
-          n(s.capacityW / 1000, 3),
+          s.capacityW === null ? "Non dichiarata" : n(s.capacityW / 1000, 3),
           (product?.heatingCapacityW ?? combination?.heatingCapacityW)
             ? n(
                 (product?.heatingCapacityW ?? combination?.heatingCapacityW)! /
@@ -864,8 +873,248 @@ export async function renderDossierPdf(
       [0.42, 0.28, 0.3],
     );
   }
+  for (const system of p.hvacSystems.filter((s) => s.type === "ducted")) {
+    const plenum = calculateSupplyPlenum(p, system.id);
+    newPage(
+      `Plenum mandata - ${data.codes.get(system.id) ?? ""} ${
+        system.name ||
+        p.rooms
+          .filter((r) => system.roomIds.includes(r.id))
+          .map((r) => r.name)
+          .join(", ")
+      }`,
+    );
+    paragraph(
+      `Macchina: ${plenum.machineModel ?? "catalogo da verificare"}. ${plenum.branches.length} stacchi di mandata; ripresa separata: ${plenum.returnTerminalCount} bocchette. Stato: ${plenum.status === "ready" ? "dati mandata e ripresa completi" : "configurazione da completare"}.`,
+    );
+    paragraph(
+      `Criterio proposto: velocita massima ${n(plenum.settings.maxBranchVelocityMs)} m/s; ${plenum.settings.grouping === "terminal" ? "uno stacco per bocchetta" : "uno stacco per punto"}. Q/3600 = v x pi x D²/4. Diametro nominale commerciale non inferiore al minimo calcolato.`,
+      9,
+      muted,
+    );
+    if (plenum.branches.length) {
+      for (let offset = 0; offset < plenum.branches.length; offset += 12) {
+        const diagramBranches = plenum.branches.slice(offset, offset + 12);
+        const columns = Math.min(4, diagramBranches.length);
+        const rows = Math.ceil(diagramBranches.length / columns);
+        const blockHeight = 70 + rows * 92;
+        ensure(blockHeight, "Plenum - schema stacchi");
+        const graphTop = y;
+        page.drawRectangle({
+          x: margin,
+          y: graphTop - 31,
+          width: 105,
+          height: 31,
+          color: pale,
+          borderColor: blue,
+          borderWidth: 0.6,
+        });
+        txt("MACCHINA", margin + 12, graphTop - 20, 10, bold, blue);
+        page.drawLine({
+          start: { x: margin + 112, y: graphTop - 15 },
+          end: { x: margin + 137, y: graphTop - 15 },
+          color: cyan,
+          thickness: 1.5,
+        });
+        page.drawRectangle({
+          x: margin + 145,
+          y: graphTop - 31,
+          width: usable - 145,
+          height: 31,
+          color: pale,
+          borderColor: cyan,
+          borderWidth: 0.6,
+        });
+        txt(
+          plenum.machineGeometry?.bodyWidthMm
+            ? `PLENUM ${plenum.machineGeometry.bodyWidthMm}x${plenum.machineGeometry.bodyHeightMm}x${plenum.machineGeometry.totalDepthMm} mm`
+            : "ATTACCO DA SPECIFICARE",
+          margin + 158,
+          graphTop - 20,
+          10,
+          bold,
+          blue,
+        );
+        const scale =
+          24 / Math.max(63, ...plenum.branches.map((b) => b.diameterMm ?? 0));
+        diagramBranches.forEach((branch, i) => {
+          const x = margin + (usable / columns) * ((i % columns) + 0.5);
+          const yy = graphTop - 67 - Math.floor(i / columns) * 92;
+          const radius =
+            branch.diameterMm === null ? 14 : branch.diameterMm * scale;
+          page.drawCircle({
+            x,
+            y: yy,
+            size: radius,
+            color: pale,
+            borderColor: branch.verified ? cyan : muted,
+            borderWidth: 1,
+          });
+          txt(String(offset + i + 1), x - 3, yy - 3, 9, bold, blue);
+          txt(
+            branch.diameterMm === null
+              ? "Ø da verificare"
+              : `Ø ${branch.diameterMm} mm`,
+            x - 38,
+            yy - 39,
+            9,
+            bold,
+          );
+          txt(`${n(branch.airflowM3h)} m³/h`, x - 29, yy - 53, 8, font, muted);
+          txt(
+            branch.roomName.length > 22
+              ? branch.roomName.slice(0, 21) + "…"
+              : branch.roomName,
+            x - 40,
+            yy - 67,
+            8,
+            font,
+            muted,
+          );
+        });
+        y -= blockHeight;
+        paragraph(
+          "Cerchi proporzionali ai diametri nominali. Corpo e transizione quotati sul raccordo macchina documentato. Verificare luce libera, flangia e percorsi prima della fabbricazione.",
+          8,
+          muted,
+        );
+      }
+      table(
+        ["Stacco / ambiente", "Portata", "Diametro", "Velocita"],
+        plenum.branches.map((b, i) => [
+          `${i + 1}. ${b.roomName}`,
+          `${n(b.airflowM3h)} m³/h`,
+          b.diameterMm === null ? "Da verificare" : `Ø ${b.diameterMm} mm`,
+          b.velocityMs === null ? "-" : `${n(b.velocityMs)} m/s`,
+        ]),
+        [0.4, 0.2, 0.2, 0.2],
+      );
+    }
+    if (plenum.issues.length)
+      paragraph(
+        plenum.issues.map((issue) => issue.message).join(" "),
+        9,
+        muted,
+      );
+    paragraph(
+      `Mandata: ${n(plenum.supplyAirflowM3h)} m³/h; ripresa: ${n(plenum.returnAirflowM3h)} m³/h; macchina: ${plenum.machineAirflowM3h === null ? "da verificare" : n(plenum.machineAirflowM3h) + " m³/h"}.`,
+      9,
+    );
+    paragraph(
+      PLENUM_SOURCES.map((source) => `${source.title}: ${source.url}`).join(
+        " / ",
+      ),
+      8,
+      muted,
+    );
+  }
+  if (p.airTerminals.length) {
+    const bill = calculateEcoclimaBom(p);
+    const currency = (cents: number) => `${n(cents / 100, 2)} EUR`;
+    newPage("Listino materiali Ecoclima");
+    paragraph(
+      `Revisione ${bill.revision ?? "non indicata"}. Prezzi originali di listino, senza sconti; trattamento IVA da confermare sulla fonte.`,
+      9,
+    );
+    table(
+      ["Articolo / modello", "Quantita", "Listino", "Importo"],
+      bill.lines.map((line) => [
+        `${line.label}${line.sku ? ` (${line.sku})` : ""}${line.reason ? ` - ${line.reason}` : ""}`,
+        line.quantity === null ? "Da verificare" : String(line.quantity),
+        line.unitPriceCents === null
+          ? "Da quotare"
+          : currency(line.unitPriceCents),
+        line.extendedPriceCents === null
+          ? "Da completare"
+          : currency(line.extendedPriceCents),
+      ]),
+      [0.52, 0.12, 0.18, 0.18],
+    );
+    paragraph(
+      bill.complete && bill.totalCents !== null
+        ? `Totale: ${currency(bill.totalCents)}`
+        : `Subtotale articoli con prezzo: ${currency(bill.knownSubtotalCents)}. ${bill.missingLineCount} voci da completare; totale completo non disponibile.`,
+      11,
+    );
+    for (const source of [
+      ...new Map(
+        bill.lines
+          .filter((line) => line.sourceMetadata)
+          .map((line) => [
+            line.sourceMetadata!.sourceUrl,
+            line.sourceMetadata!,
+          ]),
+      ).values(),
+    ])
+      paragraph(
+        `Fonte listino: ${source.sourceUrl}; acquisizione ${source.retrievedAt ?? "non registrata"}; SHA256 ${source.sha256}.`,
+        8,
+        muted,
+      );
+  }
   heading("Nota tecnica");
   paragraph(TECHNICAL_NOTE, 9);
+  for (const panorama of options.renderImages ?? []) {
+    if (panorama.mimeType !== "image/jpeg" || !panorama.bytes.byteLength)
+      throw new Error("Immagine render del dossier non valida.");
+    if (
+      !p.floors.some((floor) => floor.id === panorama.floorId) ||
+      (panorama.roomId &&
+        !p.rooms.some(
+          (room) =>
+            room.id === panorama.roomId && room.floorId === panorama.floorId,
+        ))
+    )
+      throw new Error(
+        "Il render non appartiene a un piano o ambiente del progetto.",
+      );
+    const image = await doc.embedJpg(panorama.bytes);
+    const landscapeWidth = 841.89,
+      landscapeHeight = 595.28;
+    page = doc.addPage([landscapeWidth, landscapeHeight]);
+    txt(
+      "STAIANO / VISUALIZZAZIONE DEL PROGETTO",
+      42,
+      landscapeHeight - 39,
+      9,
+      bold,
+      blue,
+    );
+    const titleLines = wrap(panorama.title, landscapeWidth - 84, 18, bold);
+    titleLines.forEach((line, index) =>
+      txt(line, 42, landscapeHeight - 67 - index * 22, 18, bold),
+    );
+    const imageMaxWidth = landscapeWidth - 84,
+      imageMaxHeight = 405 - Math.max(0, titleLines.length - 2) * 22;
+    const scale = Math.min(
+      imageMaxWidth / image.width,
+      imageMaxHeight / image.height,
+    );
+    const imageWidth = image.width * scale,
+      imageHeight = image.height * scale;
+    page.drawImage(image, {
+      x: (landscapeWidth - imageWidth) / 2,
+      y: 76 + (imageMaxHeight - imageHeight) / 2,
+      width: imageWidth,
+      height: imageHeight,
+    });
+    txt(
+      "Render della geometria di progetto. Finiture illustrative; muri e soffitti in sezione.",
+      42,
+      61,
+      8,
+      font,
+      muted,
+    );
+    txt(
+      "Visualizzazione orientativa: non sostituisce verifiche, quote e progetto esecutivo.",
+      42,
+      49,
+      8,
+      font,
+      muted,
+    );
+  }
   const pages = doc.getPages();
   pages.forEach((v, i) => {
     page = v;

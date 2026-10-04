@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-test";
+import { openInspector } from "./ui-helpers";
 
 test("exact radiator worker can be cancelled and restarted without applying provisional results", async ({
   page,
@@ -11,6 +12,7 @@ test("exact radiator worker can be cancelled and restarted without applying prov
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
+  await openInspector(page, "Configura impianto");
   await page
     .getByLabel("Marca radiatori", { exact: true })
     .selectOption("Cordivari");

@@ -1,0 +1,124 @@
+{
+  "filename": "EVVAIR-0404c5b2.xlsx",
+  "sha256": "13cc03d75e315dfeccd0e82848ca643b277d4fbfdfbec97d4f85b680ffeb6606",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:29",
+    "modified": "2026-10-04 01:02:29"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 6,
+      "maxColumn": 2,
+      "mergedRanges": [
+        "A3:B3",
+        "A1:B1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EVVAIR VALVOLE REGOLABILI PER LA MANDATA E ESTRAZIONE DELLARIA",
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EVVAIR-C 125",
+            "80,83"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EVVAIR-Q 125",
+            "80,83"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EVVAIR VALVOLE REGOLABILI PER LA MANDATA E ESTRAZIONE DELLARIA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EVVAIR-C 125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "80,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EVVAIR-Q 125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "80,83",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+  "code": "EDFLNA",
+  "slug": "edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:22.057524+00:00",
+      "filename": "EDFLNA-04628549.xlsx",
+      "bytes": 9616,
+      "sha256": "3bf70f2e102ddf269b9af18d90fd6d29732e11410335771b24a085ae872238f6",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 300
+      }
+    }
+  ]
+}

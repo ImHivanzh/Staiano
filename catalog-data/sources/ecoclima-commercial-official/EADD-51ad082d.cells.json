@@ -1,0 +1,193 @@
+{
+  "filename": "EADD-51ad082d.xlsx",
+  "sha256": "56c64efb0eee2d49dd2d6bffc3c8019658b8144e2d0a0f595a5a6706eef9be40",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:27",
+    "modified": "2026-10-04 01:02:27"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 9,
+      "maxColumn": 2,
+      "mergedRanges": [
+        "A3:B3",
+        "A1:B1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EADD DIFFUSORE DARIA IN ABS",
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EADD-80",
+            "56,39"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EADD-100",
+            "87,58"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EADD-125",
+            "64,30"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "EADD-160",
+            "175,64"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "EADD-200",
+            "221,71"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EADD DIFFUSORE DARIA IN ABS",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EADD-80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "56,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EADD-100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "87,58",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EADD-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "64,30",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "EADD-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "175,64",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "EADD-200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "221,71",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

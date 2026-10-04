@@ -23,6 +23,9 @@ import {
   FolderOpen,
   X,
   HouseLine,
+  Columns,
+  Wind,
+  Snowflake,
 } from "@phosphor-icons/react";
 import { useProjectStore, type Tool } from "@/stores/project-store";
 import {
@@ -46,6 +49,7 @@ import { Editor2D } from "./editor2d/Editor2D";
 import { Properties } from "./properties/Properties";
 import type { Project } from "@/schemas/project";
 import { CatalogAdmin } from "./systems/CatalogAdmin";
+import { EcoclimaBill } from "./systems/EcoclimaBill";
 
 const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), {
   ssr: false,
@@ -81,6 +85,10 @@ export function Configurator() {
     [ready, setReady] = useState(false),
     [newDialog, setNewDialog] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [includeRenders, setIncludeRenders] = useState(true);
+  const [billOpen, setBillOpen] = useState(false);
+  const [pdfProgress, setPdfProgress] = useState("");
+  const pdfController = useRef<AbortController | null>(null);
   const [planOpen, setPlanOpen] = useState(false);
   const [planFile, setPlanFile] = useState<File | undefined>(undefined);
   const fileInput = useRef<HTMLInputElement>(null),
@@ -401,11 +409,19 @@ export function Configurator() {
                     setPage("editor");
                   }}
                 >
-                  <span>{r.name}</span>
-                  <small>
-                    {formatNumber(r.netAreaM2)} m² ·{" "}
-                    {formatNumber(r.designLoadW / 1000)} kW
-                  </small>
+                  <span className="nome-ambiente-nav">
+                    {r.systemType === "radiator" ? (
+                      <Columns size={17} aria-hidden="true" />
+                    ) : r.systemType === "ducted" ? (
+                      <Wind size={17} aria-hidden="true" />
+                    ) : r.systemType === "split" ? (
+                      <Snowflake size={17} aria-hidden="true" />
+                    ) : (
+                      <HouseLine size={17} aria-hidden="true" />
+                    )}
+                    {r.name}
+                  </span>
+                  <small>{formatNumber(r.netAreaM2)} m²</small>
                 </button>
               ))}
               {!rooms.length && (
@@ -428,6 +444,11 @@ export function Configurator() {
             <h1>{p?.name ?? "Progetta il tuo impianto"}</h1>
           </div>
           <div className="azioni-testata">
+            <form action="/api/auth/logout" method="post">
+              <button className="bottone tenue piccolo" type="submit">
+                Esci
+              </button>
+            </form>
             <span
               className={`stato-salvataggio ${s.saveStatus === "error" ? "errore" : ""}`}
               role="status"
@@ -490,18 +511,67 @@ export function Configurator() {
               disabled={pdfBusy}
               onClick={() => {
                 setPdfBusy(true);
+                setPdfProgress("Preparazione documento");
+                const controller = new AbortController();
+                pdfController.current = controller;
                 void import("@/services/pdf/download")
-                  .then(({ downloadDossier }) => downloadDossier(p))
-                  .catch(() =>
-                    s.setError(
-                      "PDF non generato. Verificare il progetto e riprovare.",
-                    ),
+                  .then(({ downloadDossier }) =>
+                    downloadDossier(p, {
+                      includeRenders,
+                      floorId: s.activeFloorId,
+                      roomId: s.selection.find((v) => v.kind === "room")?.id,
+                      signal: controller.signal,
+                      onProgress: setPdfProgress,
+                    }),
                   )
-                  .finally(() => setPdfBusy(false));
+                  .catch((error) => {
+                    if (!(
+                      error instanceof DOMException &&
+                      error.name === "AbortError"
+                    ))
+                      s.setError(
+                        error instanceof Error
+                          ? error.message
+                          : "PDF non generato. Verificare il progetto e riprovare.",
+                      );
+                  })
+                  .finally(() => {
+                    setPdfBusy(false);
+                    pdfController.current = null;
+                    setPdfProgress("");
+                  });
               }}
             >
               <DownloadSimple /> {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
             </button>
+            <label className="opzione-render-pdf">
+              <input
+                type="checkbox"
+                checked={includeRenders}
+                disabled={pdfBusy}
+                onChange={(e) => setIncludeRenders(e.target.checked)}
+              />
+              Includi render 3D
+            </label>
+            <button
+              className="bottone tenue piccolo"
+              onClick={() => setBillOpen(true)}
+            >
+              Listino materiali
+            </button>
+            {pdfBusy && (
+              <>
+                <span role="status" className="nota">
+                  {pdfProgress}
+                </span>
+                <button
+                  className="bottone piccolo tenue"
+                  onClick={() => pdfController.current?.abort()}
+                >
+                  Annulla documento
+                </button>
+              </>
+            )}
             <button
               className="bottone tenue piccolo"
               onClick={() => void saveAs()}
@@ -518,6 +588,25 @@ export function Configurator() {
             >
               Rinomina progetto
             </button>
+          </div>
+        )}
+        {billOpen && p && (
+          <div
+            className="sfondo-listino"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Listino materiali Ecoclima"
+          >
+            <div className="documento-listino">
+              <button
+                className="bottone piccolo tenue"
+                aria-label="Chiudi listino"
+                onClick={() => setBillOpen(false)}
+              >
+                Chiudi
+              </button>
+              <EcoclimaBill project={p} />
+            </div>
           </div>
         )}
         {s.error && (
@@ -739,25 +828,26 @@ export function Configurator() {
           <main className="configuratore">
             <div className="barra-strumenti">
               <div className="strumenti-disegno">
-                {tools.map((t) => (
-                  <button
-                    key={t.id}
-                    className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
-                    title={`${t.label} · ${t.shortcut}`}
-                    aria-label={t.label}
-                    aria-pressed={s.tool === t.id}
-                    onClick={() => s.setTool(t.id)}
-                  >
-                    <t.icon />
-                    <span>{t.label}</span>
-                  </button>
-                ))}
+                {s.view === "2d" &&
+                  tools.map((t) => (
+                    <button
+                      key={t.id}
+                      className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
+                      title={`${t.label} · ${t.shortcut}`}
+                      aria-label={t.label}
+                      aria-pressed={s.tool === t.id}
+                      onClick={() => s.setTool(t.id)}
+                    >
+                      <t.icon />
+                      <span>{t.label}</span>
+                    </button>
+                  ))}
                 <button
                   className="bottone piccolo"
                   onClick={() => setRectangleOpen(true)}
                 >
                   <Square />
-                  Stanza rettangolare
+                  {s.view === "3d" ? "Aggiungi stanza" : "Stanza rettangolare"}
                 </button>
               </div>
               <div className="strumenti-cronologia">
@@ -800,55 +890,65 @@ export function Configurator() {
             <div className="barra-vista">
               <div className="titolo-vista">
                 <strong>{floor?.name}</strong>
-                <span>Planimetria in metri</span>
+                <span>
+                  {s.view === "3d"
+                    ? "Ambienti e impianti"
+                    : "Planimetria in metri"}
+                </span>
               </div>
               <div className="opzioni-vista">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={s.showGrid}
-                    onChange={(e) =>
-                      useProjectStore.setState({ showGrid: e.target.checked })
-                    }
-                  />
-                  Griglia
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={s.snap.enabled}
-                    onChange={(e) =>
-                      useProjectStore.setState({
-                        snap: { ...s.snap, enabled: e.target.checked },
-                      })
-                    }
-                  />
-                  Snap
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={s.snap.angle45}
-                    onChange={(e) =>
-                      useProjectStore.setState({
-                        snap: { ...s.snap, angle45: e.target.checked },
-                      })
-                    }
-                  />
-                  45°
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={s.showDimensions}
-                    onChange={(e) =>
-                      useProjectStore.setState({
-                        showDimensions: e.target.checked,
-                      })
-                    }
-                  />
-                  Quote
-                </label>
+                {s.view === "2d" && (
+                  <>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={s.showGrid}
+                        onChange={(e) =>
+                          useProjectStore.setState({
+                            showGrid: e.target.checked,
+                          })
+                        }
+                      />
+                      Griglia
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={s.snap.enabled}
+                        onChange={(e) =>
+                          useProjectStore.setState({
+                            snap: { ...s.snap, enabled: e.target.checked },
+                          })
+                        }
+                      />
+                      Snap
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={s.snap.angle45}
+                        onChange={(e) =>
+                          useProjectStore.setState({
+                            snap: { ...s.snap, angle45: e.target.checked },
+                          })
+                        }
+                      />
+                      45°
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={s.showDimensions}
+                        onChange={(e) =>
+                          useProjectStore.setState({
+                            showDimensions: e.target.checked,
+                          })
+                        }
+                      />
+                      Quote
+                    </label>
+                  </>
+                )}
                 <button
                   className="bottone piccolo tenue"
                   onClick={() => {

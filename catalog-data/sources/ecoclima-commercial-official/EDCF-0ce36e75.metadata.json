@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcf-diffusori-circolari-forellinati",
+  "code": "EDCF",
+  "slug": "edcf-diffusori-circolari-forellinati",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcf-diffusori-circolari-forellinati?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcf-diffusori-circolari-forellinati?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edcf-diffusori-circolari-forellinati.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:20.306155+00:00",
+      "filename": "EDCF-0ce36e75.xlsx",
+      "bytes": 7331,
+      "sha256": "15b2ad189f6f07b650e2ede019445ca75cd44050a381d2208aa4e7073bc4b147",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 65
+      }
+    }
+  ]
+}

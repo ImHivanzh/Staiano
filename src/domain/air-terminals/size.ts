@@ -38,30 +38,44 @@ export function sizeAirTerminal(
   for (const variant of family.variants)
     for (const point of variant.operatingPoints) {
       if (point.quality === "review") continue;
+      if (point.use && point.use !== use) continue;
       const noise = acousticUpperBound(point);
       if (noise === null || noise > MAX_NOISE_DBA) continue;
       if (family.isLinearPerMeter) {
         if (!point.airflowPerMeterM3h) continue;
         const theoreticalLengthM = perPoint / point.airflowPerMeterM3h;
-        const lengthMm = variant.commercialLengthsMm
-          .toSorted((a, b) => a - b)
-          .find((mm) => (mm / 1000) * point.airflowPerMeterM3h! >= perPoint);
-        if (lengthMm === undefined) continue;
-        const commercialLengthM = lengthMm / 1000,
-          available = point.airflowPerMeterM3h * commercialLengthM;
+        const modules = variant.commercialLengthsMm
+          .map((mm) => ({
+            mm,
+            quantity: Math.max(
+              1,
+              Math.ceil(perPoint / ((mm / 1000) * point.airflowPerMeterM3h!)),
+            ),
+          }))
+          .sort(
+            (a, b) =>
+              a.mm * a.quantity - b.mm * b.quantity || a.quantity - b.quantity,
+          );
+        const selectedModule = modules[0];
+        if (!selectedModule) continue;
+        const commercialLengthM = selectedModule.mm / 1000,
+          available =
+            point.airflowPerMeterM3h *
+            commercialLengthM *
+            selectedModule.quantity;
         solutions.push({
           variant,
           operatingPoint: point,
           requiredAirflowPerPointM3h: perPoint,
           theoreticalLengthM,
           commercialLengthM,
-          quantityPerPoint: 1,
+          quantityPerPoint: selectedModule.quantity,
           numberOfPoints,
           availableAirflowPerPointM3h: available,
           log: [
             `${requiredAirflowM3h} / ${numberOfPoints} = ${perPoint} m³/h per punto`,
             `${perPoint} / ${point.airflowPerMeterM3h} = ${theoreticalLengthM} m teorici`,
-            `Misura commerciale ${commercialLengthM} m; portata di riferimento ${available} m³/h`,
+            `${selectedModule.quantity} moduli commerciali da ${commercialLengthM} m; totale ${selectedModule.quantity * commercialLengthM} m per punto; portata di riferimento ${available} m³/h`,
             `Rumore di riferimento ${point.noiseLabel} dB(A), lunghezza di prova ${point.referenceLengthM ?? "non dichiarata"} m`,
             family.operatingConditions,
           ],
@@ -92,8 +106,12 @@ export function sizeAirTerminal(
     }
   return solutions.sort(
     (a, b) =>
-      (a.commercialLengthM ?? a.quantityPerPoint) -
-        (b.commercialLengthM ?? b.quantityPerPoint) ||
+      (a.commercialLengthM === null
+        ? a.quantityPerPoint
+        : a.commercialLengthM * a.quantityPerPoint) -
+        (b.commercialLengthM === null
+          ? b.quantityPerPoint
+          : b.commercialLengthM * b.quantityPerPoint) ||
       a.availableAirflowPerPointM3h - b.availableAirflowPerPointM3h ||
       (acousticUpperBound(a.operatingPoint) ?? Infinity) -
         (acousticUpperBound(b.operatingPoint) ?? Infinity),

@@ -1,0 +1,120 @@
+GRIGLIE DI RIPRESA IN
+ALLUMINIO PASSO 25 mm
+CON FILTRO
+Serie EGA 1-4
+Griglie per la ripresa dell’aria costruite con alette orizzontali fisse ed inclinate a 45°, con l’inserimento di uno
+speciale profilo o controtelaio che permette l’alloggiamento di un filtro piano per polveri grossolane e fini.
+CARATTERISTICHE
+Materiale: alluminio.
+Finitura: anodizzato naturale.
+Filtro: classe COARSE (G2) spessore 12 mm.
+IMPIEGO
+Per la ripresa dell’aria esterna o ambiente dove sia consigliata una prefiltrazione di polvere.
+Perdita di carico iniziale inferiore a 40 Pa con velocità di 1,5 m/s sul filtro.
+ACCESSORI
+- EPZ plenum zincato;
+- EPI plenum isolato;
+MODELLI
+EGA1: griglia con filtro;
+EGA2: griglia con filtro e serranda;
+EGA3: griglia con speciale controtelaio fissato con cerniere alla cornice della griglia per consentire un’agevole
+manutenzione del filtro;
+EGA4: griglia con serranda e speciale controtelaio fissato con cerniere alla cornice della griglia per consentire
+un’agevole manutenzione del filtro.
+A RICHIESTA
+Fissaggio con calamite o con pomelli (EGA3 - EGA4).
+INSTALLAZIONE
+L’installazione viene eseguita mediante l’apertura delle apposite zanche presenti nel controtelaio o in alternativa
+fissando quest’ultimo al muro o al canale mediante viti.
+EGA1 - EGA2: solo per installazione a parete, sconsigliata l’installazione a soffitto. Chiusura mediante magnete.
+EGA3 - EGA4: chiusura con vite.
+NOMENCLATURA CODICE
+EGA griglia di ripresa in alluminio ad alette fisse passo 25 mm
+1 - Griglia di ripresa in alluminio con filtro
+2 - Griglia di ripresa in alluminio con filtro e serranda
+3 - Griglia di ripresa in alluminio con filtro e apertura a cerniera
+4 - Griglia di ripresa in alluminio con filtro, serranda e apertura a cerniera
+Larghezza L (mm)
+L = 200 - 300 - 400 - 500 - 600 - 800 - 1000
+Altezza H (mm)
+H = 200 - 300 - 400 - 500 - 600 - 800
+EGA 3 500 220000
+PAG 1 - GRIGLIE DI RIPRESA IN ALLUMINIO PASSO 25 mm CON FILTRO
+SERIE EGA 1-4 - AGGIORNAMENTO 01/2023
+
+DIMENSIONI
+SEZIONE EFFICACE
+L
+H
+200 300 400 500 600 800 1000
+sezione efficace della griglia m²
+200 0,019 0,030 0,040 0,050 0,061 0,081 0,102
+300 0,029 0,045 0,061 0,076 0,092 0,124 0,155
+400 0,039 0,060 0,081 0,102 0,123 0,166 0,208
+500 0,049 0,075 0,102 0,128 0,155 0,208 0,261
+600 0,059 0,091 0,123 0,154 0,186 0,250 0,313
+800 0,079 0,121 0,164 0,206 0,249 0,334 0,419
+DATI DI FUNZIONAMENTO
+L
+V
+H 200 300 400 500 600 800 1000
+m/s m³/h: portata
+Velocità frontale sul filtro portata aria m³/h Pa: perdite di carico in Pascal
+1,5 195 300 400 505 605 810 1015 dB(A): indice di rumorosità
+200 V: velocità frontale sul filtro (m/s)
+2 260 395 535 670 805 1080 1355
+Si consiglia la velocità dell’aria
+1,5 300 455 610 765 925 1235 1550
+300 sul filtro di 1,5 m/s per contenere
+2 395 605 810 1025 1230 1650 2065
+le perdite di carico e mantenere
+1,5 400 610 820 1030 1245 1665 2085 l’efficienza di filtrazione;
+400
+2 535 815 1095 1375 1655 2220 2780 i dati di portata in tabella si
+1,5 505 765 1030 1300 1560 2090 2620 riferiscono alla griglia con il filtro.
+500
+2 670 1025 1375 1730 2080 2790 3495 Tutte le dimensioni sono
+espresse in mm
+1,5 605 925 1245 1560 1880 2515 3155
+600
+2 805 1230 1655 2080 2505 3355 4205
+1,5 810 1235 1665 2090 2515 3370 4225
+800
+2 1080 1650 2220 2790 3355 4495 5630
+INDICE DI RUMOROSITÀ dB(A) SERRANDA DI TARATURA EGA2 - EGA4
+V Serranda di taratura in acciaio zincato ad alette
+dB(A)
+m/s con movimento contrapposto.
+1,5 32/38
+2 39/45
+PERDITA DI CARICO (Pa)
+V
+Pa
+m/s
+1,5 35/38
+2 62/68
+PAG 2 - GRIGLIE DI RIPRESA IN ALLUMINIO PASSO 25 mm CON FILTRO
+SERIE EGA 1-4 - AGGIORNAMENTO 01/2023
+
+PLENUM
+stacco superiore stacco laterale stacco superiore stacco laterale
+modello modello
+n° n° E F n° n°
+L1 x H1 P1 Ø d P2 Ø d L1 x H1 P1 Ø d P2 Ø d
+stacchi stacchi stacchi stacchi
+200x200 200 1 198 300 1 198 80 12 500x300 200 1 248 350 1 248
+300x200 200 1 198 300 1 198 80 12 600x300 200 2 198 350 2 248
+400x200 200 1 198 300 1 198 80 12 800x300 200 2 248 350 2 248
+500x200 200 1 198 300 1 198 80 12 1000x300 200 2 248 350 2 248
+600x200 200 2 198 300 2 198 80 12 400x400 200 1 298 350 1 298
+800x200 200 2 198 300 2 198 80 12 500x400 200 1 298 350 1 298
+1000x200 200 2 198 300 2 198 80 12 600x400 200 2 198 350 2 248
+300x300 200 1 248 350 1 248 80 12 800x400 200 2 298 350 2 298
+400x300 200 1 248 350 1 248 80 12 1000x400 200 2 298 400 2 298
+Tutte le misure sono espresse in mm.
+INSTALLAZIONE
+Installazione possibile anche senza plenum, possibilità
+di fissare il controtelaio direttamente sulla muratura,
+o con le apposite zanche su pareti di cartongesso
+PAG 3 - GRIGLIE DI RIPRESA IN ALLUMINIO PASSO 25 mm CON FILTRO
+SERIE EGA 1-4 - AGGIORNAMENTO 01/2023

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica",
+  "code": "EAPRO",
+  "slug": "eapro-prolunga-telescopica",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eapro-prolunga-telescopica.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.138023+00:00",
+      "filename": "EAPRO-e6bb0262.xlsx",
+      "bytes": 6702,
+      "sha256": "3941933bb8bba30d708febf8f92621d16f70b50d3174e1ed87f59bf08af08656",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 10
+      }
+    }
+  ]
+}

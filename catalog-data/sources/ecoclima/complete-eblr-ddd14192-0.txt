@@ -1,0 +1,105 @@
+BOCCHETTE LINEARI
+A BARRE ORIZZONTALI
+FISSE CON CORNICE DA
+15 mm
+Serie EBLR
+Bocchette a barre orizzontali fisse in alluminio con profili a deflessione 0° o 15°, con cornice 15 mm.
+CARATTERISTICHE
+Materiale: alluminio.
+Finitura: anodizzato naturale.
+Installazione: fissaggio con calamite.
+IMPIEGO
+Per impianti di condizionamento e ventilazione, a parete, per fan-coil, a pavimento (non
+calpestabile), sia in mandata che in ripresa.
+MODELLI
+EBLR 20/0°: con cornice da15 mm e barre fisse frontali estraibili con deflessione 0°;
+EBLR 20/15°: con cornice da 15 mm e barre fisse frontali estraibili con deflessione 15°;
+ACCESSORI
+- EPZR plenum zincato;
+- EPIR plenum isolato;
+- SC serranda di taratura in acciaio zincato con alette a movimento contrapposto.
+A RICHIESTA
+Verniciatura colore bianco RAL9016 o altri colori
+RAL a scelta.
+NOMENCLATURA CODICE
+EBLR Bocchette lineari a barre orizzontali fisse con cornice da 15 mm
+20/0°: con cornice da15 mm e barre fisse frontali estraibili con deflessione 0°;
+20/15°: con cornice da 15 mm e barre fisse frontali estraibili con deflessione 15°;
+Larghezza L (mm) 400 - 500 - 600
+Altezza H (mm) 75 - 100 - 125 - 150 - 200
+EBLR 20/0° 400 220000
+PAG 1 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE CON CORNICE DA 15 mm
+SERIE EBLR - AGGIORNAMENTO 01/2025
+
+DIMENSIONI EBLR 20/0° - 20/15°
+DIMENSIONI EBLR 20/0° - 20/15° + SC
+PAG 2 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE CON CORNICE DA 15 mm
+SERIE EBLR - AGGIORNAMENTO 01/2025
+
+DATI DI FUNZIONAMENTO:
+Vk 3 m/s Vk 4 m/s Vk 5 m/s
+dimensioni sezione efficace
+LxH m³/h L1 m³/h L1 m³/h L1
+m2
+400x75 0,015 160 2,8 213 3,8 266 4,7
+500x75 0,019 201 3 268 3,9 335 4,9
+600x75 0,022 243 3,1 323 4,1 404 5,1
+400x100 0,020 216 2,9 292 3,8 365 4,8
+500x100 0,026 276 3 367 4 459 5
+600x100 0,031 332 3,1 443 4,2 554 5,2
+400x125 0,026 278 2,9 370 3,9 463 4,9
+500x125 0,032 350 3,1 467 4,1 583 5,1
+600x125 0,039 422 3,2 563 4,2 703 5,3
+400x150 0,031 337 3 449 4 561 5
+500x150 0,039 424 3,1 566 4,2 707 5,2
+600x150 0,047 512 3,4 682 4,3 853 5,4
+400x200 0,042 455 3,3 607 4,2 758 5,2
+500x200 0,053 573 3,4 764 4,4 955 5,4
+600x200 0,064 691 3,6 922 4,5 1152 5,6
+Pa 5 10 15
+dB(A) 25 / 32 33 / 39 38 / 44
+v
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L1 (m): lancio riferito ad una velocità terminale Vt= 0,25 m/s e con un differenziale di temperatura di 10/12 °C, montati in
+prossimità del soffitto (non oltre 3 m); per distanze superiori correggere il lancio moltiplicandolo x 0,7
+dB(A): indice di rumorosità
+Tutte le dimensioni sono espresse in mm.
+PAG 3 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE CON CORNICE DA 15 mm
+SERIE EBLR - AGGIORNAMENTO 01/2025
+
+SERRANDA DI TARATURA SC
+- SC serranda di taratura in acciaio zincato con alette a movimento contrapposto.
+PAG 4 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE CON CORNICE DA 15 mm
+SERIE EBLR - AGGIORNAMENTO 01/2025
+
+EPIR-EPZR PLENUM
+CARATTERISTICHE
+- Materiale: acciaio
+- Finitura superficiale: zincatura
+- Fissaggio bocchetta: con clips o con viti
+frontali
+stacco superiore stacco laterale
+modello dimensioni
+E F
+L1 x H1 L1 x H1 n° n°
+P1 Ø d P2 Ø d
+stacchi stacchi
+400x75 395x70 - - - 150 2 95 80 8
+500x75 495x70 - - - 150 2 95 80 8
+600x75 595x70 - - - 150 2 95 80 8
+400x100 395x95 200 2 95 200 2 95 80 8
+500x100 495x95 200 2 95 200 2 95 80 8
+600x100 595x95 200 2 95 200 2 95 80 8
+400x125 395x120 200 1 120 230 1 120 80 8
+500x125 495x120 200 2 120 230 2 120 80 8
+600x125 595x120 200 2 120 230 2 120 80 8
+400x150 395x145 200 1 145 250 1 145 80 8
+500x150 495x145 200 2 145 250 2 145 80 8
+600x150 595x145 200 2 145 250 2 145 80 8
+400x200 395x195 200 1 195 300 1 195 80 8
+500x200 495x195 200 2 195 300 2 195 80 8
+600x200 595x195 200 2 195 300 2 195 80 8
+PAG 5 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE CON CORNICE DA 15 mm
+SERIE EBLR - AGGIORNAMENTO 01/2025

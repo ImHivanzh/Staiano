@@ -1,0 +1,147 @@
+{
+  "filename": "EARS-61b3bd7d.xlsx",
+  "sha256": "85eab63f9338250499ed70147a2630f534d996c455198bfac1e12232ba1b223a",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:28",
+    "modified": "2026-10-04 01:02:28"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 7,
+      "maxColumn": 2,
+      "mergedRanges": [
+        "A3:B3",
+        "A1:B1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EARS PN RACCORDO PER ATTRAVERSAMENTO SOLAIO",
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EARS2-PN2",
+            "134,01"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EARS4-PN4",
+            "143,00"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EARS6-PN6",
+            "153,55"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EARS PN RACCORDO PER ATTRAVERSAMENTO SOLAIO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EARS2-PN2",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "134,01",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EARS4-PN4",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "143,00",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EARS6-PN6",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "153,55",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

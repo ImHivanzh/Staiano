@@ -1,0 +1,569 @@
+{
+  "filename": "EVREA-37663445.xlsx",
+  "sha256": "ea38af63ba6ebc4c76ec97cdcdac6c6bef6c8f61a6bff65d8aa127b8aad644ed",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:29",
+    "modified": "2026-10-04 01:02:29"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 19,
+      "maxColumn": 3,
+      "mergedRanges": [
+        "A1:C1",
+        "A3:C3"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EVREA DIFFUSORE DARIA IN ABS",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "Descrizione",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EVREA-80",
+            "EVREA 80 - Diffusore senza deflettori",
+            "15,52"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EVREA-100",
+            "EVREA 100 - Diffusore senza deflettori",
+            "22,39"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EVREA-125",
+            "EVREA 125 - Diffusore senza deflettori",
+            "23,29"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "EVREA-160",
+            "EVREA 160 - Diffusore senza deflettori",
+            "52,24"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "EVREA-200",
+            "EVREA 200 - Diffusore senza deflettori",
+            "79,10"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "EVREA-DF-80",
+            "Deflettore per EVREA-80",
+            "1,79"
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "EVREA-DF-100",
+            "Deflettore per EVREA-100",
+            "2,09"
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "EVREA-DF-125",
+            "Deflettore per EVREA-125",
+            "2,39"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "EVREA-DF-160",
+            "Deflettore per EVREA-160",
+            "3,29"
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "EVREA-DF-200",
+            "Deflettore per EVREA-200",
+            "5,08"
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "EVREA-M 80",
+            "Manicotto in plastica per EVREA-80 lunghezza 100mm",
+            "7,75"
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "EVREA-M 100",
+            "Manicotto in plastica per EVREA-100 lunghezza 100mm",
+            "12,45"
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "EVREA-M 125",
+            "Manicotto in plastica per EVREA-125 lunghezza 100mm",
+            "12,45"
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "EVREA-M 160",
+            "Manicotto in plastica per EVREA-160 lunghezza 100mm",
+            "18,53"
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "EVREA-M 200",
+            "Manicotto in plastica per EVREA-200 lunghezza 100mm",
+            "23,51"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EVREA DIFFUSORE DARIA IN ABS",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EVREA-80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "EVREA 80 - Diffusore senza deflettori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "15,52",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EVREA-100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "EVREA 100 - Diffusore senza deflettori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": "22,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EVREA-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "EVREA 125 - Diffusore senza deflettori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "23,29",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "EVREA-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "EVREA 160 - Diffusore senza deflettori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": "52,24",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "EVREA-200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "EVREA 200 - Diffusore senza deflettori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C9",
+          "row": 9,
+          "column": 3,
+          "value": "79,10",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "EVREA-DF-80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "Deflettore per EVREA-80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C10",
+          "row": 10,
+          "column": 3,
+          "value": "1,79",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": "EVREA-DF-100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "Deflettore per EVREA-100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C11",
+          "row": 11,
+          "column": 3,
+          "value": "2,09",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": "EVREA-DF-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": "Deflettore per EVREA-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C12",
+          "row": 12,
+          "column": 3,
+          "value": "2,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": "EVREA-DF-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B13",
+          "row": 13,
+          "column": 2,
+          "value": "Deflettore per EVREA-160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C13",
+          "row": 13,
+          "column": 3,
+          "value": "3,29",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "EVREA-DF-200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": "Deflettore per EVREA-200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C14",
+          "row": 14,
+          "column": 3,
+          "value": "5,08",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A15",
+          "row": 15,
+          "column": 1,
+          "value": "EVREA-M 80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B15",
+          "row": 15,
+          "column": 2,
+          "value": "Manicotto in plastica per EVREA-80 lunghezza 100mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C15",
+          "row": 15,
+          "column": 3,
+          "value": "7,75",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A16",
+          "row": 16,
+          "column": 1,
+          "value": "EVREA-M 100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B16",
+          "row": 16,
+          "column": 2,
+          "value": "Manicotto in plastica per EVREA-100 lunghezza 100mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C16",
+          "row": 16,
+          "column": 3,
+          "value": "12,45",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A17",
+          "row": 17,
+          "column": 1,
+          "value": "EVREA-M 125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B17",
+          "row": 17,
+          "column": 2,
+          "value": "Manicotto in plastica per EVREA-125 lunghezza 100mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C17",
+          "row": 17,
+          "column": 3,
+          "value": "12,45",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A18",
+          "row": 18,
+          "column": 1,
+          "value": "EVREA-M 160",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B18",
+          "row": 18,
+          "column": 2,
+          "value": "Manicotto in plastica per EVREA-160 lunghezza 100mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C18",
+          "row": 18,
+          "column": 3,
+          "value": "18,53",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A19",
+          "row": 19,
+          "column": 1,
+          "value": "EVREA-M 200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B19",
+          "row": 19,
+          "column": 2,
+          "value": "Manicotto in plastica per EVREA-200 lunghezza 100mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C19",
+          "row": 19,
+          "column": 3,
+          "value": "23,51",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

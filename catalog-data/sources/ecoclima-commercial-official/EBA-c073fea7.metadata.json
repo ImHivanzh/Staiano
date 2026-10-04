@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
+  "code": "EBA",
+  "slug": "eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eba-bocchette-di-mandata-in-alluminio-passo-20-mm.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:15.705415+00:00",
+      "filename": "EBA-c073fea7.xlsx",
+      "bytes": 9237,
+      "sha256": "0ee8a0e7e285f031a3b7eb7b147c944eb566b56095d31dd65f89469156b22924",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 305
+      }
+    }
+  ]
+}

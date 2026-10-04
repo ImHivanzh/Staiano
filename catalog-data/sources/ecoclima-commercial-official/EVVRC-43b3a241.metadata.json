@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+  "code": "EVVRC",
+  "slug": "evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.784347+00:00",
+      "filename": "EVVRC-43b3a241.xlsx",
+      "bytes": 6867,
+      "sha256": "ea636fe9e040ba495b878df507c35570bc4352cd526068628d8c7c9d2f72ee39",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 26
+      }
+    }
+  ]
+}

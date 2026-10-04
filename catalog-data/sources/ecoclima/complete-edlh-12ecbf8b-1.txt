@@ -1,0 +1,662 @@
+ANTINCENDIO
+DIFFUSIONE
+VMC
+VENTILATORI
+SANIFICAZIONE
+TUBI FLESSIBILI
+TUBI SPIRO
+FILTRAZIONE
+ISOLANTI
+NASTRI & GUARNIZIONI
+REGOLATORI
+ACCESSORI
+EDLH
+Diffusori lineari
+multiferitoia a scomparsa
+Scheda tecnica
+Rev.03
+
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+2 | REV.03
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+A
+B
+C
+30 20 30 20 30
+D
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+EDLH-EDLHB
+1 FERITOIA
+1 FERITOIA
+Dimensione feritoia L A B C D Numero ponti di fissaggio Sezione efficace m² Portata aria e lancio
+800
+m³/h 70 105 140 175 210 245
+1000
+20
+1200 55 48 41 34 2 0,0097
+MM
+1500 L(m) 1,8 2,7 3,6 4,5 5,4 6,3
+2000
+800
+m³/h 105 158 210 262 315 368
+1000
+30 0,0146
+1200 65 58 51 44 2
+MM L(m) 1,6 2,5 3,4 4,2 5 5,8
+1500
+2000 indice di rumorosità dB(A) <20 22 32 37 44 48
+Vk m/s 2 3 4 5 6 7
+Perdite di carico Pa 7 15 26 41 59 80
+Dati di funzionamento
+Dati riferiti a diffusori di lunghezza 1 m, con una velocità Vk (m/s) velocità efficace
+terminale Vt=0.25 m/s, montati a filo soffitto e con m³/h portata aria
+lancio laterale con effetto coanda. Valori riferiti a Pa perdite di carico
+diffusore senza serranda e deflettori in posizione di L(m) lancio
+lavoro con parzializzazione al 50% della superficie utile dB(A) indice di rumorosità
+di passaggio aria. La posizione dei deflettori riduce la
+sezione efficace. Con deflettori completamente aperti
+o nel caso che il diffusore sia utilizzato per la ripresa,
+le portate in m³/h riportate in tabella possono variare.
+FERITOIA 20mm FERITOIA 30mm
+EDLH FA EDLH FB
+A
+B
+C
+30 20 30 20 30
+D
+
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+3 | REV.03
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+A
+B
+C
+30 20 30 20 30
+D
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+EDLH-EDLHB
+2 FERITOIE
+2 FERITOIE
+Dimensione feritoia L A B C D Numero ponti di fissaggio Sezione efficace m² Portata aria e lancio
+800
+m³/h 140 210 280 350 420 490
+1000
+20
+1200 95 88 81 74 2 0,0194
+MM
+1500 L(m) 2,6 3,9 5,1 6,4 7,7 9,0
+2000
+800
+m³/h 210 316 420 524 630 736
+1000
+30 0,0292
+1200 115 108 101 94 2
+MM L(m) 2,3 3,6 4,9 6,0 7,1 8,3
+1500
+2000 indice di rumorosità dB(A) <20 24 34 39 46 50
+Vk m/s 2 3 4 5 6 7
+Perdite di carico Pa 7 15 26 41 59 80
+Dati di funzionamento
+Dati riferiti a diffusori di lunghezza 1 m, con una velocità Vk (m/s) velocità efficace
+terminale Vt=0.25 m/s, montati a filo soffitto e con m³/h portata aria
+lancio laterale con effetto coanda. Valori riferiti a Pa perdite di carico
+diffusore senza serranda e deflettori in posizione di L(m) lancio
+lavoro con parzializzazione al 50% della superficie utile dB(A) indice di rumorosità
+di passaggio aria. La posizione dei deflettori riduce la
+sezione efficace. Con deflettori completamente aperti
+o nel caso che il diffusore sia utilizzato per la ripresa,
+le portate in m³/h riportate in tabella possono variare.
+FERITOIA 20mm FERITOIA 30mm
+EDLH FA EDLH FB
+A
+B
+C
+30 20 30 20 30
+D
+
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+4 | REV.03
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+A
+B
+C
+30 20 30 20 30
+D
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+EDLH-EDLHB
+3 FERITOIE
+3 FERITOIE
+Dimensione feritoia L A B C D Numero ponti di fissaggio Sezione efficace m² Portata aria e lancio
+800
+m³/h 210 315 420 525 630 735
+1000
+20 2
+1200 135 128 121 114 0,0291
+MM
+1500 L(m) 3,9 5,8 7,7 9,6 11,6 13,5
+2000 3
+800
+m³/h 305 474 630 786 945 1104
+1000
+30 2 0,0438
+1200 165 158 151 144
+MM L(m) 3,4 5,4 7,3 9,0 10,7 12,4
+1500
+2000 3 indice di rumorosità dB(A) <20 26 36 41 48 52
+Vk m/s 2 3 4 5 6 7
+Perdite di carico Pa 7 15 26 41 59 80
+Dati di funzionamento
+Dati riferiti a diffusori di lunghezza 1 m, con una velocità Vk (m/s) velocità efficace
+terminale Vt=0.25 m/s, montati a filo soffitto e con m³/h portata aria
+lancio laterale con effetto coanda. Valori riferiti a Pa perdite di carico
+diffusore senza serranda e deflettori in posizione di L(m) lancio
+lavoro con parzializzazione al 50% della superficie utile dB(A) indice di rumorosità
+di passaggio aria. La posizione dei deflettori riduce la
+sezione efficace. Con deflettori completamente aperti
+o nel caso che il diffusore sia utilizzato per la ripresa,
+le portate in m³/h riportate in tabella possono variare.
+A
+B
+C
+30 20 30 20 30
+D
+FERITOIA 20mm FERITOIA 30mm
+EDLH FA EDLH FB
+
+5 | REV.03
+P
+E
+D
+Attacco laterale F
+Side mounting
+L2
+L1
+H
+P
+DIMENSIONI PLENUM E SISTEMA
+DI MONTAGGIO CON PONTI DI
+FISSAGGIO
+Plenum in acciaio zincato, disponibile sia in version senza assicurano stabilità e rapidità di posa. Il collegamento
+isolamento che con isolamento esterno in polietilene tra diffusore e plenum avviene tramite pratici ponti
+espanso per garantire migliori prestazioni termiche. di fissaggio che si agganciano alle apposite pieghe
+Progettato per l’installazione in continuità dei diffusori, strutturali, garantendo un montaggio semplice, sicuro
+è già dotato di piastrine di fissaggio integrate che e preciso.
+EDLH
+E
+D
+Attacco laterale F
+Side mounting EDLH 1 FERITOIA L L1 L2 Numero stacchi Ø d P H E F
+800 800 770 1
+1000 1000 970 1
+20
+1200 1200 1170 2 145 240 65 80 49
+L2 MM 1500 1500 1470 2
+2000 2000 1970 2
+L1 800 800 770 1
+H 30
+1
+1
+0
+20
+0
+0
+0 1
+1
+0
+20
+0
+0
+0
+1
+9
+1
+7
+7
+0
+0 2
+1
+145 240 75 80 49
+MM 1500 1500 1470 2
+2000 2000 1970 2
+EDLH 2 FERITOIE L L1 L2 Numero stacchi Ø d P H E F
+800 800 770 2
+1000 1000 970 2
+20
+1200 1200 1170 2 145 300 105 80 49
+MM 1500 1500 1470 2
+2000 2000 1970 2
+800 800 770 2
+1000 1000 970 2
+30
+1200 1200 1170 2 198 300 125 80 49
+MM 1500 1500 1470 2
+2000 2000 1970 2
+EDLH 3 FERITOIE L L1 L2 Numero stacchi Ø d P H E F
+800 800 770 2
+1000 1000 970 2
+20
+1200 1200 1170 2 198 300 145 80 49
+MM 1500 1500 1470 2
+2000 2000 1970 2
+800 800 770 2
+1000 1000 970 2
+30
+1200 1200 1170 2 198 300 165 80 49
+MM 1500 1500 1470 2
+2000 2000 1970 2
+
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+6 | REV.03
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+A
+B
+C
+20
+D
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FB
+A
+B
+C
+30 20 30 20 30
+D
+06
+A
+B
+C
+30
+D
+06
+A
+B
+C
+20 20 20
+D
+FERITOIA / SLOT 20mm
+EDLHFA
+06 06
+EDLH FA
+A
+B
+C
+30 20 30
+D
+FERITOIA / SLOT 30mm
+EDLH FB
+FERITOIA / SLOT 20 mm FERITOIA / SLOT 30 mm
+EDLH FA EDLH FB
+06
+A
+B
+C
+20 20 20 20 20
+D
+06
+INSTALLAZIONE EDLH-EDLHB
+1
+Predisporre il foro sulla lastra di cartongesso
+della larghezza pari alla quota “D”, a seconda
+del modello e del numero di feritoie, e con
+lunghezza pari a “L”:
+2
+Ai lati del foro installare due supporti, con delle strutture per
+cartongesso o con delle staffe (non fornite a corredo del plenum):
+A
+B
+C
+30 20 30 20 30
+D
+
+INSTALLAZIONE EDLH-EDLHB
+3
+Installare il diffusore all’interno del
+plenum con i ponti di fissaggio:
+Il ponte di fissaggio deve essere
+inserito all’interno del plenum e
+collegato al diffusore, tramite le viti
+in dotazione, come indicato nella
+sezione:
+Le viti del ponte di fissaggio vanno
+fatte passare attraverso le piastrine
+con occhielli presenti nel diffusore:
+➧
+Nel caso di trafilamenti
+si può utilizzare del
+silicone tra il plenum e il
+diffusore:
+7 | REV.03
+
+INSTALLAZIONE EDLH-EDLHB
+5
+Il plenum viene installato in appoggio alla
+lastra di cartongesso e fissato alle staffe:
+6
+Collegare il flessibile allo stacco e fissare
+tramite fascetta:
+7
+Stuccare sulla parte inferiore.
+8 | REV.03
+
+9 | REV.03
+➧
+INSTALLAZIONE EDLH-EDLHB
+8
+Nel caso di installazione in continuità i diffusori vengono accostati l’uno all’altro e
+collegati tramite il kit di continuità previa rimozione della testata di chiusura:
+Vanno quindi inserite le piastrine del kit di
+continuità e agganciati i due diffusori:
+I plenum sono corredati da
+piastrine di fissaggio che
+vanno ruotate per facilitare il
+mantenimento della linearità
+nel caso di installazione in
+continuità:
+
+NOMENCLATURA CODICE
+Come ordinare
+EDLH10 FA 1000 1F
+EDLH10-FA / EDLHB10-FA FA Lunghezza L 1F
+diffusori lineari a scomparsa feritoia da 20 mm (mm) 1 feritoia
+di ripresa senza deflettori con 800
+FB 2F
+feritoia da 20 mm. feritoia da 30 mm 1000 2 feritoie
+EDLH20-FA / EDLHB20-FA 1200
+3F
+diffusori lineari a scomparsa 1500
+3 feritoie
+di mandata con deflettori e 2000
+feritoia da 20 mm.
+EDLH30-FA / EDLHB30-FA
+diffusori lineari a scomparsa
+di ripresa senza deflettori, con
+serranda e feritoia da 20 mm.
+EDLH40-FA / EDLHB40-FA
+diffusori lineari a scomparsa
+di mandata con deflettori e
+serranda e feritoia da 20 mm.
+EDLH10-FB - EDLHB10-FB
+diffusori lineari a scomparsa
+di ripresa senza deflettori con
+feritoia da 30 mm.
+EDLH20-FB - EDLHB20-FB
+diffusori lineari a scomparsa
+di mandata con deflettori e
+feritoia da 30 mm.
+EDLH30-FB - EDLHB30-FB
+diffusori lineari a scomparsa
+di ripresa senza deflettori, con
+serranda e feritoia da 30 mm.
+EDLH40-FB - EDLHB40-FB
+diffusori lineari a scomparsa
+di mandata con deflettori e
+serranda e feritoia da 30 mm.
+10 | REV.03
+
+Head quarter
+E V C ia O C C a L d IM u A ti S d R i R L ussia, 19 S in a f l o e @ s o e f c fi o c c e l i I m tal a y .com I I I S S S O O O 5 4 9 0 5 0 0 0 0 0 0 1 1 1
+35010 Curtarolo - PADOVA - ITALY
+ISO 14001
+P. +39 049 9620344 Sales office international
+info@ecoclima.com francesca@ecoclima.com ecoclima.com Certified Management System

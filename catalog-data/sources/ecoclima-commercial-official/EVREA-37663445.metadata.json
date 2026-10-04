@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs",
+  "code": "EVREA",
+  "slug": "evrea-diffusore-daria-in-abs",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=evrea-diffusore-daria-in-abs.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.566777+00:00",
+      "filename": "EVREA-37663445.xlsx",
+      "bytes": 7195,
+      "sha256": "ea38af63ba6ebc4c76ec97cdcdac6c6bef6c8f61a6bff65d8aa127b8aad644ed",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 50
+      }
+    }
+  ]
+}

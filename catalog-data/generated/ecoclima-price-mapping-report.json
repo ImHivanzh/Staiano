@@ -1,0 +1,658 @@
+{
+  "priceVersion": "ecoclima-listino-07a432d5cb1d",
+  "technicalVersion": "2026-10-04-ecoclima-f01779a46f65",
+  "rows": [
+    {
+      "familyCode": "EDLS",
+      "configurations": 30,
+      "matchedConfigurations": 30
+    },
+    {
+      "familyCode": "EBLF",
+      "configurations": 42,
+      "matchedConfigurations": 42
+    },
+    {
+      "familyCode": "ETA",
+      "configurations": 18,
+      "matchedConfigurations": 18
+    },
+    {
+      "familyCode": "EGQ",
+      "configurations": 72,
+      "matchedConfigurations": 72
+    },
+    {
+      "familyCode": "EVVMC",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EGS",
+      "configurations": 11,
+      "matchedConfigurations": 11
+    },
+    {
+      "familyCode": "EADD",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EBA",
+      "configurations": 33,
+      "matchedConfigurations": 33
+    },
+    {
+      "familyCode": "EBCV",
+      "configurations": 12,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EBV",
+      "configurations": 22,
+      "matchedConfigurations": 22
+    },
+    {
+      "familyCode": "EBIA",
+      "configurations": 29,
+      "matchedConfigurations": 29
+    },
+    {
+      "familyCode": "EBL",
+      "configurations": 31,
+      "matchedConfigurations": 31
+    },
+    {
+      "familyCode": "EBLR",
+      "configurations": 15,
+      "matchedConfigurations": 15
+    },
+    {
+      "familyCode": "EBLS",
+      "configurations": 25,
+      "matchedConfigurations": 25
+    },
+    {
+      "familyCode": "EGA",
+      "configurations": 81,
+      "matchedConfigurations": 73
+    },
+    {
+      "familyCode": "EGA1-4",
+      "configurations": 42,
+      "matchedConfigurations": 42
+    },
+    {
+      "familyCode": "EGA6",
+      "configurations": 49,
+      "matchedConfigurations": 42
+    },
+    {
+      "familyCode": "EBL3",
+      "configurations": 15,
+      "matchedConfigurations": 15
+    },
+    {
+      "familyCode": "EGA50",
+      "configurations": 56,
+      "matchedConfigurations": 56
+    },
+    {
+      "familyCode": "EGA50-3F",
+      "configurations": 56,
+      "matchedConfigurations": 56
+    },
+    {
+      "familyCode": "EGA50-3S",
+      "configurations": 56,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EGZ50",
+      "configurations": 56,
+      "matchedConfigurations": 56
+    },
+    {
+      "familyCode": "EGZ100",
+      "configurations": 56,
+      "matchedConfigurations": 56
+    },
+    {
+      "familyCode": "EGQR",
+      "configurations": 36,
+      "matchedConfigurations": 35
+    },
+    {
+      "familyCode": "EGQIF",
+      "configurations": 42,
+      "matchedConfigurations": 42
+    },
+    {
+      "familyCode": "EGQ1-4",
+      "configurations": 49,
+      "matchedConfigurations": 49
+    },
+    {
+      "familyCode": "EGQ-PUSH",
+      "configurations": 36,
+      "matchedConfigurations": 36
+    },
+    {
+      "familyCode": "EGQR-PUSH",
+      "configurations": 1,
+      "matchedConfigurations": 1
+    },
+    {
+      "familyCode": "EGF",
+      "configurations": 30,
+      "matchedConfigurations": 30
+    },
+    {
+      "familyCode": "EGFR",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EGFF",
+      "configurations": 42,
+      "matchedConfigurations": 42
+    },
+    {
+      "familyCode": "EGF-PUSH",
+      "configurations": 59,
+      "matchedConfigurations": 45
+    },
+    {
+      "familyCode": "EGFR-PUSH",
+      "configurations": 1,
+      "matchedConfigurations": 1
+    },
+    {
+      "familyCode": "EBP",
+      "configurations": 24,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EBP-T",
+      "configurations": 42,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDE1",
+      "configurations": 9,
+      "matchedConfigurations": 9
+    },
+    {
+      "familyCode": "EDE1R",
+      "configurations": 6,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDE2",
+      "configurations": 9,
+      "matchedConfigurations": 9
+    },
+    {
+      "familyCode": "EDE2R",
+      "configurations": 6,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDE2S",
+      "configurations": 1,
+      "matchedConfigurations": 1
+    },
+    {
+      "familyCode": "EDE5",
+      "configurations": 4,
+      "matchedConfigurations": 4
+    },
+    {
+      "familyCode": "EDLH",
+      "configurations": 30,
+      "matchedConfigurations": 30
+    },
+    {
+      "familyCode": "EDFL-10",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFL-20",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFL-30",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFL-40",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFL-50",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFLB-20",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFLB-40",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFLB-50",
+      "configurations": 36,
+      "matchedConfigurations": 24
+    },
+    {
+      "familyCode": "EDFLB-FL",
+      "configurations": 8,
+      "matchedConfigurations": 8
+    },
+    {
+      "familyCode": "EDFLNA-10",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLNA-20",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLNA-40",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLNA-50",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLBNA-10",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLBNA-20",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLBNA-40",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDFLBNA-50",
+      "configurations": 16,
+      "matchedConfigurations": 16
+    },
+    {
+      "familyCode": "EDRA",
+      "configurations": 12,
+      "matchedConfigurations": 7
+    },
+    {
+      "familyCode": "EDRA-PQ",
+      "configurations": 7,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDCS",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDCS-PQ",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDEA-SD",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDCF",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDCC",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDQF1",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDQC1",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDQF3",
+      "configurations": 1,
+      "matchedConfigurations": 1
+    },
+    {
+      "familyCode": "EDRC",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDRCS",
+      "configurations": 5,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDRC-PQR",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EDRCS-PQR",
+      "configurations": 3,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDRCS THERM",
+      "configurations": 5,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDRCS-PQR THERM",
+      "configurations": 2,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDRF",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDRFQ",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDRFB",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDRFQB",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDE-FB",
+      "configurations": 4,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDQMQ",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EDQMC",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EDMF-S",
+      "configurations": 8,
+      "matchedConfigurations": 8
+    },
+    {
+      "familyCode": "EDMP-P",
+      "configurations": 45,
+      "matchedConfigurations": 45
+    },
+    {
+      "familyCode": "EDMP-C",
+      "configurations": 45,
+      "matchedConfigurations": 45
+    },
+    {
+      "familyCode": "EDQV",
+      "configurations": 7,
+      "matchedConfigurations": 7
+    },
+    {
+      "familyCode": "EDQV-PQ",
+      "configurations": 4,
+      "matchedConfigurations": 4
+    },
+    {
+      "familyCode": "EDC1",
+      "configurations": 20,
+      "matchedConfigurations": 20
+    },
+    {
+      "familyCode": "EDC2",
+      "configurations": 20,
+      "matchedConfigurations": 20
+    },
+    {
+      "familyCode": "EDC3",
+      "configurations": 20,
+      "matchedConfigurations": 20
+    },
+    {
+      "familyCode": "EDC4",
+      "configurations": 20,
+      "matchedConfigurations": 20
+    },
+    {
+      "familyCode": "EDC5",
+      "configurations": 11,
+      "matchedConfigurations": 11
+    },
+    {
+      "familyCode": "EDC6",
+      "configurations": 11,
+      "matchedConfigurations": 11
+    },
+    {
+      "familyCode": "EDU",
+      "configurations": 7,
+      "matchedConfigurations": 7
+    },
+    {
+      "familyCode": "EDU-M",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EDUB",
+      "configurations": 9,
+      "matchedConfigurations": 9
+    },
+    {
+      "familyCode": "EDU-F",
+      "configurations": 6,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDU-S",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDU-SM",
+      "configurations": 6,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDU-LFS",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EDFDS",
+      "configurations": 2,
+      "matchedConfigurations": 2
+    },
+    {
+      "familyCode": "EVVRC",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EVPMC",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EAM-VRFN",
+      "configurations": 3,
+      "matchedConfigurations": 0
+    },
+    {
+      "familyCode": "EDSC-C",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EDSC-CC",
+      "configurations": 2,
+      "matchedConfigurations": 2
+    },
+    {
+      "familyCode": "EDSC-Q",
+      "configurations": 2,
+      "matchedConfigurations": 2
+    },
+    {
+      "familyCode": "EGE",
+      "configurations": 12,
+      "matchedConfigurations": 12
+    },
+    {
+      "familyCode": "EGFC",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EDLSV",
+      "configurations": 2,
+      "matchedConfigurations": 2
+    },
+    {
+      "familyCode": "EGA-ONE",
+      "configurations": 8,
+      "matchedConfigurations": 8
+    },
+    {
+      "familyCode": "EAGF",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EAG",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EAL",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EAG-AL",
+      "configurations": 8,
+      "matchedConfigurations": 8
+    },
+    {
+      "familyCode": "EAG-INOX",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EAMV-V",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EVREA",
+      "configurations": 5,
+      "matchedConfigurations": 5
+    },
+    {
+      "familyCode": "EVVAIR-C",
+      "configurations": 1,
+      "matchedConfigurations": 1
+    },
+    {
+      "familyCode": "EVVAIR-Q",
+      "configurations": 1,
+      "matchedConfigurations": 1
+    },
+    {
+      "familyCode": "EVVBOR",
+      "configurations": 2,
+      "matchedConfigurations": 2
+    },
+    {
+      "familyCode": "EVALI",
+      "configurations": 8,
+      "matchedConfigurations": 8
+    },
+    {
+      "familyCode": "EMV-PFS",
+      "configurations": 6,
+      "matchedConfigurations": 6
+    },
+    {
+      "familyCode": "EMV-S",
+      "configurations": 4,
+      "matchedConfigurations": 4
+    },
+    {
+      "familyCode": "EMV-J",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EMV-BVS",
+      "configurations": 3,
+      "matchedConfigurations": 3
+    },
+    {
+      "familyCode": "EMV-350",
+      "configurations": 1,
+      "matchedConfigurations": 0
+    }
+  ],
+  "unmappedFamilies": [
+    "EBCV",
+    "EGA50-3S",
+    "EBP",
+    "EBP-T",
+    "EDE1R",
+    "EDE2R",
+    "EDRCS",
+    "EDRCS-PQR",
+    "EDRCS THERM",
+    "EDRCS-PQR THERM",
+    "EDE-FB",
+    "EDU-F",
+    "EDU-SM",
+    "EAM-VRFN",
+    "EMV-350"
+  ]
+}

@@ -539,6 +539,77 @@ export function Editor2D() {
             </g>
           );
         })}
+        {project?.openings
+          .filter((o) => o.floorId === activeFloorId)
+          .map((opening) => {
+            const wall = walls.find((w) => w.id === opening.wallId);
+            if (!wall) return null;
+            const a = previewPoint(wall.start),
+              b = previewPoint(wall.end);
+            const length = distance(a, b);
+            if (length < 1e-7) return null;
+            const x = a.x + ((b.x - a.x) / length) * opening.offsetM;
+            const y = a.y + ((b.y - a.y) / length) * opening.offsetM;
+            const width = Math.min(
+              opening.widthM,
+              Math.max(0, length - opening.offsetM),
+            );
+            return (
+              <g
+                key={opening.id}
+                data-testid="opening-2d"
+                transform={`translate(${x} ${y}) rotate(${(Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI})`}
+                onPointerDown={(e) => {
+                  e.stopPropagation();
+                  select({ kind: "wall", id: wall.id });
+                }}
+              >
+                <title>
+                  {opening.type === "door" ? "Porta" : "Finestra"} ·{" "}
+                  {formatNumber(opening.widthM)} ×{" "}
+                  {formatNumber(opening.heightM)} m
+                </title>
+                <line
+                  x1={0}
+                  x2={width}
+                  y1={0}
+                  y2={0}
+                  stroke="var(--carta)"
+                  strokeWidth={wall.thickness + 0.012}
+                />
+                {opening.type === "window" ? (
+                  [-1, 1].map((sign) => (
+                    <line
+                      key={sign}
+                      x1={0}
+                      x2={width}
+                      y1={(sign * wall.thickness) / 4}
+                      y2={(sign * wall.thickness) / 4}
+                      stroke="#4599ac"
+                      strokeWidth={u * 1.2}
+                    />
+                  ))
+                ) : (
+                  <>
+                    <line
+                      x1={0}
+                      x2={0}
+                      y1={0}
+                      y2={width}
+                      stroke="#7b8a7d"
+                      strokeWidth={u * 1.2}
+                    />
+                    <path
+                      d={`M ${width} 0 A ${width} ${width} 0 0 1 0 ${width}`}
+                      fill="none"
+                      stroke="#7b8a7d"
+                      strokeWidth={u}
+                    />
+                  </>
+                )}
+              </g>
+            );
+          })}
         {project?.radiators
           .filter((d) => d.floorId === activeFloorId)
           .map((d) => {

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro",
+  "code": "EDFLB",
+  "slug": "edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:21.823548+00:00",
+      "filename": "EDFLB-e3db5d52.xlsx",
+      "bytes": 6865,
+      "sha256": "cdbb23e400fcb7180784c01ac027bf5d5ab7c2570efe586378ea739fa83071a4",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 18
+      }
+    }
+  ]
+}

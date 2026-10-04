@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata",
+  "code": "EDUB",
+  "slug": "edub-diffusori-a-ugello-orientabili-a-lunga-gittata",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edub-diffusori-a-ugello-orientabili-a-lunga-gittata.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:24.541306+00:00",
+      "filename": "EDUB-67f21c59.xlsx",
+      "bytes": 6837,
+      "sha256": "b6de3205962c33a39f568ef3533c0105d2fc87f5f0df1d3ffd0582aa124da8ec",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 22
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito",
+  "code": "EMV",
+  "slug": "emv-350-griglie-di-transito",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=emv-350-griglie-di-transito.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.861495+00:00",
+      "filename": "EMV-8e23e379.xlsx",
+      "bytes": 6809,
+      "sha256": "b82532a4af12509ae8749c5eefee0a81a29ad9ccf3a148acba999b6dc0d66ec3",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 12
+      }
+    }
+  ]
+}

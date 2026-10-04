@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello",
+  "code": "EDMF",
+  "slug": "edmf-s-diffusori-a-microugelli-orientabili-su-pannello",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edmf-s-diffusori-a-microugelli-orientabili-su-pannello.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:22.287550+00:00",
+      "filename": "EDMF-c12080bf.xlsx",
+      "bytes": 6992,
+      "sha256": "054ba5cf7593412e0d253cc24c44d972629dbee121c36ebaa0f7bd88922b5138",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 38
+      }
+    }
+  ]
+}

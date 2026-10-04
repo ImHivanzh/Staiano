@@ -1,0 +1,231 @@
+DIFFUSORI LINEARI
+A FERITOIE CON
+DEFLETTORI
+Serie EDFL - EDFL/B
+I diffusori delle serie EDFL sono diffusori lineari a feritoie con deflettori regolabili.
+Possono essere impiegati sia in mandata che in ripresa in ambienti anche molto estesi in termini di superficie, ma con altezze
+relativamente limitate. Essi vengono quindi impiegati per la climatizzazione di uffici, open space, banche, grandi hall di alberghi,
+centri direzionali, negozi, tribunali ecc.
+La possibilità di poterli giuntare in soluzioni praticamente libere nella dimensione longitudinale, offre grande flessibilità progettuale
+che, unita ad un design molto semplice e curato, rendono questo diffusore poco invasivo nelle architetture interne e facilmente
+abbinabile con motivi lineari di arredi, pareti e soffitti.
+Sono costruiti a mezzo di profili in alluminio modulari il cui particolare disegno è stato studiato appositamente per poter comporre
+soluzioni a feritoie multiple.
+All’interno dei profili sono ricavati gli alloggiamenti che consentono il montaggio dei deflettori regolabili in alluminio.
+La tipologia di diffusore a feritoie con deflettori regolabili, consente l’ottenimento di elevati rapporti di induzione (capacità dell’aria
+immessa di indurre il moto e la miscelazione dell’aria ambiente) con la possibilità di orientare il flusso d’aria direzionando i
+deflettori ovviamente in direzione normale alla dimensione longitudinale del diffusore.
+L’orientamento dei diffusori può avvenire anche ad installazione terminata cos∞ da poter ottimizzare il flusso d’aria in funzione
+delle modifiche degli ambienti trattati (variazione di arredi, disposizioni, posizioni di lavoro ecc.). Nelle applicazioni in ripresa i
+diffusori della serie EDFL vengono forniti senza deflettori, dato che non vi sono necessità di orientamento del lancio, oltre che per
+ridurre le perdite di carico e aumentare cos∞ l’efficienza del diffusore.
+I deflettori mobili sono realizzati in alluminio verniciato colore nero standard.
+Il telaio esterno è costituito da profili di alluminio estruso anodizzato lavorati in modo da ottenere un design altamente
+aerodinamico e esteticamente gradevole.
+Il diffusore può essere verniciato con polveri a base di resine epossidiche posate elettrostaticamente ed essiccate al forno.
+Questo tipo di verniciatura è resistente ad eventuali urti e abrasioni, e mantiene inalterate nel tempo le caratteristiche estetiche.
+L’installazione, le regolazioni e la manutenzione sono di semplice esecuzione. vvIl fissaggio al plenum è effettuato mediante viti
+laterali, con ponti di montaggio non in vista o con sistema di aggancio rapido Fast Block (brevettato).
+La regolazione della distribuzione del flusso d’aria avviene agendo manualmente sui deflettori, dotati di movimento a scatto che
+permette il mantenimento della posizione durante il funzionamento.
+CARATTERISTICHE TECNICHE
+I diffusori lineari delle serie EDFL sono caratterizzati dalla possibilità di orientare, privilegiando a seconda delle necessità, il lancio
+verticale o quello orizzontale, sempre con elevata induzione. L’applicazione prevalente è in mandata, ma può essere utilizzato
+anche in ripresa nelle apposite versioni senza alette deflettrici. L’installazione a soffitto prevede generalmente un’altezza variabile
+tra m. 2,5 e 3,1. Le caratteristiche di funzionamento sono la velocità efficace, la perdita di carico totale, il livello sonoro
+ed il lancio orizzontale e sono relative ad un diffusore di lunghezza 1 metro. Esse vengono rappresentate
+in forma tabellare per ciascuna serie di diffusori in funzione della portata d’aria. Il lancio orizzontale isotermo viene riferito alla
+velocità terminale di 0,20 m/s. Per lanci non isotermi vengono forniti dei coefficienti moltiplicativi di correzione.
+Il livello sonoro viene espresso come livello di potenza sonora ponderata A (LWA) emessa dal diffusore lineare per la lunghezza
+di 1 metro, senza alcuna correzione ambientale. Per lunghezze diverse del diffusore, consultare i fattori correttivi tabellati. Per
+calcolare il livello di pressione sonora (LpA) nell’ambiente, bisogna considerare la collocazione del diffusore, la distanza dal punto
+di ascolto e le caratteristiche acustiche dell’ambiente in cui il diffusore viene installato.
+VARIANTI
+EDFL 10 diffusori di ripresa (senza deflettori).
+EDFL 20 diffusori di mandata con deflettori neri.
+EDFL/B 20 diffusori di mandata verniciati bianco RAL9016 con deflettori bianchi.
+EDFL 30 diffusori di ripresa con serranda.
+EDFL 40 diffusori di mandata con deflettori neri e serranda a scorrimento.
+EDFL/B 40 diffusori di mandata verniciati bianco RAL9016 con deflettori bianchi e serranda a scorrimento.
+EDFL 50 diffusori di mandata con deflettori neri, equalizzatore e serranda a scorrimento.
+EDFL/B 50 diffusori di mandata verniciati bianco RAL9016 con deflettori bianchi, equalizzatore e serranda a scorrimento.
+PAG 1 - DIFFUSORI LINEARI A FERITOIE CON DEFLETTORI
+SERIE EDFL - EDFL/B - AGGIORNAMENTO 02/2024
+
+ACCESSORI
+Sono disponibili i componenti angolari per la giunzione di tratti di diffusori tra loro ortogonali.
+I diffusori della serie EDFL sono fornibili con plenum isolato o non isolato, equipaggiato con serranda di regolazione, ed attacco/
+attacchi laterale/i per condotto flessibile. Modifiche alle configurazioni standard sono eseguibili su richiesta.
+NOMENCLATURA CODICE
+EDFL EDFL/B diffusore lineare a feritoie
+Numero di feritorie
+10 senza alette deflettrici
+20 con alette deflettrici
+30 senza alette deflettrici con serranda
+40 con alette deflettrici e serranda
+50 con alette deflettrici, serranda ed equalizzatore
+Larghezza L (mm)
+EDFL 3 20 1250000
+COSTRUZIONE E DIMENSIONI
+numero
+L numero ponti di fissaggio
+feritoie A B C
+600 2
+800 2
+1000 2
+1 feritoia 46 70 41
+1200 2
+1500 2
+2000 2
+600 2
+800 2
+1000 2
+2 feritoie 86 110 81
+1200 2
+1500 2
+2000 2
+600 2
+800 2
+1000 2
+3 feritoie 126 150 121
+1200 2
+1500 2
+2000 3
+600 2
+800 2
+1000 2
+4 feritoie 166 190 161
+1200 2
+1500 2
+2000 3
+600 2
+800 2
+1000 2 Materiale: alluminio
+5 feritoie 1200 206 230 201 2 Finitura superficiale standard: anodizzato naturale
+Finiture superficiali a richiesta: verniciatura colore
+1500 2
+bianco RAL9016 o altri colori RAL a scelta
+2000 3
+Fissaggio: con viti laterali al plenum, con ponti di
+600 2 montaggio o con sistema di aggancio rapido
+800 2 Fast Block (brevettato)
+1000 2 Altezza d’installazione: da 2,5 a 3,1 m
+6 feritoie 246 270 241
+1200 2
+1500 2 tutte le dimensioni sono espresse in mm
+2000 3
+PAG 2 - DIFFUSORI LINEARI A FERITOIE CON DEFLETTORI
+SERIE EDFL - EDFL/B - AGGIORNAMENTO 02/2024
+
+DATI DI FUNZIONAMENTO
+sezione Dati riferiti a diffusori di lunghezza 1m, con una velocità
+terminale Vt=0.25 m/s e con un differenziale di temperatura
+modello efficace portata
+di 10/12 °C, montati a filo soffitto e con lancio laterale.
+m²
+Valori riferiti a diffusore senza serranda o
+EDFL 1 m³/h 70 105 140 175 210 245
+0,0097 con serranda a scorrimento aperta.
+feritoia lancio 1.8 2.7 3.6 4.5 5.4 6.3
+EDFL 2 m³/h 140 210 280 350 420 490 Valori riferiti al diffusore con deflettori in posizione di lavoro con
+0,0194 parzializzazione al 50% della superficie utile di passaggio aria.
+feritoie lancio 2.5 3.8 5 6.3 7.5 8.8
+EDFL 3 m³/h 210 315 420 525 630 735 La posizione dei deflettori riduce la sezione efficace.
+0,0291 Con deflettori completamente aperti o nel caso che il
+feritoie lancio 3 4.7 6 7.8 9.3 11
+diffusore sia utilizzato per la ripresa, le portate in m³/h
+EDFL 4 0,0388 m³/h 280 420 560 700 840 980 riportate in tabella possono essere aumentate.
+feritoie lancio 3.5 5.4 7 9 11 12.6
+E fe D r F it L o i e 5 0,0485 l m an ³ c / i h o 35 4 0 5 6 2 .1 4 69 8 8 1 8 0 7 . 3 2 1 1 0 1 4 .7 7 1 1 2 4 2 .2 2 Vk: velocità efficace (m/s) Pa: perdite di carico in Pascal
+L(m): lancio in metri
+EDFL 6 m³/h 420 628 838 1047 1257 1466 m³/h: portata aria
+0,0582
+feritoie lancio 4.5 6.8 9 11.4 13.4 15.8 dB(A): indice di rumorosità
+Vk m/s 2 3 4 5 6 7
+perdite di carico Pa 8 15 26 40 55 70
+rumorosità dB(A) <20 22 32 37 44 48
+ANGOLO DI COLLEGAMENTO
+Elemento estetico di raccordo tra i due linee di diffusori lineari
+con angolo di 90° e lunghezza 500 mm per lato. Non ha
+funzionalità di ventilazione.
+KIT DI CONTINUITÀ RETE EQUALIZZATRICE E SERRANDA A SCORRIMENTO
+Il kit di continuità è un accessorio necessario per poter
+realizzare linee in continuità di diffusori lineari di lunghezza
+superiore ai 2 metri di lunghezza. E’ costituito da due piastrine
+di giunzione che permettono l’allineamento ed il collegamento
+di due componenti della linea.
+PAG 3 - DIFFUSORI LINEARI A FERITOIE CON DEFLETTORI
+SERIE EDFL - EDFL/B - AGGIORNAMENTO 02/2024
+
+FATTORI CORRETTIVI
+Fattore addittivo correttivo del livello Fattore moltiplicativo correttivo del
+sonoro lancio non isotermo
+L [mm] K [dB(A)] ΔT[°C] K
+Tc
+500 -3 -10 0,85
+800 -1 0 1
+1000 0 10 1,2
+1500 2
+2000 3
+2500 4
+3000 5
+5000 7
+DIMENSIONI PLENUM E SISTEMA DI MONTAGGIO CON PONTI DI FISSAGGIO
+Dimensioni plenum
+Numero feritoie L
+L1 L2 Numero stacchi Ø d P H E
+600 645 615 1
+800 845 815 1
+1000 1045 1015 1
+1 feritoia 98 300 58 80
+1200 1245 1215 2
+1500 1545 1515 2
+2000 2045 2015 2
+600 645 615 1
+800 845 815 1
+1000 1045 1015 1
+2 feritoia 148 300 98 80
+1200 1245 1215 2
+1500 1545 1515 2
+2000 2045 2015 2
+600 645 615 1
+800 845 815 1
+1000 1045 1015 1
+3 feritoia 198 300 138 80
+1200 1245 1215 2
+1500 1545 1515 2
+2000 2045 2015 2
+600 645 615 1
+800 845 815 1
+1000 1045 1015 1
+4 feritoia 198 300 178 80
+1200 1245 1215 2 Materiale: acciaio zincato
+1500 1545 1515 2 Accessori: Isolamento, attacco laterale per condotto
+2000 2045 2015 2 flessibile
+Fissaggio: con ponti di montaggio.
+600 645 615 1
+800 845 815 1
+1000 1045 1015 1
+5 feritoia 247 350 258 80
+1200 1245 1215 2
+1500 1545 1515 2
+2000 2045 2015 2
+600 645 615 1
+800 845 815 1
+1000 1045 1015 1
+6 feritoia 247 350 258 80
+1200 1245 1215 2
+1500 1545 1515 2
+2000 2045 2015 2
+PAG 4 - DIFFUSORI LINEARI A FERITOIE CON DEFLETTORI
+SERIE EDFL - EDFL/B - AGGIORNAMENTO 02/2024
+
+VOCI DI CAPITOLATO
+Diffusore lineare a feritoie con due alette deflettrici longitudinali regolabili per ogni feritoia, in alluminio anodizzato o verniciato
+con polveri epossidiche
+a forno con colore standard bianco RAL 9016 o speciale su richiesta.
+Deflettori in alluminio estruso verniciato colore nero RAL 9005, o bianco RAL9016 su diffusore bianco (serie EDFL/B).
+Fornibile con o senza deflettori, completo di serranda a scorrimento, equalizzatore e giunzione angolare.
+INSTALLAZIONE
+PAG 5 - DIFFUSORI LINEARI A FERITOIE CON DEFLETTORI
+SERIE EDFL - EDFL/B - AGGIORNAMENTO 02/2024

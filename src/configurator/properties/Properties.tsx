@@ -12,7 +12,16 @@ import { bounds, distance } from "@/domain/geometry/primitives";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { RoomSystems } from "@/configurator/systems/RoomSystems";
 import { DeviceProperties } from "./DeviceProperties";
+import { WallOpenings } from "./WallOpenings";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
+import {
+  CursorClick,
+  GearSix,
+  Ruler,
+  Info,
+  PlusSquare,
+} from "@phosphor-icons/react";
+import "./inspector.css";
 
 export function Properties() {
   const { project: p, selection, commit, setError } = useProjectStore();
@@ -31,7 +40,15 @@ export function Properties() {
   return (
     <aside className="proprieta">
       <div className="titolo-pannello">
-        <span className="occhiello">Proprietà</span>
+        <span className="occhiello">
+          {r
+            ? "Stanza selezionata"
+            : w
+              ? "Parete selezionata"
+              : deviceId
+                ? "Apparecchio selezionato"
+                : "Il tuo progetto"}
+        </span>
         <h2>
           {selection.length > 1
             ? `${selection.length} elementi selezionati`
@@ -46,9 +63,27 @@ export function Properties() {
       </div>
       {deviceId && <DeviceProperties project={p} id={deviceId} />}
       {!r && !w && !deviceId && (
-        <div className="nota pannello-vuoto">
-          Seleziona una stanza per modificare nome, altezza e misure. Seleziona
-          una parete per modificare quote e spessore.
+        <div className="pannello-vuoto guida-inspector">
+          <CursorClick size={32} aria-hidden="true" />
+          <h3>Parti da una stanza</h3>
+          <p className="nota">
+            Clicca una stanza nella pianta o nel 3D. Qui trovi solo gli
+            strumenti per l’elemento selezionato.
+          </p>
+          <ol>
+            <li>
+              <strong>Seleziona</strong>
+              <span>Stanza, parete o apparecchio</span>
+            </li>
+            <li>
+              <strong>Configura</strong>
+              <span>Scegli l’impianto e vedi il risultato</span>
+            </li>
+            <li>
+              <strong>Esporta</strong>
+              <span>Documento finale con viste del progetto</span>
+            </li>
+          </ol>
         </div>
       )}
       {r && (
@@ -71,15 +106,9 @@ export function Properties() {
               </dd>
             </div>
             <div>
-              <dt>Volume</dt>
+              <dt>Altezza</dt>
               <dd>
-                {formatNumber(r.volumeM3)} <small>m³</small>
-              </dd>
-            </div>
-            <div>
-              <dt>Perimetro netto</dt>
-              <dd>
-                {formatNumber(r.perimeterM)} <small>m</small>
+                {formatNumber(r.heightM)} <small>m</small>
               </dd>
             </div>
             <div className="carico">
@@ -89,123 +118,170 @@ export function Properties() {
               </dd>
             </div>
           </dl>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const data = new FormData(e.currentTarget);
-              commit((p) =>
-                updateRoom(p, r.id, {
-                  name: String(data.get("name")),
-                  heightM: numberFromForm(data.get("height")),
-                }),
-              );
-            }}
-          >
-            <label className="campo">
-              <span>Nome stanza</span>
-              <input
-                name="name"
-                defaultValue={r.name}
-                maxLength={100}
-                aria-label="Nome stanza"
-              />
-            </label>
-            <label className="campo">
-              <span>Altezza stanza (m)</span>
-              <input
-                name="height"
-                type="number"
-                min="0.1"
-                max="30"
-                step="0.01"
-                defaultValue={r.heightM}
-                required
-                aria-label="Altezza stanza"
-              />
-            </label>
-            <button className="bottone chiara" type="submit">
-              Applica proprietà
-            </button>
-          </form>
-          {r.polygon.length === 4 && (
+          <p className="nota nota-fabbisogno">
+            Il fabbisogno serve a scegliere la potenza dell’impianto.
+          </p>
+          <p className="impianto-attuale">
+            <GearSix size={17} aria-hidden="true" />
+            {r.systemType === "none"
+              ? "Impianto da configurare"
+              : r.systemType === "radiator"
+                ? `${p.radiators.filter((d) => d.roomId === r.id).length} radiatori nella stanza`
+                : p.hvacSystems.find(
+                    (s) => s.type === r.systemType && s.roomIds.includes(r.id),
+                  )?.name ||
+                  (r.systemType === "ducted"
+                    ? "Impianto canalizzato"
+                    : "Climatizzazione split")}
+          </p>
+          <details className="azione-inspector">
+            <summary>
+              <Ruler size={20} aria-hidden="true" />
+              <span>
+                Modifica stanza<small>Misure e nome</small>
+              </span>
+            </summary>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
                 commit((p) =>
-                  resizeRectangularRoom(
-                    p,
-                    r.id,
-                    numberFromForm(data.get("width")),
-                    numberFromForm(data.get("length")),
-                  ),
+                  updateRoom(p, r.id, {
+                    name: String(data.get("name")),
+                    heightM: numberFromForm(data.get("height")),
+                  }),
                 );
               }}
             >
-              <h3>Quote nette stanza</h3>
-              <p className="nota">Modifica anche i muri collegati.</p>
               <label className="campo">
-                <span>Larghezza netta (m)</span>
+                <span>Nome stanza</span>
                 <input
-                  name="width"
-                  type="number"
-                  min="0.1"
-                  max="100"
-                  step="0.01"
-                  defaultValue={(
-                    bounds(r.polygon).maxX - bounds(r.polygon).minX
-                  ).toFixed(3)}
-                  required
+                  name="name"
+                  defaultValue={r.name}
+                  maxLength={100}
+                  aria-label="Nome stanza"
                 />
               </label>
               <label className="campo">
-                <span>Lunghezza netta (m)</span>
+                <span>Altezza stanza (m)</span>
                 <input
-                  name="length"
+                  name="height"
                   type="number"
                   min="0.1"
-                  max="100"
+                  max="30"
                   step="0.01"
-                  defaultValue={(
-                    bounds(r.polygon).maxY - bounds(r.polygon).minY
-                  ).toFixed(3)}
+                  defaultValue={r.heightM}
                   required
+                  aria-label="Altezza stanza"
                 />
               </label>
-              <button className="bottone" type="submit">
-                Aggiorna quote nette
+              <button className="bottone chiara" type="submit">
+                Applica proprietà
               </button>
             </form>
-          )}
-          {rooms.length === 2 && (
-            <button
-              className="bottone"
-              onClick={() => {
-                let height: number | undefined;
-                if (rooms[0].heightM !== rooms[1].heightM) {
-                  const entered = window.prompt(
-                    `Altezze diverse: ${rooms[0].heightM} m e ${rooms[1].heightM} m. Altezza del nuovo ambiente (m):`,
-                    String(rooms[0].heightM),
-                  );
-                  if (entered === null) return;
-                  height = numberFromForm(entered);
-                }
-                if (
-                  window.confirm(
-                    "Eliminare la parete condivisa e unire le due stanze? Operazione annullabile.",
-                  )
-                )
+            {r.polygon.length === 4 && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const data = new FormData(e.currentTarget);
                   commit((p) =>
-                    mergeRooms(p, rooms[0].id, rooms[1].id, height),
+                    resizeRectangularRoom(
+                      p,
+                      r.id,
+                      numberFromForm(data.get("width")),
+                      numberFromForm(data.get("length")),
+                    ),
                   );
-              }}
-            >
-              Unisci le due stanze
-            </button>
-          )}
-          <RoomSystems key={r.id} room={r} project={p} />
-          <details open>
-            <summary>Come è stato calcolato?</summary>
+                }}
+              >
+                <h3>Quote nette stanza</h3>
+                <p className="nota">Modifica anche i muri collegati.</p>
+                <label className="campo">
+                  <span>Larghezza netta (m)</span>
+                  <input
+                    name="width"
+                    type="number"
+                    min="0.1"
+                    max="100"
+                    step="0.01"
+                    defaultValue={(
+                      bounds(r.polygon).maxX - bounds(r.polygon).minX
+                    ).toFixed(3)}
+                    required
+                  />
+                </label>
+                <label className="campo">
+                  <span>Lunghezza netta (m)</span>
+                  <input
+                    name="length"
+                    type="number"
+                    min="0.1"
+                    max="100"
+                    step="0.01"
+                    defaultValue={(
+                      bounds(r.polygon).maxY - bounds(r.polygon).minY
+                    ).toFixed(3)}
+                    required
+                  />
+                </label>
+                <button className="bottone" type="submit">
+                  Aggiorna quote nette
+                </button>
+              </form>
+            )}
+            {rooms.length === 2 && (
+              <button
+                className="bottone"
+                onClick={() => {
+                  let height: number | undefined;
+                  if (rooms[0].heightM !== rooms[1].heightM) {
+                    const entered = window.prompt(
+                      `Altezze diverse: ${rooms[0].heightM} m e ${rooms[1].heightM} m. Altezza del nuovo ambiente (m):`,
+                      String(rooms[0].heightM),
+                    );
+                    if (entered === null) return;
+                    height = numberFromForm(entered);
+                  }
+                  if (
+                    window.confirm(
+                      "Eliminare la parete condivisa e unire le due stanze? Operazione annullabile.",
+                    )
+                  )
+                    commit((p) =>
+                      mergeRooms(p, rooms[0].id, rooms[1].id, height),
+                    );
+                }}
+              >
+                Unisci le due stanze
+              </button>
+            )}
+          </details>
+          <details className="azione-inspector">
+            <summary>
+              <GearSix size={20} aria-hidden="true" />
+              <span>
+                Configura impianto<small>Radiatori, canalizzato o split</small>
+              </span>
+            </summary>
+            <RoomSystems key={r.id} room={r} project={p} />
+          </details>
+          <details className="azione-inspector dettagli-inspector">
+            <summary>
+              <Info size={19} aria-hidden="true" />
+              <span>
+                Dettagli tecnici<small>Volume, perimetro e calcolo</small>
+              </span>
+            </summary>
+            <dl className="dati-secondari">
+              <div>
+                <dt>Volume netto</dt>
+                <dd>{formatNumber(r.volumeM3)} m³</dd>
+              </div>
+              <div>
+                <dt>Perimetro netto</dt>
+                <dd>{formatNumber(r.perimeterM)} m</dd>
+              </div>
+            </dl>
             <p className="formula">
               {formatNumber(r.netAreaM2)} m² × {formatNumber(r.heightM)} m<br />
               = {formatNumber(r.volumeM3)} m³
@@ -289,59 +365,69 @@ export function Properties() {
             </button>
           </form>
           {walls.length === 1 && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = new FormData(e.currentTarget);
-                commit((p) =>
-                  addAdjacentRoom(
-                    p,
-                    w.id,
-                    numberFromForm(data.get("depth")),
-                    String(data.get("name")),
-                    numberFromForm(data.get("height")),
-                  ),
-                );
-              }}
-            >
-              <h3>Aggiungi ambiente adiacente</h3>
-              <p className="nota">Usa questa parete come lato condiviso.</p>
-              <label className="campo">
-                <span>Nome nuovo ambiente</span>
-                <input
-                  name="name"
-                  defaultValue="Nuovo ambiente"
-                  maxLength={100}
-                />
-              </label>
-              <label className="campo">
-                <span>Profondità netta (m)</span>
-                <input
-                  type="number"
-                  name="depth"
-                  min="0.1"
-                  max="30"
-                  step="0.01"
-                  defaultValue="3"
-                  required
-                />
-              </label>
-              <label className="campo">
-                <span>Altezza (m)</span>
-                <input
-                  type="number"
-                  name="height"
-                  min="0.1"
-                  max="30"
-                  step="0.01"
-                  defaultValue={p.projectSettings.defaultHeightM}
-                  required
-                />
-              </label>
-              <button className="bottone" type="submit">
-                Crea ambiente adiacente
-              </button>
-            </form>
+            <WallOpenings key={w.id} project={p} wall={w} />
+          )}
+          {walls.length === 1 && (
+            <details className="azione-inspector">
+              <summary>
+                <PlusSquare size={20} aria-hidden="true" />
+                <span>
+                  Aggiungi stanza adiacente
+                  <small>Usa questa parete come lato condiviso</small>
+                </span>
+              </summary>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const data = new FormData(e.currentTarget);
+                  commit((p) =>
+                    addAdjacentRoom(
+                      p,
+                      w.id,
+                      numberFromForm(data.get("depth")),
+                      String(data.get("name")),
+                      numberFromForm(data.get("height")),
+                    ),
+                  );
+                }}
+              >
+                <label className="campo">
+                  <span>Nome nuovo ambiente</span>
+                  <input
+                    name="name"
+                    defaultValue="Nuovo ambiente"
+                    maxLength={100}
+                  />
+                </label>
+                <label className="campo">
+                  <span>Profondità netta (m)</span>
+                  <input
+                    type="number"
+                    name="depth"
+                    min="0.1"
+                    max="30"
+                    step="0.01"
+                    defaultValue="3"
+                    required
+                  />
+                </label>
+                <label className="campo">
+                  <span>Altezza (m)</span>
+                  <input
+                    type="number"
+                    name="height"
+                    min="0.1"
+                    max="30"
+                    step="0.01"
+                    defaultValue={p.projectSettings.defaultHeightM}
+                    required
+                  />
+                </label>
+                <button className="bottone" type="submit">
+                  Crea ambiente adiacente
+                </button>
+              </form>
+            </details>
           )}
           <button
             className="bottone tenue"

@@ -1,0 +1,163 @@
+DIFFUSORI MULTI-UGELLO
+A GEOMETRIA QUADRATA
+O CIRCOLARE
+Serie EDQM
+I diffusori tipo EDQM sono diffusori con micro-ugelli elevati rapporti di induzione e rappresentano una eccellente
+asimmetrici ad alta induzione su pannello quadro. soluzione tecnologica per due caratteristiche generalmente
+Vengono utilizzati in mandata sia in condizionamento antagoniste. Il diffusore è costituito da un telaio di acciaio
+che in riscaldamento per installazioni a soffitto. I diffusori verniciato con polvere a base di resine epossidiche posate
+serie EDQM hanno micro-ugelli asimmetrici orientabili elettrostaticamente ed essiccate al forno. Questo tipo di
+singolarmente su 360° di rotazione e consentono di avere verniciatura risulta resistente ad eventuali urti o abrasioni e
+un’elevata velocità di uscita con livelli sonori contenuti. mantiene inalterate nel tempo le caratteristiche estetiche. Sul
+Sono quindi idonei per tutte quelle applicazioni che pannello trovano alloggiamento i micro-ugelli in materiale
+richiedono lanci orizzontali relativamente consistenti polimerico orientabili singolarmente. L’installazione, le
+con la possibilità di orientare il flusso d’aria. La presenza regolazioni e la manutenzione sono di semplice esecuzione.
+dei micro-ugelli garantisce un’elevata induzione dell’aria Il fissaggio al plenum è effettuato mediante viti laterali o vite
+ambiente ad opera dell’aria primaria immessa. In sintesi centrale.
+questi diffusori offrono la possibilità di lanci consistenti con
+VARIANTI
+I diffusori tipo EDQM dispongono di due diverse versioni:
+•EDQMC diffusore quadro con micro-ugelli asimmetrici posti Su richiesta possono essere forniti diffusori con pannello
+su contorni circolari. rettangolare o con pannello circolare con verniciature RAL
+•EDQMQ diffusore quadro con micro-ugelli asimmetrici posti nei colori disponibili.
+su contorni quadri.
+ACCESSORI
+I diffusori tipo EDQM che lo prevedono sono fornibili con - EPZ-EDE-EQ plenum zincato con serranda, ponte di
+plenum isolato o non isolato, equipaggiato con serranda fissaggio ed equalizzatore;
+di regolazione, equalizzatore, ponte di montaggio per - EPI-EDE plenum isolato con serranda e ponte di fissaggio;
+l’installazione a mezzo vite centrale ed attacco per condotto - EPI-EDE-EQ plenum isolato con serranda, ponte di fissaggio
+flessibile laterale o superiore. ed equalizzatore;
+- EPZ-EDE plenum zincato con serranda e ponte di fissaggio; - vite e tappino.
+VOCI DI CAPITOLATO
+Diffusore a micro-ugelli asimmetrici ad alta induzione su micro-ugelli deflettori sono realizzati in ABS di colore bianco.
+pannello quadro in acciaio verniciato con polveri epossidiche Possono essere orientati su 360° e disposti contorni circolari
+a forno colore standard bianco RAL 9016 o speciale su (EDQMC) o su contorni quadri (EDQMQ) a seconda del
+richiesta. Il pannello è provvisto di pieghe perimetrali con modello scelto.
+fori per il fissaggio al plenum a mezzo viti autoforanti e di
+foro centrale per il fissaggio a mezzo ponte di montaggio. Le
+dimensioni sono comprese tra 400x400 mm e 625x625 mm. Accessori: plenum in acciaio zincato, isolato o non isolato
+E’ possibile realizzare la disposizione degli ugelli deflettori
+delle misure 400x400 e 500x500 su pannello 600x600. I
+PAG 1 - DIFFUSORI MULTI-UGELLO A GEOMETRIA QUADRATA O CIRCOLARE
+SERIE EDQM - AGGIORNAMENTO 01/2021
+
+- EDQMC diffusore quadro su pannello con microugelli asimmetrici
+su contorni circolari
+- EDQMQ diffusore quadro su pannello con microugelli asimmetrici
+su contorni quadri
+Grandezza: 400 - 500 - 600
+EDQMQ 400
+COSTRUZIONE DIFFUSORE
+- Materiale: pannello in acciaio, micro-ugelli asimmetrici in ABS
+- Finitura superficiale standard: telaio verniciato colore bianco RAL 9016, micro-ugelli colore bianco RAL 9016
+- Finiture superficiali a richiesta: verniciatura del pannello nei colori RAL disponibili.
+- Fissaggio: con viti laterali o con vite centrale sul ponte di montaggio del plenum.
+- Altezza d’installazione: da 2,5 a 4,0 m
+EDQMQ EDQMC
+PAG 2 - DIFFUSORI MULTI-UGELLO A GEOMETRIA QUADRATA O CIRCOLARE
+SERIE EDQM - AGGIORNAMENTO 01/2021
+
+DIMENSIONI EDQM
+Grandezza L H P
+400 395 395 200
+500 495 495 300
+600 595 595 400
+tutte le dimensioni sono espresse in mm
+DATI DI FUNZIONAMENTO EDQMQ
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio in metri riferito al diffusore montato con Plenum + equalizzatore e serranda aperta, velocità terminale 0,25 m/s
+dB(A): indice di rumorosità
+sezione efficace
+modello Vk (m/s) 3 4 5 6 8 numero ugelli
+m²
+m³/h 90 120 150 180 240
+400 0,0083 36
+L(m) 1,1 1,5 1,9 2,3 3
+m³/h 160 210 264 317 420
+500 0,0148 64
+L(m) 1,6 2,1 2,7 3,3 4
+m³/h 248 330 413 495 660
+600 0,0229 100
+L(m) 2,1 2,7 3,4 4,1 5
+indice di rumorosità dB(A) 20 25 30 35 40 -
+perdita di carico Pa 15 22 30 42 70 -
+DATI DI FUNZIONAMENTO EDQMC
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio in metri riferito al diffusore montato con Plenum + equalizzatore e serranda aperta, velocità terminale 0,25 m/s
+dB(A): indice di rumorosità
+sezione efficace
+modello Vk (m/s) 3 4 5 6 8 numero ugelli
+m²
+m³/h 45 60 75 90 120
+400 0,0041 18
+L(m) 0,9 1,2 1,5 1,8 2,4
+m³/h 90 120 150 180 240
+500 0,0083 36
+L(m) 1,2 1,6 2 2,4 3,2
+m³/h 150 200 250 300 400
+600 0,0138 60
+L(m) 1,6 2,1 2,6 3,1 4,1
+indice di rumorosità dB(A) 20 25 30 35 40 -
+perdita di carico Pa 15 22 30 42 70 -
+PAG 3 - DIFFUSORI MULTI-UGELLO A GEOMETRIA QUADRATA O CIRCOLARE
+SERIE EDQM - AGGIORNAMENTO 01/2021
+
+FATTORI CORRETTIVI
+Fattore moltiplicativo correttivo del lancio orizzontale Fattore moltiplicativo correttivo del
+in funzione della velocità terminale lancio orizzontale non isotermo
+Vt[m/s] Kv ΔT[°C] K
+Tc
+0,15 1,67 -10 0,85
+0,20 1,25 0 1
+0,25 1,00 10 1,2
+0,30 0,83
+0,35 0,71
+0,40 0,63
+0,45 0,56
+0,50 0,50
+PLENUM EDQM
+COSTRUZIONE PLENUM
+- Materiale: Acciaio zincato.
+- Varianti disponibili: 1. plenum zincato con serranda e ponte di fissaggio;
+2. plenum zincato con serranda, ponte di fissaggio ed equalizzatore;
+3. plenum zincato ISOLATO con serranda e ponte di fissaggio;
+4. plenum zincato ISOLATO con serranda, ponte di fissaggio ed equalizzatore.
+Dimensioni
+modello plenum Tipologia di diffusore compatibile Ø d P1 P2 〼 C E
+esterne L1 x H1
+400 EDQMQ 400 EDQMC 400 392x392 198 200 300 360 50
+500 EDQMQ 500 EDQMC 500 492x492 198 200 300 460 50
+600 EDQMQ 600 EDQMC 600 592x592 248 200 350 560 50
+PAG 4 - DIFFUSORI MULTI-UGELLO A GEOMETRIA QUADRATA O CIRCOLARE
+SERIE EDQM - AGGIORNAMENTO 01/2021
+
+MONTAGGIO CON PLENUM SU CONTROSOFFITTO IN CARTONGESSO
+- Appendere il plenum al soffitto servendosi di apposite staffe o catene fissate sul plenum il cui bordo esterno può
+essere forato;
+- inserire il condotto flessibile sul canotto di raccordo fissandolo con apposita fascetta stringitubo;
+- montare il diffusore o servendosi della vite centrale, avvitandola sul ponte di fissaggio del plenum o di nr. 4 viti
+laterali autoforanti.
+MONTAGGIO IN APPOGGIO AL CONTROSOFFITTO A QUADROTTI
+- Appendere il plenum al soffitto servendosi di apposite staffe o catene fissate sul plenum il cui bordo esterno può
+essere forato;
+- inserire il condotto flessibile sul canotto di raccordo fissandolo con apposita fascetta stringitubo;
+- montare il diffusore o servendosi della vite centrale avvitandola sul ponte di fissaggio del plenum o attraverso le
+nr. 4 viti laterali autoforanti;
+- appoggiare il diffusore già prefissato sul plenum sull’apposito spazio quadrato del controsoffitto.
+CARATTERISTICHE TECNICHE
+I diffusori a micro-ugelli asimmetrici orientabili serie EDQM sono caratterizzati dalla possibilità di avere lanci profondi e orientabili
+con elevata induzione. L’applicazione prevalente è in mandata a soffitto. L’installazione a soffitto prevede generalmente un’altez-
+za variabile tra i 2,5 e i 4,0 m.
+Le caratteristiche di funzionamento sono la velocità efficace, la perdita di carico totale, il livello sonoro ed il lancio orizzontale.
+Esse vengono rappresentate in forma tabellare per ciascuna serie di diffusori in funzione della portata d’aria. Il lancio orizzontale
+isotermo viene riferito alla velocità terminale di 0,25 m/s. Per lanci non isotermi o con velocità terminali diverse vengono forniti dei
+coefficienti moltiplicativi di correzione. Il livello sonoro viene espresso come livello di potenza sonora ponderata A (LWA) emessa
+dal diffusore senza alcuna correzione ambientale. Per calcolare il livello di pressione sonora (LpA) nell’ambiente bisogna consi-
+derare la collocazione del diffusore, la distanza dal punto di ascolto e le caratteristiche acustiche dell’ambiente in cui il diffusore
+viene installato.
+PAG 5 - DIFFUSORI MULTI-UGELLO A GEOMETRIA QUADRATA O CIRCOLARE
+SERIE EDQM - AGGIORNAMENTO 01/2021

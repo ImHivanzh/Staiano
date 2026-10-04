@@ -1,0 +1,64 @@
+Garda
+Technical sheet
+
+Description Straight
+Material Carbon steel
+Pipes - Ø 25x1,5
+Collectors - Ø 35x1,5
+Connections 4x1/2’ (air bleeding valve connection, included)
+Wall fixings 4
+Max operating pressure 10 bar
+Max operating temperature 90 °C
+Paint Epoxypolyester powder
+Packaging Nylon bag, carton box, carton and styrofoam protections
+Standard equipment 1 kit wall fixing brackets - 1 air bleeding valve - 1 blind plug
+|
+ADRAG
+1708
+1132
+700
+PIPES: 17 PIPES: 25 PIPES: 35
+Connection
+Min. Max
+REVERSIBLE
+62 72
+ONLY 50 MM
+CONNECTIONS
+Wall distance Suggested installations
+Min. Max
+80 90
+In
+Out
+
+|
+ADRAG
+White RAL9016 - straight
+Code Height Width Pipe centre Weight Water T50 °C T30 °C T42,5 °C T60 °C Exponent n
+mm mm mm kg lt Watt Watt Watt Watt
+388577 700 500 50 9,6 3,8 366 195 300 459 1,23184
+388578 700 600 50 11,4 4,5 440 233 360 553 1,24504
+388579 1132 500 50 14,3 5,9 555 293 453 698 1,25461
+388580 1132 600 50 16,6 7 640 334 521 808 1,27193
+388581 1708 500 50 20,3 8,4 805 422 656 1014 1,26204
+388582 1708 600 50 23,7 9,9 899 460 727 1142 1,31036
+3202-11-22-
+6 .veR
+Matt Black RAL9005 - straight
+Code Height Width Pipe centre Weight Water T50 °C T30 °C T42,5 °C T60 °C Exponent n
+mm mm mm kg lt Watt Watt Watt Watt
+390413 1132 600 50 16,6 7 640 334 521 808 1,27193
+390414 1708 600 50 23,7 9,9 899 460 727 1142 1,31036
+Our radiators are tested in qualified laboratories according to EN-442 regulations which determine the ouput value by fixing the Δт at
+50 °C. Δт is the difference between the average temperature of the water inside the radiator and the room temperature. The formula is:
+(((T +T )/2)-T ).
+1 2 3
+Ex.: ((75+65/2)-20)= 50 °C. For output values with a different Δт use the following formula: ɸ = ɸ *(Δт /50)n.
+x Δт50 x
+See calculation example of the output at Δт 60 °C of article 388577: 366*(60/50)1,23184= 459.
+Output values in kcal/h = watt x 0,85984.
+Output values in btu = watt x 3,412.
+KEY
+T = supply temperature - T = return temperature - T = room temperature.
+1 2 3
+ɸ = output to be calculated - ɸ = output at Δт 50 °C (table) - Δт = Δт value to be calculated - n = exponent ‘‘n’’ (table).
+x Δт50 x

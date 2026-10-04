@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa",
+  "code": "EDLSV",
+  "slug": "edlsv-edlsvb-diffusori-lineari-a-scomparsa",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edlsv-edlsvb-diffusori-lineari-a-scomparsa.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.579288+00:00",
+      "filename": "EDLSV-f8af1f05.xlsx",
+      "bytes": 7077,
+      "sha256": "a8e8283ff5152010f83298a30c9f0a90ba9b2efde15e123e4befba1ae8208435",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 27
+      }
+    }
+  ]
+}

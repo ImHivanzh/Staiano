@@ -1,0 +1,664 @@
+{
+  "schemaVersion": 2,
+  "id": "5d14b896-6745-47bd-a9c5-1f68572659ec",
+  "name": "Casa Staiano — terminali EBLF",
+  "createdAt": "2026-10-03T21:07:03.376Z",
+  "updatedAt": "2026-10-03T21:07:03.376Z",
+  "floors": [
+    {
+      "id": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "name": "Piano terra",
+      "elevationM": 0,
+      "scaleVerified": true,
+      "background": null
+    }
+  ],
+  "walls": [
+    {
+      "id": "105dfb18-10ec-4eb4-9568-dd91ff029f8f",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 0,
+        "y": 0
+      },
+      "end": {
+        "x": 4.6,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "43d52ced-a44a-42c4-a748-28d1928a24d3",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 4.6,
+        "y": 0
+      },
+      "end": {
+        "x": 9.2,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "3497d33e-365c-41d2-9515-5e0e921f3875",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 9.2,
+        "y": 0
+      },
+      "end": {
+        "x": 9.2,
+        "y": 4.2
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "260e90f6-cf92-4dae-a489-6fa6075c0d8c",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 9.2,
+        "y": 4.2
+      },
+      "end": {
+        "x": 9.2,
+        "y": 8.4
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "c743dfe5-df64-4984-aad0-a15149a607b6",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 9.2,
+        "y": 8.4
+      },
+      "end": {
+        "x": 4.6,
+        "y": 8.4
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "2016aa5b-67b6-44e6-b374-1262dc14e8f4",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 4.6,
+        "y": 8.4
+      },
+      "end": {
+        "x": 0,
+        "y": 8.4
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "6469d660-09bd-4cc8-a0e4-204b36b97528",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 0,
+        "y": 8.4
+      },
+      "end": {
+        "x": 0,
+        "y": 4.2
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "0cedcfec-a1d1-4738-8373-223aeb607ed6",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 0,
+        "y": 4.2
+      },
+      "end": {
+        "x": 0,
+        "y": 0
+      },
+      "thickness": 0.3,
+      "type": "ESTERNO",
+      "height": null
+    },
+    {
+      "id": "afc366fb-327d-4139-bae6-ba1970f6dc8b",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 4.6,
+        "y": 0
+      },
+      "end": {
+        "x": 4.6,
+        "y": 4.2
+      },
+      "thickness": 0.12,
+      "type": "INTERNO",
+      "height": null
+    },
+    {
+      "id": "1cb0c454-9aef-44de-8114-9b492e266345",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 4.6,
+        "y": 4.2
+      },
+      "end": {
+        "x": 4.6,
+        "y": 8.4
+      },
+      "thickness": 0.12,
+      "type": "INTERNO",
+      "height": null
+    },
+    {
+      "id": "b6d3cf7b-4cd3-4690-b398-a37b864139f4",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 0,
+        "y": 4.2
+      },
+      "end": {
+        "x": 4.6,
+        "y": 4.2
+      },
+      "thickness": 0.12,
+      "type": "INTERNO",
+      "height": null
+    },
+    {
+      "id": "d78d08eb-ac2d-440c-9111-e4b6d354d003",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "start": {
+        "x": 4.6,
+        "y": 4.2
+      },
+      "end": {
+        "x": 9.2,
+        "y": 4.2
+      },
+      "thickness": 0.12,
+      "type": "INTERNO",
+      "height": null
+    }
+  ],
+  "rooms": [
+    {
+      "id": "2c571265-eddb-417e-94cd-6e4fc513a230",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "name": "Soggiorno",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 4.54,
+          "y": 0.15
+        },
+        {
+          "x": 4.54,
+          "y": 4.140000000000001
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 4.140000000000001
+        }
+      ],
+      "wallIds": [
+        "105dfb18-10ec-4eb4-9568-dd91ff029f8f",
+        "afc366fb-327d-4139-bae6-ba1970f6dc8b",
+        "b6d3cf7b-4cd3-4690-b398-a37b864139f4",
+        "0cedcfec-a1d1-4738-8373-223aeb607ed6"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 17.5161,
+      "perimeterM": 16.759999999999998,
+      "centroid": {
+        "x": 2.345,
+        "y": 2.1450000000000005
+      },
+      "heightM": 2.7,
+      "volumeM3": 47.293470000000006,
+      "designLoadW": 1655.2714500000002,
+      "systemType": "radiator",
+      "supplyPoints": 2,
+      "returnPoints": 1
+    },
+    {
+      "id": "5d20c7a6-fdc6-434f-818e-4cdb1efd0574",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "name": "Camera",
+      "polygon": [
+        {
+          "x": 4.659999999999999,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 9.049999999999999,
+          "y": 0.15
+        },
+        {
+          "x": 9.049999999999999,
+          "y": 4.140000000000001
+        },
+        {
+          "x": 4.659999999999999,
+          "y": 4.140000000000001
+        }
+      ],
+      "wallIds": [
+        "43d52ced-a44a-42c4-a748-28d1928a24d3",
+        "3497d33e-365c-41d2-9515-5e0e921f3875",
+        "d78d08eb-ac2d-440c-9111-e4b6d354d003",
+        "afc366fb-327d-4139-bae6-ba1970f6dc8b"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 17.516099999999994,
+      "perimeterM": 16.759999999999998,
+      "centroid": {
+        "x": 6.8549999999999995,
+        "y": 2.145000000000001
+      },
+      "heightM": 2.7,
+      "volumeM3": 47.293469999999985,
+      "designLoadW": 1655.2714499999995,
+      "systemType": "split",
+      "supplyPoints": 2,
+      "returnPoints": 1
+    },
+    {
+      "id": "bb8084e1-762a-41ad-961d-5bf0344cd550",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "name": "Cucina",
+      "polygon": [
+        {
+          "x": 9.049999999999999,
+          "y": 4.26
+        },
+        {
+          "x": 9.049999999999999,
+          "y": 8.25
+        },
+        {
+          "x": 4.659999999999999,
+          "y": 8.25
+        },
+        {
+          "x": 4.659999999999999,
+          "y": 4.26
+        }
+      ],
+      "wallIds": [
+        "260e90f6-cf92-4dae-a489-6fa6075c0d8c",
+        "c743dfe5-df64-4984-aad0-a15149a607b6",
+        "1cb0c454-9aef-44de-8114-9b492e266345",
+        "d78d08eb-ac2d-440c-9111-e4b6d354d003"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 17.5161,
+      "perimeterM": 16.759999999999998,
+      "centroid": {
+        "x": 6.855,
+        "y": 6.255000000000002
+      },
+      "heightM": 2.7,
+      "volumeM3": 47.293470000000006,
+      "designLoadW": 1655.2714500000002,
+      "systemType": "ducted",
+      "supplyPoints": 2,
+      "returnPoints": 1
+    },
+    {
+      "id": "c2732cf6-7a10-4f97-89e9-eafbca55ba6e",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "name": "Studio",
+      "polygon": [
+        {
+          "x": 4.54,
+          "y": 8.25
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 8.25
+        },
+        {
+          "x": 0.15,
+          "y": 4.26
+        },
+        {
+          "x": 4.54,
+          "y": 4.26
+        }
+      ],
+      "wallIds": [
+        "2016aa5b-67b6-44e6-b374-1262dc14e8f4",
+        "6469d660-09bd-4cc8-a0e4-204b36b97528",
+        "b6d3cf7b-4cd3-4690-b398-a37b864139f4",
+        "1cb0c454-9aef-44de-8114-9b492e266345"
+      ],
+      "geometryStatus": "closed",
+      "netAreaM2": 17.516099999999994,
+      "perimeterM": 16.759999999999998,
+      "centroid": {
+        "x": 2.3450000000000006,
+        "y": 6.255000000000002
+      },
+      "heightM": 2.7,
+      "volumeM3": 47.293469999999985,
+      "designLoadW": 1655.2714499999995,
+      "systemType": "radiator",
+      "supplyPoints": 2,
+      "returnPoints": 1
+    }
+  ],
+  "openings": [
+    {
+      "id": "48788de5-4066-4d1c-8f8c-3e081a841392",
+      "wallId": "105dfb18-10ec-4eb4-9568-dd91ff029f8f",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.5999999999999999,
+      "widthM": 1.4,
+      "heightM": 1.25,
+      "type": "window",
+      "sillHeightM": 0.95
+    },
+    {
+      "id": "3a2fb0c5-ef93-471e-8955-c3e4753e7f6d",
+      "wallId": "43d52ced-a44a-42c4-a748-28d1928a24d3",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.5999999999999999,
+      "widthM": 1.4,
+      "heightM": 1.25,
+      "type": "window",
+      "sillHeightM": 0.95
+    },
+    {
+      "id": "ff1a05d7-67f1-4b00-b692-65f808464300",
+      "wallId": "c743dfe5-df64-4984-aad0-a15149a607b6",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.5999999999999999,
+      "widthM": 1.4,
+      "heightM": 1.25,
+      "type": "window",
+      "sillHeightM": 0.95
+    },
+    {
+      "id": "4eb8d2e2-07a5-4a85-8830-1b32f96722d9",
+      "wallId": "2016aa5b-67b6-44e6-b374-1262dc14e8f4",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.5999999999999999,
+      "widthM": 1.4,
+      "heightM": 1.25,
+      "type": "window",
+      "sillHeightM": 0.95
+    },
+    {
+      "id": "3831dad9-993c-4333-8ea7-0fe890634f5b",
+      "wallId": "afc366fb-327d-4139-bae6-ba1970f6dc8b",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.6500000000000001,
+      "widthM": 0.9,
+      "heightM": 2.1,
+      "type": "door",
+      "sillHeightM": 0
+    },
+    {
+      "id": "6a8452e5-d90d-4ef6-826f-cbc2f3652aee",
+      "wallId": "1cb0c454-9aef-44de-8114-9b492e266345",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.6500000000000001,
+      "widthM": 0.9,
+      "heightM": 2.1,
+      "type": "door",
+      "sillHeightM": 0
+    },
+    {
+      "id": "cc1ad9ba-6ecc-47f3-bcc3-fd72a757331e",
+      "wallId": "b6d3cf7b-4cd3-4690-b398-a37b864139f4",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.8499999999999999,
+      "widthM": 0.9,
+      "heightM": 2.1,
+      "type": "door",
+      "sillHeightM": 0
+    },
+    {
+      "id": "32f896bc-1602-44a0-810f-bfbbfeb84e88",
+      "wallId": "d78d08eb-ac2d-440c-9111-e4b6d354d003",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "offsetM": 1.8499999999999999,
+      "widthM": 0.9,
+      "heightM": 2.1,
+      "type": "door",
+      "sillHeightM": 0
+    }
+  ],
+  "hvacSystems": [
+    {
+      "id": "117330af-8684-4947-9946-7d0da6d746ee",
+      "type": "split",
+      "manufacturer": "Daikin",
+      "productId": "daikin-mono-20",
+      "roomIds": [
+        "5d20c7a6-fdc6-434f-818e-4cdb1efd0574"
+      ],
+      "capacityW": 2000,
+      "airflowM3h": null,
+      "catalogVersion": "split-53035a43d1e114cd",
+      "indoorUnits": [
+        {
+          "id": "92bb4855-ddc3-47b7-b80b-b5e2aaa4a7c2",
+          "roomId": "5d20c7a6-fdc6-434f-818e-4cdb1efd0574",
+          "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+          "wallId": "43d52ced-a44a-42c4-a748-28d1928a24d3",
+          "position": {
+            "x": 6.854999999999999,
+            "y": 0.29600000000000015
+          },
+          "rotation": -8.219190956792162e-17,
+          "widthMm": 804,
+          "heightMm": 298,
+          "depthMm": 252,
+          "productId": "daikin-ftxm20a",
+          "catalogVersion": "split-53035a43d1e114cd"
+        }
+      ],
+      "compatibilityStatus": "verified"
+    },
+    {
+      "id": "47571da8-1874-4cdd-b3cf-76bb36fe6c5b",
+      "type": "ducted",
+      "manufacturer": "Mitsubishi Electric",
+      "productId": "mitsubishi-pead-m35ja2-puz-zm35vka2",
+      "roomIds": [
+        "bb8084e1-762a-41ad-961d-5bf0344cd550"
+      ],
+      "capacityW": 3600,
+      "airflowM3h": 720,
+      "catalogVersion": "2026-10-03-hvac-9505613a27bb",
+      "indoorUnits": [],
+      "compatibilityStatus": "verified"
+    }
+  ],
+  "radiators": [
+    {
+      "id": "e2c17537-df24-465a-aed3-68dd4e0bf279",
+      "roomId": "2c571265-eddb-417e-94cd-6e4fc513a230",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "wallId": "0cedcfec-a1d1-4738-8373-223aeb607ed6",
+      "position": {
+        "x": 0.2235000000000002,
+        "y": 2.1450000000000005
+      },
+      "rotation": -1.5707963267948968,
+      "widthMm": 1220,
+      "heightMm": 586,
+      "depthMm": 107,
+      "productId": "cordivari-ardesia-3-586",
+      "catalogVersion": "2026-10-03-cordivari-900f5cc1068a",
+      "elements": 26,
+      "outputW": 1658.8,
+      "deltaTK": 50,
+      "family": "Ardesia 3 colonne",
+      "manufacturer": "Cordivari"
+    },
+    {
+      "id": "001818c4-9795-4d43-b8c5-1d7500b02c3f",
+      "roomId": "c2732cf6-7a10-4f97-89e9-eafbca55ba6e",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "wallId": "6469d660-09bd-4cc8-a0e4-204b36b97528",
+      "position": {
+        "x": 0.2175000000000002,
+        "y": 6.255
+      },
+      "rotation": -1.5707963267948968,
+      "widthMm": 960,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-1c10523537ee",
+      "elements": 12,
+      "outputW": 1704,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global"
+    }
+  ],
+  "airTerminals": [
+    {
+      "id": "3ed62b65-ca12-4002-a157-ae636d217c4a",
+      "roomId": "bb8084e1-762a-41ad-961d-5bf0344cd550",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "wallId": null,
+      "position": {
+        "x": 6.409999999999999,
+        "y": 4.51
+      },
+      "rotation": 3.141592653589793,
+      "widthMm": 1235,
+      "heightMm": 235,
+      "depthMm": 61,
+      "productId": "ecoclima-egq-1200x200",
+      "catalogVersion": "2026-10-03-ecoclima-f18f034c165c",
+      "use": "return",
+      "requiredAirflowM3h": 720,
+      "availableAirflowM3h": 735,
+      "noiseDbA": null,
+      "theoreticalLengthM": null,
+      "family": "EGQ",
+      "systemId": "47571da8-1874-4cdd-b3cf-76bb36fe6c5b",
+      "mounting": "ceiling",
+      "shape": "rectangle",
+      "elevationM": 2.7,
+      "operatingPointIndex": 0,
+      "noiseUpperBoundDbA": 20,
+      "noiseLabel": "<20",
+      "pressureDropPa": 5,
+      "throwM": null,
+      "openingMm": null,
+      "pointIndex": 0,
+      "unitIndex": 0,
+      "legacyUnverified": false
+    },
+    {
+      "id": "28319568-5499-4e7d-88dd-ebee4f799538",
+      "roomId": "bb8084e1-762a-41ad-961d-5bf0344cd550",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "wallId": "260e90f6-cf92-4dae-a489-6fa6075c0d8c",
+      "position": {
+        "x": 9.01,
+        "y": 4.7595
+      },
+      "rotation": 1.5707963267948966,
+      "widthMm": 799,
+      "heightMm": 124,
+      "depthMm": 40,
+      "productId": "ecoclima-eblf-800x125",
+      "catalogVersion": "2026-10-03-ecoclima-f18f034c165c",
+      "use": "supply",
+      "requiredAirflowM3h": 360,
+      "availableAirflowM3h": 374,
+      "noiseDbA": null,
+      "theoreticalLengthM": null,
+      "family": "EBLF",
+      "systemId": "47571da8-1874-4cdd-b3cf-76bb36fe6c5b",
+      "mounting": "wall",
+      "shape": "rectangle",
+      "elevationM": 2.2,
+      "operatingPointIndex": 0,
+      "noiseUpperBoundDbA": 20,
+      "noiseLabel": "15/20",
+      "pressureDropPa": 3,
+      "throwM": 3.1,
+      "openingMm": null,
+      "pointIndex": 0,
+      "unitIndex": 0,
+      "legacyUnverified": false
+    },
+    {
+      "id": "530af2c5-e03c-448d-95e9-08cc26868e87",
+      "roomId": "bb8084e1-762a-41ad-961d-5bf0344cd550",
+      "floorId": "d7ce386c-2177-445d-a9d6-403fd5e313d3",
+      "wallId": "260e90f6-cf92-4dae-a489-6fa6075c0d8c",
+      "position": {
+        "x": 9.01,
+        "y": 5.6594999999999995
+      },
+      "rotation": 1.5707963267948966,
+      "widthMm": 799,
+      "heightMm": 124,
+      "depthMm": 40,
+      "productId": "ecoclima-eblf-800x125",
+      "catalogVersion": "2026-10-03-ecoclima-f18f034c165c",
+      "use": "supply",
+      "requiredAirflowM3h": 360,
+      "availableAirflowM3h": 374,
+      "noiseDbA": null,
+      "theoreticalLengthM": null,
+      "family": "EBLF",
+      "systemId": "47571da8-1874-4cdd-b3cf-76bb36fe6c5b",
+      "mounting": "wall",
+      "shape": "rectangle",
+      "elevationM": 2.2,
+      "operatingPointIndex": 0,
+      "noiseUpperBoundDbA": 20,
+      "noiseLabel": "15/20",
+      "pressureDropPa": 3,
+      "throwM": 3.1,
+      "openingMm": null,
+      "pointIndex": 1,
+      "unitIndex": 0,
+      "legacyUnverified": false
+    }
+  ],
+  "projectSettings": {
+    "radiatorDeltaTK": 50,
+    "defaultHeightM": 2.7,
+    "internalWallThicknessM": 0.1,
+    "externalWallThicknessM": 0.3,
+    "coefficientWm3": 35,
+    "maxNoiseDbA": 37
+  },
+  "catalogVersions": {
+    "Cordivari": "2026-10-03-cordivari-900f5cc1068a",
+    "Global": "2026-10-03-global-1c10523537ee",
+    "SPLIT": "split-53035a43d1e114cd",
+    "HVAC": "2026-10-03-hvac-9505613a27bb",
+    "Ecoclima": "2026-10-03-ecoclima-f18f034c165c"
+  },
+  "sourceFilesMetadata": []
+}

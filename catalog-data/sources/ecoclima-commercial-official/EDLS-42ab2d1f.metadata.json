@@ -1,0 +1,55 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+  "code": "EDLS",
+  "slug": "edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:15.988563+00:00",
+      "filename": "EDLS-42ab2d1f.xlsx",
+      "bytes": 11693,
+      "sha256": "1dbeb69b19a899e47366fc3a9b9a32d5b7025a91e9914632e0989d51a791ed8f",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 682
+      }
+    },
+    {
+      "url": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:19 GMT",
+        "Server": "Apache",
+        "Content-Disposition": "attachment; filename=\"edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa.pdf\"",
+        "Cache-Control": "must-revalidate, no-cache, no-store, private",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/pdf"
+      },
+      "retrievedAt": "2026-10-03T23:02:20.693785+00:00",
+      "filename": "EDLS-42ab2d1f.pdf",
+      "bytes": 8255114,
+      "sha256": "7f2a836ff490d8c50cabd435149a5890997932c6be6c738e153b5c5df2bbf10a"
+    }
+  ]
+}

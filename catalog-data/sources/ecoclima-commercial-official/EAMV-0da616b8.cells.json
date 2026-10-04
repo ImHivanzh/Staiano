@@ -1,0 +1,451 @@
+{
+  "filename": "EAMV-0da616b8.xlsx",
+  "sha256": "5b876b69be61d6cc6af5837041243f358c1f654a16d213e181530c31119c3f1e",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:27",
+    "modified": "2026-10-04 01:02:27"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 7,
+      "maxColumn": 10,
+      "mergedRanges": [
+        "A1:J1",
+        "A3:J3"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EAMV V BOCCHETTE DI MANDATA O DI RIPRESA IN PLASTICA",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Dimensioni e Listino Prezzi",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "BxB",
+            "HxH",
+            "L",
+            "L1",
+            "L2",
+            "ØD",
+            "Sezione Efficace (m²)",
+            "Portata Massima",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EAMV-102-V",
+            154,
+            110,
+            15,
+            45,
+            87,
+            100,
+            "0,008",
+            150,
+            "12,20"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EAMV-122-V",
+            186,
+            142,
+            15,
+            45,
+            101,
+            125,
+            "0,012",
+            200,
+            "17,83"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EAMV-152-V",
+            186,
+            142,
+            15,
+            50,
+            101,
+            150,
+            "0,012",
+            300,
+            "22,82"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EAMV V BOCCHETTE DI MANDATA O DI RIPRESA IN PLASTICA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Dimensioni e Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "BxB",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "HxH",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D4",
+          "row": 4,
+          "column": 4,
+          "value": "L",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E4",
+          "row": 4,
+          "column": 5,
+          "value": "L1",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F4",
+          "row": 4,
+          "column": 6,
+          "value": "L2",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G4",
+          "row": 4,
+          "column": 7,
+          "value": "ØD",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H4",
+          "row": 4,
+          "column": 8,
+          "value": "Sezione Efficace (m²)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I4",
+          "row": 4,
+          "column": 9,
+          "value": "Portata Massima",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "J4",
+          "row": 4,
+          "column": 10,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EAMV-102-V",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": 154,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": 110,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": 15,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E5",
+          "row": 5,
+          "column": 5,
+          "value": 45,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F5",
+          "row": 5,
+          "column": 6,
+          "value": 87,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G5",
+          "row": 5,
+          "column": 7,
+          "value": 100,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H5",
+          "row": 5,
+          "column": 8,
+          "value": "0,008",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I5",
+          "row": 5,
+          "column": 9,
+          "value": 150,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "J5",
+          "row": 5,
+          "column": 10,
+          "value": "12,20",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EAMV-122-V",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": 186,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": 142,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": 15,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E6",
+          "row": 6,
+          "column": 5,
+          "value": 45,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F6",
+          "row": 6,
+          "column": 6,
+          "value": 101,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G6",
+          "row": 6,
+          "column": 7,
+          "value": 125,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H6",
+          "row": 6,
+          "column": 8,
+          "value": "0,012",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I6",
+          "row": 6,
+          "column": 9,
+          "value": 200,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "J6",
+          "row": 6,
+          "column": 10,
+          "value": "17,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EAMV-152-V",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": 186,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": 142,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": 15,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E7",
+          "row": 7,
+          "column": 5,
+          "value": 50,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F7",
+          "row": 7,
+          "column": 6,
+          "value": 101,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G7",
+          "row": 7,
+          "column": 7,
+          "value": 150,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "H7",
+          "row": 7,
+          "column": 8,
+          "value": "0,012",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "I7",
+          "row": 7,
+          "column": 9,
+          "value": 300,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "J7",
+          "row": 7,
+          "column": 10,
+          "value": "22,82",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

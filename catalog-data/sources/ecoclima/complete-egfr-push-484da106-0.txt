@@ -1,0 +1,63 @@
+GRIGLIA FORELLINATA
+CON FILTRO E CORNICE
+INTERNA DA 15 mm
+Serie EGFR-PUSH
+Griglia di ripresa dell’aria a pannello forellinato, con doppia cornice (interna da 15 mm) ad apertura a cerniere e
+sistema push-pull per l’agevole alloggiamento e la sostituzione del filtro.
+CARATTERISTICHE
+Telaio perimetrale in alluminio.
+Pannello in acciaio zincato.
+Finitura: verniciatura colore bianco RAL9016.
+Installazione: in appoggio su struttura controsoffitto.
+Filtro: classe COARSE (G2) spessore 10 mm.
+Apertura / chiusura: con sistema push-pull.
+La maglia forellinata è realizzata secondo le seguenti specifiche:
+-fori tondi alternati a 60°;
+-rapporto vuoto/pieno 46%;
+-diametro dei fori 5mm;
+-distanza tra i centri 7mm.
+IMPIEGO
+Griglia per la ripresa dell’aria in ambienti dove sia consigliata una prefiltrazione.
+Perdita di carico iniziale inferiore a 40Pa con velocità di 1,5 m/s sul filtro.
+A RICHIESTA
+Verniciatura colori RAL a scelta.
+NOMENCLATURA CODICE
+EGFR-PUSH: Griglia forellinata con filtro e cornice interna da 15 mm
+Grandezza ESTERNO CORNICE L x H
+L (mm) = 595 mm - dimensione foro 560 mm
+H (mm) = 595 mm - dimensione foro 560 mm
+EGFR-PUSH 595 x 595
+PPAAGG 11 -- GGRRIIGGLLIIAA FFOORREELLLLIINNAATTAA CCOONN FFIILLTTRROO EE CCOORRNNIICCEE IINNTTEERRNNAA DDAA 1155 mmmm
+SSEERRIIEE EEGGFFRR--PPUUSSHH -- AAGGGGIIOORRNNAAMMEENNTTOO 0011//22002244
+
+DIMENSIONI
+DATI DI FUNZIONAMENTO
+dimensioni sezione velocità Si consiglia la velocità dell’aria
+portata
+esterno efficace frontale sul filtro di 1,5 m/s per contenere
+modello aria
+cornice del filtro sul filtro le perdite di carico e mantenere
+mm m2 m/s m3/h l’efficienza di filtrazione;
+1,5 1285
+EGFR-PUSH 595x595 0,238 i dati di portata in tabella si
+2 1713 riferiscono alla griglia con il filtro.
+Tutte le misure sono espresse in mm
+INDICE DI RUMOROSITA’ PERDITA DI CARICO (Pa)
+V V
+dB(A) Pa
+m/s m/s
+1,5 <20 1,5 25/30
+2 20/25 2 45/50
+PLENUM
+stacco laterale
+modello
+n° E F
+L1 x H1 P2 Ø d
+stacchi Tutte le misure sono
+560x560 300 1 250 80 12 espresse in mm.
+PAG 2 - GRIGLIA FORELLINATA CON FILTRO E CORNICE INTERNA DA 15 mm
+SERIE EGFR-PUSH - AGGIORNAMENTO 01/2024
+
+INSTALLAZIONE
+PAG 3 - GRIGLIA FORELLINATA CON FILTRO E CORNICE INTERNA DA 15 mm
+SERIE EGFR-PUSH - AGGIORNAMENTO 01/2024

@@ -1,0 +1,131 @@
+DIFFUSORI A UGELLO
+ORIENTABILI A LUNGA
+GITTATA CON SERRANDA
+Serie EDU/S - EDU/SM
+Diffusori in alluminio a lunga gittata orientabili con angolatura max 30°.
+CARATTERISTICHE
+Materiale: alluminio.
+Finitura: alluminio anodizzato.
+Installazione: con flangia (a canale) o con raccordo (a tubo flex).
+Altezza di installazione compresa tra 3 m e 30 m in base al modello.
+IMPIEGO
+Ambienti con soffitti molto alti o dove sia necessaria una distribuzione dell’aria a distanza e/o localizzata.
+MODELLI
+EDU/S Diffusori a ugello orientabili a lunga gittata con serranda.
+EDU/SM Diffusori a ugello orientabili a lunga gittata con serranda con predisposizione per motore.
+A RICHIESTA
+-Servomotori per EDU/SM: il servomotore viene fornito disassemblato dal diffusore a lunga gittata (installazione a carico del cliente).
+-Coprighiera.
+-Con swirl posteriore (riduttore di lancio).
+-Raccordo per tubo flessibile.
+-Raccordo per canale circolare.
+-Verniciatura RAL a vostra scelta.
+NOMENCLATURA CODICE
+EDU/S Diffusori a ugello orientabili a lunga gittata con serranda.
+EDU/SM Diffusori a ugello orientabili a lunga gittata con serranda con predisposizione per motore.
+Grandezza: 80-150-200-230-250-300
+EDU/S 150
+PAG 1 - DIFFUSORI A UGELLO ORIENTABILI A LUNGA GITTATA CON SERRANDA
+SERIE EDU/S - EDU/SM - AGGIORNAMENTO 01/2023
+
+DIMENSIONI
+sezione Ø
+modello ØD ØS ØC ØF E L1 ØJ
+efficace m² foro
+80 0,0059 80 160 245 226 92 149 249 205
+150 0,0183 150 300 385 366 173 276 389 352
+200 0,0325 200 400 485 466 226 367 489 452
+230 0,0432 230 400 485 466 216 357 489 452
+250 0,0513 250 400 485 466 208 349 489 452
+300 0,0745 300 400 485 466 184 325 489 452
+tutte le dimensioni sono espresse in mm
+DATI DI FUNZIONAMENTO
+modello Vk (m/s) 2 4 6 8 10
+m³/h 36 72 108 135 168
+L(m) 4,0 8,0 12,0 15,0 19,0
+80 Vk: velocità efficace (m/s)
+Pa 2,0 10 22 36 57
+m³/h: portata
+dB(A) <20 <20 <20 22 29 Pa: perdite di carico in Pascal
+m³/h 127 254 382 509 637 L(m): lancio in metri calcolato con
+L(m) 6,0 12,0 19,0 25,0 32,0 installazione a filo soffitto e velocità
+150
+Pa 2 8 19 34 55 terminale 0,25 m/s
+dB(A): indice di rumorosità
+dB(A) <20 <20 21 29 37
+m³/h 226 452 678 904 1130
+Dal modello 40 al 200 realizzato con
+L(m) 8,0 17,0 25,0 34,0 42,0 cono centrale, modello 230 senza
+200
+Pa 2 8 19 34 55 cono centrale
+dB(A) <20 <20 20 28 35
+m³/h 298 597 896 1195 1494
+L(m) 9,0 20,0 29,0 39,0 45,0
+230
+Pa 2 8 19 34 55
+dB(A) <20 <20 21 28 35
+m³/h 353 707 1060 1413 1766
+L(m) 10,0 21,0 31,0 42,0 48,0
+250
+Pa 2 8 19 34 55
+dB(A) <20 <20 24 31 36
+m³/h 509 1017 1526 2035 2543
+L(m) 13,0 25,0 36,0 44,0 51,0
+300
+Pa 2 8 19 34 55
+dB(A) <20 <20 23 30 35
+PAG 2 - DIFFUSORI A UGELLO ORIENTABILI A LUNGA GITTATA CON SERRANDA
+SERIE EDU/S - EDU/SM - AGGIORNAMENTO 01/2023
+
+EDU/SM DIFFUSORI A UGELLO ORIENTABILI A LUNGA GITTATA CON PREDISPOSIZIONE PER
+MOTORE
+MOT.
+Dn A B C D* E F G min H min MOT. MODULANTE
+ON / OFF
+80 80 158 200 258 204 50 38 60 CM24-L / CM230-L CM24-SR-L
+150 150 313 283 388 352 60 70 85 NM24A / NM230A NM24A-SR / NM230ASR
+200 200 398 283 488 452 60 70 85 NM24A / NM230A NM24A-SR / NM230ASR
+230 230 398 283 488 452 60 70 85 NM24A / NM230A NM24A-SR / NM230ASR
+250 250 398 283 488 452 60 70 85 NM24A / NM230A NM24A-SR / NM230ASR
+300 300 398 283 488 452 60 70 85 NM24A / NM230A NM24A-SR / NM230ASR
+D* Coprighiera
+Tutte le misure sono espresse in mm.
+RACCORDO PER TUBO FLESSIBILE
+modello ØA ØB C D E ØF int L
+EDU-RF 80 158 230 60 100 60 210 220
+EDU-RF 150 248 378 60 130 60 358 250
+EDU-RF 200 398 480 60 170 60 460 290
+EDU-RF 230 398 480 60 170 60 460 290
+EDU-RF 250 398 480 60 170 60 460 290
+EDU-RF 300 398 480 60 170 60 460 290
+PAG 3 - DIFFUSORI A UGELLO ORIENTABILI A LUNGA GITTATA CON SERRANDA
+SERIE EDU/S - EDU/SM - AGGIORNAMENTO 01/2023
+
+RACCORDO PER CANALE CIRCOLARE
+Ø canale
+modello L2 Ø D1 Ø D2
+min max
+EDU-RC 80 200 210 230 315 630
+EDU-RC 150 300 358 378 500 800
+EDU-RC 200 350 460 480 500 1000
+EDU-RC 230 350 460 480 500 1000
+EDU-RC 250 350 460 480 500 1000
+EDU-RC 300 350 460 480 500 1000
+DEFLETTORE SWIRL
+Il deflettore swirl applicato nella parte posteriore del diffusore ad
+ugelli genera un moto di rotazione che aumenta l’induzione e riduce
+il lancio del diffusore del 40% ed è particolarmente indicato per
+l’immissione di portate aria elevate in ambienti di medie dimensioni
+prevenendo l’insorgere di correnti d’aria sensibili nella zona occupata.
+MONTAGGIO IN BATTERIA
+L distanza
+modello
+minima (mm)
+80 300
+150 430
+200 430
+230 550
+250 550
+300 550
+PAG 4 - DIFFUSORI A UGELLO ORIENTABILI A LUNGA GITTATA CON SERRANDA
+SERIE EDU/S - EDU/SM - AGGIORNAMENTO 01/2023

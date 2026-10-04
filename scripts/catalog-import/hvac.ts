@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import path from "node:path";
 import {
   hvacCatalogSchema,
+  hvacProductSchema,
   type HvacProduct,
 } from "../../src/domain/catalogs/hvac-schema";
 const root = process.cwd(),
@@ -272,6 +273,47 @@ for (const curatedFile of ["daikin-fba.json", "daikin-fba-large.json"]) {
     );
   }
 }
+// Additional connection drawings are curated independently from performance tables.
+const connectionSources = JSON.parse(
+  await readFile(path.join(dir, "connections-manifest.json"), "utf8"),
+) as Source[];
+const connections = JSON.parse(
+  await readFile(
+    path.join(root, "catalog-data/curation/hvac-connections.json"),
+    "utf8",
+  ),
+) as ({
+  indoorModels: string[];
+  sourceName: string;
+  sourceSha256: string;
+  page: number;
+} & Record<string, unknown>)[];
+for (const product of products) {
+  const row = connections.find((c) =>
+    c.indoorModels.includes(product.indoorModel),
+  );
+  if (!row)
+    throw new Error(
+      `Missing discharge connection drawing: ${product.indoorModel}`,
+    );
+  const drawing = connectionSources.find((s) => s.name === row.sourceName);
+  if (!drawing || drawing.sha256 !== row.sourceSha256)
+    throw new Error(`Changed discharge drawing: ${product.indoorModel}`);
+  const { indoorModels, sourceName, sourceSha256, page, ...dimensions } = row;
+  void indoorModels;
+  void sourceName;
+  void sourceSha256;
+  product.dischargeConnection =
+    hvacProductSchema.shape.dischargeConnection.parse({
+      ...dimensions,
+      sourceMetadata: metadata(
+        drawing,
+        product.manufacturer,
+        page,
+        String(dimensions.drawingReference),
+      ),
+    });
+}
 const catalog = hvacCatalogSchema.parse({
   version: `${now.slice(0, 10)}-hvac-${createHash("sha256")
     .update(
@@ -279,6 +321,14 @@ const catalog = hvacCatalogSchema.parse({
         products.map((p) => ({
           ...p,
           sourceMetadata: { sha256: p.sourceMetadata.sha256 },
+          dischargeConnection: p.dischargeConnection
+            ? {
+                ...p.dischargeConnection,
+                sourceMetadata: {
+                  sha256: p.dischargeConnection.sourceMetadata.sha256,
+                },
+              }
+            : null,
         })),
       ),
     )
@@ -302,6 +352,16 @@ const normalized = (p: HvacProduct) =>
       importedAt: null,
       retrievedAt: null,
     },
+    dischargeConnection: p.dischargeConnection
+      ? {
+          ...p.dischargeConnection,
+          sourceMetadata: {
+            ...p.dischargeConnection.sourceMetadata,
+            importedAt: null,
+            retrievedAt: null,
+          },
+        }
+      : null,
   });
 const report = {
   imported: catalog.products.length,

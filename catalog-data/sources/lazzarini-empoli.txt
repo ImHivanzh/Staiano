@@ -1,0 +1,63 @@
+Empoli
+Technical sheet
+
+Description Straight
+Material Carbon steel
+Pipes - mm 70x11x1,5
+Collectors - Ø 35x1,5
+Connections 6x1/2’ (air bleeding valve connection, included)
+Wall fixings 4
+Max operating pressure 4 bar
+Max operating temperature 90 °C
+Paint Epoxypolyester powder
+Packaging Carton box + styrofoam protections + nylon bag
+Standard equipment 1 kit wall fixing brackets - 1 air bleeding valve - 3 blind plugs
+|
+ILOPME
+1800 1800
+ELEMENTS: 4 ELEMENTS: 6
+Connection
+55 WITH BOTH LATERAL AND CENTRAL
+50 MM CONNECTIONS
+Wall distance Interaxis
+N1 = Please add the interaxis of the valves to N1.
+(Lazzarini = + 90 mm)
+85
+N3 = 50 mm
+N3
+N1
+
+|
+ILOPME
+White RAL9016 - straight
+Code Height Width Interaxis Elements Weight Water T50 °C T30 °C T42,5 °C T60 °C Exponent n
+mm mm N1 mm kg lt Watt Watt Watt Watt
+383852 1800 600 600 4 26,9 4,7 674 353 549 850 1,26960
+383853 1800 750 750 6 35,8 7,0 955 498 777 1205 1,27434
+Anthracite VOV12 - straight
+Code Height Width Interaxis Elements Weight Water T50 °C T30 °C T42,5 °C T60 °C Exponent n
+mm mm N1 mm kg lt Watt Watt Watt Watt
+383854 1800 600 600 4 26,9 4,7 674 353 549 850 1,26960
+383855 1800 750 750 6 35,8 7,0 955 498 777 1205 1,27434
+Chrome - straight
+Code Height Width Interaxis Elements Weight Water T50 °C T30 °C T42,5 °C T60 °C Exponent n
+mm mm N1 mm kg lt Watt Watt Watt Watt
+383856 1800 600 600 4 26,9 4,7 419 215 339 533 1,31404
+383857 1800 750 750 6 35,6 7,0 573 304 469 719 1,24410
+1202-40-72-
+4
+.veR
+Our radiators are tested in qualified laboratories according to EN-442 regulations which determine the ouput value by fixing the Δт at
+50 °C. Δт is the difference between the average temperature of the water inside the radiator and the room temperature. The formula is:
+(((T +T )/2)-T ).
+1 2 3
+Ex.: ((75+65/2)-20)= 50 °C. For output values with a different Δт use the following formula: ɸ = ɸ *(Δт /50)n.
+x Δт50 x
+See calculation example of the output at Δт 60 °C of article 383852: 674*(60/50)1,26960= 850.
+Output values in kcal/h = watt x 0,85984.
+Output values in btu = watt x 3,412.
+KEY
+T = supply temperature - T = return temperature - T = room temperature.
+1 2 3
+ɸ = output to be calculated - ɸ = output at Δт 50 °C (table) - Δт = Δт value to be calculated - n = exponent ‘‘n’’ (table).
+x Δт50 x

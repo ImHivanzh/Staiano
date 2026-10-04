@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
+  "code": "EBLS",
+  "slug": "ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:19 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:19 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:19.595017+00:00",
+      "filename": "EBLS-afa50e77.xlsx",
+      "bytes": 7768,
+      "sha256": "92d9de34d29bb882992b15cd133acdc4a829ef69d31ad111f90daaa3f6f15372",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 138
+      }
+    }
+  ]
+}

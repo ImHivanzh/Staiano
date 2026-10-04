@@ -1,0 +1,78 @@
+Knockout hole.
+ARROW VIEW A
+126 P.C.D.
+500 or more
+Service space
+ARROW VIEW A
+erom
+ro
+003
+ecaps
+ecivreS
+170 O100
+( )
+4 x M4 (CLASS 2)
+041
+542 871
+001
+56
+1000 69
+792 40
+50
+83
+901
+5x146=730 32
+815
+031=56x2
+011
+05
+012
+25 800
+301
+179 50
+1038
+11x65=715
+036
+954
+6x145=890
+42 135 125 98 117 135 125 100 8-O4.7 HOLE
+59 012
+Suspension bolt
+Fresh air intake position
+Suspension position
+noitisop
+noisnepsuS
+FBA60A
+9
+KC KE KH KJ
+KK
+KF KD
+KA
+KB
+KG KG
+Item Name Description
+KA
+Liquid pipe connection port Ø6.35 flared connection
+Notes
+KB
+Gas pipe connection port Ø12.70 flared connection
+1.
+KC VP20 (OD Ø26, ID Ø20) When installing optional accessories, refer to their respective documentation.
+Drain pipe connection
+KD /
+Wiring connection
+2.
+The ceiling depth varies according to the documentation of the specific system.
+KE /
+Power supply connection
+KF VP20 (OD Ø26, ID Ø20)
+Drain outlet
+KG /
+Air filter
+KH /
+Air suction side
+KJ /
+Air discharge side
+KK /
+Nameplate
+3D094983B

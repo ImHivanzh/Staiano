@@ -1,0 +1,354 @@
+{
+  "filename": "EDE2S-38fa3f46.xlsx",
+  "sha256": "f10d7380dc077e28c860fa2619c7531773b3ed4d042e1a5061fff3904a178c52",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:21",
+    "modified": "2026-10-04 01:02:21"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 16,
+      "maxColumn": 3,
+      "mergedRanges": [
+        "A1:C1",
+        "A9:C9",
+        "A3:C3"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EDE2S DIFFUSORI A GETTO ELICOIDALE REGOLABILE",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            600,
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            " ",
+            "€",
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EDE2S",
+            "131,88",
+            null
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Listino Prezzi Plenum con Stacco Laterale",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Per plenum con stacco superiore, quotazione a richiesta.",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Modello",
+            "Descrizione",
+            600
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            " ",
+            " ",
+            "€"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "EPZ-EDE",
+            "Plenum zincato con serranda e ponte di fissaggio",
+            "129,93"
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "EPZ-EDE-EQ",
+            "Plenum zincato con serranda, ponte di fissaggio ed equalizzatore",
+            "161,78"
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "EPI-EDE",
+            "Plenum Isolato con serranda e ponte di fissaggio",
+            "159,27"
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "EPI-EDE-EQ",
+            "Plenum Isolato con serranda, ponte di fissaggio ed equalizzatore",
+            "192,36"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EDE2S DIFFUSORI A GETTO ELICOIDALE REGOLABILE",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": 600,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": " ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EDE2S",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "131,88",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "Listino Prezzi Plenum con Stacco Laterale",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "Per plenum con stacco superiore, quotazione a richiesta.",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C11",
+          "row": 11,
+          "column": 3,
+          "value": 600,
+          "type": "n",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": " ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": " ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C12",
+          "row": 12,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": "EPZ-EDE",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B13",
+          "row": 13,
+          "column": 2,
+          "value": "Plenum zincato con serranda e ponte di fissaggio",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C13",
+          "row": 13,
+          "column": 3,
+          "value": "129,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "EPZ-EDE-EQ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": "Plenum zincato con serranda, ponte di fissaggio ed equalizzatore",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C14",
+          "row": 14,
+          "column": 3,
+          "value": "161,78",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A15",
+          "row": 15,
+          "column": 1,
+          "value": "EPI-EDE",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B15",
+          "row": 15,
+          "column": 2,
+          "value": "Plenum Isolato con serranda e ponte di fissaggio",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C15",
+          "row": 15,
+          "column": 3,
+          "value": "159,27",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A16",
+          "row": 16,
+          "column": 1,
+          "value": "EPI-EDE-EQ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B16",
+          "row": 16,
+          "column": 2,
+          "value": "Plenum Isolato con serranda, ponte di fissaggio ed equalizzatore",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C16",
+          "row": 16,
+          "column": 3,
+          "value": "192,36",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

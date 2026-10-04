@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda",
+  "code": "EDEA",
+  "slug": "edea-sd-diffusori-circolari-a-coni-fissi-con-serranda",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edea-sd-diffusori-circolari-a-coni-fissi-con-serranda.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:21.176420+00:00",
+      "filename": "EDEA-e564c219.xlsx",
+      "bytes": 6903,
+      "sha256": "7554b14736eaebba2a00b40ea0276bf445ee8d552720d2128ac172c873707ed2",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 23
+      }
+    }
+  ]
+}

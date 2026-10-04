@@ -1,0 +1,894 @@
+{
+  "revision": "15-2026",
+  "sourceFiles": 112,
+  "allSourceHashesMatch": true,
+  "checks": [
+    {
+      "filename": "EDLS-42ab2d1f.xlsx",
+      "immutableFilename": "revisions/EDLS-42ab2d1f-1dbeb69b19a899e47366fc3a9b9a32d5b7025a91e9914632e0989d51a791ed8f.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDLS-42ab2d1f.pdf",
+      "immutableFilename": "revisions/EDLS-42ab2d1f-7f2a836ff490d8c50cabd435149a5890997932c6be6c738e153b5c5df2bbf10a.pdf",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDSC-96ed3c92.xlsx",
+      "immutableFilename": "revisions/EDSC-96ed3c92-8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDSC-96ed3c92.pdf",
+      "immutableFilename": "revisions/EDSC-96ed3c92-161898eed8bb5ed1ed497fadf7180e99ad20722649a08e2c68b9cd67ff8fd473.pdf",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDSC-29c7607a.xlsx",
+      "immutableFilename": "revisions/EDSC-29c7607a-8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDSC-29c7607a.pdf",
+      "immutableFilename": "revisions/EDSC-29c7607a-18a20649bb17f556cc53ae7df4396de2f3b5f6a4244f4d78909a96a5d4e22fb8.pdf",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBA-c073fea7.xlsx",
+      "immutableFilename": "revisions/EBA-c073fea7-0ee8a0e7e285f031a3b7eb7b147c944eb566b56095d31dd65f89469156b22924.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBCV-557346ea.xlsx",
+      "immutableFilename": "revisions/EBCV-557346ea-80eeee654b13a9ea6e91d08830085cdfa80f7ac24eb4883416179006de485464.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBIA-ec8b8c9c.xlsx",
+      "immutableFilename": "revisions/EBIA-ec8b8c9c-9a9deda987a88fe969cef40f0d43ca079d4158e4d081b28460b109d1b5fb43c2.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBL-40afbb66.xlsx",
+      "immutableFilename": "revisions/EBL-40afbb66-79fc011660fc1251273de446491c8e42faab84a344390261b5e4a37c5f840548.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBLF-f82eef53.xlsx",
+      "immutableFilename": "revisions/EBLF-f82eef53-3c0e7879fac00f46cb792da1fb9dd447b5faa4569e81432477bc82c5d7f04837.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBLR-ddd14192.xlsx",
+      "immutableFilename": "revisions/EBLR-ddd14192-5e9956976c5e86d1c3c6629c7761afdcc3f37852aede5f1639d9c233a85f3ce9.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBLS-afa50e77.xlsx",
+      "immutableFilename": "revisions/EBLS-afa50e77-92d9de34d29bb882992b15cd133acdc4a829ef69d31ad111f90daaa3f6f15372.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBV-d3a32466.xlsx",
+      "immutableFilename": "revisions/EBV-d3a32466-61f2073a1c368124722975045996533c88c1b80de749e2827813513175e3274e.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAM-3a8012d5.xlsx",
+      "immutableFilename": "revisions/EAM-3a8012d5-df69e5b5ee7cdea583beabcc33f2bf51e4207d2725821a2e38d276e8aebbea9c.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDC-3cce0fb7.xlsx",
+      "immutableFilename": "revisions/EDC-3cce0fb7-2c9ac84551a55002906173c41bdc3aa46f79774671efc9cb34a32e3a13ccc8cf.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDCC-0bc40027.xlsx",
+      "immutableFilename": "revisions/EDCC-0bc40027-c330fa3b4568b6fa2dee129a71732be33df33fe877b955ae667f0ba2cb679b84.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDCF-0ce36e75.xlsx",
+      "immutableFilename": "revisions/EDCF-0ce36e75-15b2ad189f6f07b650e2ede019445ca75cd44050a381d2208aa4e7073bc4b147.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDCS-0025fa83.xlsx",
+      "immutableFilename": "revisions/EDCS-0025fa83-db02478f9a4d865ae941dce0eb27ad64ea8b91dfc7495bb1899caca995a5ff59.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDE-cd5d52f9.xlsx",
+      "immutableFilename": "revisions/EDE-cd5d52f9-eee3cfdf712f654090203dc0e4529358078d02e9640ff44e30043512b4dd9ac0.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDE1-4991da38.xlsx",
+      "immutableFilename": "revisions/EDE1-4991da38-83d04bc4cde583300e2f267117ce011cfc580aa8eb7e50f3330c0c7828c4a719.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDE2-628cefd2.xlsx",
+      "immutableFilename": "revisions/EDE2-628cefd2-79061f36787680cea70d90a32cd3d83fa4e73ad5eb808c8f14a593508d6f4853.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDE2S-38fa3f46.xlsx",
+      "immutableFilename": "revisions/EDE2S-38fa3f46-f10d7380dc077e28c860fa2619c7531773b3ed4d042e1a5061fff3904a178c52.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDE5-7f940c92.xlsx",
+      "immutableFilename": "revisions/EDE5-7f940c92-c125297ad19d3f17fdf2aec12851dc9305204b5123bfeb9cba6b08b5d8c0b78a.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDEA-e564c219.xlsx",
+      "immutableFilename": "revisions/EDEA-e564c219-7554b14736eaebba2a00b40ea0276bf445ee8d552720d2128ac172c873707ed2.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDFDS-bfb886c1.xlsx",
+      "immutableFilename": "revisions/EDFDS-bfb886c1-bb38bbbd3b7c9c02d40dbafd4abf60096df33ac0d960e5cb1dd1f64806fe7360.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDFL-5bdf5679.xlsx",
+      "immutableFilename": "revisions/EDFL-5bdf5679-55df1204f98b44dfd6d2c519369a30c4f5bf1e1ef050e59088133344c8373b81.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDFLB-e3db5d52.xlsx",
+      "immutableFilename": "revisions/EDFLB-e3db5d52-cdbb23e400fcb7180784c01ac027bf5d5ab7c2570efe586378ea739fa83071a4.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDFLNA-04628549.xlsx",
+      "immutableFilename": "revisions/EDFLNA-04628549-3bf70f2e102ddf269b9af18d90fd6d29732e11410335771b24a085ae872238f6.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDLH-12ecbf8b.xlsx",
+      "immutableFilename": "revisions/EDLH-12ecbf8b-4e0c168f17060e30ac2267ea857747ed00b9705d7a3ac3363cb3bc48df487d43.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDMF-c12080bf.xlsx",
+      "immutableFilename": "revisions/EDMF-c12080bf-054ba5cf7593412e0d253cc24c44d972629dbee121c36ebaa0f7bd88922b5138.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDMP-ba091999.xlsx",
+      "immutableFilename": "revisions/EDMP-ba091999-0a54e10c62bc0d7bc00b38a36093ef960e24f136a1d7df35b52a8cdc9dcaf563.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDMP-f694e191.xlsx",
+      "immutableFilename": "revisions/EDMP-f694e191-54ee7e57be73d8af9b665ede1836df5545b9e7dae7b37408d8d0a23ab9ad95fc.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDQC1-57793333.xlsx",
+      "immutableFilename": "revisions/EDQC1-57793333-aa850ed6846c41fd2492b31ec7f0f9de3afeb47253796719b28260253332b410.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDQF1-ea0e04e1.xlsx",
+      "immutableFilename": "revisions/EDQF1-ea0e04e1-44aae51bbaf636af65646d95cb2e1e29412fd454395f03e9a031d7132431fc02.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDQF3-345b40d2.xlsx",
+      "immutableFilename": "revisions/EDQF3-345b40d2-45c320aa643a931d0502d100d9b3958b3cf99fa429b3bdee0a039d6564f17897.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDQMC-72f3a18f.xlsx",
+      "immutableFilename": "revisions/EDQMC-72f3a18f-9b58d8f38c1a8a751aa5308d543bfe6a8936b6413e23c6da958ae109cfcddc7e.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDQMQ-70a836ec.xlsx",
+      "immutableFilename": "revisions/EDQMQ-70a836ec-93536b062aae2925ff1b1c47d9305843b8e8f46663d3d6c249849480df2c80fd.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDQV-b3ec9cbf.xlsx",
+      "immutableFilename": "revisions/EDQV-b3ec9cbf-6707a080ee7af630083a9d61f078924facd902498958d42f172eb8b2e2d66084.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDRA-90b29d07.xlsx",
+      "immutableFilename": "revisions/EDRA-90b29d07-097020923e3687cd6016db06096d7677d3edce2ea7104a111ae8a54807091810.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDRC-57846358.xlsx",
+      "immutableFilename": "revisions/EDRC-57846358-fd0c46cc4d40b2074aec3fb83e2700aa5ede8f0cdd6d163fb31f29f424346489.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDRCS-6bb5bdc1.xlsx",
+      "immutableFilename": "revisions/EDRCS-6bb5bdc1-5ab573f1c1f1b8146e0ba7b39492bc94eaf5b3d0c3fc9bfaee631bc915605031.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDRF-91af43f6.xlsx",
+      "immutableFilename": "revisions/EDRF-91af43f6-60afca08bb91096c012f6a7ae3ac96eb09f8435d0204ae42d1ab981df01d9f2b.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDRFB-fd67b8d4.xlsx",
+      "immutableFilename": "revisions/EDRFB-fd67b8d4-ee6a7a3e47fc963975e75dac7b684fc85f38e5ce20837ef5ff68d4f4980a6fd3.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDU-7ca6e6d6.xlsx",
+      "immutableFilename": "revisions/EDU-7ca6e6d6-9eda424a1795a76b15339aca02d6c301e7d6d2b5442836ff2deb065fd00e5db3.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDU-1f517e43.xlsx",
+      "immutableFilename": "revisions/EDU-1f517e43-ab2d54887877baaac0acba298b2c72b8bbd941167a4b33e042ba7fb30d495280.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDU-2c313c0f.xlsx",
+      "immutableFilename": "revisions/EDU-2c313c0f-e4f0675c6f01dc68aa612cb3b31405fbd025f083b0d2ebf1446c6e1625ef473c.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDU-381f4e08.xlsx",
+      "immutableFilename": "revisions/EDU-381f4e08-b29c6c255be3c020da07bc1dd20a590e64516fe45aa3f957c9dbe773c64a0fe3.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDUB-67f21c59.xlsx",
+      "immutableFilename": "revisions/EDUB-67f21c59-b6de3205962c33a39f568ef3533c0105d2fc87f5f0df1d3ffd0582aa124da8ec.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EPSP-a5a66e50.xlsx",
+      "immutableFilename": "revisions/EPSP-a5a66e50-c83ea9be99f4ba68129cded3c7a1cd7f0426caff222197a9cf8aff0b5b09ac31.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "ETIM-ba093a2c.xlsx",
+      "immutableFilename": "revisions/ETIM-ba093a2c-8c46921eb0f7740d3400d73cda63802f0f3a776b8a7a06e044a48d0c7f5a8156.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVPMC-f85b3854.xlsx",
+      "immutableFilename": "revisions/EVPMC-f85b3854-62641aa64b27ad31bd9e71253d4d1dcb265aa41b6200085cf8c20dc57d0e1b5d.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVVMC-2bb5f55f.xlsx",
+      "immutableFilename": "revisions/EVVMC-2bb5f55f-eaf0ea2a8b8c3874cdc4b3afb7eda5c40e5743025f7855aae051bc6d4388c893.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVVRC-83d74ae5.xlsx",
+      "immutableFilename": "revisions/EVVRC-83d74ae5-642fe71e0205343f44c8e99223eacc2043e5615379793bcba2e19855d199116f.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBL3-18e2ff40.xlsx",
+      "immutableFilename": "revisions/EBL3-18e2ff40-f49e2917a34d215505fc002f1c8d2c4e101365f2ec1b56b302290d0baccf6b01.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBP-8a34c73c.xlsx",
+      "immutableFilename": "revisions/EBP-8a34c73c-169ab46c288be8e3a98493316a003d825d4814faeb334698a83c2ed59fa70077.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBP-e8054039.xlsx",
+      "immutableFilename": "revisions/EBP-e8054039-53542c2559876b5efd0bc870b05be80fc68a0abe9799c417f64c97e37732aca5.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA-52b2b5ac.xlsx",
+      "immutableFilename": "revisions/EGA-52b2b5ac-6c5b9c2639c808839c83a856d640c9e12dccb0a81075090702d85ac4fb2087a6.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA-fae69031.xlsx",
+      "immutableFilename": "revisions/EGA-fae69031-60824ed547bdcc0780173cc576e7987b259d35d8cf437714db3e2d54873771a4.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA50-494d8236.xlsx",
+      "immutableFilename": "revisions/EGA50-494d8236-beb9904f67cbae51b6e3261534c5b7958aae542b590102a7099f6c258be57115.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA50-85d10ce8.xlsx",
+      "immutableFilename": "revisions/EGA50-85d10ce8-e73f592e3abebe220750db67b4a83a1d4b9c06d7613c1cda21fe4bd64bdd3a3c.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA50-fc2f9df8.xlsx",
+      "immutableFilename": "revisions/EGA50-fc2f9df8-a264eb57f0f9a34af354d9816911304df1f3ebe60d037361e709822807d7fa43.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA6-f8d6b190.xlsx",
+      "immutableFilename": "revisions/EGA6-f8d6b190-ab9ea064f6145c6c6b330be45d5b32e7d046d9764f9b1ca4f7cc5a8b19029623.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGF-d3ca77e7.xlsx",
+      "immutableFilename": "revisions/EGF-d3ca77e7-5b85ee427e3c48b883e4b2d0f3b6f415ade65e195738b0952c538ca72f028f01.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGF-37f87618.xlsx",
+      "immutableFilename": "revisions/EGF-37f87618-f8ee50fe41f4dac0d2fe7338a9a4397653132ba007ca71db7c08e942689c82e3.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGFF-2fe3d348.xlsx",
+      "immutableFilename": "revisions/EGFF-2fe3d348-592ffb316cbf54c6fa85aeb0145b06417ebdb9e69f37dc9af8977c8c9a16faf1.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGFR-dfc7c014.xlsx",
+      "immutableFilename": "revisions/EGFR-dfc7c014-65c0538733e90a8ac51e0c3fae2071c1d51cece4e38f5990e9c528b632eee7b6.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGFR-484da106.xlsx",
+      "immutableFilename": "revisions/EGFR-484da106-364aeb91220fd7b50d9391b6d4dd8ae8675de57c91f786b409b71384a75a4e03.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGQ-2f7375f8.xlsx",
+      "immutableFilename": "revisions/EGQ-2f7375f8-d7a71caf933656c0d4b56f4c635fe9eb822683a654d4c9decac8220461caa6ea.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGQ-5aa04e92.xlsx",
+      "immutableFilename": "revisions/EGQ-5aa04e92-9a0d6e2969b03ec92a5cc5ad86b7565639aecd8444337205b41b183a03f4a6b1.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGQ1-60d8c91b.xlsx",
+      "immutableFilename": "revisions/EGQ1-60d8c91b-a8bcd2baef976dafde7028264352d83373245eb0b8c4ea607f56c08b655d39bf.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGQIF-d0774fcc.xlsx",
+      "immutableFilename": "revisions/EGQIF-d0774fcc-08a37287cd7119668e49b1531f0ff89e27cee558b9e83a19ebd07f574e9f97fe.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGQR-9cd6b0d5.xlsx",
+      "immutableFilename": "revisions/EGQR-9cd6b0d5-14e4310bc66c4fe4b12670bbe1fa14b3b242c2e6160556a84b97b9d0bfc8641f.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGQR-d7e849e1.xlsx",
+      "immutableFilename": "revisions/EGQR-d7e849e1-a660428ecdbc38a5b414444e7339212f84d8d835bce3f412e46d59de838806b6.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGS-3f882c13.xlsx",
+      "immutableFilename": "revisions/EGS-3f882c13-a5505adf83fef5cb2f95daed505c996eca94f473a80fdb49d04a05b8ac6d2032.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGZ100-68b55783.xlsx",
+      "immutableFilename": "revisions/EGZ100-68b55783-1cf66dea0be60fcac83cafff6598f3ade8ad85d8e5aae6dce376c459e1803d02.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGZ50-501adef2.xlsx",
+      "immutableFilename": "revisions/EGZ50-501adef2-8665f990fa00042de46d3830e31f57effcf2831cc146dd6e171ea0f29a9b5aa5.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "ETA-cbe3edeb.xlsx",
+      "immutableFilename": "revisions/ETA-cbe3edeb-27863d68953ad8f2c40391f00d4e1bf01071a1e9022dc4653c3c2d46e90b5296.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAB9063-3af7132e.xlsx",
+      "immutableFilename": "revisions/EAB9063-3af7132e-5b494af2d36f40ea401ee12d226c0b34578339b6e8408d9badbca291e76f418e.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EADD-51ad082d.xlsx",
+      "immutableFilename": "revisions/EADD-51ad082d-56c64efb0eee2d49dd2d6bffc3c8019658b8144e2d0a0f595a5a6706eef9be40.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAG-12eb0dcc.xlsx",
+      "immutableFilename": "revisions/EAG-12eb0dcc-bd6b77ed7aa19764937d9b63141dedb8f5c8aaa3756857147f63df2c41330783.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAG-ed59904a.xlsx",
+      "immutableFilename": "revisions/EAG-ed59904a-8fbd34f13bde2b675714e5256b8bc798ad9a2b8b18522c2fefbdaeb8030e8d64.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAG-5a5c2158.xlsx",
+      "immutableFilename": "revisions/EAG-5a5c2158-19bb1acaf45e8bb76671d079f7325b6362f6bbd27c842cdad10d84667a4b01a8.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAGF-53d3ad84.xlsx",
+      "immutableFilename": "revisions/EAGF-53d3ad84-3dd1f13d1e99007e72cc879421a76b9b6ad72a1a616d5ce7e2efba7f58095d67.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAL-f30c3f6e.xlsx",
+      "immutableFilename": "revisions/EAL-f30c3f6e-6099dfa3f49a63698f2925bf199927554cfc5154855ec1443562e002f93bcd74.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAM-7e29636f.xlsx",
+      "immutableFilename": "revisions/EAM-7e29636f-0c853396f078fe3d9e77fbd71ac95b68abdee38c51360e6bb9ce29fdd16484c5.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAMV-0da616b8.xlsx",
+      "immutableFilename": "revisions/EAMV-0da616b8-5b876b69be61d6cc6af5837041243f358c1f654a16d213e181530c31119c3f1e.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EAPRO-e6bb0262.xlsx",
+      "immutableFilename": "revisions/EAPRO-e6bb0262-3941933bb8bba30d708febf8f92621d16f70b50d3174e1ed87f59bf08af08656.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EARS-61b3bd7d.xlsx",
+      "immutableFilename": "revisions/EARS-61b3bd7d-85eab63f9338250499ed70147a2630f534d996c455198bfac1e12232ba1b223a.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EASY-fc30baa1.xlsx",
+      "immutableFilename": "revisions/EASY-fc30baa1-9e5de648763bef5d8d3a2e806766b7968f4c107219ceb9b726edffc382280961.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EATM-28483b28.xlsx",
+      "immutableFilename": "revisions/EATM-28483b28-31777d8b71a5ae0acdbc0ce976e86338622b96f371960acff31f4d72f708636c.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EBOX-8bd4450e.xlsx",
+      "immutableFilename": "revisions/EBOX-8bd4450e-63701b563f12f264a2298d6f6585a665181cb15e565c401948bf5647e6b53f5d.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDLSV-f8af1f05.xlsx",
+      "immutableFilename": "revisions/EDLSV-f8af1f05-a8e8283ff5152010f83298a30c9f0a90ba9b2efde15e123e4befba1ae8208435.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EDR-0cbd5275.xlsx",
+      "immutableFilename": "revisions/EDR-0cbd5275-e70fb686c19a9b5c0f84bc4a96e2d504fe3ebc6fbbe4bee1f2bf9e1afbdfcca1.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGA-c364f74a.xlsx",
+      "immutableFilename": "revisions/EGA-c364f74a-c1ce2659af2af70458f5843fdce604db172e33c957c42ede19bb814ea588a597.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGE-27a78c0a.xlsx",
+      "immutableFilename": "revisions/EGE-27a78c0a-91a76ab24fbece552fdd61d128a8655bc88f1841ac35d71274ff829323b63433.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EGFC-9b32e3c9.xlsx",
+      "immutableFilename": "revisions/EGFC-9b32e3c9-a94a05adb4b32ec8b7b796b6e0d5f10c98d4b89a44ec84c90a554a6324dec5f5.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EMV-8e23e379.xlsx",
+      "immutableFilename": "revisions/EMV-8e23e379-b82532a4af12509ae8749c5eefee0a81a29ad9ccf3a148acba999b6dc0d66ec3.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EMV-d4050dee.xlsx",
+      "immutableFilename": "revisions/EMV-d4050dee-45c81f55b16bf9693c306bc7ccc1493763a44d0a24704c1054f5c7c213503a8d.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EMV-41de5453.xlsx",
+      "immutableFilename": "revisions/EMV-41de5453-0cc320f4adadf13e21d484408f5efb4186ce307f57e35f8f9015a39ac7b2ad9f.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EMV-2c744a55.xlsx",
+      "immutableFilename": "revisions/EMV-2c744a55-c795d841f901e361e0588e7d4d3319105ae87b2a9c8a865408cb03d10b295008.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EMV-910f7357.xlsx",
+      "immutableFilename": "revisions/EMV-910f7357-da5593a67a501f3e5b0000c0c8e6c8c7ad2626f0ecd30c72076baaca357a8166.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EPL-7ed3f635.xlsx",
+      "immutableFilename": "revisions/EPL-7ed3f635-ddb5ff84bd00c9feb501f68c8a3e9b370355c3b4e00e047869a7912e639aeec0.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "ERDR-1151004a.xlsx",
+      "immutableFilename": "revisions/ERDR-1151004a-5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVALI-52500197.xlsx",
+      "immutableFilename": "revisions/EVALI-52500197-6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVPMC-5cb0f75f.xlsx",
+      "immutableFilename": "revisions/EVPMC-5cb0f75f-cf5b377520c7c4df134d144a4f9d5841736b6ddcf09ac0cb21cb7c3f32fac549.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVREA-37663445.xlsx",
+      "immutableFilename": "revisions/EVREA-37663445-ea38af63ba6ebc4c76ec97cdcdac6c6bef6c8f61a6bff65d8aa127b8aad644ed.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVVAIR-0404c5b2.xlsx",
+      "immutableFilename": "revisions/EVVAIR-0404c5b2-13cc03d75e315dfeccd0e82848ca643b277d4fbfdfbec97d4f85b680ffeb6606.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVVBOR-c564feff.xlsx",
+      "immutableFilename": "revisions/EVVBOR-c564feff-fda29250f1c6a9caa37385e41b99d0e8774baabdd6c4a43d7fac4cd2efa1584a.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVVMC-842be3bd.xlsx",
+      "immutableFilename": "revisions/EVVMC-842be3bd-fb1d458a81631b5980f14051dacb383187e1124fce3d7ae142b0f51b385b85c1.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "EVVRC-43b3a241.xlsx",
+      "immutableFilename": "revisions/EVVRC-43b3a241-ea636fe9e040ba495b878df507c35570bc4352cd526068628d8c7c9d2f72ee39.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    },
+    {
+      "filename": "ONE-7bf1d5df.xlsx",
+      "immutableFilename": "revisions/ONE-7bf1d5df-091176931347e9f3a583d65cbda34598064839e2e024c964cc7853f346dc88b2.xlsx",
+      "hashMatches": true,
+      "immutableMatches": true
+    }
+  ],
+  "usedHtmlSourceCount": 31,
+  "allUsedHtmlSourceHashesMatch": true,
+  "htmlChecks": [
+    {
+      "filename": "complete-epsp-a5a66e50.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/epsp-plenum-realizzato-in-polistirolo-stampato",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-edqv-b3ec9cbf.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqv-edqv-pq-diffusori-quadrati-a-4-vie",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-edu-7ca6e6d6.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-edu-s-381f4e08.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-eba-c073fea7.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ebcv-557346ea.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ebv-d3a32466.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebv-bocchette-di-mandata-in-acciaio-passo-20-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ebl-40afbb66.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-eblr-ddd14192.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ebls-afa50e77.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-eblf-f82eef53.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ega-fae69031.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ega-52b2b5ac.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ega6-f8d6b190.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ega50-fc2f9df8.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egz50-501adef2.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz50-griglie-di-ripresa-in-acciaio-passo-50-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egz100-68b55783.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egq1-4-60d8c91b.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egq-push-5aa04e92.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egqr-push-d7e849e1.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egf-d3ca77e7.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-griglie-forellinate",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egf-push-37f87618.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-push-griglia-forellinata-con-filtro",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egfr-push-484da106.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-easy-fc30baa1.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-egfc-9b32e3c9.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-one-box-7bf1d5df.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-eagf-53d3ad84.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-eag-ed59904a.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-griglia-di-ripresa",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-eal-f30c3f6e.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eal-griglia-a-barre-orizzontali-fisse",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ebox-n-8bd4450e.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016",
+      "hashMatches": true
+    },
+    {
+      "filename": "complete-ears-pn-61b3bd7d.html",
+      "url": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio",
+      "hashMatches": true
+    }
+  ],
+  "prices": 6718,
+  "pageCoverage": 109,
+  "priceFamilyCount": 99,
+  "issues": 42,
+  "issueReasons": {
+    "Malformed or unpublished price; not coerced": 6,
+    "Price topology requires normalization review": 23,
+    "Published finish surcharge excluded from base price; separate option required": 9,
+    "Conflicting published SKU prices": 2,
+    "HTML differs from preferred workbook SKU; retained workbook price": 2
+  },
+  "actualNoPublishedPriceFamilies": [
+    "EBP",
+    "EBP-T",
+    "EDRCS",
+    "EGA50-3S",
+    "ETIM"
+  ],
+  "unsupportedPriceFamilies": [],
+  "partialReviewFamilies": [
+    "EASY",
+    "EBL",
+    "EBLS",
+    "EDE-FB",
+    "EDLS",
+    "EDQMC",
+    "EDQMQ",
+    "EDR",
+    "EGA1-4",
+    "EGA6",
+    "EGFF",
+    "EGQ-PUSH",
+    "EGQ1-4",
+    "EGQIF",
+    "EGQR-PUSH",
+    "ERDR",
+    "ETA",
+    "EVALI"
+  ],
+  "note": "Five actual no-price families have no numeric prices in either archived official workbook or HTML. EBOX-N workbook has no main list price, but official HTML publishes accessory prices. Unbound technical variant choices are tracked by parent importer mapping report separately.",
+  "EDLSmalformedPdfCrosscheck": {
+    "filename": "EDLS-42ab2d1f.pdf",
+    "page": 8,
+    "sha256": "7f2a836ff490d8c50cabd435149a5890997932c6be6c738e153b5c5df2bbf10a",
+    "values": [
+      "150,00 0",
+      "167,26 0",
+      "214,13 0"
+    ],
+    "result": "All three malformed XLS cells remain malformed in current official PDF; excluded."
+  },
+  "regressions": {
+    "command": "python scripts/catalog-import/test_ecoclima_price_workbooks.py",
+    "tests": 6,
+    "result": "passed"
+  }
+}

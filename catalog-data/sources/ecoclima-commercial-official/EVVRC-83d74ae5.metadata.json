@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+  "code": "EVVRC",
+  "slug": "evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:25.125320+00:00",
+      "filename": "EVVRC-83d74ae5.xlsx",
+      "bytes": 6868,
+      "sha256": "642fe71e0205343f44c8e99223eacc2043e5615379793bcba2e19855d199116f",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 26
+      }
+    }
+  ]
+}

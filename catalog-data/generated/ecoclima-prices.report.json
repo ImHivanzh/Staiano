@@ -1,0 +1,661 @@
+{
+  "priceCount": 6718,
+  "accessorySpecificationCount": 873,
+  "sourcePageCount": 109,
+  "issues": [
+    {
+      "familyCode": "EDLS",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 18,
+      "sourceColumn": 5,
+      "value": "150,00 0",
+      "reason": "Malformed or unpublished price; not coerced"
+    },
+    {
+      "familyCode": "EDLS",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 19,
+      "sourceColumn": 5,
+      "value": "167,26 0",
+      "reason": "Malformed or unpublished price; not coerced"
+    },
+    {
+      "familyCode": "EDLS",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 20,
+      "sourceColumn": 5,
+      "value": "214,13 0",
+      "reason": "Malformed or unpublished price; not coerced"
+    },
+    {
+      "familyCode": "EBL",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 77,
+      "sourceColumn": 2,
+      "value": "2,97",
+      "reason": "Price topology requires normalization review"
+    },
+    {
+      "familyCode": "EBLS",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi Nota: verniciato bianco RAL9016 + 20%. Dimensioni",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EDE-FB",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 15,
+      "sourceColumn": 3,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review"
+    },
+    {
+      "familyCode": "EDQMC",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 17,
+      "sourceColumn": 3,
+      "value": "5,93  ",
+      "reason": "Price topology requires normalization review"
+    },
+    {
+      "familyCode": "EDQMQ",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 17,
+      "sourceColumn": 3,
+      "value": "5,93  ",
+      "reason": "Price topology requires normalization review"
+    },
+    {
+      "familyCode": "EGA1-4",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi EGA1 Verniciato bianco RAL 9016 +20%. H ",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EGA1-4",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 15,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi EGA3 Verniciato bianco RAL 9016 +20% H ",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EGA6",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi Verniciato bianco RAL 9016 +20%. H ",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EGQ-PUSH",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi Verniciato bianco RAL 9016 + 20%. H ",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EGQ-PUSH",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 15,
+      "sourceColumn": 1,
+      "value": "Listino prezzi griglia versione da controsoffitto a quadrotti. Verniciato bianco RAL 9016 + 20%.",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EGQ1-4",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi EGQ1 Nota: verniciato bianco RAL 9016 + 20%. H ",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EGQR-PUSH",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi Verniciato bianco RAL 9016 + 20%",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "ETA",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/eta-griglie-di-transito-in-alluminio?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 3,
+      "sourceColumn": 1,
+      "value": "Listino Prezzi Nota: verniciato bianco RAL 9016 + 20%. Dimensioni LxH",
+      "reason": "Published finish surcharge excluded from base price; separate option required"
+    },
+    {
+      "familyCode": "EASY",
+      "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria?locale=it",
+      "sheet": "Worksheet",
+      "sourceRow": 14,
+      "sourceColumn": 2,
+      "value": "15,58",
+      "reason": "Price topology requires normalization review"
+    },
+    {
+      "familyCode": "ERDR",
+      "reason": "Conflicting published SKU prices",
+      "price": {
+        "id": "ecoclima-56a6a4d250f4adea03a1a9a0",
+        "familyCode": "ERDR",
+        "kind": "accessory",
+        "modelCode": "ERDR",
+        "label": "ERDR",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": 250,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": "250",
+        "unitPriceCents": 12456,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+          "sourceType": "excel",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:29.218097+00:00",
+          "importedAt": "2026-10-03T23:02:29.218097+00:00",
+          "sha256": "5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20",
+          "page": null
+        },
+        "sourceTable": 0,
+        "sourceRow": 28,
+        "sourceColumn": 3,
+        "originalPrice": "124,56"
+      },
+      "previousPrice": {
+        "id": "ecoclima-56a6a4d250f4adea03a1a9a0",
+        "familyCode": "ERDR",
+        "kind": "accessory",
+        "modelCode": "ERDR",
+        "label": "ERDR",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": 250,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": "250",
+        "unitPriceCents": 10870,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+          "sourceType": "excel",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:29.218097+00:00",
+          "importedAt": "2026-10-03T23:02:29.218097+00:00",
+          "sha256": "5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20",
+          "page": null
+        },
+        "sourceTable": 0,
+        "sourceRow": 24,
+        "sourceColumn": 3,
+        "originalPrice": "108,70"
+      }
+    },
+    {
+      "familyCode": "EVALI",
+      "reason": "Conflicting published SKU prices",
+      "price": {
+        "id": "ecoclima-a9b2fe9106c9223d9f2854de",
+        "familyCode": "EVALI",
+        "kind": "accessory",
+        "modelCode": "EMTD",
+        "label": "EMTD",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": null,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": null,
+        "unitPriceCents": 1631,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili?locale=it",
+          "sourceType": "excel",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:29.385134+00:00",
+          "importedAt": "2026-10-03T23:02:29.385134+00:00",
+          "sha256": "6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29",
+          "page": null
+        },
+        "sourceTable": 0,
+        "sourceRow": 23,
+        "sourceColumn": 3,
+        "originalPrice": "16,31"
+      },
+      "previousPrice": {
+        "id": "ecoclima-a9b2fe9106c9223d9f2854de",
+        "familyCode": "EVALI",
+        "kind": "accessory",
+        "modelCode": "EMTD",
+        "label": "EMTD",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": null,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": null,
+        "unitPriceCents": 1814,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili?locale=it",
+          "sourceType": "excel",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:29.385134+00:00",
+          "importedAt": "2026-10-03T23:02:29.385134+00:00",
+          "sha256": "6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29",
+          "page": null
+        },
+        "sourceTable": 0,
+        "sourceRow": 22,
+        "sourceColumn": 3,
+        "originalPrice": "18,14"
+      }
+    },
+    {
+      "familyCode": "EDLS",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "sheet": "Official HTML table",
+      "sourceRow": 5,
+      "sourceColumn": 5,
+      "value": "150,00 0",
+      "reason": "Malformed or unpublished price; not coerced",
+      "sourceTable": 11
+    },
+    {
+      "familyCode": "EDLS",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "sheet": "Official HTML table",
+      "sourceRow": 6,
+      "sourceColumn": 5,
+      "value": "167,26 0",
+      "reason": "Malformed or unpublished price; not coerced",
+      "sourceTable": 11
+    },
+    {
+      "familyCode": "EDLS",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 5,
+      "value": "214,13 0",
+      "reason": "Malformed or unpublished price; not coerced",
+      "sourceTable": 11
+    },
+    {
+      "familyCode": "EDE-FB",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+      "sheet": "Official HTML table",
+      "sourceRow": 5,
+      "sourceColumn": 3,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDE-FB",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+      "sheet": "Official HTML table",
+      "sourceRow": 5,
+      "sourceColumn": 4,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDE-FB",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+      "sheet": "Official HTML table",
+      "sourceRow": 5,
+      "sourceColumn": 5,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDE-FB",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+      "sheet": "Official HTML table",
+      "sourceRow": 5,
+      "sourceColumn": 6,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDQMQ",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 3,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDQMQ",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 4,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDQMQ",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 5,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDQMC",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 3,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDQMC",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 4,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EDQMC",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare",
+      "sheet": "Official HTML table",
+      "sourceRow": 7,
+      "sourceColumn": 5,
+      "value": "5,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EBL",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse",
+      "sheet": "Official HTML table",
+      "sourceRow": 3,
+      "sourceColumn": 2,
+      "value": "2,97",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 7
+    },
+    {
+      "familyCode": "EGQIF",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
+      "sheet": "Official HTML table",
+      "sourceRow": 2,
+      "sourceColumn": 2,
+      "value": "30,90",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 4
+    },
+    {
+      "familyCode": "EGFF",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egff-griglie-forellinate-senza-cornice",
+      "sheet": "Official HTML table",
+      "sourceRow": 2,
+      "sourceColumn": 2,
+      "value": "30,90",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 5
+    },
+    {
+      "familyCode": "EASY",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria",
+      "sheet": "Official HTML table",
+      "sourceRow": 6,
+      "sourceColumn": 2,
+      "value": "15,58",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 2
+    },
+    {
+      "familyCode": "EDR",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere",
+      "sheet": "Official HTML table",
+      "sourceRow": 2,
+      "sourceColumn": 2,
+      "value": "15,91",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 3
+    },
+    {
+      "familyCode": "EDR",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere",
+      "sheet": "Official HTML table",
+      "sourceRow": 3,
+      "sourceColumn": 2,
+      "value": "13,89",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 3
+    },
+    {
+      "familyCode": "EDR",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere",
+      "sheet": "Official HTML table",
+      "sourceRow": 4,
+      "sourceColumn": 2,
+      "value": "15,38",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 3
+    },
+    {
+      "familyCode": "EDR",
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere",
+      "sheet": "Official HTML table",
+      "sourceRow": 5,
+      "sourceColumn": 2,
+      "value": "3,93",
+      "reason": "Price topology requires normalization review",
+      "sourceTable": 3
+    },
+    {
+      "familyCode": "ERDR",
+      "reason": "HTML differs from preferred workbook SKU; retained workbook price",
+      "price": {
+        "id": "ecoclima-56a6a4d250f4adea03a1a9a0",
+        "familyCode": "ERDR",
+        "kind": "accessory",
+        "modelCode": "ERDR",
+        "label": "ERDR",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": 250,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": "250",
+        "unitPriceCents": 12456,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare",
+          "sourceType": "html",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:00.175655+00:00",
+          "importedAt": "2026-10-03T23:02:00.175655+00:00",
+          "sha256": "bc9071fe2eaeba133ae22201fa5036e15bc1d479c9edc20c4d2d4ac586c67698",
+          "page": null
+        },
+        "sourceTable": 2,
+        "sourceRow": 25,
+        "sourceColumn": 3,
+        "originalPrice": "124,56"
+      },
+      "previousPrice": {
+        "id": "ecoclima-56a6a4d250f4adea03a1a9a0",
+        "familyCode": "ERDR",
+        "kind": "accessory",
+        "modelCode": "ERDR",
+        "label": "ERDR",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": 250,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": "250",
+        "unitPriceCents": 10870,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+          "sourceType": "excel",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:29.218097+00:00",
+          "importedAt": "2026-10-03T23:02:29.218097+00:00",
+          "sha256": "5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20",
+          "page": null
+        },
+        "sourceTable": 0,
+        "sourceRow": 24,
+        "sourceColumn": 3,
+        "originalPrice": "108,70"
+      }
+    },
+    {
+      "familyCode": "EVALI",
+      "reason": "HTML differs from preferred workbook SKU; retained workbook price",
+      "price": {
+        "id": "ecoclima-a9b2fe9106c9223d9f2854de",
+        "familyCode": "EVALI",
+        "kind": "accessory",
+        "modelCode": "EMTD",
+        "label": "EMTD",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": null,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": null,
+        "unitPriceCents": 1631,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili",
+          "sourceType": "html",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:05.908767+00:00",
+          "importedAt": "2026-10-03T23:02:05.908767+00:00",
+          "sha256": "acc190c465679e202a23934971e00a7c08f634ca2963f224be55c26eb17af7ae",
+          "page": null
+        },
+        "sourceTable": 2,
+        "sourceRow": 8,
+        "sourceColumn": 3,
+        "originalPrice": "16,31"
+      },
+      "previousPrice": {
+        "id": "ecoclima-a9b2fe9106c9223d9f2854de",
+        "familyCode": "EVALI",
+        "kind": "accessory",
+        "modelCode": "EMTD",
+        "label": "EMTD",
+        "dimensions": {
+          "lengthMm": null,
+          "widthMm": null,
+          "heightMm": null,
+          "diameterMm": null,
+          "slotCount": null,
+          "slotWidthMm": null
+        },
+        "colorCode": null,
+        "connectionPosition": null,
+        "catalogSizeCode": null,
+        "unitPriceCents": 1814,
+        "currency": "EUR",
+        "sourceMetadata": {
+          "manufacturer": "Ecoclima",
+          "sourceUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili?locale=it",
+          "sourceType": "excel",
+          "documentRevision": "15-2026",
+          "retrievedAt": "2026-10-03T23:02:29.385134+00:00",
+          "importedAt": "2026-10-03T23:02:29.385134+00:00",
+          "sha256": "6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29",
+          "page": null
+        },
+        "sourceTable": 0,
+        "sourceRow": 22,
+        "sourceColumn": 3,
+        "originalPrice": "18,14"
+      }
+    }
+  ],
+  "added": [],
+  "removed": [],
+  "changed": []
+}

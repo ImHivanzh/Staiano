@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm",
+  "code": "EBIA",
+  "slug": "ebia-bocchette-industriali-in-alluminio-passo-40-mm",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:16 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ebia-bocchette-industriali-in-alluminio-passo-40-mm.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:16 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:16.994398+00:00",
+      "filename": "EBIA-ec8b8c9c.xlsx",
+      "bytes": 8320,
+      "sha256": "9a9deda987a88fe969cef40f0d43ca079d4158e4d081b28460b109d1b5fb43c2",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 208
+      }
+    }
+  ]
+}

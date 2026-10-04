@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica",
+  "code": "EAMV",
+  "slug": "eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.995957+00:00",
+      "filename": "EAMV-0da616b8.xlsx",
+      "bytes": 7046,
+      "sha256": "5b876b69be61d6cc6af5837041243f358c1f654a16d213e181530c31119c3f1e",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 42
+      }
+    }
+  ]
+}

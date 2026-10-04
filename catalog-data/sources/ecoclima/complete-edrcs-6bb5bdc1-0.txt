@@ -1,0 +1,149 @@
+DIFFUSORI TERMOSTATICI
+A GEOMETRIA VARIABILE
+Serie EDRCS THERM - EDRCS-PQR THERM
+Diffusori a geometria variabile con attuatore termostatico ed equalizzatore.
+La regolazione delle pale dei diffusori avviene in modo automatico, senza l’ausilio di alimentazione elettrica, mediante un
+attuatore termostatico costituito da speciali materiali a memoria di forma in nichel-titanio che variano la loro lunghezza in base
+alla temperatura dell’aria in ingresso al diffusore con conseguente apertura o chiusura delle pale.
+Le pale imprimono all’aria un movimento elicoidale e nel contempo forniscono la direzione di lancio.
+Nel collo dei diffusori è presente una scala graduata che indica l’angolo assunto della pala in fase di riscaldamento o
+condizionamento. Disponibile anche versione da controsoffitto a quadrotti 600x600 mm.
+CARATTERISTICHE
+- Materiale: struttura in alluminio con alette in acciaio.
+- Finitura superficiale standard: verniciato bianco RAL 9010.
+- Fissaggio: con viti laterali sul collo del diffusore.
+IMPIEGO
+Diffusori adatti per riscaldare e raffreddare grandi ambienti che necessitano un’altezza d’installazione elevata da 2 a 11 metri, con
+differenze di temperatura tra l’aria di mandata e la temperatura dell’ambiente da -12 °C a +30 °C. Il montaggio può avvenire sia a
+canale che a soffitto, ERDCS-PQR THERM installazione a controsoffitto con pannelli modulari 600x600.
+VARIANTI
+-EDRCS THERM: Diffusori termostatici a geometria variabile con equalizzatore;
+-EDRCS-PQR THERM: Diffusori termostatici a geometria variabile con equalizzatore su pannello quadrato 595x595 mm.
+NOTA IMPORTANTE
+I diffusori EDRCS THERM-PQR possono esser forniti senza raccordo e equalizzatore. Non viene garantita la possibilità di installarli.
+PAG 1 - DIFFUSORI A GEOMETRIA VARIABILE
+SERIE EDRCS THERM - EDRCS-PQR THERM - AGGIORNAMENTO 01/2021
+
+NOMENCLATURA CODICE
+-EDRCS THERM: Diffusori termostatici a geometria variabile con equalizzatore;
+-EDRCS-PQR THERM: Diffusori termostatici a geometria variabile con equalizzatore su pannello
+quadrato 595x595 mm.
+EDRCS THERM: 250 - 315 - 400 - 500 - 630
+EDRCS-PQR THERM: 250 - 315
+EDRCS THERM 500
+DIMENSIONI
+modello sezione efficace EDRCS THERM EDRCS-PQR THERM
+m2 Ø N Ø C Ø E H Ø N DxD Ø E H Ø B H1
+250 0,0569 248 400 298 205 248 595 298 205 286 145
+315 0,0902 313 500 398 230 313 595 398 230 352 145
+400 0,1243 398 615 465 270 - - - - 436 200
+500 0,1947 498 780 565 320 - - - - - -
+630 0,3095 628 935 665 390 - - - - - -
+tutte le dimensioni sono espresse in mm
+PAG 2 - DIFFUSORI A GEOMETRIA VARIABILE
+SERIE EDRCS THERM - EDRCS-PQR THERM - AGGIORNAMENTO 01/2021
+
+v
+FUNZIONAMENTO
+In funzione dell’angolo di regolazione delle alette si ottengono differenti tipi di immissione dell’aria.
+L’angolo di inclinazione di 0° corrisponde ad alette verticali.
+Con montaggio a filo soffitto e pale con angolo maggiore di 50°, si ottiene un “effetto coanda” ovvero l’allungamento del lancio
+orizzontale.
+PAG 3 - DIFFUSORI A GEOMETRIA VARIABILE
+SERIE EDRCS THERM - EDRCS-PQR THERM - AGGIORNAMENTO 01/2021
+
+DATI DI FUNZIONAMENTO IN RISCALDAMENTO CON ANGOLO DELLA PALA A 35°
+EDRCS THERM - EDRCS-PQ THERM Riscaldamento 35°
+Modello m3/h 410 630 850 1000 1300
+EDRCS THERM Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2 3,1 4,1 4,9 6,3
+EDRCS-PQR THERM 250 L(m) 2,2 1,8 3,1 2,5 4 3,3 4,6 3,7 5,7 4,7
+Pa 5 12 22 30 51
+dB(A) 37 49 58 63 70
+EDRCS THERM m3/h 650 1000 1350 1590 2060
+Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2 3,1 4,2 4,9 6,3
+315
+EDRCS-PQR THERM L(m) 2,6 2,1 4,1 3,3 5,5 4,5 6,4 5,3 8,3 6,8
+Pa 5 12 22 31 52
+dB(A) 39 51 60 65 72
+EDRCS THERM m3/h 1040 1600 2160 2540 3290
+Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2,3 3,6 4,8 5,7 7,4
+400
+L(m) 2,8 2,3 4,3 3,5 5,9 4,8 6,9 5,7 8,9 7,3
+Pa 5 12 22 31 52
+dB(A) 41 54 63 67 75
+EDRCS THERM m3/h 1640 2530 3425 4020 5210
+Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2,3 3,6 4,9 5,7 7,4
+500
+L(m) 3,2 2,6 5,1 4,1 6,9 5,6 8,2 6,7 10,7 8,7
+Pa 5 12 22 31 52
+dB(A) 42 55 64 68 76
+EDRCS THERM m3/h 2570 3970 5370 6300 8170
+Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2,3 3,6 4,8 5,7 7,3
+630
+L(m) 3,4 2,8 5,3 4,3 7,2 5,9 8,5 6,9 11 9
+Pa 5 12 22 31 52
+dB(A) 42 55 64 69 76
+Dati riferiti a una velocità terminale Vt=0.25 m/s e con un
+differenziale di temperatura di 10 e 15 °C
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio in metri
+dB(A): indice di rumorosità
+PAG 4 - DIFFUSORI A GEOMETRIA VARIABILE
+SERIE EDRCS THERM - EDRCS-PQR THERM - AGGIORNAMENTO 01/2021
+
+DATI DI FUNZIONAMENTO IN RAFFREDDAMENTO CON ANGOLO DELLA PALA A 46°
+EDRCS THERM - EDRCS-PQ THERM Raffrescamento 46°
+Modello m3/h 410 630 850 1000 1300
+EDRCS THERM Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2 3,1 4,1 4,9 6,3
+250 L(m) 2,4 2,9 3,8 4,5 5,2 6 6,2 7,3 8,1 9,6
+EDRCS-PQR THERM Pa 14 32 58 81 137
+dB(A) 39 51 60 65 72
+EDRCS THERM m3/h 650 1000 1350 1590 2060
+Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2 3,1 4,2 4,9 6,4
+315
+L(m) 2,4 2,8 3,8 4,4 5,2 6,1 6,2 7,2 8,1 9,5
+EDRCS-PQR THERM Pa 15 36 66 91 153
+dB(A) 41 53 62 67 74
+EDRCS THERM m3/h 1040 1600 2160 2540 3290
+Δt (°C) 10 15 10 15 10 15 10 15 10 15
+Vk (m/s) 2,3 3,6 4,8 5,7 7,4
+400
+L(m) 2,3 2,7 3,6 4,2 4,9 5,8 5,8 6,9 7,6 8,9
+Pa 16 37 67 93 157
+dB(A) 43 56 65 69 76
+EDRCS THERM m3/h 1640 2530 3425 - -
+Δt (°C) 10 15 10 15 10 15 - - - -
+Vk (m/s) 2,3 3,6 4,9 - -
+500
+L(m) 5 5,8 7,9 9,2 10,8 12,7 - - - -
+Pa 16 38 70 - -
+dB(A) 44 57 66 - -
+EDRCS THERM m3/h 2570 3970 - - -
+Δt (°C) 10 15 10 15 - - - - - -
+Vk (m/s) 2,3 3,6 - - -
+630
+L(m) 6,2 7,3 10 11,8 - - - - - -
+Pa 16 38 - - -
+dB(A) 44 57 - - -
+Dati riferiti a una velocità terminale Vt=0.25 m/s e con un
+differenziale di temperatura di 10 e 15 °C
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio in metri
+dB(A): indice di rumorosità
+PAG 5 - DIFFUSORI A GEOMETRIA VARIABILE
+SERIE EDRCS THERM - EDRCS-PQR THERM - AGGIORNAMENTO 01/2021
+
+ESEMPIO DI INSTALLAZIONE
+PAG 6 - DIFFUSORI A GEOMETRIA VARIABILE
+SERIE EDRCS THERM - EDRCS-PQR THERM - AGGIORNAMENTO 01/2021

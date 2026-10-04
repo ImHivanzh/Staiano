@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016",
+  "code": "EBOX",
+  "slug": "ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.388220+00:00",
+      "filename": "EBOX-8bd4450e.xlsx",
+      "bytes": 6437,
+      "sha256": "63701b563f12f264a2298d6f6585a665181cb15e565c401948bf5647e6b53f5d",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 2
+      }
+    }
+  ]
+}

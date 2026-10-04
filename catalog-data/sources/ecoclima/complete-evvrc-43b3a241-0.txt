@@ -1,0 +1,87 @@
+VALVOLE DI
+VENTILAZIONE PER
+L’ESTRAZIONE DELL’ARIA
+Serie EVVRC - EVVRB
+Valvole di ripresa costruite in acciaio verniciato di colore bianco, con cono
+centrale regolabile.
+CARATTERISTICHE
+Materiale: acciaio.
+Finitura EVVRC: verniciato bianco RAL 9010.
+Finitura EVVRB: verniciato bianco RAL 9016.
+Installazione: con viti non apparenti.
+IMPIEGO
+Montati a soffitto, direttamente a canale, per la ripresa dell’aria in locali di servizio, bagni e negozi.
+NOMENCLATURA CODICE
+EVVRC Valvole di ventilazione per l’estrazione dell'aria verniciate bianco RAL 9010.
+EVVRB Valvole di ventilazione per l’estrazione dell'aria verniciate bianco RAL 9016.
+Grandezza: 80-100-125-150-160-200
+EVVRC 150
+DIMENSIONI
+Modello A (mm) B (mm) C (mm) D (mm) E (mm)
+EVVRC - EVVRB 80 116 60 38 105 79
+EVVRC - EVVRB 100 140 76 38 125 99
+EVVRC - EVVRB 125 166 100 45 150 124
+EVVRC - EVVRB 150 203 120 50 175 149
+EVVRC - EVVRB 160 210 130 50 186 159
+EVVRC - EVVRB 200 250 160 56 225 199
+PAG 1 - VALVOLE DI VENTILAZIONE PER L’ESTRAZINE DELL’ARIA
+SERIE EVVRC - EVVRB - AGGIORNAMENTO 01/2024
+
+DATI DI FUNZIONAMENTO
+Apertura “S” Perdita di
+Modello m³/h dB(A)
+(mm) carico (Pa)
+3 35 22 Vk: velocità efficace (m/s)
+40 m³/h: portata
+0 80 31
+Pa: perdite di carico in Pascal
+EVVRC - EVVRB 80 9 40 30 L(m): lancio in metri calcolato con
+60 6 55 32 installazione a filo soffitto e velocità
+terminale 0,25 m/s
+3 100 38
+dB(A): indice di rumorosità
+8 35 25
+80 6 55 30
+4 85 34
+EVVRC - EVVRB 100
+10 58 33
+100
+8 72 36
+120 10 68 36
+6 35 23
+100 3 50 26
+0 90 34
+15 28 25
+12 34 27
+EVVRC - EVVRB 125 140 9 45 28
+6 65 33
+3 100 36
+15 45 32
+180 12 50 33
+9 70 35
+10 25 20
+5 42 23
+160
+2 70 30
+0 90 35
+10 40 24
+EVVRC - EVVRB 150 / 160
+200 5 68 30
+2 95 35
+15 38 26
+250 10 59 30
+5 95 36
+20 25 25
+15 35 27
+300 12 50 30
+9 68 32
+6 100 35
+EVVRC - EVVRB 200
+20 35 30
+350 15 55 33
+12 70 35
+20 50 34
+400
+15 65 36
+PAG 2 - VALVOLE DI VENTILAZIONE PER L’ESTRAZINE DELL’ARIA
+SERIE EVVRC - EVVRB - AGGIORNAMENTO 01/2024

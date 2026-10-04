@@ -1,14 +1,60 @@
 # Staiano HVAC
 
-Configuratore HVAC locale per Termoidraulica Staiano. Node.js >=22.13 (verificato con 24.14).
+Configuratore HVAC locale per Termoidraulica Staiano.
+
+Accesso interno: <https://hvac.internal.staianopoint.com>. Il login richiede
+la password amministrativa impostata sul server. Progetti e cataloghi restano
+sul dispositivo; non è richiesto un account cloud.
+
+## Avvio
+
+Node.js >=22.13 (verificato con 24.14):
 
 ```powershell
 npm ci
 npm run dev
 ```
 
-Aprire http://127.0.0.1:3015. Per avvio produzione: `npm run build`, poi `npm start`.
-`avvia.bat` avvia il server locale senza download quando le dipendenze sono installate.
+La prima configurazione dell'accesso sul computer che esegue Next:
+`node scripts/configure-access.mjs --stdin`. Il prompt nasconde l'input; il file
+privato `.cache/app-auth.json` contiene solo hash scrypt e chiave di sessione.
+Cambio password con `--stdin --rotate`; revoca delle sole sessioni con
+`--rotate-session-only`. Non passare la password come argomento o variabile shell.
+Per avvio produzione: `npm run build`, poi `avvia-produzione.bat`.
+
+## Progettazione
+
+Nuovo progetto, stanza manuale con misure reali, oppure importazione DXF/PDF/immagini/DWG.
+Nel 3D: Radiatori, Climatizzatori, Bocchette, Macchina manuale e Plenum.
+Scegli una stanza, un modello reale e inserisci l'apparecchio in pochi passaggi.
+L'inspector mostra le proprietà tecniche quando le apri; orbit, sezione,
+materiali, immagini render e modelli 3D ufficiali sono disponibili nel viewer.
+
+I radiatori includono 466 modelli Cordivari, Global, Zehnder e Lazzarini,
+con foto e finiture documentate. Corpi, valvole, detentori e copritubi hanno
+selettori distinti secondo le palette ufficiali del modello.
+
+I terminali Ecoclima raccolgono 127 famiglie, 1778 varianti e 6788 punti
+originali. Le immagini locali mostrano il profilo scelto. I dati incompleti
+restano espliciti e non entrano nelle raccomandazioni automatiche.
+Il configuratore ripartisce la portata massima dichiarata tra gli ambienti,
+mostra i metri lineari e permette di scegliere anche le griglie di ripresa.
+
+Ogni sistema canalizzato conserva macchina, ambienti e bocchette indipendenti.
+La vista plenum mostra l'attacco della macchina selezionata, le connessioni
+prescritte dalle schede Ecoclima e le dimensioni di progetto. Il corpo del
+plenum su misura non equivale a un accessorio OEM. Il listino separa gli
+articoli Ecoclima originali, i ponti, i kit e le righe ancora da quotare.
+
+Il dossier PDF include viste generate dal vero modello 3D e la distinta Ecoclima.
+Le finiture PBR sono illustrative. In `docs/REALISTIC-3D.md`, fonti, limiti e prove.
+Cataloghi e foto ufficiali locali hanno hash e provenienza nei rispettivi manifest.
+Prima della redistribuzione pubblica, verificare i diritti dei singoli asset.
+
+I progetti sono in IndexedDB nel browser corrente. Esportare `.hvacproj` per
+backup o trasferimento. Il browser separa archivi tra `127.0.0.1` e HTTPS.
+
+## Verifica
 
 ```powershell
 npm run typecheck
@@ -17,44 +63,9 @@ npm test
 npm run test:e2e
 ```
 
-Creare progetto, scegliere disegno manuale, inserire stanza con misure nette o
-chiudere un contorno di muri. Altezza suggerita esplicita: 2,70 m, modificabile.
-I progetti sono nel browser (IndexedDB): esportare `.hvacproj` per il backup
-portabile. Cancellare i dati del browser cancella l'archivio locale.
-
-Architettura e limiti in ARCHITECTURE.md; stato milestone in ROADMAP.md.
-
-Impianti split/mono/multi e canalizzati Daikin, Mitsubishi e Gree; radiatori
-Cordivari/Global; terminali Ecoclima con gallery e dati originali. Formule,
-revisioni e controlli separati consultabili. Dossier PDF dalla toolbar;
-esempio reale in `output/pdf`.
-
-Il wizard importa DWG/DXF/PDF/immagini con scelta layer, assi e calibrazione.
-DWG usa il parser locale MIT; versioni o proxy non supportati richiedono
-esportazione DXF ASCII o disegno manuale. Formati, sicurezza e limiti in
-`docs/PLAN_IMPORT.md` e `docs/DWG.md`.
-
-In `Cataloghi tecnici`: 18 modelli Ardesia ufficiali convertiti in GLB locale.
-Hash e fonti registrati; quote mesh discordanti esplicite, escluse dalla posa
-verificata. Verificare diritti prima della redistribuzione pubblica degli asset.
-
-Comandi manutenzione: `catalog:update:cordivari`, `catalog:update:global`,
-`catalog:update:ecoclima`, `catalog:update:hvac`, `catalog:update:split`.
-Producono staging/report; `--apply` salva dopo revisione delle differenze.
-Fonti riacquisibili con gli script separati in `scripts/catalog-import`.
-Python non serve al runtime. Worker PDF locale sincronizzato da `postinstall`.
-Test browser con Edge (`channel: msedge`); adattare Playwright per altri browser.
-
-HTTPS interno pronto: https://hvac.internal.staianopoint.com . Caddy usa il
-wildcard Let’s Encrypt esistente e ne mantiene il rinnovo automatico. Avvio
-produzione senza finestra: avvia-produzione.bat . Dettagli deploy/caddy/README.md.
-
-DWG nativo: parser MIT ACadSharp 3.8.0 con .NET 8 o superiore sul server, runtime
-distribuito e hash/notice conservati. Ricompilazione: `npm run dwg:build`. ODA commerciale resta
-disattivato. Per formati/proxy non leggibili il wizard suggerisce DXF/manuale.
-
-Radiatori: ricerca esatta di potenza minima compatibile con i vincoli, anche
-fra famiglie quando non bloccate. Il worker continua fino alla prova completa
-oppure all’annullamento esplicito; nessun risultato provvisorio applicabile.
-Le combinazioni complesse possono richiedere tempo. Marca/famiglia libere;
-quantità opzionale con default 1 esplicito, dati salvati ripristinati al reload.
+Stato verificato: `VERIFICATION.md`. Architettura: `ARCHITECTURE.md`.
+DWG: `docs/DWG.md`. HTTPS interno e avvio: `deploy/caddy/README.md`.
+L'importatore dati produce staging/report; `--apply` salva la revisione dopo
+aver controllato la differenza. Fonti riacquisibili in `scripts/catalog-import`.
+Node esegue i calcoli locali e PDF. DWG nativo MIT ACadSharp richiede .NET 8+.
+Ricompilazione del parser: `npm run dwg:build`. ODA commerciale disattivato.

@@ -1,0 +1,193 @@
+TUBO AD
+INDUZIONE
+Serie ETIM
+Canalizzazioni a induzioni a sezione circolare. Le forature, disposte sulla lunghezza del canale, permettono un elevato effetto
+induttivo generando microvortici e conseguentemente una miscelazione ottimale dell’aria immessa.
+Le canalizzazioni standard sono a sezione circolare e vengono realizzate a tronchi di circa 1mt con cartelle di accoppiamento
+e rinforzo a 90° sulle estremità. Le forature sono disposte sulla lunghezza del canale e vengono realizzate con diametri e
+geometrie specifiche per ogni impianto o e al contesto ambientale in cui è inserito. L’alto numero di configurazioni possibili
+rendono il sistema a induzione una soluzione vantaggiosa per moltissime applicazioni, in ogni contesto civile e industriale.
+I canali a induzione generano un elevato effetto induttivo tra l’aria immessa e quella in ambiente grazie ad un sistema con
+micro-forature di vario diametro, distanza e posizione. La tubazione diventa così il diffusore dell’impianto grazie alla doppia
+funzionalità dei fori.
+L’aria in uscita dai fori genera turbolenze e micro vortici in prossimità del canale; di conseguenza l’aria immessa si miscela con
+grandi quantità di quella in ambiente che viene quindi raffreddata o riscaldata più velocemente rispetto ai sistemi tradizionali.
+L’aria pretrattata in prossimità del canale viene spinta nella direzione ed alla distanza necessaria, mettendo in moto grandi
+quantità d’aria in ambiente. L’opportuno dimensionamento dei fori consente di impostare la velocità dell’aria in funzione dei
+requisiti di abitabilità dei vari locali, nel rispetto delle normative Italiane ed Europee.
+La geometria, la dimensione dei fori e gli accessori (curve, tee, tramogge, tappi) vengono configurate, in collaborazione con il
+progettista sulla base delle specifiche del progetto.
+CARATTERISTICHE
+• Tubazione in lamiera zincata DX51D con spessori:
+- Ø 150-500 mm: 6/10 (8/10 a richiesta);
+- Ø 600-900 mm: 8/10;
+- Ø 1000-1400 mm: 10/10;
+• Lunghezza: 1 m;
+• Accoppiamento tramite cartelle e rinforzo a 90°
+• Giunzioni tramite collari a omega;
+• Limiti di utilizzo con velocità di uscita tra i 3,5 e i 7 m/s;
+• Altezza di installazione:
+- da 2,5 m a 3,5 m (SISTEMA A)
+- da 3,5 a 10 m (SISTEMA B)
+- da 9 a 18 m (SISTEMA C)
+A RICHIESTA
+- Versione ETIM-D: canali semicircolari con costi di trasporto ridotti, collegamento tramite moduli ad incastro.
+- In lamiera preverniciata a polveri con RAL a scelta;
+- In acciaio inox 304 o inox 316 o in rame;
+- Trattamento anticondensa applicabile alle superfici di cui sopra;
+- Versione ETIM-O: aperti per ridurre i costi di trasporto e di assemblaggio grazie al sistema 10 seconds;
+PAG 1 - TUBO AD INDUZIONE
+SERIE ETIM - AGGIORNAMENTO 0 9/2025
+
+SISTEMA A
+Installazione centrata per
+ambienti altezza dai 2,5
+mt fino a 3,5 mt. Adatto
+all’impiego in contesti con
+requisiti di abitabilità come
+uffici, negozi.
+H = 3 m;
+L = 7 m;
+SISTEMA B
+Installazione centrata per
+ambienti altezza dai 3,5
+mt fino a 10 mt. Adatto
+sia a contesti civili (centri
+commerciali, supermercati,
+palestre, hotels, …) che
+industriali (capannoni,
+magazzini, …).
+H = 9 m;
+L = 18 m;
+SISTEMA C
+Installazione con diffusione
+asimmetrica a creare
+barriere termiche per
+trattamento vetrate ecc..
+H = 9 m;
+L = 18 m;
+N.B. Diagrammi simulati con velocità residua 0,2 m a 1800 mm da terra in modo più conservativo rispetto alla UNI 10339 e UNI
+EN 13779.
+PAG 2 - TUBO AD INDUZIONE
+SERIE ETIM - AGGIORNAMENTO 0 9/2025
+
+PERDITE DI CARICO CANALI CIRCOLARI
+Ø 200 300 400 500 600 700 800 900 1000 1100
+Portate Pa/m
+500 10
+600 21
+700 32
+800 38
+1100 10
+Limite di utilizzo del tubo a
+1200 14
+1300 17
+induzione in metallo è con
+1400 21
+1500 25 v elocità compr ese tra circa
+1600 29
+3,5 e i 7 m/s
+1700 33
+1800 38 10
+1900 12
+2000 18
+2250 22
+2500 25
+2750 31
+3000 36 17
+3250 43 21
+3500 24
+3750 27 10
+4000 31 12
+4500 40 17
+5000 43 21 12
+5500 25 15
+6000 29 17 10
+6500 34 21 12
+7000 39 24 15
+8000 30 20 14
+9000 36 24 18 10
+10000 29 22 13
+11000 34 25 17
+12000 41 30 21 11
+13000 33 23 13
+14000 41 25 15
+15000 30 18
+16000 34 20
+17000 37 22
+18000 43 24
+19000 27
+20000 29
+21000 33
+22000 34
+23000 40
+24000 43
+PAG 3 - TUBO AD INDUZIONE
+SERIE ETIM - AGGIORNAMENTO 0 9/2025
+
+PESI E SPESSORI LAMIERA
+Ø mm Spessore lamiera mm Peso al metro lineare kg
+200 0,6 3,36
+250 0,6 4,16
+300 0,6 4,96
+350 0,6 5,77
+400 0,6 6,57
+450 0,6 7,37
+500 0,8 10,89
+550 0,8 11,96
+600 0,8 13,02
+650 0,8 14,09
+700 0,8 15,16
+750 0,8 16,23
+800 0,8 17,30
+850 0,8 18,36
+900 0,8 19,43
+950 0,8 20,50
+1000 1 26,96
+1050 1 22,63
+1100 1 29,63
+1150 1 30,96
+1200 1 32,29
+1250 1 33,63
+1300 1 34,96
+1350 1 36,30
+1400 1 37,63
+1450 1 38,97
+1500 1 40,30
+PAG 4 - TUBO AD INDUZIONE
+SERIE ETIM - AGGIORNAMENTO 0 9/2025
+
+INSTALLAZIONE
+Le canalizzazioni standard sono a sezione circolare e vengono realizzate a tronchi di circa 1mt con cartelle di accoppiamento
+e rinforzo a 90° sulle estremità. Le forature sono disposte sulla lunghezza del canale e vengono realizzate con diametri e
+geometrie specifiche per ogni impianto.
+L’installazione del prodotto deve essere effettuata in conformità alle normative vigenti, e a regola d’arte da personale
+professionalmente qualificato, come previsto dal DM 37/2008. Per “personale qualificato” si intende personale in possesso di
+specifiche competenze tecniche, adeguatamente formato per le operazioni di montaggio e messa in funzione.
+Il costruttore declina ogni responsabilità, sia contrattuale sia extracontrattuale, per danni derivanti da:
+• errori di installazione;
+• utilizzo, anche parziale, di componenti e/o accessori non forniti dal costruttore;
+• inosservanza delle istruzioni di installazione.
+Il prodotto deve essere utilizzato esclusivamente per gli scopi per cui è stato progettato.
+L’installazione può avvenire tramite tiranti, catene o barre filettate, va prestata particolare attenzione al dimensionamento, e alla
+successiva posa in opera, del sistema di ancoraggio che deve prevedere un opportuno coefficiente di sicurezza.
+VOCI DI CAPITOLATO
+Canali circolari microforati in acciaio zincato Z 200 / verniciato/ preverniciato / inox 304/inox316 secondo indicazioni per
+sistema di diffusione dell’aria per impianti di condizionamento, riscaldamento e ventilazione, tipo marca ECOCLIMA mod. ETIM.
+Serie standard ETIM-O.
+Le microforature sul canale di diametro e di maglia variabile devono essere realizzate in modo da generare un elevato effetto
+induttivo tra l’aria immessa e l’aria ambiente. Le canalizzazioni a sezione circolare devono essere realizzate in tronchi di
+lunghezza pari a 1 mt/1.5mt con cartelle di accoppiamento e rinforzo a 90° sulle estremità. Le forature devono essere disposte
+sulla lunghezza del canale e devono essere realizzate con diametri e geometrie specifiche in funzione della destinazione d’uso
+dei locali serviti.
+I canali microforati ad alta induzione ECOCLIMA sono già tarati in fabbrica per funzionare senza l’ausilio di serrande di taratura
+o sistemi di scarico aria; sono infatti progettati e costruiti con forometria appositamente calcolata, nel diametro, nel numero e
+nella posizione, per la distribuzione ottimale dell’aria.
+Sono compresi nel prezzo i seguenti pezzi speciali:
+- TRASFORMAZIONE QUADRO TONDO (se richiesto)
+- CURVA 90° (se richiesto)
+- FONDELLO (se richiesto)
+- RACCORDO A T (se richiesto)
+Il collegamento dei componenti deve avvenire tramite collare di giunzione con vite senza fine.
+PAG 5 - TUBO AD INDUZIONE
+SERIE ETIM - AGGIORNAMENTO 0 9/2025

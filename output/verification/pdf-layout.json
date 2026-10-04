@@ -1,46 +1,9 @@
-[
-  {
-    "page": 1,
-    "outside": 0
-  },
-  {
-    "page": 2,
-    "outside": 0
-  },
-  {
-    "page": 3,
-    "outside": 0
-  },
-  {
-    "page": 4,
-    "outside": 0
-  },
-  {
-    "page": 5,
-    "outside": 0
-  },
-  {
-    "page": 6,
-    "outside": 0
-  },
-  {
-    "page": 7,
-    "outside": 0
-  },
-  {
-    "page": 8,
-    "outside": 0
-  },
-  {
-    "page": 9,
-    "outside": 0
-  },
-  {
-    "page": 10,
-    "outside": 0
-  },
-  {
-    "page": 11,
-    "outside": 0
-  }
-]
+{
+  "artifact": "output/verification/autonomous-plenum-render.pdf",
+  "pageCount": 19,
+  "panoramaPages": 1,
+  "machinePlenumPages": 2,
+  "ecoclimaListPricePages": 1,
+  "charactersOutsidePage": 0,
+  "verification": "pdfplumber source text + crop-box bounds"
+}

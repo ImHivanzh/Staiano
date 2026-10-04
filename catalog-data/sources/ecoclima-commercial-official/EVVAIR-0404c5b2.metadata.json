@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
+  "code": "EVVAIR",
+  "slug": "evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.489269+00:00",
+      "filename": "EVVAIR-0404c5b2.xlsx",
+      "bytes": 6701,
+      "sha256": "13cc03d75e315dfeccd0e82848ca643b277d4fbfdfbec97d4f85b680ffeb6606",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 8
+      }
+    }
+  ]
+}

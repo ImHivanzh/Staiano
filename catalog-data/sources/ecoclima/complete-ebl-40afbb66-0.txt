@@ -1,0 +1,150 @@
+BOCCHE T TE
+LINEARI A BARRE
+ORIZZONTALI
+FISSE
+Serie EBL
+Le bocchette lineari serie EBL sono a barre orizzontali fisse in alluminio con
+profili a deflessione simmetrica a 0° o asimmetrica a 15°. Le alette hanno pas-
+so 12,5 mm. Sono idonee sia per la mandata che per la ripresa dell’aria e sono
+specificatamente progettate per l’installazione a parete, su fan coils o a pavi-
+mento (perimetro non portante).
+VARIANTI
+LE SERIE DISPONIBILI SONO:
+- EBL 20/0 bocchetta lineare a barre fisse con deflessione 0° - EBL 22/0 bocchetta lineare a barre fisse con deflessione 0° senza cornice
+(pacco alettato)
+- EBL 20/15 bocchetta lineare a barre fisse con deflessione 15°
+- EBL 22/15 bocchetta lineare a barre fisse con deflessione 15° senza
+- EBL 21/0 bocchetta lineare a barre fisse con deflessione 0° ed alette cornice (pacco alettato)
+posteriori singolarmente orientabili
+- EBL 21/15 bocchetta lineare a barre fisse con deflessione 15° ed alette
+posteriori singolarmente orientabili
+Ad eccezione dei modelli senza cornice, su richiesta le bocchette lineari serie EBL possono essere dotate di uno o due sportelli d’ispezione ciechi o grigliati. É possibile
+anche l’esecuzione con cornice perimetrale da 15 mm, su specifica esigenza del cliente.
+ACCESSORI
+LA SERIE EBL DISPONE DEI SEGUENTI ACCESSORI:
+Serranda di taratura in acciaio zincato con alette a movimento Controtelaia a murare in acciaio zincato
+SC CT
+contrapposto
+VOCI DI CAPITOLATO
+Bocchette lineari a barre orizzontali fisse con angolo di deflessione 0° (15°) Bocchette lineari a barre orizzontali fisse con angolo di deflessione 0° (15°)
+con cornice per installazione a parete, a soffitto o su fan coils, in alluminio senza cornice per installazione a parete, a soffitto o su fan coils, in alluminio
+anodizzato naturale anodizzato naturale
+Prodotto: Ecoclima tipo EBL 20 / 0 (15) Prodotto: Ecoclima tipo EBL 22 / 0 (15)
+Bocchette lineari a barre orizzontali fisse con angolo di deflessione 0° (15°)
+con cornice per installazione a parete, a soffitto o su fan coils, in alluminio ano-
+dizzato naturale con alette verticali posteriori singolarmente orientabili
+Prodotto: Ecoclima tipo EBL 21 / 0 (15)
+PAG 1 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE
+SERIE EBL - AGGIORNAMENTO 01/2019
+
+EBL bocchetta a barre orizzontali fisse in allumino anodizzato naturale.
+20 con cornice in alluminio.
+21 con cornice in alluminio ed alette verticali posteriori singolarmente orientabili.
+22 senza cornice (pacco alettato).
+Angolo di deflessione (0° o 15°)
+Larghezza L (mm)
+Altezza H (mm)
+EBL 20 0 260000 210500
+EBL
+COSTRUZIONE E DIMENSIONI
+- Materiale: alluminio - Altre finiture superficiali: Verniciatura nei colori RAL9016 o RAL a scelta
+- Finitura superficiale: anodizato naturale - Fissaggio: mediate clips (su richiesta con fori per viti)
+EBL DIMENSIONI FRONTALI 20/0 20/15 EBL 20/0 EBL 20/0 + SC
+EBL 20/15 EBL 20/15 + SC
+EBL DIMENSIONI FRONTALI 21/0 21/15 EBL 21/0 EBL 21/0 + SC
+EBL 21/15 EBL 21/15 + SC
+PAG 2 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE
+SERIE EBL - AGGIORNAMENTO 01/2019
+
+EBL DIMENSIONI FRONTALI 22/0 22/15 EBL 22/0 DETTAGLIO PROFILI
+EBL 22/15
+MONTAGGIO IN CONTINUITÀ:
+Lunghezza L (mm): L ≤ 2000
+in un solo pezzo
+L > 2000 ≤ 4000:
+in due parti di lunghezza L/2
+L > 4000:
+in un numero di parti centrali
+con lunghezza L = 2000
+e due parti terminali di lunghezza
+EBL MODULARI Lx > 1000 < 2000
+EBL MODULARI
+EBL MODULARI
+PAG 3 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE
+SERIE EBL - AGGIORNAMENTO 01/2019
+
+CARATTERISTICHE TECNICHE:
+Le bocchette di mandata serie EBL sono adatte all’applicazione in mandata e vengono installate a parete o su canale ad una altezza variabile tra i 4,5 e i 15 m.
+Le caratteristiche di funzionamento sono la velocità efficace, la perdita di carico totale, il livello sonoro ed il lancio. Esse vengono rappresentate in forma tabellare in
+funzione della portata d’aria.
+Il lancio isotermo viene riferito alla velocità terminale di 0,25 m/s. Per lanci non isotermi o con velocità terminali diverse vengono forniti dei coefficienti moltiplicativi
+di correzione.
+Il livello sonoro viene espresso come livello di potenza sonora ponderata A (LWA) emessa dal diffusore senza alcuna correzione ambientale. Per calcolare il livello di
+pressione sonora (LpA) nell’ambiente bisogna considerare la collocazione della bocchetta, la distanza dal punto di ascolto e le caratteristiche acustiche dell’ambiente
+in cui la bocchetta viene installata.
+LEGENDA
+- Ak [m2] Area effettiva: quoziente risultante dalla portata d’aria e dalla velo- - X [m] Lancio: Lunghezza massima della gittata d’aria per una specifica ve-
+cità dellíaria misurata, determinate con un metodo specificato e con uno locità terminale.
+strumento specificato. - Vt [m/s] Velocità terminale: velocità locale dellíaria assunta come termine
+- Vk [m/s] Velocità efficace: velocità dell’aria misurata allíuscita dell’unità di definizione dellíinviluppo.
+terminale per la diffusione dellíaria (ADA). - LWA [dB(A)] Livello di potenza sonora ponderata A: Dieci volte il logaritmo
+- Q [m3/h] Portata: volume d’aria che entra in una unità terminale per la dif- in base 10 del rapporto tra la potenza sonora irradiata dalla sorgente so-
+fusione dellíaria (ADA) nellíunità di tempo. nora e la potenza sonora di riferimento, il tutto ponderato A. La potenza
+- Δpt [Pa] perdita di carico totale: variazione di pressione tra la sezione im- sonora di riferimento è pari a 1 pW (10-12 W).
+mediatamente a monte dell’apparecchio per la diffusione dell’aria (ADA) e
+l’ambiente trattato espressa in Pascal.
+FATTORI CORRETTIVI
+Fattore moltiplicativo correttivo Fattore moltiplicativo correttivo del Fattori moltiplicativi correttivi per EBL
+del lancio in funzione della lancio non isotermo
+velocità terminale
+Vt[m/s] Kv ΔT[°C] K K
+Tc
+0,15 1,67 -10 0,85 X 1,05
+0,20 1,25 0 1 Δpt 0,95
+0,25 1,00 10 1,2 L 0,90
+WA
+0,30 0,83
+0,35 0,71
+0,40 0,63
+0,45 0,56
+0,50 0,50
+PAG 4 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE
+SERIE EBL - AGGIORNAMENTO 01/2019
+
+Dimensioni Sezione efficace
+m³/h L1 m³/h L1 m³/h L1
+LxH m²
+400x75 0.013 120 8 180 10.6 240 13
+500x75 0.017 180 9.8 250 13.2 310 16
+600x75 0.02 220 10 280 13 360 15.6
+800x75 0.027 290 10.6 390 14 500 17.6
+1000x75 0.034 360 11.2 500 16 600 18.2
+400x100 0.019 210 9.5 275 12.5 360 15.8
+500x100 0.025 260 11 240 13.5 460 17
+600x100 0.029 310 11 420 15 520 18
+800x100 0.039 420 11.6 540 16.4 700 19.6
+1000x100 0.049 520 13.6 720 18 860 20
+400x125 0.025 260 11 360 13.5 460 17
+500x125 0.032 350 12 460 16 580 18
+600x125 0.038 410 12.5 540 16.2 700 19.8
+800x125 0.051 530 13 720 18 900 21.5
+1000x125 0.064 700 16.4 900 20 1100 23
+400x150 0.031 310 11 350 15.2 540 18
+500x150 0.039 420 12.6 540 16.2 700 19.6
+600x150 0.047 500 13.5 700 18 840 21
+800x150 0.063 700 16.4 900 20 1200 26
+1000x150 0.079 840 17.6 1140 21 1422 27.5
+400x200 0.043 480 13.6 600 16.8 780 21
+500x200 0.055 600 14.8 800 19 980 22.4
+600x200 0.066 720 16.4 920 20 1200 26.2
+800x200 0.088 950 18 1260 22.8 1580 28.7
+1000x200 0.11 1200 19 1600 25 1980 30
+600x300 0.102 1060 18.6 1450 25 - -
+800x300 0.136 1450 21 2000 28 - -
+1000x300 0.171 1850 23 2500 28 - -
+Pa 7 13 20
+dB(A) 25/30 30/55 35/40
+V (m/s) 3 4 5
+v
+PAG 5 - BOCCHETTE LINEARI A BARRE ORIZZONTALI FISSE
+SERIE EBL - AGGIORNAMENTO 01/2019

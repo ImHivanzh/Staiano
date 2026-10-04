@@ -1,5 +1,28 @@
 import { z } from "zod";
 import { sourceMetadataSchema } from "./radiator-schema";
+export const dischargeConnectionSchema = z.object({
+  connectionWidthMm: z.number().positive(),
+  connectionHeightMm: z.number().positive(),
+  dimensionBasis: z.enum(["ductOpening", "flangeMountingSpan"]),
+  clearOpeningWidthMm: z.number().positive().nullable(),
+  clearOpeningHeightMm: z.number().positive().nullable(),
+  collarDepthMm: z.number().positive().nullable(),
+  flangeOuterWidthMm: z.number().positive().nullable(),
+  flangeOuterHeightMm: z.number().positive().nullable(),
+  holePattern: z
+    .object({
+      diameterMm: z.number().positive(),
+      horizontalPitchMm: z.number().positive(),
+      horizontalCount: z.number().int().positive(),
+      rows: z.number().int().positive(),
+      verticalPitchMm: z.number().positive().nullable(),
+    })
+    .nullable(),
+  drawingReference: z.string().min(1),
+  conditions: z.string().min(1),
+  sourceMetadata: sourceMetadataSchema,
+});
+export type DischargeConnection = z.infer<typeof dischargeConnectionSchema>;
 export const hvacProductSchema = z
   .object({
     id: z.string().min(1),
@@ -19,6 +42,7 @@ export const hvacProductSchema = z
     widthMm: z.number().positive().nullable(),
     heightMm: z.number().positive().nullable(),
     depthMm: z.number().positive().nullable(),
+    dischargeConnection: dischargeConnectionSchema.nullable().optional(),
     pairingVerified: z.boolean(),
     availability: z.enum(["published", "archived", "unknown"]),
     technicalNotes: z.string(),

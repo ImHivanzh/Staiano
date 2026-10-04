@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia",
+  "code": "EAG",
+  "slug": "eag-inox-griglia-con-protezione-antipioggia",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eag-inox-griglia-con-protezione-antipioggia.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.732919+00:00",
+      "filename": "EAG-5a5c2158.xlsx",
+      "bytes": 7551,
+      "sha256": "19bb1acaf45e8bb76671d079f7325b6362f6bbd27c842cdad10d84667a4b01a8",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 72
+      }
+    }
+  ]
+}

@@ -47,6 +47,7 @@ describe("selection geometry and data preservation", () => {
         widthM: 0.8,
         heightM: 2.1,
         type: "door",
+        sillHeightM: null,
       },
     ];
     const copied = duplicateSelection(p, [{ kind: "room", id: p.rooms[0].id }]);

@@ -1,0 +1,55 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+  "code": "EDSC",
+  "slug": "edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:15.360511+00:00",
+      "filename": "EDSC-96ed3c92.xlsx",
+      "bytes": 7021,
+      "sha256": "8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 36
+      }
+    },
+    {
+      "url": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:17 GMT",
+        "Server": "Apache",
+        "Content-Disposition": "attachment; filename=\"edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso.pdf\"",
+        "Cache-Control": "must-revalidate, no-cache, no-store, private",
+        "Pragma": "no-cache",
+        "Expires": "0",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/pdf"
+      },
+      "retrievedAt": "2026-10-03T23:02:18.317607+00:00",
+      "filename": "EDSC-96ed3c92.pdf",
+      "bytes": 4731254,
+      "sha256": "161898eed8bb5ed1ed497fadf7180e99ad20722649a08e2c68b9cd67ff8fd473"
+    }
+  ]
+}

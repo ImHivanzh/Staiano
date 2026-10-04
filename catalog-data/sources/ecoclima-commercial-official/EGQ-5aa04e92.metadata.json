@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
+  "code": "EGQ",
+  "slug": "egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:26.754456+00:00",
+      "filename": "EGQ-5aa04e92.xlsx",
+      "bytes": 7435,
+      "sha256": "9a0d6e2969b03ec92a5cc5ad86b7565639aecd8444337205b41b183a03f4a6b1",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 69
+      }
+    }
+  ]
+}

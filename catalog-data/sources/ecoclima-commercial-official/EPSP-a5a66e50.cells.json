@@ -1,0 +1,170 @@
+{
+  "filename": "EPSP-a5a66e50.xlsx",
+  "sha256": "c83ea9be99f4ba68129cded3c7a1cd7f0426caff222197a9cf8aff0b5b09ac31",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:24",
+    "modified": "2026-10-04 01:02:24"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 8,
+      "maxColumn": 2,
+      "mergedRanges": [
+        "A3:B3",
+        "A1:B1"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EPSP PLENUM REALIZZATO IN POLISTIROLO STAMPATO",
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Descrizione",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Plenum polistirolo EPSP 300x300 ignifugo classe 1 completo di asta di montaggio e vite M6",
+            "28,94  "
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Plenum polistirolo EPSP 400x400 ignifugo classe 1 completo di asta di montaggio e vite M6",
+            "39,28"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Plenum polistirolo EPSP 500x500 ignifugo classe 1 completo di asta di montaggio e vite M6",
+            "47,27"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Plenum polistirolo EPSP 600x600 ignifugo classe 1 completo di asta di montaggio e vite M6",
+            "61,76"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EPSP PLENUM REALIZZATO IN POLISTIROLO STAMPATO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "Plenum polistirolo EPSP 300x300 ignifugo classe 1 completo di asta di montaggio e vite M6",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "28,94  ",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "Plenum polistirolo EPSP 400x400 ignifugo classe 1 completo di asta di montaggio e vite M6",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "39,28",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "Plenum polistirolo EPSP 500x500 ignifugo classe 1 completo di asta di montaggio e vite M6",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "47,27",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "Plenum polistirolo EPSP 600x600 ignifugo classe 1 completo di asta di montaggio e vite M6",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "61,76",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

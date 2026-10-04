@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare",
+  "code": "EMV",
+  "slug": "emv-bvs-griglia-circolare-con-collare",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=emv-bvs-griglia-circolare-con-collare.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.849493+00:00",
+      "filename": "EMV-d4050dee.xlsx",
+      "bytes": 6880,
+      "sha256": "45c81f55b16bf9693c306bc7ccc1493763a44d0a24704c1054f5c7c213503a8d",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 22
+      }
+    }
+  ]
+}

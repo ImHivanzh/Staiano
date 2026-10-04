@@ -1,0 +1,108 @@
+ERDR
+Regolatore di portata in ABS per canale circolare
+DESCRIZIONE
+Regolatori di portata dell’aria autoregolante per canale
+circolare in materiale plastico a funzionamento meccanico.
+Al variare della pressione aria del sistema varia la
+regolazione della portata aria.
+Idoneo sia per aria di mandata che per aria di ripresa.
+Resistente al fuoco (M1).
+CARATTERISTICHE
+• Involucro in PVC per i Ø 80 e 100 mm;
+• involucro in acciaio zincato per i Ø superiori;
+• valvola di regolazione in PVC;
+• disponibili Ø da 80 a 250 mm;
+• portata tarabile in fase di installazione;
+• funzionamento a portata costante per campo di pressione da 50 a 250 Pa;
+• temperatura di esercizio -30°C...+60°C;
+• tolleranza di regolazione ± 10%.
+INSTALLAZIONE
+L’installazione avviene tramite inserimento del regolatore all’interno del condotto circolare e può avvenire sia in
+canali orizzontali che verticali. Grazie alla guarnizione a labbro perimetrale si garantisce un’ottima tenuta dell’aria.
+A RICHIESTA
+Range 150 - 600 Pa.
+DIMENSIONI
+Ø DN mm Ø D 1mm Ø D2 mm L mm
+Modello ERDR
+80 80 76 76 55
+100 100 96 93 70
+125 125 120 117 86
+150 150 145 148 91
+160 160 145 148 91
+200 200 190 195 91
+250 250 235 245 120
+Tutte le dimensioni sono espresse in mm
+VANTAGGI
+• Livello sonoro contenuto;
+• installazione semplice e veloce
+PAG 1 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023
+
+1. Manicotto con guarnizione, parte esterna del regolatore
+2. Corpo interno del regolatore di spessore variabile
+3. Pala di regolazione del dispositivo
+4. Step di regolazione
+5. Meccanismo di impostazione del flusso d’aria e vite di fissaggio
+DATI DI FUNZIONAMENTO
+modello ERDR portata m³/h
+portata Ø mm
+m³/h
+PAG 2 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023
+51 03 54 05 06 57 09 001 021 051 081 012 042 072 003 053 004 054 005 055 006 056 007
+DESCRIZIONE DEL PRODOTTO
+80 15 - 50 x x x x
+100 15 - 50 x x x x
+100 50 - 100 x x x x x
+125 15 - 50 x x x x
+125 50 - 100 x x x x x
+125 100 - 180 x x x x
+150 15 - 50 x x x x
+150 50 - 100 x x x x x
+150 100 - 180 x x x x
+150 180 - 300 x x x x x
+160 15 - 50 x x x x
+160 50 - 100 x x x x x
+160 100 - 180 x x x x
+160 180 - 300 x x x x x
+200 15 - 50 x x x x
+200 50 - 100 x x x x x
+200 100 - 180 x x x x
+200 180 - 300 x x x x x
+200 300 - 500 x x x x x
+250 50 - 100 x x x x x
+250 100 - 180 x x x x
+250 180 - 300 x x x x x
+250 300 - 500 x x x x x
+250 450 - 700 x x x x x
+X: valori di portata regolabili per ogni modello
+
+PARAMETRI TECNICI Legenda: Pa Perdita di carico
+m3/h - l/s Portata aria
+dB(A) Livello di potenza sonora totale
+ponderato-A
+ERDR 80/15-50 ERDR 100/15-50
+ERDR 100/50-100 ERDR 125/15-50
+ERDR 125/50-100 ERDR 125/100-180
+PAG 3 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023
+
+ERDR 150/50-100 ERDR 150/100-180
+ERDR 150/180-300 ERDR 160/50-100
+ERDR 160/100-180 ERDR 160/180-300
+PAG 4 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023
+
+ERDR 200/100-180 ERDR 200/180-300
+ERDR 200/300-500 ERDR 250/180-300
+ERDR 250/300-500 ERDR 250/450-800
+PAG 5 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023
+
+INSTALLAZIONE
+PAG 6 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023
+
+REGOLAZIONE
+PAG 7 - REGOLATORE DI PORTATA IN ABS PER CANALE CIRCOLARE
+SERIE ERDR - AGGIORNAMENTO 01/2023

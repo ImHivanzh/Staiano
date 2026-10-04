@@ -43,14 +43,8 @@ export function SplitPanel({
     <section className="pannello-split">
       <h3>Climatizzatori split</h3>
       <p className="nota">
-        Scegli marca e ambienti. Un ambiente genera un monosplit; più ambienti
-        richiedono una combinazione multisplit approvata con capacità simultanee
-        sufficienti.
-      </p>
-      <p className="nota">
-        Posizionamento iniziale: sommità della unità a0,10m sotto il soffitto.
-        Quota di disegno; distanze di installazione da verificare nel manuale
-        del modello.
+        Scegli la marca. Il modello compatibile viene selezionato in base alle
+        stanze servite.
       </p>
       <label className="campo">
         <span>Marca split</span>
@@ -64,25 +58,28 @@ export function SplitPanel({
           ))}
         </select>
       </label>
-      <fieldset>
-        <legend>Ambienti climatizzati</legend>
-        {project.rooms.map((r) => (
-          <label className="ambiente-servito" key={r.id}>
-            <input
-              type="checkbox"
-              checked={roomIds.includes(r.id)}
-              onChange={(e) =>
-                setRoomIds(
-                  e.target.checked
-                    ? [...roomIds, r.id]
-                    : roomIds.filter((id) => id !== r.id),
-                )
-              }
-            />
-            {r.name} · {formatNumber(r.designLoadW / 1000)} kW
-          </label>
-        ))}
-      </fieldset>
+      <details>
+        <summary>Ambienti climatizzati · {roomIds.length}</summary>
+        <fieldset>
+          <legend>Ambienti climatizzati</legend>
+          {project.rooms.map((r) => (
+            <label className="ambiente-servito" key={r.id}>
+              <input
+                type="checkbox"
+                checked={roomIds.includes(r.id)}
+                onChange={(e) =>
+                  setRoomIds(
+                    e.target.checked
+                      ? [...roomIds, r.id]
+                      : roomIds.filter((id) => id !== r.id),
+                  )
+                }
+              />
+              {r.name} · {formatNumber(r.designLoadW / 1000)} kW
+            </label>
+          ))}
+        </fieldset>
+      </details>
       {!preview && (
         <p role="status" className="nota">
           COMPATIBILITÀ NON VERIFICABILE oppure capacità/dimensioni
@@ -135,8 +132,14 @@ export function SplitPanel({
         </button>
       )}
       {combo && (
-        <details open>
-          <summary>Come è stato calcolato?</summary>
+        <details>
+          <summary>Dettagli tecnici e calcolo</summary>
+          <p className="nota">
+            Un ambiente usa un monosplit; più ambienti richiedono una
+            combinazione multisplit approvata. Posizionamento iniziale: sommità
+            a 0,10 m sotto il soffitto. Quota di disegno; distanze di
+            installazione da verificare nel manuale del modello.
+          </p>
           <p className="nota">
             Richiesta stanza = superficie netta × altezza ×35 W/m³. Le capacità
             per stanza sono quelle simultanee della combinazione ufficiale: ogni

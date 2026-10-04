@@ -1,0 +1,428 @@
+{
+  "version": "2026-10-04-radiator-finishes-v1",
+  "sources": [
+    {
+      "id": "cordivari-colours",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/Catalogo-Radiatori-e-Scaldasalviette-IT-2025.pdf",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/cordivari-colours.pdf",
+      "retrievedAt": "2026-10-03T23:17:58.698555+00:00",
+      "sha256": "23a5c7777399c7b721165ca91962ed972193c58454cd7c0f51af100cc299279d",
+      "pageCount": 376,
+      "documentRevision": "2025"
+    },
+    {
+      "id": "cordivari-accessory-finishes",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Accessori-e-ricambi-radiatori-e-scaldasalviette_05-2025.pdf",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/cordivari-accessory-finishes.pdf",
+      "retrievedAt": "2026-10-03T23:18:32.920531+00:00",
+      "sha256": "5b511993d70e6379983603f395b26681197d1e20bb053f924f430dcc10c64e78",
+      "pageCount": 10,
+      "documentRevision": "2025"
+    },
+    {
+      "id": "zehnder-charleston-finishes",
+      "sourceUrl": "https://www.zehnder.it/it/radiatori-decorativi/radiatori/radiatori-idronici/zehnder-charleston-funzionamento-ad-acqua-calda",
+      "sourceType": "html",
+      "localPath": "catalog-data/sources/zehnder-charleston-finishes.html",
+      "retrievedAt": "2026-10-03T23:18:34.801047+00:00",
+      "sha256": "9e8a8079d0b5bcc7370373f59a4001f2213df9fadc15178571b1e12df92c78df",
+      "documentRevision": null
+    },
+    {
+      "id": "zehnder-nova-finishes",
+      "sourceUrl": "https://www.zehnder.it/it/radiatori-decorativi/radiatori/radiatori-idronici/zehnder-nova-funzionamento-ad-acqua-calda",
+      "sourceType": "html",
+      "localPath": "catalog-data/sources/zehnder-nova-finishes.html",
+      "retrievedAt": "2026-10-03T23:18:34.959613+00:00",
+      "sha256": "77ef664fce3817a03ec70d239b43a6b4ac2ae98230bc78093832f7b8784caecb",
+      "documentRevision": null
+    },
+    {
+      "id": "zehnder-valve-finishes",
+      "sourceUrl": "https://www.zehnder.it/download/ec3a121f6ebe42e1904bb545216a0eb1",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/zehnder-valve-finishes.pdf",
+      "retrievedAt": "2026-10-03T23:18:35.764072+00:00",
+      "sha256": "40880820033d98e8696cd2fdf6ed1316250dd602762e950af3b5b0727adb6d38",
+      "pageCount": 14,
+      "documentRevision": "04/2024"
+    },
+    {
+      "id": "zehnder-valve-colours",
+      "sourceUrl": "https://www.zehnder.it/it/radiatori-decorativi/zehnder-valvole-colorate",
+      "sourceType": "html",
+      "localPath": "catalog-data/sources/zehnder-valve-colours.html",
+      "retrievedAt": "2026-10-04T06:59:20.196521+00:00",
+      "sha256": "026dab89c07422ab36e841adcdf1eece75d503cdd90a8c1a2ad8a4b4b7d65b5e",
+      "documentRevision": null
+    },
+    {
+      "id": "global-finishes",
+      "sourceUrl": "https://www.globalradiatori.it/download/listino/ListinoIT_giugno26.pdf",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/global-listino-2026.pdf",
+      "retrievedAt": "2026-10-03T00:34:00.061190+00:00",
+      "sha256": "ae26b7deb3e4143734bac5731b5503b00d039356a28c1a9f1c5e9f761462af2c",
+      "documentRevision": "Listino giugno 2026",
+      "pageCount": 32
+    },
+    {
+      "id": "cordivari-lisa22",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-LISA-22-BIANCO-9010_R44.2025.pdf",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/cordivari-lisa22.pdf",
+      "retrievedAt": "2026-10-03T23:10:59.226399+00:00",
+      "sha256": "d182144be8d86028fb5c3995cb79b83bdfc3cc9dddcc7e353ff5c9fab7c12168",
+      "documentRevision": "R44.2025",
+      "pageCount": 2
+    },
+    {
+      "id": "cordivari-claudia",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-scaldasalviette-Claudia_05-2025.pdf",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/cordivari-claudia.pdf",
+      "retrievedAt": "2026-10-03T23:11:00.455908+00:00",
+      "sha256": "2f085757d054a2f4b156f1cc39d68599a55d879b660f0987d19079080aa04962",
+      "documentRevision": "05-2025",
+      "pageCount": 4
+    },
+    {
+      "id": "cordivari-tamara",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/EN-Cordivari_TEC-Scheda-Tamara-Vertical_N-8-2025.pdf",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/cordivari-tamara.pdf",
+      "retrievedAt": "2026-10-03T23:11:01.763251+00:00",
+      "sha256": "5d84795b452ef5ddcf0c625b96c23841c2ec65d8ffe1c28cbb198415a713d316",
+      "documentRevision": "N-8-2025",
+      "pageCount": 4
+    },
+    {
+      "id": "lazzarini-sanremo",
+      "sourceUrl": "https://docga.plateforme-services.com/api/download/variant_documents_5d77b642-bd28-4767-97e2-f5b1c210a8a0/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/lazzarini-sanremo.pdf",
+      "retrievedAt": "2026-10-03T23:11:24.955966+00:00",
+      "sha256": "7b2008d3777e396e044d611d5dcf718ad35eca0c214e7695ed98d3ca9cec718f",
+      "documentRevision": "Rev. 6 -02-08-2021",
+      "pageCount": 4
+    },
+    {
+      "id": "lazzarini-garda",
+      "sourceUrl": "https://docga.plateforme-services.com/api/download/variant_documents_2816a35c-5a49-46a0-81e2-7aee4bc61bf1/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/lazzarini-garda.pdf",
+      "retrievedAt": "2026-10-03T23:11:25.341543+00:00",
+      "sha256": "ad28f4a4001a91a9141683647f1b985c77a434b485ab11bae3e581f54dc4d906",
+      "documentRevision": "Rev. 6 -22-11-2023",
+      "pageCount": 3
+    },
+    {
+      "id": "lazzarini-empoli",
+      "sourceUrl": "https://docga.plateforme-services.com/api/download/variant_documents_8101ed7b-720e-4de1-b70c-f82628f27d21/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ",
+      "sourceType": "pdf",
+      "localPath": "catalog-data/sources/lazzarini-empoli.pdf",
+      "retrievedAt": "2026-10-03T23:11:25.604583+00:00",
+      "sha256": "76a85816d814783a04ffc8a0fcf8872f42434939329d8ac60095a8cc55056647",
+      "documentRevision": "Rev. 4 -27-04-2021",
+      "pageCount": 3
+    },
+    {
+      "id": "lazzarini-colours-web-extract",
+      "sourceUrl": "https://www.lazzariniradiatori.it/Tabella-colori-Lazzarini",
+      "sourceType": "web-extract",
+      "localPath": "catalog-data/sources/lazzarini-colours-web-extract.txt",
+      "retrievedAt": "2026-10-04T06:59:20.196521+00:00",
+      "sha256": "aea706a3a15288c3c633dd3e51bea1355e6aab88bd2c152ccf3f87228e514764",
+      "documentRevision": null
+    },
+    {
+      "id": "lazzarini-accessories-web-extract",
+      "sourceUrl": "https://www.lazzariniradiatori.it/Accessori-e-valvole",
+      "sourceType": "web-extract",
+      "localPath": "catalog-data/sources/lazzarini-accessory-finishes-web-extract.txt",
+      "retrievedAt": "2026-10-04T06:59:20.196521+00:00",
+      "sha256": "9b138c6b2c0ef2f7884a2b272392db6fd4a62aa177ad32d4d0249af565d2a199",
+      "documentRevision": null
+    }
+  ],
+  "swatches": [
+    {
+      "finishId": "zehnder-9016",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/1/4/csm_49589_596b1498b6.png",
+      "sha256": "6626ac3b8900c9fc78e932f8d2ee54988c6e5edf4a51a49b634de1ea80e5d45a",
+      "localPath": "catalog-data/sources/zehnder-finish-9016.png"
+    },
+    {
+      "finishId": "zehnder-0521",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/e/c/csm_49714_fee92686de.png",
+      "sha256": "1f32c7c91c8aa5fc08d266c0490604c037efbdb2dc077d0de0a4780c596c0331",
+      "localPath": "catalog-data/sources/zehnder-finish-0521.png"
+    },
+    {
+      "finishId": "zehnder-9010",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/1/5/csm_49699_47141895b5.png",
+      "sha256": "50a8289740888f1a452c265e3d41b0e6624523334d971bddf794555de0b0fd57",
+      "localPath": "catalog-data/sources/zehnder-finish-9010.png"
+    },
+    {
+      "finishId": "zehnder-7233",
+      "sourceUrl": "https://www.zehnder.it/download/46608276bcf744f8b86e466f6ac97fdc",
+      "sha256": "16c6c6705af98a06f0c13255d0d4664323f1eda72a9f4812cebedbd33fd5a16d",
+      "localPath": "catalog-data/sources/zehnder-finish-7233.png"
+    },
+    {
+      "finishId": "zehnder-0067",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/3/8/csm_49678_055bb3fbeb.png",
+      "sha256": "6dfe5213e2f39b77feb48070c0fc1c6b67335799e1d477fc3a609f92745dd2ea",
+      "localPath": "catalog-data/sources/zehnder-finish-0067.png"
+    },
+    {
+      "finishId": "zehnder-9001",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/a/2/csm_49675_d3fc978a84.png",
+      "sha256": "08fabb3fdcd6198b5553e22fe4b74477658bca5728aa4fb8cd151f898d4bd540",
+      "localPath": "catalog-data/sources/zehnder-finish-9001.png"
+    },
+    {
+      "finishId": "zehnder-7247",
+      "sourceUrl": "https://www.zehnder.it/download/3c95c99440e041d5aa4e1a08bc4f7d0e",
+      "sha256": "81dad77bf16bd6fcb2b5ca2378cb68f634114ba9a5171d4f5f75a1d83801453c",
+      "localPath": "catalog-data/sources/zehnder-finish-7247.png"
+    },
+    {
+      "finishId": "zehnder-0523",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/c/e/csm_49667_6eaca782e7.png",
+      "sha256": "3b862b9d71494104032b8539612901f6ad0f14554e4df902b28e179eccd5f83c",
+      "localPath": "catalog-data/sources/zehnder-finish-0523.png"
+    },
+    {
+      "finishId": "zehnder-0258",
+      "sourceUrl": "https://www.zehnder.it/download/b3d0f7de36494959afcacaecdf2106cd",
+      "sha256": "df7da7ba7a9515c615a7bcee74b8cbe4f7347e23ff82da318e5e50676d623ac3",
+      "localPath": "catalog-data/sources/zehnder-finish-0258.png"
+    },
+    {
+      "finishId": "zehnder-7234",
+      "sourceUrl": "https://www.zehnder.it/download/8e4c584ebc4e4e7aa1915330c0919dcd",
+      "sha256": "1fe73451bf95687fd34a20c656a3ccbac70232b071f0f1b14e8d524a94b6c027",
+      "localPath": "catalog-data/sources/zehnder-finish-7234.png"
+    },
+    {
+      "finishId": "zehnder-1235",
+      "sourceUrl": "https://www.zehnder.it/download/6c089882afb64c9cb1a2807c82d67599",
+      "sha256": "9c56efe7fe85d27a58808ecdae6c936f516f19044a30ad96f401b5c15db9a212",
+      "localPath": "catalog-data/sources/zehnder-finish-1235.png"
+    },
+    {
+      "finishId": "zehnder-0272",
+      "sourceUrl": "https://www.zehnder.it/download/e88f6e74719a46028cba47c71c65035a",
+      "sha256": "304289a3a126a41d66044e1b0d437d5a4e4e7d9762256b47b4a86841d65b0c7e",
+      "localPath": "catalog-data/sources/zehnder-finish-0272.png"
+    },
+    {
+      "finishId": "zehnder-0265",
+      "sourceUrl": "https://www.zehnder.it/download/09e3235b13464306a94fa826d264cd75",
+      "sha256": "faa602f85ca39c3c55a8d058944715b9ca41da842ec71c4979cbfd7b0e6099f6",
+      "localPath": "catalog-data/sources/zehnder-finish-0265.png"
+    },
+    {
+      "finishId": "zehnder-0267",
+      "sourceUrl": "https://www.zehnder.it/download/89c5fe8568c64b1b9117bf7a02750af3",
+      "sha256": "af95837377c1790a751041bde2a8e0bed7d4d250e2d28357def8f72dbbe67084",
+      "localPath": "catalog-data/sources/zehnder-finish-0267.png"
+    },
+    {
+      "finishId": "zehnder-0276",
+      "sourceUrl": "https://www.zehnder.it/download/be8d3624fd724bf2acae48672e7f826e",
+      "sha256": "38ef62b49762369373a5de88ac55dd1f5d24ebec8e3370011933593ca22d2f83",
+      "localPath": "catalog-data/sources/zehnder-finish-0276.png"
+    },
+    {
+      "finishId": "zehnder-0529",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/0/a/csm_49670_d07f99f203.png",
+      "sha256": "7f92d568c46ce88c639d9fe300f5d313dfde5f52ae799689942675f6a70fba77",
+      "localPath": "catalog-data/sources/zehnder-finish-0529.png"
+    },
+    {
+      "finishId": "zehnder-0270",
+      "sourceUrl": "https://www.zehnder.it/download/2d4e72cc7ecb45eaa788a3ffc3efbb53",
+      "sha256": "6458aa616d928aa3095ef8127982bf06e9ba53a8a47ea9493b61da2734f785bb",
+      "localPath": "catalog-data/sources/zehnder-finish-0270.png"
+    },
+    {
+      "finishId": "zehnder-9007",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/f/9/csm_49681_279a319479.png",
+      "sha256": "60755323f91cc871c9fcd3b49d10a9d548aa911b604414f2aa5b2bbafcd0696d",
+      "localPath": "catalog-data/sources/zehnder-finish-9007.png"
+    },
+    {
+      "finishId": "zehnder-0346",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/c/8/csm_49664_97e502f8d5.png",
+      "sha256": "b9fd6824d42e7d6bfd0f886d61519114b7aa59d124290e8bc2b57de29ce51658",
+      "localPath": "catalog-data/sources/zehnder-finish-0346.png"
+    },
+    {
+      "finishId": "zehnder-7222",
+      "sourceUrl": "https://www.zehnder.it/download/3d8f5a90122b4ddcbe5986bad83cf7f8",
+      "sha256": "fa9a63c1231eef1ce98fab95bebb5b6a17e1a15c258a3b0a1efcf8a44f51467e",
+      "localPath": "catalog-data/sources/zehnder-finish-7222.png"
+    },
+    {
+      "finishId": "zehnder-0336",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/5/2/csm_49711_3a6a43a5b3.png",
+      "sha256": "36f90faa6abcfaef4952db4e513ef581a40c8db089f503c5b139c72fc6a954f6",
+      "localPath": "catalog-data/sources/zehnder-finish-0336.png"
+    },
+    {
+      "finishId": "zehnder-6219",
+      "sourceUrl": "https://www.zehnder.it/download/2597ae3e70314520b3d2ca39d3afee56",
+      "sha256": "374ad8f2fbe0e0f7a0c049a464b4ab2271f1948682ac032e7539aaff4a9beb4d",
+      "localPath": "catalog-data/sources/zehnder-finish-6219.png"
+    },
+    {
+      "finishId": "zehnder-6211",
+      "sourceUrl": "https://www.zehnder.it/download/760b615fa3ff4e828b2eaf5e29e5dae6",
+      "sha256": "3070d68a6d8d5927d3016380e60129c1a4a64557d5dd7c8bcceeb0088336f237",
+      "localPath": "catalog-data/sources/zehnder-finish-6211.png"
+    },
+    {
+      "finishId": "zehnder-6203",
+      "sourceUrl": "https://www.zehnder.it/download/6bebc429247947778aa1880d381a67a7",
+      "sha256": "501e905e2b5bec5a0fbdda6f7e81878f0b170ce18f0f67dd21fe914f72e4c891",
+      "localPath": "catalog-data/sources/zehnder-finish-6203.png"
+    },
+    {
+      "finishId": "zehnder-0299",
+      "sourceUrl": "https://www.zehnder.it/download/40e66442cadb4bfdaa1b833988d39c2e",
+      "sha256": "cdddb16c2a0aac8eee082c662bb87cd9455964bed1a452da54b6c03587a2fa28",
+      "localPath": "catalog-data/sources/zehnder-finish-0299.png"
+    },
+    {
+      "finishId": "zehnder-0292",
+      "sourceUrl": "https://www.zehnder.it/download/89dd95977494480a862647e0f649f674",
+      "sha256": "32408dbce10da1c3b7d2897f903e1fa8bf08d7574736c59bf04c77e9dcdbcbea",
+      "localPath": "catalog-data/sources/zehnder-finish-0292.png"
+    },
+    {
+      "finishId": "zehnder-3003",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/7/a/csm_49700_8e0569c034.png",
+      "sha256": "c6c2d79168da26801423ca582d9af5968eaca13c32cf617d333ec9d1ba586d1b",
+      "localPath": "catalog-data/sources/zehnder-finish-3003.png"
+    },
+    {
+      "finishId": "zehnder-0556",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/a/1/csm_49713_4dd21658c8.png",
+      "sha256": "9c2e5a569b07414d9fd020df39ef20d0144fadaa884750a8a80ca596296f3c1b",
+      "localPath": "catalog-data/sources/zehnder-finish-0556.png"
+    },
+    {
+      "finishId": "zehnder-0253",
+      "sourceUrl": "https://www.zehnder.it/download/9bc0ca15a4494243b3c943799973dcd2",
+      "sha256": "f074b96ad9a2fd782be2dacb9819fc6bb81ed8ad7d3f527926d52ed897222fa5",
+      "localPath": "catalog-data/sources/zehnder-finish-0253.png"
+    },
+    {
+      "finishId": "zehnder-0262",
+      "sourceUrl": "https://www.zehnder.it/download/27a0f32ad29b42d6acd4c90d3f540003",
+      "sha256": "a461f9120636b422694b52df83391f4f12140970486fd20b108c8d84a5c1e1f5",
+      "localPath": "catalog-data/sources/zehnder-finish-0262.png"
+    },
+    {
+      "finishId": "zehnder-9006",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/e/4/csm_White_Aluminium_9006_1c7d9a31fe.png",
+      "sha256": "d2059176aeefc0305b011ac6008cfd9579aa22d64d183ddbbe545e66bca7c141",
+      "localPath": "catalog-data/sources/zehnder-finish-9006.png"
+    },
+    {
+      "finishId": "zehnder-0264",
+      "sourceUrl": "https://www.zehnder.it/download/b229452b5dd64ddc88d512bf8c7663d9",
+      "sha256": "aa76498d6bfb01f09f6fbe6c057b31ed707bf699b7326a51e2a15348610d5aac",
+      "localPath": "catalog-data/sources/zehnder-finish-0264.png"
+    },
+    {
+      "finishId": "zehnder-0335",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/1/7/csm_Titane_0335_fb19829026.png",
+      "sha256": "d9d0a5775823e0e93d70400b2d35ae916152e80c9d57eae32100af07bebd0736",
+      "localPath": "catalog-data/sources/zehnder-finish-0335.png"
+    },
+    {
+      "finishId": "zehnder-0332",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/0/5/csm_Inox_Look_0332_010a06e98e.png",
+      "sha256": "914f48068affa86c3b68c8b0cbd8f4a5c2946be89808c80fbbd054d64e1b032d",
+      "localPath": "catalog-data/sources/zehnder-finish-0332.png"
+    },
+    {
+      "finishId": "zehnder-7246",
+      "sourceUrl": "https://www.zehnder.it/download/f73d2598d25047c0886be5663ada0235",
+      "sha256": "1ffebff2d220212ceebca32260196ea95b68fa86b947d10675f68bc8395eee1c",
+      "localPath": "catalog-data/sources/zehnder-finish-7246.png"
+    },
+    {
+      "finishId": "zehnder-7231",
+      "sourceUrl": "https://www.zehnder.it/download/c9e1da7759514c9b93fd1ba666c6783d",
+      "sha256": "b22a40e1d2bc6ec147fc35b18a19ac9ecd6d9a0f7355558be56404c55a368495",
+      "localPath": "catalog-data/sources/zehnder-finish-7231.png"
+    },
+    {
+      "finishId": "zehnder-7016",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/a/4/csm_49665_028f966479.png",
+      "sha256": "d9953ff75eed9413c0977660c42b1c0e797941e80fac3ad48f050db192d752fa",
+      "localPath": "catalog-data/sources/zehnder-finish-7016.png"
+    },
+    {
+      "finishId": "zehnder-0550",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/0/b/csm_Black_Quartz_0550_cabe995938.png",
+      "sha256": "5ceda4c458d37e2fa4fda9f3dc477a0bde5c052a259c6a1d0a6021339565f254",
+      "localPath": "catalog-data/sources/zehnder-finish-0550.png"
+    },
+    {
+      "finishId": "zehnder-0557",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/1/6/csm_49668_2a00e364c4.png",
+      "sha256": "9e4b922348fe06134a03aaf3d3695322608382b84e77c28c7ce592cd2c69a598",
+      "localPath": "catalog-data/sources/zehnder-finish-0557.png"
+    },
+    {
+      "finishId": "zehnder-9217",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/d/9/csm_49708_b91e194405.png",
+      "sha256": "4dc3782d86615d9dcb9785722963ae1e3f0ae95014a3c9890914fc0f12161019",
+      "localPath": "catalog-data/sources/zehnder-finish-9217.png"
+    },
+    {
+      "finishId": "zehnder-9005",
+      "sourceUrl": "https://www.zehnder.it/fileadmin/_processed_/4/e/csm_49687_6bc2be21f6.png",
+      "sha256": "55225653d6fe1e56dad27fd965ea8e2dde5edb3658e846a25e1d895eeeba0c8f",
+      "localPath": "catalog-data/sources/zehnder-finish-9005.png"
+    },
+    {
+      "finishId": "zehnder-5224",
+      "sourceUrl": "https://www.zehnder.it/download/b1d8309afbdb4ee792a3818088673af8",
+      "sha256": "965333a2a95f045654c120599c2fbba06b3156d281485110631734083e23f21a",
+      "localPath": "catalog-data/sources/zehnder-finish-5224.png"
+    },
+    {
+      "finishId": "zehnder-5214",
+      "sourceUrl": "https://www.zehnder.it/download/edf03dc7d8be44078476aad92e385240",
+      "sha256": "5dfcc7bcf95d365a40e518d01c356620d3e9f04a0b68f6aa7c2be0c0b0b9a161",
+      "localPath": "catalog-data/sources/zehnder-finish-5214.png"
+    },
+    {
+      "finishId": "zehnder-5210",
+      "sourceUrl": "https://www.zehnder.it/download/ac5e544383fb4d13a63c70a1c38b9d58",
+      "sha256": "f3fc3e31ce2124aec532973474f775406d74ad39ed87e0706762f693cdb6df57",
+      "localPath": "catalog-data/sources/zehnder-finish-5210.png"
+    },
+    {
+      "finishId": "zehnder-5203",
+      "sourceUrl": "https://www.zehnder.it/download/6e2d0a35381a4fed92a40e742f0670f2",
+      "sha256": "2f21d7ca492a398855b780df5d85121be3a2a02355ec97290097b9149614f1b8",
+      "localPath": "catalog-data/sources/zehnder-finish-5203.png"
+    },
+    {
+      "finishId": "zehnder-0289",
+      "sourceUrl": "https://www.zehnder.it/download/86e530f763d44815ac3d753dfff7033d",
+      "sha256": "52a960f38c4cd9ddf1c46c41514c504f991bb5eb929f4460a3b1e22d1d25d182",
+      "localPath": "catalog-data/sources/zehnder-finish-0289.png"
+    }
+  ]
+}

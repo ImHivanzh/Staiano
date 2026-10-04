@@ -1,0 +1,107 @@
+GRIGLIA
+FORELLINATA CON
+CORNICE DA 15 mm
+Serie EGFR
+DESCRIZIONE
+Griglie di mandata e ripresa dell’aria a pannello forellinato, con cornice da 15 mm.
+CARATTERISTICHE
+Telaio perimetrale in alluminio.
+Pannello in acciaio zincato.
+Finitura: verniciatura colore bianco RAL 9016.
+Installazione: fissaggio con calamite.
+La maglia forellinata è realizzata secondo le seguenti specifiche:
+-fori tondi alternati a 60°;
+-rapporto vuoto/pieno 46%;
+-diametro dei fori 5mm;
+-distanza tra i centri 7mm.
+IMPIEGO
+Per la ripresa dell’aria all’interno dei locali.
+ACCESSORI
+- EPZR plenum zincato;
+- EPIR plenum isolato;
+- SC serranda di taratura in acciaio zincato con alette a movimento
+contrapposto.
+A RICHIESTA
+Verniciatura nei colori RAL a scelta.
+NOMENCLATURA CODICE
+EGFS Griglie forellinate con cornice da 15 mm
+Larghezza L (mm) 300-400-500-600
+Altezza H (mm) 300-400-500-600
+EGFR 500 230000
+PAG 1 - GRIGLIA FORELLINATA CON CORNICE DA 15 mm
+SERIE EGFR - AGGIORNAMENTO 01/2025
+
+DIMENSIONI
+SEZIONE EFFICACE
+L
+H
+300 400 500 600
+Sezione efficace m²
+300 0,037 0,050 0,064 0,077
+400 0,050 0,068 0,086 0,104
+500 0,064 0,086 0,108 0,131
+600 0,077 0,104 0,131 0,157
+DATI DI FUNZIONAMENTO
+Vk L
+H
+m/s 300 400 500 600
+portata m³/h
+Vk: velocità efficace (m/s)
+2 269 363 458 552
+m³/h: portata
+300 3 404 545 687 828
+Pa: perdite di carico in Pascal
+4 538 727 916 1104
+dB(A): indice di rumorosità
+2 363 491 618 746 L: larghezza
+400 3 545 736 928 1119 H: altezza
+4 727 982 1237 1492 Tutte le misure sono espresse in mm.
+2 458 618 779 940
+500 3 687 928 1169 1410
+4 916 1237 1558 1879
+2 552 746 940 1133
+600 3 828 1119 1410 1700
+4 1104 1492 1879 2267
+PAG 2 - GRIGLIA FORELLINATA CON CORNICE DA 15 mm
+SERIE EGFR - AGGIORNAMENTO 01/2025
+
+INDICE DI RUMOROSITÀ dB(A)
+V
+dB(A)
+m/s
+2 20/25
+livello potenza sonora 3 25/30
+4 35/40
+PERDITA DI CARICO (Pa)
+V
+Pa
+m/s
+2 15
+perdite di carico 3 40
+4 70
+DETTAGLIO FORI
+SC SERRANDA DI TARATURA
+Serranda di taratura in acciaio zincato
+ad alette con movimento contrapposto.
+PAG 3 - GRIGLIA FORELLINATA CON CORNICE DA 15 mm
+SERIE EGFR - AGGIORNAMENTO 01/2025
+
+PLENUM
+modello EGFR
+dimensioni stacco superiore stacco laterale
+E F
+L x H L1 x H1 P1 n° stacchi Ø d P2 n° stacchi Ø d
+300x300 295x295 200 1 195 300 1 195 80 8
+400x300 395x195 200 1 245 300 1 195 80 8
+500x300 495x295 200 1 245 350 1 245 80 8
+600x300 595x295 200 2 195 300 2 195 80 8
+400x400 395x395 200 1 295 400 1 295 80 8
+500x400 495x395 200 1 295 400 1 295 80 8
+600x400 595x395 200 2 245 350 2 245 80 8
+500x500 495x495 200 1 345 450 1 345 80 8
+580x580 575x575 200 2 245 350 2 245 80 8
+600x500 595x495 200 2 245 350 2 245 80 8
+600x600 595x595 200 1 245 450 1 345 80 8
+INSTALLAZIONE
+PAG 4 - GRIGLIA FORELLINATA CON CORNICE DA 15 mm
+SERIE EGFR - AGGIORNAMENTO 01/2025

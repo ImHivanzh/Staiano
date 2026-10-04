@@ -1,0 +1,3782 @@
+{
+  "authority": "https://www.ecoclima.com",
+  "catalogPriceListRevision": "15-2026",
+  "revisionEvidence": "catalogo-generale.html",
+  "families": [
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "code": "EDLS",
+      "slug": "edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:15.988563+00:00",
+          "filename": "EDLS-42ab2d1f.xlsx",
+          "bytes": 11693,
+          "sha256": "1dbeb69b19a899e47366fc3a9b9a32d5b7025a91e9914632e0989d51a791ed8f",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 682
+          },
+          "immutableFilename": "revisions/EDLS-42ab2d1f-1dbeb69b19a899e47366fc3a9b9a32d5b7025a91e9914632e0989d51a791ed8f.xlsx"
+        },
+        {
+          "url": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Server": "Apache",
+            "Content-Disposition": "attachment; filename=\"edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa.pdf\"",
+            "Cache-Control": "must-revalidate, no-cache, no-store, private",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/pdf"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.693785+00:00",
+          "filename": "EDLS-42ab2d1f.pdf",
+          "bytes": 8255114,
+          "sha256": "7f2a836ff490d8c50cabd435149a5890997932c6be6c738e153b5c5df2bbf10a",
+          "immutableFilename": "revisions/EDLS-42ab2d1f-7f2a836ff490d8c50cabd435149a5890997932c6be6c738e153b5c5df2bbf10a.pdf"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+      "code": "EDSC",
+      "slug": "edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:15.360511+00:00",
+          "filename": "EDSC-96ed3c92.xlsx",
+          "bytes": 7021,
+          "sha256": "8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 36
+          },
+          "immutableFilename": "revisions/EDSC-96ed3c92-8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473.xlsx"
+        },
+        {
+          "url": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/pdf/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:17 GMT",
+            "Server": "Apache",
+            "Content-Disposition": "attachment; filename=\"edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso.pdf\"",
+            "Cache-Control": "must-revalidate, no-cache, no-store, private",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/pdf"
+          },
+          "retrievedAt": "2026-10-03T23:02:18.317607+00:00",
+          "filename": "EDSC-96ed3c92.pdf",
+          "bytes": 4731254,
+          "sha256": "161898eed8bb5ed1ed497fadf7180e99ad20722649a08e2c68b9cd67ff8fd473",
+          "immutableFilename": "revisions/EDSC-96ed3c92-161898eed8bb5ed1ed497fadf7180e99ad20722649a08e2c68b9cd67ff8fd473.pdf"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+      "code": "EDSC",
+      "slug": "edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:15.209494+00:00",
+          "filename": "EDSC-29c7607a.xlsx",
+          "bytes": 7021,
+          "sha256": "8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 36
+          },
+          "immutableFilename": "revisions/EDSC-29c7607a-8cd7e90694e6d76e2ec380a415b7d620cf23f44fe8bffbc25c45b6bae8e7d473.xlsx"
+        },
+        {
+          "url": "https://www.ecoclima.com/download/pdf/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/pdf/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:17 GMT",
+            "Server": "Apache",
+            "Content-Disposition": "attachment; filename=\"edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso.pdf\"",
+            "Cache-Control": "must-revalidate, no-cache, no-store, private",
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/pdf"
+          },
+          "retrievedAt": "2026-10-03T23:02:18.528624+00:00",
+          "filename": "EDSC-29c7607a.pdf",
+          "bytes": 4731464,
+          "sha256": "18a20649bb17f556cc53ae7df4396de2f3b5f6a4244f4d78909a96a5d4e22fb8",
+          "immutableFilename": "revisions/EDSC-29c7607a-18a20649bb17f556cc53ae7df4396de2f3b5f6a4244f4d78909a96a5d4e22fb8.pdf"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
+      "code": "EBA",
+      "slug": "eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eba-bocchette-di-mandata-in-alluminio-passo-20-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:15 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:15.705415+00:00",
+          "filename": "EBA-c073fea7.xlsx",
+          "bytes": 9237,
+          "sha256": "0ee8a0e7e285f031a3b7eb7b147c944eb566b56095d31dd65f89469156b22924",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 305
+          },
+          "immutableFilename": "revisions/EBA-c073fea7-0ee8a0e7e285f031a3b7eb7b147c944eb566b56095d31dd65f89469156b22924.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari",
+      "code": "EBCV",
+      "slug": "ebcv-bocchette-di-mandata-per-canali-circolari",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:16 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebcv-bocchette-di-mandata-per-canali-circolari.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:16 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:16.330789+00:00",
+          "filename": "EBCV-557346ea.xlsx",
+          "bytes": 8523,
+          "sha256": "80eeee654b13a9ea6e91d08830085cdfa80f7ac24eb4883416179006de485464",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 220
+          },
+          "immutableFilename": "revisions/EBCV-557346ea-80eeee654b13a9ea6e91d08830085cdfa80f7ac24eb4883416179006de485464.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm",
+      "code": "EBIA",
+      "slug": "ebia-bocchette-industriali-in-alluminio-passo-40-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:16 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebia-bocchette-industriali-in-alluminio-passo-40-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:16 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:16.994398+00:00",
+          "filename": "EBIA-ec8b8c9c.xlsx",
+          "bytes": 8320,
+          "sha256": "9a9deda987a88fe969cef40f0d43ca079d4158e4d081b28460b109d1b5fb43c2",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 208
+          },
+          "immutableFilename": "revisions/EBIA-ec8b8c9c-9a9deda987a88fe969cef40f0d43ca079d4158e4d081b28460b109d1b5fb43c2.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse",
+      "code": "EBL",
+      "slug": "ebl-bocchette-lineari-a-barre-orizzontali-fisse",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:18 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebl-bocchette-lineari-a-barre-orizzontali-fisse.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:18 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:18.076015+00:00",
+          "filename": "EBL-40afbb66.xlsx",
+          "bytes": 9804,
+          "sha256": "79fc011660fc1251273de446491c8e42faab84a344390261b5e4a37c5f840548",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 452
+          },
+          "immutableFilename": "revisions/EBL-40afbb66-79fc011660fc1251273de446491c8e42faab84a344390261b5e4a37c5f840548.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice",
+      "code": "EBLF",
+      "slug": "eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:18 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:18 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:18.740166+00:00",
+          "filename": "EBLF-f82eef53.xlsx",
+          "bytes": 8558,
+          "sha256": "3c0e7879fac00f46cb792da1fb9dd447b5faa4569e81432477bc82c5d7f04837",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 265
+          },
+          "immutableFilename": "revisions/EBLF-f82eef53-3c0e7879fac00f46cb792da1fb9dd447b5faa4569e81432477bc82c5d7f04837.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
+      "code": "EBLR",
+      "slug": "eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:18 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:18 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:18.882673+00:00",
+          "filename": "EBLR-ddd14192.xlsx",
+          "bytes": 7102,
+          "sha256": "5e9956976c5e86d1c3c6629c7761afdcc3f37852aede5f1639d9c233a85f3ce9",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 53
+          },
+          "immutableFilename": "revisions/EBLR-ddd14192-5e9956976c5e86d1c3c6629c7761afdcc3f37852aede5f1639d9c233a85f3ce9.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
+      "code": "EBLS",
+      "slug": "ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:19.595017+00:00",
+          "filename": "EBLS-afa50e77.xlsx",
+          "bytes": 7768,
+          "sha256": "92d9de34d29bb882992b15cd133acdc4a829ef69d31ad111f90daaa3f6f15372",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 138
+          },
+          "immutableFilename": "revisions/EBLS-afa50e77-92d9de34d29bb882992b15cd133acdc4a829ef69d31ad111f90daaa3f6f15372.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebv-bocchette-di-mandata-in-acciaio-passo-20-mm",
+      "code": "EBV",
+      "slug": "ebv-bocchette-di-mandata-in-acciaio-passo-20-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebv-bocchette-di-mandata-in-acciaio-passo-20-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebv-bocchette-di-mandata-in-acciaio-passo-20-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebv-bocchette-di-mandata-in-acciaio-passo-20-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:19.537017+00:00",
+          "filename": "EBV-d3a32466.xlsx",
+          "bytes": 7549,
+          "sha256": "61f2073a1c368124722975045996533c88c1b80de749e2827813513175e3274e",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 123
+          },
+          "immutableFilename": "revisions/EBV-d3a32466-61f2073a1c368124722975045996533c88c1b80de749e2827813513175e3274e.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox",
+      "code": "EAM",
+      "slug": "eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:19 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:19.242458+00:00",
+          "filename": "EAM-3a8012d5.xlsx",
+          "bytes": 7020,
+          "sha256": "df69e5b5ee7cdea583beabcc33f2bf51e4207d2725821a2e38d276e8aebbea9c",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 31
+          },
+          "immutableFilename": "revisions/EAM-3a8012d5-df69e5b5ee7cdea583beabcc33f2bf51e4207d2725821a2e38d276e8aebbea9c.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve",
+      "code": "EDC",
+      "slug": "edc-1-6-diffusori-multidirezionali-ad-alette-curve",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edc-1-6-diffusori-multidirezionali-ad-alette-curve.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.064119+00:00",
+          "filename": "EDC-3cce0fb7.xlsx",
+          "bytes": 8081,
+          "sha256": "2c9ac84551a55002906173c41bdc3aa46f79774671efc9cb34a32e3a13ccc8cf",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 201
+          },
+          "immutableFilename": "revisions/EDC-3cce0fb7-2c9ac84551a55002906173c41bdc3aa46f79774671efc9cb34a32e3a13ccc8cf.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcc-diffusori-circolari-con-piastra-di-fondo-chiusa",
+      "code": "EDCC",
+      "slug": "edcc-diffusori-circolari-con-piastra-di-fondo-chiusa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcc-diffusori-circolari-con-piastra-di-fondo-chiusa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcc-diffusori-circolari-con-piastra-di-fondo-chiusa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edcc-diffusori-circolari-con-piastra-di-fondo-chiusa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.205642+00:00",
+          "filename": "EDCC-0bc40027.xlsx",
+          "bytes": 7339,
+          "sha256": "c330fa3b4568b6fa2dee129a71732be33df33fe877b955ae667f0ba2cb679b84",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 65
+          },
+          "immutableFilename": "revisions/EDCC-0bc40027-c330fa3b4568b6fa2dee129a71732be33df33fe877b955ae667f0ba2cb679b84.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcf-diffusori-circolari-forellinati",
+      "code": "EDCF",
+      "slug": "edcf-diffusori-circolari-forellinati",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcf-diffusori-circolari-forellinati?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcf-diffusori-circolari-forellinati?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edcf-diffusori-circolari-forellinati.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.306155+00:00",
+          "filename": "EDCF-0ce36e75.xlsx",
+          "bytes": 7331,
+          "sha256": "15b2ad189f6f07b650e2ede019445ca75cd44050a381d2208aa4e7073bc4b147",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 65
+          },
+          "immutableFilename": "revisions/EDCF-0ce36e75-15b2ad189f6f07b650e2ede019445ca75cd44050a381d2208aa4e7073bc4b147.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile",
+      "code": "EDCS",
+      "slug": "edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.780823+00:00",
+          "filename": "EDCS-0025fa83.xlsx",
+          "bytes": 7371,
+          "sha256": "db02478f9a4d865ae941dce0eb27ad64ea8b91dfc7495bb1899caca995a5ff59",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 58
+          },
+          "immutableFilename": "revisions/EDCS-0025fa83-db02478f9a4d865ae941dce0eb27ad64ea8b91dfc7495bb1899caca995a5ff59.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+      "code": "EDE",
+      "slug": "ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.680782+00:00",
+          "filename": "EDE-cd5d52f9.xlsx",
+          "bytes": 7219,
+          "sha256": "eee3cfdf712f654090203dc0e4529358078d02e9640ff44e30043512b4dd9ac0",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 49
+          },
+          "immutableFilename": "revisions/EDE-cd5d52f9-eee3cfdf712f654090203dc0e4529358078d02e9640ff44e30043512b4dd9ac0.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede1-ede1r-diffusori-a-getto-elicoidale-regolabile",
+      "code": "EDE1",
+      "slug": "ede1-ede1r-diffusori-a-getto-elicoidale-regolabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede1-ede1r-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede1-ede1r-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ede1-ede1r-diffusori-a-getto-elicoidale-regolabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:20.716312+00:00",
+          "filename": "EDE1-4991da38.xlsx",
+          "bytes": 7587,
+          "sha256": "83d04bc4cde583300e2f267117ce011cfc580aa8eb7e50f3330c0c7828c4a719",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 87
+          },
+          "immutableFilename": "revisions/EDE1-4991da38-83d04bc4cde583300e2f267117ce011cfc580aa8eb7e50f3330c0c7828c4a719.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede2-ede2r-diffusori-a-getto-elicoidale-regolabile",
+      "code": "EDE2",
+      "slug": "ede2-ede2r-diffusori-a-getto-elicoidale-regolabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede2-ede2r-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede2-ede2r-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ede2-ede2r-diffusori-a-getto-elicoidale-regolabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:21.105009+00:00",
+          "filename": "EDE2-628cefd2.xlsx",
+          "bytes": 7587,
+          "sha256": "79061f36787680cea70d90a32cd3d83fa4e73ad5eb808c8f14a593508d6f4853",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 87
+          },
+          "immutableFilename": "revisions/EDE2-628cefd2-79061f36787680cea70d90a32cd3d83fa4e73ad5eb808c8f14a593508d6f4853.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile",
+      "code": "EDE2S",
+      "slug": "ede2s-diffusori-a-getto-elicoidale-regolabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ede2s-diffusori-a-getto-elicoidale-regolabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:21.161303+00:00",
+          "filename": "EDE2S-38fa3f46.xlsx",
+          "bytes": 7034,
+          "sha256": "f10d7380dc077e28c860fa2619c7531773b3ed4d042e1a5061fff3904a178c52",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 28
+          },
+          "immutableFilename": "revisions/EDE2S-38fa3f46-f10d7380dc077e28c860fa2619c7531773b3ed4d042e1a5061fff3904a178c52.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile",
+      "code": "EDE5",
+      "slug": "ede5-diffusori-a-getto-elicoidale-regolabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ede5-diffusori-a-getto-elicoidale-regolabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:21.167298+00:00",
+          "filename": "EDE5-7f940c92.xlsx",
+          "bytes": 7256,
+          "sha256": "c125297ad19d3f17fdf2aec12851dc9305204b5123bfeb9cba6b08b5d8c0b78a",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 55
+          },
+          "immutableFilename": "revisions/EDE5-7f940c92-c125297ad19d3f17fdf2aec12851dc9305204b5123bfeb9cba6b08b5d8c0b78a.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda",
+      "code": "EDEA",
+      "slug": "edea-sd-diffusori-circolari-a-coni-fissi-con-serranda",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edea-sd-diffusori-circolari-a-coni-fissi-con-serranda.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:21.176420+00:00",
+          "filename": "EDEA-e564c219.xlsx",
+          "bytes": 6903,
+          "sha256": "7554b14736eaebba2a00b40ea0276bf445ee8d552720d2128ac172c873707ed2",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 23
+          },
+          "immutableFilename": "revisions/EDEA-e564c219-7554b14736eaebba2a00b40ea0276bf445ee8d552720d2128ac172c873707ed2.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfds-diffusori-circolari-da-pavimento",
+      "code": "EDFDS",
+      "slug": "edfds-diffusori-circolari-da-pavimento",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edfds-diffusori-circolari-da-pavimento?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edfds-diffusori-circolari-da-pavimento?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edfds-diffusori-circolari-da-pavimento.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:21.508975+00:00",
+          "filename": "EDFDS-bfb886c1.xlsx",
+          "bytes": 6756,
+          "sha256": "bb38bbbd3b7c9c02d40dbafd4abf60096df33ac0d960e5cb1dd1f64806fe7360",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 13
+          },
+          "immutableFilename": "revisions/EDFDS-bfb886c1-bb38bbbd3b7c9c02d40dbafd4abf60096df33ac0d960e5cb1dd1f64806fe7360.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
+      "code": "EDFL",
+      "slug": "edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.166042+00:00",
+          "filename": "EDFL-5bdf5679.xlsx",
+          "bytes": 10579,
+          "sha256": "55df1204f98b44dfd6d2c519369a30c4f5bf1e1ef050e59088133344c8373b81",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 413
+          },
+          "immutableFilename": "revisions/EDFL-5bdf5679-55df1204f98b44dfd6d2c519369a30c4f5bf1e1ef050e59088133344c8373b81.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro",
+      "code": "EDFLB",
+      "slug": "edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:21.823548+00:00",
+          "filename": "EDFLB-e3db5d52.xlsx",
+          "bytes": 6865,
+          "sha256": "cdbb23e400fcb7180784c01ac027bf5d5ab7c2570efe586378ea739fa83071a4",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 18
+          },
+          "immutableFilename": "revisions/EDFLB-e3db5d52-cdbb23e400fcb7180784c01ac027bf5d5ab7c2570efe586378ea739fa83071a4.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+      "code": "EDFLNA",
+      "slug": "edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.057524+00:00",
+          "filename": "EDFLNA-04628549.xlsx",
+          "bytes": 9616,
+          "sha256": "3bf70f2e102ddf269b9af18d90fd6d29732e11410335771b24a085ae872238f6",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 300
+          },
+          "immutableFilename": "revisions/EDFLNA-04628549-3bf70f2e102ddf269b9af18d90fd6d29732e11410335771b24a085ae872238f6.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edlh-edlhb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "code": "EDLH",
+      "slug": "edlh-edlhb-diffusori-lineari-multiferitoia-a-scomparsa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edlh-edlhb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edlh-edlhb-diffusori-lineari-multiferitoia-a-scomparsa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edlh-edlhb-diffusori-lineari-multiferitoia-a-scomparsa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.616649+00:00",
+          "filename": "EDLH-12ecbf8b.xlsx",
+          "bytes": 11537,
+          "sha256": "4e0c168f17060e30ac2267ea857747ed00b9705d7a3ac3363cb3bc48df487d43",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 682
+          },
+          "immutableFilename": "revisions/EDLH-12ecbf8b-4e0c168f17060e30ac2267ea857747ed00b9705d7a3ac3363cb3bc48df487d43.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello",
+      "code": "EDMF",
+      "slug": "edmf-s-diffusori-a-microugelli-orientabili-su-pannello",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edmf-s-diffusori-a-microugelli-orientabili-su-pannello.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.287550+00:00",
+          "filename": "EDMF-c12080bf.xlsx",
+          "bytes": 6992,
+          "sha256": "054ba5cf7593412e0d253cc24c44d972629dbee121c36ebaa0f7bd88922b5138",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 38
+          },
+          "immutableFilename": "revisions/EDMF-c12080bf-054ba5cf7593412e0d253cc24c44d972629dbee121c36ebaa0f7bd88922b5138.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmp-c-diffusori-a-microugelli-orientabili-per-canali-circolari",
+      "code": "EDMP",
+      "slug": "edmp-c-diffusori-a-microugelli-orientabili-per-canali-circolari",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmp-c-diffusori-a-microugelli-orientabili-per-canali-circolari?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmp-c-diffusori-a-microugelli-orientabili-per-canali-circolari?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edmp-c-diffusori-a-microugelli-orientabili-per-canali-circolari.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.501632+00:00",
+          "filename": "EDMP-ba091999.xlsx",
+          "bytes": 7374,
+          "sha256": "0a54e10c62bc0d7bc00b38a36093ef960e24f136a1d7df35b52a8cdc9dcaf563",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 73
+          },
+          "immutableFilename": "revisions/EDMP-ba091999-0a54e10c62bc0d7bc00b38a36093ef960e24f136a1d7df35b52a8cdc9dcaf563.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmp-p-diffusori-a-microugelli-orientabili-su-pannello-rettangolare",
+      "code": "EDMP",
+      "slug": "edmp-p-diffusori-a-microugelli-orientabili-su-pannello-rettangolare",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmp-p-diffusori-a-microugelli-orientabili-su-pannello-rettangolare?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edmp-p-diffusori-a-microugelli-orientabili-su-pannello-rettangolare?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edmp-p-diffusori-a-microugelli-orientabili-su-pannello-rettangolare.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.647649+00:00",
+          "filename": "EDMP-f694e191.xlsx",
+          "bytes": 7367,
+          "sha256": "54ee7e57be73d8af9b665ede1836df5545b9e7dae7b37408d8d0a23ab9ad95fc",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 73
+          },
+          "immutableFilename": "revisions/EDMP-f694e191-54ee7e57be73d8af9b665ede1836df5545b9e7dae7b37408d8d0a23ab9ad95fc.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqc1-diffusore-quadrato-con-piastra-di-fondo-chiusa",
+      "code": "EDQC1",
+      "slug": "edqc1-diffusore-quadrato-con-piastra-di-fondo-chiusa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqc1-diffusore-quadrato-con-piastra-di-fondo-chiusa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqc1-diffusore-quadrato-con-piastra-di-fondo-chiusa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edqc1-diffusore-quadrato-con-piastra-di-fondo-chiusa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:22 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:22.819248+00:00",
+          "filename": "EDQC1-57793333.xlsx",
+          "bytes": 7255,
+          "sha256": "aa850ed6846c41fd2492b31ec7f0f9de3afeb47253796719b28260253332b410",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 57
+          },
+          "immutableFilename": "revisions/EDQC1-57793333-aa850ed6846c41fd2492b31ec7f0f9de3afeb47253796719b28260253332b410.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqf1-diffusori-quadrati-forellinati",
+      "code": "EDQF1",
+      "slug": "edqf1-diffusori-quadrati-forellinati",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqf1-diffusori-quadrati-forellinati?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqf1-diffusori-quadrati-forellinati?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edqf1-diffusori-quadrati-forellinati.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.105347+00:00",
+          "filename": "EDQF1-ea0e04e1.xlsx",
+          "bytes": 7323,
+          "sha256": "44aae51bbaf636af65646d95cb2e1e29412fd454395f03e9a031d7132431fc02",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 65
+          },
+          "immutableFilename": "revisions/EDQF1-ea0e04e1-44aae51bbaf636af65646d95cb2e1e29412fd454395f03e9a031d7132431fc02.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqf3-diffusori-quadrati-forellinati",
+      "code": "EDQF3",
+      "slug": "edqf3-diffusori-quadrati-forellinati",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqf3-diffusori-quadrati-forellinati?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqf3-diffusori-quadrati-forellinati?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edqf3-diffusori-quadrati-forellinati.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.094343+00:00",
+          "filename": "EDQF3-345b40d2.xlsx",
+          "bytes": 6841,
+          "sha256": "45c320aa643a931d0502d100d9b3958b3cf99fa429b3bdee0a039d6564f17897",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 16
+          },
+          "immutableFilename": "revisions/EDQF3-345b40d2-45c320aa643a931d0502d100d9b3958b3cf99fa429b3bdee0a039d6564f17897.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare",
+      "code": "EDQMC",
+      "slug": "edqmc-diffusori-multi-ugello-a-geometria-circolare",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edqmc-diffusori-multi-ugello-a-geometria-circolare.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.098344+00:00",
+          "filename": "EDQMC-72f3a18f.xlsx",
+          "bytes": 7233,
+          "sha256": "9b58d8f38c1a8a751aa5308d543bfe6a8936b6413e23c6da958ae109cfcddc7e",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 49
+          },
+          "immutableFilename": "revisions/EDQMC-72f3a18f-9b58d8f38c1a8a751aa5308d543bfe6a8936b6413e23c6da958ae109cfcddc7e.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata",
+      "code": "EDQMQ",
+      "slug": "edqmq-diffusori-multi-ugello-a-geometria-quadrata",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edqmq-diffusori-multi-ugello-a-geometria-quadrata.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.250367+00:00",
+          "filename": "EDQMQ-70a836ec.xlsx",
+          "bytes": 7228,
+          "sha256": "93536b062aae2925ff1b1c47d9305843b8e8f46663d3d6c249849480df2c80fd",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 49
+          },
+          "immutableFilename": "revisions/EDQMQ-70a836ec-93536b062aae2925ff1b1c47d9305843b8e8f46663d3d6c249849480df2c80fd.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqv-edqv-pq-diffusori-quadrati-a-4-vie",
+      "code": "EDQV",
+      "slug": "edqv-edqv-pq-diffusori-quadrati-a-4-vie",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqv-edqv-pq-diffusori-quadrati-a-4-vie?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edqv-edqv-pq-diffusori-quadrati-a-4-vie?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edqv-edqv-pq-diffusori-quadrati-a-4-vie.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.580918+00:00",
+          "filename": "EDQV-b3ec9cbf.xlsx",
+          "bytes": 6943,
+          "sha256": "6707a080ee7af630083a9d61f078924facd902498958d42f172eb8b2e2d66084",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 29
+          },
+          "immutableFilename": "revisions/EDQV-b3ec9cbf-6707a080ee7af630083a9d61f078924facd902498958d42f172eb8b2e2d66084.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edra-edra-pq-diffusori-circolari-a-coni-regolabili",
+      "code": "EDRA",
+      "slug": "edra-edra-pq-diffusori-circolari-a-coni-regolabili",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edra-edra-pq-diffusori-circolari-a-coni-regolabili?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edra-edra-pq-diffusori-circolari-a-coni-regolabili?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edra-edra-pq-diffusori-circolari-a-coni-regolabili.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.770474+00:00",
+          "filename": "EDRA-90b29d07.xlsx",
+          "bytes": 7761,
+          "sha256": "097020923e3687cd6016db06096d7677d3edce2ea7104a111ae8a54807091810",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 109
+          },
+          "immutableFilename": "revisions/EDRA-90b29d07-097020923e3687cd6016db06096d7677d3edce2ea7104a111ae8a54807091810.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrc-edrcs-edrc-pqr-edrcs-pqr-diffusori-a-geometria-variabile",
+      "code": "EDRC",
+      "slug": "edrc-edrcs-edrc-pqr-edrcs-pqr-diffusori-a-geometria-variabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrc-edrcs-edrc-pqr-edrcs-pqr-diffusori-a-geometria-variabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrc-edrcs-edrc-pqr-edrcs-pqr-diffusori-a-geometria-variabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edrc-edrcs-edrc-pqr-edrcs-pqr-diffusori-a-geometria-variabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.495407+00:00",
+          "filename": "EDRC-57846358.xlsx",
+          "bytes": 7002,
+          "sha256": "fd0c46cc4d40b2074aec3fb83e2700aa5ede8f0cdd6d163fb31f29f424346489",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 37
+          },
+          "immutableFilename": "revisions/EDRC-57846358-fd0c46cc4d40b2074aec3fb83e2700aa5ede8f0cdd6d163fb31f29f424346489.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile",
+      "code": "EDRCS",
+      "slug": "edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:23 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:23.609921+00:00",
+          "filename": "EDRCS-6bb5bdc1.xlsx",
+          "bytes": 6820,
+          "sha256": "5ab573f1c1f1b8146e0ba7b39492bc94eaf5b3d0c3fc9bfaee631bc915605031",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 23
+          },
+          "immutableFilename": "revisions/EDRCS-6bb5bdc1-5ab573f1c1f1b8146e0ba7b39492bc94eaf5b3d0c3fc9bfaee631bc915605031.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa",
+      "code": "EDRF",
+      "slug": "edrf-edrfq-diffusori-a-geometria-fissa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edrf-edrfq-diffusori-a-geometria-fissa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.135071+00:00",
+          "filename": "EDRF-91af43f6.xlsx",
+          "bytes": 7435,
+          "sha256": "60afca08bb91096c012f6a7ae3ac96eb09f8435d0204ae42d1ab981df01d9f2b",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 74
+          },
+          "immutableFilename": "revisions/EDRF-91af43f6-60afca08bb91096c012f6a7ae3ac96eb09f8435d0204ae42d1ab981df01d9f2b.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrfb-edrfqb-diffusori-a-geometria-fissa",
+      "code": "EDRFB",
+      "slug": "edrfb-edrfqb-diffusori-a-geometria-fissa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrfb-edrfqb-diffusori-a-geometria-fissa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrfb-edrfqb-diffusori-a-geometria-fissa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edrfb-edrfqb-diffusori-a-geometria-fissa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.231167+00:00",
+          "filename": "EDRFB-fd67b8d4.xlsx",
+          "bytes": 7360,
+          "sha256": "ee6a7a3e47fc963975e75dac7b684fc85f38e5ce20837ef5ff68d4f4980a6fd3",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 65
+          },
+          "immutableFilename": "revisions/EDRFB-fd67b8d4-ee6a7a3e47fc963975e75dac7b684fc85f38e5ce20837ef5ff68d4f4980a6fd3.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata",
+      "code": "EDU",
+      "slug": "edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.309170+00:00",
+          "filename": "EDU-7ca6e6d6.xlsx",
+          "bytes": 7684,
+          "sha256": "9eda424a1795a76b15339aca02d6c301e7d6d2b5442836ff2deb065fd00e5db3",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 88
+          },
+          "immutableFilename": "revisions/EDU-7ca6e6d6-9eda424a1795a76b15339aca02d6c301e7d6d2b5442836ff2deb065fd00e5db3.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile",
+      "code": "EDU",
+      "slug": "edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.135071+00:00",
+          "filename": "EDU-1f517e43.xlsx",
+          "bytes": 6837,
+          "sha256": "ab2d54887877baaac0acba298b2c72b8bbd941167a4b33e042ba7fb30d495280",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 18
+          },
+          "immutableFilename": "revisions/EDU-1f517e43-ab2d54887877baaac0acba298b2c72b8bbd941167a4b33e042ba7fb30d495280.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-lfs-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda-ed-attacco-per-canale-circolare-o-flessibile",
+      "code": "EDU",
+      "slug": "edu-lfs-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda-ed-attacco-per-canale-circolare-o-flessibile",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-lfs-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda-ed-attacco-per-canale-circolare-o-flessibile?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-lfs-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda-ed-attacco-per-canale-circolare-o-flessibile?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edu-lfs-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda-ed-attacco-per-canale-circolare-o-flessibile.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.500210+00:00",
+          "filename": "EDU-2c313c0f.xlsx",
+          "bytes": 6846,
+          "sha256": "e4f0675c6f01dc68aa612cb3b31405fbd025f083b0d2ebf1446c6e1625ef473c",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 18
+          },
+          "immutableFilename": "revisions/EDU-2c313c0f-e4f0675c6f01dc68aa612cb3b31405fbd025f083b0d2ebf1446c6e1625ef473c.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda",
+      "code": "EDU",
+      "slug": "edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.763419+00:00",
+          "filename": "EDU-381f4e08.xlsx",
+          "bytes": 7662,
+          "sha256": "b29c6c255be3c020da07bc1dd20a590e64516fe45aa3f957c9dbe773c64a0fe3",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 77
+          },
+          "immutableFilename": "revisions/EDU-381f4e08-b29c6c255be3c020da07bc1dd20a590e64516fe45aa3f957c9dbe773c64a0fe3.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata",
+      "code": "EDUB",
+      "slug": "edub-diffusori-a-ugello-orientabili-a-lunga-gittata",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edub-diffusori-a-ugello-orientabili-a-lunga-gittata.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.541306+00:00",
+          "filename": "EDUB-67f21c59.xlsx",
+          "bytes": 6837,
+          "sha256": "b6de3205962c33a39f568ef3533c0105d2fc87f5f0df1d3ffd0582aa124da8ec",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 22
+          },
+          "immutableFilename": "revisions/EDUB-67f21c59-b6de3205962c33a39f568ef3533c0105d2fc87f5f0df1d3ffd0582aa124da8ec.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/epsp-plenum-realizzato-in-polistirolo-stampato",
+      "code": "EPSP",
+      "slug": "epsp-plenum-realizzato-in-polistirolo-stampato",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/epsp-plenum-realizzato-in-polistirolo-stampato?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/epsp-plenum-realizzato-in-polistirolo-stampato?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=epsp-plenum-realizzato-in-polistirolo-stampato.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.716419+00:00",
+          "filename": "EPSP-a5a66e50.xlsx",
+          "bytes": 6818,
+          "sha256": "c83ea9be99f4ba68129cded3c7a1cd7f0426caff222197a9cf8aff0b5b09ac31",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 12
+          },
+          "immutableFilename": "revisions/EPSP-a5a66e50-c83ea9be99f4ba68129cded3c7a1cd7f0426caff222197a9cf8aff0b5b09ac31.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/etim-tubo-a-induzione",
+      "code": "ETIM",
+      "slug": "etim-tubo-a-induzione",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/etim-tubo-a-induzione?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/etim-tubo-a-induzione?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=etim-tubo-a-induzione.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.934750+00:00",
+          "filename": "ETIM-ba093a2c.xlsx",
+          "bytes": 6402,
+          "sha256": "8c46921eb0f7740d3400d73cda63802f0f3a776b8a7a06e044a48d0c7f5a8156",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 2
+          },
+          "immutableFilename": "revisions/ETIM-ba093a2c-8c46921eb0f7740d3400d73cda63802f0f3a776b8a7a06e044a48d0c7f5a8156.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs",
+      "code": "EVPMC",
+      "slug": "evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:24.905531+00:00",
+          "filename": "EVPMC-f85b3854.xlsx",
+          "bytes": 6751,
+          "sha256": "62641aa64b27ad31bd9e71253d4d1dcb265aa41b6200085cf8c20dc57d0e1b5d",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 14
+          },
+          "immutableFilename": "revisions/EVPMC-f85b3854-62641aa64b27ad31bd9e71253d4d1dcb265aa41b6200085cf8c20dc57d0e1b5d.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
+      "code": "EVVMC",
+      "slug": "evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.145321+00:00",
+          "filename": "EVVMC-2bb5f55f.xlsx",
+          "bytes": 6870,
+          "sha256": "eaf0ea2a8b8c3874cdc4b3afb7eda5c40e5743025f7855aae051bc6d4388c893",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 26
+          },
+          "immutableFilename": "revisions/EVVMC-2bb5f55f-eaf0ea2a8b8c3874cdc4b3afb7eda5c40e5743025f7855aae051bc6d4388c893.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+      "code": "EVVRC",
+      "slug": "evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.125320+00:00",
+          "filename": "EVVRC-83d74ae5.xlsx",
+          "bytes": 6868,
+          "sha256": "642fe71e0205343f44c8e99223eacc2043e5615379793bcba2e19855d199116f",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 26
+          },
+          "immutableFilename": "revisions/EVVRC-83d74ae5-642fe71e0205343f44c8e99223eacc2043e5615379793bcba2e19855d199116f.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebl3-200-griglie-lineari-a-barre-orizzontali-fisse-con-filtro",
+      "code": "EBL3",
+      "slug": "ebl3-200-griglie-lineari-a-barre-orizzontali-fisse-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ebl3-200-griglie-lineari-a-barre-orizzontali-fisse-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ebl3-200-griglie-lineari-a-barre-orizzontali-fisse-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebl3-200-griglie-lineari-a-barre-orizzontali-fisse-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.237840+00:00",
+          "filename": "EBL3-18e2ff40.xlsx",
+          "bytes": 7713,
+          "sha256": "f49e2917a34d215505fc002f1c8d2c4e101365f2ec1b56b302290d0baccf6b01",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 106
+          },
+          "immutableFilename": "revisions/EBL3-18e2ff40-f49e2917a34d215505fc002f1c8d2c4e101365f2ec1b56b302290d0baccf6b01.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebp-ebp-r-griglie-pedonabili",
+      "code": "EBP",
+      "slug": "ebp-ebp-r-griglie-pedonabili",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ebp-ebp-r-griglie-pedonabili?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ebp-ebp-r-griglie-pedonabili?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebp-ebp-r-griglie-pedonabili.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.166320+00:00",
+          "filename": "EBP-8a34c73c.xlsx",
+          "bytes": 7247,
+          "sha256": "169ab46c288be8e3a98493316a003d825d4814faeb334698a83c2ed59fa70077",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 106
+          },
+          "immutableFilename": "revisions/EBP-8a34c73c-169ab46c288be8e3a98493316a003d825d4814faeb334698a83c2ed59fa70077.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebp-t-ebp-tr-griglie-pedonabili",
+      "code": "EBP",
+      "slug": "ebp-t-ebp-tr-griglie-pedonabili",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ebp-t-ebp-tr-griglie-pedonabili?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ebp-t-ebp-tr-griglie-pedonabili?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebp-t-ebp-tr-griglie-pedonabili.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.392989+00:00",
+          "filename": "EBP-e8054039.xlsx",
+          "bytes": 7888,
+          "sha256": "53542c2559876b5efd0bc870b05be80fc68a0abe9799c417f64c97e37732aca5",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 266
+          },
+          "immutableFilename": "revisions/EBP-e8054039-53542c2559876b5efd0bc870b05be80fc68a0abe9799c417f64c97e37732aca5.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro",
+      "code": "EGA",
+      "slug": "ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.817121+00:00",
+          "filename": "EGA-52b2b5ac.xlsx",
+          "bytes": 7791,
+          "sha256": "6c5b9c2639c808839c83a856d640c9e12dccb0a81075090702d85ac4fb2087a6",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 127
+          },
+          "immutableFilename": "revisions/EGA-52b2b5ac-6c5b9c2639c808839c83a856d640c9e12dccb0a81075090702d85ac4fb2087a6.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm",
+      "code": "EGA",
+      "slug": "ega-griglie-di-ripresa-in-alluminio-passo-25-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega-griglie-di-ripresa-in-alluminio-passo-25-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.951170+00:00",
+          "filename": "EGA-fae69031.xlsx",
+          "bytes": 9463,
+          "sha256": "60824ed547bdcc0780173cc576e7987b259d35d8cf437714db3e2d54873771a4",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 295
+          },
+          "immutableFilename": "revisions/EGA-fae69031-60824ed547bdcc0780173cc576e7987b259d35d8cf437714db3e2d54873771a4.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm",
+      "code": "EGA50",
+      "slug": "ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.534011+00:00",
+          "filename": "EGA50-494d8236.xlsx",
+          "bytes": 8771,
+          "sha256": "beb9904f67cbae51b6e3261534c5b7958aae542b590102a7099f6c258be57115",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 255
+          },
+          "immutableFilename": "revisions/EGA50-494d8236-beb9904f67cbae51b6e3261534c5b7958aae542b590102a7099f6c258be57115.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione",
+      "code": "EGA50",
+      "slug": "ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.681075+00:00",
+          "filename": "EGA50-85d10ce8.xlsx",
+          "bytes": 7593,
+          "sha256": "e73f592e3abebe220750db67b4a83a1d4b9c06d7613c1cda21fe4bd64bdd3a3c",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 170
+          },
+          "immutableFilename": "revisions/EGA50-85d10ce8-e73f592e3abebe220750db67b4a83a1d4b9c06d7613c1cda21fe4bd64bdd3a3c.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
+      "code": "EGA50",
+      "slug": "ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega50-griglie-di-ripresa-in-alluminio-passo-50-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:25.926170+00:00",
+          "filename": "EGA50-fc2f9df8.xlsx",
+          "bytes": 7495,
+          "sha256": "a264eb57f0f9a34af354d9816911304df1f3ebe60d037361e709822807d7fa43",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 86
+          },
+          "immutableFilename": "revisions/EGA50-fc2f9df8-a264eb57f0f9a34af354d9816911304df1f3ebe60d037361e709822807d7fa43.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro",
+      "code": "EGA6",
+      "slug": "ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.166796+00:00",
+          "filename": "EGA6-f8d6b190.xlsx",
+          "bytes": 7319,
+          "sha256": "ab9ea064f6145c6c6b330be45d5b32e7d046d9764f9b1ca4f7cc5a8b19029623",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 68
+          },
+          "immutableFilename": "revisions/EGA6-f8d6b190-ab9ea064f6145c6c6b330be45d5b32e7d046d9764f9b1ca4f7cc5a8b19029623.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-griglie-forellinate",
+      "code": "EGF",
+      "slug": "egf-griglie-forellinate",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egf-griglie-forellinate?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egf-griglie-forellinate?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egf-griglie-forellinate.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.243318+00:00",
+          "filename": "EGF-d3ca77e7.xlsx",
+          "bytes": 7979,
+          "sha256": "5b85ee427e3c48b883e4b2d0f3b6f415ade65e195738b0952c538ca72f028f01",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 156
+          },
+          "immutableFilename": "revisions/EGF-d3ca77e7-5b85ee427e3c48b883e4b2d0f3b6f415ade65e195738b0952c538ca72f028f01.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-push-griglia-forellinata-con-filtro",
+      "code": "EGF",
+      "slug": "egf-push-griglia-forellinata-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egf-push-griglia-forellinata-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egf-push-griglia-forellinata-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egf-push-griglia-forellinata-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.418403+00:00",
+          "filename": "EGF-37f87618.xlsx",
+          "bytes": 7277,
+          "sha256": "f8ee50fe41f4dac0d2fe7338a9a4397653132ba007ca71db7c08e942689c82e3",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 73
+          },
+          "immutableFilename": "revisions/EGF-37f87618-f8ee50fe41f4dac0d2fe7338a9a4397653132ba007ca71db7c08e942689c82e3.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egff-griglie-forellinate-senza-cornice",
+      "code": "EGFF",
+      "slug": "egff-griglie-forellinate-senza-cornice",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egff-griglie-forellinate-senza-cornice?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egff-griglie-forellinate-senza-cornice?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egff-griglie-forellinate-senza-cornice.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.292318+00:00",
+          "filename": "EGFF-2fe3d348.xlsx",
+          "bytes": 7865,
+          "sha256": "592ffb316cbf54c6fa85aeb0145b06417ebdb9e69f37dc9af8977c8c9a16faf1",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 133
+          },
+          "immutableFilename": "revisions/EGFF-2fe3d348-592ffb316cbf54c6fa85aeb0145b06417ebdb9e69f37dc9af8977c8c9a16faf1.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-griglie-forellinate-con-cornice-da-15-mm",
+      "code": "EGFR",
+      "slug": "egfr-griglie-forellinate-con-cornice-da-15-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egfr-griglie-forellinate-con-cornice-da-15-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egfr-griglie-forellinate-con-cornice-da-15-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egfr-griglie-forellinate-con-cornice-da-15-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.503406+00:00",
+          "filename": "EGFR-dfc7c014.xlsx",
+          "bytes": 8072,
+          "sha256": "65c0538733e90a8ac51e0c3fae2071c1d51cece4e38f5990e9c528b632eee7b6",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 147
+          },
+          "immutableFilename": "revisions/EGFR-dfc7c014-65c0538733e90a8ac51e0c3fae2071c1d51cece4e38f5990e9c528b632eee7b6.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm",
+      "code": "EGFR",
+      "slug": "egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.692437+00:00",
+          "filename": "EGFR-484da106.xlsx",
+          "bytes": 6768,
+          "sha256": "364aeb91220fd7b50d9391b6d4dd8ae8675de57c91f786b409b71384a75a4e03",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 9
+          },
+          "immutableFilename": "revisions/EGFR-484da106-364aeb91220fd7b50d9391b6d4dd8ae8675de57c91f786b409b71384a75a4e03.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-griglie-a-maglia-quadra",
+      "code": "EGQ",
+      "slug": "egq-griglie-a-maglia-quadra",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-griglie-a-maglia-quadra?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-griglie-a-maglia-quadra?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egq-griglie-a-maglia-quadra.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.667431+00:00",
+          "filename": "EGQ-2f7375f8.xlsx",
+          "bytes": 10826,
+          "sha256": "d7a71caf933656c0d4b56f4c635fe9eb822683a654d4c9decac8220461caa6ea",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 500
+          },
+          "immutableFilename": "revisions/EGQ-2f7375f8-d7a71caf933656c0d4b56f4c635fe9eb822683a654d4c9decac8220461caa6ea.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
+      "code": "EGQ",
+      "slug": "egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.754456+00:00",
+          "filename": "EGQ-5aa04e92.xlsx",
+          "bytes": 7435,
+          "sha256": "9a0d6e2969b03ec92a5cc5ad86b7565639aecd8444337205b41b183a03f4a6b1",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 69
+          },
+          "immutableFilename": "revisions/EGQ-5aa04e92-9a0d6e2969b03ec92a5cc5ad86b7565639aecd8444337205b41b183a03f4a6b1.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro",
+      "code": "EGQ1",
+      "slug": "egq1-4-griglie-a-maglia-quadra-con-filtro",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egq1-4-griglie-a-maglia-quadra-con-filtro.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:26 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:26.822714+00:00",
+          "filename": "EGQ1-60d8c91b.xlsx",
+          "bytes": 7938,
+          "sha256": "a8bcd2baef976dafde7028264352d83373245eb0b8c4ea607f56c08b655d39bf",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 150
+          },
+          "immutableFilename": "revisions/EGQ1-60d8c91b-a8bcd2baef976dafde7028264352d83373245eb0b8c4ea607f56c08b655d39bf.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
+      "code": "EGQIF",
+      "slug": "egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egqif-griglie-a-maglia-quadra-inclinata-senza-cornice.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.020739+00:00",
+          "filename": "EGQIF-d0774fcc.xlsx",
+          "bytes": 8230,
+          "sha256": "08a37287cd7119668e49b1531f0ff89e27cee558b9e83a19ebd07f574e9f97fe",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 177
+          },
+          "immutableFilename": "revisions/EGQIF-d0774fcc-08a37287cd7119668e49b1531f0ff89e27cee558b9e83a19ebd07f574e9f97fe.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm",
+      "code": "EGQR",
+      "slug": "egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.161254+00:00",
+          "filename": "EGQR-9cd6b0d5.xlsx",
+          "bytes": 9586,
+          "sha256": "14e4310bc66c4fe4b12670bbe1fa14b3b242c2e6160556a84b97b9d0bfc8641f",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 301
+          },
+          "immutableFilename": "revisions/EGQR-9cd6b0d5-14e4310bc66c4fe4b12670bbe1fa14b3b242c2e6160556a84b97b9d0bfc8641f.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm",
+      "code": "EGQR",
+      "slug": "egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.107742+00:00",
+          "filename": "EGQR-d7e849e1.xlsx",
+          "bytes": 6818,
+          "sha256": "a660428ecdbc38a5b414444e7339212f84d8d835bce3f412e46d59de838806b6",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 10
+          },
+          "immutableFilename": "revisions/EGQR-d7e849e1-a660428ecdbc38a5b414444e7339212f84d8d835bce3f412e46d59de838806b6.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egs-griglie-stampate-di-aspirazione",
+      "code": "EGS",
+      "slug": "egs-griglie-stampate-di-aspirazione",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egs-griglie-stampate-di-aspirazione?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egs-griglie-stampate-di-aspirazione?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egs-griglie-stampate-di-aspirazione.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.120255+00:00",
+          "filename": "EGS-3f882c13.xlsx",
+          "bytes": 7072,
+          "sha256": "a5505adf83fef5cb2f95daed505c996eca94f473a80fdb49d04a05b8ac6d2032",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 44
+          },
+          "immutableFilename": "revisions/EGS-3f882c13-a5505adf83fef5cb2f95daed505c996eca94f473a80fdb49d04a05b8ac6d2032.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
+      "code": "EGZ100",
+      "slug": "egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egz100-griglie-di-ripresa-in-acciaio-passo-100-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.326311+00:00",
+          "filename": "EGZ100-68b55783.xlsx",
+          "bytes": 7478,
+          "sha256": "1cf66dea0be60fcac83cafff6598f3ade8ad85d8e5aae6dce376c459e1803d02",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 86
+          },
+          "immutableFilename": "revisions/EGZ100-68b55783-1cf66dea0be60fcac83cafff6598f3ade8ad85d8e5aae6dce376c459e1803d02.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz50-griglie-di-ripresa-in-acciaio-passo-50-mm",
+      "code": "EGZ50",
+      "slug": "egz50-griglie-di-ripresa-in-acciaio-passo-50-mm",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egz50-griglie-di-ripresa-in-acciaio-passo-50-mm?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egz50-griglie-di-ripresa-in-acciaio-passo-50-mm?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egz50-griglie-di-ripresa-in-acciaio-passo-50-mm.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.448842+00:00",
+          "filename": "EGZ50-501adef2.xlsx",
+          "bytes": 7478,
+          "sha256": "8665f990fa00042de46d3830e31f57effcf2831cc146dd6e171ea0f29a9b5aa5",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 86
+          },
+          "immutableFilename": "revisions/EGZ50-501adef2-8665f990fa00042de46d3830e31f57effcf2831cc146dd6e171ea0f29a9b5aa5.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/eta-griglie-di-transito-in-alluminio",
+      "code": "ETA",
+      "slug": "eta-griglie-di-transito-in-alluminio",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/eta-griglie-di-transito-in-alluminio?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/eta-griglie-di-transito-in-alluminio?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eta-griglie-di-transito-in-alluminio.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.372312+00:00",
+          "filename": "ETA-cbe3edeb.xlsx",
+          "bytes": 7282,
+          "sha256": "27863d68953ad8f2c40391f00d4e1bf01071a1e9022dc4653c3c2d46e90b5296",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 69
+          },
+          "immutableFilename": "revisions/ETA-cbe3edeb-27863d68953ad8f2c40391f00d4e1bf01071a1e9022dc4653c3c2d46e90b5296.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato",
+      "code": "EAB9063",
+      "slug": "eab9063-curva-a-90-in-acciaio-zincato",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eab9063-curva-a-90-in-acciaio-zincato.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.407326+00:00",
+          "filename": "EAB9063-3af7132e.xlsx",
+          "bytes": 6658,
+          "sha256": "5b494af2d36f40ea401ee12d226c0b34578339b6e8408d9badbca291e76f418e",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 6
+          },
+          "immutableFilename": "revisions/EAB9063-3af7132e-5b494af2d36f40ea401ee12d226c0b34578339b6e8408d9badbca291e76f418e.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eadd-diffusore-daria-in-abs",
+      "code": "EADD",
+      "slug": "eadd-diffusore-daria-in-abs",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eadd-diffusore-daria-in-abs?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eadd-diffusore-daria-in-abs?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eadd-diffusore-daria-in-abs.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.589352+00:00",
+          "filename": "EADD-51ad082d.xlsx",
+          "bytes": 6753,
+          "sha256": "56c64efb0eee2d49dd2d6bffc3c8019658b8144e2d0a0f595a5a6706eef9be40",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 14
+          },
+          "immutableFilename": "revisions/EADD-51ad082d-56c64efb0eee2d49dd2d6bffc3c8019658b8144e2d0a0f595a5a6706eef9be40.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca",
+      "code": "EAG",
+      "slug": "eag-al-griglia-in-alluminio-con-rete-verniciata-bianca",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eag-al-griglia-in-alluminio-con-rete-verniciata-bianca.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.646889+00:00",
+          "filename": "EAG-12eb0dcc.xlsx",
+          "bytes": 6976,
+          "sha256": "bd6b77ed7aa19764937d9b63141dedb8f5c8aaa3756857147f63df2c41330783",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 31
+          },
+          "immutableFilename": "revisions/EAG-12eb0dcc-bd6b77ed7aa19764937d9b63141dedb8f5c8aaa3756857147f63df2c41330783.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-griglia-di-ripresa",
+      "code": "EAG",
+      "slug": "eag-griglia-di-ripresa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-griglia-di-ripresa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-griglia-di-ripresa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eag-griglia-di-ripresa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.653890+00:00",
+          "filename": "EAG-ed59904a.xlsx",
+          "bytes": 6961,
+          "sha256": "8fbd34f13bde2b675714e5256b8bc798ad9a2b8b18522c2fefbdaeb8030e8d64",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 28
+          },
+          "immutableFilename": "revisions/EAG-ed59904a-8fbd34f13bde2b675714e5256b8bc798ad9a2b8b18522c2fefbdaeb8030e8d64.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia",
+      "code": "EAG",
+      "slug": "eag-inox-griglia-con-protezione-antipioggia",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eag-inox-griglia-con-protezione-antipioggia.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.732919+00:00",
+          "filename": "EAG-5a5c2158.xlsx",
+          "bytes": 7551,
+          "sha256": "19bb1acaf45e8bb76671d079f7325b6362f6bbd27c842cdad10d84667a4b01a8",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 72
+          },
+          "immutableFilename": "revisions/EAG-5a5c2158-19bb1acaf45e8bb76671d079f7325b6362f6bbd27c842cdad10d84667a4b01a8.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata",
+      "code": "EAGF",
+      "slug": "eagf-griglia-forellinata",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eagf-griglia-forellinata.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.892442+00:00",
+          "filename": "EAGF-53d3ad84.xlsx",
+          "bytes": 6966,
+          "sha256": "3dd1f13d1e99007e72cc879421a76b9b6ad72a1a616d5ce7e2efba7f58095d67",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 28
+          },
+          "immutableFilename": "revisions/EAGF-53d3ad84-3dd1f13d1e99007e72cc879421a76b9b6ad72a1a616d5ce7e2efba7f58095d67.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eal-griglia-a-barre-orizzontali-fisse",
+      "code": "EAL",
+      "slug": "eal-griglia-a-barre-orizzontali-fisse",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eal-griglia-a-barre-orizzontali-fisse?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eal-griglia-a-barre-orizzontali-fisse?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eal-griglia-a-barre-orizzontali-fisse.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.920955+00:00",
+          "filename": "EAL-f30c3f6e.xlsx",
+          "bytes": 6981,
+          "sha256": "6099dfa3f49a63698f2925bf199927554cfc5154855ec1443562e002f93bcd74",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 28
+          },
+          "immutableFilename": "revisions/EAL-f30c3f6e-6099dfa3f49a63698f2925bf199927554cfc5154855ec1443562e002f93bcd74.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox",
+      "code": "EAM",
+      "slug": "eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.946955+00:00",
+          "filename": "EAM-7e29636f.xlsx",
+          "bytes": 7020,
+          "sha256": "0c853396f078fe3d9e77fbd71ac95b68abdee38c51360e6bb9ce29fdd16484c5",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 31
+          },
+          "immutableFilename": "revisions/EAM-7e29636f-0c853396f078fe3d9e77fbd71ac95b68abdee38c51360e6bb9ce29fdd16484c5.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica",
+      "code": "EAMV",
+      "slug": "eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:27.995957+00:00",
+          "filename": "EAMV-0da616b8.xlsx",
+          "bytes": 7046,
+          "sha256": "5b876b69be61d6cc6af5837041243f358c1f654a16d213e181530c31119c3f1e",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 42
+          },
+          "immutableFilename": "revisions/EAMV-0da616b8-5b876b69be61d6cc6af5837041243f358c1f654a16d213e181530c31119c3f1e.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica",
+      "code": "EAPRO",
+      "slug": "eapro-prolunga-telescopica",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eapro-prolunga-telescopica.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.138023+00:00",
+          "filename": "EAPRO-e6bb0262.xlsx",
+          "bytes": 6702,
+          "sha256": "3941933bb8bba30d708febf8f92621d16f70b50d3174e1ed87f59bf08af08656",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 10
+          },
+          "immutableFilename": "revisions/EAPRO-e6bb0262-3941933bb8bba30d708febf8f92621d16f70b50d3174e1ed87f59bf08af08656.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio",
+      "code": "EARS",
+      "slug": "ears-pn-raccordo-per-attraversamento-solaio",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ears-pn-raccordo-per-attraversamento-solaio.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.288181+00:00",
+          "filename": "EARS-61b3bd7d.xlsx",
+          "bytes": 6720,
+          "sha256": "85eab63f9338250499ed70147a2630f534d996c455198bfac1e12232ba1b223a",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 10
+          },
+          "immutableFilename": "revisions/EARS-61b3bd7d-85eab63f9338250499ed70147a2630f534d996c455198bfac1e12232ba1b223a.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria",
+      "code": "EASY",
+      "slug": "easy-box-plenum-in-abs-per-distribuzione-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=easy-box-plenum-in-abs-per-distribuzione-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.200023+00:00",
+          "filename": "EASY-fc30baa1.xlsx",
+          "bytes": 7040,
+          "sha256": "9e5de648763bef5d8d3a2e806766b7968f4c107219ceb9b726edffc382280961",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 21
+          },
+          "immutableFilename": "revisions/EASY-fc30baa1-9e5de648763bef5d8d3a2e806766b7968f4c107219ceb9b726edffc382280961.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eatm-tubo-telescopico",
+      "code": "EATM",
+      "slug": "eatm-tubo-telescopico",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eatm-tubo-telescopico?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eatm-tubo-telescopico?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=eatm-tubo-telescopico.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.293182+00:00",
+          "filename": "EATM-28483b28.xlsx",
+          "bytes": 6792,
+          "sha256": "31777d8b71a5ae0acdbc0ce976e86338622b96f371960acff31f4d72f708636c",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 18
+          },
+          "immutableFilename": "revisions/EATM-28483b28-31777d8b71a5ae0acdbc0ce976e86338622b96f371960acff31f4d72f708636c.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016",
+      "code": "EBOX",
+      "slug": "ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.388220+00:00",
+          "filename": "EBOX-8bd4450e.xlsx",
+          "bytes": 6437,
+          "sha256": "63701b563f12f264a2298d6f6585a665181cb15e565c401948bf5647e6b53f5d",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 2
+          },
+          "immutableFilename": "revisions/EBOX-8bd4450e-63701b563f12f264a2298d6f6585a665181cb15e565c401948bf5647e6b53f5d.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa",
+      "code": "EDLSV",
+      "slug": "edlsv-edlsvb-diffusori-lineari-a-scomparsa",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edlsv-edlsvb-diffusori-lineari-a-scomparsa.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.579288+00:00",
+          "filename": "EDLSV-f8af1f05.xlsx",
+          "bytes": 7077,
+          "sha256": "a8e8283ff5152010f83298a30c9f0a90ba9b2efde15e123e4befba1ae8208435",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 27
+          },
+          "immutableFilename": "revisions/EDLSV-f8af1f05-a8e8283ff5152010f83298a30c9f0a90ba9b2efde15e123e4befba1ae8208435.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere",
+      "code": "EDR",
+      "slug": "edr-serrande-di-regolazione-leggere",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=edr-serrande-di-regolazione-leggere.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.584290+00:00",
+          "filename": "EDR-0cbd5275.xlsx",
+          "bytes": 7158,
+          "sha256": "e70fb686c19a9b5c0f84bc4a96e2d504fe3ebc6fbbe4bee1f2bf9e1afbdfcca1",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 69
+          },
+          "immutableFilename": "revisions/EDR-0cbd5275-e70fb686c19a9b5c0f84bc4a96e2d504fe3ebc6fbbe4bee1f2bf9e1afbdfcca1.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ega-one-griglia-per-plenum-one-box",
+      "code": "EGA",
+      "slug": "ega-one-griglia-per-plenum-one-box",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ega-one-griglia-per-plenum-one-box?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ega-one-griglia-per-plenum-one-box?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ega-one-griglia-per-plenum-one-box.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.553288+00:00",
+          "filename": "EGA-c364f74a.xlsx",
+          "bytes": 6893,
+          "sha256": "c1ce2659af2af70458f5843fdce604db172e33c957c42ede19bb814ea588a597",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 29
+          },
+          "immutableFilename": "revisions/EGA-c364f74a-c1ce2659af2af70458f5843fdce604db172e33c957c42ede19bb814ea588a597.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box",
+      "code": "EGE",
+      "slug": "ege-griglie-di-distribuzione-aria-per-easy-box",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=ege-griglie-di-distribuzione-aria-per-easy-box.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.705343+00:00",
+          "filename": "EGE-27a78c0a.xlsx",
+          "bytes": 6926,
+          "sha256": "91a76ab24fbece552fdd61d128a8655bc88f1841ac35d71274ff829323b63433",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 29
+          },
+          "immutableFilename": "revisions/EGE-27a78c0a-91a76ab24fbece552fdd61d128a8655bc88f1841ac35d71274ff829323b63433.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso",
+      "code": "EGFC",
+      "slug": "egfc-griglia-forellinata-a-scomparsa-per-cartongesso",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=egfc-griglia-forellinata-a-scomparsa-per-cartongesso.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.920751+00:00",
+          "filename": "EGFC-9b32e3c9.xlsx",
+          "bytes": 6727,
+          "sha256": "a94a05adb4b32ec8b7b796b6e0d5f10c98d4b89a44ec84c90a554a6324dec5f5",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 10
+          },
+          "immutableFilename": "revisions/EGFC-9b32e3c9-a94a05adb4b32ec8b7b796b6e0d5f10c98d4b89a44ec84c90a554a6324dec5f5.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito",
+      "code": "EMV",
+      "slug": "emv-350-griglie-di-transito",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=emv-350-griglie-di-transito.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.861495+00:00",
+          "filename": "EMV-8e23e379.xlsx",
+          "bytes": 6809,
+          "sha256": "b82532a4af12509ae8749c5eefee0a81a29ad9ccf3a148acba999b6dc0d66ec3",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 12
+          },
+          "immutableFilename": "revisions/EMV-8e23e379-b82532a4af12509ae8749c5eefee0a81a29ad9ccf3a148acba999b6dc0d66ec3.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare",
+      "code": "EMV",
+      "slug": "emv-bvs-griglia-circolare-con-collare",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=emv-bvs-griglia-circolare-con-collare.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.849493+00:00",
+          "filename": "EMV-d4050dee.xlsx",
+          "bytes": 6880,
+          "sha256": "45c81f55b16bf9693c306bc7ccc1493763a44d0a24704c1054f5c7c213503a8d",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 22
+          },
+          "immutableFilename": "revisions/EMV-d4050dee-45c81f55b16bf9693c306bc7ccc1493763a44d0a24704c1054f5c7c213503a8d.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-j-griglia-di-sovrapressione",
+      "code": "EMV",
+      "slug": "emv-j-griglia-di-sovrapressione",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-j-griglia-di-sovrapressione?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-j-griglia-di-sovrapressione?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=emv-j-griglia-di-sovrapressione.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:28.967752+00:00",
+          "filename": "EMV-41de5453.xlsx",
+          "bytes": 6905,
+          "sha256": "0cc320f4adadf13e21d484408f5efb4186ce307f57e35f8f9015a39ac7b2ad9f",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 26
+          },
+          "immutableFilename": "revisions/EMV-41de5453-0cc320f4adadf13e21d484408f5efb4186ce307f57e35f8f9015a39ac7b2ad9f.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs",
+      "code": "EMV",
+      "slug": "emv-pfs-diffusore-a-coni-fissi-in-abs",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=emv-pfs-diffusore-a-coni-fissi-in-abs.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.127839+00:00",
+          "filename": "EMV-2c744a55.xlsx",
+          "bytes": 7077,
+          "sha256": "c795d841f901e361e0588e7d4d3319105ae87b2a9c8a865408cb03d10b295008",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 44
+          },
+          "immutableFilename": "revisions/EMV-2c744a55-c795d841f901e361e0588e7d4d3319105ae87b2a9c8a865408cb03d10b295008.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana",
+      "code": "EMV",
+      "slug": "emv-s-emv-vs-griglia-piana",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=emv-s-emv-vs-griglia-piana.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.127839+00:00",
+          "filename": "EMV-910f7357.xlsx",
+          "bytes": 7114,
+          "sha256": "da5593a67a501f3e5b0000c0c8e6c8c7ad2626f0ecd30c72076baaca357a8166",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 51
+          },
+          "immutableFilename": "revisions/EMV-910f7357-da5593a67a501f3e5b0000c0c8e6c8c7ad2626f0ecd30c72076baaca357a8166.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/epl-epp-plenum-in-acciaio-zincato-con-attacchi-laterali-o-posteriori",
+      "code": "EPL",
+      "slug": "epl-epp-plenum-in-acciaio-zincato-con-attacchi-laterali-o-posteriori",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/epl-epp-plenum-in-acciaio-zincato-con-attacchi-laterali-o-posteriori?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/epl-epp-plenum-in-acciaio-zincato-con-attacchi-laterali-o-posteriori?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=epl-epp-plenum-in-acciaio-zincato-con-attacchi-laterali-o-posteriori.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.222097+00:00",
+          "filename": "EPL-7ed3f635.xlsx",
+          "bytes": 6909,
+          "sha256": "ddb5ff84bd00c9feb501f68c8a3e9b370355c3b4e00e047869a7912e639aeec0",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 22
+          },
+          "immutableFilename": "revisions/EPL-7ed3f635-ddb5ff84bd00c9feb501f68c8a3e9b370355c3b4e00e047869a7912e639aeec0.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare",
+      "code": "ERDR",
+      "slug": "erdr-regolatore-di-portata-in-abs-per-canale-circolare",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=erdr-regolatore-di-portata-in-abs-per-canale-circolare.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.218097+00:00",
+          "filename": "ERDR-1151004a.xlsx",
+          "bytes": 7159,
+          "sha256": "5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 77
+          },
+          "immutableFilename": "revisions/ERDR-1151004a-5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili",
+      "code": "EVALI",
+      "slug": "evali-bocchette-di-estrazione-autoregolabili",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evali-bocchette-di-estrazione-autoregolabili.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.385134+00:00",
+          "filename": "EVALI-52500197.xlsx",
+          "bytes": 7169,
+          "sha256": "6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 45
+          },
+          "immutableFilename": "revisions/EVALI-52500197-6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs",
+      "code": "EVPMC",
+      "slug": "evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.401134+00:00",
+          "filename": "EVPMC-5cb0f75f.xlsx",
+          "bytes": 6751,
+          "sha256": "cf5b377520c7c4df134d144a4f9d5841736b6ddcf09ac0cb21cb7c3f32fac549",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 14
+          },
+          "immutableFilename": "revisions/EVPMC-5cb0f75f-cf5b377520c7c4df134d144a4f9d5841736b6ddcf09ac0cb21cb7c3f32fac549.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs",
+      "code": "EVREA",
+      "slug": "evrea-diffusore-daria-in-abs",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evrea-diffusore-daria-in-abs.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.566777+00:00",
+          "filename": "EVREA-37663445.xlsx",
+          "bytes": 7195,
+          "sha256": "ea38af63ba6ebc4c76ec97cdcdac6c6bef6c8f61a6bff65d8aa127b8aad644ed",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 50
+          },
+          "immutableFilename": "revisions/EVREA-37663445-ea38af63ba6ebc4c76ec97cdcdac6c6bef6c8f61a6bff65d8aa127b8aad644ed.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
+      "code": "EVVAIR",
+      "slug": "evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.489269+00:00",
+          "filename": "EVVAIR-0404c5b2.xlsx",
+          "bytes": 6701,
+          "sha256": "13cc03d75e315dfeccd0e82848ca643b277d4fbfdfbec97d4f85b680ffeb6606",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 8
+          },
+          "immutableFilename": "revisions/EVVAIR-0404c5b2-13cc03d75e315dfeccd0e82848ca643b277d4fbfdfbec97d4f85b680ffeb6606.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvbor-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
+      "code": "EVVBOR",
+      "slug": "evvbor-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvbor-valvole-regolabili-per-la-mandata-e-estrazione-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvbor-valvole-regolabili-per-la-mandata-e-estrazione-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evvbor-valvole-regolabili-per-la-mandata-e-estrazione-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.638309+00:00",
+          "filename": "EVVBOR-c564feff.xlsx",
+          "bytes": 7016,
+          "sha256": "fda29250f1c6a9caa37385e41b99d0e8774baabdd6c4a43d7fac4cd2efa1584a",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 23
+          },
+          "immutableFilename": "revisions/EVVBOR-c564feff-fda29250f1c6a9caa37385e41b99d0e8774baabdd6c4a43d7fac4cd2efa1584a.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
+      "code": "EVVMC",
+      "slug": "evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.714828+00:00",
+          "filename": "EVVMC-842be3bd.xlsx",
+          "bytes": 6869,
+          "sha256": "fb1d458a81631b5980f14051dacb383187e1124fce3d7ae142b0f51b385b85c1",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 26
+          },
+          "immutableFilename": "revisions/EVVMC-842be3bd-fb1d458a81631b5980f14051dacb383187e1124fce3d7ae142b0f51b385b85c1.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+      "code": "EVVRC",
+      "slug": "evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.784347+00:00",
+          "filename": "EVVRC-43b3a241.xlsx",
+          "bytes": 6867,
+          "sha256": "ea636fe9e040ba495b878df507c35570bc4352cd526068628d8c7c9d2f72ee39",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 26
+          },
+          "immutableFilename": "revisions/EVVRC-43b3a241-ea636fe9e040ba495b878df507c35570bc4352cd526068628d8c7c9d2f72ee39.xlsx"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp",
+      "code": "ONE",
+      "slug": "one-box-box-di-distribuzione-in-epp",
+      "sources": [
+        {
+          "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp?locale=it",
+          "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp?locale=it",
+          "status": 200,
+          "headers": {
+            "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Server": "Apache",
+            "Cache-Control": "public",
+            "Content-Disposition": "attachment; filename=one-box-box-di-distribuzione-in-epp.xlsx",
+            "Accept-Ranges": "bytes",
+            "Upgrade": "h2",
+            "Connection": "Upgrade, close",
+            "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+            "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+            "Transfer-Encoding": "chunked",
+            "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "retrievedAt": "2026-10-03T23:02:29.822371+00:00",
+          "filename": "ONE-7bf1d5df.xlsx",
+          "bytes": 6753,
+          "sha256": "091176931347e9f3a583d65cbda34598064839e2e024c964cc7853f346dc88b2",
+          "extraction": {
+            "sheets": 1,
+            "populatedCells": 8
+          },
+          "immutableFilename": "revisions/ONE-7bf1d5df-091176931347e9f3a583d65cbda34598064839e2e024c964cc7853f346dc88b2.xlsx"
+        }
+      ]
+    }
+  ]
+}

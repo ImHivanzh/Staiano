@@ -1,0 +1,50 @@
+{
+  "Cordivari|Ardesia 2 colonne": {
+    "localPath": "/catalog-assets/radiators/cordivari-ardesia-2-colonne.jpg",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-2-colonne_R25-2025.pdf",
+    "sha256": "69d329ea81d6838903cf670698f63c7861cca3bf6d12a30910d45145822ef748",
+    "caption": "Fotografia ufficiale di famiglia estratta dalla scheda originale, pagina 1; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Cordivari|Ardesia 3 colonne": {
+    "localPath": "/catalog-assets/radiators/cordivari-ardesia-3-colonne.jpg",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-3-colonne_05-2025.pdf",
+    "sha256": "5d2f665d3e3ade3d72ccb76d0f9842d78c3810b2298bf35be4a53dcf17528075",
+    "caption": "Fotografia ufficiale di famiglia estratta dalla scheda originale, pagina 1; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Cordivari|Ardesia 4 colonne": {
+    "localPath": "/catalog-assets/radiators/cordivari-ardesia-4-colonne.jpg",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-4-colonne_05-2025.pdf",
+    "sha256": "665a74260aeb2080dfa27820ea09cf53dc0539c3528cfb9f3c34de4e256473a6",
+    "caption": "Fotografia ufficiale di famiglia estratta dalla scheda originale, pagina 1; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Cordivari|Ardesia 5 colonne": {
+    "localPath": "/catalog-assets/radiators/cordivari-ardesia-5-colonne.jpg",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-5-colonne_05-2025.pdf",
+    "sha256": "de47b307182a09ece0c995ddfec0dd9add90e19156973d9466e3ac01d1986901",
+    "caption": "Fotografia ufficiale di famiglia estratta dalla scheda originale, pagina 1; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Cordivari|Ardesia 6 colonne": {
+    "localPath": "/catalog-assets/radiators/cordivari-ardesia-6-colonne.jpg",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Scheda-tecnica-tubolare-Ardesia-6-colonne_05-2025.pdf",
+    "sha256": "48584e162d5dedd17b2f19d41651bbf17bf08d2c887dc6af389e34ad2c7fb898",
+    "caption": "Fotografia ufficiale di famiglia estratta dalla scheda originale, pagina 1; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Global|VIP": {
+    "localPath": "/catalog-assets/radiators/global-vip.jpg",
+    "sourceUrl": "https://www.globalradiatori.it/uploads/blog/00231_16213519640.jpg",
+    "sha256": "66fad128cb2b706e95d7c217eda68660d1131a0b7753a4c6f01e7d7626d820a8",
+    "caption": "Fotografia ufficiale di famiglia dal produttore; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Global|OSCAR": {
+    "localPath": "/catalog-assets/radiators/global-oscar.jpg",
+    "sourceUrl": "https://www.globalradiatori.it/uploads/blog/00232_16219371540.jpg",
+    "sha256": "d5b6aefb7236dc400a1dfdde60f6c26e8f8daf8cd0dbaa352d0b22db4a0cf0cb",
+    "caption": "Fotografia ufficiale di famiglia dal produttore; dimensione e finitura dipendono dal modello selezionato."
+  },
+  "Global|OSCAR TONDO": {
+    "localPath": "/catalog-assets/radiators/global-oscar-tondo.jpg",
+    "sourceUrl": "https://www.globalradiatori.it/uploads/blog/00323_16221941810.jpg",
+    "sha256": "3845d2c45e94e37585466b24d2979c509f237a7b532f622ae0759b027f6ce5c9",
+    "caption": "Fotografia ufficiale di famiglia dal produttore; dimensione e finitura dipendono dal modello selezionato."
+  }
+}

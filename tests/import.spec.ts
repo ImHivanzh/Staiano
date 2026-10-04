@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-test";
 import { PDFDocument, rgb } from "pdf-lib";
 
 function cad() {
@@ -122,21 +122,30 @@ test("PDF vettoriale locale: pagina, anteprima, due punti e sfondo calibrato", a
     fullPage: true,
   });
 });
-test("DWG danneggiato non produce geometrie né modifica il progetto", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page.getByRole("button", { name: /^Importa planimetria/ }).click();
-  const dialog = page.getByRole("dialog", { name: "Importa planimetria" });
-  await dialog.getByLabel("File planimetria", { exact: true }).setInputFiles({
-    name: "abitazione.dwg",
-    mimeType: "application/octet-stream",
-    buffer: Buffer.from("AC1027"),
+test.describe("invalid DWG request", () => {
+  test.use({ expectedHttpError: { status: 400, path: "/api/import/dwg" } });
+  test("DWG danneggiato non produce geometrie né modifica il progetto", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /^Importa planimetria/ }).click();
+    const dialog = page.getByRole("dialog", { name: "Importa planimetria" });
+    const rejected = page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname === "/api/import/dwg" &&
+        response.request().method() === "POST",
+    );
+    await dialog.getByLabel("File planimetria", { exact: true }).setInputFiles({
+      name: "abitazione.dwg",
+      mimeType: "application/octet-stream",
+      buffer: Buffer.from("AC1027"),
+    });
+    expect((await rejected).status()).toBe(400);
+    await expect(dialog.getByRole("alert")).toContainText("DWG valido");
+    await expect(
+      dialog.getByRole("button", { name: "Importa muri selezionati" }),
+    ).toHaveCount(0);
+    await dialog.getByRole("button", { name: "Chiudi importazione" }).click();
+    await expect(page.getByTestId("wall")).toHaveCount(0);
   });
-  await expect(dialog.getByRole("alert")).toContainText("DWG valido");
-  await expect(
-    dialog.getByRole("button", { name: "Importa muri selezionati" }),
-  ).toHaveCount(0);
-  await dialog.getByRole("button", { name: "Chiudi importazione" }).click();
-  await expect(page.getByTestId("wall")).toHaveCount(0);
 });

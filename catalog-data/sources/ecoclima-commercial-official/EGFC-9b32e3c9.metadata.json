@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso",
+  "code": "EGFC",
+  "slug": "egfc-griglia-forellinata-a-scomparsa-per-cartongesso",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=egfc-griglia-forellinata-a-scomparsa-per-cartongesso.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.920751+00:00",
+      "filename": "EGFC-9b32e3c9.xlsx",
+      "bytes": 6727,
+      "sha256": "a94a05adb4b32ec8b7b796b6e0d5f10c98d4b89a44ec84c90a554a6324dec5f5",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 10
+      }
+    }
+  ]
+}

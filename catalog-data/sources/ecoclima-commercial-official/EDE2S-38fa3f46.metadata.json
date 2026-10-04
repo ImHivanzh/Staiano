@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile",
+  "code": "EDE2S",
+  "slug": "ede2s-diffusori-a-getto-elicoidale-regolabile",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ede2s-diffusori-a-getto-elicoidale-regolabile.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:21 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:21.161303+00:00",
+      "filename": "EDE2S-38fa3f46.xlsx",
+      "bytes": 7034,
+      "sha256": "f10d7380dc077e28c860fa2619c7531773b3ed4d042e1a5061fff3904a178c52",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 28
+      }
+    }
+  ]
+}

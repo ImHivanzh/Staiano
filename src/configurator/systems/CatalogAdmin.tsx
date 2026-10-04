@@ -86,7 +86,10 @@ export function CatalogAdmin() {
         <AirTerminalCalculator />
       </section>
       {radiatorCatalogs.map((catalog) => (
-        <section className="catalogo-scheda" key={catalog.manufacturer}>
+        <section
+          className="catalogo-scheda"
+          key={`${catalog.manufacturer}-${catalog.version}`}
+        >
           <div className="titolo-archivio">
             <div>
               <h3>{catalog.manufacturer}</h3>

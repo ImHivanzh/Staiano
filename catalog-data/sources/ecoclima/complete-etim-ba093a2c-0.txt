@@ -1,0 +1,38 @@
+MODULO RICHIESTA DATI TECNICI
+Informazioni sul richiedente
+Ragione Sociale:
+Riferimento Progetto:
+Persona di riferimento:
+Dati necessari per la stesura della simulazione / relazione del calcolo
+Portata aria:
+………………. m3/h
+Pressione statica utile:
+………………. Pa
+Altezza ambiente:
+………………. m
+Altezza di installazione all’asse:
+………………. m
+Temperatura di mandata in riscaldamento:
+………………. °C
+Temperatura di mandata in condizionamento:
+………………. °C
+Temperatura ambiente in riscaldamento:
+………………. °C
+Temperatura ambiente in condizionamento:
+………………. °C
+Posizionamento ripresa (alta o bassa):
+………………. °C
+Zona da trattare a destra del ramo (indicare la distanza
+dalla parete): ………………. °C
+Zona da trattare a sinistra del ramo (indicare la distanza
+dalla parete):
+………………. m
+Destinazione d’uso e caratteristiche del locale (vetrate
+da trattare, particolari requisiti di abitabilità come “zone
+protette”, ecc...). ………………. m
+Allegare alla richiesta schema della
+distribuzione
+ECOCLIMA srl
+I-35010 CURTAROLO – PD Via Caduti di Russia, 19 tel. ++39.0499620344 fax ++39.0499620348
+E-mail: info@ecoclima.com - http://www.ecoclima.com/
+Reg.impr., C.F. e P.IVA IT 03380110282 r.e.a. PD 309958 cap.soc. € 20.800,00 i.v.

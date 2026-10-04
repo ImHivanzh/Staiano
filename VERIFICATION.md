@@ -1,91 +1,86 @@
-# Verifica del rilascio — 3 ottobre 2026
+# Verifica del rilascio — 4 ottobre 2026
 
-Produzione: https://hvac.internal.staianopoint.com. Build `rIJ9Q0cKcLKDrGOZ5lOKh`.
+Produzione: https://hvac.internal.staianopoint.com. Build `G6T81v8TT_frZV_5OSgpC`.
+Certificato wildcard Let's Encrypt, SAN `*.internal.staianopoint.com`; rinnovo Caddy DNS-01.
 Node 24.14, Next 16.3.8, React 19.3, TypeScript strict.
 
 ## Gate
 
-- 129 unit test su 20 file superati.
-- TypeScript strict, ESLint senza warning/errori e build produzione superati.
-- 18 E2E Edge sull'ultima build HTTPS Caddy superati senza ignorare errori TLS.
-- Audit npm delle dipendenze runtime: zero vulnerabilità; NuGet senza segnalazioni.
-- Prettier: sorgenti, test e documenti principali conformi.
+- 228 test unitari su 35 file superati.
+- TypeScript strict, ESLint senza warning o errori, build produzione superati.
+- 33 test Edge sul dominio HTTPS reale, TLS verificato senza bypass.
+- Il test DWG rifiuta il binario danneggiato preservando il progetto.
+- Login e logout, protezione pagine/API/modelli/worker, limiti tentativi e origin verificati.
+- Home anonima reindirizza al login; API DWG e GLB non autenticati: HTTP 401. Logo pubblico: HTTP 200.
+- Password hash scrypt privata, sessione HMAC 8 ore, cookie HttpOnly/SameSite Strict/Secure su HTTPS, logout, rate limit e verifica Origin.
+- Zero warning Next/Turbopack; inventari `.nft.json` senza `.cache`, `.env`, credential o corpus sorgente.
+- `next build` produce zero warning e nessun trace di cache/credenziali.
+- npm audit runtime: zero vulnerabilità; NuGet senza vulnerabilità segnalate.
+- Prettier, ESLint e TypeScript passati.
 
-Copertura browser: creazione manuale, rettangoli e forme irregolari, muro inclinato
-con quota di 4,23 m, quote e altezze, copia e spostamento stanza, undo e contorno
-aperto, archivio e recupero, import/export, gallery Ecoclima, radiatori, canalizzato,
-split, DXF/PDF, DWG nativo MIT e file danneggiato, dossier PDF, GLB ufficiali e
-smartphone a 390 px. Nessuna AI/OCR, login o dipendenza cloud obbligatoria.
+Copertura browser: manuale, quote e muri inclinati; selezione/drag/undo;
+import/export/reload e recovery; 3D grande scena e telefono; aperture misurate;
+radio/split/canalizzato/terminali; nuove famiglie e colori radiatori; fotografie
+Ecoclima; macchina manuale e portata massima; ripresa e mandata indipendenti;
+stacchi e plenum macchina; listino/accessori; render JPEG e PDF; annullamento render.
 
-## Cataloghi originali
+## Cataloghi
 
-154 radiatori: 135 Ardesia a 2–6 colonne e 19 Global VIP/Oscar/Tondo. Vincoli
-reali e larghezze con tappi; Global 16 bar/110 °C dalle istruzioni ufficiali.
-Revisioni storiche conservate per le istanze salvate.
+Radiatori: 466 varianti Cordivari/Global/Zehnder/Lazzarini con immagini ufficiali;
+206 finiture di catalogo per corpo/accessori, limitate alle combinazioni pubblicate.
+Il dimensionamento usa potenze e coefficienti di catalogo; il colore non cambia Q.
+Alcune geometrie Zehnder/Lazzarini sono dichiarate schematiche: ingombri di catalogo
+restano distinti dalla sagoma illustrativa.
 
-Ecoclima: 7 famiglie, 160 varianti, 534 punti, 16 punti in quarantena. Foto originali
-locali, Q/m e unità discrete, limite acustico di 37 nel motore, lunghezze teoriche
-e commerciali e pose. EADD conserva le portate a intervallo; i punti acustici
-assenti non sono inventati. Nove pagine commerciali con prezzi originali restano
-separate dai calcoli e dalla distinta. Date HTML non registrate: null, esplicite
-nell'interfaccia e nel PDF.
+Ecoclima: 127 famiglie, 1778 varianti, 6788 punti; 536 punti in revisione e 612
+con rumore sconosciuto, esclusi dall'automazione quando il dato manca.
+Inventario ufficiale: 109 pagine terminali/accessori. 6718 prezzi e 873 schede
+accessori nel listino locale 15-2026; fonti originali/hash preservati. 112 famiglie
+tecniche con corrispondenza commerciale esatta su 127. SKU e prezzi mancanti
+restano `Da verificare`; il subtotale non viene presentato come totale completo.
+Foto originali locali e hash delle fonti nei manifest.
 
-21 abbinamenti canalizzati reali di tre marchi; 24 split e 2403 combinazioni
-mono/multi con capacità simultanee per stanza. SKU regionali e disponibilità
-italiana espliciti. 18 OBJ Ardesia convertiti in 24,8 MB di GLB, hash e dimensioni
-controllati. La larghezza mesh supera di 9,2 mm quella catalogata: anteprima
-disponibile, esclusa dalla posa verificata. Archivio Gree Revit acquisito,
-senza sostituire modelli estranei ai GUD. Nessun dato tecnico sintetico.
+Canalizzati: 21 modelli originali. La portata massima pubblicata guida selezione,
+refresh, validazione, mandata, ripresa e stacchi. Valori verificati in snapshot:
+Mitsubishi 840, Daikin 900, Gree 600 m³/h per i modelli di riferimento provati.
+Macchina manuale: marca/modello/massimo dichiarati dall'operatore, potenza opzionale.
 
-## Geometria, prestazioni e PDF
+Split: 24 unità interne e 2403 combinazioni approvate di tre marchi; capacità
+simultanee per ambiente, senza somma non supportata. Compatibilità regionale esplicita.
 
-Stanze nette, multipiano, adiacenza, divisione/unione, snap e misure verificati.
-La divisione eredita l'altezza; l'unione con altezze diverse richiede una scelta
-esplicita. La ricalibrazione conserva gli ingombri fisici. Contorni aperti
-conservano dati e apparecchi; lo stato irrisolto blocca il dimensionamento.
-Campi legacy ignoti restano null/unknown. Collisioni verificate in pianta e quota.
+## 3D, plenum e PDF
 
-Fixture con 200 muri, 50 stanze e 100 radiatori reali: ricalcolo, validazione,
-repository, reload e orbit 3D superati. Campionamento durante orbit: mediana
-frame 8,3 ms, P95 circa 8,6 ms, interazione 151 ms. Risultati riferiti alla macchina
-di verifica. Metriche in output/verification/browser-performance.json.
+Il 3D usa intonaco, legno e pietra PBR locali CC0, luci da studio, ombre,
+occlusione ambientale, aperture misurate e apparecchi riconoscibili.
+Sezione davanti alla camera, muri posteriori ad altezza reale, orientamento,
+focus/isola, orbit e fullscreen. Render reali 1600×900 inseriti nel dossier A4
+orizzontale. Dati non noti (come davanzali storici) non diventano fori inventati.
 
-Dossier reale di 11 pagine in output/pdf/staiano-dossier-verifica.pdf: copertina
-con logo, riepilogo, A3 vettoriale con codici e legenda, schede stanza, impianti,
-terminali, radiatori, materiali con locali e prestazioni, controlli, fonti con SHA
-e disclaimer richiesto. Tutte le pagine renderizzate e ispezionate; zero caratteri
-fuori pagina. Forme circolari, quote sconosciute e codici sopra gli ingombri verificati.
+Per ogni macchina il plenum usa attacco OEM documentato oppure misure manuali. Ogni
+stacco e diametro viene dalle specifiche del plenum Ecoclima del terminale scelto.
+Il corpo e la transizione hanno quote di progetto calcolate dal raccordo, angolo,
+collari e portate. La lista prezzi comprende voce terminale, plenum isolato, ponti
+e kit quando richiesti dalla documentazione. Il plenum macchina su misura non ha
+prezzo Ecoclima pubblicato, perciò resta da quotare.
 
-## HTTPS Caddy
+Fixture 200 muri/50 stanze/100 apparecchi; selezione reale 2D/3D; due zone
+canalizzate modificate e ricaricate senza alterare l'altra; ripresa e mandata
+separate e pareti/stanze aggiornate. Render verificato nella [prova PDF](/C:/local-software/staiano-3d/output/verification/autonomous-plenum-render.pdf).
 
-DNS: 192.168.178.9. Caddy 2.11.4 usa il wildcard Let's Encrypt esistente con
-rinnovo DNS-01. Proxy HVAC verso 127.0.0.1:3015 aggiunto con ETag; nove route
-precedenti preservate. Il file principale differisce solo per l'import HVAC;
-backup conservato. Token Cloudflare protetto da ACL non letto o modificato.
+## Accesso
 
-Verifica TLS standard senza bypass: SAN `*.internal.staianopoint.com`, scadenza
-4 dicembre 2026, home e logo HTTP 200, HSTS ereditato. Server produzione senza
-finestra; PID e build ID in .cache/production-server.json.
-Prova aggiornata in output/verification/https.json.
+Configurazione locale protetta: `.cache/app-auth.json`, segreto scrypt e firma
+sessione, file con ACL proprietario/SYSTEM/amministratori. Cookie HttpOnly,
+SameSite Strict, Secure su HTTPS, validità 8 ore. La password non è inclusa
+nel bundle né in Git; login limitato, logout revoca cookie. Accesso protetto
+anche per API, worker, foto, modelli e JavaScript. Hashconfig non va copiato
+tra server. Cambio password: `node scripts/configure-access.mjs --stdin --rotate`.
+Revocare tutte le sessioni: `node scripts/configure-access.mjs --rotate-session-only`.
 
-## Ricerca e limiti dichiarati
+## Limiti
 
-Il solver radiatori effettua ricerca completa fino alla prova di ottimalità oppure
-all'annullamento esplicito: nessun limite automatico di stati o timeout.
-A ΔT nominale usa una rappresentazione esatta dei decimali pubblicati; ad altri
-ΔT continua la ricerca completa nel worker. Potenze originali conservate, deficit
-vietato. Marca e famiglia libere permettono combinazioni fra produttori;
-ogni batteria conserva fonte e versione. Oracle brute force con 3–5 batterie
-a ΔT 50/40 e casi reali con 10 batterie verificati. La complessità può richiedere
-tempo, senza bloccare l'editor.
-
-DWG nativo con ACadSharp 3.8.0 MIT e .NET 8 o superiore locale: binario reale,
-layer e unità, stanza di 15,96 m², autosave e reload verificati via HTTPS.
-ODA commerciale disattivato; nessuna licenza ODA richiesta al parser MIT.
-Runtime di circa 1,4 MB, notice e hash inclusi. Helper con memoria di 512 MB,
-timeout di 30 s, input/output di 32 MB e controllo di host e origine.
-
-Versioni e proxy non supportati richiedono correzione o esportazione, senza
-geometrie inventate. Dati catalogo originali mancanti restano espliciti.
-Prima di redistribuire pubblicamente verificare i diritti degli asset produttore.
-Nessuna pubblicazione esterna eseguita. Audit completo in docs/REQUIREMENTS-AUDIT.md.
+Il plenum macchina è un progetto di fabbricazione: verificare flange, tenuta,
+rumore e perdite prima di costruire. Il raccordo reale può avere area libera
+diversa dal nominale. Scarico termico/calcoli di potenza restano limiti
+convenzionali dichiarati. Prestazioni assenti ed errori sorgente non vengono
+sostituiti da valori stimati.

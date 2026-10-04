@@ -1,0 +1,58 @@
+INSTALLAZIONE SERVOMOTORE SU SERRANDA
+CIRCOLARE EDR
+1) Componenti:
+- Servomotore Belimo:
+N.B. In fase di ordine assicurarsi che il servomotore sia compatibile con
+il diametro specifico.
+- Piastrina di fissaggio e viti (comprese nella confezione del servomotore);
+- Serranda circolare EDR;
+- Piastra per motorizzazione;
+- Perno per motorizzazione;
+2) Svitare il dado e togliere la leva utilizzata per la chiusura manuale:
+3) Va quindi installato il perno per motorizzazione:
+1
+
+4) Installare la piastra per motorizzazione, viti di fissaggio non fornite a corredo:
+N.B. nel caso i fori non collimassero provvedere a riforare la piastra.
+5) Va quindi installato il servomotore andando a inserire il perno della serranda nell’inserto dello stesso:
+6) Essendo la base universale il perno di fermo della piastrina di fissaggio può sporgere di alcuni
+centimetri:
+La piastrina di fissaggio va quindi tagliata di conseguenza, misurare la distanza segnata dalla freccia in
+rosso, tagliare quindi la base di fissaggio:
+Riportare la quota misurata sulla piastra e tagliarla:
+2
+
+7) Installare la piastra sulla serranda e fissarla con le viti in dotazione:
+8) Installare il servomotore e provvedere ai collegamenti elettrici:
+N.B. Verificare che quando il servomotore è in posizione di chiusura la pala della serranda sia come
+riportato nella sezione.
+3
+
+1) Components:
+- Belimo actuator:
+N.B. When ordering, make sure that the actuatore is compatible with the
+specific diameter.
+- Fixing plate and screws (included in the servo motor package);
+- Circular damper EDR;
+- Motorisation plate
+- Motorisation pin
+1) Unscrew the nut and remove the lever used for manual closing:
+2) Install the motorisation pin:
+4
+
+3) Install the plate for motorization, fixing screws not supplied:
+N.B. if the holes do not collide, re-drill the plate.
+4) The actuator must then be installed by inserting the shutter pin into the shutter insert:
+5) Since the base is universal, the retaining pin of the fixing plate can protrude a few centimetres:
+The fixing plate must then be cut accordingly, measure the distance marked by the red arrow then cut
+the fixing base:
+5
+
+6) Write the measured dimension on the plate and cut it:
+7) Install the fixing base with the supplied screws:
+8) Install the servo motor and provide electrical connections:
+N.B. Check that when the servo motor is in the closed position, the damper blade is as shown in the
+section.
+REV. DESCRIZIONE REDATTO DA DATA
+00 PRIMA EMISSIONE FRASSON M. 06/08/2025
+6

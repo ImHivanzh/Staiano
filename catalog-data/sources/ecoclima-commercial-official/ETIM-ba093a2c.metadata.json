@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/etim-tubo-a-induzione",
+  "code": "ETIM",
+  "slug": "etim-tubo-a-induzione",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/etim-tubo-a-induzione?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/etim-tubo-a-induzione?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=etim-tubo-a-induzione.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:24.934750+00:00",
+      "filename": "ETIM-ba093a2c.xlsx",
+      "bytes": 6402,
+      "sha256": "8c46921eb0f7740d3400d73cda63802f0f3a776b8a7a06e044a48d0c7f5a8156",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 2
+      }
+    }
+  ]
+}

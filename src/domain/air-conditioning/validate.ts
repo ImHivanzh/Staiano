@@ -82,6 +82,7 @@ export function validateSplitSystem(
   emit(
     "split-record",
     system.manufacturer === combination.manufacturer &&
+      system.capacityW !== null &&
       Math.abs(system.capacityW - combination.coolingCapacityW) < 1e-6
       ? "valid"
       : "invalid",

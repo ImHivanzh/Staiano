@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare",
+  "code": "ERDR",
+  "slug": "erdr-regolatore-di-portata-in-abs-per-canale-circolare",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=erdr-regolatore-di-portata-in-abs-per-canale-circolare.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:29 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:29.218097+00:00",
+      "filename": "ERDR-1151004a.xlsx",
+      "bytes": 7159,
+      "sha256": "5148b8c73f784ea80fa76a9d1190b19dfd9580c5faa7b2fc7b9c45983d166d20",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 77
+      }
+    }
+  ]
+}

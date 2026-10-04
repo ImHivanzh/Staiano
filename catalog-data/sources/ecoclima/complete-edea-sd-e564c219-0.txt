@@ -1,0 +1,70 @@
+EDEA-SD
+Diffusori circolari a coni fissi con serranda
+a scomparsa a barre orizzontali fisse
+Scheda tecnica
+Rev.01
+
+EDEA-SD
+Modello Sezione efficace vk 2 m/s vk 3 m/s vk 4 m/s vk 5 m/s
+mm m2 m³/h L1 Pa m³/h L1 Pa m³/h L1 Pa m³/h L1 Pa
+150 0,0135 97 1,1 3 146 1,4 6 194 2,2 9 243 2,7 13
+200 0,0285 205 1,9 5 308 2,5 8 410 3 13 513 4 18
+250 0,0435 313 2 6 470 2,6 11 626 3,5 17 783 4,7 24
+300 0,0585 418 2,1 7 626 2,7 13 835 3,7 20 1044 5 29
+350 0,0789 568 2,2 8 853 2,8 15 1137 3,8 23 1053 5,2 33
+Indice di rumorosità dB(A) 15-20 20-20 25-30 30*35
+Vk (m/s) velocità efficace L1(m) lancio riferito ad una velocità terminale,
+m³/h portata aria Vt= 0,25 m/s
+Pa perdite di carico dB(A) indice di rumorosità
+E DEA-SD
+Φ A Φ D Φ H
+Modello
+mm mm mm mm
+150 257 149 225
+200 307 199 275
+250 357 249 325
+300 407 299 375
+350 457 349 425
+2 | REV.02
+
+INSTALLAZIONE
+Il diffusori della serie EDEA-SD sono adatti all’utilizzo termali e locali con lavorazioni con agenti chimici.
+in impianti di condizionamento, riscaldamento In particolare vapori e fumi clorati si rivelavano
+e ventilazione con impiego come elemento estremamente aggressivi.
+sia di mandata che di aspirazione. Altezza di L’installazione può avvenire tramite il ponte di
+installazione tra i 2,5 m e i 4 m. L’impiego di questa fissaggio o l’accessorio EDEA-RFA, utilizzato anche
+tipologia di diffusori non è adatta per ambienti con per il collegamento con canali circolari.
+atmosfera corrosiva come piscine, stabilimenti
+E DEA-SD E E DDEEAA--SSDD E EDEA-RFA
+3
+3
+22
+2
+1
+1
+I modelli EDEA-SD sono venduti provvisti di: EDEA-SD + EDEA-RFA:
+1- Diffusore; 1- Diffusore;
+2- Viti; 2- Viti;
+3- Pote di fissaggio; 3- Collare di collegamento EDEA-RFA;
+N.B. Le viti per il fissaggio del collare non sono
+a corredo.
+3 | REV.02
+
+NOMENCLATURA CODICE
+Come ordinare
+EDEA-SD 150
+EDEA-SD 150: diametro 150 mm;
+Diffusore circolare a coni
+200: diametro 200 mm;
+fissi
+250: diametro 250mm;
+300: diametro 300mm;
+350: diametro 350mm;
+4 | REV.02
+
+Head quarter
+ECOCLIMA SRL Sales office Italy
+Via Caduti di Russia, 19 info@ecoclima.com
+35010 Curtarolo - PADOVA - ITALY
+P. +39 049 9620344 Sales office international
+info@ecoclima.com francesca@ecoclima.com ecoclima.com Certified Management System

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
+  "code": "EGA50",
+  "slug": "ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ega50-griglie-di-ripresa-in-alluminio-passo-50-mm.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:25.926170+00:00",
+      "filename": "EGA50-fc2f9df8.xlsx",
+      "bytes": 7495,
+      "sha256": "a264eb57f0f9a34af354d9816911304df1f3ebe60d037361e709822807d7fa43",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 86
+      }
+    }
+  ]
+}

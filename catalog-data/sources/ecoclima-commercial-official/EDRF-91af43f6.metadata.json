@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa",
+  "code": "EDRF",
+  "slug": "edrf-edrfq-diffusori-a-geometria-fissa",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edrf-edrfq-diffusori-a-geometria-fissa.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:24.135071+00:00",
+      "filename": "EDRF-91af43f6.xlsx",
+      "bytes": 7435,
+      "sha256": "60afca08bb91096c012f6a7ae3ac96eb09f8435d0204ae42d1ab981df01d9f2b",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 74
+      }
+    }
+  ]
+}

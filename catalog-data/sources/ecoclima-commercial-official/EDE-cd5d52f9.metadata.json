@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+  "code": "EDE",
+  "slug": "ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:20.680782+00:00",
+      "filename": "EDE-cd5d52f9.xlsx",
+      "bytes": 7219,
+      "sha256": "eee3cfdf712f654090203dc0e4529358078d02e9640ff44e30043512b4dd9ac0",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 49
+      }
+    }
+  ]
+}

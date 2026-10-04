@@ -673,6 +673,79 @@ input[type="checkbox"] {
   border-radius: var(--r-p);
   max-width: calc(100% - 32px);
 }
+.nome-ambiente-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.opzione-render-pdf {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--testo-tenue);
+}
+.opzione-render-pdf input {
+  accent-color: var(--tinta);
+}
+.campione-colore {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 1px solid #c5ced2;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 7px;
+}
+.riparto-terminale {
+  display: grid;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bordo);
+  font-size: 12px;
+}
+.sfondo-listino {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #152b3b60;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.documento-listino {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  width: min(1000px, 100%);
+  max-height: 90dvh;
+  overflow: auto;
+}
+.tabella-listino {
+  overflow-x: auto;
+}
+.tabella-listino table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+.tabella-listino td,
+.tabella-listino th {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--bordo);
+}
+.tabella-listino small {
+  display: block;
+  font-size: 11px;
+  color: var(--testo-tenue);
+}
+.apertura-parete {
+  display: grid;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bordo);
+}
 .vista-3d .indicazione-editor {
   top: auto;
   bottom: 16px;

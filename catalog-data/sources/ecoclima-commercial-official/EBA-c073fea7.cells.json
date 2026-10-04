@@ -1,0 +1,3192 @@
+{
+  "filename": "EBA-c073fea7.xlsx",
+  "sha256": "0ee8a0e7e285f031a3b7eb7b147c944eb566b56095d31dd65f89469156b22924",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:15",
+    "modified": "2026-10-04 01:02:15"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 65,
+      "maxColumn": 7,
+      "mergedRanges": [
+        "A1:G1",
+        "A3:G3",
+        "D49:E49",
+        "A48:G48",
+        "A49:A50",
+        "G49:G50",
+        "B49:C49",
+        "F49:F50",
+        "A28:G28"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EBA BOCCHETTE DI MANDATA IN ALLUMINIO PASSO 20 MM",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Verniciatura:",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Dimensioni",
+            "EBA-VO",
+            "EBA-OV",
+            "EBA-O",
+            "EBA-V",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "LxH",
+            "€",
+            "€",
+            "€",
+            "€",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "200x100",
+            "22,74",
+            "22,74",
+            "20,92",
+            "20,92",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "300x100",
+            "26,32",
+            "26,32",
+            "23,65",
+            "23,65",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "400x100",
+            "33,65",
+            "33,65",
+            "27,23",
+            "27,23",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "500x100",
+            "37,85",
+            "37,85",
+            "31,54",
+            "31,54",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "600x100",
+            "42,01",
+            "42,01",
+            "35,03",
+            "35,03",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "700x100",
+            "50,49",
+            "50,49",
+            "38,01",
+            "38,01",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "200x150",
+            "25,66",
+            "25,66",
+            "23,84",
+            "23,84",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "300x150",
+            "29,72",
+            "29,72",
+            "27,26",
+            "27,26",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "400x150",
+            "43,47",
+            "43,47",
+            "31,82",
+            "31,82",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "500x150",
+            "50,00",
+            "50,00",
+            "36,37",
+            "36,37",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "600x150",
+            "58,19",
+            "58,19",
+            "40,93",
+            "40,93",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "700x150",
+            "66,39",
+            "66,39",
+            "43,20",
+            "43,20",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "800x150",
+            "74,58",
+            "74,58",
+            "45,46",
+            "45,46",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "200x200",
+            "33,65",
+            "33,65",
+            "27,23",
+            "27,23",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "300x200",
+            "43,47",
+            "43,47",
+            "31,82",
+            "31,82",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "400x200",
+            "49,09",
+            "49,09",
+            "37,28",
+            "37,28",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "500x200",
+            "59,11",
+            "59,11",
+            "41,84",
+            "41,84",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "600x200",
+            "70,03",
+            "70,03",
+            "46,37",
+            "46,37",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "700x200",
+            "78,22",
+            "78,22",
+            "50,48",
+            "50,48",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Listino Prezzi (continua)",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Dimensioni espresse in mm.",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Dimensioni",
+            "EBA-VO",
+            "EBA-OV",
+            "EBA-O",
+            "EBA-V",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 31,
+          "values": [
+            "LxH",
+            "€",
+            "€",
+            "€",
+            "€",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 32,
+          "values": [
+            "800x200",
+            "86,40",
+            "86,40",
+            "54,59",
+            "54,59",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 33,
+          "values": [
+            "1000x200",
+            "93,68",
+            "93,68",
+            "59,11",
+            "59,11",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 34,
+          "values": [
+            "300x300",
+            "58,19",
+            "58,19",
+            "40,93",
+            "40,93",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 35,
+          "values": [
+            "400x300",
+            "70,03",
+            "70,03",
+            "46,37",
+            "46,37",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 36,
+          "values": [
+            "500x300",
+            "75,48",
+            "75,48",
+            "55,47",
+            "55,47",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 37,
+          "values": [
+            "600x300",
+            "88,24",
+            "88,24",
+            "60,93",
+            "60,93",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 38,
+          "values": [
+            "700x300",
+            "97,33",
+            "97,33",
+            "67,29",
+            "67,29",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 39,
+          "values": [
+            "800x300",
+            "106,40",
+            "106,40",
+            "73,67",
+            "73,67",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 40,
+          "values": [
+            "1000x300",
+            "126,41",
+            "126,41",
+            "90,04",
+            "90,04",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 41,
+          "values": [
+            "400x400",
+            "86,40",
+            "86,40",
+            "54,59",
+            "54,59",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 42,
+          "values": [
+            "600x400",
+            "106,40",
+            "106,40",
+            "72,79",
+            "72,79",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 43,
+          "values": [
+            "700x400",
+            "120,95",
+            "120,95",
+            "83,70",
+            "83,70",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 44,
+          "values": [
+            "800x400",
+            "135,49",
+            "135,49",
+            "93,68",
+            "93,68",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 45,
+          "values": [
+            "1000x400",
+            "150,05",
+            "150,05",
+            "110,04",
+            "110,04",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 48,
+          "values": [
+            "Listino Prezzi (continua)",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ]
+        },
+        {
+          "row": 49,
+          "values": [
+            "Dimensioni",
+            "Stacco Superiore",
+            null,
+            "Stacco Laterale",
+            null,
+            "SC - Serranda",
+            "CT - Controtelaio"
+          ]
+        },
+        {
+          "row": 50,
+          "values": [
+            null,
+            "EPZ - Plenum Zincato",
+            "EPI - Plenum Isolato",
+            "EPZ - Plenum Zincato",
+            "EPI - Plenum Isolato",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 51,
+          "values": [
+            "L1xH1",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€",
+            "€"
+          ]
+        },
+        {
+          "row": 52,
+          "values": [
+            "800x200",
+            "73,54",
+            "93,88",
+            "82,80",
+            "106,39",
+            "43,65",
+            "31,31"
+          ]
+        },
+        {
+          "row": 53,
+          "values": [
+            "1000x200",
+            "79,65",
+            "102,12",
+            "79,65",
+            "117,02",
+            "48,71",
+            "34,92"
+          ]
+        },
+        {
+          "row": 54,
+          "values": [
+            "300x300",
+            "42,85",
+            "58,39",
+            "51,24",
+            "69,74",
+            "29,76",
+            "22,16"
+          ]
+        },
+        {
+          "row": 55,
+          "values": [
+            "400x300",
+            "57,55",
+            "74,78",
+            "67,34",
+            "87,92",
+            "36,84",
+            "25,91"
+          ]
+        },
+        {
+          "row": 56,
+          "values": [
+            "500x300",
+            "61,07",
+            "79,49",
+            "72,22",
+            "94,52",
+            "40,56",
+            "29,57"
+          ]
+        },
+        {
+          "row": 57,
+          "values": [
+            "600x300",
+            "72,30",
+            "92,24",
+            "80,69",
+            "103,51",
+            "44,34",
+            "31,31"
+          ]
+        },
+        {
+          "row": 58,
+          "values": [
+            "700x300",
+            "75,82",
+            "98,96",
+            "89,76",
+            "118,02",
+            "49,06",
+            "a.r."
+          ]
+        },
+        {
+          "row": 59,
+          "values": [
+            "800x300",
+            "88,37",
+            "116,90",
+            "103,71",
+            "137,48",
+            "53,79",
+            "36,97"
+          ]
+        },
+        {
+          "row": 60,
+          "values": [
+            "1000x300",
+            "95,40",
+            "126,33",
+            "113,51",
+            "150,59",
+            "64,85",
+            "42,05"
+          ]
+        },
+        {
+          "row": 61,
+          "values": [
+            "400x400",
+            "62,15",
+            "80,81",
+            "77,05",
+            "100,84",
+            "42,19",
+            "29,57"
+          ]
+        },
+        {
+          "row": 62,
+          "values": [
+            "600x400",
+            "85,60",
+            "113,34",
+            "94,88",
+            "125,85",
+            "54,78",
+            "36,97"
+          ]
+        },
+        {
+          "row": 63,
+          "values": [
+            "700x400",
+            "90,89",
+            "122,49",
+            "106,18",
+            "143,48",
+            "60,91",
+            "a.r."
+          ]
+        },
+        {
+          "row": 64,
+          "values": [
+            "800x400",
+            "103,23",
+            "134,13",
+            "119,93",
+            "156,51",
+            "67,03",
+            "42,05"
+          ]
+        },
+        {
+          "row": 65,
+          "values": [
+            "1000x400",
+            "122,38",
+            "159,31",
+            "148,36",
+            "194,16",
+            "79,54",
+            "47,69"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EBA BOCCHETTE DI MANDATA IN ALLUMINIO PASSO 20 MM",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Verniciatura:",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "Dimensioni",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "EBA-VO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "EBA-OV",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D5",
+          "row": 5,
+          "column": 4,
+          "value": "EBA-O",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E5",
+          "row": 5,
+          "column": 5,
+          "value": "EBA-V",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "LxH",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D6",
+          "row": 6,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E6",
+          "row": 6,
+          "column": 5,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "200x100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "22,74",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "22,74",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D7",
+          "row": 7,
+          "column": 4,
+          "value": "20,92",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E7",
+          "row": 7,
+          "column": 5,
+          "value": "20,92",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "300x100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "26,32",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": "26,32",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D8",
+          "row": 8,
+          "column": 4,
+          "value": "23,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E8",
+          "row": 8,
+          "column": 5,
+          "value": "23,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "400x100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "33,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C9",
+          "row": 9,
+          "column": 3,
+          "value": "33,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D9",
+          "row": 9,
+          "column": 4,
+          "value": "27,23",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E9",
+          "row": 9,
+          "column": 5,
+          "value": "27,23",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "500x100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "37,85",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C10",
+          "row": 10,
+          "column": 3,
+          "value": "37,85",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D10",
+          "row": 10,
+          "column": 4,
+          "value": "31,54",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E10",
+          "row": 10,
+          "column": 5,
+          "value": "31,54",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": "600x100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "42,01",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C11",
+          "row": 11,
+          "column": 3,
+          "value": "42,01",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D11",
+          "row": 11,
+          "column": 4,
+          "value": "35,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E11",
+          "row": 11,
+          "column": 5,
+          "value": "35,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": "700x100",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": "50,49",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C12",
+          "row": 12,
+          "column": 3,
+          "value": "50,49",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D12",
+          "row": 12,
+          "column": 4,
+          "value": "38,01",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E12",
+          "row": 12,
+          "column": 5,
+          "value": "38,01",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": "200x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B13",
+          "row": 13,
+          "column": 2,
+          "value": "25,66",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C13",
+          "row": 13,
+          "column": 3,
+          "value": "25,66",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D13",
+          "row": 13,
+          "column": 4,
+          "value": "23,84",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E13",
+          "row": 13,
+          "column": 5,
+          "value": "23,84",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "300x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": "29,72",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C14",
+          "row": 14,
+          "column": 3,
+          "value": "29,72",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D14",
+          "row": 14,
+          "column": 4,
+          "value": "27,26",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E14",
+          "row": 14,
+          "column": 5,
+          "value": "27,26",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A15",
+          "row": 15,
+          "column": 1,
+          "value": "400x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B15",
+          "row": 15,
+          "column": 2,
+          "value": "43,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C15",
+          "row": 15,
+          "column": 3,
+          "value": "43,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D15",
+          "row": 15,
+          "column": 4,
+          "value": "31,82",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E15",
+          "row": 15,
+          "column": 5,
+          "value": "31,82",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A16",
+          "row": 16,
+          "column": 1,
+          "value": "500x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B16",
+          "row": 16,
+          "column": 2,
+          "value": "50,00",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C16",
+          "row": 16,
+          "column": 3,
+          "value": "50,00",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D16",
+          "row": 16,
+          "column": 4,
+          "value": "36,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E16",
+          "row": 16,
+          "column": 5,
+          "value": "36,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A17",
+          "row": 17,
+          "column": 1,
+          "value": "600x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B17",
+          "row": 17,
+          "column": 2,
+          "value": "58,19",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C17",
+          "row": 17,
+          "column": 3,
+          "value": "58,19",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D17",
+          "row": 17,
+          "column": 4,
+          "value": "40,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E17",
+          "row": 17,
+          "column": 5,
+          "value": "40,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A18",
+          "row": 18,
+          "column": 1,
+          "value": "700x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B18",
+          "row": 18,
+          "column": 2,
+          "value": "66,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C18",
+          "row": 18,
+          "column": 3,
+          "value": "66,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D18",
+          "row": 18,
+          "column": 4,
+          "value": "43,20",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E18",
+          "row": 18,
+          "column": 5,
+          "value": "43,20",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A19",
+          "row": 19,
+          "column": 1,
+          "value": "800x150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B19",
+          "row": 19,
+          "column": 2,
+          "value": "74,58",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C19",
+          "row": 19,
+          "column": 3,
+          "value": "74,58",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D19",
+          "row": 19,
+          "column": 4,
+          "value": "45,46",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E19",
+          "row": 19,
+          "column": 5,
+          "value": "45,46",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A20",
+          "row": 20,
+          "column": 1,
+          "value": "200x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B20",
+          "row": 20,
+          "column": 2,
+          "value": "33,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C20",
+          "row": 20,
+          "column": 3,
+          "value": "33,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D20",
+          "row": 20,
+          "column": 4,
+          "value": "27,23",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E20",
+          "row": 20,
+          "column": 5,
+          "value": "27,23",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A21",
+          "row": 21,
+          "column": 1,
+          "value": "300x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B21",
+          "row": 21,
+          "column": 2,
+          "value": "43,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C21",
+          "row": 21,
+          "column": 3,
+          "value": "43,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D21",
+          "row": 21,
+          "column": 4,
+          "value": "31,82",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E21",
+          "row": 21,
+          "column": 5,
+          "value": "31,82",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A22",
+          "row": 22,
+          "column": 1,
+          "value": "400x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B22",
+          "row": 22,
+          "column": 2,
+          "value": "49,09",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C22",
+          "row": 22,
+          "column": 3,
+          "value": "49,09",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D22",
+          "row": 22,
+          "column": 4,
+          "value": "37,28",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E22",
+          "row": 22,
+          "column": 5,
+          "value": "37,28",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A23",
+          "row": 23,
+          "column": 1,
+          "value": "500x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B23",
+          "row": 23,
+          "column": 2,
+          "value": "59,11",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C23",
+          "row": 23,
+          "column": 3,
+          "value": "59,11",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D23",
+          "row": 23,
+          "column": 4,
+          "value": "41,84",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E23",
+          "row": 23,
+          "column": 5,
+          "value": "41,84",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A24",
+          "row": 24,
+          "column": 1,
+          "value": "600x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B24",
+          "row": 24,
+          "column": 2,
+          "value": "70,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C24",
+          "row": 24,
+          "column": 3,
+          "value": "70,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D24",
+          "row": 24,
+          "column": 4,
+          "value": "46,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E24",
+          "row": 24,
+          "column": 5,
+          "value": "46,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A25",
+          "row": 25,
+          "column": 1,
+          "value": "700x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B25",
+          "row": 25,
+          "column": 2,
+          "value": "78,22",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C25",
+          "row": 25,
+          "column": 3,
+          "value": "78,22",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D25",
+          "row": 25,
+          "column": 4,
+          "value": "50,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E25",
+          "row": 25,
+          "column": 5,
+          "value": "50,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A28",
+          "row": 28,
+          "column": 1,
+          "value": "Listino Prezzi (continua)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A29",
+          "row": 29,
+          "column": 1,
+          "value": "Dimensioni espresse in mm.",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A30",
+          "row": 30,
+          "column": 1,
+          "value": "Dimensioni",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B30",
+          "row": 30,
+          "column": 2,
+          "value": "EBA-VO",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C30",
+          "row": 30,
+          "column": 3,
+          "value": "EBA-OV",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D30",
+          "row": 30,
+          "column": 4,
+          "value": "EBA-O",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E30",
+          "row": 30,
+          "column": 5,
+          "value": "EBA-V",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A31",
+          "row": 31,
+          "column": 1,
+          "value": "LxH",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B31",
+          "row": 31,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C31",
+          "row": 31,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D31",
+          "row": 31,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E31",
+          "row": 31,
+          "column": 5,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A32",
+          "row": 32,
+          "column": 1,
+          "value": "800x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B32",
+          "row": 32,
+          "column": 2,
+          "value": "86,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C32",
+          "row": 32,
+          "column": 3,
+          "value": "86,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D32",
+          "row": 32,
+          "column": 4,
+          "value": "54,59",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E32",
+          "row": 32,
+          "column": 5,
+          "value": "54,59",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A33",
+          "row": 33,
+          "column": 1,
+          "value": "1000x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B33",
+          "row": 33,
+          "column": 2,
+          "value": "93,68",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C33",
+          "row": 33,
+          "column": 3,
+          "value": "93,68",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D33",
+          "row": 33,
+          "column": 4,
+          "value": "59,11",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E33",
+          "row": 33,
+          "column": 5,
+          "value": "59,11",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A34",
+          "row": 34,
+          "column": 1,
+          "value": "300x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B34",
+          "row": 34,
+          "column": 2,
+          "value": "58,19",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C34",
+          "row": 34,
+          "column": 3,
+          "value": "58,19",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D34",
+          "row": 34,
+          "column": 4,
+          "value": "40,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E34",
+          "row": 34,
+          "column": 5,
+          "value": "40,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A35",
+          "row": 35,
+          "column": 1,
+          "value": "400x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B35",
+          "row": 35,
+          "column": 2,
+          "value": "70,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C35",
+          "row": 35,
+          "column": 3,
+          "value": "70,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D35",
+          "row": 35,
+          "column": 4,
+          "value": "46,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E35",
+          "row": 35,
+          "column": 5,
+          "value": "46,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A36",
+          "row": 36,
+          "column": 1,
+          "value": "500x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B36",
+          "row": 36,
+          "column": 2,
+          "value": "75,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C36",
+          "row": 36,
+          "column": 3,
+          "value": "75,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D36",
+          "row": 36,
+          "column": 4,
+          "value": "55,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E36",
+          "row": 36,
+          "column": 5,
+          "value": "55,47",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A37",
+          "row": 37,
+          "column": 1,
+          "value": "600x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B37",
+          "row": 37,
+          "column": 2,
+          "value": "88,24",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C37",
+          "row": 37,
+          "column": 3,
+          "value": "88,24",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D37",
+          "row": 37,
+          "column": 4,
+          "value": "60,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E37",
+          "row": 37,
+          "column": 5,
+          "value": "60,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A38",
+          "row": 38,
+          "column": 1,
+          "value": "700x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B38",
+          "row": 38,
+          "column": 2,
+          "value": "97,33",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C38",
+          "row": 38,
+          "column": 3,
+          "value": "97,33",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D38",
+          "row": 38,
+          "column": 4,
+          "value": "67,29",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E38",
+          "row": 38,
+          "column": 5,
+          "value": "67,29",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A39",
+          "row": 39,
+          "column": 1,
+          "value": "800x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B39",
+          "row": 39,
+          "column": 2,
+          "value": "106,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C39",
+          "row": 39,
+          "column": 3,
+          "value": "106,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D39",
+          "row": 39,
+          "column": 4,
+          "value": "73,67",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E39",
+          "row": 39,
+          "column": 5,
+          "value": "73,67",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A40",
+          "row": 40,
+          "column": 1,
+          "value": "1000x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B40",
+          "row": 40,
+          "column": 2,
+          "value": "126,41",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C40",
+          "row": 40,
+          "column": 3,
+          "value": "126,41",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D40",
+          "row": 40,
+          "column": 4,
+          "value": "90,04",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E40",
+          "row": 40,
+          "column": 5,
+          "value": "90,04",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A41",
+          "row": 41,
+          "column": 1,
+          "value": "400x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B41",
+          "row": 41,
+          "column": 2,
+          "value": "86,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C41",
+          "row": 41,
+          "column": 3,
+          "value": "86,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D41",
+          "row": 41,
+          "column": 4,
+          "value": "54,59",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E41",
+          "row": 41,
+          "column": 5,
+          "value": "54,59",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A42",
+          "row": 42,
+          "column": 1,
+          "value": "600x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B42",
+          "row": 42,
+          "column": 2,
+          "value": "106,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C42",
+          "row": 42,
+          "column": 3,
+          "value": "106,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D42",
+          "row": 42,
+          "column": 4,
+          "value": "72,79",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E42",
+          "row": 42,
+          "column": 5,
+          "value": "72,79",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A43",
+          "row": 43,
+          "column": 1,
+          "value": "700x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B43",
+          "row": 43,
+          "column": 2,
+          "value": "120,95",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C43",
+          "row": 43,
+          "column": 3,
+          "value": "120,95",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D43",
+          "row": 43,
+          "column": 4,
+          "value": "83,70",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E43",
+          "row": 43,
+          "column": 5,
+          "value": "83,70",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A44",
+          "row": 44,
+          "column": 1,
+          "value": "800x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B44",
+          "row": 44,
+          "column": 2,
+          "value": "135,49",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C44",
+          "row": 44,
+          "column": 3,
+          "value": "135,49",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D44",
+          "row": 44,
+          "column": 4,
+          "value": "93,68",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E44",
+          "row": 44,
+          "column": 5,
+          "value": "93,68",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A45",
+          "row": 45,
+          "column": 1,
+          "value": "1000x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B45",
+          "row": 45,
+          "column": 2,
+          "value": "150,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C45",
+          "row": 45,
+          "column": 3,
+          "value": "150,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D45",
+          "row": 45,
+          "column": 4,
+          "value": "110,04",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E45",
+          "row": 45,
+          "column": 5,
+          "value": "110,04",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A48",
+          "row": 48,
+          "column": 1,
+          "value": "Listino Prezzi (continua)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A49",
+          "row": 49,
+          "column": 1,
+          "value": "Dimensioni",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B49",
+          "row": 49,
+          "column": 2,
+          "value": "Stacco Superiore",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D49",
+          "row": 49,
+          "column": 4,
+          "value": "Stacco Laterale",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F49",
+          "row": 49,
+          "column": 6,
+          "value": "SC - Serranda",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G49",
+          "row": 49,
+          "column": 7,
+          "value": "CT - Controtelaio",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B50",
+          "row": 50,
+          "column": 2,
+          "value": "EPZ - Plenum Zincato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C50",
+          "row": 50,
+          "column": 3,
+          "value": "EPI - Plenum Isolato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D50",
+          "row": 50,
+          "column": 4,
+          "value": "EPZ - Plenum Zincato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E50",
+          "row": 50,
+          "column": 5,
+          "value": "EPI - Plenum Isolato",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A51",
+          "row": 51,
+          "column": 1,
+          "value": "L1xH1",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B51",
+          "row": 51,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C51",
+          "row": 51,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D51",
+          "row": 51,
+          "column": 4,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E51",
+          "row": 51,
+          "column": 5,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F51",
+          "row": 51,
+          "column": 6,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G51",
+          "row": 51,
+          "column": 7,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A52",
+          "row": 52,
+          "column": 1,
+          "value": "800x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B52",
+          "row": 52,
+          "column": 2,
+          "value": "73,54",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C52",
+          "row": 52,
+          "column": 3,
+          "value": "93,88",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D52",
+          "row": 52,
+          "column": 4,
+          "value": "82,80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E52",
+          "row": 52,
+          "column": 5,
+          "value": "106,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F52",
+          "row": 52,
+          "column": 6,
+          "value": "43,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G52",
+          "row": 52,
+          "column": 7,
+          "value": "31,31",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A53",
+          "row": 53,
+          "column": 1,
+          "value": "1000x200",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B53",
+          "row": 53,
+          "column": 2,
+          "value": "79,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C53",
+          "row": 53,
+          "column": 3,
+          "value": "102,12",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D53",
+          "row": 53,
+          "column": 4,
+          "value": "79,65",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E53",
+          "row": 53,
+          "column": 5,
+          "value": "117,02",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F53",
+          "row": 53,
+          "column": 6,
+          "value": "48,71",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G53",
+          "row": 53,
+          "column": 7,
+          "value": "34,92",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A54",
+          "row": 54,
+          "column": 1,
+          "value": "300x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B54",
+          "row": 54,
+          "column": 2,
+          "value": "42,85",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C54",
+          "row": 54,
+          "column": 3,
+          "value": "58,39",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D54",
+          "row": 54,
+          "column": 4,
+          "value": "51,24",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E54",
+          "row": 54,
+          "column": 5,
+          "value": "69,74",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F54",
+          "row": 54,
+          "column": 6,
+          "value": "29,76",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G54",
+          "row": 54,
+          "column": 7,
+          "value": "22,16",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A55",
+          "row": 55,
+          "column": 1,
+          "value": "400x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B55",
+          "row": 55,
+          "column": 2,
+          "value": "57,55",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C55",
+          "row": 55,
+          "column": 3,
+          "value": "74,78",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D55",
+          "row": 55,
+          "column": 4,
+          "value": "67,34",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E55",
+          "row": 55,
+          "column": 5,
+          "value": "87,92",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F55",
+          "row": 55,
+          "column": 6,
+          "value": "36,84",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G55",
+          "row": 55,
+          "column": 7,
+          "value": "25,91",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A56",
+          "row": 56,
+          "column": 1,
+          "value": "500x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B56",
+          "row": 56,
+          "column": 2,
+          "value": "61,07",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C56",
+          "row": 56,
+          "column": 3,
+          "value": "79,49",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D56",
+          "row": 56,
+          "column": 4,
+          "value": "72,22",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E56",
+          "row": 56,
+          "column": 5,
+          "value": "94,52",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F56",
+          "row": 56,
+          "column": 6,
+          "value": "40,56",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G56",
+          "row": 56,
+          "column": 7,
+          "value": "29,57",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A57",
+          "row": 57,
+          "column": 1,
+          "value": "600x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B57",
+          "row": 57,
+          "column": 2,
+          "value": "72,30",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C57",
+          "row": 57,
+          "column": 3,
+          "value": "92,24",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D57",
+          "row": 57,
+          "column": 4,
+          "value": "80,69",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E57",
+          "row": 57,
+          "column": 5,
+          "value": "103,51",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F57",
+          "row": 57,
+          "column": 6,
+          "value": "44,34",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G57",
+          "row": 57,
+          "column": 7,
+          "value": "31,31",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A58",
+          "row": 58,
+          "column": 1,
+          "value": "700x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B58",
+          "row": 58,
+          "column": 2,
+          "value": "75,82",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C58",
+          "row": 58,
+          "column": 3,
+          "value": "98,96",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D58",
+          "row": 58,
+          "column": 4,
+          "value": "89,76",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E58",
+          "row": 58,
+          "column": 5,
+          "value": "118,02",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F58",
+          "row": 58,
+          "column": 6,
+          "value": "49,06",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G58",
+          "row": 58,
+          "column": 7,
+          "value": "a.r.",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A59",
+          "row": 59,
+          "column": 1,
+          "value": "800x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B59",
+          "row": 59,
+          "column": 2,
+          "value": "88,37",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C59",
+          "row": 59,
+          "column": 3,
+          "value": "116,90",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D59",
+          "row": 59,
+          "column": 4,
+          "value": "103,71",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E59",
+          "row": 59,
+          "column": 5,
+          "value": "137,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F59",
+          "row": 59,
+          "column": 6,
+          "value": "53,79",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G59",
+          "row": 59,
+          "column": 7,
+          "value": "36,97",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A60",
+          "row": 60,
+          "column": 1,
+          "value": "1000x300",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B60",
+          "row": 60,
+          "column": 2,
+          "value": "95,40",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C60",
+          "row": 60,
+          "column": 3,
+          "value": "126,33",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D60",
+          "row": 60,
+          "column": 4,
+          "value": "113,51",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E60",
+          "row": 60,
+          "column": 5,
+          "value": "150,59",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F60",
+          "row": 60,
+          "column": 6,
+          "value": "64,85",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G60",
+          "row": 60,
+          "column": 7,
+          "value": "42,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A61",
+          "row": 61,
+          "column": 1,
+          "value": "400x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B61",
+          "row": 61,
+          "column": 2,
+          "value": "62,15",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C61",
+          "row": 61,
+          "column": 3,
+          "value": "80,81",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D61",
+          "row": 61,
+          "column": 4,
+          "value": "77,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E61",
+          "row": 61,
+          "column": 5,
+          "value": "100,84",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F61",
+          "row": 61,
+          "column": 6,
+          "value": "42,19",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G61",
+          "row": 61,
+          "column": 7,
+          "value": "29,57",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A62",
+          "row": 62,
+          "column": 1,
+          "value": "600x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B62",
+          "row": 62,
+          "column": 2,
+          "value": "85,60",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C62",
+          "row": 62,
+          "column": 3,
+          "value": "113,34",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D62",
+          "row": 62,
+          "column": 4,
+          "value": "94,88",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E62",
+          "row": 62,
+          "column": 5,
+          "value": "125,85",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F62",
+          "row": 62,
+          "column": 6,
+          "value": "54,78",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G62",
+          "row": 62,
+          "column": 7,
+          "value": "36,97",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A63",
+          "row": 63,
+          "column": 1,
+          "value": "700x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B63",
+          "row": 63,
+          "column": 2,
+          "value": "90,89",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C63",
+          "row": 63,
+          "column": 3,
+          "value": "122,49",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D63",
+          "row": 63,
+          "column": 4,
+          "value": "106,18",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E63",
+          "row": 63,
+          "column": 5,
+          "value": "143,48",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F63",
+          "row": 63,
+          "column": 6,
+          "value": "60,91",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G63",
+          "row": 63,
+          "column": 7,
+          "value": "a.r.",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A64",
+          "row": 64,
+          "column": 1,
+          "value": "800x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B64",
+          "row": 64,
+          "column": 2,
+          "value": "103,23",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C64",
+          "row": 64,
+          "column": 3,
+          "value": "134,13",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D64",
+          "row": 64,
+          "column": 4,
+          "value": "119,93",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E64",
+          "row": 64,
+          "column": 5,
+          "value": "156,51",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F64",
+          "row": 64,
+          "column": 6,
+          "value": "67,03",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G64",
+          "row": 64,
+          "column": 7,
+          "value": "42,05",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A65",
+          "row": 65,
+          "column": 1,
+          "value": "1000x400",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B65",
+          "row": 65,
+          "column": 2,
+          "value": "122,38",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C65",
+          "row": 65,
+          "column": 3,
+          "value": "159,31",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "D65",
+          "row": 65,
+          "column": 4,
+          "value": "148,36",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "E65",
+          "row": 65,
+          "column": 5,
+          "value": "194,16",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "F65",
+          "row": 65,
+          "column": 6,
+          "value": "79,54",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "G65",
+          "row": 65,
+          "column": 7,
+          "value": "47,69",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

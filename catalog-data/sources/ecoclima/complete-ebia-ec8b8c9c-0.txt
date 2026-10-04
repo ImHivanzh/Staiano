@@ -1,0 +1,134 @@
+BOCCHETTE
+INDUSTRIALI DI
+MANDATA PASSO
+40 mm
+Serie EBIA
+Le bocchette serie EBIA sono di mandata dell’aria con uno o due ordini di alette passo 40 mm singolarmente orientabili, in allu-
+minio. Sono impiegate nelle installazioni a parete o a canale in mandata, sia in riscaldamento che in condizionamento, idonee per
+applicazioni in impianti industriali per elevate portate d’aria.
+VARIANTI
+Le varianti previste riguardano la configurazione degli ordini di alette.
+LE SERIE DISPONIBILI SONO:
+- EBIA VO bocchetta industriale - EBIA V bocchetta industriale
+a doppio ordine di alette (le frontali verticali) a singolo ordine di alette verticali
+- EBIA OV bocchetta industriale - EBIA O bocchetta industriale
+a doppio ordine di alette (le frontali orizzontali) a singolo ordine di alette orizzontali
+ACCESSORI
+Controtelaio a murare
+CTP
+VOCI DI CAPITOLATO
+Bocchette di mandata a singolo o doppio ordine di alette singolarmente orientabili, passo industriale 40 mm in alluminio anodiz-
+zato naturale, idonee per l’installazione in applicazioni industriali per elevate portate d’aria.
+NOMENCLATURA CODICE
+EBIA bocchetta industriale di mandata in alluminio passo 40 mm.
+VO doppio ordine di alette singolarmente orientabili con frontale verticale.
+OV doppio ordine di alette singolarmente orientabili con frontale orizzontale.
+V singolo ordine di alette verticali orientabili singolarmente.
+O singolo ordine di alette orizzontali orientabili singolarmente.
+Larghezza L (mm)
+Altezza H (mm)
+EBIA VO 800 620000
+PAG 1 - BOCCHETTE INDUSTRIALI DI MANDATA PASSO 40 mm
+SERIE EBIA - AGGIORNAMENTO 02/2024
+
+EBIA
+COSTRUZIONE E DIMENSIONI
+- Materiale: alluminio
+- Finitura superficiale: anodizzato naturale
+- Altre finiture superficiali: Verniciatura nei colori RAL a
+scelta
+- Fissaggio: con fori frontali per viti
+CARATTERISTICHE TECNICHE:
+Le bocchette di mandata industriali serie EBIA sono adat-
+te all’applicazione in mandata e vengono installate a pa-
+rete o su canale ad una altezza variabile tra i 4,5 e i 15 m.
+Le caratteristiche di funzionamento sono la velocità effi-
+cace, la perdita di carico totale, il livello sonoro ed il lancio.
+Esse vengono rappresentate in forma tabellare in funzio- EBIA DIMENSIONI FRONTALI
+ne della portata d’aria.
+Il lancio isotermo viene riferito alla velocità terminale di
+0,25 m/s. Per lanci non isotermi o con velocità termina-
+li diverse vengono forniti dei coefficienti moltiplicativi di
+correzione.
+Il livello sonoro viene espresso come livello di potenza
+sonora ponderata A (LWA) emessa dal diffusore senza
+alcuna correzione ambientale. Per calcolare il livello di
+pressione sonora (LpA) nell’ambiente bisogna considera-
+re la collocazione della bocchetta, la distanza dal punto di
+ascolto e le caratteristiche acustiche dell’ambiente in cui
+la bocchetta viene installata.
+FATTORI CORRETTIVI
+Fattore moltiplicativo correttivo
+del lancio in funzione della
+velocità terminale
+Vt[m/s] Kv
+EBIA OV - EBIA VO EBIA O - EBIA V
+0,15 1,67
+0,20 1,25
+Fattore moltiplicativo correttivo del Fattori moltiplicativi correttivi ad 1
+lancio non isotermo ordine di alette
+0,25 1,00
+-X Lancio: Lunghezza massima della
+gittata d’aria per una specifica velocità
+0,30 0,83 terminale.
+0,35 0,71 ΔT[°C] K K
+Tc
+0,40 0,63 -10 0,85 X 1,05
+0,45 0,56 0 1 Δpt 0,95
+0,50 0,50 10 1,2 L 0,90
+WA
+PAG 2 - BOCCHETTE INDUSTRIALI DI MANDATA PASSO 40 mm
+SERIE EBIA - AGGIORNAMENTO 02/2024
+
+Dimensioni Sezione efficace
+m³/h L1 m³/h L1 m³/h L1
+LxH m²
+500x200 0.075 810 11.5 1080 14.6 1350 19.5
+600x200 0.09 972 13 1296 16 1620 22
+700x200 0.105 1134 13.5 1512 18 1890 23
+800x200 0.012 1296 14 1728 19 2160 24
+1000x200 0.15 1620 16.5 2160 21 2700 25
+500x300 0.12 1296 14 1728 18.1 2160 23
+600x300 0.145 1566 16.2 2088 20.8 2610 25
+700x300 0.17 1836 18.6 2448 23 3060 28
+800x300 0.195 2106 20.8 2808 25 2564 30
+1000x300 0.245 2646 23 3528 28 4410 35
+1200x300 0.29 3132 24.8 4176 29.5 5220 36
+1500x300 0.36 3888 26.6 5184 31 6480 37.5
+600x400 0.2 1260 20.5 2880 25.8 3600 29
+700x400 0.23 2484 23 3312 26.2 4140 32
+800x400 0.26 808 25.5 3744 30 4680 35
+1000x400 0.33 3564 27.2 4752 33 5940 39
+1200x400 0.41 4428 28.4 5900 34.8 7380 40.2
+1500x400 0.51 5500 31.2 7350 37.7 9180 42
+600x500 0.26 2808 21 3744 29 4680 36
+700x500 0.3 3240 24 4320 31 5400 38
+800x500 0.34 3672 27 4896 33 6120 39.5
+1000x500 0.42 4536 29.5 6048 36 7560 41
+1200x500 0.51 4536 31.2 7350 37.7 9180 42
+1500x500 0.63 5500 32 9072 38.5 11340 43.2
+600x600 0.31 6805 23.6 4464 30.1 5580 37.2
+800x600 0.42 3348 28 6048 35 7560 40
+1000x600 0.52 5637 32 7516 37 9396 47
+1200x600 0.63 6804 33 9072 42 11340 49
+1500x600 0.75 8100 34.8 10800 44 13500 50.6
+V (m/s) 3 4 5
+v
+L1 (m): lancio in metri calcolato con installazione a filo soffitto e velocità terminale 0,25 m/s
+Pa: perdite di carico in Pascal
+dB (A): indice di rumorosità
+Tutte le dimensioni sono espresse in mm
+PAG 3 - BOCCHETTE INDUSTRIALI DI MANDATA PASSO 40 mm
+SERIE EBIA - AGGIORNAMENTO 02/2024
+
+INDICE DI RUMOROSITÀ dB(A) PERDITA DI CARICO (Pa)
+V defl. defl. defl. V defl. defl. defl.
+m/s 0° 20° 40° m/s 0° 20° 40°
+3 25/30 28/33 30/35 3 5 7 10
+4 30/35 33/38 35/40 4 10 13 18
+5 35/40 38/43 40/45 5 15 21 33
+CONFIGURAZIONE
+Tutte le misure sono espresse in mm.
+CTP CONTROTELAIO
+PAG 4 - BOCCHETTE INDUSTRIALI DI MANDATA PASSO 40 mm
+SERIE EBIA - AGGIORNAMENTO 02/2024

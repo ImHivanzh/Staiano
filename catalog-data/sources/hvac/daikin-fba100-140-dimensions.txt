@@ -1,0 +1,82 @@
+170
+Item Name Description
+Liquid pipe connection port Ø9.52 flared connection
+Gas pipe connection port Ø15.90 flared connection
+VP20 (OD Ø26, ID Ø20)
+Drain pipe connection
+/
+Wiring connection
+/
+Power supply connection
+Drain outlet VP20 (OD Ø26, ID Ø20)
+/
+Air filter
+/
+Air suction side
+/
+Air discharge side
+/
+Nameplate
+041
+O100
+( )
+126 P.C.D.
+4 x M4 (CLASS 2)
+542 871
+001 56
+1400 69
+1192 40
+50
+83
+901
+25 800
+301
+7x156=1092 32 179 50
+1215
+031=56x2
+011
+05
+012
+1438
+16x65=1040
+036
+ARROW VIEW A
+ARROW VIEW A
+42 150 147.5 147.5 115 115 150 147.5 147.5 115 10xO4.7 HOLE
+1354
+8X150=1200
+59 622
+Knockout hole.
+500 or more
+Service space
+erom
+ro
+003
+ecaps
+ecivreS
+Suspension bolt
+KJ KC KE KH
+Fresh air intake position
+KK
+KF
+KD
+Suspension position
+KA
+KB
+KG KG
+noitisop
+noisnepsuS
+FBA100-140A
+KA Notes
+1. When installing optional accessories, refer to their respective documentation.
+KB
+2. The ceiling depth varies according to the documentation of the specific system.
+KC
+KD
+KE
+KF
+KG
+KH
+KJ
+KK
+3D094914B

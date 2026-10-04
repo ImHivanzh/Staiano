@@ -1,0 +1,50 @@
+{
+  "filename": "ETIM-ba093a2c.xlsx",
+  "sha256": "8c46921eb0f7740d3400d73cda63802f0f3a776b8a7a06e044a48d0c7f5a8156",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:24",
+    "modified": "2026-10-04 01:02:24"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 3,
+      "maxColumn": 1,
+      "mergedRanges": [],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "ETIM TUBO A INDUZIONE"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Nessun listino prezzi disponibile per questo prodotto"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "ETIM TUBO A INDUZIONE",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Nessun listino prezzi disponibile per questo prodotto",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

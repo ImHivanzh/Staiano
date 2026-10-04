@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, PDFDict, PDFName, PDFRawStream } from "pdf-lib";
+import { readFile } from "node:fs/promises";
 import { createProject } from "@/domain/project";
 import { buildDossier, TECHNICAL_NOTE } from "./dossier";
 import { renderDossierPdf } from "./render";
@@ -9,6 +10,49 @@ import { sizeAirTerminal } from "@/domain/air-terminals/size";
 import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
 
 describe("Dossier tecnico locale", () => {
+  it("aggiunge una pagina panoramica con JPEG incorporato e mantiene il dossier completo", async () => {
+    const p = dossierFixture();
+    // Original local JPEG proves PDF image embedding; real GPU capture is browser-verified.
+    const imageBytes = new Uint8Array(
+      await readFile(
+        new URL(
+          "../../../public/materials3d/stone/basecolor.jpg",
+          import.meta.url,
+        ),
+      ),
+    );
+    const baseline = await PDFDocument.load(await renderDossierPdf(p));
+    const doc = await PDFDocument.load(
+      await renderDossierPdf(p, {
+        renderImages: [
+          {
+            title: "Piano - immagine di verifica",
+            floorId: p.floors[0].id,
+            bytes: imageBytes,
+            mimeType: "image/jpeg",
+            width: 1024,
+            height: 1024,
+          },
+        ],
+      }),
+    );
+    expect(doc.getPageCount()).toBe(baseline.getPageCount() + 1);
+    const renderPage = doc.getPage(doc.getPageCount() - 1);
+    expect(renderPage.getWidth()).toBeCloseTo(841.89, 2);
+    expect(renderPage.getHeight()).toBeCloseTo(595.28, 2);
+    const images = renderPage.node
+      .Resources()!
+      .lookup(PDFName.of("XObject"), PDFDict);
+    expect(images.values()).toHaveLength(1);
+    const image = doc.context.lookup(images.values()[0]);
+    if (!(image instanceof PDFRawStream))
+      throw new Error("JPEG stream mancante");
+    expect(image.dict.get(PDFName.of("Subtype"))).toEqual(PDFName.of("Image"));
+    expect(image.dict.get(PDFName.of("Filter"))).toEqual(
+      PDFName.of("DCTDecode"),
+    );
+    expect(image.contents.byteLength).toBe(imageBytes.byteLength);
+  });
   it("renderizza facce circolari reali e posa legacy ignota senza inventare profondità", async () => {
     let p = dossierFixture();
     const room = p.rooms.find((r) => r.systemType === "ducted")!;

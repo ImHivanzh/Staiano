@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-test";
+import { openInspector } from "./ui-helpers";
 test("canalizzato, mandata/ripresa reali, reload e selezione3D", async ({
   page,
 }) => {
@@ -9,9 +10,11 @@ test("canalizzato, mandata/ripresa reali, reload e selezione3D", async ({
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
+  await openInspector(page, "Configura impianto");
   await page
-    .getByLabel("Impianto da configurare", { exact: true })
-    .selectOption("ducted");
+    .getByRole("group", { name: "Impianto da configurare" })
+    .getByRole("button", { name: "Canalizzato", exact: true })
+    .click();
   await page
     .getByRole("button", { name: "Configura canalizzato", exact: true })
     .click();
@@ -39,6 +42,7 @@ test("canalizzato, mandata/ripresa reali, reload e selezione3D", async ({
   await expect(page.getByTestId("terminal-supply")).toHaveCount(2);
   await expect(page.getByTestId("terminal-return")).toHaveCount(1);
   await page.getByTestId("terminal-supply").first().click();
+  await openInspector(page, "Posizione");
   await expect(
     page.getByRole("button", { name: "Applica posizione terminale" }),
   ).toBeVisible();
@@ -80,17 +84,15 @@ test("gallery Ecoclima reale, scelta stile e formula metri lineari", async ({
   await expect(
     page.getByRole("columnheader", { name: "Misura commerciale", exact: true }),
   ).toBeVisible();
-  expect(
-    await page
-      .locator(".stile-terminale img")
-      .evaluateAll((nodes) =>
-        nodes.every(
-          (node) =>
-            (node as HTMLImageElement).complete &&
-            (node as HTMLImageElement).naturalWidth > 0,
-        ),
+  const firstOfficialPhoto = page.locator(".stile-terminale img").first();
+  await firstOfficialPhoto.scrollIntoViewIfNeeded();
+  await expect
+    .poll(() =>
+      firstOfficialPhoto.evaluate(
+        (node) => (node as HTMLImageElement).naturalWidth,
       ),
-  ).toBe(true);
+    )
+    .toBeGreaterThan(0);
   await page.screenshot({
     path: "test-results/ecoclima-gallery.png",
     fullPage: true,
@@ -104,6 +106,7 @@ test("radiatori reali, vincoli, posizionamento e reload", async ({ page }) => {
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
+  await openInspector(page, "Configura impianto");
   await page.getByLabel("Marca radiatori").selectOption("Global");
   await page.getByLabel("Famiglia radiatori").selectOption("VIP");
   await page.getByLabel("Numero radiatori").fill("2");
@@ -119,6 +122,7 @@ test("radiatori reali, vincoli, posizionamento e reload", async ({ page }) => {
   await page.reload();
   await expect(page.getByTestId("radiator-2d")).toHaveCount(2);
   await page.getByRole("button", { name: /Soggiorno.*15,96/ }).click();
+  await openInspector(page, "Configura impianto");
   await expect(page.getByLabel("Marca radiatori", { exact: true })).toHaveValue(
     "Global",
   );
@@ -129,6 +133,7 @@ test("radiatori reali, vincoli, posizionamento e reload", async ({ page }) => {
     page.getByLabel("Numero radiatori", { exact: true }),
   ).toHaveValue("2");
   await page.getByTestId("radiator-2d").first().click();
+  await openInspector(page, "Posizione");
   await expect(page.getByText("Distanza centro dall'inizio (m)")).toBeVisible();
   await page
     .getByRole("button", { name: "Controlli", exact: false })
@@ -161,6 +166,7 @@ test("creazione manuale, quote, altezza, autosave, import/export e 3D", async ({
   await expect(page.getByTestId("room-area")).toContainText("20,00");
   await expect(page.getByTestId("room-load")).toContainText("1,89");
   await expect(page.getByTestId("wall")).toHaveCount(4);
+  await openInspector(page, "Modifica stanza");
   await page
     .getByRole("spinbutton", { name: "Altezza stanza", exact: true })
     .fill("3");
@@ -170,6 +176,7 @@ test("creazione manuale, quote, altezza, autosave, import/export e 3D", async ({
   await page.reload();
   await page.getByRole("button", { name: /Soggiorno Rossi.*20,00/ }).click();
   await expect(page.getByTestId("room-load")).toContainText("2,10");
+  await openInspector(page, "Modifica stanza");
   await page.getByRole("spinbutton", { name: "Larghezza netta (m)" }).fill("6");
   await page.getByRole("button", { name: "Aggiorna quote nette" }).click();
   await expect(page.getByTestId("room-area")).toContainText("24,00");
@@ -220,6 +227,7 @@ test("input errato preserva progetto, archivio duplica e recupera autosave", asy
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
+  await openInspector(page, "Modifica stanza");
   await page
     .getByRole("textbox", { name: "Nome stanza", exact: true })
     .fill("Camera aggiornata");

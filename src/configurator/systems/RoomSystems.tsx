@@ -4,6 +4,7 @@ import type { Project, Room } from "@/schemas/project";
 import { RadiatorPanel } from "./RadiatorPanel";
 import { DuctedPanel } from "./DuctedPanel";
 import { SplitPanel } from "./SplitPanel";
+import { Columns, Wind, Snowflake } from "@phosphor-icons/react";
 export function RoomSystems({
   project,
   room,
@@ -16,20 +17,36 @@ export function RoomSystems({
   );
   return (
     <section className="sistemi-stanza">
-      <label className="campo">
-        <span>Impianto da configurare</span>
-        <select
-          aria-label="Impianto da configurare"
-          value={mode}
-          onChange={(e) =>
-            setMode(e.target.value as "radiator" | "ducted" | "split")
-          }
+      <div
+        className="scelta-impianto"
+        role="group"
+        aria-label="Impianto da configurare"
+      >
+        <button
+          type="button"
+          aria-pressed={mode === "radiator"}
+          onClick={() => setMode("radiator")}
         >
-          <option value="radiator">Radiatori</option>
-          <option value="ducted">Canalizzato</option>
-          <option value="split">Climatizzatori split</option>
-        </select>
-      </label>
+          <Columns size={23} aria-hidden="true" />
+          Radiatori
+        </button>
+        <button
+          type="button"
+          aria-pressed={mode === "ducted"}
+          onClick={() => setMode("ducted")}
+        >
+          <Wind size={23} aria-hidden="true" />
+          Canalizzato
+        </button>
+        <button
+          type="button"
+          aria-pressed={mode === "split"}
+          onClick={() => setMode("split")}
+        >
+          <Snowflake size={23} aria-hidden="true" />
+          Split
+        </button>
+      </div>
       {mode === "radiator" ? (
         <RadiatorPanel project={project} room={room} />
       ) : mode === "ducted" ? (

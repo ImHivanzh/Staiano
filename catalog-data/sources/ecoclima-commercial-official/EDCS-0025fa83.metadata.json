@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile",
+  "code": "EDCS",
+  "slug": "edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:20 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:20.780823+00:00",
+      "filename": "EDCS-0025fa83.xlsx",
+      "bytes": 7371,
+      "sha256": "db02478f9a4d865ae941dce0eb27ad64ea8b91dfc7495bb1899caca995a5ff59",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 58
+      }
+    }
+  ]
+}

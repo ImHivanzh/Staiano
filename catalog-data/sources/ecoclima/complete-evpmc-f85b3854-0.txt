@@ -1,0 +1,47 @@
+VALVOLE DI MANDATA E
+ESTRAZIONE DELL’ARIA
+IN ABS
+Serie EVPMC
+Valvole di mandata e ripresa costruite ABS di colore bianco RAL 9010, con cono
+centrale regolabile.
+CARATTERISTICHE
+Materiale: ABS.
+Finitura: bianco RAL 9010.
+Installazione: con viti non apparenti.
+IMPIEGO
+Montati a soffitto, direttamente a canale, per la mandata o la ripresa dell’aria in locali di servizio, bagni e negozi.
+NOMENCLATURA CODICE
+EVPMC Valvole di mandata e estrazione dell'aria in ABS
+Grandezza: 100-125-150-160-200
+EVPMC 150
+DIMENSIONI
+Modello A (mm) B (mm) C (mm) D (mm)
+EVPMC 100 99 149 89 20
+EVPMC 125 124 165 109 20
+EVPMC 150 148 185 130 20
+EVPMC 160 158 195 130 20
+EVPMC 200 199 230 177 20
+PAG 1 - VALVOLE DI MANDATA E ESTRAZIONE DELL’ARIA IN ABS
+SERIE EVPMC - AGGIORNAMENTO 01/2023
+
+DATI DI FUNZIONAMENTO
+Apertura “S” Perdita di
+Modello m³/h dB(A)
+(mm) carico (Pa) Vk: velocità efficace (m/s)
+54 15 25 25 m³/h: portata
+EVPMC 100 72 18 40 30 Pa: perdite di carico in Pascal
+L(m): lancio in metri calcolato con installazione a filo
+108 20 80 38
+soffitto e velocità terminale 0,25 m/s
+72 9 58 38
+dB(A): indice di rumorosità
+EVPMC 125 108 17 68 35
+144 23 70 35
+108 10 70 40
+EVPMC 150 / 160 144 18 68 35
+180 25 70 33
+108 17 60 38
+EVPMC 200 144 22 68 35
+180 25 72 35
+PAG 2 - VALVOLE DI MANDATA E ESTRAZIONE DELL’ARIA IN ABS
+SERIE EVPMC - AGGIORNAMENTO 01/2023

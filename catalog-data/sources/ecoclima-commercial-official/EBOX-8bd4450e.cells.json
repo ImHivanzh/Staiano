@@ -1,0 +1,50 @@
+{
+  "filename": "EBOX-8bd4450e.xlsx",
+  "sha256": "63701b563f12f264a2298d6f6585a665181cb15e565c401948bf5647e6b53f5d",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:28",
+    "modified": "2026-10-04 01:02:28"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 3,
+      "maxColumn": 1,
+      "mergedRanges": [],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EBOX N BOX DI DISTRIBUZIONE IN ACCIAIO ZINCATO O VERNICIATO RAL 9016"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Nessun listino prezzi disponibile per questo prodotto"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EBOX N BOX DI DISTRIBUZIONE IN ACCIAIO ZINCATO O VERNICIATO RAL 9016",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Nessun listino prezzi disponibile per questo prodotto",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

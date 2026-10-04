@@ -1,0 +1,94 @@
+DIFFUSORI
+QUADRATI
+FORELLINATI
+Serie EDQF 3
+I diffusori del tipo EDQF 3 sono a getto orizzontale ad alta induzione su pannello quadro con un notevole effetto coanda. Sono
+adatti per installazioni a soffitto. Possono essere impiegati sia in condizionamento che in riscaldamento soprattutto in impianti
+a portata variabile anche con elevato numero di ricambi ora. L’altezza di installazione è generalmente compresa tra 2,5 e 4,0 m.
+I diffusori di questa tipologia consentono un elevato rapporto di induzione (capacità di miscelazione) tra aria immessa e aria
+ambiente.
+Essi sono costituiti da una piastra forellinata con fori di dimensione 5 mm e possono essere utilizzati sia per la ripresa che per la
+mandata dell’aria.
+Il pannello è costituito da lamiera di acciaio verniciata con polvere a base di resine epossidiche posate elettrostaticamente ed
+essiccate al forno. Questo tipo di verniciatura risulta resistente ad eventuali urti o abrasioni e mantiene inalterate nel tempo le
+caratteristiche estetiche.
+L’installazione e la manutenzione sono di semplice esecuzione. Il fissaggio al plenum è effettuato con viti laterali non apparenti.
+COSTRUZIONE DIFFUSORE
+Materiale: telaio perimetrale in alluminio, pannello in acciaio zincato.
+Finitura superficiale standard: vernicitura pannello RAL 9016
+Finitura superficiale: a richiesta vernicitura pannello RAL fuori standard e fori per viti sulla cornice del diffusore.
+Fissaggio: con viti laterali su plenum
+La maglia forellinata è realizzata secondo le seguenti specifiche:
+-fori tondi alternati a 60°;
+-rapporto vuoto/pieno 46%;
+-diametro dei fori 5mm;
+-distanza tra i centri 7mm.
+IMPIEGO
+I diffusori a getto orizzontale ad alta induzione delle serie EDQF3 sono idonei all’applicazione in mandata sia in riscaldamento
+che in raffrescamento.
+VARIANTI
+Disponibile:
+• EDQF 3 595x595 diffusore quadro forellinato a getto orizzontale ad alta induzione.
+ACCESSORI
+Plenum isolato o non isolato.
+Serranda di taratura in acciaio zincato ad alette con movimento contrapposto
+PAG 1 - DIFFUSORI QUADRATI FORELLINATI
+SERIE EDQF 3 - AGGIORNAMENTO 01/2021
+
+NOMENCLATURA CODICE
+EDQF 3 Diffusore quadrato forellinato
+Modello 595x595
+EDQF 3 595x595
+DIMENSIONI PANNELLO QUADRO:
+Dimensioni
+Modello
+EDQF 3
+Diffusore Foro
+600 595x595 560x560
+DATI DI FUNZIONAMENTO
+sezione
+modello efficace Vk 2,5 3 4 5 6
+m²
+m³/h 1145 1370 1830 2285 2740
+L(m) 2,9 3,5 4,4 5,3 6,3
+EDQF3
+0,127
+595x595
+Pa 10 15 20 35 50
+dB(A) 18 21 30 39 48
+Vk: velocità efficace (m/s)
+m³/h: portata
+Pa: perdite di carico in Pascal
+L(m): lancio in metri calcolato con installazione a
+filo soffitto e velocità terminale 0,25 m/s
+dB(A): indice di rumorosità
+PAG 2 - DIFFUSORI QUADRATI FORELLINATI
+SERIE EDQF 3 - AGGIORNAMENTO 01/2021
+
+SC SERRANDA DI TARATURA
+Questo accessorio permette di ridurre la portata d’aria in uscita al diffusore garantendo una perfetta regolazione. La serranda
+viene agganciata al diffusore tramite le clips che vengono fornite a corredo del diffusore.
+PLENUM EDQF3
+- Materiale: Acciaio zincato.
+- Varianti disponibili: 1. plenum zincato
+2. plenum zincato ISOLATO
+Dimensioni esterne
+modello Ø d P1 〼 C E
+L1 x H1
+EDQF3 580x580 248 300 560 80
+VOCI DI CAPITOLATO
+Diffusore a getto orizzontale ad alta induzione su pannello quadro con un notevole effetto coanda [595x595 per applicazione a
+controsoffitto in acciaio verniciato con polveri epossidiche a forno, colore standard bianco RAL 9016 o speciale su richiesta].
+PAG 3 - DIFFUSORI QUADRATI FORELLINATI
+SERIE EDQF 3 - AGGIORNAMENTO 01/2021
+
+MONTAGGIO CON PLENUM MONTAGGIO IN APPOGGIO
+FISSATO AL SOFFITTO AL CONTROSOFFITTO
+appendere il plenum al soffitto servendosi di apposite staffe appendere gli elementi del controsoffitto al soffitto;
+o catene fissate sul plenum il cui bordo esterno può essere inserire il condotto flessibile sul canotto di raccordo fissan-
+forato; inserire il condotto flessibile sul canotto di raccordo dolo con apposita fascetta stringitubo; montare il diffusore e
+fissandolo con apposita fascetta stringitubo; fissare con nr. 4 viti laterali autoforanti; appoggiare il diffu-
+montare il diffusore e fissare con nr. 4 viti laterali sore già prefissato sul plenum sull’apposito spazio quadrato
+autoforanti; del controsoffitto;
+PAG 4 - DIFFUSORI QUADRATI FORELLINATI
+SERIE EDQF 3 - AGGIORNAMENTO 01/2021

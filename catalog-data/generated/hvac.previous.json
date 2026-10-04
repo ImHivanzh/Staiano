@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-03-hvac-723ad292ebef",
+  "version": "2026-10-03-hvac-b3fd117050bb",
   "products": [
     {
       "id": "mitsubishi-pead-m35ja2-puz-zm35vka2",
@@ -36,6 +36,35 @@
       "widthMm": 900,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 860,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 9,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -45,7 +74,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -85,6 +114,35 @@
       "widthMm": 900,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 860,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 9,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -94,7 +152,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -134,6 +192,35 @@
       "widthMm": 1100,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 1060,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 11,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -143,7 +230,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -183,6 +270,35 @@
       "widthMm": 1100,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 1060,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 11,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -192,7 +308,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -232,6 +348,35 @@
       "widthMm": 1400,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 1360,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 14,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -241,7 +386,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -281,6 +426,35 @@
       "widthMm": 1400,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 1360,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 14,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -290,7 +464,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -330,6 +504,35 @@
       "widthMm": 1600,
       "heightMm": 250,
       "depthMm": 732,
+      "dischargeConnection": {
+        "connectionWidthMm": 1560,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": null,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 15,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": {
+          "diameterMm": 2.9,
+          "horizontalPitchMm": 100,
+          "horizontalCount": 16,
+          "rows": 2,
+          "verticalPitchMm": null
+        },
+        "drawingReference": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Mitsubishi Electric",
+          "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+          "sourceType": "pdf",
+          "documentRevision": "PEAD-M35/50/60/71/100/125/140JA2 DIMENSIONS; D(Duct), 178(Duct), 15; 2xE diameter2.9",
+          "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+          "page": 2
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Capacità nominali a T+35°C/T+7°C. Portata di calcolo alla velocità Media pubblicata, non media aritmetica. Pressione statica50Pa predefinita dal produttore. Pdesign non confuso con capacità nominale.",
@@ -339,7 +542,7 @@
         "sourceType": "pdf",
         "documentRevision": "PEAD-M JA2 — scheda5027",
         "retrievedAt": "2026-10-03T02:39:01.961761+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",
         "page": 1
       }
@@ -376,6 +579,29 @@
       "widthMm": 700,
       "heightMm": 245,
       "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 515,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 492,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094988B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba35a9_dim_3d094988b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094988B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:13.845651+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "713e4e89dbeee05d001c3d27ad88fca64d23dc6d9d3f7a6a80352088c8ccbc21",
+          "page": 1
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Celle unite verificate sul PDF: taglie35/50 condividono dimensioni e portate. Calcolo alla velocità Media. RXM50A(9) mantiene la designazione della scheda originale, da precisare per l'ordine.",
@@ -385,7 +611,7 @@
         "sourceType": "pdf",
         "documentRevision": "Catalogo Residenziale edizione20250429,p.57",
         "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
         "page": 57
       }
@@ -422,6 +648,29 @@
       "widthMm": 700,
       "heightMm": 245,
       "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 515,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 492,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094918B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba50a9_dim_3d094918b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094918B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:15.551542+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "7669dcfa80dfb10b6dbf90ad11da8c0ba08d24a14fec54c18dc2376966aaab52",
+          "page": 1
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Celle unite verificate sul PDF: taglie35/50 condividono dimensioni e portate. Calcolo alla velocità Media. RXM50A(9) mantiene la designazione della scheda originale, da precisare per l'ordine.",
@@ -431,7 +680,7 @@
         "sourceType": "pdf",
         "documentRevision": "Catalogo Residenziale edizione20250429,p.57",
         "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
         "page": 57
       }
@@ -468,6 +717,29 @@
       "widthMm": 1000,
       "heightMm": 245,
       "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 815,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 792,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094983B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba60a9_dim_3d094983b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094983B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:17.589689+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "a37c977baf47b128ad78332f59719e21028a4fd2220a50c9763e5051092cf14b",
+          "page": 1
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Celle unite verificate sul PDF: taglie35/50 condividono dimensioni e portate. Calcolo alla velocità Media. RXM50A(9) mantiene la designazione della scheda originale, da precisare per l'ordine.",
@@ -477,9 +749,285 @@
         "sourceType": "pdf",
         "documentRevision": "Catalogo Residenziale edizione20250429,p.57",
         "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
         "page": 57
+      }
+    },
+    {
+      "id": "daikin-fba71a9-rzasg71mv1",
+      "manufacturer": "Daikin",
+      "family": "FBA-A(9) / Sky Air Advance",
+      "kind": "ducted",
+      "indoorModel": "FBA71A9",
+      "outdoorModel": "RZASG71MV1",
+      "coolingCapacityW": 6800,
+      "heatingCapacityW": 7500,
+      "airflowOptions": [
+        {
+          "label": "Bassa",
+          "airflowM3h": 750
+        },
+        {
+          "label": "Media",
+          "airflowM3h": 900
+        },
+        {
+          "label": "Alta",
+          "airflowM3h": 1080
+        }
+      ],
+      "defaultAirflowIndex": 1,
+      "staticPressurePa": 30,
+      "staticPressureOptionsPa": [
+        30,
+        150
+      ],
+      "widthMm": 1000,
+      "heightMm": 245,
+      "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 815,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 792,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094915B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba71a9_dim_3d094915b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094915B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:20.207644+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "61bcfcfe82b478e60443617f6e822b5e48055b0148e80535889ae192f9df503c",
+          "page": 1
+        }
+      },
+      "pairingVerified": true,
+      "availability": "published",
+      "technicalNotes": "Celle unite verificate sul PDF p.90: FBA100/125/140 condividono dimensioni;125/140 portate e pressione. Calcolo alla velocità Media. Abbinamenti monofase MV; suffisso(1) mantenuto dalla scheda originale, da precisare per l'ordine. La pubblicazione2025 non conferma disponibilità a magazzino.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale edizione20250429,p.90",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T23:06:08.092Z",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 90
+      }
+    },
+    {
+      "id": "daikin-fba100a-rzasg100mv-1-",
+      "manufacturer": "Daikin",
+      "family": "FBA-A(9) / Sky Air Advance",
+      "kind": "ducted",
+      "indoorModel": "FBA100A",
+      "outdoorModel": "RZASG100MV(1)",
+      "coolingCapacityW": 9500,
+      "heatingCapacityW": 10800,
+      "airflowOptions": [
+        {
+          "label": "Bassa",
+          "airflowM3h": 1380
+        },
+        {
+          "label": "Media",
+          "airflowM3h": 1560
+        },
+        {
+          "label": "Alta",
+          "airflowM3h": 1740
+        }
+      ],
+      "defaultAirflowIndex": 1,
+      "staticPressurePa": 40,
+      "staticPressureOptionsPa": [
+        40,
+        150
+      ],
+      "widthMm": 1400,
+      "heightMm": 245,
+      "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 1215,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 1192,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094914B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A/EN/fba100-140a_dim_3d094914b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094914B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:22.660650+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "736a112c48ec45279bfd9b5e245959f5ce6a72cc80d4233ce7ee8c6ef7e1b590",
+          "page": 1
+        }
+      },
+      "pairingVerified": true,
+      "availability": "published",
+      "technicalNotes": "Celle unite verificate sul PDF p.90: FBA100/125/140 condividono dimensioni;125/140 portate e pressione. Calcolo alla velocità Media. Abbinamenti monofase MV; suffisso(1) mantenuto dalla scheda originale, da precisare per l'ordine. La pubblicazione2025 non conferma disponibilità a magazzino.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale edizione20250429,p.90",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T23:06:08.092Z",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 90
+      }
+    },
+    {
+      "id": "daikin-fba125a-rzasg125mv-1-",
+      "manufacturer": "Daikin",
+      "family": "FBA-A(9) / Sky Air Advance",
+      "kind": "ducted",
+      "indoorModel": "FBA125A",
+      "outdoorModel": "RZASG125MV(1)",
+      "coolingCapacityW": 12100,
+      "heatingCapacityW": 13500,
+      "airflowOptions": [
+        {
+          "label": "Bassa",
+          "airflowM3h": 1410
+        },
+        {
+          "label": "Media",
+          "airflowM3h": 1740
+        },
+        {
+          "label": "Alta",
+          "airflowM3h": 2040
+        }
+      ],
+      "defaultAirflowIndex": 1,
+      "staticPressurePa": 50,
+      "staticPressureOptionsPa": [
+        50,
+        150
+      ],
+      "widthMm": 1400,
+      "heightMm": 245,
+      "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 1215,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 1192,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094914B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A/EN/fba100-140a_dim_3d094914b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094914B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:22.660650+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "736a112c48ec45279bfd9b5e245959f5ce6a72cc80d4233ce7ee8c6ef7e1b590",
+          "page": 1
+        }
+      },
+      "pairingVerified": true,
+      "availability": "published",
+      "technicalNotes": "Celle unite verificate sul PDF p.90: FBA100/125/140 condividono dimensioni;125/140 portate e pressione. Calcolo alla velocità Media. Abbinamenti monofase MV; suffisso(1) mantenuto dalla scheda originale, da precisare per l'ordine. La pubblicazione2025 non conferma disponibilità a magazzino.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale edizione20250429,p.90",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T23:06:08.092Z",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 90
+      }
+    },
+    {
+      "id": "daikin-fba140a-rzasg140mv-1-",
+      "manufacturer": "Daikin",
+      "family": "FBA-A(9) / Sky Air Advance",
+      "kind": "ducted",
+      "indoorModel": "FBA140A",
+      "outdoorModel": "RZASG140MV(1)",
+      "coolingCapacityW": 13400,
+      "heatingCapacityW": 15500,
+      "airflowOptions": [
+        {
+          "label": "Bassa",
+          "airflowM3h": 1410
+        },
+        {
+          "label": "Media",
+          "airflowM3h": 1740
+        },
+        {
+          "label": "Alta",
+          "airflowM3h": 2040
+        }
+      ],
+      "defaultAirflowIndex": 1,
+      "staticPressurePa": 50,
+      "staticPressureOptionsPa": [
+        50,
+        150
+      ],
+      "widthMm": 1400,
+      "heightMm": 245,
+      "depthMm": 800,
+      "dischargeConnection": {
+        "connectionWidthMm": 1215,
+        "connectionHeightMm": 178,
+        "dimensionBasis": "flangeMountingSpan",
+        "clearOpeningWidthMm": 1192,
+        "clearOpeningHeightMm": null,
+        "collarDepthMm": 25,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "3D094914B; air discharge KJ, flange transverse dimensions",
+        "conditions": "515/815/1215 e 178 sono le quote trasversali documentate della flangia di mandata KJ. Larghezza luce492/792/1192 documentata; altezza netta luce e ingombro esterno flangia non quotati separatamente. Adattatore da verificare sul componente; non usare178 come altezza libera certificata.",
+        "sourceMetadata": {
+          "manufacturer": "Daikin",
+          "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A/EN/fba100-140a_dim_3d094914b_en.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "3D094914B; air discharge KJ, flange transverse dimensions",
+          "retrievedAt": "2026-10-03T23:02:22.660650+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "736a112c48ec45279bfd9b5e245959f5ce6a72cc80d4233ce7ee8c6ef7e1b590",
+          "page": 1
+        }
+      },
+      "pairingVerified": true,
+      "availability": "published",
+      "technicalNotes": "Celle unite verificate sul PDF p.90: FBA100/125/140 condividono dimensioni;125/140 portate e pressione. Calcolo alla velocità Media. Abbinamenti monofase MV; suffisso(1) mantenuto dalla scheda originale, da precisare per l'ordine. La pubblicazione2025 non conferma disponibilità a magazzino.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale edizione20250429,p.90",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T23:06:08.092Z",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 90
       }
     },
     {
@@ -517,6 +1065,29 @@
       "widthMm": 700,
       "heightMm": 200,
       "depthMm": 450,
+      "dischargeConnection": {
+        "connectionWidthMm": 585,
+        "connectionHeightMm": 122,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 585,
+        "clearOpeningHeightMm": 122,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -526,7 +1097,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 35
       }
@@ -566,6 +1137,29 @@
       "widthMm": 1000,
       "heightMm": 200,
       "depthMm": 450,
+      "dischargeConnection": {
+        "connectionWidthMm": 885,
+        "connectionHeightMm": 122,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 885,
+        "clearOpeningHeightMm": 122,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -575,7 +1169,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 35
       }
@@ -615,6 +1209,29 @@
       "widthMm": 900,
       "heightMm": 260,
       "depthMm": 655,
+      "dischargeConnection": {
+        "connectionWidthMm": 740,
+        "connectionHeightMm": 215,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 740,
+        "clearOpeningHeightMm": 215,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -624,7 +1241,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 35
       }
@@ -664,6 +1281,29 @@
       "widthMm": 900,
       "heightMm": 260,
       "depthMm": 655,
+      "dischargeConnection": {
+        "connectionWidthMm": 740,
+        "connectionHeightMm": 215,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 740,
+        "clearOpeningHeightMm": 215,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -673,7 +1313,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 35
       }
@@ -713,6 +1353,29 @@
       "widthMm": 1340,
       "heightMm": 260,
       "depthMm": 655,
+      "dischargeConnection": {
+        "connectionWidthMm": 1153,
+        "connectionHeightMm": 215,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 1153,
+        "clearOpeningHeightMm": 215,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -722,7 +1385,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 36
       }
@@ -762,6 +1425,29 @@
       "widthMm": 1340,
       "heightMm": 260,
       "depthMm": 655,
+      "dischargeConnection": {
+        "connectionWidthMm": 1153,
+        "connectionHeightMm": 215,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 1153,
+        "clearOpeningHeightMm": 215,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -771,7 +1457,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 36
       }
@@ -811,6 +1497,29 @@
       "widthMm": 1400,
       "heightMm": 300,
       "depthMm": 700,
+      "dischargeConnection": {
+        "connectionWidthMm": 1151,
+        "connectionHeightMm": 197,
+        "dimensionBasis": "ductOpening",
+        "clearOpeningWidthMm": 1151,
+        "clearOpeningHeightMm": 197,
+        "collarDepthMm": null,
+        "flangeOuterWidthMm": null,
+        "flangeOuterHeightMm": null,
+        "holePattern": null,
+        "drawingReference": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+        "conditions": "Dimensioni del raccordo aria di mandata, non ingombro del carter. Le quote mancanti restano da rilevare; verificare guarnizione, fissaggio e tolleranze sul componente fornito.",
+        "sourceMetadata": {
+          "manufacturer": "Gree",
+          "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+          "sourceType": "pdf",
+          "documentRevision": "2.2.7.1 Dimensions of the Supply Air Outlet/Return Air Inlet; Supply A(height), B(width); printed31",
+          "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+          "importedAt": "2026-10-03T23:06:08.092Z",
+          "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+          "page": 35
+        }
+      },
       "pairingVerified": true,
       "availability": "published",
       "technicalNotes": "Specifiche originali Gree U-MatchVI: quattro velocità SH/H/M/L. Calcolo alla velocità M pubblicata. Pressione statica standard dalla tabella, non massima. Modello con pompa condensa; capacità e portate condivise con modello senza pompa nella stessa colonna. Dati dal produttore, pubblicati nel suo canale tecnico regionale; verifica disponibilità commerciale in Italia.",
@@ -820,7 +1529,7 @@
         "sourceType": "pdf",
         "documentRevision": "U-MatchVI — Technical Sales Guide",
         "retrievedAt": "2026-10-03T02:42:17.317451+00:00",
-        "importedAt": "2026-10-03T02:56:18.729Z",
+        "importedAt": "2026-10-03T23:06:08.092Z",
         "sha256": "6ac1d6dcc340a219280fd5399fa1f0992485323a503becb77d1be2e6fd2263e7",
         "page": 36
       }

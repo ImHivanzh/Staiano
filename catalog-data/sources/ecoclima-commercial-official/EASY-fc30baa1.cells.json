@@ -1,0 +1,282 @@
+{
+  "filename": "EASY-fc30baa1.xlsx",
+  "sha256": "9e5de648763bef5d8d3a2e806766b7968f4c107219ceb9b726edffc382280961",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:28",
+    "modified": "2026-10-04 01:02:28"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 14,
+      "maxColumn": 3,
+      "mergedRanges": [
+        "A1:C1",
+        "A3:C3",
+        "A8:C8"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EASY BOX PLENUM IN ABS PER DISTRIBUZIONE DELLARIA",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino prezzi",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "Descrizione",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EASY BOX",
+            "kit Plenum Universale per Griglie serie EGE",
+            "53,24"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Listino Prezzi Accessori",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Descrizione",
+            "€",
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "M63-EASY - Manicotto aggiuntivo per tubo diametro 63 mm interno (confezione da 5 pezzi)",
+            "25,99",
+            null
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "M76-EASY - Manicotto aggiuntivo per tubo ø 75 mm interno (confezione da 5 pezzi)",
+            "25,99",
+            null
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "S-EASY - Serranda di regolazione per attacchi ø 63mm o 75mm interno (confezione da 5 pezzi)",
+            "15,58",
+            null
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "C-EASY - Coperchio per EASY BOX (confezione da 3 pezzi)",
+            "32,32",
+            null
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Tappo per manicotto EASY BOX in confezione da 5 pezzi",
+            "15,58",
+            null
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EASY BOX PLENUM IN ABS PER DISTRIBUZIONE DELLARIA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EASY BOX",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "kit Plenum Universale per Griglie serie EGE",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "53,24",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "Listino Prezzi Accessori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "M63-EASY - Manicotto aggiuntivo per tubo diametro 63 mm interno (confezione da 5 pezzi)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "25,99",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": "M76-EASY - Manicotto aggiuntivo per tubo ø 75 mm interno (confezione da 5 pezzi)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "25,99",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": "S-EASY - Serranda di regolazione per attacchi ø 63mm o 75mm interno (confezione da 5 pezzi)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": "15,58",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A13",
+          "row": 13,
+          "column": 1,
+          "value": "C-EASY - Coperchio per EASY BOX (confezione da 3 pezzi)",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B13",
+          "row": 13,
+          "column": 2,
+          "value": "32,32",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A14",
+          "row": 14,
+          "column": 1,
+          "value": "Tappo per manicotto EASY BOX in confezione da 5 pezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B14",
+          "row": 14,
+          "column": 2,
+          "value": "15,58",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

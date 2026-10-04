@@ -77,6 +77,7 @@ export function applySplitSystem(
   roomIds: string[],
   manufacturer: string,
   existingId: string | null,
+  preferredCombinationId?: string,
 ): Project {
   if (
     roomIds.some(
@@ -96,12 +97,15 @@ export function applySplitSystem(
     throw new Error(
       "Una stanza è servita da un altro sistema. Rimuovere o modificare prima quella zona.",
     );
-  const solution = sizeSplitSystems(
+  const solutions = sizeSplitSystems(
     project,
     roomIds,
     manufacturer,
     splitCatalog,
-  )[0];
+  );
+  const solution = preferredCombinationId
+    ? solutions.find((item) => item.combination.id === preferredCombinationId)
+    : solutions[0];
   if (!solution)
     throw new Error(
       "Nessuna combinazione approvata e verificabile soddisfa capacità simultanee e dimensioni delle stanze selezionate.",

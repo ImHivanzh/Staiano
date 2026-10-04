@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
+  "code": "EBLR",
+  "slug": "eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:18 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:18 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:18.882673+00:00",
+      "filename": "EBLR-ddd14192.xlsx",
+      "bytes": 7102,
+      "sha256": "5e9956976c5e86d1c3c6629c7761afdcc3f37852aede5f1639d9c233a85f3ce9",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 53
+      }
+    }
+  ]
+}

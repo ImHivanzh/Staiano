@@ -13,6 +13,8 @@ export const operatingPointSchema = z.object({
   quality: z.enum(["valid", "review"]).default("valid"),
   qualityNote: z.string().nullable().default(null),
   openingMm: z.number().finite().nullable().optional(),
+  use: z.enum(["supply", "return", "transfer"]).optional(),
+  settingCode: z.string().min(1).optional(),
 });
 export const airTerminalVariantSchema = z.object({
   id: z.string().min(1),
@@ -34,6 +36,11 @@ export const airTerminalVariantSchema = z.object({
   faceWidthMm: z.number().positive().nullable().optional(),
   faceHeightMm: z.number().positive().nullable().optional(),
   bodyDepthMm: z.number().positive().nullable().optional(),
+  modelCode: z.string().min(1).optional(),
+  modelCodes: z.array(z.string().min(1)).optional(),
+  dimensionNote: z.string().optional(),
+  connectionDiameterMm: z.number().positive().nullable().optional(),
+  connectionDiametersMm: z.array(z.number().positive()).optional(),
 });
 export const airTerminalFamilySchema = z.object({
   manufacturer: z.string().min(1),
@@ -51,6 +58,13 @@ export const airTerminalFamilySchema = z.object({
   mountings: z.array(z.enum(["wall", "ceiling"])).optional(),
   shape: z.enum(["rectangle", "circle"]).optional(),
   geometryNote: z.string().optional(),
+  modelCodes: z.array(z.string().min(1)).optional(),
+  finishes: z.array(z.string().min(1)).optional(),
+  frameOptions: z.array(z.string().min(1)).optional(),
+  closureOptions: z.array(z.string().min(1)).optional(),
+  selectionStatus: z
+    .enum(["verified", "partial", "dimensions-only"])
+    .optional(),
 });
 export const airTerminalCatalogSchema = z
   .object({
@@ -61,6 +75,8 @@ export const airTerminalCatalogSchema = z
     const ids = c.families.flatMap((f) => f.variants.map((v) => v.id));
     if (new Set(ids).size !== ids.length)
       ctx.addIssue({ code: "custom", message: "Varianti terminali duplicate" });
+    if (new Set(c.families.map((f) => f.familyCode)).size !== c.families.length)
+      ctx.addIssue({ code: "custom", message: "Famiglie terminali duplicate" });
     for (const f of c.families)
       for (const v of f.variants)
         if (

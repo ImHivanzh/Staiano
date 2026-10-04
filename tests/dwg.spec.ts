@@ -1,10 +1,10 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-test";
 
 test("DWG actual binary imports locally through HTTPS with MIT parser and no commercial ODA", async ({
   page,
-  request,
+  context,
 }) => {
-  const statusResponse = await request.get("/api/import/dwg");
+  const statusResponse = await context.request.get("/api/import/dwg");
   expect(statusResponse.ok()).toBe(true);
   const status = await statusResponse.json();
   expect(status.available).toBe(true);

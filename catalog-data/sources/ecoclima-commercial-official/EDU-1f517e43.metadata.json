@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile",
+  "code": "EDU",
+  "slug": "edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:24 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:24.135071+00:00",
+      "filename": "EDU-1f517e43.xlsx",
+      "bytes": 6837,
+      "sha256": "ab2d54887877baaac0acba298b2c72b8bbd941167a4b33e042ba7fb30d495280",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 18
+      }
+    }
+  ]
+}

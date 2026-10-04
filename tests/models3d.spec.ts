@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./browser-test";
 
 test("manufacturer GLB preview loads locally, switches models and downloads", async ({
   page,

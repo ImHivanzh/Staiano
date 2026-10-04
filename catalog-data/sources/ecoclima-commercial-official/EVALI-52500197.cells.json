@@ -1,0 +1,546 @@
+{
+  "filename": "EVALI-52500197.xlsx",
+  "sha256": "6465534946be20820067d3aa86b9da917ac5499921f06123e316d535928dcb29",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:29",
+    "modified": "2026-10-04 01:02:29"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 23,
+      "maxColumn": 3,
+      "mergedRanges": [
+        "A1:C1",
+        "A3:C3",
+        "A15:C15"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EVALI BOCCHETTE DI ESTRAZIONE AUTOREGOLABILI",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "€",
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EVALI 15",
+            "22,83",
+            null
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EVALI 30",
+            "22,83",
+            null
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EVALI 45",
+            "22,83",
+            null
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "EVALI 60",
+            "22,83",
+            null
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "EVALI 75",
+            "22,83",
+            null
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "EVALI 90",
+            "22,83",
+            null
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "EVALI 120",
+            "33,63",
+            null
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "EVALI 150",
+            "33,63",
+            null
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Listino Prezzi Accessori",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Modello",
+            "Descrizione",
+            "€"
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "EMGA",
+            "Manicotto di giunzione ø 100 mm con guarnizione",
+            "5,10"
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "EMGA",
+            "Manicotto di giunzione ø 125 mm con guarnizione",
+            "5,10"
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "EMPG",
+            "Manicotto per installazione a soffitto in cartongesso ø 80 mm",
+            "9,17"
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "EMPG",
+            "Manicotto per installazione a soffitto in cartongesso ø 100 mm",
+            "9,17"
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "EMPG",
+            "Manicotto per installazione a soffitto in cartongesso ø 125 mm",
+            "9,17"
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "EMTD",
+            "Manicotto di attraversamento parete ø 80 mm",
+            "18,14"
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "EMTD",
+            "Manicotto di attraversamento parete ø 125 mm",
+            "16,31"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EVALI BOCCHETTE DI ESTRAZIONE AUTOREGOLABILI",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EVALI 15",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "22,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EVALI 30",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "22,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EVALI 45",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "22,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "EVALI 60",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "22,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "EVALI 75",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "22,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "EVALI 90",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "22,83",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A11",
+          "row": 11,
+          "column": 1,
+          "value": "EVALI 120",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B11",
+          "row": 11,
+          "column": 2,
+          "value": "33,63",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A12",
+          "row": 12,
+          "column": 1,
+          "value": "EVALI 150",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B12",
+          "row": 12,
+          "column": 2,
+          "value": "33,63",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A15",
+          "row": 15,
+          "column": 1,
+          "value": "Listino Prezzi Accessori",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A16",
+          "row": 16,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B16",
+          "row": 16,
+          "column": 2,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C16",
+          "row": 16,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A17",
+          "row": 17,
+          "column": 1,
+          "value": "EMGA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B17",
+          "row": 17,
+          "column": 2,
+          "value": "Manicotto di giunzione ø 100 mm con guarnizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C17",
+          "row": 17,
+          "column": 3,
+          "value": "5,10",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A18",
+          "row": 18,
+          "column": 1,
+          "value": "EMGA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B18",
+          "row": 18,
+          "column": 2,
+          "value": "Manicotto di giunzione ø 125 mm con guarnizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C18",
+          "row": 18,
+          "column": 3,
+          "value": "5,10",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A19",
+          "row": 19,
+          "column": 1,
+          "value": "EMPG",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B19",
+          "row": 19,
+          "column": 2,
+          "value": "Manicotto per installazione a soffitto in cartongesso ø 80 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C19",
+          "row": 19,
+          "column": 3,
+          "value": "9,17",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A20",
+          "row": 20,
+          "column": 1,
+          "value": "EMPG",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B20",
+          "row": 20,
+          "column": 2,
+          "value": "Manicotto per installazione a soffitto in cartongesso ø 100 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C20",
+          "row": 20,
+          "column": 3,
+          "value": "9,17",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A21",
+          "row": 21,
+          "column": 1,
+          "value": "EMPG",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B21",
+          "row": 21,
+          "column": 2,
+          "value": "Manicotto per installazione a soffitto in cartongesso ø 125 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C21",
+          "row": 21,
+          "column": 3,
+          "value": "9,17",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A22",
+          "row": 22,
+          "column": 1,
+          "value": "EMTD",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B22",
+          "row": 22,
+          "column": 2,
+          "value": "Manicotto di attraversamento parete ø 80 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C22",
+          "row": 22,
+          "column": 3,
+          "value": "18,14",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A23",
+          "row": 23,
+          "column": 1,
+          "value": "EMTD",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B23",
+          "row": 23,
+          "column": 2,
+          "value": "Manicotto di attraversamento parete ø 125 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C23",
+          "row": 23,
+          "column": 3,
+          "value": "16,31",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

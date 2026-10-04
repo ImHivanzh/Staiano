@@ -11,7 +11,9 @@ import { radiatorProductAtVersion } from "./catalogs/radiators";
 import { elementOutputAtDeltaT, radiatorWidth } from "./radiators/size";
 import { airTerminalFamilyAtVersion } from "./catalogs/air-terminals";
 import { hvacProductAtVersion } from "./catalogs/hvac";
+import { maximumAirflowOption } from "./catalogs/hvac-airflow";
 import { ductedRoomAllocation } from "./ducted/apply";
+import { ductedMaximumAirflow } from "./ducted/machine";
 import { footprintInsideRoom } from "./geometry/footprint";
 import {
   legacyTerminalCheck,
@@ -139,13 +141,23 @@ export function validateProject(p: Project): Check[] {
       wall &&
       opening.offsetM + opening.widthM <=
         distance(wall.start, wall.end) + 1e-7 &&
-      opening.heightM <= height + 1e-7;
+      opening.heightM +
+        (opening.type === "window" ? (opening.sillHeightM ?? 0) : 0) <=
+        height + 1e-7;
     checks.push({
       code: "openingDimensions",
       status: valid ? "valid" : "invalid",
       entityId: opening.id,
       message: `${opening.type === "door" ? "Porta" : "Finestra"}: apertura ${valid ? "entro lunghezza e altezza della parete" : "fuori dall’ingombro della parete; correggere le quote"}.`,
     });
+    if (opening.type === "window" && opening.sillHeightM === null)
+      checks.push({
+        code: "openingElevation",
+        status: "warning",
+        entityId: opening.id,
+        message:
+          "Finestra: quota davanzale da verificare; il 3D non inventa l’altezza della posa.",
+      });
   }
   for (let i = 0; i < p.rooms.length; i++)
     for (let j = i + 1; j < p.rooms.length; j++)
@@ -233,33 +245,67 @@ export function validateProject(p: Project): Check[] {
       load = p.rooms
         .filter((r) => system.roomIds.includes(r.id))
         .reduce((n, r) => n + r.designLoadW, 0);
-    checks.push({
-      code: "machineCatalog",
-      status: product?.pairingVerified ? "valid" : "invalid",
-      message: `${product?.indoorModel ?? system.productId}: abbinamento da catalogo`,
-      entityId: system.id,
-    });
-    checks.push({
-      code: "machinePower",
-      status:
-        product &&
-        product.coolingCapacityW >= load &&
-        (product.heatingCapacityW ?? 0) >= load
-          ? "valid"
-          : "invalid",
-      message: `${product?.indoorModel ?? system.productId}: capacità per carico ${Math.round(load)}W`,
-      entityId: system.id,
-    });
-    checks.push({
-      code: "machineAirflow",
-      status: product?.airflowOptions.some(
-        (f) => f.airflowM3h === system.airflowM3h,
-      )
-        ? "valid"
-        : "invalid",
-      message: `${system.productId}: portata da produttore`,
-      entityId: system.id,
-    });
+    if (system.genericMachine) {
+      const manual = system.genericMachine;
+      checks.push({
+        code: "machineCatalog",
+        status: "warning",
+        entityId: system.id,
+        message: `${manual.manufacturer} ${manual.model}: macchina inserita manualmente; dati dichiarati dall’operatore.`,
+      });
+      checks.push({
+        code: "machinePower",
+        entityId: system.id,
+        status:
+          manual.coolingCapacityW === undefined ||
+          manual.heatingCapacityW === undefined
+            ? "warning"
+            : manual.coolingCapacityW >= load && manual.heatingCapacityW >= load
+              ? "warning"
+              : "invalid",
+        message:
+          manual.coolingCapacityW === undefined ||
+          manual.heatingCapacityW === undefined
+            ? "Macchina inserita manualmente; potenza non dichiarata. Verificare copertura del carico termico."
+            : `${manual.model}: potenze dichiarate dall’operatore, copertura del carico ${Math.round(load)} W da verificare.`,
+      });
+      checks.push({
+        code: "machineAirflow",
+        entityId: system.id,
+        status:
+          ductedMaximumAirflow(system) === system.airflowM3h
+            ? "warning"
+            : "invalid",
+        message: `${manual.model}: portata massima dichiarata dall’operatore ${manual.maxAirflowM3h} m³/h.`,
+      });
+    } else {
+      checks.push({
+        code: "machineCatalog",
+        status: product?.pairingVerified ? "valid" : "invalid",
+        message: `${product?.indoorModel ?? system.productId}: abbinamento da catalogo`,
+        entityId: system.id,
+      });
+      checks.push({
+        code: "machinePower",
+        status:
+          product &&
+          product.coolingCapacityW >= load &&
+          (product.heatingCapacityW ?? 0) >= load
+            ? "valid"
+            : "invalid",
+        message: `${product?.indoorModel ?? system.productId}: capacità per carico ${Math.round(load)}W`,
+        entityId: system.id,
+      });
+      checks.push({
+        code: "machineAirflow",
+        status:
+          maximumAirflowOption(product)?.airflowM3h === system.airflowM3h
+            ? "valid"
+            : "invalid",
+        message: `${system.productId}: portata massima da produttore`,
+        entityId: system.id,
+      });
+    }
     for (const roomId of system.roomIds) {
       const allocation = ductedRoomAllocation(p, roomId);
       if (!allocation) continue;

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato",
+  "code": "EAB9063",
+  "slug": "eab9063-curva-a-90-in-acciaio-zincato",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eab9063-curva-a-90-in-acciaio-zincato.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.407326+00:00",
+      "filename": "EAB9063-3af7132e.xlsx",
+      "bytes": 6658,
+      "sha256": "5b494af2d36f40ea401ee12d226c0b34578339b6e8408d9badbca291e76f418e",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 6
+      }
+    }
+  ]
+}

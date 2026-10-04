@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box",
+  "code": "EGE",
+  "slug": "ege-griglie-di-distribuzione-aria-per-easy-box",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ege-griglie-di-distribuzione-aria-per-easy-box.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:28 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:28.705343+00:00",
+      "filename": "EGE-27a78c0a.xlsx",
+      "bytes": 6926,
+      "sha256": "91a76ab24fbece552fdd61d128a8655bc88f1841ac35d71274ff829323b63433",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 29
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca",
+  "code": "EAG",
+  "slug": "eag-al-griglia-in-alluminio-con-rete-verniciata-bianca",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=eag-al-griglia-in-alluminio-con-rete-verniciata-bianca.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:27 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:27.646889+00:00",
+      "filename": "EAG-12eb0dcc.xlsx",
+      "bytes": 6976,
+      "sha256": "bd6b77ed7aa19764937d9b63141dedb8f5c8aaa3756857147f63df2c41330783",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 31
+      }
+    }
+  ]
+}

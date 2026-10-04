@@ -1,0 +1,281 @@
+{
+  "filename": "EVVBOR-c564feff.xlsx",
+  "sha256": "fda29250f1c6a9caa37385e41b99d0e8774baabdd6c4a43d7fac4cd2efa1584a",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:29",
+    "modified": "2026-10-04 01:02:29"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 10,
+      "maxColumn": 3,
+      "mergedRanges": [
+        "A1:C1",
+        "A3:C3"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EVVBOR VALVOLE REGOLABILI PER LA MANDATA E ESTRAZIONE DELLARIA",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Modello",
+            "Descrizione",
+            "€"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "EVVBOR-80",
+            "Valvola di mandata e ripresa regolabile EVVBOR ø 80 mm in ABS bianco",
+            "16,02"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "EVVBOR-125",
+            "Valvola di mandata e ripresa regolabile EVVBOR ø 125 mm in ABS Bianco",
+            "23,71"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EVMBOR-80",
+            "Manicotto EVMBOR ø 80 mm per installazione a soffitto in cartongesso",
+            "24,54"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "EVMBOR-125",
+            "Manicotto EVMBOR ø 125 mm per installazione a soffitto in cartongesso",
+            "30,58"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "ERDR 80",
+            "Regolatore di portata aria costante ERDR ø 80 mm",
+            "27,45"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "ERDR 125",
+            "Regolatore di portata aria costante ERDR ø 125 mm",
+            "36,97"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EVVBOR VALVOLE REGOLABILI PER LA MANDATA E ESTRAZIONE DELLARIA",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B4",
+          "row": 4,
+          "column": 2,
+          "value": "Descrizione",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C4",
+          "row": 4,
+          "column": 3,
+          "value": "€",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "EVVBOR-80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "Valvola di mandata e ripresa regolabile EVVBOR ø 80 mm in ABS bianco",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "16,02",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A6",
+          "row": 6,
+          "column": 1,
+          "value": "EVVBOR-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "Valvola di mandata e ripresa regolabile EVVBOR ø 125 mm in ABS Bianco",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C6",
+          "row": 6,
+          "column": 3,
+          "value": "23,71",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EVMBOR-80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "Manicotto EVMBOR ø 80 mm per installazione a soffitto in cartongesso",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "24,54",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A8",
+          "row": 8,
+          "column": 1,
+          "value": "EVMBOR-125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B8",
+          "row": 8,
+          "column": 2,
+          "value": "Manicotto EVMBOR ø 125 mm per installazione a soffitto in cartongesso",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C8",
+          "row": 8,
+          "column": 3,
+          "value": "30,58",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A9",
+          "row": 9,
+          "column": 1,
+          "value": "ERDR 80",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B9",
+          "row": 9,
+          "column": 2,
+          "value": "Regolatore di portata aria costante ERDR ø 80 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C9",
+          "row": 9,
+          "column": 3,
+          "value": "27,45",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A10",
+          "row": 10,
+          "column": 1,
+          "value": "ERDR 125",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B10",
+          "row": 10,
+          "column": 2,
+          "value": "Regolatore di portata aria costante ERDR ø 125 mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C10",
+          "row": 10,
+          "column": 3,
+          "value": "36,97",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

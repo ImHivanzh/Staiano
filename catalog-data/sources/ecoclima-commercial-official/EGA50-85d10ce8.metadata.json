@@ -1,0 +1,33 @@
+{
+  "pageUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione",
+  "code": "EGA50",
+  "slug": "ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione",
+  "sources": [
+    {
+      "url": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione?locale=it",
+      "finalUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione?locale=it",
+      "status": 200,
+      "headers": {
+        "Date": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Server": "Apache",
+        "Cache-Control": "public",
+        "Content-Disposition": "attachment; filename=ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione.xlsx",
+        "Accept-Ranges": "bytes",
+        "Upgrade": "h2",
+        "Connection": "Upgrade, close",
+        "Last-Modified": "Sat, 03 Oct 2026 23:02:25 GMT",
+        "Strict-Transport-Security": "max-age=15768000;includeSubdomains",
+        "Transfer-Encoding": "chunked",
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      },
+      "retrievedAt": "2026-10-03T23:02:25.681075+00:00",
+      "filename": "EGA50-85d10ce8.xlsx",
+      "bytes": 7593,
+      "sha256": "e73f592e3abebe220750db67b4a83a1d4b9c06d7613c1cda21fe4bd64bdd3a3c",
+      "extraction": {
+        "sheets": 1,
+        "populatedCells": 170
+      }
+    }
+  ]
+}

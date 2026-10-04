@@ -49,6 +49,14 @@
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
+.zoomControls {
+  flex-wrap: wrap;
+}
+.zoomControls output {
+  min-width: 54px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
 .notice {
   font-size: 12px;
   color: #425a69;

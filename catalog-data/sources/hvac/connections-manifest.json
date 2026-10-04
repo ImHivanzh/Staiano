@@ -1,0 +1,58 @@
+[
+  {
+    "name": "mitsubishi-pead-dimensions",
+    "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/4173",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:08.010948+00:00",
+    "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
+    "pageCount": 2
+  },
+  {
+    "name": "gree-duct-installation",
+    "sourceUrl": "https://gree.gr/wp-content/uploads/2025/07/IM_U-Match-Duct.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:11.991325+00:00",
+    "sha256": "b2c16307a29ff02896b3ede547ae04ca5c50c78a09c31a894288a066b1300d01",
+    "pageCount": 68
+  },
+  {
+    "name": "daikin-fba35-dimensions",
+    "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba35a9_dim_3d094988b_en.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:13.845651+00:00",
+    "sha256": "713e4e89dbeee05d001c3d27ad88fca64d23dc6d9d3f7a6a80352088c8ccbc21",
+    "pageCount": 1
+  },
+  {
+    "name": "daikin-fba50-dimensions",
+    "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba50a9_dim_3d094918b_en.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:15.551542+00:00",
+    "sha256": "7669dcfa80dfb10b6dbf90ad11da8c0ba08d24a14fec54c18dc2376966aaab52",
+    "pageCount": 1
+  },
+  {
+    "name": "daikin-fba60-dimensions",
+    "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba60a9_dim_3d094983b_en.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:17.589689+00:00",
+    "sha256": "a37c977baf47b128ad78332f59719e21028a4fd2220a50c9763e5051092cf14b",
+    "pageCount": 1
+  },
+  {
+    "name": "daikin-fba71-dimensions",
+    "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A(9)/fba71a9_dim_3d094915b_en.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:20.207644+00:00",
+    "sha256": "61bcfcfe82b478e60443617f6e822b5e48055b0148e80535889ae192f9df503c",
+    "pageCount": 1
+  },
+  {
+    "name": "daikin-fba100-140-dimensions",
+    "sourceUrl": "https://www.daikin.es/content/dam/MDM/TechnicalDrawings/SkyAir/FBA-A/EN/fba100-140a_dim_3d094914b_en.pdf",
+    "sourceType": "pdf",
+    "retrievedAt": "2026-10-03T23:02:22.660650+00:00",
+    "sha256": "736a112c48ec45279bfd9b5e245959f5ce6a72cc80d4233ce7ee8c6ef7e1b590",
+    "pageCount": 1
+  }
+]

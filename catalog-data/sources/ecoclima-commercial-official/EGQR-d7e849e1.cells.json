@@ -1,0 +1,155 @@
+{
+  "filename": "EGQR-d7e849e1.xlsx",
+  "sha256": "a660428ecdbc38a5b414444e7339212f84d8d835bce3f412e46d59de838806b6",
+  "properties": {
+    "title": "Untitled Spreadsheet",
+    "creator": "Unknown Creator",
+    "created": "2026-10-04 01:02:27",
+    "modified": "2026-10-04 01:02:27"
+  },
+  "sheets": [
+    {
+      "title": "Worksheet",
+      "maxRow": 7,
+      "maxColumn": 3,
+      "mergedRanges": [
+        "A1:C1",
+        "A3:C3",
+        "A5:A6",
+        "C5:C6"
+      ],
+      "rows": [
+        {
+          "row": 1,
+          "values": [
+            "EGQR PUSH GRIGLIA DI RIPRESA A MAGLIA QUADRA 13X13 MM CON FILTRO E CORNICE INTERNA DA 15 MM",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Listino Prezzi",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Verniciato bianco RAL 9016 + 20%",
+            null,
+            null
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Modello",
+            "Dimensioni Esterno Cornice",
+            "euro"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            "mm",
+            null
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "EGQR-PUSH",
+            "595x595",
+            "171,67"
+          ]
+        }
+      ],
+      "cells": [
+        {
+          "coordinate": "A1",
+          "row": 1,
+          "column": 1,
+          "value": "EGQR PUSH GRIGLIA DI RIPRESA A MAGLIA QUADRA 13X13 MM CON FILTRO E CORNICE INTERNA DA 15 MM",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A3",
+          "row": 3,
+          "column": 1,
+          "value": "Listino Prezzi",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A4",
+          "row": 4,
+          "column": 1,
+          "value": "Verniciato bianco RAL 9016 + 20%",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A5",
+          "row": 5,
+          "column": 1,
+          "value": "Modello",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B5",
+          "row": 5,
+          "column": 2,
+          "value": "Dimensioni Esterno Cornice",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C5",
+          "row": 5,
+          "column": 3,
+          "value": "euro",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B6",
+          "row": 6,
+          "column": 2,
+          "value": "mm",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "A7",
+          "row": 7,
+          "column": 1,
+          "value": "EGQR-PUSH",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "B7",
+          "row": 7,
+          "column": 2,
+          "value": "595x595",
+          "type": "s",
+          "numberFormat": "General"
+        },
+        {
+          "coordinate": "C7",
+          "row": 7,
+          "column": 3,
+          "value": "171,67",
+          "type": "s",
+          "numberFormat": "General"
+        }
+      ]
+    }
+  ]
+}

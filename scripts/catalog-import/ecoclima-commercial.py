@@ -9,6 +9,8 @@ import hashlib
 from html.parser import HTMLParser
 import json
 from pathlib import Path
+import subprocess
+import sys
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -48,7 +50,17 @@ class Tables(HTMLParser):
 cli = argparse.ArgumentParser()
 cli.add_argument('--apply', action='store_true')
 cli.add_argument('--allow-removal', action='store_true')
+cli.add_argument('--normalize-prices', action='store_true', help='Normalize preserved official XLSX and HTML sources into the typed BOM catalog')
 args = cli.parse_args()
+if args.normalize_prices:
+    subprocess.run([sys.executable, str(ROOT / 'scripts/catalog-import/ecoclima-price-workbooks.py')], check=True)
+    command = [sys.executable, str(ROOT / 'scripts/catalog-import/ecoclima-prices.py')]
+    if args.apply:
+        command.append('--apply')
+    if args.allow_removal:
+        command.append('--allow-removal')
+    subprocess.run(command, check=True)
+    raise SystemExit(0)
 records = json.loads((DEST / 'discovery.json').read_text(encoding='utf-8'))
 families = []
 for record in records:
@@ -60,7 +72,19 @@ for record in records:
     now = dt.datetime.now(dt.timezone.utc).isoformat()
     digest = hashlib.sha256(data).hexdigest()
     identifier = record['code'].lower() + '-' + hashlib.sha256(record['pageUrl'].encode()).hexdigest()[:12]
-    (DEST / f"commercial-{identifier}.html").write_bytes(data)
+    raw_path = DEST / f"commercial-{identifier}.html"
+    revisions = DEST / 'commercial-revisions'
+    revisions.mkdir(exist_ok=True)
+    if raw_path.exists():
+        previous_data = raw_path.read_bytes()
+        previous_digest = hashlib.sha256(previous_data).hexdigest()
+        immutable_previous = revisions / f'{identifier}-{previous_digest}.html'
+        if not immutable_previous.exists():
+            immutable_previous.write_bytes(previous_data)
+    immutable_current = revisions / f'{identifier}-{digest}.html'
+    if not immutable_current.exists():
+        immutable_current.write_bytes(data)
+    raw_path.write_bytes(data)
     parser = Tables()
     parser.feed(data.decode('utf-8'))
     tables = [rows for rows in parser.tables if any('€' in cell for row in rows for cell in row)]

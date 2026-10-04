@@ -1,0 +1,121 @@
+GRIGLIA
+FORELLINATA
+Serie EGF
+DESCRIZIONE
+Griglie di mandata e ripresa dell’aria a pannello forellinato.
+CARATTERISTICHE
+Telaio perimetrale in alluminio.
+Pannello in acciaio zincato.
+Finitura: verniciatura colore bianco RAL 9016.
+Installazione: fissaggio a clips.
+La maglia forellinata è realizzata secondo le seguenti specifiche:
+-fori tondi alternati a 60°;
+-rapporto vuoto/pieno 46%;
+-diametro dei fori 5mm;
+-distanza tra i centri 7mm.
+IMPIEGO
+Per la ripresa dell’aria all’interno dei locali.
+ACCESSORI
+- EPZ plenum zincato;
+- EPI plenum isolato;
+- SC serranda di taratura in acciaio zincato con alette a movimento
+contrapposto;
+- CT controtelaio a murare in acciaio zincato.
+A RICHIESTA
+- Esecuzione con controtelaio portafiltro;
+- verniciatura nei colori RAL a scelta;
+- fori su cornice per installazione con viti.
+NOMENCLATURA CODICE
+EGF Griglie forellinate
+Larghezza L (mm) 300-400-500-600-800-1000
+Altezza H (mm) 200-300-400-500-600
+EGF 500 220000
+PAG 1 - GRIGLIA FORELLINATA
+SERIE EGF - AGGIORNAMENTO 01/2023
+
+DIMENSIONI
+SEZIONE EFFICACE
+L
+H
+300 400 500 600 800 1000
+Sezione efficace m²
+200 0,024 0,033 0,041 0,050 0,067 0,084
+300 0,037 0,050 0,064 0,077 0,103 0,129
+400 0,050 0,068 0,086 0,104 0,139 0,174
+500 0,064 0,086 0,108 0,131 0,175 0,220
+600 0,077 0,104 0,131 0,157 0,211 0,265
+DATI DI FUNZIONAMENTO
+Vk L
+H
+m/s 300 400 500 600 800 1000
+portata m³/h
+Vk: velocità efficace (m/s)
+2 175 236 297 358 481 604
+m³/h: portata
+200 3 262 354 446 538 721 905
+Pa: perdite di carico in Pascal
+4 349 472 594 717 962 1207
+dB(A): indice di rumorosità
+2 269 363 458 552 740 930 L: larghezza
+300 3 404 545 687 828 1110 1395 H: altezza
+4 538 727 916 1104 1482 1860 Tutte le misure sono espresse in mm.
+2 363 491 618 746 1000 1256
+400 3 545 736 928 1119 1500 1884
+4 727 982 1237 1492 2000 2512
+2 458 618 779 940 1260 1582
+500 3 687 928 1169 1410 1890 2373
+4 916 1237 1558 1879 2522 3164
+2 552 746 940 1133 1520 1908
+600 3 828 1119 1410 1700 2280 2863
+4 1104 1492 1879 2267 3042 3817
+PAG 2 - GRIGLIA FORELLINATA
+SERIE EGF - AGGIORNAMENTO 01/2023
+
+INDICE DI RUMOROSITÀ dB(A)
+V
+dB(A)
+m/s
+2 20/25
+livello potenza sonora 3 25/30
+4 35/40
+PERDITA DI CARICO (Pa)
+V
+Pa
+m/s
+2 15
+perdite di carico 3 40
+4 70
+DETTAGLIO FORI
+SC SERRANDA DI TARATURA CT CONTROTELAIO
+Serranda di taratura in acciaio zincato
+ad alette con movimento contrapposto.
+PAG 3 - GRIGLIA FORELLINATA
+SERIE EGF - AGGIORNAMENTO 01/2023
+
+PLENUM
+modello stacco superiore stacco laterale
+E F
+L1 x H1 P1 n° stacchi Ø d P2 n° stacchi Ø d
+300x200 200 1 200 300 1 200 80 12
+400x200 200 1 200 300 1 200 80 12
+500x200 200 1 200 300 1 200 80 12
+600x200 200 2 200 300 2 200 80 12
+800x200 200 2 200 300 2 200 80 12
+1000x200 200 2 200 300 2 200 80 12
+300x300 200 1 248 350 1 248 80 12
+400x300 200 1 248 350 1 248 80 12
+500x300 200 1 248 350 1 248 80 12
+600x300 200 2 198 350 2 248 80 12
+800x300 200 2 248 350 2 248 80 12
+1000x300 200 2 248 350 2 248 80 12
+400x400 200 1 298 350 1 298 80 12
+500x400 200 1 298 350 1 298 80 12
+600x400 200 2 198 350 2 248 80 12
+800x400 200 2 298 350 2 298 80 12
+1000x400 200 2 298 400 2 298 80 12
+PAG 4 - GRIGLIA FORELLINATA
+SERIE EGF - AGGIORNAMENTO 01/2023
+
+INSTALLAZIONE
+PAG 5 - GRIGLIA FORELLINATA
+SERIE EGF - AGGIORNAMENTO 01/2023

@@ -1,11 +1,10 @@
 {
   "added": [],
   "changed": [
-    "ecoclima-eadd-80",
-    "ecoclima-eadd-100",
-    "ecoclima-eadd-125",
-    "ecoclima-eadd-160",
-    "ecoclima-eadd-200"
+    "ecoclima-edsc-c-100",
+    "ecoclima-edsc-cc-100",
+    "ecoclima-edsc-q-100",
+    "ecoclima-edsc-q-125"
   ],
   "removed": []
 }

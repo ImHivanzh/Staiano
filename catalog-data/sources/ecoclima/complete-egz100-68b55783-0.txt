@@ -1,0 +1,85 @@
+GRIGLIE DI RIPRESA IN
+ACCIAIO PASSO 100 mm
+Serie EGZ100
+Griglie di ripresa costruite in robusto profilo di acciaio zincato. Le alette sono inclinate a 45° con passo 100 mm.
+CARATTERISTICHE
+Materiale: acciaio.
+Finitura: zincato.
+Installazione: fissaggio con viti frontali.
+Dimensioni realizzabili in pezzo unico:
+- min. base 200 mm x altezza 200 mm;
+- max. base 2500 mm x altezza 2500 mm.
+IMPIEGO
+Sia per la ripresa che per l’espulsione dell’aria. Si possono utilizzare sia all’interno che all’esterno degli edifici grazie
+al particolare profilo antipioggia.
+ACCESSORI
+- CTP: controtelaio a murare.
+A RICHIESTA
+- Verniciatura nei colori RAL a scelta;
+- rete antivolatile.
+NOMENCLATURA CODICE
+EGZ100 Griglia di ripresa in acciaio passo 100 mm
+Grandezza L x H
+L (mm) = 600-800-1000-1200-1400-1600-1800-2000
+H (mm) = 600-800-1000-1200-1400-1600-1800
+EGZ100 600 x 400
+PAG 1 - GRIGLIE DI RIPRESA IN ACCIAIO PASSO 100 mm
+SERIE EGZ100 - AGGIORNAMENTO 01/2023
+
+DIMENSIONI
+INSTALLAZIONE
+PAG 2 - GRIGLIE DI RIPRESA IN ACCIAIO PASSO 100 mm
+SERIE EGZ100 - AGGIORNAMENTO 01/2023
+
+CONTROTELAIO
+CTP: controtelaio per applicazione a
+murare realizzato in acciaio
+zincato, ideale per l’installazione della
+griglia.
+INDICE DI RUMOROSITÀ dB(A) PERDITA DI CARICO (Pa)
+Vk m/s dB(A) Vk m/s Pa
+4 25/30 4 16
+6 35/45 6 45
+8 45/50 8 80
+SEZIONE EFFICACE
+H L
+600 800 1000 1200 1400 1600 1800 2000
+sezione efficace m2
+600 0,147 0,198 0,248 0,299 0,350 0,401 0,451 0,502
+800 0,211 0,284 0,356 0,429 0,502 0,574 0,647 0,720
+1000 0,275 0,369 0,464 0,559 0,653 0,748 0,843 0,938
+1200 0,338 0,455 0,572 0,689 0,805 0,922 1,039 1,155
+1400 0,402 0,541 0,680 0,818 0,957 1,096 1,234 1,373
+1600 0,466 0,627 0,787 0,948 1,109 1,270 1,430 1,591
+1800 0,530 0,713 0,895 1,078 1,261 1,443 1,626 1,809
+DATI DI FUNZIONAMENTO
+L
+H Vk m/s
+600 800 1000 1200 1400 1600 1800 2000
+portata m³/h
+4 2115 2845 3575 4305 5035 5765 6500 7230 Vk: velocità efficace (m/s)
+600
+6 3175 4270 5365 6460 7555 8650 9745 10840
+m³/h: portata
+4 3035 4085 5130 6175 7225 8270 9315 10365
+800 Pa: perdite di carico
+6 4555 6125 7695 9265 10835 12405 13975 15545
+in Pascal
+4 3955 5320 6680 8045 9410 10775 12135 13500
+1000
+6 5930 7980 10020 12070 14115 16160 18205 20250 dB(A): indice di rumorosità
+4 4870 6555 8235 9915 11595 13275 14955 16635
+1200
+6 7310 9830 12350 14870 17395 19914 22435 24955
+L: base (lunghezza alette)
+4 5790 7790 9785 11785 13780 15780 17775 19775
+1400
+6 8690 11685 14680 17675 20670 23670 26665 29660 H: altezza
+4 6710 9025 11340 13655 15965 18280 20595 22910 Tutte le dimensioni
+1600
+6 10065 13535 17010 20480 23950 27420 30895 34365 sono espresse in mm
+4 7630 10260 12890 15520 18155 20785 23415 26045
+1800
+6 11445 15390 19335 23285 27230 31175 35125 39070
+PAG 3 - GRIGLIE DI RIPRESA IN ACCIAIO PASSO 100 mm
+SERIE EGZ100 - AGGIORNAMENTO 01/2023

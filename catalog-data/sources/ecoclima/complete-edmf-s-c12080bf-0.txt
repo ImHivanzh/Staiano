@@ -1,0 +1,184 @@
+DIFFUSORI A MICRO
+UGELLI ORIENTABILI
+SU PANNELLO
+Serie EDMF-S
+Diffusori a microugelli orientabili su pannello rettangolare.
+Trovano applicazione in mandata dell’aria quando vi sia necessità di lunghe gittate a basso livello sonoro e/o orientamento del
+flusso d’aria.
+Installati prevalentemente a parete, sono particolarmente adatti nei casi in cui si debba prevedere, per ragioni architettoniche o
+strutturali dell’ambiente, direzioni di lancio diverse per i singoli microugelli. Nel caso di disposizione su più file, risulta possibile
+divergere il lancio a piacere sia in senso orizzontale che verticale, ampliando in modo notevole la zona d’influenza dello stesso.
+In considerazione dell’elevato effetto induttivo, dovuto alla suddivisione della portata in tanti piccoli getti, si ottiene una rapida
+diminuzione della velocità di lancio e della differenza di temperatura tra aria di mandata e aria ambiente
+Telaio con cornice a scomparsa.
+Diffusore a microugelli singolarmente orientabili, in lamiera forellinata.
+Microugelli di materiale plastico in colore nero o bianco, con bordo di uscita arrotondato per diminuire la rumorosità generata.
+CARATTERISTICHE
+Materiale: Piastra in acciaio, cornice in alluminio, microugelli in nylon bianco.
+Finitura: Bianco RAL 9016.
+IMPIEGO
+Diffusori a microugelli orientabili singolarmente studiati per ottenere lunghe gittate d’aria con livello di rumorosità contenuto.
+FISSAGGIO
+Fissaggio con viti frontali su cornice.
+A richiesta Microugelli e piastra di colore nero.
+DIMENSIONI
+PAG 1 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMF-S - AGGIORNAMENTO 01/2025
+
+NOMENCLATURA CODICE
+EDMF-S diffusore rettangolare su pannello forellinato con
+microugelli
+Grandezza L x H
+EDMF-S 600 x 100
+COSTRUZIONE DIFFUSORE
+- Materiale EDMF-S: Piastra in acciaio, cornice in alluminio, microugelli in nylon bianco.
+- Finitura superficiale standard: Verniciatura colore bianco RAL 9016, micro ugelli colore bianco (a richiesta colore nero).
+- Finiture superficiali a richiesta: verniciatura del diffusore nei colori RAL a scelta (i micro ugelli non possono esser verniciati).
+- Fissaggio: con viti frontali su cornice
+SEZIONE EFFICACE
+L
+H
+600 800 1000 1200
+100 m2 0,0065 0,0088 0,0111 0,0133
+150 m2 0,0086 0,0114 0,0143 0,0172
+DATI TECNICI
+Vk L Vk L
+H H
+7 m/s 600 800 1000 1200 8 m/s 600 800 1000 1200
+N° microugelli N° microugelli
+11 15 19 23 11 15 19 23
+disposti in 1 fila disposti in una fila
+100 m3/h 165 220 280 335 100 m3/h 190 250 320 385
+L(m) 4,1 4,8 5,4 6,0 L(m) 4,7 5,5 6,3 7,0
+dB(A) 29 30 30 31 dB(A) 34 35 35 36
+N° microugelli N° microugelli
+22 30 38 46 22 30 38 46
+disposti in 2 file disposti in due file
+150 m3/h 215 290 360 430 150 m3/h 245 330 410 495
+L(m) 5,7 6,7 7,3 8,3 L(m) 6,6 7,8 8,2 9,5
+dB(A) 30 31 32 32 dB(A) 35 36 37 37
+Perdita di carico: 18 Pa Perdita di carico: 28 Pa
+PAG 2 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMF-S - AGGIORNAMENTO 01/2025
+
+DETTAGLI DIMENSIONALI
+PAG 3 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMF-S - AGGIORNAMENTO 01/2025
+531
+45
+635
+A
+B B
+A
+58 001
+52
+52
+531
+600
+Passo 50 mm
+25 585 25
+635
+835
+531
+A
+B B
+A
+58 001
+52
+52
+531
+45
+800
+Passo 50 mm
+25 785 25
+835
+1035
+531
+A
+B B
+A
+58
+45
+001
+52
+52
+531
+985
+P a s s o 5 0 m m
+1000
+25 25
+1035
+531
+1235
+A
+B B
+A
+58
+45
+001
+52
+52
+531
+1200
+Passo 50 mm
+25 1185 25
+1235
+
+45
+835
+A
+B
+A
+PAG 4 - DIFFUSORI A MICRO UGELLI ORIENTABILI SU PANNELLO
+SERIE EDMF-S - AGGIORNAMENTO 01/2025
+051
+52
+531
+52
+581
+800
+Passo 50 mm
+785 25
+835
+45
+1035
+A
+B
+A
+051
+52
+531
+52
+581
+1000
+Passo 50 mm
+985 25
+1035
+45
+1235
+A
+B
+A
+051
+52
+531
+52
+581
+635
+A
+B
+A
+1200
+Passo 50 mm
+1185 25
+531
+45
+051
+52
+52
+581
+DETTAGLI DIMENSIONALI
+600
+Passo 50 mm
+585 25
+635

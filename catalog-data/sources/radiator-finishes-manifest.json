@@ -1,0 +1,45 @@
+[
+  {
+    "id": "cordivari-colours",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/Catalogo-Radiatori-e-Scaldasalviette-IT-2025.pdf",
+    "sourceType": "pdf",
+    "localPath": "catalog-data/sources/cordivari-colours.pdf",
+    "retrievedAt": "2026-10-03T23:17:58.698555+00:00",
+    "sha256": "23a5c7777399c7b721165ca91962ed972193c58454cd7c0f51af100cc299279d",
+    "pageCount": 376
+  },
+  {
+    "id": "cordivari-accessory-finishes",
+    "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2023/10/IT-Cordivari_TEC_Accessori-e-ricambi-radiatori-e-scaldasalviette_05-2025.pdf",
+    "sourceType": "pdf",
+    "localPath": "catalog-data/sources/cordivari-accessory-finishes.pdf",
+    "retrievedAt": "2026-10-03T23:18:32.920531+00:00",
+    "sha256": "5b511993d70e6379983603f395b26681197d1e20bb053f924f430dcc10c64e78",
+    "pageCount": 10
+  },
+  {
+    "id": "zehnder-charleston-finishes",
+    "sourceUrl": "https://www.zehnder.it/it/radiatori-decorativi/radiatori/radiatori-idronici/zehnder-charleston-funzionamento-ad-acqua-calda",
+    "sourceType": "html",
+    "localPath": "catalog-data/sources/zehnder-charleston-finishes.html",
+    "retrievedAt": "2026-10-03T23:18:34.801047+00:00",
+    "sha256": "9e8a8079d0b5bcc7370373f59a4001f2213df9fadc15178571b1e12df92c78df"
+  },
+  {
+    "id": "zehnder-nova-finishes",
+    "sourceUrl": "https://www.zehnder.it/it/radiatori-decorativi/radiatori/radiatori-idronici/zehnder-nova-funzionamento-ad-acqua-calda",
+    "sourceType": "html",
+    "localPath": "catalog-data/sources/zehnder-nova-finishes.html",
+    "retrievedAt": "2026-10-03T23:18:34.959613+00:00",
+    "sha256": "77ef664fce3817a03ec70d239b43a6b4ac2ae98230bc78093832f7b8784caecb"
+  },
+  {
+    "id": "zehnder-valve-finishes",
+    "sourceUrl": "https://www.zehnder.it/download/ec3a121f6ebe42e1904bb545216a0eb1",
+    "sourceType": "pdf",
+    "localPath": "catalog-data/sources/zehnder-valve-finishes.pdf",
+    "retrievedAt": "2026-10-03T23:18:35.764072+00:00",
+    "sha256": "40880820033d98e8696cd2fdf6ed1316250dd602762e950af3b5b0727adb6d38",
+    "pageCount": 14
+  }
+]
