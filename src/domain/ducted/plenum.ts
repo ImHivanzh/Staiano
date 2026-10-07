@@ -12,6 +12,7 @@ import { distributeAirflow } from "./calculate";
 
 export type PlenumSettings = {
   maxBranchVelocityMs: number;
+  /** Legacy preference retained on import; physical catalogue ports stay separate. */
   grouping: "terminal" | "point";
 };
 export const DEFAULT_PLENUM_SETTINGS: PlenumSettings = {
@@ -60,6 +61,7 @@ export type PlenumBranch = {
   diameterMm: number | null;
   velocityMs: number | null;
   verified: boolean;
+  geometryVerified?: boolean;
 };
 export type SupplyPlenum = {
   machineGeometry?: MachinePlenumGeometry;
@@ -129,7 +131,7 @@ const close = (a: number, b: number) =>
   Math.abs(a - b) <= Math.max(1e-6, Math.abs(b) * 1e-9);
 
 /** A branch is auditable only against the selected historical operating point. */
-function terminalVerified(terminal: Terminal) {
+function terminalVerified(terminal: Terminal, requireCapacity = true) {
   if (needsTerminalReconfiguration(terminal)) return false;
   const family = airTerminalFamilyAtVersion(
     terminal.family,
@@ -158,7 +160,7 @@ function terminalVerified(terminal: Terminal) {
     op.pressureDropPa === terminal.pressureDropPa &&
     capacity !== null &&
     close(capacity, terminal.availableAirflowM3h) &&
-    capacity >= terminal.requiredAirflowM3h &&
+    (!requireCapacity || capacity >= terminal.requiredAirflowM3h) &&
     Number.isFinite(terminal.requiredAirflowM3h) &&
     terminal.requiredAirflowM3h > 0
   );
@@ -261,6 +263,34 @@ export function calculateSupplyPlenum(
     let allValid = true;
     for (const room of rooms) {
       const allocation = allocations.find((a) => a.roomId === room.id)!;
+      const physical = selected.filter((t) => t.roomId === room.id);
+      if (
+        physical.some((t) => t.decisionOrigin !== "calculated" || t.proposalId)
+      ) {
+        const totalCapacity = physical.reduce(
+          (sum, t) => sum + t.availableAirflowM3h,
+          0,
+        );
+        for (const terminal of physical) {
+          const expected =
+            (allocation.airflowM3h * terminal.availableAirflowM3h) /
+            totalCapacity;
+          const verified =
+            terminalVerified(terminal) &&
+            close(terminal.requiredAirflowM3h, expected);
+          valid.set(terminal.id, verified);
+          if (!verified) allValid = false;
+        }
+        if (totalCapacity + 1e-7 < allocation.airflowM3h) {
+          allValid = false;
+          result.issues.push({
+            code: `${use}Capacity`,
+            entityId: room.id,
+            message: `${room.name}: portata installata insufficiente; distribuzione scelta dall’operatore.`,
+          });
+        }
+        continue;
+      }
       const points = use === "supply" ? room.supplyPoints : room.returnPoints;
       for (let pointIndex = 0; pointIndex < points; pointIndex++) {
         const atPoint = selected.filter(
@@ -324,45 +354,6 @@ export function calculateSupplyPlenum(
         message: `La somma delle portate di ${use === "supply" ? "mandata" : "ripresa"} non coincide con la portata macchina.`,
       });
   }
-  const groups = new Map<string, Terminal[]>();
-  for (const terminal of terminals.filter((t) => t.use === "supply")) {
-    const key =
-      settings.grouping === "point" && terminal.pointIndex !== null
-        ? `${terminal.roomId}:${terminal.pointIndex}`
-        : terminal.id;
-    groups.set(key, [...(groups.get(key) ?? []), terminal]);
-  }
-  for (const [id, grouped] of groups) {
-    const first = grouped[0],
-      room = rooms.find((r) => r.id === first.roomId);
-    const airflowM3h = grouped.reduce(
-      (sum, t) => sum + t.requiredAirflowM3h,
-      0,
-    );
-    const verified = grouped.every((t) => valid.get(t.id) === true);
-    const size = verified
-      ? sizeCircularBranch(airflowM3h, settings.maxBranchVelocityMs)
-      : null;
-    result.branches.push({
-      id,
-      roomId: first.roomId,
-      roomName: room?.name ?? "Ambiente sconosciuto",
-      pointIndex: first.pointIndex,
-      terminalIds: grouped.map((t) => t.id),
-      terminalModels: grouped.map((t) => t.productId),
-      airflowM3h,
-      minimumDiameterMm: size?.minimumDiameterMm ?? null,
-      diameterMm: size?.diameterMm ?? null,
-      velocityMs: size?.velocityMs ?? null,
-      verified: verified && size?.diameterMm !== null && size !== null,
-    });
-    if (verified && size?.diameterMm === null)
-      result.issues.push({
-        code: "diameterUnavailable",
-        entityId: id,
-        message: `${room?.name ?? "Ambiente"}: diametro oltre la serie commerciale disponibile.`,
-      });
-  }
   const connections = terminalSupplyConnections(project, systemId);
   const sourceBranches: PlenumBranch[] = [];
   for (const terminal of terminals.filter((t) => t.use === "supply")) {
@@ -420,6 +411,18 @@ export function calculateSupplyPlenum(
     }
     ports.forEach((port) => {
       const verified = valid.get(terminal.id) === true;
+      const geometryVerified =
+        verified ||
+        (terminal.decisionOrigin !== "calculated" &&
+          terminalVerified(terminal, false) &&
+          port.diameter > 0);
+      const size = sizeCircularBranch(port.flow, settings.maxBranchVelocityMs);
+      if (verified && size?.diameterMm === null)
+        result.issues.push({
+          code: "diameterUnavailable",
+          entityId: `${terminal.id}:port:${port.index}`,
+          message: `${room?.name ?? "Ambiente"}: diametro oltre la serie commerciale disponibile.`,
+        });
       sourceBranches.push({
         id: `${terminal.id}:port:${port.index}`,
         roomId: terminal.roomId,
@@ -428,14 +431,13 @@ export function calculateSupplyPlenum(
         terminalIds: [terminal.id],
         terminalModels: [terminal.productId],
         airflowM3h: port.flow,
-        minimumDiameterMm:
-          sizeCircularBranch(port.flow, settings.maxBranchVelocityMs)
-            ?.minimumDiameterMm ?? null,
-        diameterMm: verified ? port.diameter : null,
-        velocityMs: verified
+        minimumDiameterMm: size?.minimumDiameterMm ?? null,
+        diameterMm: geometryVerified ? port.diameter : null,
+        velocityMs: geometryVerified
           ? port.flow / 3600 / ((Math.PI * (port.diameter / 1000) ** 2) / 4)
           : null,
         verified,
+        geometryVerified,
         connectionSource: port.source,
         plenumModelCode: port.plenum,
         terminalPortIndex: port.index,
@@ -446,7 +448,8 @@ export function calculateSupplyPlenum(
   result.machineGeometry = machinePlenumGeometry(
     result.branches,
     machine,
-    undefined,
+    project.plenums.find((pl) => pl.systemId === systemId)?.designSettings ??
+      undefined,
     system.genericMachine,
   );
   const groupedDiameters = new Map<number, number>();

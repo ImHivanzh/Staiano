@@ -120,6 +120,42 @@ describe("plenum di mandata indipendente e verificabile", () => {
     expect(result.pendingReturnPoints).toHaveLength(1);
     expect(result.groupedDiameters).toEqual([{ diameterMm: 198, quantity: 4 }]);
   });
+  it("una velocità proposta diversa modifica solo il minimo teorico, mai gli attacchi reali", () => {
+    const p = fixture();
+    const systemId = p.hvacSystems[0].id;
+    const slow = calculateSupplyPlenum(p, systemId, {
+      maxBranchVelocityMs: 0.5,
+      grouping: "point",
+    });
+    const fast = calculateSupplyPlenum(p, systemId, {
+      maxBranchVelocityMs: 10,
+      grouping: "terminal",
+    });
+    expect(slow.branches).toHaveLength(4);
+    expect(fast.branches).toHaveLength(4);
+    expect(
+      slow.branches.map((branch) => [
+        branch.id,
+        branch.diameterMm,
+        branch.velocityMs,
+      ]),
+    ).toEqual(
+      fast.branches.map((branch) => [
+        branch.id,
+        branch.diameterMm,
+        branch.velocityMs,
+      ]),
+    );
+    expect(
+      slow.branches.every(
+        (branch, i) =>
+          branch.minimumDiameterMm! > fast.branches[i].minimumDiameterMm!,
+      ),
+    ).toBe(true);
+    expect(slow.machineGeometry?.ports.map((port) => port.number)).toEqual([
+      1, 2, 3, 4,
+    ]);
+  });
   it("punti previsti privi di bocchetta non diventano stacchi installati", () => {
     const p = fixture();
     p.airTerminals = p.airTerminals.filter(
@@ -232,8 +268,9 @@ describe("plenum di mandata indipendente e verificabile", () => {
       true,
     );
   });
-  it("variazione domanda aggiorna la macchina e richiede conferma terminali insufficienti", () => {
+  it("variazione domanda aggiorna la macchina automatica e richiede conferma terminali insufficienti", () => {
     let p = fixture();
+    p.hvacSystems[0].decisionOrigin = "calculated";
     p = refreshDuctedBindings(updateRoom(p, p.rooms[0].id, { heightM: 8 }));
     const result = calculateSupplyPlenum(p, p.hvacSystems[0].id);
     expect(result.machineAirflowM3h).toBeGreaterThan(840);

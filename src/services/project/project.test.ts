@@ -63,8 +63,35 @@ describe("formato e archivio", () => {
       }),
     };
     const next = parseProject(old);
-    expect(next.schemaVersion).toBe(2);
+    expect(next.schemaVersion).toBe(3);
     expect(next.rooms[0].supplyPoints).toBe(1);
+  });
+  it("migra v2 in modo additivo senza alterare i dati esistenti", () => {
+    const p = fixture();
+    const v2 = JSON.parse(JSON.stringify({ ...p, schemaVersion: 2 }));
+    for (const w of v2.walls) delete w.locked;
+    for (const r of v2.rooms) delete r.usage;
+    delete v2.plenums;
+    delete v2.floors[0].importAnalysis;
+    delete v2.projectSettings.dimensionMode;
+    const next = parseProject(v2);
+    expect(next.schemaVersion).toBe(3);
+    expect(next.projectSettings.dimensionMode).toBe("internal");
+    expect(next.plenums).toEqual([]);
+    expect(next.walls[0].locked).toBe(false);
+    expect(next.rooms[0].usage).toBe("");
+    // Preservation proof: removing v3-only keys restores the v2 payload.
+    const rolledBack = JSON.parse(JSON.stringify(next));
+    expect(rolledBack.schemaVersion).toBe(3);
+    for (const w of rolledBack.walls) delete w.locked;
+    for (const r of rolledBack.rooms) delete r.usage;
+    delete rolledBack.plenums;
+    delete rolledBack.floors[0].importAnalysis;
+    delete rolledBack.projectSettings.dimensionMode;
+    rolledBack.schemaVersion = 2;
+    expect(rolledBack.walls).toEqual(v2.walls);
+    expect(rolledBack.rooms).toEqual(v2.rooms);
+    expect(rolledBack.projectSettings).toEqual(v2.projectSettings);
   });
   it("salva, ricarica, recupera precedente, duplica ed elimina", async () => {
     const repo = new IndexedDbProjectRepository(`test-${crypto.randomUUID()}`),

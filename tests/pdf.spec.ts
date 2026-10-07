@@ -15,7 +15,7 @@ test("dossier PDF locale scaricato con logo, planimetria e schede stanza", async
     page.waitForEvent("download"),
     page.getByRole("button", { name: "Dossier PDF", exact: true }).click(),
   ]);
-  expect(download.suggestedFilename()).toMatch(/-dossier-tecnico\.pdf$/);
+  expect(download.suggestedFilename()).toMatch(/-dossier-completo\.pdf$/);
   const path = await download.path();
   expect(path).toBeTruthy();
   const pdf = await PDFDocument.load(await readFile(path!));

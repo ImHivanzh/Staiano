@@ -2,7 +2,7 @@ import type { Project } from "@/schemas/project";
 import { splitCatalogAtVersion } from "@/domain/catalogs/splits";
 import { sizeSplitSystems } from "./size";
 import { splitSystemFromSolution } from "./apply";
-/** Reselect against the project's frozen catalog after real geometric changes. */
+/** Revalidate chosen systems without silently replacing operator models. */
 export function refreshSplitBindings(project: Project): Project {
   const hvacSystems = project.hvacSystems.map((original) => {
     const system =
@@ -27,6 +27,21 @@ export function refreshSplitBindings(project: Project): Project {
       system.manufacturer,
       catalog,
     );
+    if (
+      system.decisionOrigin === "confirmed" ||
+      system.decisionOrigin === "manual" ||
+      system.indoorUnits.some((u) => u.locked)
+    ) {
+      const chosen = solutions.find(
+        (s) => s.combination.id === system.productId,
+      );
+      return {
+        ...system,
+        compatibilityStatus: chosen
+          ? ("verified" as const)
+          : ("invalid" as const),
+      };
+    }
     if (!solutions.length)
       return { ...system, compatibilityStatus: "invalid" as const };
     return splitSystemFromSolution(

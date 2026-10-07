@@ -22,6 +22,15 @@ import {
   PlusSquare,
 } from "@phosphor-icons/react";
 import "./inspector.css";
+import {
+  wallMeasuredLength,
+  roomRectSides,
+} from "@/domain/geometry/dimensions";
+import {
+  setWallEndpoints,
+  splitWall,
+  mergeWallSegments,
+} from "@/domain/geometry/wall-commands";
 
 export function Properties() {
   const { project: p, selection, commit, setError } = useProjectStore();
@@ -37,6 +46,16 @@ export function Properties() {
   const r = rooms[0],
     w = walls[0];
   const deviceId = selection.find((s) => s.kind === "device")?.id;
+  const selectedObject = [
+    ...p.walls,
+    ...p.radiators,
+    ...(p.fanCoils ?? []),
+    ...(p.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
+    ...p.airTerminals,
+    ...p.plenums,
+    ...(p.pillars ?? []),
+    ...p.hvacSystems.flatMap((s) => s.indoorUnits),
+  ].find((o) => o.id === (deviceId ?? w?.id));
   return (
     <aside className="proprieta">
       <div className="titolo-pannello">
@@ -62,6 +81,54 @@ export function Properties() {
         </h2>
       </div>
       {deviceId && <DeviceProperties project={p} id={deviceId} />}
+      {selectedObject && (
+        <label className="campo">
+          <span>
+            <input
+              type="checkbox"
+              checked={selectedObject.locked}
+              onChange={(e) => {
+                const locked = e.target.checked;
+                commit((p) => ({
+                  ...p,
+                  walls: p.walls.map((o) =>
+                    o.id === selectedObject.id ? { ...o, locked } : o,
+                  ),
+                  radiators: p.radiators.map((o) =>
+                    o.id === selectedObject.id ? { ...o, locked } : o,
+                  ),
+                  fanCoils: p.fanCoils?.map((o) =>
+                    o.id === selectedObject.id ? { ...o, locked } : o,
+                  ),
+                  hydronicSystems: p.hydronicSystems?.map((s) => ({
+                    ...s,
+                    outdoorUnit:
+                      s.outdoorUnit.id === selectedObject.id
+                        ? { ...s.outdoorUnit, locked }
+                        : s.outdoorUnit,
+                  })),
+                  airTerminals: p.airTerminals.map((o) =>
+                    o.id === selectedObject.id ? { ...o, locked } : o,
+                  ),
+                  plenums: p.plenums.map((o) =>
+                    o.id === selectedObject.id ? { ...o, locked } : o,
+                  ),
+                  pillars: p.pillars?.map((o) =>
+                    o.id === selectedObject.id ? { ...o, locked } : o,
+                  ),
+                  hvacSystems: p.hvacSystems.map((s) => ({
+                    ...s,
+                    indoorUnits: s.indoorUnits.map((o) =>
+                      o.id === selectedObject.id ? { ...o, locked } : o,
+                    ),
+                  })),
+                }));
+              }}
+            />{" "}
+            Blocca elemento
+          </span>
+        </label>
+      )}
       {!r && !w && !deviceId && (
         <div className="pannello-vuoto guida-inspector">
           <CursorClick size={32} aria-hidden="true" />
@@ -179,7 +246,7 @@ export function Properties() {
                 Applica proprietà
               </button>
             </form>
-            {r.polygon.length === 4 && (
+            {roomRectSides(r) && (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -299,6 +366,83 @@ export function Properties() {
           className="corpo-proprieta"
           key={`${w.id}-${distance(w.start, w.end)}-${w.thickness}`}
         >
+          {walls.length === 2 && (
+            <button
+              className="bottone piccolo"
+              onClick={() =>
+                commit((p) => mergeWallSegments(p, walls[0].id, walls[1].id))
+              }
+            >
+              Unisci segmenti collineari
+            </button>
+          )}
+          {walls.length === 1 && (
+            <details>
+              <summary>Estremi, angolo e divisione muro</summary>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const d = new FormData(e.currentTarget);
+                  commit((p) =>
+                    setWallEndpoints(
+                      p,
+                      w.id,
+                      {
+                        x: numberFromForm(d.get("sx")),
+                        y: numberFromForm(d.get("sy")),
+                      },
+                      {
+                        x: numberFromForm(d.get("ex")),
+                        y: numberFromForm(d.get("ey")),
+                      },
+                    ),
+                  );
+                }}
+              >
+                {[
+                  ["sx", "Inizio X (m)", w.start.x],
+                  ["sy", "Inizio Y (m)", w.start.y],
+                  ["ex", "Fine X (m)", w.end.x],
+                  ["ey", "Fine Y (m)", w.end.y],
+                ].map(([name, label, value]) => (
+                  <label className="campo" key={name}>
+                    <span>{label}</span>
+                    <input
+                      name={String(name)}
+                      type="number"
+                      step="any"
+                      defaultValue={value}
+                    />
+                  </label>
+                ))}
+                <button className="bottone piccolo" disabled={w.locked}>
+                  Applica estremi e angolo
+                </button>
+              </form>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const d = new FormData(e.currentTarget);
+                  commit((p) =>
+                    splitWall(p, w.id, numberFromForm(d.get("offset"))),
+                  );
+                }}
+              >
+                <label className="campo">
+                  <span>Posizione divisione lungo asse (m)</span>
+                  <input
+                    name="offset"
+                    type="number"
+                    step="0.01"
+                    defaultValue={distance(w.start, w.end) / 2}
+                  />
+                </label>
+                <button className="bottone piccolo" disabled={w.locked}>
+                  Dividi segmento
+                </button>
+              </form>
+            </details>
+          )}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -308,7 +452,13 @@ export function Properties() {
               commit((p) => {
                 const resized =
                   walls.length === 1
-                    ? resizeWall(p, w.id, numberFromForm(data.get("length")))
+                    ? resizeWall(
+                        p,
+                        w.id,
+                        numberFromForm(data.get("length")) +
+                          distance(w.start, w.end) -
+                          wallMeasuredLength(p, w, "internal"),
+                      )
                     : p;
                 const ids = new Set(walls.map((w) => w.id));
                 return recomputeProject(
@@ -324,14 +474,14 @@ export function Properties() {
           >
             {walls.length === 1 && (
               <label className="campo">
-                <span>Lunghezza asse (m)</span>
+                <span>Lunghezza interna utile (m)</span>
                 <input
                   type="number"
                   name="length"
                   min="0.05"
                   max="100"
                   step="0.01"
-                  defaultValue={distance(w.start, w.end).toFixed(3)}
+                  defaultValue={wallMeasuredLength(p, w, "internal").toFixed(3)}
                   required
                   aria-label="Lunghezza muro"
                 />
@@ -357,8 +507,7 @@ export function Properties() {
               />
             </label>
             <p className="nota">
-              La quota misura l&apos;asse del muro. La superficie stanza usa le
-              facce interne.
+              Quote e superficie stanza riferite alle facce interne dei muri.
             </p>
             <button className="bottone chiara" type="submit">
               Applica parete{walls.length > 1 ? " a tutti" : ""}

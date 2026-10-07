@@ -137,6 +137,7 @@ describe("ingombri dispositivi con quota verticale", () => {
       depthMm: 230,
       productId: "fixture-indoor",
       catalogVersion: "fixture",
+      locked: false,
     };
     p.hvacSystems.push({
       id: "fixture-system",
@@ -149,6 +150,7 @@ describe("ingombri dispositivi con quota verticale", () => {
       catalogVersion: "fixture",
       indoorUnits: [unit],
       compatibilityStatus: "unverifiable",
+      linearPlan: null,
     });
     const s = deviceEnvelope(p, unit.id)!;
     expect(s.minZ).toBeCloseTo(room.heightM - 0.1 - unit.heightMm / 1000);

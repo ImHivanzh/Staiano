@@ -146,7 +146,7 @@ export function machinePlenumGeometry(
     return result;
   }
   const valid = branches.flatMap((branch, index) =>
-    branch.verified &&
+    (branch.geometryVerified ?? branch.verified) &&
     branch.diameterMm !== null &&
     Number.isFinite(branch.diameterMm) &&
     branch.diameterMm > 0
@@ -240,6 +240,10 @@ export function machinePlenumGeometry(
     result.issues.push(
       "Foratura e ingombro esterno flangia: quote mancanti da rilevare prima della costruzione.",
     );
-  result.status = valid.length === branches.length ? "proposed" : "pending";
+  result.status =
+    valid.length === branches.length &&
+    valid.every((port) => port.branch.verified)
+      ? "proposed"
+      : "pending";
   return result;
 }

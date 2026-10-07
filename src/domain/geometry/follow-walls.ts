@@ -42,6 +42,9 @@ export function followWallTransforms(
     ...project,
     walls: newWalls,
     radiators: project.radiators.map(pose),
+    fanCoils: project.fanCoils?.map((u) =>
+      u.mounting === "wall" ? pose(u) : u,
+    ),
     airTerminals: project.airTerminals.map((t) =>
       t.mounting === "wall" ? pose(t) : t,
     ),

@@ -18,6 +18,10 @@ import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { translateSelection } from "@/domain/geometry/selection";
 import { deviceCodes } from "@/services/export/device-codes";
 import { ArrowsOut, Minus, Plus } from "@phosphor-icons/react";
+import { wallMeasuredLength } from "@/domain/geometry/dimensions";
+import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
+import { ductRoute } from "@/domain/ducted/routes";
+import { hydronicPipeRoute } from "@/domain/hydronic/routes";
 
 type View = { x: number; y: number; w: number; h: number };
 type Drag = {
@@ -54,6 +58,9 @@ export function Editor2D() {
   const [delta, setDelta] = useState<Point | null>(null),
     [exact, setExact] = useState("");
   const [size, setSize] = useState({ width: 900, height: 700 });
+  const [terminalPose, setTerminalPose] = useState<ReturnType<
+    typeof snapTerminalPose
+  > | null>(null);
   const walls = project?.walls.filter((w) => w.floorId === activeFloorId) ?? [],
     rooms = project?.rooms.filter((r) => r.floorId === activeFloorId) ?? [];
   const floor = project?.floors.find((f) => f.id === activeFloorId);
@@ -72,6 +79,15 @@ export function Editor2D() {
   }, []);
   function fit() {
     const b = bounds(walls.flatMap((w) => [w.start, w.end]));
+    for (const unit of project?.hydronicSystems
+      ?.filter((s) => s.outdoorUnit.floorId === activeFloorId)
+      .map((s) => s.outdoorUnit) ?? []) {
+      const radius = Math.hypot(unit.widthMm, unit.depthMm) / 2000;
+      b.minX = Math.min(b.minX, unit.position.x - radius);
+      b.maxX = Math.max(b.maxX, unit.position.x + radius);
+      b.minY = Math.min(b.minY, unit.position.y - radius);
+      b.maxY = Math.max(b.maxY, unit.position.y + radius);
+    }
     if (floor?.background) {
       b.minX = Math.min(b.minX, floor.background.origin.x);
       b.minY = Math.min(b.minY, floor.background.origin.y);
@@ -239,6 +255,21 @@ export function Editor2D() {
               y: Math.round(v.y / step) * step,
             }
           : v;
+        if (d.type === "device" && d.deviceId && project) {
+          const terminal = project.airTerminals.find(
+            (t) => t.id === d.deviceId,
+          );
+          if (terminal) {
+            const pose = snapTerminalPose(
+              project,
+              terminal.id,
+              add(terminal.position, d.delta),
+              snap,
+            );
+            d.delta = subtract(pose.position, terminal.position);
+            setTerminalPose(pose);
+          }
+        }
         setDelta(d.delta);
       }
       return;
@@ -256,12 +287,16 @@ export function Editor2D() {
     if (d?.type === "device" && d.deviceId && project) {
       const item = [
         ...project.radiators,
+        ...(project.fanCoils ?? []),
         ...project.airTerminals,
+        ...project.plenums,
+        ...(project.pillars ?? []),
+        ...(project.hydronicSystems ?? []).map((s) => s.outdoorUnit),
         ...project.hvacSystems.flatMap((system) => system.indoorUnits),
       ].find((r) => r.id === d.deviceId);
       if (item && distance(d.delta, { x: 0, y: 0 }) > 0.001)
         commit((p) =>
-          movePlacedDevice(p, d.deviceId!, add(item.position, d.delta)),
+          movePlacedDevice(p, d.deviceId!, add(item.position, d.delta), snap),
         );
     }
     if (
@@ -272,6 +307,7 @@ export function Editor2D() {
       commit((p) => moveWall(p, d.wallId!, d.delta));
     drag.current = null;
     setDelta(null);
+    setTerminalPose(null);
     if (svg.current?.hasPointerCapture(e.pointerId))
       svg.current.releasePointerCapture(e.pointerId);
   }
@@ -282,6 +318,18 @@ export function Editor2D() {
     const group =
       !e.shiftKey && prior.length > 1 && prior.some((s) => s.id === id);
     if (!group) select({ kind: "device", id }, e.shiftKey);
+    if (
+      [
+        ...(project?.radiators ?? []),
+        ...(project?.fanCoils ?? []),
+        ...(project?.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
+        ...(project?.airTerminals ?? []),
+        ...(project?.plenums ?? []),
+        ...(project?.pillars ?? []),
+        ...(project?.hvacSystems.flatMap((s) => s.indoorUnits) ?? []),
+      ].find((o) => o.id === id)?.locked
+    )
+      return;
     if (e.shiftKey) return;
     svg.current?.setPointerCapture(e.pointerId);
     drag.current = {
@@ -484,6 +532,7 @@ export function Editor2D() {
                   prior.length > 1 &&
                   prior.some((s) => s.id === w.id);
                 if (!group) select({ kind: "wall", id: w.id }, e.shiftKey);
+                if (w.locked) return;
                 if (!e.shiftKey) {
                   svg.current?.setPointerCapture(e.pointerId);
                   drag.current = {
@@ -533,7 +582,10 @@ export function Editor2D() {
                   fontSize={u * 11}
                   className="quota-pianta"
                 >
-                  {formatNumber(distance(a, b))} m
+                  {formatNumber(
+                    project ? wallMeasuredLength(project, w, "internal") : 0,
+                  )}{" "}
+                  m
                 </text>
               )}
             </g>
@@ -610,6 +662,34 @@ export function Editor2D() {
               </g>
             );
           })}
+        {project?.ducts
+          ?.filter((d) =>
+            project.plenums.some(
+              (pl) => pl.id === d.plenumId && pl.floorId === activeFloorId,
+            ),
+          )
+          .map((d) => {
+            const route = ductRoute(project, d);
+            return (
+              <polyline
+                key={d.id}
+                points={route.map((p) => `${p.x},${p.y}`).join(" ")}
+                fill="none"
+                stroke="#2589ac"
+                strokeWidth={Math.max(
+                  u * 2,
+                  (d.diameterMm ?? d.widthMm ?? 50) / 1000,
+                )}
+                opacity={0.4}
+                pointerEvents="none"
+              >
+                <title>
+                  {codes.get(d.id)} ·{" "}
+                  {d.terminalId ? codes.get(d.terminalId) : "Macchina → plenum"}
+                </title>
+              </polyline>
+            );
+          })}
         {project?.radiators
           .filter((d) => d.floorId === activeFloorId)
           .map((d) => {
@@ -656,7 +736,7 @@ export function Editor2D() {
               <g
                 key={t.id}
                 data-testid={`terminal-${t.use}`}
-                transform={`translate(${pos.x} ${pos.y}) rotate(${(t.rotation * 180) / Math.PI})`}
+                transform={`translate(${pos.x} ${pos.y}) rotate(${((drag.current?.deviceId === t.id && terminalPose ? terminalPose.rotation : t.rotation) * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, t.id)}
               >
                 {t.shape === "circle" && t.mounting === "ceiling" ? (
@@ -727,6 +807,130 @@ export function Editor2D() {
                   className="quota-pianta"
                 >
                   {codes.get(d.id)}
+                </text>
+              </g>
+            );
+          })}
+        {project?.fanCoils
+          ?.filter((u) => u.floorId === activeFloorId)
+          .map((unit) => {
+            const pos = previewDevice(unit),
+              depth =
+                unit.mounting === "ceiling" ? unit.heightMm : unit.depthMm;
+            return (
+              <g
+                key={unit.id}
+                data-testid="fan-coil-2d"
+                transform={`translate(${pos.x} ${pos.y}) rotate(${(unit.rotation * 180) / Math.PI})`}
+                onPointerDown={(e) => beginDeviceDrag(e, unit.id)}
+              >
+                <rect
+                  x={-unit.widthMm / 2000}
+                  y={-depth / 2000}
+                  width={unit.widthMm / 1000}
+                  height={depth / 1000}
+                  fill="#eef2e7"
+                  stroke={
+                    selection.some((s) => s.id === unit.id)
+                      ? "#00aeef"
+                      : "#7a8966"
+                  }
+                  strokeWidth={u * 1.5}
+                />
+                <text
+                  textAnchor="middle"
+                  fontSize={u * 11}
+                  y={depth / 2000 + u * 13}
+                >
+                  {codes.get(unit.id)}
+                </text>
+              </g>
+            );
+          })}
+        {project?.hydronicSystems
+          ?.filter((s) => s.outdoorUnit.floorId === activeFloorId)
+          .map((system) => {
+            const unit = system.outdoorUnit;
+            const pos = previewDevice({ ...unit, roomId: "", wallId: null });
+            return (
+              <g key={system.id}>
+                {system.fanCoilIds.map((id) => (
+                  <polyline
+                    key={id}
+                    points={hydronicPipeRoute(project, system, id)
+                      .map((p) => `${p.x},${p.y}`)
+                      .join(" ")}
+                    fill="none"
+                    stroke="#a87357"
+                    strokeWidth={u * 1.5}
+                    strokeDasharray={`${u * 5} ${u * 3}`}
+                    opacity={0.55}
+                    pointerEvents="none"
+                  />
+                ))}
+                <g
+                  data-testid="heat-pump-2d"
+                  transform={`translate(${pos.x} ${pos.y}) rotate(${(unit.rotation * 180) / Math.PI})`}
+                  onPointerDown={(e) => beginDeviceDrag(e, unit.id)}
+                >
+                  <rect
+                    x={-unit.widthMm / 2000}
+                    y={-unit.depthMm / 2000}
+                    width={unit.widthMm / 1000}
+                    height={unit.depthMm / 1000}
+                    fill="#f1e9dc"
+                    stroke={
+                      selection.some((s) => s.id === unit.id)
+                        ? "#00aeef"
+                        : "#9b7858"
+                    }
+                    strokeWidth={u * 1.5}
+                  />
+                  <text
+                    textAnchor="middle"
+                    fontSize={u * 11}
+                    y={unit.depthMm / 2000 + u * 13}
+                  >
+                    {codes.get(unit.id)} · esterna
+                  </text>
+                </g>
+              </g>
+            );
+          })}
+        {[...(project?.plenums ?? []), ...(project?.pillars ?? [])]
+          .filter((o) => o.floorId === activeFloorId)
+          .map((o) => {
+            const pos = previewDevice({
+              ...o,
+              roomId:
+                "roomId" in o && typeof o.roomId === "string" ? o.roomId : "",
+              wallId: null,
+            });
+            const plenum = "systemId" in o;
+            return (
+              <g
+                key={o.id}
+                data-testid={plenum ? "plenum-2d" : "pillar-2d"}
+                transform={`translate(${pos.x} ${pos.y}) rotate(${(o.rotation * 180) / Math.PI})`}
+                onPointerDown={(e) => beginDeviceDrag(e, o.id)}
+              >
+                <rect
+                  x={-o.widthMm / 2000}
+                  y={-o.depthMm / 2000}
+                  width={o.widthMm / 1000}
+                  height={o.depthMm / 1000}
+                  fill={plenum ? "#d2f0f4" : "#929b9b"}
+                  stroke={
+                    selection.some((s) => s.id === o.id) ? "#00aeef" : "#43656e"
+                  }
+                  strokeWidth={u * 2}
+                />
+                <text
+                  fontSize={u * 11}
+                  textAnchor="middle"
+                  y={o.depthMm / 2000 + u * 13}
+                >
+                  {codes.get(o.id)}
                 </text>
               </g>
             );
@@ -834,7 +1038,8 @@ export function Editor2D() {
         </button>
       </div>
       <div className="stato-editor">
-        Unità: metri · Griglia 50 cm
+        Quote interne · Unità: metri · Griglia 50 cm
+        {terminalPose && ` · ${terminalPose.label}`}
         {cursor && tool !== "select" ? ` · Snap: ${cursor.kind}` : ""}
       </div>
     </div>

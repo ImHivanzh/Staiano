@@ -33,13 +33,13 @@ export function TerminalDistribution({
       </p>
       {result.theoreticalLengthM !== null && (
         <p>
-          <strong>{formatNumber(result.theoreticalLengthM)} m teorici</strong>
-          {result.commercialLengthM !== null &&
-            ` · ${formatNumber(result.commercialLengthM)} m commerciali`}
+          <strong>
+            Minimo richiesto: {formatNumber(result.theoreticalLengthM)} m
+          </strong>
         </p>
       )}
       <p className="nota">
-        Ripartizione per metratura
+        Suggerimento automatico, modificabile: ripartizione per metratura
         {result.sameHeights ? "." : " e altezza degli ambienti."} Il calcolo usa
         il fabbisogno di ogni stanza.
       </p>
@@ -53,7 +53,7 @@ export function TerminalDistribution({
             {row.solution
               ? row.commercialLengthM === null
                 ? `${row.units} unità · ${row.solution.variant.widthMm ?? row.solution.variant.nominalDiameterMm} × ${row.solution.variant.heightMm ?? row.solution.variant.nominalDiameterMm} mm`
-                : `${formatNumber(row.commercialLengthM)} m · ${row.units} moduli`
+                : `circa ${formatNumber(row.theoreticalLengthM ?? 0)} m suggeriti`
               : "Aumenta i punti o scegli un’altra misura"}
           </span>
         </div>

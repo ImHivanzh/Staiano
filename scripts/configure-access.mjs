@@ -150,6 +150,22 @@ try {
       }).toString("hex"),
       sessionSecret: randomBytes(32).toString("hex"),
     };
+    // An admin-password rotation preserves operators and changes only the admin.
+    if (existsSync(file)) {
+      const previous = JSON.parse(readFileSync(file, "utf8"));
+      if (previous.users)
+        config.users = previous.users.map((user) =>
+          user.username === "admin"
+            ? {
+                ...user,
+                salt: config.salt,
+                passwordHash: config.passwordHash,
+                revision: user.revision + 1,
+                mustChangePassword: false,
+              }
+            : user,
+        );
+    }
   }
   mkdirSync(resolve(file, ".."), { recursive: true, mode: 0o700 });
   temporary = `${file}.${randomBytes(8).toString("hex")}.tmp`;

@@ -22,6 +22,8 @@ export function applyAirTerminalSolution(
   familyCode: string,
   solution: AirTerminalSolution,
   mounting: "wall" | "ceiling",
+  mode: "replace" | "append" = "replace",
+  dimensions?: { widthMm: number; heightMm: number; depthMm: number | null },
 ): Project {
   const room = project.rooms.find((r) => r.id === roomId),
     family = airTerminalCatalog.families.find(
@@ -55,15 +57,18 @@ export function applyAirTerminalSolution(
   if (opIndex < 0)
     throw new Error("Punto di funzionamento non presente nel catalogo.");
   const widthMm =
-      solution.commercialLengthM !== null
+      dimensions?.widthMm ??
+      (solution.commercialLengthM !== null
         ? solution.commercialLengthM * 1000
-        : variant.faceWidthMm,
-    heightMm = variant.faceHeightMm;
+        : variant.faceWidthMm),
+    heightMm = dimensions?.heightMm ?? variant.faceHeightMm;
   if (!widthMm || !heightMm || !family.shape)
     throw new Error("Ingombro frontale non disponibile dal catalogo.");
-  const depthMm = variant.bodyDepthMm ?? null,
+  const depthMm = dimensions
+      ? dimensions.depthMm
+      : (variant.bodyDepthMm ?? null),
     existing = project.airTerminals.filter(
-      (t) => t.roomId !== roomId || t.use !== use,
+      (t) => mode === "append" || t.roomId !== roomId || t.use !== use,
     ),
     added: AirTerminal[] = [];
   const footprint = (t: AirTerminal) =>
@@ -195,13 +200,21 @@ export function applyAirTerminalSolution(
         pointIndex,
         unitIndex,
         legacyUnverified: false,
+        locked: false,
+        decisionOrigin: "calculated",
+        style: "",
+        color: "",
+        finish: "",
+        productCode: "",
+        plenumId: null,
+        ...(dimensions ? { manualDimensions: true } : {}),
       });
     }
   return {
     ...project,
     airTerminals: [...existing, ...added],
     rooms: project.rooms.map((r) =>
-      r.id === roomId
+      r.id === roomId && mode === "replace"
         ? {
             ...r,
             [use === "supply" ? "supplyPoints" : "returnPoints"]:

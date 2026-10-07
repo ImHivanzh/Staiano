@@ -1,12 +1,15 @@
 import { randomBytes, scryptSync } from "node:crypto";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import {
   AccessConfig,
+  authenticateUser,
+  changeUserPassword,
+  getSessionUser,
   cookieOptions,
   createSession,
   getAccessConfig,
@@ -22,6 +25,8 @@ import { proxy } from "../proxy";
 import { POST as login } from "../app/api/auth/login/route";
 import { POST as logout } from "../app/api/auth/logout/route";
 import { GET as loginPage } from "../app/accedi/route";
+import { POST as changePassword } from "../app/api/auth/change-password/route";
+import { GET as currentSession } from "../app/api/auth/session/route";
 
 const directories: string[] = [];
 
@@ -245,9 +250,15 @@ describe("protected app", () => {
     expect(await page.text()).toContain("Accesso non configurato");
     await configure();
     const readyPage = await loginPage(request("/accedi"));
+    expect(readyPage.headers.get("referrer-policy")).toBe("same-origin");
     const html = await readyPage.text();
     expect(html).toContain('action="/api/auth/login"');
     expect(html).toContain('type="password"');
+    expect(html).toContain('<select id="username" name="username" required');
+    expect(html).toContain(
+      '<option value="" selected disabled>Seleziona utente</option>',
+    );
+    expect(html).toContain('<option value="admin">Ivan</option>');
     expect(html).not.toContain("<script");
   });
 
@@ -324,5 +335,293 @@ describe("protected app", () => {
       }),
     );
     expect(large.status).toBe(400);
+  });
+});
+
+describe("named users", () => {
+  it("bootstraps all four accounts from empty configuration without exposing passwords", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "staiano-users-new-test-"));
+    directories.push(directory);
+    const file = join(directory, "auth.json");
+    vi.stubEnv("AUTH_FILE", file);
+    const result = spawnSync(
+      process.execPath,
+      ["scripts/manage-accounts.mjs", "--bootstrap"],
+      {
+        env: { ...process.env, AUTH_FILE: file },
+        encoding: "utf8",
+        windowsHide: true,
+      },
+    );
+    expect(result.status).toBe(0);
+    const value = await getAccessConfig();
+    const credentials = JSON.parse(
+      await readFile(join(directory, "initial-user-credentials.json"), "utf8"),
+    );
+    expect(value.users).toHaveLength(4);
+    expect(credentials.accounts).toHaveLength(4);
+    for (const account of credentials.accounts) {
+      expect(result.stdout + result.stderr).not.toContain(account.password);
+      const user = await authenticateUser(
+        account.username,
+        account.password,
+        value,
+      );
+      expect(user).toMatchObject({
+        username: account.username,
+        mustChangePassword: true,
+      });
+      const token = createSession(value, Date.now(), user!);
+      expect(verifySession(token, value)).toBe(true);
+      expect(
+        verifySession(token, value, Date.now() + SESSION_SECONDS * 1000),
+      ).toBe(false);
+      const parts = token.split(".");
+      const claims = JSON.parse(
+        Buffer.from(parts[1], "base64url").toString("utf8"),
+      );
+      claims.sub = "admin";
+      claims.role = "admin";
+      claims.rev = 999;
+      parts[1] = Buffer.from(JSON.stringify(claims)).toString("base64url");
+      expect(verifySession(parts.join("."), value)).toBe(false);
+    }
+  });
+
+  async function bootstrap() {
+    const initial = await configure();
+    const invoke = (...args: string[]) =>
+      spawnSync(process.execPath, ["scripts/manage-accounts.mjs", ...args], {
+        env: { ...process.env, AUTH_FILE: process.env.AUTH_FILE! },
+        encoding: "utf8",
+        windowsHide: true,
+      });
+    expect(invoke("--bootstrap").status).toBe(0);
+    const config = await getAccessConfig();
+    const credentials = JSON.parse(
+      await readFile(
+        join(process.env.AUTH_FILE!, "..", "initial-user-credentials.json"),
+        "utf8",
+      ),
+    ) as { accounts: { username: string; password: string }[] };
+    return { initial, config, credentials, invoke };
+  }
+
+  it("creates three distinct operators, preserves the admin password and is idempotent", async () => {
+    const { initial, config, credentials, invoke } = await bootstrap();
+    expect(config.users?.map((user) => user.username)).toEqual([
+      "admin",
+      "samuele",
+      "gionathan",
+      "marco",
+    ]);
+    expect(config.passwordHash).toBe(initial.passwordHash);
+    expect(config.sessionSecret).toBe(initial.sessionSecret);
+    expect(credentials.accounts).toHaveLength(3);
+    expect(
+      new Set(credentials.accounts.map((user) => user.password)).size,
+    ).toBe(3);
+    for (const account of credentials.accounts) {
+      expect(
+        await authenticateUser(account.username, account.password, config),
+      ).toMatchObject({
+        username: account.username,
+        role: "operator",
+        mustChangePassword: true,
+      });
+      expect(
+        await authenticateUser("admin", account.password, config),
+      ).toBeNull();
+    }
+    expect(
+      await authenticateUser(" ADMIN ", "Auth-test-only-password", config),
+    ).toMatchObject({ role: "admin", displayName: "Ivan" });
+    expect(
+      await authenticateUser("", "Auth-test-only-password", config),
+    ).toBeNull();
+    expect(verifySession(createSession(initial), config)).toBe(false);
+    const repeat = invoke("--bootstrap");
+    expect(repeat.status).toBe(0);
+    expect(await getAccessConfig()).toEqual(config);
+    for (const account of credentials.accounts)
+      expect(repeat.stdout).not.toContain(account.password);
+  });
+
+  it("lists only active users, escapes labels and shows Ivan for existing admin accounts", async () => {
+    const { config } = await bootstrap();
+    config.users!.find((user) => user.username === "admin")!.displayName =
+      "Admin";
+    config.users!.find((user) => user.username === "marco")!.disabled = true;
+    config.users!.find((user) => user.username === "samuele")!.displayName =
+      '<Samuele & "team">';
+    await writeFile(process.env.AUTH_FILE!, JSON.stringify(config));
+    const page = await loginPage(request("/accedi"));
+    const html = await page.text();
+    expect(html).toContain('<option value="admin">Ivan</option>');
+    expect(html).toContain(
+      '<option value="samuele">&lt;Samuele &amp; &quot;team&quot;&gt;</option>',
+    );
+    expect(html).toContain('<option value="gionathan">Gionathan</option>');
+    expect(html).not.toContain('<option value="marco">');
+    expect(html).not.toContain('type="text"');
+    const identity = await authenticateUser(
+      "admin",
+      "Auth-test-only-password",
+      config,
+    );
+    expect(identity).toMatchObject({ username: "admin", displayName: "Ivan" });
+    const session = createSession(config, Date.now(), identity!);
+    expect(getSessionUser(session, config)).toMatchObject({
+      displayName: "Ivan",
+    });
+    expect(html).not.toContain(config.sessionSecret);
+    for (const user of config.users!) {
+      expect(html).not.toContain(user.salt);
+      expect(html).not.toContain(user.passwordHash);
+    }
+  });
+
+  it("requires first-login password change, rejects wrong current password, renews identity and revokes old sessions", async () => {
+    const { config, credentials } = await bootstrap();
+    const account = credentials.accounts.find(
+      (entry) => entry.username === "samuele",
+    )!;
+    const headers = {
+      origin: "https://hvac.example",
+      "content-type": "application/x-www-form-urlencoded",
+      "x-forwarded-for": "203.0.113.101",
+    };
+    const loggedIn = await login(
+      request("/api/auth/login", {
+        method: "POST",
+        headers,
+        body: new URLSearchParams({
+          username: "Samuele",
+          password: account.password,
+          next: "/",
+        }),
+      }),
+    );
+    expect(loggedIn.headers.get("location")).toContain("password=change");
+    const cookie = loggedIn.headers.get("set-cookie")!.split(";")[0];
+    const token = cookie.slice(cookie.indexOf("=") + 1);
+    expect(getSessionUser(token, config)).toMatchObject({
+      username: "samuele",
+      role: "operator",
+    });
+    expect(
+      (await proxy(request("/", { headers: { cookie } }))).headers.get(
+        "location",
+      ),
+    ).toContain("password=change");
+    expect(
+      (await proxy(request("/api/import/dwg", { headers: { cookie } }))).status,
+    ).toBe(403);
+    const page = await loginPage(request("/accedi", { headers: { cookie } }));
+    expect(await page.text()).toContain('action="/api/auth/change-password"');
+    const newPassword = "Personal-test-password-2026";
+    const change = (currentPassword: string, origin = "https://hvac.example") =>
+      changePassword(
+        request("/api/auth/change-password", {
+          method: "POST",
+          headers: { ...headers, origin, cookie },
+          body: new URLSearchParams({
+            currentPassword,
+            password: newPassword,
+            confirmPassword: newPassword,
+            next: "/",
+          }),
+        }),
+      );
+    expect(
+      (await change(account.password, "https://evil.example")).status,
+    ).toBe(403);
+    expect((await change("wrong-password")).headers.get("location")).toContain(
+      "error=password",
+    );
+    const changed = await change(account.password);
+    expect(changed.headers.get("location")).toBe("/");
+    const updated = await getAccessConfig();
+    expect(verifySession(token, updated)).toBe(false);
+    expect(
+      await authenticateUser("samuele", account.password, updated),
+    ).toBeNull();
+    expect(
+      await authenticateUser("samuele", newPassword, updated),
+    ).toMatchObject({ mustChangePassword: false });
+    const newCookie = changed.headers.get("set-cookie")!.split(";")[0];
+    const identity = await currentSession(
+      request("/api/auth/session", { headers: { cookie: newCookie } }),
+    );
+    expect(await identity.json()).toEqual({
+      username: "samuele",
+      displayName: "Samuele",
+      role: "operator",
+      mustChangePassword: false,
+    });
+    expect(
+      (
+        await proxy(request("/", { headers: { cookie: newCookie } }))
+      ).headers.get("x-middleware-next"),
+    ).toBe("1");
+    await expect(
+      changeUserPassword(
+        getSessionUser(token, config)!,
+        "Another-password-2026",
+      ),
+    ).rejects.toThrow("Sessione scaduta");
+  });
+
+  it("disables and resets individual users without revoking other identities and refuses the last-admin disable", async () => {
+    const { config, credentials, invoke } = await bootstrap();
+    const marco = credentials.accounts.find(
+      (entry) => entry.username === "marco",
+    )!;
+    const identity = await authenticateUser("marco", marco.password, config);
+    const token = createSession(config, Date.now(), identity!);
+    const admin = createSession(config);
+    expect(invoke("--disable", "marco").status).toBe(0);
+    let updated = await getAccessConfig();
+    expect(verifySession(token, updated)).toBe(false);
+    expect(verifySession(admin, updated)).toBe(true);
+    expect(await authenticateUser("marco", marco.password, updated)).toBeNull();
+    expect(invoke("--enable", "marco").status).toBe(0);
+    updated = await getAccessConfig();
+    expect(verifySession(token, updated)).toBe(false);
+    expect(invoke("--disable", "admin").status).toBe(1);
+    expect(invoke("--reset", "marco").status).toBe(0);
+    updated = await getAccessConfig();
+    expect(await authenticateUser("marco", marco.password, updated)).toBeNull();
+    expect(verifySession(admin, updated)).toBe(true);
+  });
+
+  it("admin password and session rotations preserve operator credentials", async () => {
+    const { config, credentials } = await bootstrap();
+    const adminToken = createSession(config);
+    const rotate = (args: string[], input = "") =>
+      spawnSync(process.execPath, ["scripts/configure-access.mjs", ...args], {
+        env: { ...process.env, AUTH_FILE: process.env.AUTH_FILE! },
+        input,
+        encoding: "utf8",
+        windowsHide: true,
+      });
+    expect(rotate(["--rotate-session-only"]).status).toBe(0);
+    let updated = await getAccessConfig();
+    expect(updated.users).toEqual(config.users);
+    expect(verifySession(adminToken, updated)).toBe(false);
+    expect(
+      rotate(["--stdin", "--rotate"], "Rotated-admin-test-password\n").status,
+    ).toBe(0);
+    updated = await getAccessConfig();
+    expect(
+      await authenticateUser("admin", "Rotated-admin-test-password", updated),
+    ).toMatchObject({ role: "admin", mustChangePassword: false });
+    expect(
+      await authenticateUser("admin", "Auth-test-only-password", updated),
+    ).toBeNull();
+    for (const account of credentials.accounts)
+      expect(
+        await authenticateUser(account.username, account.password, updated),
+      ).toMatchObject({ role: "operator" });
   });
 });

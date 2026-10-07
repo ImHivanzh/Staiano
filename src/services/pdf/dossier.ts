@@ -3,11 +3,21 @@ import { projectSchema } from "@/schemas/project";
 import { validateProject } from "@/domain/validation";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
-import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
+import {
+  hvacProductAtVersion,
+  hvacDischargeConnection,
+} from "@/domain/catalogs/hvac";
+import {
+  fanCoilProductAtVersion,
+  fanCoilControlAtVersion,
+  controllerBoardFor,
+} from "@/domain/catalogs/fan-coils";
+import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
 import type { z } from "zod";
 import type { sourceMetadataSchema } from "@/domain/catalogs/radiator-schema";
 import { deviceCodes } from "@/services/export/device-codes";
 import { airTerminalModelDescription } from "@/domain/air-terminals/description";
+import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
@@ -44,10 +54,13 @@ export function buildDossier(project: Project) {
     const deviceId = [...codes.entries()].find(
       ([, value]) => value === code,
     )?.[0];
-    const system = p.hvacSystems.find((s) => s.id === deviceId);
+    const system =
+      p.hvacSystems.find((s) => s.id === deviceId) ??
+      p.hydronicSystems?.find((s) => s.id === deviceId);
     const device = [
       ...p.radiators,
       ...p.airTerminals,
+      ...(p.fanCoils ?? []),
       ...p.hvacSystems.flatMap((s) => s.indoorUnits),
     ].find((d) => d.id === deviceId);
     const roomIds = system?.roomIds ?? (device ? [device.roomId] : []);
@@ -104,6 +117,11 @@ export function buildDossier(project: Project) {
       product?.sourceMetadata ?? combination?.sourceMetadata,
       `${codes.get(s.id)}: catalogo HVAC ${s.catalogVersion} non disponibile`,
     );
+    const inletSource =
+      s.type === "ducted" && !s.genericMachine
+        ? hvacDischargeConnection(product)?.sourceMetadata
+        : null;
+    if (inletSource) addSource(inletSource, "");
     combination?.secondarySourceMetadata.forEach((source) =>
       addSource(source, ""),
     );
@@ -134,6 +152,73 @@ export function buildDossier(project: Project) {
       );
     }
   }
+  for (const unit of p.fanCoils ?? []) {
+    const product = fanCoilProductAtVersion(
+      unit.productId,
+      unit.catalogVersion,
+    );
+    const point = product?.operatingPoints[unit.operatingPointIndex];
+    const control = unit.controllerId
+      ? fanCoilControlAtVersion(unit.controllerId, unit.catalogVersion)
+      : null;
+    const code = codes.get(unit.id)!;
+    addSource(
+      product?.sourceMetadata,
+      `${code}: catalogo ventilconvettori ${unit.catalogVersion} non disponibile`,
+    );
+    material(
+      `fan-coil:${unit.productId}:${unit.catalogVersion}:${unit.operatingPointIndex}`,
+      {
+        description: product
+          ? `${product.manufacturer} ${product.family} ${product.model}`
+          : unit.productId,
+        unit: "pezzi",
+        details: `${unit.widthMm} x ${unit.heightMm} x ${unit.depthMm} mm; ${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}`,
+      },
+      code,
+    );
+    if (unit.controllerId) {
+      addSource(
+        control?.sourceMetadata,
+        `${code}: comando ${unit.controllerId} non disponibile nella revisione ${unit.catalogVersion}`,
+      );
+      const expectedBoard =
+        product && control ? controllerBoardFor(product, control) : null;
+      material(
+        `fan-coil-control:${unit.controllerId}:${unit.catalogVersion}:${unit.controllerBoard}`,
+        {
+          description: control
+            ? `${control.manufacturer} ${control.series} ${control.model} - comando originale`
+            : `Comando ${unit.controllerId}`,
+          unit: "pezzi",
+          details: `Associato a ${code}; scheda salvata ${unit.controllerBoard ?? "non scelta"}; ${expectedBoard && unit.controllerBoard === expectedBoard ? "abbinamento documentato" : "abbinamento da verificare"}`,
+        },
+        code,
+      );
+    }
+  }
+  for (const system of p.hydronicSystems ?? []) {
+    const product = heatPumpProductAtVersion(
+      system.productId,
+      system.catalogVersion,
+    );
+    const point = product?.operatingPoints[system.operatingPointIndex];
+    addSource(
+      product?.sourceMetadata,
+      `${codes.get(system.id)}: catalogo pompe di calore ${system.catalogVersion} non disponibile`,
+    );
+    material(
+      `hydronic:${system.productId}:${system.catalogVersion}:${system.operatingPointIndex}`,
+      {
+        description: product
+          ? `${product.manufacturer} ${product.family} ${product.model} - pompa di calore`
+          : system.productId,
+        unit: "pezzi",
+        details: `${system.outdoorUnit.widthMm} x ${system.outdoorUnit.heightMm} x ${system.outdoorUnit.depthMm} mm; ${point ? `${display(point.heatingW)} W caldo / ${display(point.coolingW)} W freddo; ${point.label}` : "punto operativo non verificabile"}; ventilconvettori ${system.fanCoilIds.map((id) => codes.get(id) ?? id).join(", ") || "nessuno collegato"}`,
+      },
+      codes.get(system.id)!,
+    );
+  }
   return {
     project: p,
     codes,
@@ -141,6 +226,11 @@ export function buildDossier(project: Project) {
     unresolved,
     materials: [...materialMap.values()],
     checks: validateProject(p),
+    linearBalances: p.hvacSystems
+      .filter((s) => s.type === "ducted")
+      .flatMap((s) =>
+        systemLinearBalances(p, s.id).map((b) => ({ ...b, systemId: s.id })),
+      ),
     provisionalRooms: p.rooms.filter((r) => r.geometryStatus === "unresolved"),
     totals: p.rooms
       .filter((r) => r.geometryStatus === "closed")

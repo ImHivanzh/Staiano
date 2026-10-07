@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-04-ecoclima-44e8c2174094",
+  "version": "2026-10-04-ecoclima-f01779a46f65",
   "families": [
     {
       "manufacturer": "Ecoclima",
@@ -622,7 +622,7 @@
         "sourceType": "pdf",
         "documentRevision": "Scheda tecnica EDLS-EDLSB rev 3-2025 IT Download",
         "retrievedAt": "2026-10-03T00:50:34.717773+00:00",
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "7f043fc11f9904e80f2eb1078893d17f97cf157da2bf70a77d32169f1995c2d9",
         "page": null
       },
@@ -2971,7 +2971,7 @@
         "sourceType": "pdf",
         "documentRevision": "EBLF Scheda tecnica rev 2-2025 Download",
         "retrievedAt": "2026-10-03T00:50:40.277767+00:00",
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "65bfe317cde324f4c9d6d27f98b6235a3a12c5ec86552200395edb62f6d8909b",
         "page": null
       },
@@ -3938,7 +3938,7 @@
         "sourceType": "pdf",
         "documentRevision": "ETA scheda tecnica rev 1-2023 Download",
         "retrievedAt": "2026-10-03T00:50:46.418973+00:00",
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "9033b34111ec62f5146d08822e0c2cb5cca1ad81e7c596948ceabdf006d42c67",
         "page": null
       }
@@ -7924,7 +7924,7 @@
         "sourceType": "pdf",
         "documentRevision": "Scheda tecnica EGQ rev 1-2023 Download",
         "retrievedAt": "2026-10-03T00:50:43.243605+00:00",
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "c87a297cf2b07762665819366f03b42b8b12c20588e3c9a315c628b5f765a315",
         "page": null
       },
@@ -8912,7 +8912,7 @@
         "sourceType": "pdf",
         "documentRevision": "Scheda tecnica EVVMC - EVVMB rev1-2024 Download",
         "retrievedAt": "2026-10-03T00:50:36.316944+00:00",
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "dbb60155c748325de10b263df50d374eade56a7c2992cece5486800913e22cb4",
         "page": null
       },
@@ -9697,7 +9697,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": null,
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "a118d79a1805a895ad0a7de880953e6930c670fc5631b181cf0862390c915e3d",
         "page": null
       }
@@ -9838,7 +9838,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": null,
-        "importedAt": "2026-10-04T06:51:57.758Z",
+        "importedAt": "2026-10-04T06:55:15.789Z",
         "sha256": "ecb91b0e37ad09920d6eb92ee433ca61dc65f603aa23fdb16bc40962fdb839fa",
         "page": null
       }
@@ -121361,8 +121361,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "30",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "return",
               "settingCode": "D2"
             },
@@ -123035,7 +123035,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:00:50.438029+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "2aef168ca633e5a4cd3b01f0bc4a688fcf0e7f4d1f786d03606328708ccd3db5",
         "page": null
       },
@@ -123045,7 +123045,7 @@
         "EDSC-C 125",
         "EDSC-C 160"
       ],
-      "selectionStatus": "verified",
+      "selectionStatus": "partial",
       "geometryNote": "Le lettere delle quote originali restano originalDimensionsMm. Diametro nominale e ingombro frontale non sono intercambiabili.",
       "mountings": [
         "ceiling"
@@ -123559,8 +123559,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "25",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "return",
               "settingCode": "D3"
             },
@@ -123574,8 +123574,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "30",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "return",
               "settingCode": "D3"
             },
@@ -124464,7 +124464,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:00:50.438029+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "2aef168ca633e5a4cd3b01f0bc4a688fcf0e7f4d1f786d03606328708ccd3db5",
         "page": null
       },
@@ -124473,7 +124473,7 @@
         "EDSC-CC 100",
         "EDSC-CC 125"
       ],
-      "selectionStatus": "verified",
+      "selectionStatus": "partial",
       "geometryNote": "Le lettere delle quote originali restano originalDimensionsMm. Diametro nominale e ingombro frontale non sono intercambiabili.",
       "mountings": [
         "ceiling"
@@ -124657,8 +124657,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "20",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "supply",
               "settingCode": "D3"
             },
@@ -125047,8 +125047,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "30",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "return",
               "settingCode": "D4"
             },
@@ -125591,8 +125591,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "25",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "return",
               "settingCode": "D1"
             },
@@ -125816,8 +125816,8 @@
               "noiseUpperBoundDbA": null,
               "noiseLabel": "25",
               "referenceLengthM": null,
-              "quality": "valid",
-              "qualityNote": null,
+              "quality": "review",
+              "qualityNote": "Portata maggiore rispetto alla configurazione precedente, a pari potenza sonora e con serranda maggiormente chiusa. Dato originale conservato; verifica produttore richiesta.",
               "use": "return",
               "settingCode": "D6"
             },
@@ -125892,7 +125892,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:00:50.438029+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "2aef168ca633e5a4cd3b01f0bc4a688fcf0e7f4d1f786d03606328708ccd3db5",
         "page": null
       },
@@ -125901,7 +125901,7 @@
         "EDSC-Q 100",
         "EDSC-Q 125"
       ],
-      "selectionStatus": "verified",
+      "selectionStatus": "partial",
       "geometryNote": "Le lettere delle quote originali restano originalDimensionsMm. Diametro nominale e ingombro frontale non sono intercambiabili.",
       "mountings": [
         "ceiling"
@@ -126604,7 +126604,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:55.163471+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "a250835490d0a30dae549f915d71ca56bd7a251ab4ae3834badf867093ad22e8",
         "page": null
       },
@@ -127049,7 +127049,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:55.286523+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "de6abfe8dd2541860ab04f6db049cb99734d0eabc86ee3da4c895a2cf8e7f5ab",
         "page": null
       },
@@ -127304,7 +127304,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:56.389520+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "5d3dd32d7dd7a26cdac9cb11a6b2ca6aac9cf30808a502c541f4403eac8b5704",
         "page": null
       },
@@ -127923,7 +127923,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:57.207001+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "5df95c5a5c5835b86d7c747c5d4778259a61319772c16085e43a63935263ba3c",
         "page": null
       },
@@ -128364,7 +128364,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:57.573962+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "2948c5abab137184c9e1c6676ea766c9e3304640127a1a612efaf04193d0855d",
         "page": null
       },
@@ -128800,7 +128800,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:57.947106+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "c4edf22e6978b44fdf77dfc20ccea86c3c4882d2bbc0c2f85fd77af8413d1ebc",
         "page": null
       },
@@ -129131,7 +129131,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:01:57.958106+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "de5e57a0a6ec5989bbec246e6dc0213a029454f93823b87cba7ce0cef27f3001",
         "page": null
       },
@@ -129358,7 +129358,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:00.982618+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "3ef3ca7f944da7427684f2a0d623eda2fddfcda6e4f02b604b9b81abd37c2c1c",
         "page": null
       },
@@ -129623,7 +129623,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:03.262680+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "9a93ffb745abea35544b3657a7786e526e7db564f2112b764116dbc174ac758d",
         "page": null
       },
@@ -129750,7 +129750,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:04.661961+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "f0ca182e05794ca43dbda2ac752780ba0b0a8873fcbfd0ed79e4163605fd3969",
         "page": null
       },
@@ -131080,7 +131080,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:03.039620+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "edde89af5bdcbfeed36e6d9d5d33a554aa7095dc71e09bdd5e77754ef0ea1646",
         "page": null
       },
@@ -134376,7 +134376,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:04.241321+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "9030735ccf2cb159348411f165ecec158311a0150b9350e77ed6715865a94404",
         "page": null
       },
@@ -137668,7 +137668,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:04.241321+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "9030735ccf2cb159348411f165ecec158311a0150b9350e77ed6715865a94404",
         "page": null
       },
@@ -138486,7 +138486,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:05.226329+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "233b26948a8ef98bc78a4769e1fd40540495f17d7dc3c8cefe1dd2f53870367a",
         "page": null
       },
@@ -138688,7 +138688,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:05.908767+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "acc190c465679e202a23934971e00a7c08f634ca2963f224be55c26eb17af7ae",
         "page": null
       },
@@ -138836,7 +138836,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:07.951421+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "a4707a41b791872cc2d7dc93275bccf66726b3e90ddffaf7359ed4afeeca7daa",
         "page": null
       },
@@ -138958,7 +138958,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:08.190056+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "ebdd339ba40c9357ec738d303683f4e907ff734bb2edbb78b5c8aa31eb68e468",
         "page": null
       },
@@ -139057,7 +139057,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:08.749229+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "d72e4f112049281426a2282b7fe7f5105dbf57613f3b09e5ebea84ab7c4b8a2d",
         "page": null
       },
@@ -139155,7 +139155,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:09.609602+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "35e8ef19ba8980dfe20c0b83902c21cb563276fc86cab21a310831f8a1b1b4ea",
         "page": null
       },
@@ -139206,7 +139206,7 @@
         "sourceType": "html",
         "documentRevision": null,
         "retrievedAt": "2026-10-03T23:02:09.537093+00:00",
-        "importedAt": "2026-10-03T23:06:57.535385+00:00",
+        "importedAt": "2026-10-04T06:55:15.570687+00:00",
         "sha256": "4fb7e1b400df422490f9d9e6f05bb68099fa1149a1088553749c17d46997bee7",
         "page": null
       },

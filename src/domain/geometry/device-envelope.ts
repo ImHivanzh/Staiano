@@ -59,6 +59,18 @@ export function deviceEnvelope(
       0.1 + radiator.heightMm / 1000,
     );
   const terminal = project.airTerminals.find((d) => d.id === deviceId);
+  const fan = project.fanCoils?.find((d) => d.id === deviceId);
+  if (fan)
+    return envelope(
+      fan,
+      (fan.mounting === "ceiling" ? fan.heightMm : fan.depthMm) / 1000,
+      fan.mounting === "ceiling"
+        ? fan.elevationM
+        : fan.elevationM - fan.heightMm / 2000,
+      fan.mounting === "ceiling"
+        ? fan.elevationM + fan.depthMm / 1000
+        : fan.elevationM + fan.heightMm / 2000,
+    );
   if (terminal) {
     if (
       needsTerminalReconfiguration(terminal) ||
@@ -103,6 +115,7 @@ export function projectDeviceEnvelopes(project: Project): DeviceEnvelope[] {
   return [
     ...project.radiators,
     ...project.airTerminals,
+    ...(project.fanCoils ?? []),
     ...project.hvacSystems
       .filter((s) => s.type === "split")
       .flatMap((s) => s.indoorUnits),

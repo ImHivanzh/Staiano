@@ -5,6 +5,10 @@ import { recomputeProject } from "@/domain/project";
 import { refreshDuctedBindings } from "@/domain/ducted/refresh";
 import { refreshSplitBindings } from "@/domain/air-conditioning/refresh";
 import type { SnapOptions } from "@/domain/geometry/primitives";
+import {
+  checkLockedObjects,
+  recordOperatorChanges,
+} from "@/domain/project-commands";
 
 export type Tool = "select" | "wall" | "measure" | "pan" | "calibrate";
 type State = {
@@ -22,6 +26,8 @@ type State = {
   snap: SnapOptions;
   showGrid: boolean;
   showDimensions: boolean;
+  presentation: boolean;
+  pillarDialog: boolean;
   load(p: Project): void;
   commit(fn: (p: Project) => Project): void;
   undo(): void;
@@ -56,6 +62,8 @@ export const useProjectStore = create<State>((set, get) => ({
   },
   showGrid: true,
   showDimensions: true,
+  presentation: false,
+  pillarDialog: false,
   load(p) {
     set({
       project: projectSchema.parse(
@@ -75,8 +83,10 @@ export const useProjectStore = create<State>((set, get) => ({
     const state = get();
     if (!state.project) return;
     try {
+      const changed = fn(structuredClone(state.project));
+      checkLockedObjects(state.project, changed);
       const next = refreshSplitBindings(
-        refreshDuctedBindings(fn(structuredClone(state.project))),
+        refreshDuctedBindings(recordOperatorChanges(state.project, changed)),
       );
       next.updatedAt = new Date().toISOString();
       const valid = projectSchema.parse(next);
@@ -86,6 +96,11 @@ export const useProjectStore = create<State>((set, get) => ({
           ...valid.walls,
           ...valid.radiators,
           ...valid.airTerminals,
+          ...valid.plenums,
+          ...(valid.fanCoils ?? []),
+          ...(valid.hydronicSystems ?? []).map((s) => s.outdoorUnit),
+          ...(valid.pillars ?? []),
+          ...(valid.ducts ?? []),
           ...valid.hvacSystems.flatMap((system) => system.indoorUnits),
         ].map((e) => e.id),
       );

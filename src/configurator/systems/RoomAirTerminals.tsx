@@ -8,7 +8,7 @@ import {
   sizeAirTerminal,
   type AirTerminalSolution,
 } from "@/domain/air-terminals/size";
-import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
+import { OperatorTerminalControls } from "./OperatorTerminalControls";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 export function RoomAirTerminals({
@@ -176,24 +176,15 @@ export function RoomAirTerminals({
             ))}
             <p className="nota">{family.geometryNote}</p>
           </details>
-          <button
-            className="bottone pieno"
-            onClick={() =>
-              commit((p) =>
-                applyAirTerminalSolution(
-                  p,
-                  room.id,
-                  allocation.system.id,
-                  use,
-                  family.familyCode,
-                  solution,
-                  mounting,
-                ),
-              )
-            }
-          >
-            Applica {use === "supply" ? "mandata" : "ripresa"} e posiziona
-          </button>
+          <OperatorTerminalControls
+            project={project}
+            room={room}
+            systemId={allocation.system.id}
+            family={family}
+            solution={solution}
+            use={use}
+            mounting={mounting}
+          />
         </>
       )}
       {!compatible.length && (
@@ -202,8 +193,8 @@ export function RoomAirTerminals({
         </p>
       )}
       <p className="nota">
-        La scelta sostituisce i terminali della stessa funzione in questa
-        stanza.
+        Ogni inserimento aggiunge un pezzo; puoi creare più bocchette nella
+        stessa stanza.
       </p>
       <details>
         <summary>Terminali posizionati</summary>

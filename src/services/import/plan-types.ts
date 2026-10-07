@@ -1,4 +1,5 @@
-import type { Floor, Point, Project } from "@/schemas/project";
+import type { Floor, ImportAnalysis, Point, Project } from "@/schemas/project";
+import type { PlanAnalysis } from "@/domain/geometry/plan-analysis";
 
 export type PlanSegment = {
   id: string;
@@ -27,9 +28,16 @@ export type ParsedPlan = {
   background: NonNullable<Floor["background"]> | null;
   pageCount?: number;
   pageNumber?: number;
+  analysis?: PlanAnalysis;
+  originalDataUrl?: string;
 };
 export type ImportedPlan = {
-  walls: { start: Point; end: Point }[];
+  walls: {
+    start: Point;
+    end: Point;
+    thickness?: number;
+    recognition?: Project["walls"][number]["recognition"];
+  }[];
   thicknessM: number;
   background: Floor["background"];
   source: Omit<
@@ -37,4 +45,5 @@ export type ImportedPlan = {
     "id" | "floorId" | "importedAt"
   >;
   scaleVerified: true;
+  analysis?: ImportAnalysis;
 };

@@ -1,5 +1,6 @@
 import { createHmac, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
-import { readFile, stat } from "node:fs/promises";
+import { readFile, stat, rename, writeFile, unlink } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 
 export const SESSION_COOKIE = "staiano_session";
@@ -10,6 +11,54 @@ export interface AccessConfig {
   salt: string;
   passwordHash: string;
   sessionSecret: string;
+  users?: AccessUser[];
+}
+
+export interface AccessUser {
+  username: string;
+  displayName: string;
+  role: "admin" | "operator";
+  salt: string;
+  passwordHash: string;
+  revision: number;
+  disabled: boolean;
+  mustChangePassword: boolean;
+}
+
+export type SessionUser = Pick<
+  AccessUser,
+  "username" | "displayName" | "role" | "revision" | "mustChangePassword"
+>;
+
+export function normalizeUsername(value: string) {
+  return value.trim().toLowerCase();
+}
+
+export function validUsers(users: unknown): users is AccessUser[] {
+  if (!Array.isArray(users) || !users.length || users.length > 100)
+    return false;
+  const names = new Set<string>();
+  for (const user of users) {
+    if (
+      !user ||
+      typeof user.username !== "string" ||
+      !/^[a-z0-9][a-z0-9._-]{1,39}$/.test(user.username) ||
+      names.has(user.username) ||
+      typeof user.displayName !== "string" ||
+      !user.displayName ||
+      user.displayName.length > 80 ||
+      !["admin", "operator"].includes(user.role) ||
+      !/^[a-f0-9]{64}$/.test(user.salt) ||
+      !/^[a-f0-9]{128}$/.test(user.passwordHash) ||
+      !Number.isSafeInteger(user.revision) ||
+      user.revision < 1 ||
+      typeof user.disabled !== "boolean" ||
+      typeof user.mustChangePassword !== "boolean"
+    )
+      return false;
+    names.add(user.username);
+  }
+  return users.some((user) => user.role === "admin" && !user.disabled);
 }
 
 export class AccessConfigurationError extends Error {
@@ -50,7 +99,8 @@ export async function getAccessConfig(): Promise<AccessConfig> {
       config.version !== 1 ||
       !/^[a-f0-9]{64}$/.test(config.salt) ||
       !/^[a-f0-9]{128}$/.test(config.passwordHash) ||
-      !/^[a-f0-9]{64}$/.test(config.sessionSecret)
+      !/^[a-f0-9]{64}$/.test(config.sessionSecret) ||
+      (config.users !== undefined && !validUsers(config.users))
     ) {
       throw new AccessConfigurationError();
     }
@@ -64,7 +114,7 @@ export async function getAccessConfig(): Promise<AccessConfig> {
 
 export async function verifyPassword(
   password: string,
-  config: AccessConfig,
+  config: Pick<AccessConfig, "salt" | "passwordHash">,
 ): Promise<boolean> {
   if (!password || Buffer.byteLength(password, "utf8") > 1024) return false;
   const derived = await new Promise<Buffer>((accept, reject) => {
@@ -82,8 +132,21 @@ export async function verifyPassword(
   return timingSafeEqual(derived, Buffer.from(config.passwordHash, "hex"));
 }
 
-export function createSession(config: AccessConfig, now = Date.now()): string {
-  const payload = `${Math.floor(now / 1000) + SESSION_SECONDS}.${randomBytes(24).toString("base64url")}`;
+export function createSession(
+  config: AccessConfig,
+  now = Date.now(),
+  user?: SessionUser,
+): string {
+  const identity =
+    user ||
+    config.users?.find(
+      (candidate) => candidate.username === "admin" && !candidate.disabled,
+    );
+  if (config.users && !identity) throw new Error("Account non disponibile.");
+  const nonce = randomBytes(24).toString("base64url");
+  const payload = identity
+    ? `v2.${Buffer.from(JSON.stringify({ exp: Math.floor(now / 1000) + SESSION_SECONDS, sub: identity.username, role: identity.role, rev: identity.revision, nonce })).toString("base64url")}`
+    : `${Math.floor(now / 1000) + SESSION_SECONDS}.${nonce}`;
   const signature = createHmac(
     "sha256",
     Buffer.from(config.sessionSecret, "hex"),
@@ -98,18 +161,70 @@ export function verifySession(
   config: AccessConfig,
   now = Date.now(),
 ): boolean {
-  if (!value || value.length > 160) return false;
+  return getSessionUser(value, config, now) !== null;
+}
+
+export function getSessionUser(
+  value: string | undefined,
+  config: AccessConfig,
+  now = Date.now(),
+): SessionUser | null {
+  if (!value || value.length > 512) return null;
   const parts = value.split(".");
+  if (
+    parts.length === 3 &&
+    parts[0] === "v2" &&
+    /^[\w-]+$/.test(parts[1]) &&
+    /^[\w-]{43}$/.test(parts[2])
+  ) {
+    const expected = createHmac(
+      "sha256",
+      Buffer.from(config.sessionSecret, "hex"),
+    )
+      .update(`${parts[0]}.${parts[1]}`)
+      .digest();
+    const signature = Buffer.from(parts[2], "base64url");
+    if (
+      signature.length !== expected.length ||
+      !timingSafeEqual(signature, expected)
+    )
+      return null;
+    try {
+      const claims = JSON.parse(
+        Buffer.from(parts[1], "base64url").toString("utf8"),
+      );
+      const seconds = Math.floor(now / 1000);
+      if (
+        !Number.isSafeInteger(claims.exp) ||
+        claims.exp <= seconds ||
+        claims.exp > seconds + SESSION_SECONDS ||
+        !/^[\w-]{32}$/.test(claims.nonce)
+      )
+        return null;
+      const user = config.users?.find(
+        (candidate) =>
+          candidate.username === claims.sub &&
+          !candidate.disabled &&
+          candidate.revision === claims.rev &&
+          candidate.role === claims.role,
+      );
+      return user ? publicUser(user) : null;
+    } catch {
+      return null;
+    }
+  }
+  // Single-password sessions stop being valid once named accounts are enabled.
+  if (config.users) return null;
   if (
     parts.length !== 3 ||
     !/^\d{10}$/.test(parts[0]) ||
     !/^[\w-]{32}$/.test(parts[1]) ||
     !/^[\w-]{43}$/.test(parts[2])
   )
-    return false;
+    return null;
   const expires = Number(parts[0]);
   const seconds = Math.floor(now / 1000);
-  if (expires <= seconds || expires > seconds + SESSION_SECONDS) return false;
+  if (expires <= seconds || expires > seconds + SESSION_SECONDS) return null;
   const expected = createHmac(
     "sha256",
     Buffer.from(config.sessionSecret, "hex"),
@@ -117,9 +232,161 @@ export function verifySession(
     .update(`${parts[0]}.${parts[1]}`)
     .digest();
   const signature = Buffer.from(parts[2], "base64url");
-  return (
-    signature.length === expected.length && timingSafeEqual(signature, expected)
+  return signature.length === expected.length &&
+    timingSafeEqual(signature, expected)
+    ? {
+        username: "admin",
+        displayName: "Ivan",
+        role: "admin",
+        revision: 1,
+        mustChangePassword: false,
+      }
+    : null;
+}
+
+export function publicUser(user: AccessUser): SessionUser {
+  return {
+    username: user.username,
+    displayName: user.username === "admin" ? "Ivan" : user.displayName,
+    role: user.role,
+    revision: user.revision,
+    mustChangePassword: user.mustChangePassword,
+  };
+}
+
+export async function authenticateUser(
+  username: string,
+  password: string,
+  config: AccessConfig,
+): Promise<SessionUser | null> {
+  const normalized = normalizeUsername(username);
+  if (!config.users)
+    return (!normalized || normalized === "admin") &&
+      (await verifyLoginPassword(password, config))
+      ? {
+          username: "admin",
+          displayName: "Ivan",
+          role: "admin",
+          revision: 1,
+          mustChangePassword: false,
+        }
+      : null;
+  const user = config.users.find(
+    (candidate) => candidate.username === normalized,
   );
+  // Perform the same password work for unknown/disabled users to avoid account enumeration.
+  const correct = await verifyLoginPassword(password, user || config);
+  return correct && user && !user.disabled ? publicUser(user) : null;
+}
+
+let passwordWrite = Promise.resolve();
+
+/** Serialize changes and re-read the current revision before replacing private credentials. */
+export async function changeUserPassword(
+  session: SessionUser,
+  password: string,
+): Promise<SessionUser> {
+  if (
+    password.length < 12 ||
+    password.length > 256 ||
+    /[\x00-\x1f\x7f]/.test(password)
+  )
+    throw new Error("Scegli una password fra 12 e 256 caratteri.");
+  let updated!: SessionUser;
+  const operation = passwordWrite.then(async () => {
+    const config = await getAccessConfig();
+    const user = config.users?.find(
+      (candidate) =>
+        candidate.username === session.username &&
+        candidate.revision === session.revision &&
+        !candidate.disabled,
+    );
+    if (!user) throw new Error("Sessione scaduta.");
+    if (await verifyPassword(password, user))
+      throw new Error(
+        "La nuova password deve essere diversa da quella attuale.",
+      );
+    const salt = randomBytes(32).toString("hex");
+    const passwordHash = await new Promise<string>((accept, reject) =>
+      scrypt(
+        password,
+        Buffer.from(salt, "hex"),
+        64,
+        { N: 16384, r: 8, p: 1 },
+        (error, key) => (error ? reject(error) : accept(key.toString("hex"))),
+      ),
+    );
+    const nextUser = {
+      ...user,
+      salt,
+      passwordHash,
+      revision: user.revision + 1,
+      mustChangePassword: false,
+    };
+    const nextConfig = {
+      ...config,
+      users: config.users!.map((candidate) =>
+        candidate.username === user.username ? nextUser : candidate,
+      ),
+    };
+    if (user.username === "admin") {
+      nextConfig.salt = salt;
+      nextConfig.passwordHash = passwordHash;
+    }
+    const file = resolve(
+      /* turbopackIgnore: true */
+      process.env.AUTH_FILE ||
+        resolve(
+          /* turbopackIgnore: true */ process.cwd(),
+          ".cache/app-auth.json",
+        ),
+    );
+    const temporary = `${file}.${randomBytes(8).toString("hex")}.tmp`;
+    try {
+      await writeFile(
+        /* turbopackIgnore: true */ temporary,
+        `${JSON.stringify(nextConfig)}\n`,
+        {
+          flag: "wx",
+          mode: 0o600,
+        },
+      );
+      if (process.platform === "win32") {
+        const output = execFileSync(
+          "whoami.exe",
+          ["/user", "/fo", "csv", "/nh"],
+          { encoding: "utf8", windowsHide: true },
+        );
+        const sid = output.match(/S-1-\d+(?:-\d+)+/)?.[0];
+        if (!sid) throw new Error("permissions");
+        execFileSync(
+          "icacls.exe",
+          [
+            temporary,
+            "/inheritance:r",
+            "/grant:r",
+            `*${sid}:(F)`,
+            "*S-1-5-18:(F)",
+            "*S-1-5-32-544:(F)",
+          ],
+          { stdio: "ignore", windowsHide: true },
+        );
+      }
+      await rename(
+        /* turbopackIgnore: true */ temporary,
+        /* turbopackIgnore: true */ file,
+      );
+      cached = undefined;
+      updated = publicUser(nextUser);
+    } finally {
+      await unlink(/* turbopackIgnore: true */ temporary).catch(
+        () => undefined,
+      );
+    }
+  });
+  passwordWrite = operation.catch(() => undefined);
+  await operation;
+  return updated;
 }
 
 export function safeReturnPath(value: unknown): string {
@@ -218,7 +485,7 @@ export function takeLoginAttempt(request: Request, now = Date.now()): number {
 
 export async function verifyLoginPassword(
   password: string,
-  config: AccessConfig,
+  config: Pick<AccessConfig, "salt" | "passwordHash">,
 ) {
   activeVerifications += 1;
   try {

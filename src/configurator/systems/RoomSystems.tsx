@@ -4,6 +4,8 @@ import type { Project, Room } from "@/schemas/project";
 import { RadiatorPanel } from "./RadiatorPanel";
 import { DuctedPanel } from "./DuctedPanel";
 import { SplitPanel } from "./SplitPanel";
+import { FanCoilPanel } from "./FanCoilPanel";
+import { HydronicPanel } from "./HydronicPanel";
 import { Columns, Wind, Snowflake } from "@phosphor-icons/react";
 export function RoomSystems({
   project,
@@ -12,7 +14,7 @@ export function RoomSystems({
   project: Project;
   room: Room;
 }) {
-  const [mode, setMode] = useState<"radiator" | "ducted" | "split">(
+  const [mode, setMode] = useState<"radiator" | "ducted" | "split" | "fanCoil">(
     room.systemType === "none" ? "radiator" : room.systemType,
   );
   return (
@@ -40,6 +42,14 @@ export function RoomSystems({
         </button>
         <button
           type="button"
+          aria-pressed={mode === "fanCoil"}
+          onClick={() => setMode("fanCoil")}
+        >
+          <Wind size={23} aria-hidden="true" />
+          Ventilconvettori
+        </button>
+        <button
+          type="button"
           aria-pressed={mode === "split"}
           onClick={() => setMode("split")}
         >
@@ -51,6 +61,14 @@ export function RoomSystems({
         <RadiatorPanel project={project} room={room} />
       ) : mode === "ducted" ? (
         <DuctedPanel project={project} room={room} />
+      ) : mode === "fanCoil" ? (
+        <>
+          <FanCoilPanel project={project} room={room} />
+          <details>
+            <summary>Impianto idronico · pompa di calore</summary>
+            <HydronicPanel project={project} floorId={room.floorId} />
+          </details>
+        </>
       ) : (
         <SplitPanel project={project} room={room} />
       )}

@@ -1,5 +1,7 @@
 # Audit del brief originale
 
+Nota 7 ottobre 2026: questo documento conserva l'audit della release precedente. Per schema v3, accesso multiutente, import guidato, idronico e nuove prove consultare [DELIVERY-GUIDED.md](DELIVERY-GUIDED.md). I risultati HTTPS storici sottostanti non sono una verifica della nuova versione sul server.
+
 Data: 3 ottobre 2026. Il brief resta la fonte di accettazione; questa matrice non riduce l’obiettivo alle sole schermate implementate. Gli esiti sono riferiti al codice, ai cataloghi locali e ai flussi esercitati. `V` = prova concreta; `L` = limite dichiarato; `P` = verifica ancora da completare. I limiti non sono trasformati in dati inventati.
 
 | Requisiti del master                       | Prova autorevole                                                                             | Esito e limiti                                                                                                                                                                                                                                                                                                                                                        |

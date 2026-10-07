@@ -57,8 +57,23 @@ export function applyDuctedSystem(
     capacityW: machine.coolingCapacityW,
     airflowM3h: maximumAirflowOption(machine)!.airflowM3h,
     catalogVersion: hvacCatalog.version,
-    indoorUnits: [],
+    indoorUnits: (previous?.indoorUnits ?? []).map((u) => {
+      const room = rooms.find((r) => r.id === u.roomId) ?? rooms[0];
+      return {
+        ...u,
+        roomId: room.id,
+        floorId: room.floorId,
+        position: room.id === u.roomId ? u.position : room.centroid,
+        widthMm: machine.widthMm ?? u.widthMm,
+        heightMm: machine.heightMm ?? u.heightMm,
+        depthMm: machine.depthMm ?? u.depthMm,
+        productId: machine.id,
+        catalogVersion: hvacCatalog.version,
+      };
+    }),
     compatibilityStatus: "verified",
+    decisionOrigin: "confirmed",
+    linearPlan: previous?.linearPlan ?? null,
   };
   return {
     ...project,
@@ -155,8 +170,26 @@ export function applyManualDuctedSystem(
     catalogVersion: "manual",
     genericMachine: manual,
     dataOrigin: "manual",
-    indoorUnits: [],
+    indoorUnits:
+      manual.widthMm && manual.heightMm && manual.depthMm
+        ? (previous?.indoorUnits ?? []).map((u) => {
+            const room = rooms.find((r) => r.id === u.roomId) ?? rooms[0];
+            return {
+              ...u,
+              roomId: room.id,
+              floorId: room.floorId,
+              position: room.id === u.roomId ? u.position : room.centroid,
+              widthMm: manual.widthMm!,
+              heightMm: manual.heightMm!,
+              depthMm: manual.depthMm!,
+              productId: `manual-${id}`,
+              catalogVersion: "manual",
+            };
+          })
+        : [],
     compatibilityStatus: "unverifiable",
+    decisionOrigin: "manual",
+    linearPlan: previous?.linearPlan ?? null,
   };
   return refreshDuctedBindings({
     ...project,
@@ -183,6 +216,7 @@ export function removeHvacSystem(project: Project, id: string): Project {
   return {
     ...project,
     hvacSystems: remaining,
+    plenums: project.plenums.filter((pl) => pl.systemId !== id),
     airTerminals: project.airTerminals.filter((t) => t.systemId !== id),
     rooms: project.rooms.map((r) => ({
       ...r,

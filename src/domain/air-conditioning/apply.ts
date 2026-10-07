@@ -57,6 +57,7 @@ export function splitSystemFromSolution(
           depthMm: unit.depthMm,
           productId: unit.id,
           catalogVersion: catalog.version,
+          locked: old?.locked ?? false,
         };
       });
   return {
@@ -70,6 +71,8 @@ export function splitSystemFromSolution(
     catalogVersion: catalog.version,
     indoorUnits,
     compatibilityStatus: "verified",
+    decisionOrigin: "confirmed",
+    linearPlan: null,
   };
 }
 export function applySplitSystem(

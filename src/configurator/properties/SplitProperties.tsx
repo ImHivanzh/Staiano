@@ -13,6 +13,8 @@ import {
 } from "@/domain/geometry/placement";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { ArrowsOutCardinal, Info } from "@phosphor-icons/react";
+import { splitUnitPresentation } from "@/domain/catalogs/split-presentation";
+import Image from "next/image";
 export function SplitProperties({
   project,
   id,
@@ -34,9 +36,29 @@ export function SplitProperties({
     );
   if (!room) return null;
   const slot = system.indoorUnits.findIndex((u) => u.id === id);
+  const series = model && splitUnitPresentation(model);
   return (
     <div className="corpo-proprieta">
       <h3>{model?.model ?? unit.productId}</h3>
+      {series && (
+        <>
+          <h4>{series.title}</h4>
+          <Image
+            src={series.productPhoto.localPath}
+            alt={series.productPhoto.caption}
+            width={420}
+            height={210}
+            unoptimized
+            className="foto-serie"
+          />
+          <p className="nota">{series.features.join(" · ")}</p>
+          {series.gains.map((g) => (
+            <p className="nota" key={g}>
+              {g}
+            </p>
+          ))}
+        </>
+      )}
       <p>
         {room.name} · {system.manufacturer}
       </p>

@@ -1,0 +1,2572 @@
+{
+  "indoorUnits": [
+    {
+      "id": "daikin-ftxa20cw",
+      "manufacturer": "Daikin",
+      "family": "Stylish",
+      "model": "FTXA20CW",
+      "sizeClass": "20",
+      "nominalCoolingW": 2000,
+      "nominalHeatingW": 2500,
+      "widthMm": 798,
+      "heightMm": 295,
+      "depthMm": 189,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa25cw",
+      "manufacturer": "Daikin",
+      "family": "Stylish",
+      "model": "FTXA25CW",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 2800,
+      "widthMm": 798,
+      "heightMm": 295,
+      "depthMm": 189,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa35cw",
+      "manufacturer": "Daikin",
+      "family": "Stylish",
+      "model": "FTXA35CW",
+      "sizeClass": "35",
+      "nominalCoolingW": 3400,
+      "nominalHeatingW": 4000,
+      "widthMm": 798,
+      "heightMm": 295,
+      "depthMm": 189,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa42cw",
+      "manufacturer": "Daikin",
+      "family": "Stylish",
+      "model": "FTXA42CW",
+      "sizeClass": "42",
+      "nominalCoolingW": 4200,
+      "nominalHeatingW": 5400,
+      "widthMm": 798,
+      "heightMm": 295,
+      "depthMm": 189,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa50cw",
+      "manufacturer": "Daikin",
+      "family": "Stylish",
+      "model": "FTXA50CW",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000,
+      "nominalHeatingW": 5800,
+      "widthMm": 798,
+      "heightMm": 295,
+      "depthMm": 189,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxj20aw",
+      "manufacturer": "Daikin",
+      "family": "Emura",
+      "model": "FTXJ20AW",
+      "sizeClass": "20",
+      "nominalCoolingW": 2000,
+      "nominalHeatingW": 2500,
+      "widthMm": 900,
+      "heightMm": 305,
+      "depthMm": 212,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj25aw",
+      "manufacturer": "Daikin",
+      "family": "Emura",
+      "model": "FTXJ25AW",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 2800,
+      "widthMm": 900,
+      "heightMm": 305,
+      "depthMm": 212,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj35aw",
+      "manufacturer": "Daikin",
+      "family": "Emura",
+      "model": "FTXJ35AW",
+      "sizeClass": "35",
+      "nominalCoolingW": 3400,
+      "nominalHeatingW": 4000,
+      "widthMm": 900,
+      "heightMm": 305,
+      "depthMm": 212,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj42aw",
+      "manufacturer": "Daikin",
+      "family": "Emura",
+      "model": "FTXJ42AW",
+      "sizeClass": "42",
+      "nominalCoolingW": 4200,
+      "nominalHeatingW": 5400,
+      "widthMm": 900,
+      "heightMm": 305,
+      "depthMm": 212,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj50aw",
+      "manufacturer": "Daikin",
+      "family": "Emura",
+      "model": "FTXJ50AW",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000,
+      "nominalHeatingW": 5800,
+      "widthMm": 900,
+      "heightMm": 305,
+      "depthMm": 212,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxp20n9",
+      "manufacturer": "Daikin",
+      "family": "Comfora",
+      "model": "FTXP20N9",
+      "sizeClass": "20",
+      "nominalCoolingW": 2000,
+      "nominalHeatingW": 2500,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp25n9",
+      "manufacturer": "Daikin",
+      "family": "Comfora",
+      "model": "FTXP25N9",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 3000,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp35n9",
+      "manufacturer": "Daikin",
+      "family": "Comfora",
+      "model": "FTXP35N9",
+      "sizeClass": "35",
+      "nominalCoolingW": 3500,
+      "nominalHeatingW": 4000,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp50n9",
+      "manufacturer": "Daikin",
+      "family": "Comfora",
+      "model": "FTXP50N9",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000,
+      "nominalHeatingW": 6000,
+      "widthMm": 990,
+      "heightMm": 295,
+      "depthMm": 263,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp60n",
+      "manufacturer": "Daikin",
+      "family": "Comfora",
+      "model": "FTXP60N",
+      "sizeClass": "60",
+      "nominalCoolingW": 6000,
+      "nominalHeatingW": 7000,
+      "widthMm": 990,
+      "heightMm": 295,
+      "depthMm": 263,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp71n",
+      "manufacturer": "Daikin",
+      "family": "Comfora",
+      "model": "FTXP71N",
+      "sizeClass": "71",
+      "nominalCoolingW": 7100,
+      "nominalHeatingW": 8200,
+      "widthMm": 990,
+      "heightMm": 295,
+      "depthMm": 263,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxf20e",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF20E",
+      "sizeClass": "20",
+      "nominalCoolingW": 2000,
+      "nominalHeatingW": 2400,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf25e",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF25E",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 2800,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf35e",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF35E",
+      "sizeClass": "35",
+      "nominalCoolingW": 3300,
+      "nominalHeatingW": 3500,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf42e",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF42E",
+      "sizeClass": "42",
+      "nominalCoolingW": 4200,
+      "nominalHeatingW": 4600,
+      "widthMm": 770,
+      "heightMm": 286,
+      "depthMm": 225,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf50d",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF50D",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000,
+      "nominalHeatingW": 6000,
+      "widthMm": 990,
+      "heightMm": 295,
+      "depthMm": 263,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf60d",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF60D",
+      "sizeClass": "60",
+      "nominalCoolingW": 6000,
+      "nominalHeatingW": 6400,
+      "widthMm": 990,
+      "heightMm": 295,
+      "depthMm": 263,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf71d",
+      "manufacturer": "Daikin",
+      "family": "Sensira",
+      "model": "FTXF71D",
+      "sizeClass": "71",
+      "nominalCoolingW": 7100,
+      "nominalHeatingW": 8200,
+      "widthMm": 990,
+      "heightMm": 295,
+      "depthMm": 263,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "gree-gwh09aucxb-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Clivia",
+      "model": "GWH09AUCXB-K6DNA1A/I",
+      "sizeClass": "9",
+      "nominalCoolingW": 2700.0,
+      "nominalHeatingW": 3000.0,
+      "widthMm": 837,
+      "heightMm": 293,
+      "depthMm": 200,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh12aucxb-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Clivia",
+      "model": "GWH12AUCXB-K6DNA1A/I",
+      "sizeClass": "12",
+      "nominalCoolingW": 3510.0,
+      "nominalHeatingW": 3810.0,
+      "widthMm": 837,
+      "heightMm": 293,
+      "depthMm": 200,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh18audxd-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Clivia",
+      "model": "GWH18AUDXD-K6DNA1A/I",
+      "sizeClass": "18",
+      "nominalCoolingW": 5300.0,
+      "nominalHeatingW": 5350.0,
+      "widthMm": 993,
+      "heightMm": 311,
+      "depthMm": 222,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh24audxf-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Clivia",
+      "model": "GWH24AUDXF-K6DNA1A/I",
+      "sizeClass": "24",
+      "nominalCoolingW": 7100.0,
+      "nominalHeatingW": 7300.0,
+      "widthMm": 993,
+      "heightMm": 311,
+      "depthMm": 222,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh09avcxb-k6dna1b-i",
+      "manufacturer": "Gree",
+      "family": "Airy",
+      "model": "GWH09AVCXB-K6DNA1B/I",
+      "sizeClass": "9",
+      "nominalCoolingW": 2700.0,
+      "nominalHeatingW": 3000.0,
+      "widthMm": 907,
+      "heightMm": 292,
+      "depthMm": 200,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "gree-gwh12avcxd-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Airy",
+      "model": "GWH12AVCXD-K6DNA1A/I",
+      "sizeClass": "12",
+      "nominalCoolingW": 3500.0,
+      "nominalHeatingW": 3810.0,
+      "widthMm": 907,
+      "heightMm": 292,
+      "depthMm": 200,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "gree-gwh18avdxe-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Airy",
+      "model": "GWH18AVDXE-K6DNA1A/I",
+      "sizeClass": "18",
+      "nominalCoolingW": 5300.0,
+      "nominalHeatingW": 5600.0,
+      "widthMm": 970,
+      "heightMm": 347,
+      "depthMm": 257,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "gree-gwh24avexf-k6dna1a-i",
+      "manufacturer": "Gree",
+      "family": "Airy",
+      "model": "GWH24AVEXF-K6DNA1A/I",
+      "sizeClass": "24",
+      "nominalCoolingW": 7100.0,
+      "nominalHeatingW": 7800.0,
+      "widthMm": 1110,
+      "heightMm": 347,
+      "depthMm": 257,
+      "region": "Italy",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr25vf",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-HR",
+      "model": "MSZ-HR25VF",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500.0,
+      "nominalHeatingW": 3150.0,
+      "widthMm": 838,
+      "heightMm": 280,
+      "depthMm": 228,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr35vf",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-HR",
+      "model": "MSZ-HR35VF",
+      "sizeClass": "35",
+      "nominalCoolingW": 3400.0,
+      "nominalHeatingW": 3600.0,
+      "widthMm": 838,
+      "heightMm": 280,
+      "depthMm": 228,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr50vf",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-HR",
+      "model": "MSZ-HR50VF",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000.0,
+      "nominalHeatingW": 5400.0,
+      "widthMm": 838,
+      "heightMm": 280,
+      "depthMm": 228,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr60vf",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-HR",
+      "model": "MSZ-HR60VF",
+      "sizeClass": "60",
+      "nominalCoolingW": 6100.0,
+      "nominalHeatingW": 6800.0,
+      "widthMm": 923,
+      "heightMm": 305,
+      "depthMm": 263,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr71vf",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-HR",
+      "model": "MSZ-HR71VF",
+      "sizeClass": "71",
+      "nominalCoolingW": 7100.0,
+      "nominalHeatingW": 8100.0,
+      "widthMm": 923,
+      "heightMm": 305,
+      "depthMm": 263,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef18vgkw",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-EF",
+      "model": "MSZ-EF18VGKW",
+      "sizeClass": "18",
+      "nominalCoolingW": 1800.0,
+      "nominalHeatingW": 2000.0,
+      "widthMm": 885,
+      "heightMm": 299,
+      "depthMm": 195,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef22vgkw",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-EF",
+      "model": "MSZ-EF22VGKW",
+      "sizeClass": "22",
+      "nominalCoolingW": 2200.0,
+      "nominalHeatingW": 2600.0,
+      "widthMm": 885,
+      "heightMm": 299,
+      "depthMm": 195,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef25vgkw",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-EF",
+      "model": "MSZ-EF25VGKW",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500.0,
+      "nominalHeatingW": 3200.0,
+      "widthMm": 885,
+      "heightMm": 299,
+      "depthMm": 195,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef35vgkw",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-EF",
+      "model": "MSZ-EF35VGKW",
+      "sizeClass": "35",
+      "nominalCoolingW": 3500.0,
+      "nominalHeatingW": 4000.0,
+      "widthMm": 885,
+      "heightMm": 299,
+      "depthMm": 195,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef50vgkw",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-EF",
+      "model": "MSZ-EF50VGKW",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000.0,
+      "nominalHeatingW": 5800.0,
+      "widthMm": 885,
+      "heightMm": 299,
+      "depthMm": 195,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln18vg2w",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-LN",
+      "model": "MSZ-LN18VG2W",
+      "sizeClass": "18",
+      "nominalCoolingW": 1800.0,
+      "nominalHeatingW": 2000.0,
+      "widthMm": 890,
+      "heightMm": 307,
+      "depthMm": 233,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln25vg2w",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-LN",
+      "model": "MSZ-LN25VG2W",
+      "sizeClass": "25",
+      "nominalCoolingW": 2500.0,
+      "nominalHeatingW": 3200.0,
+      "widthMm": 890,
+      "heightMm": 307,
+      "depthMm": 233,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln35vg2w",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-LN",
+      "model": "MSZ-LN35VG2W",
+      "sizeClass": "35",
+      "nominalCoolingW": 3500.0,
+      "nominalHeatingW": 4000.0,
+      "widthMm": 890,
+      "heightMm": 307,
+      "depthMm": 233,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln50vg2w",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-LN",
+      "model": "MSZ-LN50VG2W",
+      "sizeClass": "50",
+      "nominalCoolingW": 5000.0,
+      "nominalHeatingW": 6000.0,
+      "widthMm": 890,
+      "heightMm": 307,
+      "depthMm": 233,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln60vg2w",
+      "manufacturer": "Mitsubishi Electric",
+      "family": "MSZ-LN",
+      "model": "MSZ-LN60VG2W",
+      "sizeClass": "60",
+      "nominalCoolingW": 6100.0,
+      "nominalHeatingW": 6800.0,
+      "widthMm": 890,
+      "heightMm": 307,
+      "depthMm": 233,
+      "region": "UK; disponibilità Italia da verificare",
+      "notes": "Codici e condizioni della fonte conservati. Disponibilità e suffisso di revisione da verificare in fase d'ordine.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    }
+  ],
+  "combinations": [
+    {
+      "id": "daikin-ftxa20cw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXA20A9",
+      "indoorProductIds": [
+        "daikin-ftxa20cw"
+      ],
+      "coolingCapacityW": 2000,
+      "heatingCapacityW": 2500,
+      "indoorCoolingW": [
+        2000
+      ],
+      "indoorHeatingW": [
+        2500
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa25cw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXA25A9",
+      "indoorProductIds": [
+        "daikin-ftxa25cw"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 2800,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        2800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa35cw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXA35A9",
+      "indoorProductIds": [
+        "daikin-ftxa35cw"
+      ],
+      "coolingCapacityW": 3400,
+      "heatingCapacityW": 4000,
+      "indoorCoolingW": [
+        3400
+      ],
+      "indoorHeatingW": [
+        4000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa42cw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXA42B9",
+      "indoorProductIds": [
+        "daikin-ftxa42cw"
+      ],
+      "coolingCapacityW": 4200,
+      "heatingCapacityW": 5400,
+      "indoorCoolingW": [
+        4200
+      ],
+      "indoorHeatingW": [
+        5400
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxa50cw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXA50B8",
+      "indoorProductIds": [
+        "daikin-ftxa50cw"
+      ],
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 5800,
+      "indoorCoolingW": [
+        5000
+      ],
+      "indoorHeatingW": [
+        5800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 47
+      }
+    },
+    {
+      "id": "daikin-ftxj20aw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXJ20A9",
+      "indoorProductIds": [
+        "daikin-ftxj20aw"
+      ],
+      "coolingCapacityW": 2000,
+      "heatingCapacityW": 2500,
+      "indoorCoolingW": [
+        2000
+      ],
+      "indoorHeatingW": [
+        2500
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj25aw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXJ25A9",
+      "indoorProductIds": [
+        "daikin-ftxj25aw"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 2800,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        2800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj35aw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXJ35A9",
+      "indoorProductIds": [
+        "daikin-ftxj35aw"
+      ],
+      "coolingCapacityW": 3400,
+      "heatingCapacityW": 4000,
+      "indoorCoolingW": [
+        3400
+      ],
+      "indoorHeatingW": [
+        4000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj42aw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXJ42A9",
+      "indoorProductIds": [
+        "daikin-ftxj42aw"
+      ],
+      "coolingCapacityW": 4200,
+      "heatingCapacityW": 5400,
+      "indoorCoolingW": [
+        4200
+      ],
+      "indoorHeatingW": [
+        5400
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxj50aw-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXJ50A9",
+      "indoorProductIds": [
+        "daikin-ftxj50aw"
+      ],
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 5800,
+      "indoorCoolingW": [
+        5000
+      ],
+      "indoorHeatingW": [
+        5800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 49
+      }
+    },
+    {
+      "id": "daikin-ftxp20n9-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXP20N9",
+      "indoorProductIds": [
+        "daikin-ftxp20n9"
+      ],
+      "coolingCapacityW": 2000,
+      "heatingCapacityW": 2500,
+      "indoorCoolingW": [
+        2000
+      ],
+      "indoorHeatingW": [
+        2500
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp25n9-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXP25N9",
+      "indoorProductIds": [
+        "daikin-ftxp25n9"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 3000,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        3000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp35n9-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXP35N9",
+      "indoorProductIds": [
+        "daikin-ftxp35n9"
+      ],
+      "coolingCapacityW": 3500,
+      "heatingCapacityW": 4000,
+      "indoorCoolingW": [
+        3500
+      ],
+      "indoorHeatingW": [
+        4000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp50n9-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXP50N8",
+      "indoorProductIds": [
+        "daikin-ftxp50n9"
+      ],
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 6000,
+      "indoorCoolingW": [
+        5000
+      ],
+      "indoorHeatingW": [
+        6000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp60n-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXP60N9",
+      "indoorProductIds": [
+        "daikin-ftxp60n"
+      ],
+      "coolingCapacityW": 6000,
+      "heatingCapacityW": 7000,
+      "indoorCoolingW": [
+        6000
+      ],
+      "indoorHeatingW": [
+        7000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxp71n-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXP71N9",
+      "indoorProductIds": [
+        "daikin-ftxp71n"
+      ],
+      "coolingCapacityW": 7100,
+      "heatingCapacityW": 8200,
+      "indoorCoolingW": [
+        7100
+      ],
+      "indoorHeatingW": [
+        8200
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 54
+      }
+    },
+    {
+      "id": "daikin-ftxf20e-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF20E",
+      "indoorProductIds": [
+        "daikin-ftxf20e"
+      ],
+      "coolingCapacityW": 2000,
+      "heatingCapacityW": 2400,
+      "indoorCoolingW": [
+        2000
+      ],
+      "indoorHeatingW": [
+        2400
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf25e-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF25E",
+      "indoorProductIds": [
+        "daikin-ftxf25e"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 2800,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        2800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf35e-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF35E",
+      "indoorProductIds": [
+        "daikin-ftxf35e"
+      ],
+      "coolingCapacityW": 3300,
+      "heatingCapacityW": 3500,
+      "indoorCoolingW": [
+        3300
+      ],
+      "indoorHeatingW": [
+        3500
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf42e-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF42E",
+      "indoorProductIds": [
+        "daikin-ftxf42e"
+      ],
+      "coolingCapacityW": 4200,
+      "heatingCapacityW": 4600,
+      "indoorCoolingW": [
+        4200
+      ],
+      "indoorHeatingW": [
+        4600
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf50d-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF50D",
+      "indoorProductIds": [
+        "daikin-ftxf50d"
+      ],
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 6000,
+      "indoorCoolingW": [
+        5000
+      ],
+      "indoorHeatingW": [
+        6000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf60d-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF60D9",
+      "indoorProductIds": [
+        "daikin-ftxf60d"
+      ],
+      "coolingCapacityW": 6000,
+      "heatingCapacityW": 6400,
+      "indoorCoolingW": [
+        6000
+      ],
+      "indoorHeatingW": [
+        6400
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "daikin-ftxf71d-mono",
+      "manufacturer": "Daikin",
+      "mode": "mono",
+      "outdoorModel": "RXF71D9",
+      "indoorProductIds": [
+        "daikin-ftxf71d"
+      ],
+      "coolingCapacityW": 7100,
+      "heatingCapacityW": 8200,
+      "indoorCoolingW": [
+        7100
+      ],
+      "indoorHeatingW": [
+        8200
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "documentRevision": "Catalogo residenziale 2025",
+        "page": 55
+      }
+    },
+    {
+      "id": "gree-gwh09aucxb-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH09AUCXB-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh09aucxb-k6dna1a-i"
+      ],
+      "coolingCapacityW": 2700.0,
+      "heatingCapacityW": 3000.0,
+      "indoorCoolingW": [
+        2700.0
+      ],
+      "indoorHeatingW": [
+        3000.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh12aucxb-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH12AUCXB-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh12aucxb-k6dna1a-i"
+      ],
+      "coolingCapacityW": 3510.0,
+      "heatingCapacityW": 3810.0,
+      "indoorCoolingW": [
+        3510.0
+      ],
+      "indoorHeatingW": [
+        3810.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh18audxd-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH18AUDXD-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh18audxd-k6dna1a-i"
+      ],
+      "coolingCapacityW": 5300.0,
+      "heatingCapacityW": 5350.0,
+      "indoorCoolingW": [
+        5300.0
+      ],
+      "indoorHeatingW": [
+        5350.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh24audxf-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH24AUDXF-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh24audxf-k6dna1a-i"
+      ],
+      "coolingCapacityW": 7100.0,
+      "heatingCapacityW": 7300.0,
+      "indoorCoolingW": [
+        7100.0
+      ],
+      "indoorHeatingW": [
+        7300.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 24
+      }
+    },
+    {
+      "id": "gree-gwh09avcxb-k6dna1b-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH09AVCXB-K6DNA1B/O",
+      "indoorProductIds": [
+        "gree-gwh09avcxb-k6dna1b-i"
+      ],
+      "coolingCapacityW": 2700.0,
+      "heatingCapacityW": 3000.0,
+      "indoorCoolingW": [
+        2700.0
+      ],
+      "indoorHeatingW": [
+        3000.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "gree-gwh12avcxd-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH12AVCXD-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh12avcxd-k6dna1a-i"
+      ],
+      "coolingCapacityW": 3500.0,
+      "heatingCapacityW": 3810.0,
+      "indoorCoolingW": [
+        3500.0
+      ],
+      "indoorHeatingW": [
+        3810.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "gree-gwh18avdxe-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH18AVDXE-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh18avdxe-k6dna1a-i"
+      ],
+      "coolingCapacityW": 5300.0,
+      "heatingCapacityW": 5600.0,
+      "indoorCoolingW": [
+        5300.0
+      ],
+      "indoorHeatingW": [
+        5600.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "gree-gwh24avexf-k6dna1a-i-mono",
+      "manufacturer": "Gree",
+      "mode": "mono",
+      "outdoorModel": "GWH24AVEXF-K6DNA1A/O",
+      "indoorProductIds": [
+        "gree-gwh24avexf-k6dna1a-i"
+      ],
+      "coolingCapacityW": 7100.0,
+      "heatingCapacityW": 7800.0,
+      "indoorCoolingW": [
+        7100.0
+      ],
+      "indoorHeatingW": [
+        7800.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "Italy",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "importedAt": "2026-10-03T05:50:39.903129+00:00",
+        "documentRevision": "Catalogo residenziale Gree 2026",
+        "page": 14
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr25vf-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-HR25VF",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-hr25vf"
+      ],
+      "coolingCapacityW": 2500.0,
+      "heatingCapacityW": 3150.0,
+      "indoorCoolingW": [
+        2500.0
+      ],
+      "indoorHeatingW": [
+        3150.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr35vf-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-HR35VF",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-hr35vf"
+      ],
+      "coolingCapacityW": 3400.0,
+      "heatingCapacityW": 3600.0,
+      "indoorCoolingW": [
+        3400.0
+      ],
+      "indoorHeatingW": [
+        3600.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr50vf-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-HR50VF",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-hr50vf"
+      ],
+      "coolingCapacityW": 5000.0,
+      "heatingCapacityW": 5400.0,
+      "indoorCoolingW": [
+        5000.0
+      ],
+      "indoorHeatingW": [
+        5400.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr60vf-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-HR60VF",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-hr60vf"
+      ],
+      "coolingCapacityW": 6100.0,
+      "heatingCapacityW": 6800.0,
+      "indoorCoolingW": [
+        6100.0
+      ],
+      "indoorHeatingW": [
+        6800.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-hr71vf-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-HR71VF",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-hr71vf"
+      ],
+      "coolingCapacityW": 7100.0,
+      "heatingCapacityW": 8100.0,
+      "indoorCoolingW": [
+        7100.0
+      ],
+      "indoorHeatingW": [
+        8100.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 55
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef25vgkw-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-EF25VG",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ef25vgkw"
+      ],
+      "coolingCapacityW": 2500.0,
+      "heatingCapacityW": 3200.0,
+      "indoorCoolingW": [
+        2500.0
+      ],
+      "indoorHeatingW": [
+        3200.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef35vgkw-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-EF35VG",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ef35vgkw"
+      ],
+      "coolingCapacityW": 3500.0,
+      "heatingCapacityW": 4000.0,
+      "indoorCoolingW": [
+        3500.0
+      ],
+      "indoorHeatingW": [
+        4000.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ef50vgkw-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-EF50VG",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ef50vgkw"
+      ],
+      "coolingCapacityW": 5000.0,
+      "heatingCapacityW": 5800.0,
+      "indoorCoolingW": [
+        5000.0
+      ],
+      "indoorHeatingW": [
+        5800.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 51
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln25vg2w-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-LN25VG2",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ln25vg2w"
+      ],
+      "coolingCapacityW": 2500.0,
+      "heatingCapacityW": 3200.0,
+      "indoorCoolingW": [
+        2500.0
+      ],
+      "indoorHeatingW": [
+        3200.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln35vg2w-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-LN35VG2",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ln35vg2w"
+      ],
+      "coolingCapacityW": 3500.0,
+      "heatingCapacityW": 4000.0,
+      "indoorCoolingW": [
+        3500.0
+      ],
+      "indoorHeatingW": [
+        4000.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln50vg2w-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-LN50VG2",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ln50vg2w"
+      ],
+      "coolingCapacityW": 5000.0,
+      "heatingCapacityW": 6000.0,
+      "indoorCoolingW": [
+        5000.0
+      ],
+      "indoorHeatingW": [
+        6000.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    },
+    {
+      "id": "mitsubishi-electric-msz-ln60vg2w-mono",
+      "manufacturer": "Mitsubishi Electric",
+      "mode": "mono",
+      "outdoorModel": "MUZ-LN60VG2",
+      "indoorProductIds": [
+        "mitsubishi-electric-msz-ln60vg2w"
+      ],
+      "coolingCapacityW": 6100.0,
+      "heatingCapacityW": 6800.0,
+      "indoorCoolingW": [
+        6100.0
+      ],
+      "indoorHeatingW": [
+        6800.0
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Abbinamento monosplit e capacità nominali pubblicati; nessuna combinazione multisplit dedotta.",
+      "region": "UK; disponibilità Italia da verificare",
+      "secondarySourceMetadata": [],
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "importedAt": "2026-10-03T05:56:49.307029+00:00",
+        "documentRevision": "Residential product guide 2025 UK",
+        "page": 49
+      }
+    }
+  ]
+}

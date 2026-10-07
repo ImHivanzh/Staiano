@@ -4,6 +4,7 @@ import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine, distributeAirflow } from "./calculate";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { ductedMaximumAirflow } from "./machine";
+import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 /** Refresh automatic machine selection and demand; installed terminal style stays chosen. */
 export function refreshDuctedBindings(project: Project): Project {
   const systems = project.hvacSystems.map((system) => {
@@ -27,6 +28,25 @@ export function refreshDuctedBindings(project: Project): Project {
     const catalog = hvacCatalogAtVersion(system.catalogVersion);
     if (!catalog)
       return { ...system, compatibilityStatus: "unverifiable" as const };
+    if (
+      system.decisionOrigin === "confirmed" ||
+      system.decisionOrigin === "manual" ||
+      system.indoorUnits.some((u) => u.locked)
+    ) {
+      const chosen = hvacProductAtVersion(
+        system.productId,
+        system.catalogVersion,
+      );
+      const maximum = maximumAirflowOption(chosen);
+      return chosen && maximum
+        ? {
+            ...system,
+            capacityW: chosen.coolingCapacityW,
+            airflowM3h: maximum.airflowM3h,
+            compatibilityStatus: "verified" as const,
+          }
+        : { ...system, compatibilityStatus: "unverifiable" as const };
+    }
     const load = project.rooms
         .filter((r) => system.roomIds.includes(r.id))
         .reduce((sum, r) => sum + r.designLoadW, 0),
@@ -131,6 +151,40 @@ export function refreshDuctedBindings(project: Project): Project {
           .slice(0, -1)
           .reduce((sum, t) => sum + t.requiredAirflowM3h, 0);
     }
+  }
+  // Operator pieces have no mandatory one-point/one-vent mapping. Allocate room
+  // demand by declared capacity (length for a homogeneous linear model).
+  for (const system of systems.filter((s) => s.type === "ducted")) {
+    const flow = ductedMaximumAirflow(system);
+    const rooms = project.rooms.filter((r) => system.roomIds.includes(r.id));
+    if (!flow || rooms.some((r) => r.geometryStatus !== "closed")) continue;
+    const allocations = distributeAirflow(rooms, flow);
+    for (const allocation of allocations)
+      for (const use of ["supply", "return"] as const) {
+        const pieces = airTerminals.filter(
+          (t) =>
+            t.systemId === system.id &&
+            t.roomId === allocation.roomId &&
+            t.use === use,
+        );
+        if (
+          !pieces.some((t) => t.decisionOrigin !== "calculated" || t.proposalId)
+        )
+          continue;
+        const capacity = pieces.reduce(
+          (sum, t) => sum + t.availableAirflowM3h,
+          0,
+        );
+        if (capacity <= 0) continue;
+        let assigned = 0;
+        pieces.forEach((t, i) => {
+          t.requiredAirflowM3h =
+            i === pieces.length - 1
+              ? allocation.airflowM3h - assigned
+              : (allocation.airflowM3h * t.availableAirflowM3h) / capacity;
+          assigned += t.requiredAirflowM3h;
+        });
+      }
   }
   return { ...project, hvacSystems: systems, airTerminals };
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   clearLoginAttempts,
+  authenticateUser,
   cookieOptions,
   createSession,
   getAccessConfig,
@@ -8,42 +9,12 @@ import {
   safeReturnPath,
   SESSION_COOKIE,
   takeLoginAttempt,
-  verifyLoginPassword,
 } from "@/server/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-async function boundedForm(request: Request) {
-  if (
-    !request.headers
-      .get("content-type")
-      ?.toLowerCase()
-      .startsWith("application/x-www-form-urlencoded")
-  )
-    throw new Error("invalid form");
-  const declared = Number(request.headers.get("content-length") || 0);
-  if (!Number.isFinite(declared) || declared > 4096 || !request.body)
-    throw new Error("invalid form");
-  const reader = request.body.getReader();
-  const chunks: Uint8Array[] = [];
-  let length = 0;
-  try {
-    for (;;) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      length += value.byteLength;
-      if (length > 4096) {
-        await reader.cancel();
-        throw new Error("invalid form");
-      }
-      chunks.push(value);
-    }
-  } finally {
-    reader.releaseLock();
-  }
-  return new URLSearchParams(Buffer.concat(chunks).toString("utf8"));
-}
+import { boundedForm } from "@/server/auth-form";
 
 export async function POST(request: Request) {
   if (!isSameOrigin(request))
@@ -82,7 +53,12 @@ export async function POST(request: Request) {
     );
   }
   const next = safeReturnPath(form.get("next"));
-  if (!(await verifyLoginPassword(form.get("password") || "", config))) {
+  const user = await authenticateUser(
+    form.get("username") || "",
+    form.get("password") || "",
+    config,
+  );
+  if (!user) {
     return new NextResponse(null, {
       status: 303,
       headers: {
@@ -94,11 +70,16 @@ export async function POST(request: Request) {
   clearLoginAttempts(request);
   const response = new NextResponse(null, {
     status: 303,
-    headers: { Location: next, "Cache-Control": "private, no-store" },
+    headers: {
+      Location: user.mustChangePassword
+        ? `/accedi?password=change&next=${encodeURIComponent(next)}`
+        : next,
+      "Cache-Control": "private, no-store",
+    },
   });
   response.cookies.set(
     SESSION_COOKIE,
-    createSession(config),
+    createSession(config, Date.now(), config.users ? user : undefined),
     cookieOptions(request),
   );
   return response;

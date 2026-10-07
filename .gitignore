@@ -16,6 +16,7 @@ catalog-data/sources/models3d/*.zip
 tmp/
 .cache/
 .env.local
+istruzioni apiduck.txt
 native/**/bin/
 native/**/obj/
 native/runtime/*.exe

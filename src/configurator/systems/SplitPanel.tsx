@@ -8,9 +8,12 @@ import {
 } from "@/domain/catalogs/splits";
 import { applySplitSystem } from "@/domain/air-conditioning/apply";
 import { sizeSplitSystems } from "@/domain/air-conditioning/size";
+import { wattsToBtuh } from "@/domain/thermal/calculate";
 import { removeHvacSystem } from "@/domain/ducted/apply";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
+import { splitUnitPresentation } from "@/domain/catalogs/split-presentation";
+import Image from "next/image";
 export function SplitPanel({
   project,
   room,
@@ -26,16 +29,19 @@ export function SplitPanel({
       existing?.manufacturer ?? "Daikin",
     ),
     [roomIds, setRoomIds] = useState(existing?.roomIds ?? [room.id]);
-  const preview = sizeSplitSystems(
+  const [combinationId, setCombinationId] = useState(existing?.productId ?? "");
+  const solutions = sizeSplitSystems(
       project,
       roomIds,
       manufacturer,
       splitCatalog,
-    )[0],
+    ),
+    preview =
+      solutions.find((s) => s.combination.id === combinationId) ?? solutions[0],
     installed = existing
       ? splitCombinationAtVersion(existing.productId, existing.catalogVersion)
       : null,
-    combo = installed ?? preview?.combination;
+    combo = preview?.combination ?? installed;
   const catalog = existing
     ? splitCatalogAtVersion(existing.catalogVersion)
     : splitCatalog;
@@ -58,6 +64,51 @@ export function SplitPanel({
           ))}
         </select>
       </label>
+      <label className="campo">
+        <span>Serie e modello</span>
+        <select
+          aria-label="Serie e modello split"
+          value={preview?.combination.id ?? ""}
+          onChange={(e) => setCombinationId(e.target.value)}
+        >
+          {solutions.map((s) => (
+            <option key={s.combination.id} value={s.combination.id}>
+              {s.assignments
+                .map(
+                  (a) =>
+                    `${splitUnitPresentation(a.indoor)?.title ?? a.indoor.family} · ${a.indoor.model}`,
+                )
+                .join(" + ")}{" "}
+              / {s.combination.outdoorModel}
+            </option>
+          ))}
+        </select>
+      </label>
+      {preview?.assignments.map((a) => {
+        const series = splitUnitPresentation(a.indoor);
+        return series ? (
+          <div key={a.roomId}>
+            <Image
+              src={series.productPhoto.localPath}
+              alt={series.productPhoto.caption}
+              width={420}
+              height={210}
+              unoptimized
+              className="foto-serie"
+            />
+            <strong>{series.title}</strong>
+            <p className="nota">{series.features.join(" · ")}</p>
+            {series.gains.map((g) => (
+              <p className="nota" key={g}>
+                {g}
+              </p>
+            ))}
+            <p className="nota">
+              {a.indoor.region ?? "Disponibilità secondo la fonte"}
+            </p>
+          </div>
+        ) : null;
+      })}
       <details>
         <summary>Ambienti climatizzati · {roomIds.length}</summary>
         <fieldset>
@@ -99,7 +150,7 @@ export function SplitPanel({
           {formatNumber(preview.combination.heatingCapacityW! / 1000)} kW
           <br />
           {formatNumber(
-            preview.combination.coolingCapacityW * 3.412142,
+            wattsToBtuh(preview.combination.coolingCapacityW),
             0,
           )}{" "}
           BTU/h
@@ -110,7 +161,13 @@ export function SplitPanel({
         disabled={!preview}
         onClick={() =>
           commit((p) =>
-            applySplitSystem(p, roomIds, manufacturer, existing?.id ?? null),
+            applySplitSystem(
+              p,
+              roomIds,
+              manufacturer,
+              existing?.id ?? null,
+              preview?.combination.id,
+            ),
           )
         }
       >

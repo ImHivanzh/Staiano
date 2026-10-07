@@ -58,7 +58,7 @@
   border-radius: 5px;
   padding: 3px 5px;
   color: #285e6c;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   box-shadow: 0 1px 4px #466c6315;
 }
@@ -139,4 +139,27 @@
   .preview header button {
     padding: 6px;
   }
+}
+.preview:fullscreen {
+  padding: 20px;
+  overflow: auto;
+  background: #f1f5f2;
+}
+.preview:fullscreen .diagram {
+  height: 58dvh;
+  min-height: 340px;
+}
+.preview:fullscreen h4 {
+  font-size: 28px;
+}
+.preview:fullscreen header p,
+.preview:fullscreen .portLabel {
+  font-size: 18px;
+}
+.preview:fullscreen .legend {
+  max-width: 1100px;
+  margin-inline: auto;
+}
+.preview:fullscreen header button {
+  font-size: 15px;
 }

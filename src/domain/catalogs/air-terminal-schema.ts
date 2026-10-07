@@ -39,6 +39,14 @@ export const airTerminalVariantSchema = z.object({
   modelCode: z.string().min(1).optional(),
   modelCodes: z.array(z.string().min(1)).optional(),
   dimensionNote: z.string().optional(),
+  dimensionDrawing: z
+    .object({
+      localPath: z.string().startsWith("/catalog-assets/"),
+      sourceUrl: z.url(),
+      sha256: z.string().length(64),
+      caption: z.string().min(1),
+    })
+    .optional(),
   connectionDiameterMm: z.number().positive().nullable().optional(),
   connectionDiametersMm: z.array(z.number().positive()).optional(),
 });

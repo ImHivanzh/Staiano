@@ -1,0 +1,402 @@
+[
+  {
+    "manufacturer": "Daikin",
+    "family": "Sensira",
+    "title": "Sensira",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Wi-Fi predisposto, modulo opzionale",
+      "Timer e telecomando"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "Daikin",
+      "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+      "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+      "importedAt": "2026-10-03T02:41:21.764272+00:00",
+      "documentRevision": "Catalogo residenziale 2025",
+      "page": 55
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/daikin-sensira-official.jpg",
+      "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXF-E/FTXF-E_R.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+      "sha256": "7c086022b17595085cc696a6cf3aef8f87d21c57097c6bb442e686ffa43b816d",
+      "caption": "Sensira, immagine originale Daikin della serie"
+    }
+  },
+  {
+    "manufacturer": "Daikin",
+    "family": "Comfora",
+    "title": "Comfora",
+    "tier": 2,
+    "features": [
+      "Wi-Fi incluso/integrato secondo revisione",
+      "Filtro deodorizzante all'apatite di titanio",
+      "Modalità Comfort"
+    ],
+    "gains": [
+      "Rispetto a Sensira: controllo Wi-Fi incluso/integrato e filtro deodorizzante all'apatite di titanio."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Daikin",
+      "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+      "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+      "importedAt": "2026-10-03T02:41:21.764272+00:00",
+      "documentRevision": "Catalogo residenziale 2025",
+      "page": 54
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/daikin-comfora-official.jpg",
+      "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXP-N9_R.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+      "sha256": "315002f799326e6d9d2fcfe1fb12cdc65fd0a5515df67d639166d77ebbb3950b",
+      "caption": "Comfora, immagine originale Daikin della serie"
+    }
+  },
+  {
+    "manufacturer": "Daikin",
+    "family": "Perfera All Seasons",
+    "title": "Perfera All Seasons",
+    "tier": 3,
+    "features": [
+      "Flash Streamer",
+      "Sensore di movimento a due aree",
+      "Wi-Fi integrato",
+      "Funzione Heat Boost"
+    ],
+    "gains": [
+      "Rispetto a Comfora: Flash Streamer, sensore a due aree e Heat Boost."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Daikin",
+      "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+      "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+      "importedAt": "2026-10-03T02:41:21.764272+00:00",
+      "documentRevision": "Catalogo residenziale 2025",
+      "page": 51
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/daikin-perfera-all-seasons-official.jpg",
+      "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXM-A/correct/FTXM-A_R.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+      "sha256": "a32b9ae2ccede296c31c92ddcea2c35b071f0fe8a234b1daed8aefdd5d67ef1c",
+      "caption": "Perfera All Seasons, immagine originale Daikin della serie"
+    }
+  },
+  {
+    "manufacturer": "Daikin",
+    "family": "Stylish",
+    "title": "Stylish",
+    "tier": 4,
+    "features": [
+      "Flash Streamer",
+      "Intelligent Thermal Sensor",
+      "Wi-Fi integrato",
+      "Profondità 189 mm",
+      "Tre colori"
+    ],
+    "gains": [
+      "Rispetto a Perfera: corpo di design più compatto e Intelligent Thermal Sensor; condizioni e prestazioni restano specifiche del modello."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Daikin",
+      "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+      "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+      "importedAt": "2026-10-03T02:41:21.764272+00:00",
+      "documentRevision": "Catalogo residenziale 2025",
+      "page": 47
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/daikin-stylish-official.jpg",
+      "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXA-C(W_B_S)/FTXA-CW%20Right.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+      "sha256": "4f1971dfc4cffae9a16881f9c687ca1917bb9b9b4b259c06cdaeecf3104811de",
+      "caption": "Stylish, immagine originale Daikin della serie"
+    }
+  },
+  {
+    "manufacturer": "Daikin",
+    "family": "Emura",
+    "title": "Daikin Emura",
+    "tier": 5,
+    "features": [
+      "Flash Streamer",
+      "Intelligent Thermal Sensor e sensore a tre aree",
+      "Wi-Fi integrato",
+      "Design curvo in tre colori",
+      "Telecomando ARC488A1"
+    ],
+    "gains": [
+      "Rispetto a Stylish: design curvo Emura, sensore a tre aree e telecomando dedicato; non viene dichiarato un aumento universale di potenza."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Daikin",
+      "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+      "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+      "importedAt": "2026-10-03T02:41:21.764272+00:00",
+      "documentRevision": "Catalogo residenziale 2025",
+      "page": 49
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/daikin-emura-official.jpg",
+      "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXJ-AW/FTXJ-AW_right.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+      "sha256": "9edf10ba63abd345f32e0902889299617a1679f64d0166fbd868498720db2ed3",
+      "caption": "Daikin Emura, immagine originale Daikin della serie"
+    }
+  },
+  {
+    "manufacturer": "Gree",
+    "family": "Clivia",
+    "title": "Clivia",
+    "tier": 2,
+    "features": [
+      "Tecnologia G-AI",
+      "Lampada UV-C",
+      "I-Feel Plus",
+      "Wi-Fi con Bluetooth",
+      "Sette velocità"
+    ],
+    "gains": [
+      "Rispetto a Pular: tecnologia G-AI e lampada UV-C integrata. I-Feel Plus e sette velocità sono già presenti anche sulla gamma Pular documentata."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Gree",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+      "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+      "importedAt": "2026-10-03T05:50:39.903129+00:00",
+      "documentRevision": "Catalogo residenziale Gree 2026",
+      "page": 24
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/gree-clivia.png",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sha256": "cdb58ff4d67ec92b6879fa235721a867c5772c972d3b5d0322fa3227540098f4",
+      "caption": "Gree Clivia, immagine originale della serie"
+    }
+  },
+  {
+    "manufacturer": "Gree",
+    "family": "Airy",
+    "title": "Airy Silver",
+    "tier": 3,
+    "features": [
+      "Tecnologia G-AI 2.0",
+      "Controllo umidità intelligente",
+      "Lancio dichiarato fino a 15,5 m",
+      "Ampia oscillazione flap",
+      "Wi-Fi con Bluetooth"
+    ],
+    "gains": [
+      "Rispetto a Clivia: G-AI 2.0, controllo umidità intelligente e diffusione con lancio dichiarato fino a 15,5 m."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Gree",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+      "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+      "importedAt": "2026-10-03T05:50:39.903129+00:00",
+      "documentRevision": "Catalogo residenziale Gree 2026",
+      "page": 14
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/gree-airy.png",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sha256": "a69ef53f32ad6de854f73e2eee739f2c0db3792255a454ea2bf3fc5614b0e51d",
+      "caption": "Gree Airy, immagine originale della serie"
+    }
+  },
+  {
+    "manufacturer": "Gree",
+    "family": "Pular",
+    "title": "Pular",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "I-Feel Plus",
+      "Wi-Fi con Bluetooth",
+      "X-Fan",
+      "Sette velocità"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "Gree",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+      "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+      "importedAt": "2026-10-03T05:50:39.903129+00:00",
+      "documentRevision": "Catalogo residenziale Gree 2026",
+      "page": 32
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/gree-pular.png",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sha256": "122df1087cb0d2e30a6b62afb619b22f181d6bac5261030d80445204fc779061",
+      "caption": "Gree Pular, immagine originale della famiglia"
+    }
+  },
+  {
+    "manufacturer": "Gree",
+    "family": "Pular New",
+    "title": "Pular New",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "I-Feel Plus",
+      "Wi-Fi con Bluetooth",
+      "X-Fan",
+      "Sette velocità"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "Gree",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+      "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+      "importedAt": "2026-10-03T05:50:39.903129+00:00",
+      "documentRevision": "Catalogo residenziale Gree 2026",
+      "page": 32
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/gree-pular.png",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+      "sha256": "122df1087cb0d2e30a6b62afb619b22f181d6bac5261030d80445204fc779061",
+      "caption": "Gree Pular, immagine originale della famiglia"
+    }
+  },
+  {
+    "manufacturer": "Mitsubishi Electric",
+    "family": "MSZ-HR",
+    "title": "Classic / MSZ-HR",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Wi-Fi opzionale",
+      "Timer giornaliero"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "Mitsubishi Electric",
+      "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+      "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+      "importedAt": "2026-10-03T05:56:49.307029+00:00",
+      "documentRevision": "Residential product guide 2025 UK",
+      "page": 54
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/mitsubishi-msz-hr.png",
+      "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+      "sha256": "4271bd88297bbd45f53cdab2689d0de14d105f12c911662fbb609ab4d7a785eb",
+      "caption": "Classic / MSZ-HR, immagine originale del produttore"
+    }
+  },
+  {
+    "manufacturer": "Mitsubishi Electric",
+    "family": "MSZ-EF",
+    "title": "Kirigamine Zen / MSZ-EF",
+    "tier": 3,
+    "features": [
+      "Design Zen in tre colori",
+      "MELCloud Wi-Fi integrato",
+      "Filtro V-Blocking",
+      "Plasma Quad Connect opzionale"
+    ],
+    "gains": [
+      "Rispetto a Linea Plus: scelta di design Zen e tre colori. AY VGKP include Plasma Quad Plus; EF propone V-Blocking e Plasma Quad Connect opzionale. Il posizionamento di design non indica filtrazione superiore."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Mitsubishi Electric",
+      "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+      "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+      "importedAt": "2026-10-03T05:56:49.307029+00:00",
+      "documentRevision": "Residential product guide 2025 UK",
+      "page": 50
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/mitsubishi-msz-ef.png",
+      "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+      "sha256": "645154b4ba8bb3ef285eed8c0d9942c4ed2965cfccf1f784ef7e94242d967c42",
+      "caption": "Kirigamine Zen / MSZ-EF, immagine originale del produttore"
+    }
+  },
+  {
+    "manufacturer": "Mitsubishi Electric",
+    "family": "MSZ-LN",
+    "title": "Kirigamine Style / MSZ-LN",
+    "tier": 4,
+    "features": [
+      "Plasma Quad integrato",
+      "Sensore 3D i-see",
+      "Dual Barrier Coating",
+      "Quattro colori",
+      "Wi-Fi integrato"
+    ],
+    "gains": [
+      "Rispetto a Kirigamine Zen: Plasma Quad integrato, sensore 3D i-see e quattro finiture."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Mitsubishi Electric",
+      "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+      "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+      "importedAt": "2026-10-03T05:56:49.307029+00:00",
+      "documentRevision": "Residential product guide 2025 UK",
+      "page": 48
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/mitsubishi-msz-ln.png",
+      "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+      "sha256": "125c18bbe9a48a563841c191b8fd505be07368f0b2edda990a943c553b7b3c4b",
+      "caption": "Kirigamine Style / MSZ-LN, immagine originale del produttore"
+    }
+  },
+  {
+    "manufacturer": "Mitsubishi Electric",
+    "family": "MSZ-AY",
+    "title": "Linea Plus / MSZ-AY",
+    "tier": 2,
+    "features": [
+      "Plasma Quad Plus (VGKP)",
+      "Wi-Fi integrato",
+      "Self Clean Mode",
+      "Dual Barrier Coating",
+      "Timer settimanale"
+    ],
+    "gains": [
+      "Rispetto a Classic: Plasma Quad Plus nella versione VGKP, Wi-Fi integrato, Self Clean e timer settimanale."
+    ],
+    "sourceMetadata": {
+      "manufacturer": "Mitsubishi Electric",
+      "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-03T05:50:01.127852+00:00",
+      "sha256": "f93a90f5ddbe8b3ce33511ee1c0e68db14c84308a438355c4d68533a6511710e",
+      "importedAt": "2026-10-03T05:50:01.127852+00:00",
+      "documentRevision": "Brochure MSZ-AY 2025 Italia",
+      "page": 2
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/mitsubishi-msz-ay.png",
+      "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+      "sha256": "d2bbb478cd0a0e5548af9182378caf138f095c2e7db22319ec310bf1112efc10",
+      "caption": "MSZ-AY, immagine originale della brochure italiana"
+    }
+  }
+]

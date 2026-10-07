@@ -17,6 +17,7 @@ export function CameraRig({
   onCutWalls,
   viewRotation,
   underside,
+  animate = false,
 }: {
   frame: SceneFrame;
   top: boolean;
@@ -27,10 +28,19 @@ export function CameraRig({
   onCutWalls: (ids: Set<string>) => void;
   viewRotation?: number;
   underside?: boolean;
+  animate?: boolean;
 }) {
   const { camera, size, invalidate } = useThree();
   const controls = useRef<OrbitControlsImpl>(null);
   const previous = useRef("");
+  const initialized = useRef(false);
+  const motion = useRef<{
+    from: THREE.Vector3;
+    to: THREE.Vector3;
+    fromTarget: THREE.Vector3;
+    target: THREE.Vector3;
+    started: number;
+  } | null>(null);
   useEffect(() => {
     if (!(camera instanceof THREE.PerspectiveCamera)) return;
     const base = frame.base ?? 0;
@@ -69,7 +79,26 @@ export function CameraRig({
               ),
           );
         }
-    camera.position.copy(target).addScaledVector(direction, distance);
+    const destination = target.clone().addScaledVector(direction, distance);
+    if (
+      animate &&
+      initialized.current &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      controls.current
+    ) {
+      motion.current = {
+        from: camera.position.clone(),
+        to: destination,
+        fromTarget: controls.current.target.clone(),
+        target,
+        started: performance.now(),
+      };
+      controls.current.enabled = false;
+      invalidate();
+      return;
+    }
+    initialized.current = true;
+    camera.position.copy(destination);
     camera.lookAt(target);
     camera.updateProjectionMatrix();
     if (controls.current) {
@@ -92,8 +121,23 @@ export function CameraRig({
     underside,
     fitKey,
     invalidate,
+    animate,
   ]);
   useFrame(() => {
+    if (motion.current && controls.current) {
+      const m = motion.current;
+      const t = Math.min(1, (performance.now() - m.started) / 1200);
+      const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      camera.position.lerpVectors(m.from, m.to, eased);
+      controls.current.target.lerpVectors(m.fromTarget, m.target, eased);
+      camera.lookAt(controls.current.target);
+      controls.current.update();
+      invalidate();
+      if (t >= 1) {
+        motion.current = null;
+        controls.current.enabled = true;
+      }
+    }
     const ids = cutaway
       ? cameraCutWalls(walls, rooms, camera.position, top)
       : new Set<string>();

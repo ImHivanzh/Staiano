@@ -22,11 +22,12 @@ import { selectDuctedMachine } from "@/domain/ducted/calculate";
 import { applyDuctedSystem, ductedRoomAllocation } from "@/domain/ducted/apply";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { sizeAirTerminal } from "@/domain/air-terminals/size";
-import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
+import { OperatorTerminalControls } from "@/configurator/systems/OperatorTerminalControls";
 import { airTerminalModelDescription } from "@/domain/air-terminals/description";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { roomWallSpan } from "@/domain/geometry/placement";
 import styles from "./ProductTools.module.css";
+import { splitUnitPresentation } from "@/domain/catalogs/split-presentation";
 
 export type ProductTool = "radiator" | "split" | "terminal" | "machine";
 export type ProductToolsProps = {
@@ -94,24 +95,6 @@ function RadiatorIllustration({ columns }: { columns: number | null }) {
         rx="3"
         fill="#d7dfda"
       />
-    </svg>
-  );
-}
-function SplitIllustration() {
-  return (
-    <svg viewBox="0 0 180 90" aria-hidden="true">
-      <rect
-        x="15"
-        y="22"
-        width="150"
-        height="45"
-        rx="9"
-        fill="#f4f5f0"
-        stroke="#bac8c4"
-      />
-      <path d="M25 55H155" stroke="#536c70" strokeWidth="4" />
-      <path d="M25 62H155" stroke="#d1dcd7" strokeWidth="3" />
-      <path d="M32 28H148" stroke="#e2e8e3" strokeWidth="2" />
     </svg>
   );
 }
@@ -538,8 +521,33 @@ function SplitProducts({ project, room, apply }: PlacementProps) {
             aria-pressed={chosen?.combination.id === solution.combination.id}
             onClick={() => setCombinationId(solution.combination.id)}
           >
-            <SplitIllustration />
+            {splitUnitPresentation(solution.assignments[0].indoor)
+              ?.productPhoto ? (
+              <Image
+                src={
+                  splitUnitPresentation(solution.assignments[0].indoor)!
+                    .productPhoto.localPath
+                }
+                alt={
+                  splitUnitPresentation(solution.assignments[0].indoor)!
+                    .productPhoto.caption
+                }
+                width={420}
+                height={210}
+                unoptimized
+              />
+            ) : (
+              <span>Immagine ufficiale non disponibile</span>
+            )}
             <span>{index === 0 ? "Consigliato" : manufacturer}</span>
+            <strong>
+              {solution.assignments
+                .map(
+                  (a) =>
+                    splitUnitPresentation(a.indoor)?.title ?? a.indoor.family,
+                )
+                .join(" + ")}
+            </strong>
             <strong>
               {solution.assignments
                 .map((assignment) => assignment.indoor.model)
@@ -559,6 +567,21 @@ function SplitProducts({ project, room, apply }: PlacementProps) {
       )}
       {chosen && (
         <div className={styles.result}>
+          {chosen.assignments.map((assignment) => {
+            const series = splitUnitPresentation(assignment.indoor);
+            return series ? (
+              <div key={assignment.roomId}>
+                <strong>{series.title}</strong>
+                <p>{series.features.join(" · ")}</p>
+                {series.gains.map((gain) => (
+                  <p key={gain}>{gain}</p>
+                ))}
+                <small>
+                  {assignment.indoor.region ?? "Disponibilità secondo la fonte"}
+                </small>
+              </div>
+            ) : null;
+          })}
           <strong>
             {chosen.combination.mode === "mono" ? "Monosplit" : "Multisplit"} ·{" "}
             {chosen.assignments.length}{" "}
@@ -956,28 +979,17 @@ function TerminalProducts({ project, room, apply }: PlacementProps) {
           </details>
         </div>
       )}
-      <button
-        type="button"
-        className={styles.cta}
-        disabled={!solution || !selected}
-        onClick={() =>
-          selected &&
-          solution &&
-          apply((currentProject) =>
-            applyAirTerminalSolution(
-              currentProject,
-              room.id,
-              allocation.system.id,
-              use,
-              selected.family.familyCode,
-              solution,
-              mounting,
-            ),
-          )
-        }
-      >
-        Inserisci bocchette
-      </button>
+      {selected && solution && (
+        <OperatorTerminalControls
+          project={project}
+          room={room}
+          systemId={allocation.system.id}
+          family={selected.family}
+          solution={solution}
+          use={use}
+          mounting={mounting}
+        />
+      )}
     </>
   );
 }

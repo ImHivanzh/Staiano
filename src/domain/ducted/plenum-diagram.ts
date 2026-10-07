@@ -34,16 +34,16 @@ export function plenumDiagramSvg(result: SupplyPlenum): string {
   const pxPerMm = 66 / largest;
   const description =
     `Schema del plenum di mandata ${result.systemName}. ${count} stacchi. ` +
-      result.groupedDiameters
-        .map(
-          (group) =>
-            `${group.quantity} di diametro ${group.diameterMm} millimetri`,
-        )
-        .join(", ") +
-      result.machineGeometry?.bodyWidthMm !==
-      null && result.machineGeometry?.bodyWidthMm !== undefined
+    result.groupedDiameters
+      .map(
+        (group) =>
+          `${group.quantity} di diametro ${group.diameterMm} millimetri`,
+      )
+      .join(", ") +
+    (result.machineGeometry?.bodyWidthMm !== null &&
+    result.machineGeometry?.bodyWidthMm !== undefined
       ? `. Corpo proposto ${result.machineGeometry.bodyWidthMm} x ${result.machineGeometry.bodyHeightMm} x ${result.machineGeometry.totalDepthMm} mm sulla connessione macchina documentata; perdite di carico e percorsi da verificare.`
-      : ". Specificare l'attacco della macchina. Corpo e raccordo non vengono inventati.";
+      : ". Specificare l'attacco della macchina. Corpo e raccordo non vengono inventati.");
   const branchNodes = result.branches
     .map((branch, index) => {
       const row = Math.floor(index / columns),

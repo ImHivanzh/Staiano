@@ -38,6 +38,7 @@ function largeHouse(): Project {
         thickness: 0.3,
         type: "ESTERNO",
         height: null,
+        locked: false,
       }),
     );
   }

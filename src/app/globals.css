@@ -1011,3 +1011,70 @@ input[type="checkbox"] {
   overflow-x: auto;
   margin: 16px 0;
 }
+/* The guided workflow leaves both editors available. */
+.percorso-guidato {
+  padding: 12px 20px;
+  border-bottom: 1px solid #c4d5df;
+  background: #f3f8fa;
+}
+.percorso-guidato header,
+.percorso-guidato footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.percorso-guidato nav {
+  margin: 8px 0;
+}
+.percorso-guidato select {
+  max-width: 100%;
+}
+.contenuto-percorso {
+  max-height: 210px;
+  overflow: auto;
+  padding: 4px 0;
+}
+.contenuto-percorso .azioni {
+  flex-wrap: wrap;
+}
+.percorso-guidato footer {
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.percorso-ripresa {
+  padding: 6px 20px;
+}
+.caratteristiche-stanza {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 6px 0;
+}
+.caratteristiche-stanza input {
+  max-width: 180px;
+}
+.modo-cliente .barra-lato,
+.modo-cliente .testata-hvac,
+.modo-cliente .comandi-progetto,
+.modo-cliente .barra-strumenti,
+.modo-cliente .proprieta,
+.modo-cliente .riepilogo-progetto,
+.modo-cliente .percorso-guidato,
+.modo-cliente .percorso-ripresa {
+  display: none;
+}
+.modo-cliente .contenuto-hvac {
+  margin: 0;
+  width: 100%;
+}
+.modo-cliente .spazio-progetto {
+  grid-template-columns: 1fr;
+}
+.foto-serie {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+}

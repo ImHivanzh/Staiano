@@ -561,6 +561,18 @@ for (const filename of [
 catalog.families[0].modelCodes = ["EDLS", "EDLSB"];
 catalog.families[0].finishes = ["RAL9005", "RAL9016"];
 airTerminalCatalogSchema.parse(catalog);
+// Apply a reviewed geometry correction without reacquiring or retimestamping curves.
+if (process.argv.includes("--geometry-only")) {
+  const current = airTerminalCatalogSchema.parse(
+    JSON.parse(
+      await readFile(
+        path.join(root, "catalog-data/generated/ecoclima.json"),
+        "utf8",
+      ),
+    ),
+  );
+  catalog.families = current.families;
+}
 const geometrySpecs = JSON.parse(
   await readFile(
     path.join(root, "catalog-data/curation/ecoclima-geometry.json"),
@@ -576,6 +588,7 @@ const geometrySpecs = JSON.parse(
     faceHeightAdditionMm?: number;
     bodyDepthMm: number | null;
     note: string;
+    variantsByNominalDiameterMm?: Record<string, Partial<AirTerminalVariant>>;
   }
 >;
 for (const family of catalog.families) {
@@ -589,6 +602,26 @@ for (const family of catalog.families) {
   family.shape = geometry.shape;
   family.geometryNote = geometry.note;
   for (const variant of family.variants) {
+    if (geometry.variantsByNominalDiameterMm) {
+      const exact =
+        geometry.variantsByNominalDiameterMm[String(variant.nominalDiameterMm)];
+      if (!exact) throw new Error(`Reviewed geometry missing: ${variant.id}`);
+      if (exact.dimensionDrawing) {
+        const local = path.join(
+          root,
+          "public",
+          exact.dimensionDrawing.localPath,
+        );
+        if (
+          createHash("sha256")
+            .update(await readFile(local))
+            .digest("hex") !== exact.dimensionDrawing.sha256
+        )
+          throw new Error(`Original geometry drawing changed: ${variant.id}`);
+      }
+      Object.assign(variant, exact);
+      continue;
+    }
     variant.bodyDepthMm = geometry.bodyDepthMm;
     if (family.isLinearPerMeter) {
       variant.faceWidthMm = null;

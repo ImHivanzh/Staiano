@@ -1,5 +1,7 @@
 # Staiano HVAC — decisioni architetturali
 
+Aggiornamento 7 ottobre 2026: gli ADR iniziali descrivono la base storica. Login personale, schema v3, riconoscimento euristico dei muri e impianto idronico sono ora implementati. Lo stato corrente e le relative prove sono in [DELIVERY-GUIDED.md](docs/DELIVERY-GUIDED.md); le precedenti esclusioni di autenticazione e riconoscimento non rappresentano più il prodotto corrente.
+
 ## Ambito e vincoli
 
 Configuratore preliminare di abitazioni: geometria netta, stima convenzionale

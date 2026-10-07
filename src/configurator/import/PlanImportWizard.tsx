@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Point } from "@/schemas/project";
 import type { ImportedPlan, ParsedPlan } from "@/services/import/plan-types";
 import { readPlanFile } from "@/services/import/plan-file";
+import { analyzePlan } from "@/services/import/analyze";
 import {
   calibrationScale,
   preparePlanImport,
@@ -68,9 +69,47 @@ export function PlanImportWizard({
     try {
       const parsed = await readPlanFile(next, page);
       if (token !== generation.current) return;
+      try {
+        parsed.analysis = await analyzePlan(parsed);
+        const recognized = parsed.analysis.walls;
+        parsed.segments = [...parsed.segments, ...recognized];
+        if (recognized.length)
+          parsed.layers.push({
+            name: "Muri riconosciuti",
+            count: recognized.length,
+            visible: true,
+          });
+        setLayers(recognized.length ? ["Muri riconosciuti"] : []);
+        setExcluded(
+          recognized.filter((w) => w.confidence < 0.9).map((w) => w.id),
+        );
+        setAxisConfirmed(recognized.some((w) => w.confidence >= 0.9));
+      } catch (error) {
+        parsed.warnings.push(
+          error instanceof Error
+            ? error.message
+            : "Analisi fallita; usare la selezione manuale.",
+        );
+      }
+      parsed.originalDataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result));
+        reader.onerror = () =>
+          reject(new Error("Conservazione file originale non riuscita."));
+        reader.readAsDataURL(
+          new File([next], next.name, {
+            type: next.type || "application/octet-stream",
+          }),
+        );
+      });
+      if (token !== generation.current) return;
       setPlan(parsed);
       setScale(parsed.suggestedMetersPerUnit ?? 0);
-      setConvert(parsed.sourceType === "dxf" || parsed.sourceType === "dwg");
+      setConvert(
+        !!parsed.analysis?.walls.length ||
+          parsed.sourceType === "dxf" ||
+          parsed.sourceType === "dwg",
+      );
     } catch (e) {
       if (token === generation.current)
         setError(e instanceof Error ? e.message : "Planimetria non leggibile.");
@@ -273,9 +312,9 @@ export function PlanImportWizard({
           }}
         />
         <p className={styles.notice}>
-          Locale, senza riconoscimento AI. DXF ASCII, PDF vettoriale/raster,
-          PNG/JPEG. Limite 32 MB; immagini 15 MB. DWG: esportare DXF dal proprio
-          CAD.
+          Analisi locale con affidabilità visibile. DXF, DWG, PDF, PNG/JPEG.
+          Verificare sempre scala, muri e aperture. Limite 32 MB; immagini 15
+          MB.
         </p>
         {loading && <p role="status">Lettura e anteprima della planimetria…</p>}
         {error && (
@@ -285,6 +324,51 @@ export function PlanImportWizard({
         )}
         {plan && (
           <>
+            {plan.analysis && (
+              <section aria-label="Analisi automatica planimetria">
+                <strong>
+                  {plan.analysis.walls.length} muri candidati ·{" "}
+                  {
+                    plan.analysis.walls.filter((w) => w.confidence >= 0.9)
+                      .length
+                  }{" "}
+                  ad alta affidabilità · {plan.analysis.openings.length}{" "}
+                  aperture possibili
+                </strong>
+                {plan.analysis.notes.map((note) => (
+                  <p className={styles.notice} key={note}>
+                    {note}
+                  </p>
+                ))}
+                {plan.analysis.walls.some((w) => w.confidence < 0.9) && (
+                  <label className={styles.row}>
+                    <input
+                      type="checkbox"
+                      checked={plan.analysis.walls
+                        .filter(
+                          (w) => w.confidence >= 0.5 && w.confidence < 0.9,
+                        )
+                        .every((w) => !excluded.includes(w.id))}
+                      onChange={(e) => {
+                        const ids = plan
+                          .analysis!.walls.filter(
+                            (w) => w.confidence >= 0.5 && w.confidence < 0.9,
+                          )
+                          .map((w) => w.id);
+                        setExcluded((old) =>
+                          e.target.checked
+                            ? old.filter((id) => !ids.includes(id))
+                            : [...new Set([...old, ...ids])],
+                        );
+                        setAxisConfirmed(e.target.checked);
+                      }}
+                    />
+                    Ho verificato e confermo i muri proposti in arancione
+                    (affidabilità media)
+                  </label>
+                )}
+              </section>
+            )}
             <div className={styles.body}>
               <div>
                 <p className={styles.filename}>
@@ -467,7 +551,10 @@ export function PlanImportWizard({
                       y2={s.end.y}
                       stroke={
                         layers.includes(s.layer) && !excluded.includes(s.id)
-                          ? "#08778c"
+                          ? (plan.analysis?.walls.find((w) => w.id === s.id)
+                              ?.confidence ?? 1) < 0.9
+                            ? "#ba7417"
+                            : "#08778c"
                           : "#a6afb4"
                       }
                       strokeWidth={mode === "select" ? 5 : 2}
@@ -487,6 +574,8 @@ export function PlanImportWizard({
                     >
                       <title>
                         {s.layer} · {s.kind} · {s.id}
+                        {plan.analysis?.walls.find((w) => w.id === s.id) &&
+                          ` · Affidabilità euristica ${Math.round(plan.analysis.walls.find((w) => w.id === s.id)!.confidence * 100)}%: ${plan.analysis.walls.find((w) => w.id === s.id)!.reason}`}
                       </title>
                     </line>
                   ))}

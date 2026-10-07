@@ -23,6 +23,8 @@ import {
 } from "./plenum-layout";
 import styles from "./PlenumPreview3D.module.css";
 import { plenumTransitionGeometry } from "./plenum-transition";
+import { placedPlenumGeometry } from "@/domain/ducted/placement";
+import { deviceCodes } from "@/services/export/device-codes";
 
 class PreviewFailure extends Component<
   { children: React.ReactNode },
@@ -48,22 +50,53 @@ function Camera({
   size,
   center,
   reset,
+  view,
+  faceWidth,
+  faceHeight,
 }: {
   size: number;
   center: [number, number, number];
   reset: number;
+  view: "isometric" | "front" | "top";
+  faceWidth: number;
+  faceHeight: number;
 }) {
-  const { camera, invalidate } = useThree();
+  const { camera, invalidate, size: viewport } = useThree();
   useEffect(() => {
     camera.position.set(
       center[0] + size * 0.82,
       center[1] + size * 0.57,
       center[2] + size * 1.35,
     );
+    if (view === "front")
+      camera.position.set(center[0], center[1], center[2] + size * 2);
+    if (view === "top")
+      camera.position.set(center[0], center[1] + size * 2, center[2] + 0.001);
+    if (camera instanceof THREE.OrthographicCamera)
+      Object.assign(camera, {
+        zoom:
+          view === "front"
+            ? Math.min(
+                viewport.width / (Math.max(0.2, faceWidth) * 1.3),
+                viewport.height / (Math.max(0.2, faceHeight) * 1.7),
+              )
+            : Math.min(viewport.width, viewport.height) / (size * 1.3),
+      });
     camera.lookAt(...center);
     camera.updateProjectionMatrix();
     invalidate();
-  }, [camera, size, center, reset, invalidate]);
+  }, [
+    camera,
+    size,
+    center,
+    reset,
+    invalidate,
+    view,
+    viewport.width,
+    viewport.height,
+    faceWidth,
+    faceHeight,
+  ]);
   return (
     <OrbitControls
       makeDefault
@@ -158,11 +191,13 @@ function Scene({
   machine,
   elements,
   reset,
+  view,
 }: {
   layout: PlenumLayout;
   machine: [number, number, number] | null;
   elements: RefObject<Map<string, HTMLSpanElement>>;
   reset: number;
+  view: "isometric" | "front" | "top";
 }) {
   const [w, h, depth] = layout.body;
   const transition = useMemo(
@@ -202,7 +237,7 @@ function Scene({
         castShadow
         shadow-mapSize={[1024, 1024]}
       />
-      {machine && (
+      {machine && view !== "front" && (
         <group position={[0, 0, -machine[2] / 2 - 0.07]}>
           <mesh castShadow receiveShadow>
             <boxGeometry args={machine} />
@@ -287,7 +322,14 @@ function Scene({
         <planeGeometry args={[extent * 8, extent * 8]} />
         <shadowMaterial transparent opacity={0.1} />
       </mesh>
-      <Camera size={extent} center={center} reset={reset} />
+      <Camera
+        size={extent}
+        center={center}
+        reset={reset}
+        view={view}
+        faceWidth={w}
+        faceHeight={h}
+      />
       <LabelProjection layout={layout} elements={elements} />
     </>
   );
@@ -311,31 +353,49 @@ export function PlenumPreview3D({
   const product = system
     ? hvacProductAtVersion(system.productId, system.catalogVersion)
     : null;
+  const savedPlenum = project.plenums.find((pl) => pl.systemId === systemId);
+  const codes = deviceCodes(project);
+  const dimensions = system?.genericMachine ?? product;
   const machine: [number, number, number] | null =
-    product?.widthMm && product.heightMm && product.depthMm
+    dimensions?.widthMm && dimensions.heightMm && dimensions.depthMm
       ? [
-          product.widthMm / 1000,
-          product.heightMm / 1000,
-          product.depthMm / 1000,
+          dimensions.widthMm / 1000,
+          dimensions.heightMm / 1000,
+          dimensions.depthMm / 1000,
         ]
       : null;
   const layout = useMemo(
     () =>
-      result.machineGeometry
-        ? layoutFromMachineGeometry(result.machineGeometry)
+      (
+        savedPlenum
+          ? placedPlenumGeometry(project, savedPlenum)
+          : result.machineGeometry
+      )
+        ? layoutFromMachineGeometry(
+            (savedPlenum
+              ? placedPlenumGeometry(project, savedPlenum)
+              : result.machineGeometry)!,
+          )
         : plenumLayout(result.branches, product),
-    [result.branches, result.machineGeometry, product],
+    [result.branches, result.machineGeometry, product, savedPlenum, project],
   );
   const elements = useRef(new Map<string, HTMLSpanElement>());
   const [reset, setReset] = useState(0);
+  const [view, setView] = useState<"isometric" | "front" | "top">("front");
+  const previewRef = useRef<HTMLElement>(null);
+  const [viewError, setViewError] = useState("");
   return (
     <section
+      ref={previewRef}
       className={styles.preview}
       aria-label="Schema 3D plenum di mandata"
     >
       <header>
         <div>
-          <h4>Schema degli stacchi</h4>
+          <h4>
+            {result.branches.length} attacchi numerati · {layout.ports.length}{" "}
+            verificati
+          </h4>
           <p>
             {result.systemName} ·{" "}
             {result.machineModel ?? "Macchina da verificare"}
@@ -348,10 +408,52 @@ export function PlenumPreview3D({
         >
           Reimposta vista
         </button>
+        <button
+          type="button"
+          onClick={async () => {
+            try {
+              if (document.fullscreenElement === previewRef.current)
+                await document.exitFullscreen();
+              else await previewRef.current?.requestFullscreen();
+              setViewError("");
+            } catch {
+              setViewError(
+                "Schermo intero non disponibile. La vista frontale resta utilizzabile.",
+              );
+            }
+          }}
+        >
+          Espandi plenum / esci
+        </button>
       </header>
+      {viewError && (
+        <p role="status" className={styles.notice}>
+          {viewError}
+        </p>
+      )}
+      <div className="azioni" aria-label="Vista tecnica plenum">
+        {(["front", "isometric", "top"] as const).map((mode) => (
+          <button
+            className="bottone piccolo tenue"
+            key={mode}
+            aria-pressed={view === mode}
+            onClick={() => setView(mode)}
+          >
+            {
+              {
+                front: "Vista frontale",
+                isometric: "Vista isometrica",
+                top: "Vista dall’alto plenum",
+              }[mode]
+            }
+          </button>
+        ))}
+      </div>
       <div className={styles.diagram} data-testid="plenum-preview-3d">
         <PreviewFailure>
           <Canvas
+            key={view}
+            orthographic={view !== "isometric"}
             shadows
             frameloop="demand"
             camera={{ fov: 42, near: 0.01, far: 200 }}
@@ -367,6 +469,7 @@ export function PlenumPreview3D({
               machine={machine}
               elements={elements}
               reset={reset}
+              view={view}
             />
           </Canvas>
         </PreviewFailure>
@@ -392,15 +495,17 @@ export function PlenumPreview3D({
         {layout.geometry.bodyWidthMm !== null
           ? `Plenum per ${result.machineModel}: ${layout.geometry.bodyWidthMm} × ${layout.geometry.bodyHeightMm} mm, profondità totale ${layout.geometry.totalDepthMm} mm. `
           : "Specificare le quote dell’attacco macchina. "}
-        Disposizione {layout.rows === 1 ? "su una fila" : "su due file"} e
+        Disposizione su {layout.rows} {layout.rows === 1 ? "fila" : "file"} e
         lunghezza dei collari illustrative; diametri nominali in proporzione
         metrica.
       </p>
       {machine ? (
         <p className={styles.machine}>
-          Ingombro macchina da catalogo: {product!.widthMm} ×{" "}
-          {product!.heightMm} × {product!.depthMm} mm. Attacco di mandata da
-          verificare sul disegno del modello.
+          Ingombro macchina{" "}
+          {system?.genericMachine ? "dichiarato dall’operatore" : "da catalogo"}
+          : {dimensions!.widthMm} × {dimensions!.heightMm} ×{" "}
+          {dimensions!.depthMm} mm. Attacco di mandata da verificare sul disegno
+          del modello.
         </p>
       ) : (
         <p className={styles.machine}>
@@ -415,6 +520,10 @@ export function PlenumPreview3D({
             <span>{index + 1}</span>
             <p>
               <strong>{branch.roomName}</strong>
+              <small>
+                {branch.terminalIds.map((id) => codes.get(id) ?? id).join(", ")}{" "}
+                · {branch.terminalModels.join(", ")}
+              </small>
               <small>
                 {branch.diameterMm === null
                   ? "Diametro da verificare"

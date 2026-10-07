@@ -13,6 +13,11 @@ import {
 } from "@/domain/ducted/plenum";
 import styles from "./SupplyPlenumPanel.module.css";
 import { plenumDiagramSvg } from "@/domain/ducted/plenum-diagram";
+import {
+  placeDuctedMachine,
+  placeSupplyPlenum,
+} from "@/domain/ducted/placement";
+import { LinearSummary } from "./OperatorTerminalControls";
 
 export function SupplyPlenumPanel({
   project,
@@ -24,6 +29,11 @@ export function SupplyPlenumPanel({
   const result = calculateSupplyPlenum(project, systemId);
   const [show3D, setShow3D] = useState(false);
   const { commit } = useProjectStore();
+  const placed = project.plenums.find((pl) => pl.systemId === systemId);
+  const system = project.hvacSystems.find((s) => s.id === systemId);
+  const [machineRoomId, setMachineRoomId] = useState(
+    system?.indoorUnits[0]?.roomId ?? system?.roomIds[0] ?? "",
+  );
   const update = (patch: Partial<PlenumSettings>) =>
     commit((p) => ({
       ...p,
@@ -58,6 +68,53 @@ export function SupplyPlenumPanel({
           ? `${result.branches.length} stacchi`
           : "Configura le bocchette"}
       </strong>
+      <LinearSummary project={project} systemId={systemId} />
+      <p className={styles.notice}>
+        {result.branches.length} attacchi richiesti;{" "}
+        {result.machineGeometry?.ports.length ?? 0} attacchi con diametro
+        verificato. Un plenum dedicato esclusivamente a questa macchina.
+      </p>
+      <label className="campo">
+        <span>Stanza di posa macchina</span>
+        <select
+          aria-label="Stanza di posa macchina"
+          value={machineRoomId}
+          onChange={(e) => setMachineRoomId(e.target.value)}
+        >
+          {project.rooms
+            .filter((r) => system?.roomIds.includes(r.id))
+            .map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
+              </option>
+            ))}
+        </select>
+      </label>
+      <button
+        className="bottone piccolo"
+        onClick={() =>
+          commit((p) => placeDuctedMachine(p, systemId, machineRoomId))
+        }
+      >
+        {system?.indoorUnits.length
+          ? "Aggiorna posa macchina"
+          : "Posiziona macchina nel progetto"}
+      </button>
+      <button
+        className="bottone piccolo"
+        onClick={() => {
+          commit((p) => placeSupplyPlenum(p, systemId));
+          const state = useProjectStore.getState();
+          const pl = state.project?.plenums.find(
+            (pl) => pl.systemId === systemId,
+          );
+          if (pl && !state.error) state.select({ kind: "device", id: pl.id });
+        }}
+      >
+        {placed
+          ? "Seleziona plenum nel progetto"
+          : "Crea plenum dedicato nel progetto"}
+      </button>
       {summary && <p className={styles.diameters}>{summary}</p>}
       {!show3D && (
         <Image

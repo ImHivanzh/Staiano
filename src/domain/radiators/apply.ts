@@ -139,6 +139,7 @@ export function applyRadiatorSolution(
       deltaTK: solution.deltaTK,
       family: variant.family,
       manufacturer: variant.manufacturer,
+      locked: false,
     };
   });
   const radiators = [

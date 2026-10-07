@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   getAccessConfig,
+  getSessionUser,
   requestOrigin,
   SESSION_COOKIE,
-  verifySession,
 } from "@/server/auth";
 
 const publicPaths = new Set([
@@ -29,7 +29,44 @@ export async function proxy(request: NextRequest) {
       { status: 503, headers: { "Cache-Control": "private, no-store" } },
     );
   }
-  if (verifySession(request.cookies.get(SESSION_COOKIE)?.value, config)) {
+  const user = getSessionUser(
+    request.cookies.get(SESSION_COOKIE)?.value,
+    config,
+  );
+  if (user) {
+    if (
+      user.mustChangePassword &&
+      ![
+        "/api/auth/change-password",
+        "/api/auth/logout",
+        "/api/auth/session",
+      ].includes(pathname)
+    ) {
+      if (
+        pathname.startsWith("/api/") ||
+        !["GET", "HEAD"].includes(request.method)
+      )
+        return NextResponse.json(
+          {
+            message: "Cambio password richiesto.",
+            passwordChangeRequired: true,
+          },
+          { status: 403, headers: { "Cache-Control": "private, no-store" } },
+        );
+      const origin = requestOrigin(request);
+      if (!origin)
+        return NextResponse.json(
+          { message: "Origine non valida." },
+          { status: 400 },
+        );
+      return NextResponse.redirect(
+        new URL(
+          `/accedi?password=change&next=${encodeURIComponent(`${pathname}${request.nextUrl.search}`)}`,
+          origin,
+        ),
+        303,
+      );
+    }
     const response = NextResponse.next();
     response.headers.set("Cache-Control", "private, no-store");
     return response;

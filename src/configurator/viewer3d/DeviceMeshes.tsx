@@ -12,6 +12,10 @@ import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { radiatorDetail, type DetailPart } from "./device-detail";
 import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
 import { RadiatorHardware } from "./RadiatorHardware";
+import { SystemMeshes } from "./SystemMeshes";
+import { FanCoilMeshes } from "./FanCoilMeshes";
+import { HydronicMeshes } from "./HydronicMeshes";
+import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
 const rounded = new RoundedBoxGeometry(1, 1, 1, 2, 0.12);
@@ -250,10 +254,37 @@ function SplitMesh({
   const w = item.widthMm / 1000,
     h = item.heightMm / 1000,
     d = item.depthMm / 1000;
+  const family = splitIndoorAtVersion(
+    item.productId,
+    item.catalogVersion,
+  )?.family;
+  const emura = family === "Emura";
+  const flat = family === "Stylish" || family === "MSZ-EF";
+  // Missing OEM mesh: documentary family cues within the saved metric envelope.
   const body = useMemo(
-    () => new RoundedBoxGeometry(w, h, d, 3, Math.min(0.035, h / 7, d / 6)),
-    [w, h, d],
+    () =>
+      new RoundedBoxGeometry(
+        w,
+        h,
+        emura ? d * 0.84 : d,
+        4,
+        Math.min(flat ? 0.008 : emura ? 0.045 : 0.025, h / 7, d / 6),
+      ),
+    [w, h, d, emura, flat],
   );
+  const curvedFront = useMemo(() => {
+    if (!emura) return null;
+    const geometry = new THREE.PlaneGeometry(w * 0.94, h * 0.55, 32, 8);
+    const positions = geometry.getAttribute("position");
+    for (let i = 0; i < positions.count; i++)
+      positions.setZ(
+        i,
+        d * 0.08 * Math.max(0, 1 - ((positions.getX(i) * 2) / w) ** 2),
+      );
+    geometry.computeVertexNormals();
+    return geometry;
+  }, [w, h, d, emura]);
+  useEffect(() => () => curvedFront?.dispose(), [curvedFront]);
   useEffect(() => () => body.dispose(), [body]);
   const fins = useMemo<DetailPart[]>(
     () =>
@@ -273,7 +304,22 @@ function SplitMesh({
   );
   return (
     <>
-      <mesh geometry={body} material={plastic} castShadow receiveShadow />
+      <mesh
+        geometry={body}
+        material={plastic}
+        position={[0, 0, emura ? -d * 0.08 : 0]}
+        castShadow
+        receiveShadow
+      />
+      {curvedFront && (
+        <mesh
+          geometry={curvedFront}
+          material={plastic}
+          position={[0, h * 0.14, d * 0.38]}
+          castShadow
+          receiveShadow
+        />
+      )}
       <mesh
         geometry={rounded}
         material={recess}
@@ -296,7 +342,13 @@ function SplitMesh({
         scale={[w * 0.025, h * 0.018, 1]}
       />
       <BrandMark
-        name={manufacturer}
+        name={
+          family === "Emura"
+            ? "DAIKIN EMURA"
+            : family === "Stylish"
+              ? "DAIKIN STYLISH"
+              : manufacturer
+        }
         width={Math.min(0.12, w * 0.2)}
         position={[0, h * 0.06, d / 2 + 0.0004]}
       />
@@ -336,6 +388,14 @@ function TerminalMesh({
     h = item.heightMm / 1000,
     d = (item.depthMm ?? 0) / 1000;
   const family = airTerminalFamilyAtVersion(item.family, item.catalogVersion);
+  const faceMaterial = useMemo(() => {
+    const material = whiteFace.clone();
+    if (/^#[0-9a-f]{6}$/i.test(item.color)) material.color.set(item.color);
+    if (/opac|matt/i.test(item.finish)) material.roughness = 0.8;
+    if (/lucid|gloss/i.test(item.finish)) material.roughness = 0.18;
+    return material;
+  }, [item.color, item.finish]);
+  useEffect(() => () => faceMaterial.dispose(), [faceMaterial]);
   const variant = family?.variants.find((v) => v.id === item.productId);
   const front = item.mounting === "ceiling" ? -1 : 1;
   const z = (front * d) / 2;
@@ -418,13 +478,13 @@ function TerminalMesh({
           />
           <mesh
             geometry={ring}
-            material={whiteFace}
+            material={faceMaterial}
             position={[0, 0, z]}
             scale={[w / 2, h / 2, 1]}
           />
           <mesh
             geometry={circle}
-            material={whiteFace}
+            material={faceMaterial}
             position={[0, 0, z]}
             scale={[w * 0.31, h * 0.31, 1]}
           />
@@ -440,7 +500,11 @@ function TerminalMesh({
             />
           )}
           <Parts parts={detail.dark} geometry={plane} material={recess} />
-          <Parts parts={detail.white} geometry={plane} material={whiteFace} />
+          <Parts
+            parts={detail.white}
+            geometry={plane}
+            material={faceMaterial}
+          />
         </>
       )}
       {selected && <SelectionOutline dimensions={[w, h, d || 0.001]} />}
@@ -454,6 +518,7 @@ export type DeviceMeshesProps = {
   selection: Selection[];
   isolatedRoomId?: string;
   onSelect: (selection: Selection) => void;
+  showHydronicPipes?: boolean;
 };
 
 /** Local axes are width X, height Y, depth Z. Project plan Y maps to world Z. */
@@ -463,6 +528,7 @@ export function DeviceMeshes({
   selection,
   isolatedRoomId,
   onSelect,
+  showHydronicPipes = false,
 }: DeviceMeshesProps) {
   const visible = (item: { floorId: string; roomId: string }) =>
     item.floorId === activeFloorId &&
@@ -475,6 +541,29 @@ export function DeviceMeshes({
   };
   return (
     <group dispose={null}>
+      <SystemMeshes
+        project={project}
+        activeFloorId={activeFloorId}
+        selection={selection}
+        isolatedRoomId={isolatedRoomId}
+        onSelect={onSelect}
+      />
+      <FanCoilMeshes
+        project={project}
+        activeFloorId={activeFloorId}
+        selection={selection}
+        isolatedRoomId={isolatedRoomId}
+        onSelect={onSelect}
+      />
+      {!isolatedRoomId && (
+        <HydronicMeshes
+          project={project}
+          floorId={activeFloorId}
+          showPipes={showHydronicPipes}
+          selection={selection}
+          onSelect={onSelect}
+        />
+      )}
       {project.radiators.filter(visible).map((item) => (
         <group
           key={item.id}

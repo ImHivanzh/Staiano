@@ -16,12 +16,13 @@ import {
 import { reconcileRooms, overlappingPolygons } from "@/domain/geometry/rooms";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
 import { calculateThermal } from "@/domain/thermal/calculate";
+import { pillarAreaInRoom } from "@/domain/geometry/pillars";
 
 export const newId = () => crypto.randomUUID();
 export function createProject(name = "Nuovo progetto"): Project {
   const now = new Date().toISOString();
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     id: newId(),
     name,
     createdAt: now,
@@ -33,12 +34,18 @@ export function createProject(name = "Nuovo progetto"): Project {
         elevationM: 0,
         scaleVerified: true,
         background: null,
+        importAnalysis: null,
       },
     ],
     walls: [],
     rooms: [],
     openings: [],
     hvacSystems: [],
+    plenums: [],
+    pillars: [],
+    ducts: [],
+    fanCoils: [],
+    hydronicSystems: [],
     radiators: [],
     airTerminals: [],
     projectSettings: {
@@ -48,6 +55,7 @@ export function createProject(name = "Nuovo progetto"): Project {
       externalWallThicknessM: 0.3,
       coefficientWm3: 35,
       maxNoiseDbA: 37,
+      dimensionMode: "internal",
     },
     catalogVersions: {},
     sourceFilesMetadata: [],
@@ -103,6 +111,13 @@ export function recomputeProject(project: Project): Project {
   p.rooms = p.floors.flatMap((f) =>
     reconcileRooms(p.walls, p.rooms, f.id, p.projectSettings.defaultHeightM),
   );
+  p.rooms = p.rooms.map((room) => {
+    const occupied = (p.pillars ?? [])
+      .filter((c) => c.floorId === room.floorId)
+      .reduce((sum, c) => sum + pillarAreaInRoom(c, room.polygon), 0);
+    const netAreaM2 = Math.max(0, room.netAreaM2 - occupied);
+    return { ...room, netAreaM2, ...calculateThermal(netAreaM2, room.heightM) };
+  });
   // An unfinished edit must never silently discard the room or its devices.
   // Keep last closed geometry explicitly unresolved, with current valid wall references.
   const closedRooms = [...p.rooms];
@@ -169,6 +184,13 @@ export function recomputeProject(project: Project): Project {
       })
       .filter((item) => p.rooms.some((r) => r.id === item.roomId));
   p.radiators = reassociate(p.radiators);
+  p.fanCoils = reassociate(p.fanCoils ?? []).map((u) => ({
+    ...u,
+    elevationM:
+      u.mounting === "ceiling"
+        ? p.rooms.find((r) => r.id === u.roomId)!.heightM
+        : u.elevationM,
+  }));
   p.airTerminals = reassociate(p.airTerminals);
   p.openings = p.openings.filter((o) => p.walls.some((w) => w.id === o.wallId));
   p.hvacSystems = p.hvacSystems
@@ -200,6 +222,41 @@ export function recomputeProject(project: Project): Project {
     ...t,
     systemId: t.systemId && systemIds.has(t.systemId) ? t.systemId : null,
   }));
+  p.plenums = p.plenums
+    .filter((pl) => systemIds.has(pl.systemId))
+    .map((pl) => ({
+      ...pl,
+      roomId: p.hvacSystems
+        .find((s) => s.id === pl.systemId)
+        ?.roomIds.includes(pl.roomId ?? "")
+        ? pl.roomId
+        : null,
+    }));
+  const plenumIds = new Set(p.plenums.map((pl) => pl.id));
+  p.airTerminals = p.airTerminals.map((t) => ({
+    ...t,
+    plenumId: t.plenumId && plenumIds.has(t.plenumId) ? t.plenumId : null,
+  }));
+  p.ducts = (p.ducts ?? []).filter(
+    (d) =>
+      plenumIds.has(d.plenumId) &&
+      (!d.terminalId ||
+        p.airTerminals.some(
+          (t) => t.id === d.terminalId && t.plenumId === d.plenumId,
+        )),
+  );
+  p.hydronicSystems = p.hydronicSystems
+    ?.map((s) => ({
+      ...s,
+      roomIds: s.roomIds.filter((id) => p.rooms.some((r) => r.id === id)),
+      fanCoilIds: s.fanCoilIds.filter((id) =>
+        p.fanCoils?.some((u) => u.id === id && s.roomIds.includes(u.roomId)),
+      ),
+      pipeWaypoints: s.pipeWaypoints?.filter((route) =>
+        p.fanCoils?.some((u) => u.id === route.fanCoilId),
+      ),
+    }))
+    .filter((s) => s.roomIds.length > 0);
   p.rooms = p.rooms.map((room) => ({
     ...room,
     systemType: p.hvacSystems.some(
@@ -212,7 +269,9 @@ export function recomputeProject(project: Project): Project {
         ? "split"
         : p.radiators.some((r) => r.roomId === room.id)
           ? "radiator"
-          : room.systemType,
+          : p.fanCoils?.some((u) => u.roomId === room.id)
+            ? "fanCoil"
+            : room.systemType,
   }));
   return p;
 }
@@ -236,6 +295,7 @@ export function addWall(
         ? p.projectSettings.internalWallThicknessM
         : p.projectSettings.externalWallThicknessM,
     height: null,
+    locked: false,
   };
   return recomputeProject({ ...p, walls: [...p.walls, wall] });
 }
@@ -280,6 +340,7 @@ export function addRectangle(
     type: "ESTERNO",
     thickness: t,
     height: null,
+    locked: false,
   }));
   const result = recomputeProject({ ...p, walls: [...p.walls, ...walls] });
   const room = result.rooms.find((r) =>

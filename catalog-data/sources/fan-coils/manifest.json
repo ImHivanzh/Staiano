@@ -1,0 +1,51 @@
+[
+  {
+    "name": "olimpia-bi2",
+    "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+    "sourceType": "pdf",
+    "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+    "retrievedAt": "2026-10-07T09:09:36.905836+00:00"
+  },
+  {
+    "name": "innova-controls-page",
+    "sourceUrl": "https://www.innova.it/docs/manuali/",
+    "sourceType": "html",
+    "sha256": "e7b0a12982b4b3627d53d2ad96e2f34024ca8c138b8bd2b99f43f56990029e8d",
+    "retrievedAt": "2026-10-07T09:09:37.085680+00:00"
+  },
+  {
+    "name": "innova-sl-page",
+    "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
+    "sourceType": "html",
+    "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
+    "retrievedAt": "2026-10-07T09:11:17.851832+00:00"
+  },
+  {
+    "name": "innova-sls-page",
+    "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
+    "sourceType": "html",
+    "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
+    "retrievedAt": "2026-10-07T09:11:17.913304+00:00"
+  },
+  {
+    "name": "innova-m7",
+    "sourceUrl": "https://rep.innova.it/downloads/manuali/N420927A_Manuale%20installazione%20Comandi%20AirLeaf_NEW%20RS_Rev.10_%20IT.pdf",
+    "sourceType": "pdf",
+    "sha256": "96a699b5b47da4e51f319129b6e985cc1e0c7fe04ba857288e2b727700c0d277",
+    "retrievedAt": "2026-10-07T09:11:18.190920+00:00"
+  },
+  {
+    "name": "aermec-fcz",
+    "sourceUrl": "https://www.aermec.com/download?id=22891",
+    "sourceType": "pdf",
+    "sha256": "c6553b66d6b055b189b250bcf8e890c5d760f25c260a3e1fa6667919fe621e50",
+    "retrievedAt": "2026-10-07T09:11:19.373268+00:00"
+  },
+  {
+    "name": "innova-sli-page",
+    "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
+    "sourceType": "html",
+    "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
+    "retrievedAt": "2026-10-07T09:16:41.664554+00:00"
+  }
+]

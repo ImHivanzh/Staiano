@@ -1,6 +1,7 @@
 import type { Point, Project } from "@/schemas/project";
 import type { ImportedPlan, ParsedPlan } from "@/services/import/plan-types";
 import { newId, recomputeProject } from "@/domain/project";
+import { PLAN_ANALYSIS_VERSION } from "./plan-analysis";
 
 export function calibrationScale(
   a: Point,
@@ -74,7 +75,32 @@ export function preparePlanImport(
   });
   const keys = new Set<string>();
   const walls = selected
-    .map((s) => ({ start: map(s.start), end: map(s.end) }))
+    .map((s) => {
+      const candidate = plan.analysis?.walls.find((w) => w.id === s.id);
+      return {
+        start: map(s.start),
+        end: map(s.end),
+        ...(candidate
+          ? {
+              thickness:
+                candidate.thicknessUnits === null
+                  ? thicknessM
+                  : Math.max(
+                      0.01,
+                      Math.min(2, candidate.thicknessUnits * metersPerUnit),
+                    ),
+              recognition: {
+                confidence: candidate.confidence,
+                origin:
+                  candidate.confidence >= 0.9
+                    ? ("calculated" as const)
+                    : ("confirmed" as const),
+                reason: candidate.reason,
+              },
+            }
+          : {}),
+      };
+    })
     .filter((w) => {
       if (
         ![w.start.x, w.start.y, w.end.x, w.end.y].every(
@@ -108,6 +134,47 @@ export function preparePlanImport(
       mimeType: plan.mimeType,
       sizeBytes: plan.sizeBytes,
       sourceType: plan.sourceType,
+      ...(plan.originalDataUrl
+        ? { originalDataUrl: plan.originalDataUrl }
+        : {}),
+    },
+    analysis: {
+      algorithmVersion: PLAN_ANALYSIS_VERSION,
+      analyzedAt: new Date().toISOString(),
+      sourceType: plan.sourceType,
+      scaleConfidence: "high",
+      wallCandidates: plan.analysis?.walls.length ?? 0,
+      wallsAutoCreated: walls.filter(
+        (w) => w.recognition?.origin === "calculated",
+      ).length,
+      wallsConfirmedByOperator: walls.filter(
+        (w) => w.recognition?.origin === "confirmed",
+      ).length,
+      wallsManual: walls.filter((w) => !w.recognition).length,
+      roomsDetected: 0,
+      openingsDetected: plan.analysis?.openings.length ?? 0,
+      notes: (
+        plan.analysis?.notes ?? ["Tracciati selezionati manualmente."]
+      ).slice(0, 50),
+      candidates: plan.analysis?.walls.map((w) => ({
+        id: w.id,
+        start: map(w.start),
+        end: map(w.end),
+        thicknessM:
+          w.thicknessUnits === null ? null : w.thicknessUnits * metersPerUnit,
+        confidence: w.confidence,
+        reason: w.reason,
+        status: selected.some((s) => s.id === w.id)
+          ? w.confidence >= 0.9
+            ? ("automatic" as const)
+            : ("confirmed" as const)
+          : ("rejected" as const),
+      })),
+      openingCandidates: plan.analysis?.openings.map((o) => ({
+        ...o,
+        start: map(o.start),
+        end: map(o.end),
+      })),
     },
   };
 }
@@ -132,6 +199,12 @@ export function applyPlanImport(
             ...f,
             background: plan.background ?? f.background,
             scaleVerified: true,
+            importAnalysis: plan.analysis ?? null,
+            configurationWizard: {
+              step: 0,
+              confirmedSteps: [],
+              status: "active" as const,
+            },
           }
         : f,
     ),
@@ -141,9 +214,10 @@ export function applyPlanImport(
         ...w,
         id: newId(),
         floorId,
-        thickness: plan.thicknessM,
+        thickness: w.thickness ?? plan.thicknessM,
         type: "INTERNO" as const,
         height: null,
+        locked: false,
       })),
     ],
     sourceFilesMetadata: [
@@ -156,5 +230,11 @@ export function applyPlanImport(
       },
     ],
   };
-  return recomputeProject(next);
+  const computed = recomputeProject(next);
+  const floor = computed.floors.find((f) => f.id === floorId)!;
+  if (floor.importAnalysis)
+    floor.importAnalysis.roomsDetected = computed.rooms.filter(
+      (r) => r.floorId === floorId && r.geometryStatus === "closed",
+    ).length;
+  return computed;
 }

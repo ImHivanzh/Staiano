@@ -58,8 +58,26 @@ export function rescaleFloor(
             scaleVerified: true,
             background: {
               ...f.background,
+              origin: transform(f.background.origin),
               metersPerPixel: f.background.metersPerPixel * factor,
             },
+            importAnalysis: f.importAnalysis
+              ? {
+                  ...f.importAnalysis,
+                  candidates: f.importAnalysis.candidates?.map((c) => ({
+                    ...c,
+                    start: transform(c.start),
+                    end: transform(c.end),
+                  })),
+                  openingCandidates: f.importAnalysis.openingCandidates?.map(
+                    (o) => ({
+                      ...o,
+                      start: transform(o.start),
+                      end: transform(o.end),
+                    }),
+                  ),
+                }
+              : null,
           }
         : f,
     ),
@@ -74,6 +92,40 @@ export function rescaleFloor(
     ),
     radiators: project.radiators.map(pose),
     airTerminals: project.airTerminals.map(pose),
+    fanCoils: project.fanCoils?.map(pose),
+    pillars: project.pillars?.map((c) =>
+      c.floorId === floorId ? { ...c, position: transform(c.position) } : c,
+    ),
+    plenums: project.plenums.map((pl) =>
+      pl.floorId === floorId ? { ...pl, position: transform(pl.position) } : pl,
+    ),
+    ducts: project.ducts?.map((d) =>
+      project.plenums.some(
+        (pl) => pl.id === d.plenumId && pl.floorId === floorId,
+      )
+        ? {
+            ...d,
+            waypoints: d.waypoints.map((point) => ({
+              ...point,
+              ...transform(point),
+            })),
+          }
+        : d,
+    ),
+    hydronicSystems: project.hydronicSystems?.map((s) => ({
+      ...s,
+      outdoorUnit:
+        s.outdoorUnit.floorId === floorId
+          ? { ...s.outdoorUnit, position: transform(s.outdoorUnit.position) }
+          : s.outdoorUnit,
+      pipeWaypoints: s.pipeWaypoints?.map((route) =>
+        project.fanCoils?.some(
+          (u) => u.id === route.fanCoilId && u.floorId === floorId,
+        )
+          ? { ...route, points: route.points.map(transform) }
+          : route,
+      ),
+    })),
     hvacSystems: project.hvacSystems.map((system) => ({
       ...system,
       indoorUnits: system.indoorUnits.map(pose),

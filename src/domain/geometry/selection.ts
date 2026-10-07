@@ -1,6 +1,6 @@
 import type { Point, Project, Selection } from "@/schemas/project";
 import { newId, recomputeProject } from "@/domain/project";
-import { add, bounds, samePoint } from "./primitives";
+import { add, bounds, samePoint, pointInPolygon } from "./primitives";
 import { followWallTransforms } from "./follow-walls";
 import { movePlacedDevice } from "./move-device";
 import { overlappingPolygons } from "./rooms";
@@ -99,7 +99,13 @@ export function translateSelection(
         : room,
     ),
     radiators: next.radiators.map(moveRoomDevice),
+    fanCoils: next.fanCoils?.map(moveRoomDevice),
     airTerminals: next.airTerminals.map(moveRoomDevice),
+    plenums: next.plenums.map((pl) =>
+      pl.roomId && roomIds.has(pl.roomId)
+        ? { ...pl, position: add(pl.position, delta) }
+        : pl,
+    ),
     hvacSystems: next.hvacSystems.map((system) => ({
       ...system,
       indoorUnits: system.indoorUnits.map(moveRoomDevice),
@@ -110,7 +116,11 @@ export function translateSelection(
     if (movedDevices.has(id)) continue;
     const before = [
       ...project.radiators,
+      ...(project.fanCoils ?? []),
       ...project.airTerminals,
+      ...project.plenums,
+      ...(project.pillars ?? []),
+      ...(project.hydronicSystems ?? []).map((s) => s.outdoorUnit),
       ...project.hvacSystems.flatMap((system) => system.indoorUnits),
     ].find((device) => device.id === id);
     if (before) next = movePlacedDevice(next, id, add(before.position, delta));
@@ -159,6 +169,7 @@ export function removeSelection(
     walls: project.walls.filter((wall) => !wallIds.has(wall.id)),
     rooms: project.rooms.filter((room) => !roomIds.has(room.id)),
     radiators: project.radiators.filter(keepDevice),
+    fanCoils: project.fanCoils?.filter(keepDevice),
     airTerminals: project.airTerminals.filter(keepDevice).map((device) => ({
       ...device,
       systemId:
@@ -166,7 +177,18 @@ export function removeSelection(
           ? device.systemId
           : null,
     })),
+    plenums: project.plenums.filter(
+      (pl) =>
+        !deviceIds.has(pl.id) &&
+        !roomIds.has(pl.roomId ?? "") &&
+        systemIds.has(pl.systemId),
+    ),
+    pillars: project.pillars?.filter((c) => !deviceIds.has(c.id)),
+    ducts: project.ducts?.filter((d) => !deviceIds.has(d.id)),
     hvacSystems: systems,
+    hydronicSystems: project.hydronicSystems?.filter(
+      (s) => !deviceIds.has(s.outdoorUnit.id),
+    ),
   });
 }
 
@@ -177,6 +199,16 @@ export function duplicateSelection(
   delta?: Point,
 ): Project {
   const { roomIds, wallIds, deviceIds } = selectedGeometry(project, selection);
+  if (
+    project.plenums.some((pl) => deviceIds.has(pl.id)) ||
+    project.hvacSystems.some(
+      (s) =>
+        s.type === "ducted" && s.indoorUnits.some((u) => deviceIds.has(u.id)),
+    )
+  )
+    throw new Error(
+      "Macchina e plenum appartengono a un sistema dedicato. Duplicare la stanza/sistema per crearne un secondo indipendente.",
+    );
   const rooms = project.rooms.filter((room) => roomIds.has(room.id));
   if (rooms.some((room) => room.geometryStatus === "unresolved"))
     throw new Error("Chiudere il contorno prima di copiare la stanza.");
@@ -230,6 +262,7 @@ export function duplicateSelection(
   }));
   const allDevices = [
     ...project.radiators,
+    ...(project.fanCoils ?? []),
     ...project.airTerminals,
     ...project.hvacSystems.flatMap((system) => system.indoorUnits),
   ];
@@ -300,6 +333,31 @@ export function duplicateSelection(
           ? (systemMap.get(device.systemId) ?? null)
           : device.systemId,
     }));
+  const copiedPlenums = project.plenums
+    .filter((pl) => systemMap.has(pl.systemId) && roomMap.has(pl.roomId ?? ""))
+    .map((pl) => ({
+      ...pl,
+      id: newId(),
+      systemId: systemMap.get(pl.systemId)!,
+      roomId: roomMap.get(pl.roomId!)!,
+      position: add(pl.position, offset),
+      locked: false,
+    }));
+  const plenumMap = new Map(
+    project.plenums
+      .filter(
+        (pl) => systemMap.has(pl.systemId) && roomMap.has(pl.roomId ?? ""),
+      )
+      .map((pl, i) => [pl.id, copiedPlenums[i].id]),
+  );
+  for (const t of copiedTerminals)
+    t.plenumId =
+      t.plenumId &&
+      roomIds.has(
+        project.airTerminals.find((v) => deviceMap.get(v.id) === t.id)!.roomId,
+      )
+        ? (plenumMap.get(t.plenumId) ?? null)
+        : t.plenumId;
   const copiedOpenings = project.openings
     .filter((opening) => wallMap.has(opening.wallId))
     .map((opening) => ({
@@ -315,8 +373,34 @@ export function duplicateSelection(
       ...project.radiators,
       ...project.radiators.filter(selectedDevice).map(copiedRoomDevice),
     ],
+    fanCoils: [
+      ...(project.fanCoils ?? []),
+      ...(project.fanCoils ?? [])
+        .filter(selectedDevice)
+        .map((u) => ({ ...copiedRoomDevice(u), locked: false })),
+    ],
     airTerminals: [...project.airTerminals, ...copiedTerminals],
     hvacSystems: [...systems, ...copiedSystems],
+    plenums: [...project.plenums, ...copiedPlenums],
+    pillars: [
+      ...(project.pillars ?? []),
+      ...(project.pillars ?? [])
+        .filter(
+          (c) =>
+            deviceIds.has(c.id) ||
+            rooms.some(
+              (r) =>
+                r.floorId === c.floorId &&
+                pointInPolygon(c.position, r.polygon),
+            ),
+        )
+        .map((c) => ({
+          ...c,
+          id: newId(),
+          position: add(c.position, offset),
+          locked: false,
+        })),
+    ],
     openings: [...project.openings, ...copiedOpenings],
   });
   for (const device of allDevices.filter(

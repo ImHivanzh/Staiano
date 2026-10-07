@@ -1,10 +1,13 @@
 "use client";
+import Image from "next/image";
 import { radiatorCatalogs } from "@/domain/catalogs/radiators";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { AirTerminalCalculator } from "./AirTerminalCalculator";
 import { Models3DPanel } from "./Models3DPanel";
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { splitCatalog } from "@/domain/catalogs/splits";
+import { splitSeriesPresentations } from "@/domain/catalogs/split-presentation";
+import { fanCoilCatalog } from "@/domain/catalogs/fan-coils";
 import { CommercialCatalog } from "./CommercialCatalog";
 export function CatalogAdmin() {
   return (
@@ -62,6 +65,100 @@ export function CatalogAdmin() {
                     : "Data acquisizione non registrata"}
                 </p>
               ))}
+              {splitSeriesPresentations
+                .filter((series) => series.manufacturer === brand)
+                .sort((a, b) => a.tier - b.tier)
+                .map((series) => {
+                  const models = units.filter(
+                    (unit) => unit.family === series.family,
+                  );
+                  return (
+                    <article className="catalogo-serie" key={series.family}>
+                      <Image
+                        src={series.productPhoto.localPath}
+                        alt={series.productPhoto.caption}
+                        width={300}
+                        height={150}
+                        unoptimized
+                        style={{
+                          objectFit: [
+                            "Stylish",
+                            "Perfera All Seasons",
+                          ].includes(series.family)
+                            ? "cover"
+                            : "contain",
+                          background: "white",
+                        }}
+                      />
+                      <h4>{series.title}</h4>
+                      <p>{series.features.join(" · ")}</p>
+                      {series.gains.length ? (
+                        series.gains.map((gain) => <p key={gain}>{gain}</p>)
+                      ) : (
+                        <p className="nota">
+                          Gamma di ingresso: base del confronto commerciale.
+                        </p>
+                      )}
+                      <p className="nota">
+                        <a
+                          href={series.sourceMetadata.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Funzionalità documentate · pagina{" "}
+                          {series.sourceMetadata.page}
+                        </a>
+                        {" · "}
+                        <a
+                          href={series.productPhoto.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Foto originale del produttore
+                        </a>
+                      </p>
+                      <details>
+                        <summary>
+                          {models.length} modelli · codici e misure pubblicati
+                        </summary>
+                        <table className="tabella">
+                          <thead>
+                            <tr>
+                              <th>Modello</th>
+                              <th>Freddo / caldo nominale</th>
+                              <th>Ingombro L × H × P</th>
+                              <th>Mercato della fonte</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {models.map((unit) => (
+                              <tr key={unit.id}>
+                                <td>{unit.model}</td>
+                                <td>
+                                  {unit.nominalCoolingW ?? "—"} /{" "}
+                                  {unit.nominalHeatingW ?? "—"} W
+                                </td>
+                                <td>
+                                  {unit.widthMm} × {unit.heightMm} ×{" "}
+                                  {unit.depthMm} mm
+                                </td>
+                                <td>{unit.region ?? "Fonte riportata"}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        {series.family === "MSZ-AY" && (
+                          <p className="nota">
+                            I codici VGKP e VGK MSZ-AY hanno dotazioni diverse:
+                            Plasma Quad Plus è documentato per VGKP; VGK propone
+                            V-Blocking e Plasma Quad Connect opzionale.
+                            Verificare codice e revisione in fase d’ordine.
+                          </p>
+                        )}
+                      </details>
+                    </article>
+                  );
+                })}
             </div>
           );
         })}
@@ -71,6 +168,147 @@ export function CatalogAdmin() {
           conferma disponibilità commerciale in Italia; i codici restano quelli
           pubblicati.
         </p>
+        <p className="nota">
+          I gradini confrontano il posizionamento commerciale delle serie, non
+          l’anno di uscita. Design, filtrazione e rendimento sono dimensioni
+          diverse: una serie di design non garantisce prestazioni superiori in
+          ogni voce.
+        </p>
+      </section>
+      <section className="catalogo-scheda">
+        <h3>Ventilconvettori · Innova, Olimpia Splendid, Aermec</h3>
+        <p className="nota">
+          {fanCoilCatalog.products.length} modelli documentati ·{" "}
+          {fanCoilCatalog.version}. Potenze riferite alle condizioni e alla
+          velocità dichiarate dal produttore.
+        </p>
+        {[
+          ...new Set(
+            fanCoilCatalog.products.map(
+              (product) => `${product.manufacturer}|${product.family}`,
+            ),
+          ),
+        ].map((key) => {
+          const products = fanCoilCatalog.products.filter(
+            (product) => `${product.manufacturer}|${product.family}` === key,
+          );
+          const representative = products[0];
+          return (
+            <article className="catalogo-serie" key={key}>
+              {representative.productPhoto && (
+                <Image
+                  src={representative.productPhoto.localPath}
+                  alt={representative.productPhoto.caption}
+                  width={300}
+                  height={170}
+                  unoptimized
+                  style={{ objectFit: "contain", background: "white" }}
+                />
+              )}
+              <h4>
+                {representative.manufacturer} · {representative.family}
+              </h4>
+              <p>{representative.features.join(" · ")}</p>
+              <details>
+                <summary>
+                  {products.length} modelli · potenze e condizioni di prova
+                </summary>
+                <table className="tabella">
+                  <thead>
+                    <tr>
+                      <th>Modello</th>
+                      <th>Tubi</th>
+                      <th>Ingombro L × H × P</th>
+                      <th>Punto operativo</th>
+                      <th>Freddo / caldo</th>
+                      <th>Aria</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {products.flatMap((product) =>
+                      product.operatingPoints.map((point) => (
+                        <tr key={`${product.id}-${point.label}`}>
+                          <td>{product.model}</td>
+                          <td>{product.pipes}</td>
+                          <td>
+                            {product.widthMm} × {product.heightMm} ×{" "}
+                            {product.depthMm} mm
+                          </td>
+                          <td>{point.label}</td>
+                          <td>
+                            {point.coolingW} / {point.heatingW} W
+                          </td>
+                          <td>
+                            {point.airflowM3h === null
+                              ? "Non pubblicata"
+                              : `${point.airflowM3h} m³/h`}
+                          </td>
+                        </tr>
+                      )),
+                    )}
+                  </tbody>
+                </table>
+                {products.map((product) => (
+                  <details key={product.id}>
+                    <summary>
+                      {product.model} · condizioni, rumore e installazione
+                    </summary>
+                    <p className="nota">{product.dimensionNote}</p>
+                    {product.operatingPoints.map((point) => (
+                      <p className="nota" key={point.label}>
+                        {point.label}: freddo {point.coolingConditions}; caldo{" "}
+                        {point.heatingConditions}. Rumore{" "}
+                        {point.noiseDbA === null
+                          ? "non pubblicato"
+                          : `${point.noiseDbA} dB(A)`}
+                        : {point.noiseConditions}
+                      </p>
+                    ))}
+                    <a
+                      href={product.sourceMetadata.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Fonte ufficiale ·{" "}
+                      {product.sourceMetadata.documentRevision}
+                    </a>
+                  </details>
+                ))}
+              </details>
+            </article>
+          );
+        })}
+        <h4>Comandi originali Innova M7</h4>
+        {fanCoilCatalog.controls.map((control) => (
+          <article className="catalogo-serie" key={control.id}>
+            {control.productPhoto && (
+              <Image
+                src={control.productPhoto.localPath}
+                alt={control.productPhoto.caption}
+                width={220}
+                height={140}
+                unoptimized
+                style={{ objectFit: "contain", background: "white" }}
+              />
+            )}
+            <h5>
+              {control.model} · {control.series}
+            </h5>
+            <p>{control.features.join(" · ")}</p>
+            <p className="nota">
+              Famiglie documentate: {control.compatibleFamilies.join(", ")}.
+              Scheda necessaria secondo impianto a 2/4 tubi:{" "}
+              {control.requiredBoards.join(", ")}.
+            </p>
+            <a
+              href={control.sourceMetadata.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Manuale originale · pagina {control.sourceMetadata.page}
+            </a>
+          </article>
+        ))}
       </section>
       <section className="catalogo-scheda">
         <h3>Ecoclima · {airTerminalCatalog.version}</h3>

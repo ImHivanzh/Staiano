@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "2026-10-04-ecoclima-f01779a46f65",
+  "catalogVersion": "2026-10-07-ecoclima-ebf9e1e5a329",
   "scope": "Tutte le pagine prodotto presenti nelle quattro categorie ufficiali Ecoclima: diffusori, bocchette, griglie e bocchette/griglie/plenum VMC. Duplicati fra categorie preservati come provenienza; accessori esclusi dal dimensionamento terminali.",
   "categorySources": [
     {
@@ -1087,9 +1087,6 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 13,
       "missingFrontGeometryVariantIds": [
-        "ecoclima-edsc-c-100",
-        "ecoclima-edsc-c-125",
-        "ecoclima-edsc-c-160",
         "ecoclima-edsc-cc-100",
         "ecoclima-edsc-cc-125",
         "ecoclima-edsc-q-100",
@@ -5033,9 +5030,6 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 13,
       "missingFrontGeometryVariantIds": [
-        "ecoclima-edsc-c-100",
-        "ecoclima-edsc-c-125",
-        "ecoclima-edsc-c-160",
         "ecoclima-edsc-cc-100",
         "ecoclima-edsc-cc-125",
         "ecoclima-edsc-q-100",

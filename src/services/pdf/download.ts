@@ -4,6 +4,7 @@ import type { PanoramaOptions } from "@/services/render3d/export";
 
 export type DossierDownloadOptions = PanoramaOptions & {
   includeRenders?: boolean;
+  variant?: "complete" | "summary";
 };
 
 export async function downloadDossier(
@@ -26,13 +27,14 @@ export async function downloadDossier(
   const bytes = await renderDossierPdf(snapshot, {
     logoSvg,
     renderImages,
+    variant: options.variant,
   });
   options.signal?.throwIfAborted();
   const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
   const url = URL.createObjectURL(blob),
     anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-tecnico.pdf`;
+  anchor.download = `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}.pdf`;
   anchor.click();
   setTimeout(() => URL.revokeObjectURL(url), 10000);
 }

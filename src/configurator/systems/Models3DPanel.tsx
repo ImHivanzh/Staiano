@@ -19,6 +19,13 @@ export function Models3DPanel() {
     <section className="catalogo-scheda">
       <h3>Modelli 3D ufficiali · Cordivari</h3>
       <p className="nota">
+        Quando manca un modello originale verificato, il progetto usa una
+        ricostruzione dimensionale: ingombri dalle schede, dettagli e materiali
+        illustrativi. Una mesh con quote discordanti resta disponibile in
+        anteprima; non viene deformata per adattarla al progetto. Le foto
+        ufficiali mostrano l’aspetto reale della serie scelta.
+      </p>
+      <p className="nota">
         {model3dCatalog.models.length} modelli Ardesia, 2–6 colonne. OBJ
         originali convertiti in GLB locale, in metri. Geometria conservata,
         materiale tecnico neutro.

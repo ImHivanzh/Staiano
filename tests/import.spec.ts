@@ -91,7 +91,8 @@ test("PDF vettoriale locale: pagina, anteprima, due punti e sfondo calibrato", a
     buffer,
   });
   await expect(dialog.getByLabel("Pagina PDF", { exact: true })).toBeVisible();
-  await expect(dialog.locator("svg line")).toHaveCount(4);
+  await expect(dialog.locator("svg line")).toHaveCount(8); // Four source paths plus four independently identified wall candidates.
+  await dialog.getByLabel("Converti geometrie selezionate in muri").uncheck();
   const preview = dialog.getByRole("img", { name: /Anteprima planimetria/ });
   const box = await preview.boundingBox();
   if (!box) throw new Error("Anteprima non visibile");

@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { deviceCodes } from "@/services/export/device-codes";
 import Image from "next/image";
 import {
   ArrowCounterClockwise,
@@ -41,12 +43,19 @@ import {
 } from "@/domain/geometry/selection";
 import { exportProject } from "@/services/project/format";
 import { importProjectFile } from "@/services/import/project-file";
-import { flushSave, repository, saveCurrent } from "@/services/project/session";
+import {
+  configureProjectSession,
+  flushSave,
+  repository,
+  saveCurrent,
+} from "@/services/project/session";
 import { applyPlanImport } from "@/domain/geometry/import-plan";
 import type { ImportedPlan } from "@/services/import/plan-types";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { Editor2D } from "./editor2d/Editor2D";
 import { Properties } from "./properties/Properties";
+import { ConfigurationWizard } from "./import/ConfigurationWizard";
+import { PillarDialog } from "./PillarDialog";
 import type { Project } from "@/schemas/project";
 import { CatalogAdmin } from "./systems/CatalogAdmin";
 import { EcoclimaBill } from "./systems/EcoclimaBill";
@@ -75,6 +84,7 @@ const tools: {
 ];
 
 export function Configurator() {
+  const router = useRouter();
   const s = useProjectStore(),
     p = s.project;
   const [page, setPage] = useState<
@@ -86,11 +96,15 @@ export function Configurator() {
     [newDialog, setNewDialog] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
   const [includeRenders, setIncludeRenders] = useState(true);
+  const [dossierVariant, setDossierVariant] = useState<"complete" | "summary">(
+    "complete",
+  );
   const [billOpen, setBillOpen] = useState(false);
   const [pdfProgress, setPdfProgress] = useState("");
   const pdfController = useRef<AbortController | null>(null);
   const [planOpen, setPlanOpen] = useState(false);
   const [planFile, setPlanFile] = useState<File | undefined>(undefined);
+  const [userName, setUserName] = useState("");
   const fileInput = useRef<HTMLInputElement>(null),
     rasterInput = useRef<HTMLInputElement>(null),
     started = useRef(false);
@@ -99,6 +113,28 @@ export function Configurator() {
     started.current = true;
     void (async () => {
       try {
+        const response = await fetch("/api/auth/session", {
+          cache: "no-store",
+        });
+        if (response.status === 401) {
+          router.replace("/accedi");
+          return;
+        }
+        if (!response.ok)
+          throw new Error(
+            "Sessione utente non disponibile. Ricaricare l’applicazione.",
+          );
+        const identity = (await response.json()) as {
+          username: string;
+          displayName: string;
+          mustChangePassword: boolean;
+        };
+        if (identity.mustChangePassword) {
+          router.replace("/accedi");
+          return;
+        }
+        configureProjectSession(identity.username);
+        setUserName(identity.displayName);
         const id = await repository.lastActiveId();
         if (id) {
           const saved = await repository.get(id);
@@ -114,7 +150,7 @@ export function Configurator() {
         setReady(true);
       }
     })();
-  }, []);
+  }, [router]);
   useEffect(() => {
     const unsub = useProjectStore.subscribe((state, previous) => {
       if (!state.dirty || state.revision === previous.revision) return;
@@ -285,7 +321,7 @@ export function Configurator() {
   const floor = p?.floors.find((f) => f.id === s.activeFloorId),
     rooms = p?.rooms.filter((r) => r.floorId === s.activeFloorId) ?? [];
   return (
-    <div className="app hvac-app">
+    <div className={`app hvac-app ${s.presentation ? "modo-cliente" : ""}`}>
       <input
         ref={fileInput}
         type="file"
@@ -390,6 +426,7 @@ export function Configurator() {
                         elevationM: p.floors.length * 3,
                         scaleVerified: true,
                         background: null,
+                        importAnalysis: null,
                       },
                     ],
                   }));
@@ -434,13 +471,15 @@ export function Configurator() {
         )}
         <div className="piede-lato">
           <span className="locale-indicatore">Archivio sul dispositivo</span>
-          <small>Nessun account · Nessun cloud</small>
+          <small>Utenti autorizzati · Archivio locale</small>
         </div>
       </aside>
       <div className="contenuto contenuto-hvac">
         <header className="testata testata-hvac">
           <div>
-            <span className="occhiello">Termoidraulica Staiano</span>
+            <span className="occhiello">
+              Termoidraulica Staiano{userName ? ` · ${userName}` : ""}
+            </span>
             <h1>{p?.name ?? "Progetta il tuo impianto"}</h1>
           </div>
           <div className="azioni-testata">
@@ -506,6 +545,20 @@ export function Configurator() {
         </header>
         {p && (
           <div className="comandi-progetto">
+            <label className="opzione-render-pdf">
+              Documento{" "}
+              <select
+                aria-label="Tipo dossier"
+                value={dossierVariant}
+                disabled={pdfBusy}
+                onChange={(e) =>
+                  setDossierVariant(e.target.value as "complete" | "summary")
+                }
+              >
+                <option value="complete">Dossier completo</option>
+                <option value="summary">Dossier sintetico</option>
+              </select>
+            </label>
             <button
               className="bottone tenue piccolo"
               disabled={pdfBusy}
@@ -518,6 +571,7 @@ export function Configurator() {
                   .then(({ downloadDossier }) =>
                     downloadDossier(p, {
                       includeRenders,
+                      variant: dossierVariant,
                       floorId: s.activeFloorId,
                       roomId: s.selection.find((v) => v.kind === "room")?.id,
                       signal: controller.signal,
@@ -826,8 +880,56 @@ export function Configurator() {
           </main>
         ) : (
           <main className="configuratore">
+            <ConfigurationWizard />
             <div className="barra-strumenti">
               <div className="strumenti-disegno">
+                <select
+                  aria-label="Elemento nel progetto"
+                  value={
+                    s.selection[0]?.kind === "device" ? s.selection[0].id : ""
+                  }
+                  onChange={(e) =>
+                    s.select(
+                      e.target.value
+                        ? { kind: "device", id: e.target.value }
+                        : null,
+                    )
+                  }
+                >
+                  <option value="">Seleziona apparecchio</option>
+                  {[
+                    ...p.radiators,
+                    ...p.airTerminals,
+                    ...(p.fanCoils ?? []),
+                    ...p.plenums,
+                    ...(p.pillars ?? []),
+                    ...p.hvacSystems.flatMap((system) => system.indoorUnits),
+                    ...(p.hydronicSystems?.map(
+                      (system) => system.outdoorUnit,
+                    ) ?? []),
+                  ]
+                    .filter((o) => o.floorId === s.activeFloorId)
+                    .map((o) => (
+                      <option value={o.id} key={o.id}>
+                        {deviceCodes(p).get(o.id)} ·{" "}
+                        {"family" in o
+                          ? String(o.family)
+                          : "model" in o
+                            ? String(o.model ?? "Plenum")
+                            : "productId" in o
+                              ? String(o.productId)
+                              : "Oggetto"}
+                      </option>
+                    ))}
+                </select>
+                <button
+                  className="bottone piccolo tenue"
+                  onClick={() =>
+                    useProjectStore.setState({ pillarDialog: true })
+                  }
+                >
+                  Aggiungi pilastro
+                </button>
                 {s.view === "2d" &&
                   tools.map((t) => (
                     <button
@@ -1158,6 +1260,7 @@ export function Configurator() {
           onImport={acceptPlan}
         />
       )}
+      {s.view === "2d" && <PillarDialog />}
       {newDialog && (
         <div className="sfondo-dialogo">
           <section

@@ -237,6 +237,7 @@ export function reconcileRooms(
         systemType: parent?.systemType ?? "none",
         supplyPoints: parent?.supplyPoints ?? 1,
         returnPoints: parent?.returnPoints ?? 1,
+        usage: parent?.usage ?? "",
       };
     },
   );

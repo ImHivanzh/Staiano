@@ -4,6 +4,7 @@ import {
   distance,
   pointInPolygon,
   selfIntersects,
+  projection,
 } from "./geometry/primitives";
 import { overlappingPolygons } from "./geometry/rooms";
 import { roomWallSpan } from "./geometry/placement";
@@ -26,6 +27,21 @@ import {
   deviceEnvelopesOverlap,
 } from "./geometry/device-envelope";
 import { deviceCodes } from "@/services/export/device-codes";
+import { systemLinearBalances } from "./air-terminals/linear-meters";
+import { calculateSupplyPlenum } from "./ducted/plenum";
+import { placedPlenumGeometry } from "./ducted/placement";
+import { pillarFootprint } from "./geometry/pillars";
+import {
+  convexFootprintsOverlap,
+  footprintCorners,
+} from "./geometry/footprint";
+import { ductRoute } from "./ducted/routes";
+import { validateHydronicSystem } from "./hydronic/validation";
+import {
+  fanCoilProductAtVersion,
+  fanCoilControlAtVersion,
+  controllerBoardFor,
+} from "./catalogs/fan-coils";
 export type Check = {
   code: string;
   status: "valid" | "warning" | "invalid";
@@ -35,6 +51,60 @@ export type Check = {
 export function validateProject(p: Project): Check[] {
   const checks: Check[] = [];
   const codes = deviceCodes(p);
+  for (const system of p.hydronicSystems ?? []) {
+    const result = validateHydronicSystem(p, system);
+    checks.push({
+      code: "hydronicCapacity",
+      status: result.capacityCovered ? "valid" : "warning",
+      entityId: system.outdoorUnit.id,
+      message: `${codes.get(system.id)}: pompa caldo ${Math.round(result.heatingW)} W / freddo ${Math.round(result.coolingW)} W; fabbisogno ${Math.round(result.designLoadW)} W alle condizioni selezionate.`,
+    });
+    checks.push(
+      ...result.warnings.map((message) => ({
+        code: "hydronicCheck",
+        status: "warning" as const,
+        entityId: system.outdoorUnit.id,
+        message: `${codes.get(system.id)}: ${message}`,
+      })),
+    );
+  }
+  for (const unit of p.fanCoils ?? []) {
+    const product = fanCoilProductAtVersion(
+      unit.productId,
+      unit.catalogVersion,
+    );
+    const point = product?.operatingPoints[unit.operatingPointIndex];
+    checks.push({
+      code: "fanCoilCatalog",
+      status: point ? "valid" : "warning",
+      entityId: unit.id,
+      message: `${codes.get(unit.id)}: ${product?.manufacturer ?? ""} ${product?.model ?? unit.productId}, punto ${point?.label ?? "da verificare"}.`,
+    });
+    if (!point || point.noiseDbA === null || point.noiseDbA > 37)
+      checks.push({
+        code: "fanCoilNoise",
+        status: "warning",
+        entityId: unit.id,
+        message: `${codes.get(unit.id)}: ${point?.noiseDbA == null ? "rumore non disponibile" : `rumore ${point.noiseDbA} dB(A), oltre il limite 37`}.`,
+      });
+    if (unit.controllerId) {
+      const control = fanCoilControlAtVersion(
+        unit.controllerId,
+        unit.catalogVersion,
+      );
+      if (
+        !control ||
+        !product ||
+        controllerBoardFor(product, control) !== unit.controllerBoard
+      )
+        checks.push({
+          code: "fanCoilControl",
+          status: "warning",
+          entityId: unit.id,
+          message: `${codes.get(unit.id)}: comando e scheda non abbinabili secondo la fonte originale.`,
+        });
+    }
+  }
   for (const f of p.floors)
     checks.push({
       code: "scale",
@@ -42,6 +112,22 @@ export function validateProject(p: Project): Check[] {
       message: `${f.name}: scala ${f.scaleVerified ? "verificata" : "da calibrare"}`,
       entityId: f.id,
     });
+  for (const f of p.floors) {
+    if (f.importAnalysis?.candidates?.some((c) => c.status === "pending"))
+      checks.push({
+        code: "recognitionPending",
+        status: "warning",
+        entityId: f.id,
+        message: `${f.name}: elementi geometrici ancora da confermare.`,
+      });
+    if (f.configurationWizard && f.configurationWizard.status !== "complete")
+      checks.push({
+        code: "wizardPending",
+        status: "warning",
+        entityId: f.id,
+        message: `${f.name}: verifica guidata non completata; editor e salvataggio restano disponibili.`,
+      });
+  }
   const badWalls = p.walls.filter(
     (w) => distance(w.start, w.end) < 0.05 || w.thickness <= 0,
   );
@@ -175,6 +261,7 @@ export function validateProject(p: Project): Check[] {
   });
   for (const d of [
     ...p.radiators,
+    ...(p.fanCoils ?? []),
     ...p.airTerminals,
     ...p.hvacSystems.flatMap((s) => s.indoorUnits),
   ]) {
@@ -201,9 +288,13 @@ export function validateProject(p: Project): Check[] {
   const envelopes = projectDeviceEnvelopes(p);
   for (const envelope of envelopes) {
     const room = p.rooms.find((r) => r.id === envelope.roomId);
-    const ceiling = p.airTerminals.some(
-      (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
-    );
+    const ceiling =
+      p.airTerminals.some(
+        (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
+      ) ||
+      !!p.fanCoils?.some(
+        (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
+      );
     checks.push({
       code: "deviceEnvelope",
       status:
@@ -238,6 +329,13 @@ export function validateProject(p: Project): Check[] {
   for (const system of p.hvacSystems.filter((s) => s.type === "split"))
     checks.push(...validateSplitSystem(p, system));
   for (const system of p.hvacSystems.filter((s) => s.type === "ducted")) {
+    for (const balance of systemLinearBalances(p, system.id))
+      checks.push({
+        code: "linearMeters",
+        status: balance.status === "deficit" ? "warning" : "valid",
+        entityId: system.id,
+        message: `${system.name || codes.get(system.id)} ${balance.use === "supply" ? "mandata" : "ripresa"}: richiesti ${balance.requiredM.toFixed(2)} m, installati ${balance.installedM.toFixed(2)} m, margine ${balance.marginM >= 0 ? "+" : ""}${balance.marginM.toFixed(2)} m.${balance.mixedModels ? ` Modelli misti: capacità ${balance.availableAirflowM3h.toFixed(1)} / ${balance.airflowM3h.toFixed(1)} m³/h; metri riferiti a ${balance.familyCode}.` : ""}`,
+      });
     const product = hvacProductAtVersion(
         system.productId,
         system.catalogVersion,
@@ -381,6 +479,79 @@ export function validateProject(p: Project): Check[] {
     });
   }
   for (const t of p.airTerminals) {
+    if (t.manualDimensions)
+      checks.push({
+        code: "terminalManualDimensions",
+        status: "warning",
+        entityId: t.id,
+        message: `${codes.get(t.id)}: ingombro dichiarato dall’operatore; dimensioni frontali non disponibili nella fonte di catalogo.`,
+      });
+    if (!t.systemId || !t.plenumId)
+      checks.push({
+        code: "terminalConnection",
+        status: "warning",
+        entityId: t.id,
+        message: `${codes.get(t.id)}: ${!t.systemId ? "macchina" : "plenum"} non collegato.`,
+      });
+    if (t.mounting === "wall" && t.wallId) {
+      const wall = p.walls.find((w) => w.id === t.wallId);
+      if (wall) {
+        const angle = Math.atan2(
+          wall.end.y - wall.start.y,
+          wall.end.x - wall.start.x,
+        );
+        const along =
+          (t.position.x - wall.start.x) * Math.cos(angle) +
+          (t.position.y - wall.start.y) * Math.sin(angle);
+        const half =
+          (t.widthMm / 2000) * Math.abs(Math.cos(t.rotation - angle)) +
+          ((t.depthMm ?? 0) / 2000) * Math.abs(Math.sin(t.rotation - angle));
+        if (along - half < 0 || along + half > distance(wall.start, wall.end))
+          checks.push({
+            code: "terminalCorner",
+            status: "warning",
+            entityId: t.id,
+            message: `${codes.get(t.id)}: bocchetta oltre un angolo o la parete disponibile.`,
+          });
+        const perpendicular = distance(
+          t.position,
+          projection(t.position, wall.start, wall.end),
+        );
+        if (
+          Math.abs(
+            perpendicular -
+              (wall.thickness / 2 + (t.depthMm ?? 0) / 2000 + 0.02),
+          ) > 0.04 ||
+          Math.abs(Math.sin(t.rotation - angle)) > 0.02
+        )
+          checks.push({
+            code: "terminalWall",
+            status: "warning",
+            entityId: t.id,
+            message: `${codes.get(t.id)}: posa fuori dalla faccia interna o orientamento non allineato alla parete.`,
+          });
+        for (const opening of p.openings.filter((o) => o.wallId === wall.id)) {
+          if (
+            along + half <= opening.offsetM ||
+            along - half >= opening.offsetM + opening.widthM
+          )
+            continue;
+          const bottom = opening.type === "door" ? 0 : opening.sillHeightM;
+          const low = (t.elevationM ?? 0) - t.heightMm / 2000,
+            high = (t.elevationM ?? 0) + t.heightMm / 2000;
+          if (
+            bottom === null ||
+            Math.min(high, bottom + opening.heightM) > Math.max(low, bottom)
+          )
+            checks.push({
+              code: "terminalOpening",
+              status: "warning",
+              entityId: t.id,
+              message: `${codes.get(t.id)}: ${bottom === null ? "possibile " : ""}sovrapposizione con ${opening.type === "door" ? "porta" : "finestra"}${bottom === null ? "; quota davanzale mancante" : ""}.`,
+            });
+        }
+      }
+    }
     const legacyCheck = legacyTerminalCheck(t);
     if (legacyCheck) {
       checks.push(legacyCheck);
@@ -460,6 +631,127 @@ export function validateProject(p: Project): Check[] {
         status: "warning",
         message: `${t.productId}: rumore riferito a ${op.referenceLengthM}m; linea reale ${t.widthMm / 1000}m da verificare`,
         entityId: t.id,
+      });
+  }
+  for (const plenum of p.plenums) {
+    const result = calculateSupplyPlenum(p, plenum.systemId);
+    const geometry = placedPlenumGeometry(p, plenum);
+    const footprint = footprintCorners(
+      plenum.position,
+      plenum.widthMm / 1000,
+      plenum.depthMm / 1000,
+      plenum.rotation,
+    );
+    const room = p.rooms.find((r) => r.id === plenum.roomId);
+    if (
+      !room ||
+      !footprint.every((point) => pointInPolygon(point, room.polygon)) ||
+      (plenum.elevationM ?? 0) - plenum.heightMm / 2000 < 0 ||
+      (plenum.elevationM ?? 0) + plenum.heightMm / 2000 > room.heightM
+    )
+      checks.push({
+        code: "plenumEnvelope",
+        status: "warning",
+        entityId: plenum.id,
+        message: `${codes.get(plenum.id)}: ingombro plenum da verificare rispetto alla stanza.`,
+      });
+    if (
+      !geometry?.ports.length ||
+      geometry.ports.length !== result.branches.length
+    )
+      checks.push({
+        code: "plenumConnections",
+        status: "warning",
+        entityId: plenum.id,
+        message: `${codes.get(plenum.id)}: ${result.branches.length} attacchi richiesti, ${geometry?.ports.length ?? 0} con geometria verificata.`,
+      });
+    if (
+      geometry?.ports.some(
+        (port) =>
+          Math.abs(port.centerMm[0]) + port.diameterMm / 2 >
+            plenum.widthMm / 2 ||
+          Math.abs(port.centerMm[1]) + port.diameterMm / 2 >
+            plenum.heightMm / 2,
+      ) ||
+      plenum.depthMm <
+        (result.machineGeometry?.transitionDepthMm ?? 0) +
+          (result.machineGeometry?.settings.collarLengthMm ?? 0)
+    )
+      checks.push({
+        code: "plenumDimensions",
+        status: "warning",
+        entityId: plenum.id,
+        message: `${codes.get(plenum.id)}: dimensioni incompatibili con transizione o attacchi del plenum.`,
+      });
+  }
+  for (const pillar of p.pillars ?? []) {
+    const footprint = pillarFootprint(pillar);
+    if (
+      !p.rooms.some(
+        (r) =>
+          r.floorId === pillar.floorId &&
+          footprint.every((point) => pointInPolygon(point, r.polygon)),
+      )
+    )
+      checks.push({
+        code: "pillarEnvelope",
+        status: "warning",
+        entityId: pillar.id,
+        message: `${codes.get(pillar.id)}: pilastro esterno alla geometria utile; verificare posizione e misure.`,
+      });
+    for (const e of envelopes.filter((e) => e.floorId === pillar.floorId))
+      if (
+        e.minZ < pillar.heightMm / 1000 &&
+        convexFootprintsOverlap(footprint, e.cornersXY)
+      )
+        checks.push({
+          code: "pillarCollision",
+          status: "warning",
+          entityId: e.deviceId,
+          message: `${codes.get(e.deviceId)}: interferenza con ${codes.get(pillar.id)}.`,
+        });
+    if (
+      (p.pillars ?? []).some(
+        (other) =>
+          other.id !== pillar.id &&
+          other.floorId === pillar.floorId &&
+          convexFootprintsOverlap(footprint, pillarFootprint(other)),
+      )
+    )
+      checks.push({
+        code: "pillarOverlap",
+        status: "invalid",
+        entityId: pillar.id,
+        message: `${codes.get(pillar.id)}: pilastri sovrapposti; correggere prima di usare area e calcoli.`,
+      });
+  }
+  for (const duct of p.ducts ?? []) {
+    const route = ductRoute(p, duct);
+    if (route.length < 2)
+      checks.push({
+        code: "ductConnection",
+        status: "warning",
+        entityId: duct.id,
+        message: `${codes.get(duct.id)}: attacco o collegamento non disponibile; rigenerare la proposta.`,
+      });
+    const floorId = p.plenums.find((pl) => pl.id === duct.plenumId)?.floorId;
+    if (
+      route.some(
+        (point) =>
+          point.elevationM < 0 ||
+          !p.rooms.some(
+            (r) =>
+              r.floorId === floorId &&
+              pointInPolygon(point, r.polygon) &&
+              point.elevationM <= r.heightM,
+          ),
+      )
+    )
+      checks.push({
+        code: "ductEnvelope",
+        status: "warning",
+        entityId: duct.id,
+        message: `${codes.get(duct.id)}: percorso fuori dalla geometria interna o sopra la quota disponibile.`,
       });
   }
   return checks;

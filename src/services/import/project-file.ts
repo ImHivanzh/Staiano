@@ -4,7 +4,7 @@ export async function importProjectFile(file: File): Promise<Project> {
   if (!file.name.toLowerCase().endsWith(".hvacproj"))
     throw new Error("Selezionare un file .hvacproj.");
   if (file.size > MAX_PROJECT_BYTES)
-    throw new Error("Progetto troppo grande. Limite 32 MB.");
+    throw new Error("Progetto troppo grande. Limite 128 MB.");
   if (
     file.type &&
     !["application/json", "application/octet-stream", "text/plain"].includes(

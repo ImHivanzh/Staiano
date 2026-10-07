@@ -33,6 +33,7 @@ export function realisticProjectFixture(): Project {
     type,
     thickness: type === "ESTERNO" ? 0.3 : 0.12,
     height: null,
+    locked: false,
   }));
   p = recomputeProject({ ...p, walls });
   p.rooms = p.rooms.map((room) => ({

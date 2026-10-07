@@ -1,7 +1,14 @@
 import { z } from "zod";
 import { terminalCommercialOptionsSchema } from "@/domain/catalogs/ecoclima-price-schema";
 
-export const CURRENT_SCHEMA_VERSION = 2;
+export const CURRENT_SCHEMA_VERSION = 3;
+export const DIMENSION_MODES = ["internal", "axis", "external"] as const;
+export const DECISION_ORIGINS = [
+  "calculated",
+  "suggested",
+  "confirmed",
+  "manual",
+] as const;
 const id = z.string().min(1).max(120);
 const finite = z.number().finite();
 export const manualDuctedMachineSchema = z.object({
@@ -48,7 +55,54 @@ export const wallSchema = z.object({
   thickness: finite.min(0.01).max(2),
   type: z.enum(["INTERNO", "ESTERNO"]),
   height: finite.positive().max(30).nullable(),
+  locked: z.boolean().default(false),
+  recognition: z
+    .object({
+      confidence: finite.min(0).max(1),
+      origin: z.enum(DECISION_ORIGINS),
+      reason: z.string().max(500),
+    })
+    .optional(),
 });
+export const importAnalysisSchema = z.object({
+  algorithmVersion: z.string().max(50),
+  analyzedAt: z.iso.datetime(),
+  sourceType: z.enum(["raster", "pdf", "dxf", "dwg", "manual"]),
+  scaleConfidence: z.enum(["high", "medium", "low"]),
+  wallCandidates: z.number().int().nonnegative(),
+  wallsAutoCreated: z.number().int().nonnegative(),
+  wallsConfirmedByOperator: z.number().int().nonnegative(),
+  wallsManual: z.number().int().nonnegative(),
+  roomsDetected: z.number().int().nonnegative(),
+  openingsDetected: z.number().int().nonnegative(),
+  notes: z.array(z.string().max(500)).max(50),
+  candidates: z
+    .array(
+      z.object({
+        id,
+        start: pointSchema,
+        end: pointSchema,
+        thicknessM: finite.positive().nullable(),
+        confidence: finite.min(0).max(1),
+        reason: z.string().max(500),
+        status: z.enum(["automatic", "confirmed", "rejected", "pending"]),
+      }),
+    )
+    .max(5000)
+    .optional(),
+  openingCandidates: z
+    .array(
+      z.object({
+        start: pointSchema,
+        end: pointSchema,
+        confidence: finite.min(0).max(1),
+        reason: z.string().max(500),
+      }),
+    )
+    .max(2000)
+    .optional(),
+});
+export type ImportAnalysis = z.infer<typeof importAnalysisSchema>;
 export const floorSchema = z.object({
   id,
   name: z.string().min(1).max(100),
@@ -68,6 +122,15 @@ export const floorSchema = z.object({
       filename: z.string().max(255),
     })
     .nullable(),
+  importAnalysis: importAnalysisSchema.nullable().default(null),
+  configurationWizard: z
+    .object({
+      step: z.number().int().min(0).max(10),
+      confirmedSteps: z.array(z.number().int().min(0).max(10)).max(11),
+      status: z.enum(["active", "paused", "complete"]),
+    })
+    .nullable()
+    .optional(),
 });
 export const roomSchema = z.object({
   id,
@@ -82,9 +145,10 @@ export const roomSchema = z.object({
   heightM: finite.positive().max(30),
   volumeM3: finite.nonnegative(),
   designLoadW: finite.nonnegative(),
-  systemType: z.enum(["none", "split", "ducted", "radiator"]),
+  systemType: z.enum(["none", "split", "ducted", "radiator", "fanCoil"]),
   supplyPoints: z.number().int().min(1).max(100),
   returnPoints: z.number().int().min(1).max(100),
+  usage: z.string().max(100).default(""),
 });
 const placement = z.object({
   id,
@@ -98,10 +162,96 @@ const placement = z.object({
   depthMm: finite.positive(),
   productId: id,
   catalogVersion: z.string().max(100),
+  locked: z.boolean().default(false),
 });
+export const linearPlanSchema = z.object({
+  updatedAt: z.iso.datetime(),
+  airflowM3h: finite.positive(),
+  familyCode: z.string().max(100),
+  catalogVersion: z.string().max(100).optional(),
+  supplyVariantId: id.optional(),
+  supplyOperatingPointIndex: z.number().int().nonnegative().optional(),
+  returnVariantId: id.optional(),
+  returnOperatingPointIndex: z.number().int().nonnegative().optional(),
+  operatingPointLabel: z.string().max(100),
+  airflowPerMeterM3h: finite.positive().nullable(),
+  returnFamilyCode: z.string().max(100).nullable().default(null),
+  returnOperatingPointLabel: z.string().max(100).nullable().default(null),
+  returnAirflowPerMeterM3h: finite.positive().nullable().default(null),
+  requiredSupplyM: finite.nonnegative(),
+  requiredReturnM: finite.nonnegative(),
+  distribution: z
+    .array(
+      z.object({
+        roomId: id,
+        use: z.enum(["supply", "return"]),
+        suggestedM: finite.nonnegative(),
+        airflowM3h: finite.nonnegative(),
+      }),
+    )
+    .max(2000),
+  status: z.enum(["proposed", "accepted", "modified", "none"]),
+});
+export type LinearPlan = z.infer<typeof linearPlanSchema>;
+export const plenumSchema = z.object({
+  id,
+  systemId: id,
+  floorId: id,
+  roomId: id.nullable(),
+  position: pointSchema,
+  rotation: finite,
+  widthMm: finite.positive().max(10000),
+  heightMm: finite.positive().max(10000),
+  depthMm: finite.positive().max(10000),
+  status: z.enum(["proposed", "confirmed", "manual"]),
+  elevationM: finite.positive().max(30).optional(),
+  model: z.string().max(100).optional(),
+  locked: z.boolean().default(false),
+  designSettings: z
+    .object({
+      edgeClearanceMm: finite.positive(),
+      portClearanceMm: finite.positive(),
+      collarLengthMm: finite.positive(),
+      minimumBoxDepthMm: finite.positive(),
+      expansionHalfAngleDeg: finite.positive(),
+      faceWidthMm: finite.positive().nullable(),
+    })
+    .nullable()
+    .default(null),
+});
+export type Plenum = z.infer<typeof plenumSchema>;
+export const pillarSchema = z.object({
+  id,
+  floorId: id,
+  position: pointSchema,
+  rotation: finite,
+  widthMm: finite.positive().max(10000),
+  depthMm: finite.positive().max(10000),
+  heightMm: finite.positive().max(30000),
+  locked: z.boolean().default(false),
+});
+export type Pillar = z.infer<typeof pillarSchema>;
+export const ductSchema = z.object({
+  id,
+  systemId: id,
+  plenumId: id,
+  terminalId: id.nullable(),
+  branchId: z.string().max(250).nullable(),
+  shape: z.enum(["circle", "rectangle"]),
+  diameterMm: finite.positive().nullable(),
+  widthMm: finite.positive().nullable(),
+  heightMm: finite.positive().nullable(),
+  routing: z.enum(["orthogonal", "manual"]),
+  waypoints: z
+    .array(pointSchema.extend({ elevationM: finite.min(0).max(30) }))
+    .max(100),
+  decisionOrigin: z.enum(DECISION_ORIGINS),
+  locked: z.boolean().default(false),
+});
+export type Duct = z.infer<typeof ductSchema>;
 export const projectSchema = z
   .object({
-    schemaVersion: z.literal(2),
+    schemaVersion: z.literal(CURRENT_SCHEMA_VERSION),
     id,
     name: z.string().trim().min(1).max(150),
     createdAt: z.iso.datetime(),
@@ -145,9 +295,48 @@ export const projectSchema = z
           catalogVersion: z.string().max(100),
           indoorUnits: z.array(placement),
           compatibilityStatus: z.enum(["verified", "unverifiable", "invalid"]),
+          linearPlan: linearPlanSchema.nullable().default(null),
+          decisionOrigin: z.enum(DECISION_ORIGINS).optional(),
         }),
       )
       .max(1000),
+    plenums: z.array(plenumSchema).max(1000).default([]),
+    pillars: z.array(pillarSchema).max(2000).optional(),
+    ducts: z.array(ductSchema).max(5000).optional(),
+    hydronicSystems: z
+      .array(
+        z.object({
+          id,
+          name: z.string().min(1).max(100),
+          productId: id,
+          catalogVersion: z.string().max(100),
+          roomIds: z.array(id).min(1).max(1000),
+          fanCoilIds: z.array(id).max(2000),
+          operatingPointIndex: z.number().int().nonnegative().max(100),
+          outdoorUnit: z.object({
+            id,
+            floorId: id,
+            position: pointSchema,
+            rotation: finite,
+            widthMm: finite.positive(),
+            heightMm: finite.positive(),
+            depthMm: finite.positive(),
+            elevationM: finite.nonnegative().max(100),
+            locked: z.boolean().default(false),
+          }),
+          pipeWaypoints: z
+            .array(
+              z.object({
+                fanCoilId: id,
+                points: z.array(pointSchema).max(100),
+              }),
+            )
+            .max(2000)
+            .optional(),
+        }),
+      )
+      .max(1000)
+      .optional(),
     radiators: z
       .array(
         placement.extend({
@@ -168,6 +357,18 @@ export const projectSchema = z
         }),
       )
       .max(2000),
+    fanCoils: z
+      .array(
+        placement.extend({
+          mounting: z.enum(["wall", "ceiling"]),
+          elevationM: finite.positive().max(30),
+          operatingPointIndex: z.number().int().nonnegative().max(100),
+          controllerId: id.nullable().default(null),
+          controllerBoard: z.string().max(100).nullable().default(null),
+        }),
+      )
+      .max(2000)
+      .optional(),
     airTerminals: z
       .array(
         placement.extend({
@@ -197,6 +398,16 @@ export const projectSchema = z
           unitIndex: z.number().int().nonnegative().max(1000).nullable(),
           legacyUnverified: z.boolean().default(false),
           commercialOptions: terminalCommercialOptionsSchema.optional(),
+          decisionOrigin: z
+            .enum(["calculated", "suggested", "confirmed", "manual"])
+            .default("calculated"),
+          style: z.string().max(100).default(""),
+          color: z.string().max(100).default(""),
+          finish: z.string().max(100).default(""),
+          productCode: z.string().max(100).default(""),
+          plenumId: id.nullable().default(null),
+          proposalId: z.string().max(200).optional(),
+          manualDimensions: z.boolean().optional(),
         }),
       )
       .max(2000),
@@ -207,6 +418,7 @@ export const projectSchema = z
       externalWallThicknessM: finite.min(0.01).max(2),
       coefficientWm3: z.literal(35),
       maxNoiseDbA: z.literal(37),
+      dimensionMode: z.enum(DIMENSION_MODES).default("internal"),
     }),
     catalogVersions: z.record(z.string().max(100), z.string().max(100)),
     sourceFilesMetadata: z
@@ -219,6 +431,11 @@ export const projectSchema = z
           importedAt: z.iso.datetime(),
           floorId: id,
           sourceType: z.enum(["raster", "pdf", "dxf", "dwg"]),
+          originalDataUrl: z
+            .string()
+            .max(45_000_000)
+            .regex(/^data:[^;]*;base64,/)
+            .optional(),
         }),
       )
       .max(100),
@@ -231,7 +448,13 @@ export const projectSchema = z
       p.openings,
       p.hvacSystems,
       p.radiators,
+      p.fanCoils ?? [],
       p.airTerminals,
+      p.plenums,
+      p.pillars ?? [],
+      p.ducts ?? [],
+      p.hydronicSystems ?? [],
+      p.hydronicSystems?.map((s) => s.outdoorUnit) ?? [],
       p.hvacSystems.flatMap((s) => s.indoorUnits),
     ];
     const ids = groups.flat().map((e) => e.id);
@@ -245,7 +468,10 @@ export const projectSchema = z
       ...p.rooms,
       ...p.openings,
       ...p.radiators,
+      ...(p.fanCoils ?? []),
       ...p.airTerminals,
+      ...p.plenums,
+      ...(p.pillars ?? []),
       ...p.sourceFilesMetadata,
     ])
       if (!floors.has(e.floorId))
@@ -258,6 +484,7 @@ export const projectSchema = z
         ctx.addIssue({ code: "custom", message: "Apertura senza muro" });
     for (const e of [
       ...p.radiators,
+      ...(p.fanCoils ?? []),
       ...p.airTerminals,
       ...p.hvacSystems.flatMap((s) => s.indoorUnits),
     ]) {
@@ -305,6 +532,65 @@ export const projectSchema = z
           code: "custom",
           message: "Terminale senza sistema canalizzato coerente",
         });
+    const plenumIds = new Map(p.plenums.map((pl) => [pl.id, pl]));
+    for (const pl of p.plenums) {
+      const system = p.hvacSystems.find((s) => s.id === pl.systemId);
+      if (!system || system.type !== "ducted")
+        ctx.addIssue({
+          code: "custom",
+          message: "Plenum senza sistema canalizzato coerente",
+        });
+      if (pl.roomId && !system?.roomIds.includes(pl.roomId))
+        ctx.addIssue({
+          code: "custom",
+          message: "Plenum in stanza non servita dal sistema",
+        });
+      if (pl.roomId && rooms.get(pl.roomId)?.floorId !== pl.floorId)
+        ctx.addIssue({ code: "custom", message: "Piano plenum incoerente" });
+    }
+    for (const t of p.airTerminals)
+      if (
+        t.plenumId &&
+        (plenumIds.get(t.plenumId)?.systemId !== t.systemId ||
+          plenumIds.get(t.plenumId)?.floorId !== t.floorId)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Terminale senza plenum coerente",
+        });
+    for (const duct of p.ducts ?? []) {
+      const plenum = plenumIds.get(duct.plenumId);
+      const terminal = p.airTerminals.find((t) => t.id === duct.terminalId);
+      if (
+        !plenum ||
+        plenum.systemId !== duct.systemId ||
+        (duct.terminalId &&
+          (!terminal ||
+            terminal.systemId !== duct.systemId ||
+            terminal.plenumId !== duct.plenumId ||
+            terminal.floorId !== plenum.floorId))
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Canale con collegamenti incoerenti",
+        });
+    }
+    for (const system of p.hydronicSystems ?? []) {
+      if (
+        !floors.has(system.outdoorUnit.floorId) ||
+        system.roomIds.some((rid) => !rooms.has(rid)) ||
+        system.fanCoilIds.some(
+          (fid) =>
+            !p.fanCoils?.some(
+              (u) => u.id === fid && system.roomIds.includes(u.roomId),
+            ),
+        )
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Collegamenti impianto idronico incoerenti",
+        });
+    }
   });
 
 export type Point = z.infer<typeof pointSchema>;

@@ -1,0 +1,93 @@
+"""Offline normalization of reviewed official heat-pump tables; hashes pin sources.
+
+Run with the bundled Python (pypdf). Changed documents require review of the
+source rows before changing their expected hash. No interpolation of capacities.
+"""
+from pathlib import Path
+import hashlib
+import json
+from datetime import datetime, timezone
+from pypdf import PdfReader
+
+ROOT = Path(__file__).resolve().parents[2]
+SOURCE = ROOT / "catalog-data/sources/heat-pumps"
+DOCS = {
+    "chaffoteaux": ("https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf", "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9", "Scheda ARIANEXT PLUS M LINK R32 2022"),
+    "gree-versati-v": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf", "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b", "Brochure VERSATI V 2025"),
+}
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+for name, (_, expected, _) in DOCS.items():
+    if sha(SOURCE / f"{name}.pdf") != expected:
+        raise ValueError(f"Source changed: review {name}")
+
+manifest_path = SOURCE / "manifest.json"
+previous_manifest = {m["name"]: m for m in json.loads(manifest_path.read_text(encoding="utf8"))} if manifest_path.exists() else {}
+retrieved = {name: previous_manifest[name]["retrievedAt"] if previous_manifest.get(name, {}).get("timestampBasis") == "file-acquired-at" else datetime.fromtimestamp((SOURCE / f"{name}.pdf").stat().st_mtime, timezone.utc).isoformat() for name in DOCS}
+
+def source(name, manufacturer, page):
+    url, digest, revision = DOCS[name]
+    return dict(manufacturer=manufacturer, sourceUrl=url, sourceType="pdf", sha256=digest,
+                documentRevision=revision, retrievedAt=retrieved[name], importedAt=retrieved[name], page=page)
+
+def photo(name, url, caption):
+    path = ROOT / "public/catalog-assets/heat-pumps" / name
+    return dict(localPath=f"/catalog-assets/heat-pumps/{name}", sourceUrl=url, sha256=sha(path), caption=caption)
+
+def point(label, heat, cold, cop, eer, heat_water=35, heat_air=7):
+    return dict(label=label, heatingW=round(heat*1000), coolingW=round(cold*1000), cop=cop, eer=eer,
+                heatingWaterSupplyC=heat_water, coolingWaterSupplyC=7, heatingOutdoorC=heat_air, coolingOutdoorC=35,
+                heatingConditions=f"EN 14511 · aria esterna {heat_air} °C · acqua mandata/ritorno {heat_water}/{heat_water-5} °C",
+                coolingConditions="EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C")
+
+products = []
+chaff_photo = photo("chaffoteaux-arianext-plus.png", "https://www.chaffoteaux.it/themes/img/produits_pers/png39273-20220426155452.png", "Foto ufficiale di gamma ARIANEXT PLUS M LINK R32, con modulo interno; il 3D rappresenta l’unità esterna.")
+# Reviewed page 4 exact nominal rows; page 3 external dimension drawings.
+for size, height, heat35, heat45, heatminus7, cold, cop35, cop45, copminus7, eer in [
+    (35, 756, 3.5, 3.0, 3.51, 3.5, 5.1, 3.74, 3.1, 3.4),
+    (50, 756, 5.0, 4.05, 5.0, 5.0, 5.0, 3.65, 2.9, 2.85),
+    (80, 1106, 8.0, 6.0, 7.41, 7.0, 4.8, 3.7, 3.0, 3.1),
+]:
+    products.append(dict(id=f"chaffoteaux-arianext-plus-{size}-m-r32", manufacturer="Chaffoteaux", family="ARIANEXT PLUS M LINK R32", model=f"ARIANEXT PLUS {size} M LINK R32",
+        widthMm=1016, heightMm=height, depthMm=383, dimensionNote="Ingombro unità esterna L×H×P da disegno pag. 3; distanze di servizio da verificare nel manuale. Modulo interno previsto dal sistema, da progettare separatamente.",
+        features=["Monoblocco inverter R32", "Expert HD e Wi-Fi di serie", "Gestione ChaffoLink", "ACS con bollitore opzionale"], productPhoto=chaff_photo, sourceMetadata=source("chaffoteaux", "Chaffoteaux", 4),
+        operatingPoints=[point("Caldo A7/W35 · freddo A35/W7", heat35, cold, cop35, eer), point("Caldo A7/W45 · freddo A35/W7", heat45, cold, cop45, eer, 45), point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold, copminus7, eer, 35, -7)]))
+
+gree_photo = photo("gree-versati-v.png", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png", "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW.")
+reader = PdfReader(SOURCE / "gree-versati-v.pdf")
+for size, page in [(6, 8), (8, 10)]:
+    text = reader.pages[page-1].extract_text()
+    if f"GRS-CQ{size}.0Pd/NpG4-E" not in text or "880/1206/445" not in text:
+        raise ValueError("Gree source row/dimensions missing")
+    # Same-page named nominal capacity / EER-COP rows, no promotional rated values.
+    import re
+    capacities = re.findall(r"Capacità nominale kW ([\d,]+) ([\d,]+)", text)
+    efficiency = re.findall(r"EER/COP ([\d,]+) ([\d,]+)", text)
+    convert = lambda value: float(value.replace(",", "."))
+    points = []
+    for index, water in enumerate([35,45]):
+        cold, heat = map(convert, capacities[index])
+        eer, cop = map(convert, efficiency[index])
+        # The first row's cooling is W18; pair its heating with documented W7 cooling.
+        cold = convert(capacities[1][0])
+        eer = convert(efficiency[1][0])
+        points.append(point(f"Caldo A7/W{water} · freddo A35/W7", heat, cold, cop, eer, water))
+    products.append(dict(id=f"gree-versati-v-{size}-monofase", manufacturer="Gree", family="VERSATI V", model=f"GRS-CQ{size}.0Pd/NpG4-E", widthMm=1206, heightMm=880, depthMm=445,
+        dimensionNote=f"Ingombro unità esterna L×H×P, brochure pag. {page}. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+        features=["Monoblocco DC Inverter R290", "Mandata fino a 80 °C nei limiti di funzionamento", "Pannello remoto di serie", "ACS con accumulo e valvola opzionali"], productPhoto=gree_photo, sourceMetadata=source("gree-versati-v", "Gree", page), operatingPoints=points))
+
+version_hash = hashlib.sha256(json.dumps(products, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
+catalog = dict(version=f"heat-pumps-{version_hash}", products=products)
+out = ROOT / "catalog-data/generated/heat-pumps.json"
+history_path = out.with_name("heat-pumps-history.json")
+history = json.loads(history_path.read_text(encoding="utf8")) if history_path.exists() else {}
+if out.exists():
+    previous = json.loads(out.read_text(encoding="utf8"))
+    if previous["version"] != catalog["version"]:
+        history[previous["version"]] = previous
+out.write_text(json.dumps(catalog, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
+history_path.write_text(json.dumps(history, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
+manifest_path.write_text(json.dumps([dict(name=name, timestampBasis="file-acquired-at", **source(name, "Chaffoteaux" if name=="chaffoteaux" else "Gree", None)) for name in DOCS], indent=2, ensure_ascii=False)+"\n", encoding="utf8")
+print(f"Generated {len(products)} models from pinned official PDFs")

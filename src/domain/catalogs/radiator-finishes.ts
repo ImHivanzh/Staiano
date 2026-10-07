@@ -36,10 +36,6 @@ export function getRadiatorFinishFamily(manufacturer: string, family: string) {
   );
 }
 
-export function getRadiatorFinish(id: string | undefined | null) {
-  return radiatorFinishes.find((finish) => finish.id === id) ?? null;
-}
-
 /** No generic RAL input: options come from the manufacturer/family/role whitelist. */
 export function getRadiatorFinishOptions(
   manufacturer: string,

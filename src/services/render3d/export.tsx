@@ -153,6 +153,17 @@ function PanoramaScene({
     rooms,
     project.projectSettings.defaultHeightM,
   );
+  if (!room)
+    for (const system of project.hydronicSystems?.filter(
+      (s) => s.outdoorUnit.floorId === floorId,
+    ) ?? []) {
+      const unit = system.outdoorUnit,
+        radius = Math.hypot(unit.widthMm, unit.depthMm) / 2000 + 0.3;
+      fullFrame.minX = Math.min(fullFrame.minX, unit.position.x - radius);
+      fullFrame.maxX = Math.max(fullFrame.maxX, unit.position.x + radius);
+      fullFrame.minZ = Math.min(fullFrame.minZ, unit.position.y - radius);
+      fullFrame.maxZ = Math.max(fullFrame.maxZ, unit.position.y + radius);
+    }
   const roomPadding = Math.max(0.1, ...walls.map((wall) => wall.thickness));
   const frame = room
     ? {

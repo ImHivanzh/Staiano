@@ -3,23 +3,105 @@ import { distance, projection, pointInPolygon } from "./primitives";
 import { footprintInsideRoom } from "./footprint";
 import { positionAlongRoomWall, roomWallSpan } from "./placement";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
+import { snapTerminalPose } from "./terminal-snap";
+import type { SnapOptions } from "./primitives";
+import { moveSystemObject } from "@/domain/ducted/placement";
+import { moveHydronicOutdoorUnit } from "@/domain/hydronic/apply";
 export function movePlacedDevice(
   project: Project,
   deviceId: string,
   target: Point,
+  snap?: SnapOptions,
 ): Project {
+  if (project.hydronicSystems?.some((s) => s.outdoorUnit.id === deviceId))
+    return moveHydronicOutdoorUnit(project, deviceId, { position: target });
+  const pillar = project.pillars?.find((c) => c.id === deviceId);
+  if (pillar) {
+    if (pillar.locked)
+      throw new Error("Sbloccare il pilastro prima di spostarlo.");
+    return {
+      ...project,
+      pillars: project.pillars!.map((c) =>
+        c.id === deviceId ? { ...c, position: target } : c,
+      ),
+    };
+  }
+  if (
+    project.plenums.some((pl) => pl.id === deviceId) ||
+    project.hvacSystems.some(
+      (s) =>
+        s.type === "ducted" && s.indoorUnits.some((u) => u.id === deviceId),
+    )
+  )
+    return moveSystemObject(project, deviceId, target);
   const all = [
     ...project.radiators,
+    ...(project.fanCoils ?? []),
     ...project.airTerminals,
     ...project.hvacSystems.flatMap((s) => s.indoorUnits),
   ];
   const item = all.find((d) => d.id === deviceId);
   if (!item) return project;
   const terminal = project.airTerminals.find((t) => t.id === deviceId);
+  const fanCoil = project.fanCoils?.find((t) => t.id === deviceId);
+  if (item.locked)
+    throw new Error("Sbloccare l’apparecchio prima di spostarlo.");
   if (terminal && needsTerminalReconfiguration(terminal))
     throw new Error(
       "Terminale legacy: riconfigurare il montaggio nella stanza prima di spostarlo.",
     );
+  if (terminal && snap) {
+    const pose = snapTerminalPose(project, deviceId, target, snap);
+    return {
+      ...project,
+      airTerminals: project.airTerminals.map((t) =>
+        t.id === deviceId
+          ? {
+              ...t,
+              position: pose.position,
+              roomId: pose.roomId,
+              wallId: pose.wallId,
+              rotation: pose.rotation,
+              decisionOrigin: "manual",
+              elevationM:
+                t.mounting === "ceiling"
+                  ? project.rooms.find((r) => r.id === pose.roomId)!.heightM
+                  : t.elevationM,
+            }
+          : t,
+      ),
+    };
+  }
+  if (fanCoil?.mounting === "ceiling") {
+    const room = project.rooms.find(
+      (r) => r.floorId === fanCoil.floorId && pointInPolygon(target, r.polygon),
+    );
+    if (
+      !room ||
+      !footprintInsideRoom(
+        room,
+        target,
+        fanCoil.widthMm / 1000,
+        fanCoil.heightMm / 1000,
+        fanCoil.rotation,
+      )
+    )
+      throw new Error("Il ventilconvettore non rientra nella stanza.");
+    return {
+      ...project,
+      fanCoils: project.fanCoils!.map((u) =>
+        u.id === deviceId
+          ? {
+              ...u,
+              roomId: room.id,
+              position: target,
+              wallId: null,
+              elevationM: room.heightM,
+            }
+          : u,
+      ),
+    };
+  }
   if (terminal?.mounting === "ceiling") {
     const room = project.rooms.find(
       (r) =>
@@ -109,6 +191,9 @@ export function movePlacedDevice(
   return {
     ...project,
     radiators: project.radiators.map((d) =>
+      d.id === deviceId ? { ...d, ...moved } : d,
+    ),
+    fanCoils: project.fanCoils?.map((d) =>
       d.id === deviceId ? { ...d, ...moved } : d,
     ),
     airTerminals: project.airTerminals.map((d) =>

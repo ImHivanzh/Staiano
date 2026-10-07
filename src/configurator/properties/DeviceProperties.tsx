@@ -12,6 +12,9 @@ import { TerminalProperties } from "./TerminalProperties";
 import { SplitProperties } from "./SplitProperties";
 import { ArrowsOutCardinal, Info } from "@phosphor-icons/react";
 import { RadiatorFinishes } from "./RadiatorFinishes";
+import { StructuralProperties } from "./StructuralProperties";
+import { FanCoilProperties } from "./FanCoilProperties";
+import { HydronicProperties } from "./HydronicProperties";
 export function DeviceProperties({
   project,
   id,
@@ -21,6 +24,18 @@ export function DeviceProperties({
 }) {
   const device = project.radiators.find((r) => r.id === id),
     { commit } = useProjectStore();
+  if (project.fanCoils?.some((u) => u.id === id))
+    return <FanCoilProperties project={project} id={id} />;
+  if (project.hydronicSystems?.some((s) => s.outdoorUnit.id === id))
+    return <HydronicProperties project={project} id={id} />;
+  if (
+    project.plenums.some((pl) => pl.id === id) ||
+    project.pillars?.some((c) => c.id === id) ||
+    project.hvacSystems.some(
+      (s) => s.type === "ducted" && s.indoorUnits.some((u) => u.id === id),
+    )
+  )
+    return <StructuralProperties project={project} id={id} />;
   if (!device)
     return project.hvacSystems.some((s) =>
       s.indoorUnits.some((u) => u.id === id),

@@ -1,0 +1,344 @@
+{
+  "version": "heat-pumps-dd01394cdc900d50",
+  "products": [
+    {
+      "id": "chaffoteaux-arianext-plus-35-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT PLUS M LINK R32",
+      "model": "ARIANEXT PLUS 35 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 756,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3; distanze di servizio da verificare nel manuale. Modulo interno previsto dal sistema, da progettare separatamente.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "ACS con bollitore opzionale"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-plus.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png39273-20220426155452.png",
+        "sha256": "cb8d2bc207b7a1efc5d5d3621e56bd7c9129e8190e8372be2317aaa87bfc1f97",
+        "caption": "Foto ufficiale di gamma ARIANEXT PLUS M LINK R32, con modulo interno; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf",
+        "sourceType": "pdf",
+        "sha256": "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9",
+        "documentRevision": "Scheda ARIANEXT PLUS M LINK R32 2022",
+        "retrievedAt": "2026-10-07T13:31:59.094740+00:00",
+        "importedAt": "2026-10-07T13:31:59.094740+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 3500,
+          "coolingW": 3500,
+          "cop": 5.1,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 3000,
+          "coolingW": 3500,
+          "cop": 3.74,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 3510,
+          "coolingW": 3500,
+          "cop": 3.1,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-plus-50-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT PLUS M LINK R32",
+      "model": "ARIANEXT PLUS 50 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 756,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3; distanze di servizio da verificare nel manuale. Modulo interno previsto dal sistema, da progettare separatamente.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "ACS con bollitore opzionale"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-plus.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png39273-20220426155452.png",
+        "sha256": "cb8d2bc207b7a1efc5d5d3621e56bd7c9129e8190e8372be2317aaa87bfc1f97",
+        "caption": "Foto ufficiale di gamma ARIANEXT PLUS M LINK R32, con modulo interno; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf",
+        "sourceType": "pdf",
+        "sha256": "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9",
+        "documentRevision": "Scheda ARIANEXT PLUS M LINK R32 2022",
+        "retrievedAt": "2026-10-07T13:31:59.094740+00:00",
+        "importedAt": "2026-10-07T13:31:59.094740+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 5000,
+          "coolingW": 5000,
+          "cop": 5.0,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 4050,
+          "coolingW": 5000,
+          "cop": 3.65,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 5000,
+          "coolingW": 5000,
+          "cop": 2.9,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-plus-80-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT PLUS M LINK R32",
+      "model": "ARIANEXT PLUS 80 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1106,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3; distanze di servizio da verificare nel manuale. Modulo interno previsto dal sistema, da progettare separatamente.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "ACS con bollitore opzionale"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-plus.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png39273-20220426155452.png",
+        "sha256": "cb8d2bc207b7a1efc5d5d3621e56bd7c9129e8190e8372be2317aaa87bfc1f97",
+        "caption": "Foto ufficiale di gamma ARIANEXT PLUS M LINK R32, con modulo interno; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf",
+        "sourceType": "pdf",
+        "sha256": "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9",
+        "documentRevision": "Scheda ARIANEXT PLUS M LINK R32 2022",
+        "retrievedAt": "2026-10-07T13:31:59.094740+00:00",
+        "importedAt": "2026-10-07T13:31:59.094740+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 7000,
+          "cop": 4.8,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 6000,
+          "coolingW": 7000,
+          "cop": 3.7,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7410,
+          "coolingW": 7000,
+          "cop": 3.0,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-6-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ6.0Pd/NpG4-E",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 8. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 8
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 6200,
+          "coolingW": 6100,
+          "cop": 5.0,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 6100,
+          "coolingW": 6100,
+          "cop": 3.9,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-8-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ8.0Pd/NpG4-E",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 10. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 10
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 8400,
+          "coolingW": 7500,
+          "cop": 5.0,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 8200,
+          "coolingW": 7500,
+          "cop": 3.9,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    }
+  ]
+}

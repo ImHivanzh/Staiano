@@ -388,7 +388,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
     expect(p.airTerminals).toHaveLength(2);
     expect(p.airTerminals[0].depthMm).toBe(60);
     const restored = decodeProject(encodeProject(p));
-    expect(restored.schemaVersion).toBe(2);
+    expect(restored.schemaVersion).toBe(3);
     expect(restored.hvacSystems).toHaveLength(1);
     expect(restored.airTerminals).toHaveLength(2);
     expect(

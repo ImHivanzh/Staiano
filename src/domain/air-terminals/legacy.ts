@@ -11,8 +11,8 @@ export function needsTerminalReconfiguration(terminal: Terminal): boolean {
     terminal.shape === "unknown" ||
     terminal.elevationM === null ||
     terminal.operatingPointIndex === null ||
-    terminal.pointIndex === null ||
-    terminal.unitIndex === null
+    ((terminal.pointIndex === null || terminal.unitIndex === null) &&
+      terminal.decisionOrigin === "calculated")
   );
 }
 

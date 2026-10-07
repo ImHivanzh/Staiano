@@ -25,6 +25,7 @@ export function largeProjectFixture() {
         thickness: 0.3,
         height: null,
         type: "ESTERNO",
+        locked: false,
       }),
     );
   }

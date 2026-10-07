@@ -1,0 +1,26 @@
+[
+  {
+    "name": "chaffoteaux",
+    "timestampBasis": "file-acquired-at",
+    "manufacturer": "Chaffoteaux",
+    "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf",
+    "sourceType": "pdf",
+    "sha256": "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9",
+    "documentRevision": "Scheda ARIANEXT PLUS M LINK R32 2022",
+    "retrievedAt": "2026-10-07T13:31:59.094740+00:00",
+    "importedAt": "2026-10-07T13:31:59.094740+00:00",
+    "page": null
+  },
+  {
+    "name": "gree-versati-v",
+    "timestampBasis": "file-acquired-at",
+    "manufacturer": "Gree",
+    "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+    "sourceType": "pdf",
+    "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+    "documentRevision": "Brochure VERSATI V 2025",
+    "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+    "importedAt": "2026-10-07T13:33:45.702239+00:00",
+    "page": null
+  }
+]

@@ -154,7 +154,7 @@ describe("split con combinazioni originali", () => {
       }),
     ).toThrow();
   });
-  it("rename e incremento altezza preservanoID ewallanchor, dimensionano nuovomodello reale", () => {
+  it("rename e incremento altezza preservano modello confermato e segnalano capacità insufficiente", () => {
     let p = fixture();
     p = applySplitSystem(p, [p.rooms[0].id], "Daikin", null);
     const old = p.hvacSystems[0].indoorUnits[0];
@@ -165,9 +165,9 @@ describe("split con combinazioni originali", () => {
     expect(current.id).toBe(old.id);
     expect(current.wallId).toBe(old.wallId);
     expect(current.position).toEqual(old.position);
-    expect(p.hvacSystems[0].capacityW).toBeGreaterThanOrEqual(
-      p.rooms[0].designLoadW,
-    );
+    expect(current.productId).toBe(old.productId);
+    expect(p.hvacSystems[0].capacityW).toBeLessThan(p.rooms[0].designLoadW);
+    expect(p.hvacSystems[0].compatibilityStatus).toBe("invalid");
   });
   it("spostamento parete e cambio stanza mantengono identità unità", () => {
     let p = fixture();

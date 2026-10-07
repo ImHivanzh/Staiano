@@ -49,6 +49,13 @@ function terminal(lengthMm = 1000, slots = 1, width = 20): Terminal {
     pointIndex: 0,
     unitIndex: 0,
     legacyUnverified: false,
+    locked: false,
+    decisionOrigin: "calculated",
+    style: "",
+    color: "",
+    finish: "",
+    productCode: "",
+    plenumId: null,
     commercialOptions: {
       profileCode: "EDLS20-FA",
       colorCode: "RAL9005",
@@ -231,6 +238,7 @@ describe("official Ecoclima list-price BOM", () => {
           catalogVersion: "machine-version",
           indoorUnits: [],
           compatibilityStatus: "verified",
+          linearPlan: null,
         },
       ],
     });
