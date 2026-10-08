@@ -3,7 +3,7 @@ import type { Page, TestInfo } from "@playwright/test";
 import { expect, test } from "./browser-test";
 import { projectSchema, type Project } from "../src/schemas/project";
 import { splitCatalogSchema } from "../src/domain/catalogs/split-schema";
-import { openInspector } from "./ui-helpers";
+import { openInspector, openDisclosure } from "./ui-helpers";
 
 async function exportProject(
   page: Page,
@@ -341,6 +341,7 @@ test("two independently configured ducted zones keep each terminal assigned afte
     .getByRole("button", { name: "Chiudi plenum", exact: true })
     .click();
   const dossierWaiting = page.waitForEvent("download");
+  await openDisclosure(page, "Documento e progetto");
   await page.getByRole("button", { name: "Dossier PDF", exact: true }).click();
   await (
     await dossierWaiting

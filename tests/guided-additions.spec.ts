@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { test, expect } from "./browser-test";
 import type { Project } from "../src/schemas/project";
+import { openDisclosure } from "./ui-helpers";
 
 const fixture = JSON.parse(
   readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
@@ -171,6 +172,7 @@ test("Innova M7 and Gree outdoor heat pump are real editable objects with summar
     path: info.outputPath("hydronic-outdoor-3d.png"),
     fullPage: true,
   });
+  await openDisclosure(page, "Documento e progetto");
   await page
     .getByRole("combobox", { name: "Tipo dossier" })
     .selectOption("summary");

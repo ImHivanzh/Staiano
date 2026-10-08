@@ -29,6 +29,16 @@ export type SessionUser = Pick<
   AccessUser,
   "username" | "displayName" | "role" | "revision" | "mustChangePassword"
 >;
+export type ManagedUser = SessionUser & { disabled: boolean };
+
+export class AccountManagementError extends Error {
+  constructor(
+    message: string,
+    public readonly status = 400,
+  ) {
+    super(message);
+  }
+}
 
 export function normalizeUsername(value: string) {
   return value.trim().toLowerCase();
@@ -279,7 +289,200 @@ export async function authenticateUser(
   return correct && user && !user.disabled ? publicUser(user) : null;
 }
 
-let passwordWrite = Promise.resolve();
+const accountWriteState = globalThis as typeof globalThis & {
+  staianoAccountWrite?: Promise<void>;
+};
+
+// ponytail: one server process owns the file; use a transactional store if
+// several app processes must mutate the same account file concurrently.
+function updateAccounts(operation: () => Promise<void>) {
+  const result = (
+    accountWriteState.staianoAccountWrite ?? Promise.resolve()
+  ).then(operation);
+  accountWriteState.staianoAccountWrite = result.catch(() => undefined);
+  return result;
+}
+
+async function writeAccessConfig(nextConfig: AccessConfig) {
+  const file = resolve(
+    /* turbopackIgnore: true */
+    process.env.AUTH_FILE ||
+      resolve(
+        /* turbopackIgnore: true */ process.cwd(),
+        ".cache/app-auth.json",
+      ),
+  );
+  const temporary = `${file}.${randomBytes(8).toString("hex")}.tmp`;
+  try {
+    await writeFile(
+      /* turbopackIgnore: true */ temporary,
+      `${JSON.stringify(nextConfig)}\n`,
+      {
+        flag: "wx",
+        mode: 0o600,
+      },
+    );
+    if (process.platform === "win32") {
+      const output = execFileSync(
+        "whoami.exe",
+        ["/user", "/fo", "csv", "/nh"],
+        { encoding: "utf8", windowsHide: true },
+      );
+      const sid = output.match(/S-1-\d+(?:-\d+)+/)?.[0];
+      if (!sid) throw new Error("permissions");
+      execFileSync(
+        "icacls.exe",
+        [
+          temporary,
+          "/inheritance:r",
+          "/grant:r",
+          `*${sid}:(F)`,
+          "*S-1-5-18:(F)",
+          "*S-1-5-32-544:(F)",
+        ],
+        { stdio: "ignore", windowsHide: true },
+      );
+    }
+    await rename(
+      /* turbopackIgnore: true */ temporary,
+      /* turbopackIgnore: true */ file,
+    );
+    cached = undefined;
+  } finally {
+    await unlink(/* turbopackIgnore: true */ temporary).catch(() => undefined);
+  }
+}
+
+function accountUsers(config: AccessConfig): AccessUser[] {
+  return (
+    config.users ?? [
+      {
+        username: "admin",
+        displayName: "Ivan",
+        role: "admin",
+        salt: config.salt,
+        passwordHash: config.passwordHash,
+        revision: 1,
+        disabled: false,
+        mustChangePassword: false,
+      },
+    ]
+  );
+}
+
+export function managedUsers(config: AccessConfig): ManagedUser[] {
+  return accountUsers(config).map((user) => ({
+    ...publicUser(user),
+    disabled: user.disabled,
+  }));
+}
+
+async function passwordCredentials(password: string) {
+  if (
+    password.length < 12 ||
+    password.length > 256 ||
+    /[\x00-\x1f\x7f]/.test(password)
+  )
+    throw new AccountManagementError(
+      "Scegli una password fra 12 e 256 caratteri.",
+    );
+  const salt = randomBytes(32).toString("hex");
+  const passwordHash = await new Promise<string>((accept, reject) =>
+    scrypt(
+      password,
+      Buffer.from(salt, "hex"),
+      64,
+      { N: 16384, r: 8, p: 1 },
+      (error, key) => (error ? reject(error) : accept(key.toString("hex"))),
+    ),
+  );
+  return { salt, passwordHash };
+}
+
+/** Only an active administrator can create accounts or reset another password. */
+export async function manageUser(
+  session: SessionUser,
+  action: "create" | "reset",
+  input: { username: string; displayName?: string; password: string },
+): Promise<ManagedUser> {
+  const username = normalizeUsername(input.username);
+  if (!/^[a-z0-9][a-z0-9._-]{1,39}$/.test(username))
+    throw new AccountManagementError(
+      "Nome utente: 2–40 caratteri, lettere minuscole, numeri, punto, trattino o underscore.",
+    );
+  const displayName = input.displayName?.trim() ?? "";
+  if (
+    action === "create" &&
+    (!displayName ||
+      displayName.length > 80 ||
+      /[\x00-\x1f\x7f]/.test(displayName))
+  )
+    throw new AccountManagementError(
+      "Inserisci un nome visualizzato fra 1 e 80 caratteri.",
+    );
+  let updated!: ManagedUser;
+  await updateAccounts(async () => {
+    const config = await getAccessConfig(),
+      users = accountUsers(config);
+    const actor = users.find(
+      (u) =>
+        u.username === session.username &&
+        u.revision === session.revision &&
+        !u.disabled,
+    );
+    if (
+      !actor ||
+      session.role !== "admin" ||
+      actor.role !== "admin" ||
+      actor.mustChangePassword
+    )
+      throw new AccountManagementError(
+        "Operazione riservata all’amministratore attivo.",
+        403,
+      );
+    const existing = users.find((u) => u.username === username);
+    if (action === "create" && existing)
+      throw new AccountManagementError("Nome utente già presente.", 409);
+    if (action === "create" && users.length >= 100)
+      throw new AccountManagementError("Limite di 100 utenti raggiunto.");
+    if (action === "reset" && !existing)
+      throw new AccountManagementError("Utente non trovato.", 404);
+    if (action === "reset" && username === actor.username)
+      throw new AccountManagementError(
+        "Per la tua password usa il cambio password personale.",
+      );
+    const credentials = await passwordCredentials(input.password);
+    const nextUser: AccessUser =
+      action === "create"
+        ? {
+            username,
+            displayName,
+            role: "operator",
+            ...credentials,
+            revision: 1,
+            disabled: false,
+            mustChangePassword: true,
+          }
+        : {
+            ...existing!,
+            ...credentials,
+            revision: existing!.revision + 1,
+            mustChangePassword: true,
+          };
+    const nextUsers =
+      action === "create"
+        ? [...users, nextUser]
+        : users.map((u) => (u.username === username ? nextUser : u));
+    const nextConfig: AccessConfig = { ...config, users: nextUsers };
+    if (username === "admin") {
+      nextConfig.salt = nextUser.salt;
+      nextConfig.passwordHash = nextUser.passwordHash;
+    }
+    await writeAccessConfig(nextConfig);
+    updated = { ...publicUser(nextUser), disabled: nextUser.disabled };
+  });
+  return updated;
+}
 
 /** Serialize changes and re-read the current revision before replacing private credentials. */
 export async function changeUserPassword(
@@ -293,9 +496,10 @@ export async function changeUserPassword(
   )
     throw new Error("Scegli una password fra 12 e 256 caratteri.");
   let updated!: SessionUser;
-  const operation = passwordWrite.then(async () => {
+  const operation = updateAccounts(async () => {
     const config = await getAccessConfig();
-    const user = config.users?.find(
+    const users = accountUsers(config);
+    const user = users.find(
       (candidate) =>
         candidate.username === session.username &&
         candidate.revision === session.revision &&
@@ -306,16 +510,7 @@ export async function changeUserPassword(
       throw new Error(
         "La nuova password deve essere diversa da quella attuale.",
       );
-    const salt = randomBytes(32).toString("hex");
-    const passwordHash = await new Promise<string>((accept, reject) =>
-      scrypt(
-        password,
-        Buffer.from(salt, "hex"),
-        64,
-        { N: 16384, r: 8, p: 1 },
-        (error, key) => (error ? reject(error) : accept(key.toString("hex"))),
-      ),
-    );
+    const { salt, passwordHash } = await passwordCredentials(password);
     const nextUser = {
       ...user,
       salt,
@@ -325,7 +520,7 @@ export async function changeUserPassword(
     };
     const nextConfig = {
       ...config,
-      users: config.users!.map((candidate) =>
+      users: users.map((candidate) =>
         candidate.username === user.username ? nextUser : candidate,
       ),
     };
@@ -333,58 +528,9 @@ export async function changeUserPassword(
       nextConfig.salt = salt;
       nextConfig.passwordHash = passwordHash;
     }
-    const file = resolve(
-      /* turbopackIgnore: true */
-      process.env.AUTH_FILE ||
-        resolve(
-          /* turbopackIgnore: true */ process.cwd(),
-          ".cache/app-auth.json",
-        ),
-    );
-    const temporary = `${file}.${randomBytes(8).toString("hex")}.tmp`;
-    try {
-      await writeFile(
-        /* turbopackIgnore: true */ temporary,
-        `${JSON.stringify(nextConfig)}\n`,
-        {
-          flag: "wx",
-          mode: 0o600,
-        },
-      );
-      if (process.platform === "win32") {
-        const output = execFileSync(
-          "whoami.exe",
-          ["/user", "/fo", "csv", "/nh"],
-          { encoding: "utf8", windowsHide: true },
-        );
-        const sid = output.match(/S-1-\d+(?:-\d+)+/)?.[0];
-        if (!sid) throw new Error("permissions");
-        execFileSync(
-          "icacls.exe",
-          [
-            temporary,
-            "/inheritance:r",
-            "/grant:r",
-            `*${sid}:(F)`,
-            "*S-1-5-18:(F)",
-            "*S-1-5-32-544:(F)",
-          ],
-          { stdio: "ignore", windowsHide: true },
-        );
-      }
-      await rename(
-        /* turbopackIgnore: true */ temporary,
-        /* turbopackIgnore: true */ file,
-      );
-      cached = undefined;
-      updated = publicUser(nextUser);
-    } finally {
-      await unlink(/* turbopackIgnore: true */ temporary).catch(
-        () => undefined,
-      );
-    }
+    await writeAccessConfig(nextConfig);
+    updated = publicUser(nextUser);
   });
-  passwordWrite = operation.catch(() => undefined);
   await operation;
   return updated;
 }

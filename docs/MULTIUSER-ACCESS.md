@@ -8,6 +8,10 @@ Sul server, `AUTH_FILE` può indicare un percorso privato alternativo. Il file i
 
 Gestione amministrativa dalla shell del server:
 
+Dal profilo admin è disponibile la voce **Gestione utenti** nella navigazione. L'amministratore può creare un operatore con nome utente, nome visualizzato e password iniziale, oppure impostare una nuova password per un altro utente. Il nuovo account compare nel menu di accesso; creazione e reset richiedono un cambio password personale al successivo login. Il reset revoca le sole sessioni dell'utente interessato. La password dell'admin si cambia tramite il link personale, indicando la password attuale.
+
+`GET/POST /api/admin/users` verifica sul server ruolo admin, sessione attiva e origine delle scritture. Le risposte contengono soltanto dati pubblici degli account. Le password sono salvate come hash scrypt con sale individuale, con la stessa sostituzione atomica e gli stessi permessi privati del cambio password personale; nessuna nuova password viene conservata in chiaro. Il limite è di 100 utenti. Le scritture dei due endpoint condividono la coda del processo, anche durante il ricaricamento dei moduli. Una configurazione con più processi che scrivono lo stesso `AUTH_FILE` richiede un archivio transazionale; la console va utilizzata senza scritture simultanee dall'app.
+
 - `node scripts/manage-accounts.mjs --reset samuele`: nuova password temporanea e revoca immediata delle sessioni dell'utente.
 - `node scripts/manage-accounts.mjs --disable marco`: disabilitazione e revoca delle sessioni.
 - `node scripts/manage-accounts.mjs --enable marco`: riabilitazione; le vecchie sessioni restano revocate.

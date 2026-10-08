@@ -50,6 +50,7 @@ test("official Ecoclima model and insulated plenum create an itemized list-price
         terminal.commercialOptions?.profileCode === official.modelCode,
     ),
   ).toBe(true);
+  await openDisclosure(page, "Documento e progetto");
   await page
     .getByRole("button", { name: "Listino materiali", exact: true })
     .click();

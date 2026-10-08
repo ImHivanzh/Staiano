@@ -10,6 +10,7 @@ import {
   authenticateUser,
   changeUserPassword,
   getSessionUser,
+  manageUser,
   cookieOptions,
   createSession,
   getAccessConfig,
@@ -27,6 +28,10 @@ import { POST as logout } from "../app/api/auth/logout/route";
 import { GET as loginPage } from "../app/accedi/route";
 import { POST as changePassword } from "../app/api/auth/change-password/route";
 import { GET as currentSession } from "../app/api/auth/session/route";
+import {
+  GET as listUsers,
+  POST as manageUsers,
+} from "../app/api/admin/users/route";
 
 const directories: string[] = [];
 
@@ -67,6 +72,168 @@ afterEach(async () => {
       .splice(0)
       .map((directory) => rm(directory, { recursive: true, force: true })),
   );
+});
+
+describe("gestione utenti dal profilo admin", () => {
+  const post = (
+    cookie: string,
+    fields: Record<string, string>,
+    origin = "https://hvac.example",
+  ) =>
+    manageUsers(
+      request("/api/admin/users", {
+        method: "POST",
+        headers: {
+          origin,
+          cookie,
+          "content-type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(fields),
+      }),
+    );
+  const createFields = (username = "nuovo.utente") => ({
+    action: "create",
+    username,
+    displayName: "Nuovo utente",
+    password: "  Operator-test-password-2026  ",
+    confirmPassword: "  Operator-test-password-2026  ",
+  });
+  it("crea un operatore, conserva il vecchio admin e rinnova la sessione legacy senza esporre segreti", async () => {
+    const initial = await configure();
+    const cookie = `${SESSION_COOKIE}=${createSession(initial)}`;
+    const result = await post(cookie, createFields("Nuovo.Utente"));
+    expect(result.status).toBe(201);
+    const body = await result.json();
+    expect(body.user).toMatchObject({
+      username: "nuovo.utente",
+      role: "operator",
+      mustChangePassword: true,
+    });
+    const updated = await getAccessConfig();
+    expect(updated.users).toHaveLength(2);
+    expect(
+      await authenticateUser("admin", "Auth-test-only-password", updated),
+    ).toMatchObject({ role: "admin" });
+    expect(
+      await authenticateUser("nuovo.utente", createFields().password, updated),
+    ).toMatchObject({ mustChangePassword: true });
+    for (const secret of [
+      initial.sessionSecret,
+      initial.passwordHash,
+      createFields().password,
+      ...updated.users!.flatMap((u) => [u.salt, u.passwordHash]),
+    ])
+      expect(JSON.stringify(body)).not.toContain(secret);
+    const renewed = result.headers.get("set-cookie")!;
+    expect(renewed).toContain("HttpOnly");
+    expect(renewed).toContain("SameSite=strict");
+    expect(renewed).toContain("Secure");
+    const adminCookie = renewed.split(";")[0];
+    expect(
+      (
+        await listUsers(
+          request("/api/admin/users", { headers: { cookie: adminCookie } }),
+        )
+      ).status,
+    ).toBe(200);
+    const duplicate = await post(adminCookie, createFields("NUOVO.UTENTE"));
+    expect(duplicate.status).toBe(409);
+    const before = await readFile(process.env.AUTH_FILE!, "utf8");
+    expect(
+      (await post(adminCookie, { ...createFields("bad/name") })).status,
+    ).toBe(400);
+    expect(
+      (
+        await post(adminCookie, {
+          ...createFields("altro"),
+          confirmPassword: "different-password",
+        })
+      ).status,
+    ).toBe(400);
+    expect(await readFile(process.env.AUTH_FILE!, "utf8")).toBe(before);
+  });
+  it("nega accesso agli operatori, richieste cross-origin e corpi troppo grandi", async () => {
+    const initial = await configure(),
+      admin = getSessionUser(createSession(initial), initial)!;
+    const operator = await manageUser(
+      admin,
+      "create",
+      createFields("operatore"),
+    );
+    const updated = await getAccessConfig();
+    const adminCookie = `${SESSION_COOKIE}=${createSession(updated)}`;
+    const operatorCookie = `${SESSION_COOKIE}=${createSession(updated, Date.now(), operator)}`;
+    const before = await readFile(process.env.AUTH_FILE!, "utf8");
+    expect((await listUsers(request("/api/admin/users"))).status).toBe(401);
+    expect(
+      (
+        await listUsers(
+          request("/api/admin/users", { headers: { cookie: operatorCookie } }),
+        )
+      ).status,
+    ).toBe(403);
+    expect(
+      (await post(operatorCookie, createFields("nonpermesso"))).status,
+    ).toBe(403);
+    expect(
+      (await post(adminCookie, createFields("origine"), "https://evil.example"))
+        .status,
+    ).toBe(403);
+    expect(
+      (
+        await post(adminCookie, {
+          ...createFields("grande"),
+          displayName: "x".repeat(5000),
+        })
+      ).status,
+    ).toBe(400);
+    expect(await readFile(process.env.AUTH_FILE!, "utf8")).toBe(before);
+  });
+  it("resetta solo la password richiesta, revoca vecchie sessioni e serializza scritture simultanee", async () => {
+    const initial = await configure(),
+      admin = getSessionUser(createSession(initial), initial)!;
+    const [first, second] = await Promise.all([
+      manageUser(admin, "create", createFields("primo")),
+      manageUser(admin, "create", createFields("secondo")),
+    ]);
+    let current = await getAccessConfig();
+    expect(current.users).toHaveLength(3);
+    const firstToken = createSession(current, Date.now(), first),
+      secondToken = createSession(current, Date.now(), second),
+      adminToken = createSession(current);
+    const reset = await post(`${SESSION_COOKIE}=${adminToken}`, {
+      action: "reset",
+      username: "primo",
+      password: "Reset-test-password-2026",
+      confirmPassword: "Reset-test-password-2026",
+    });
+    expect(reset.status).toBe(200);
+    current = await getAccessConfig();
+    expect(verifySession(firstToken, current)).toBe(false);
+    expect(verifySession(secondToken, current)).toBe(true);
+    expect(verifySession(adminToken, current)).toBe(true);
+    expect(
+      await authenticateUser("primo", createFields().password, current),
+    ).toBeNull();
+    expect(
+      await authenticateUser("primo", "Reset-test-password-2026", current),
+    ).toMatchObject({ mustChangePassword: true });
+    const before = await readFile(process.env.AUTH_FILE!, "utf8");
+    expect(
+      (
+        await post(`${SESSION_COOKIE}=${adminToken}`, {
+          action: "reset",
+          username: "admin",
+          password: "Self-reset-password-2026",
+          confirmPassword: "Self-reset-password-2026",
+        })
+      ).status,
+    ).toBe(400);
+    await expect(
+      manageUser({ ...admin, revision: 99 }, "create", createFields("scaduto")),
+    ).rejects.toThrow("amministratore attivo");
+    expect(await readFile(process.env.AUTH_FILE!, "utf8")).toBe(before);
+  });
 });
 
 describe("password and sessions", () => {

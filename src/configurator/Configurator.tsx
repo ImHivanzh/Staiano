@@ -28,6 +28,7 @@ import {
   Columns,
   Wind,
   Snowflake,
+  Users,
 } from "@phosphor-icons/react";
 import { useProjectStore, type Tool } from "@/stores/project-store";
 import {
@@ -59,6 +60,7 @@ import { PillarDialog } from "./PillarDialog";
 import type { Project } from "@/schemas/project";
 import { CatalogAdmin } from "./systems/CatalogAdmin";
 import { EcoclimaBill } from "./systems/EcoclimaBill";
+import { AdminUsers } from "./AdminUsers";
 
 const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), {
   ssr: false,
@@ -88,7 +90,7 @@ export function Configurator() {
   const s = useProjectStore(),
     p = s.project;
   const [page, setPage] = useState<
-      "editor" | "projects" | "checks" | "catalogs"
+      "editor" | "projects" | "checks" | "catalogs" | "users"
     >("editor"),
     [projects, setProjects] = useState<Project[]>([]);
   const [rectangleOpen, setRectangleOpen] = useState(false),
@@ -105,6 +107,10 @@ export function Configurator() {
   const [planOpen, setPlanOpen] = useState(false);
   const [planFile, setPlanFile] = useState<File | undefined>(undefined);
   const [userName, setUserName] = useState("");
+  const [identity, setIdentity] = useState<{
+    username: string;
+    role: "admin" | "operator";
+  } | null>(null);
   const fileInput = useRef<HTMLInputElement>(null),
     rasterInput = useRef<HTMLInputElement>(null),
     started = useRef(false);
@@ -127,6 +133,7 @@ export function Configurator() {
         const identity = (await response.json()) as {
           username: string;
           displayName: string;
+          role: "admin" | "operator";
           mustChangePassword: boolean;
         };
         if (identity.mustChangePassword) {
@@ -135,6 +142,7 @@ export function Configurator() {
         }
         configureProjectSession(identity.username);
         setUserName(identity.displayName);
+        setIdentity({ username: identity.username, role: identity.role });
         const id = await repository.lastActiveId();
         if (id) {
           const saved = await repository.get(id);
@@ -392,6 +400,15 @@ export function Configurator() {
             <SquaresFour />
             Cataloghi tecnici
           </button>
+          {identity?.role === "admin" && (
+            <button
+              className={`voce-nav ${page === "users" ? "attiva" : ""}`}
+              onClick={() => setPage("users")}
+            >
+              <Users />
+              Gestione utenti
+            </button>
+          )}
         </nav>
         {p && (
           <div className="navigazione-piano">
@@ -544,105 +561,111 @@ export function Configurator() {
           </div>
         </header>
         {p && (
-          <div className="comandi-progetto">
-            <label className="opzione-render-pdf">
-              Documento{" "}
-              <select
-                aria-label="Tipo dossier"
-                value={dossierVariant}
-                disabled={pdfBusy}
-                onChange={(e) =>
-                  setDossierVariant(e.target.value as "complete" | "summary")
-                }
-              >
-                <option value="complete">Dossier completo</option>
-                <option value="summary">Dossier sintetico</option>
-              </select>
-            </label>
-            <button
-              className="bottone tenue piccolo"
-              disabled={pdfBusy}
-              onClick={() => {
-                setPdfBusy(true);
-                setPdfProgress("Preparazione documento");
-                const controller = new AbortController();
-                pdfController.current = controller;
-                void import("@/services/pdf/download")
-                  .then(({ downloadDossier }) =>
-                    downloadDossier(p, {
-                      includeRenders,
-                      variant: dossierVariant,
-                      floorId: s.activeFloorId,
-                      roomId: s.selection.find((v) => v.kind === "room")?.id,
-                      signal: controller.signal,
-                      onProgress: setPdfProgress,
-                    }),
-                  )
-                  .catch((error) => {
-                    if (!(
-                      error instanceof DOMException &&
-                      error.name === "AbortError"
-                    ))
-                      s.setError(
-                        error instanceof Error
-                          ? error.message
-                          : "PDF non generato. Verificare il progetto e riprovare.",
-                      );
-                  })
-                  .finally(() => {
-                    setPdfBusy(false);
-                    pdfController.current = null;
-                    setPdfProgress("");
-                  });
-              }}
-            >
-              <DownloadSimple /> {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
-            </button>
-            <label className="opzione-render-pdf">
-              <input
-                type="checkbox"
-                checked={includeRenders}
-                disabled={pdfBusy}
-                onChange={(e) => setIncludeRenders(e.target.checked)}
-              />
-              Includi render 3D
-            </label>
-            <button
-              className="bottone tenue piccolo"
-              onClick={() => setBillOpen(true)}
-            >
-              Listino materiali
-            </button>
-            {pdfBusy && (
-              <>
-                <span role="status" className="nota">
-                  {pdfProgress}
-                </span>
-                <button
-                  className="bottone piccolo tenue"
-                  onClick={() => pdfController.current?.abort()}
+          <details className="menu-progetto">
+            <summary className="bottone tenue piccolo">
+              Documento e progetto
+            </summary>
+            <div className="comandi-progetto">
+              <label className="opzione-render-pdf">
+                Documento{" "}
+                <select
+                  aria-label="Tipo dossier"
+                  value={dossierVariant}
+                  disabled={pdfBusy}
+                  onChange={(e) =>
+                    setDossierVariant(e.target.value as "complete" | "summary")
+                  }
                 >
-                  Annulla documento
-                </button>
-              </>
-            )}
-            <button
-              className="bottone tenue piccolo"
-              onClick={() => void saveAs()}
-            >
-              Salva con nome
-            </button>
-            <button
-              className="bottone tenue piccolo"
-              onClick={() => {
-                const name = window.prompt("Nome progetto", p.name);
-                if (name?.trim())
-                  s.commit((p) => ({ ...p, name: name.trim() }));
-              }}
-            >
-              Rinomina progetto
-            </button>
-          </div>
+                  <option value="complete">Dossier completo</option>
+                  <option value="summary">Dossier sintetico</option>
+                </select>
+              </label>
+              <button
+                className="bottone tenue piccolo"
+                disabled={pdfBusy}
+                onClick={() => {
+                  setPdfBusy(true);
+                  setPdfProgress("Preparazione documento");
+                  const controller = new AbortController();
+                  pdfController.current = controller;
+                  void import("@/services/pdf/download")
+                    .then(({ downloadDossier }) =>
+                      downloadDossier(p, {
+                        includeRenders,
+                        variant: dossierVariant,
+                        floorId: s.activeFloorId,
+                        roomId: s.selection.find((v) => v.kind === "room")?.id,
+                        signal: controller.signal,
+                        onProgress: setPdfProgress,
+                      }),
+                    )
+                    .catch((error) => {
+                      if (!(
+                        error instanceof DOMException &&
+                        error.name === "AbortError"
+                      ))
+                        s.setError(
+                          error instanceof Error
+                            ? error.message
+                            : "PDF non generato. Verificare il progetto e riprovare.",
+                        );
+                    })
+                    .finally(() => {
+                      setPdfBusy(false);
+                      pdfController.current = null;
+                      setPdfProgress("");
+                    });
+                }}
+              >
+                <DownloadSimple />{" "}
+                {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
+              </button>
+              <label className="opzione-render-pdf">
+                <input
+                  type="checkbox"
+                  checked={includeRenders}
+                  disabled={pdfBusy}
+                  onChange={(e) => setIncludeRenders(e.target.checked)}
+                />
+                Includi render 3D
+              </label>
+              <button
+                className="bottone tenue piccolo"
+                onClick={() => setBillOpen(true)}
+              >
+                Listino materiali
+              </button>
+              {pdfBusy && (
+                <>
+                  <span role="status" className="nota">
+                    {pdfProgress}
+                  </span>
+                  <button
+                    className="bottone piccolo tenue"
+                    onClick={() => pdfController.current?.abort()}
+                  >
+                    Annulla documento
+                  </button>
+                </>
+              )}
+              <button
+                className="bottone tenue piccolo"
+                onClick={() => void saveAs()}
+              >
+                Salva con nome
+              </button>
+              <button
+                className="bottone tenue piccolo"
+                onClick={() => {
+                  const name = window.prompt("Nome progetto", p.name);
+                  if (name?.trim())
+                    s.commit((p) => ({ ...p, name: name.trim() }));
+                }}
+              >
+                Rinomina progetto
+              </button>
+            </div>
+          </details>
         )}
         {billOpen && p && (
           <div
@@ -680,6 +703,8 @@ export function Configurator() {
           <div className="vuoto">Apertura archivio locale…</div>
         ) : page === "catalogs" ? (
           <CatalogAdmin />
+        ) : page === "users" && identity?.role === "admin" ? (
+          <AdminUsers username={identity.username} />
         ) : !p ? (
           <main className="inizio">
             <span className="etichetta tinta">HVAC · 2D / 3D</span>
@@ -880,7 +905,6 @@ export function Configurator() {
           </main>
         ) : (
           <main className="configuratore">
-            <ConfigurationWizard />
             <div className="barra-strumenti">
               <div className="strumenti-disegno">
                 <select
@@ -1094,7 +1118,10 @@ export function Configurator() {
               ) : (
                 <Viewer3D />
               )}
-              <Properties />
+              <div className="pannello-progetto">
+                <ConfigurationWizard />
+                <Properties />
+              </div>
             </div>
             <footer className="riepilogo-progetto">
               <div>

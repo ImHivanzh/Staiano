@@ -49,10 +49,39 @@ export function PlanImportWizard({
     [convert, setConvert] = useState(false);
   const [points, setPoints] = useState<Point[]>([]),
     [distance, setDistance] = useState(""),
-    [mode, setMode] = useState<"calibrate" | "select">("calibrate"),
+    [mode, setMode] = useState<"calibrate" | "select" | "area">("calibrate"),
     [thickness, setThickness] = useState("0,10"),
     [originX, setOriginX] = useState("0"),
     [originY, setOriginY] = useState("0");
+  const [areaPoints, setAreaPoints] = useState<Point[]>([]);
+  function applyAnalysis(parsed: ParsedPlan) {
+    const recognized = parsed.analysis?.walls ?? [];
+    parsed.segments = [
+      ...parsed.segments.filter(
+        (s) =>
+          s.layer !== "Muri riconosciuti" &&
+          s.layer !== "Contorni da verificare",
+      ),
+      ...recognized,
+    ];
+    parsed.layers = parsed.layers.filter(
+      (l) =>
+        l.name !== "Muri riconosciuti" && l.name !== "Contorni da verificare",
+    );
+    for (const name of ["Muri riconosciuti", "Contorni da verificare"]) {
+      const count = recognized.filter((w) => w.layer === name).length;
+      if (count) parsed.layers.push({ name, count, visible: true });
+    }
+    setLayers(
+      recognized.some((w) => w.layer === "Muri riconosciuti")
+        ? ["Muri riconosciuti"]
+        : recognized.length
+          ? ["Contorni da verificare"]
+          : [],
+    );
+    setExcluded(recognized.filter((w) => w.confidence < 0.9).map((w) => w.id));
+    setAxisConfirmed(recognized.some((w) => w.confidence >= 0.9));
+  }
   async function load(next: File, page = 1) {
     const token = ++generation.current;
     setFile(next);
@@ -62,6 +91,8 @@ export function PlanImportWizard({
     setVerified(false);
     setAxisConfirmed(false);
     setPoints([]);
+    setAreaPoints([]);
+    setMode("calibrate");
     setView({ zoom: 1, center: null });
     drag.current = null;
     setExcluded([]);
@@ -71,19 +102,7 @@ export function PlanImportWizard({
       if (token !== generation.current) return;
       try {
         parsed.analysis = await analyzePlan(parsed);
-        const recognized = parsed.analysis.walls;
-        parsed.segments = [...parsed.segments, ...recognized];
-        if (recognized.length)
-          parsed.layers.push({
-            name: "Muri riconosciuti",
-            count: recognized.length,
-            visible: true,
-          });
-        setLayers(recognized.length ? ["Muri riconosciuti"] : []);
-        setExcluded(
-          recognized.filter((w) => w.confidence < 0.9).map((w) => w.id),
-        );
-        setAxisConfirmed(recognized.some((w) => w.confidence >= 0.9));
+        applyAnalysis(parsed);
       } catch (error) {
         parsed.warnings.push(
           error instanceof Error
@@ -113,6 +132,58 @@ export function PlanImportWizard({
     } catch (e) {
       if (token === generation.current)
         setError(e instanceof Error ? e.message : "Planimetria non leggibile.");
+    } finally {
+      if (token === generation.current) setLoading(false);
+    }
+  }
+  async function recognizeArea(reset = false) {
+    if (!plan || (!reset && areaPoints.length !== 2)) return;
+    const token = ++generation.current;
+    setLoading(true);
+    setError("");
+    try {
+      const next = {
+        ...plan,
+        segments: plan.segments.filter(
+          (s) =>
+            s.layer !== "Muri riconosciuti" &&
+            s.layer !== "Contorni da verificare",
+        ),
+      };
+      next.analysis = await analyzePlan(
+        next,
+        reset ? undefined : { start: areaPoints[0], end: areaPoints[1] },
+      );
+      if (token !== generation.current) return;
+      applyAnalysis(next);
+      setPlan(next);
+      setConvert(!!next.analysis.walls.length);
+      setMode("select");
+      if (reset) {
+        setAreaPoints([]);
+        setView({ zoom: 1, center: null });
+      } else {
+        const [a, b] = areaPoints;
+        setView({
+          zoom: Math.max(
+            1,
+            Math.min(
+              16,
+              0.9 *
+                Math.min(
+                  width / Math.abs(b.x - a.x),
+                  height / Math.abs(b.y - a.y),
+                ),
+            ),
+          ),
+          center: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
+        });
+      }
+    } catch (e) {
+      if (token === generation.current)
+        setError(
+          e instanceof Error ? e.message : "Riconoscimento non riuscito.",
+        );
     } finally {
       if (token === generation.current) setLoading(false);
     }
@@ -227,7 +298,7 @@ export function PlanImportWizard({
     (s) => layers.includes(s.layer) && !excluded.includes(s.id),
   );
   function pick(e: React.MouseEvent<SVGSVGElement>) {
-    if (!plan || mode !== "calibrate") return;
+    if (!plan || mode === "select" || loading) return;
     const svg = e.currentTarget,
       matrix = svg.getScreenCTM();
     if (!matrix) return;
@@ -235,6 +306,10 @@ export function PlanImportWizard({
       matrix.inverse(),
     );
     let point: Point = { x: p.x, y: p.y };
+    if (mode === "area") {
+      setAreaPoints((old) => (old.length >= 2 ? [point] : [...old, point]));
+      return;
+    }
     let nearest = pointMarker * 2;
     for (const v of allPoints) {
       const d = Math.hypot(v.x - p.x, v.y - p.y);
@@ -412,7 +487,42 @@ export function PlanImportWizard({
                       Escludi / includi tracciati
                     </button>
                   )}
+                  {plan.background && (
+                    <button
+                      className={`bottone piccolo ${mode === "area" ? "" : "tenue"}`}
+                      onClick={() => {
+                        setMode("area");
+                        setAreaPoints([]);
+                      }}
+                    >
+                      Seleziona area da riconoscere
+                    </button>
+                  )}
                 </div>
+                {mode === "area" && (
+                  <p className={styles.notice}>
+                    Clicca due angoli opposti della sola pianta: escludi
+                    cartiglio, prospetti e altre piante.
+                  </p>
+                )}
+                {areaPoints.length === 2 && (
+                  <div className={styles.row}>
+                    <button
+                      className="bottone piccolo"
+                      disabled={loading}
+                      onClick={() => void recognizeArea()}
+                    >
+                      Riconosci muri nell’area
+                    </button>
+                    <button
+                      className="bottone piccolo tenue"
+                      disabled={loading}
+                      onClick={() => void recognizeArea(true)}
+                    >
+                      Analizza pagina intera
+                    </button>
+                  </div>
+                )}
                 <div className={`${styles.row} ${styles.zoomControls}`}>
                   <button
                     className="bottone piccolo tenue"
@@ -517,7 +627,7 @@ export function PlanImportWizard({
                   aria-label="Anteprima planimetria; seleziona due punti per la scala"
                   role="img"
                   style={{
-                    cursor: mode === "calibrate" ? "crosshair" : "pointer",
+                    cursor: mode === "select" ? "pointer" : "crosshair",
                   }}
                 >
                   {plan.background && (
@@ -555,11 +665,25 @@ export function PlanImportWizard({
                               ?.confidence ?? 1) < 0.9
                             ? "#ba7417"
                             : "#08778c"
-                          : "#a6afb4"
+                          : plan.analysis?.walls.some((w) => w.id === s.id)
+                            ? "#ba7417"
+                            : "#a6afb4"
                       }
-                      strokeWidth={mode === "select" ? 5 : 2}
+                      strokeWidth={
+                        plan.analysis?.walls.some((w) => w.id === s.id)
+                          ? mode === "select"
+                            ? 3
+                            : 2
+                          : 1
+                      }
                       vectorEffect="non-scaling-stroke"
-                      opacity={excluded.includes(s.id) ? 0.3 : 0.9}
+                      opacity={
+                        plan.analysis?.walls.some((w) => w.id === s.id)
+                          ? excluded.includes(s.id)
+                            ? 0.45
+                            : 0.9
+                          : 0.15
+                      }
                       onClick={(e) => {
                         if (mode !== "select") return;
                         e.stopPropagation();
@@ -579,6 +703,19 @@ export function PlanImportWizard({
                       </title>
                     </line>
                   ))}
+                  {areaPoints.length === 2 && (
+                    <rect
+                      x={Math.min(areaPoints[0].x, areaPoints[1].x)}
+                      y={Math.min(areaPoints[0].y, areaPoints[1].y)}
+                      width={Math.abs(areaPoints[1].x - areaPoints[0].x)}
+                      height={Math.abs(areaPoints[1].y - areaPoints[0].y)}
+                      fill="#08778c18"
+                      stroke="#08778c"
+                      strokeWidth={2}
+                      vectorEffect="non-scaling-stroke"
+                      pointerEvents="none"
+                    />
+                  )}
                   {points.length === 2 && (
                     <line
                       x1={points[0].x}
@@ -613,7 +750,9 @@ export function PlanImportWizard({
                   Rotella o +/− per zoomare. Trascina per spostare la vista.{" "}
                   {mode === "calibrate"
                     ? "Clicca due estremi di una misura nota. I punti si agganciano alle estremità dei tracciati CAD."
-                    : "Clicca un tracciato per escluderlo o includerlo. Le linee grigie non selezionate restano solo riferimento."}
+                    : mode === "area"
+                      ? "Clicca due angoli opposti per delimitare l’area da riconoscere."
+                      : "Clicca un tracciato per escluderlo o includerlo. Le linee grigie non selezionate restano solo riferimento."}
                 </p>
                 <div className={styles.warnings}>
                   {plan.warnings.map((w) => (
@@ -776,6 +915,7 @@ export function PlanImportWizard({
                 className="bottone"
                 disabled={
                   !verified ||
+                  loading ||
                   (convert && (!axisConfirmed || selected.length === 0)) ||
                   (!plan.background && !convert)
                 }

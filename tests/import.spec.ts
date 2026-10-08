@@ -91,7 +91,17 @@ test("PDF vettoriale locale: pagina, anteprima, due punti e sfondo calibrato", a
     buffer,
   });
   await expect(dialog.getByLabel("Pagina PDF", { exact: true })).toBeVisible();
-  await expect(dialog.locator("svg line")).toHaveCount(8); // Four source paths plus four independently identified wall candidates.
+  await expect(
+    dialog.locator("svg line").filter({ hasText: /^Tracciati PDF ·/ }),
+  ).toHaveCount(4);
+  await expect
+    .poll(() =>
+      dialog
+        .locator("svg line")
+        .filter({ hasText: /Affidabilità euristica/ })
+        .count(),
+    )
+    .toBeGreaterThanOrEqual(4);
   await dialog.getByLabel("Converti geometrie selezionate in muri").uncheck();
   const preview = dialog.getByRole("img", { name: /Anteprima planimetria/ });
   const box = await preview.boundingBox();
