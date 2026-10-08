@@ -207,6 +207,42 @@ describe("geometria e limiti del riconoscimento", () => {
     ).toBe(false);
     expect(r.openings).toEqual([]);
   });
+  it("distingue il tratto di stampa dallo spessore di un muro a doppia faccia ruotato", () => {
+    const angle = (3 * Math.PI) / 180;
+    const rotate = (x: number, y: number) => [
+      200 + (x - 200) * Math.cos(angle) - (y - 150) * Math.sin(angle),
+      150 + (x - 200) * Math.sin(angle) + (y - 150) * Math.cos(angle),
+    ];
+    const rectangle = (
+      left: number,
+      top: number,
+      right: number,
+      bottom: number,
+    ) => {
+      const corners = [
+        [left, top],
+        [right, top],
+        [right, bottom],
+        [left, bottom],
+      ].map(([x, y]) => rotate(x, y));
+      return corners.map((p, i) => [...p, ...corners[(i + 1) % 4]]);
+    };
+    const faces = [
+      ...rectangle(80, 60, 320, 240),
+      ...rectangle(100, 80, 300, 220),
+    ];
+    const result = recognizeRaster(
+      draw(faces.map((p) => [...p, 5, 80])),
+      400,
+      300,
+    );
+    const paired = result.walls.filter((w) => w.kind === "raster-paired-faces");
+    for (const probe of rectangle(90, 70, 310, 230))
+      expect(coverage(probe, paired, 3)).toBeGreaterThan(0.9);
+    expect(paired.every((w) => Math.abs(w.thicknessUnits! - 20) < 2)).toBe(
+      true,
+    );
+  });
   it("segue un contorno obliquo senza trasformarlo in una scala ortogonale", () => {
     const refs = [
       [80, 70, 300, 180],

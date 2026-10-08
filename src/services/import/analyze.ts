@@ -137,7 +137,7 @@ export async function analyzePlan(
     !result.walls.some((w) => w.confidence >= 0.9)
   )
     return vector;
-  if (!region && !result.walls.length) return vector;
+  if (!region && !result.walls.length && vector.walls.length) return vector;
   return {
     ...result,
     walls: result.walls.map((w) => ({

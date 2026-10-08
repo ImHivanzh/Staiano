@@ -2,7 +2,13 @@ import type { Point } from "@/schemas/project";
 import { distance, lineIntersection, projection } from "./primitives";
 import type { PlanAnalysis, WallCandidate } from "./plan-analysis";
 
-type Stroke = { start: Point; end: Point; width: number; ink: number };
+type Stroke = {
+  start: Point;
+  end: Point;
+  width: number;
+  ink: number;
+  oblique?: boolean;
+};
 
 /** Local line evidence, not semantic segmentation. Thin outlines stay reviewable.
  * ponytail: straight walls only; curved walls need a dedicated segmenter.
@@ -213,12 +219,19 @@ export function recognizeRaster(
       chosen.some(
         (p) =>
           Math.abs(p.angle - peak.angle) < 0.07 &&
-          Math.abs(p.rho - peak.rho) < 8,
+          Math.abs(
+            p.rho -
+              (width / 2) * Math.cos(p.angle) -
+              (height / 2) * Math.sin(p.angle) -
+              (peak.rho -
+                (width / 2) * Math.cos(peak.angle) -
+                (height / 2) * Math.sin(peak.angle)),
+          ) < 8,
       )
     )
       continue;
     chosen.push(peak);
-    if (chosen.length >= 48) break;
+    if (chosen.length >= 96) break;
   }
   for (const peak of chosen) {
     let c = Math.cos(peak.angle),
@@ -285,24 +298,58 @@ export function recognizeRaster(
           count++;
         } else if (!Number.isNaN(from) && t - last > 3) {
           let isolated = 0;
+          const widths: number[] = [],
+            offsets: number[] = [];
+          const limit = Math.min(width, height) * 0.1;
           for (let j = 0; j <= 20; j++) {
             const v = from + ((last - from) * j) / 20;
-            const px = mx + v * dx,
+            let px = mx + v * dx,
               py = my + v * dy;
-            if (!at(px + 4 * c, py + 4 * s) && !at(px - 4 * c, py - 4 * s))
+            const ink = (n: number) => at(px + n * c, py + n * s);
+            let center = [0, -0.5, 0.5, -1, 1, -1.5, 1.5, -2, 2].find(ink);
+            if (center === undefined)
+              for (const shift of [-0.5, 0.5]) {
+                px = mx + (v + shift) * dx;
+                py = my + (v + shift) * dy;
+                center = [0, -0.5, 0.5, -1, 1, -1.5, 1.5, -2, 2].find(ink);
+                if (center !== undefined) break;
+              }
+            if (center === undefined) continue;
+            let low = center,
+              high = center;
+            while (center - low < limit && ink(low - 0.5)) low -= 0.5;
+            while (high - center < limit && ink(high + 0.5)) high += 0.5;
+            if (!ink(low - 3) && !ink(high + 3) && high - low < limit) {
               isolated++;
+              widths.push(high - low + 0.5);
+              offsets.push((low + high) / 2);
+            }
           }
           if (
             last - from >= minimum &&
             count / (last - from + 1) >= 0.85 &&
             isolated >= 17
-          )
+          ) {
+            const strokeWidth = widths.sort((a, b) => a - b)[
+              Math.floor(widths.length / 2)
+            ];
+            const offset = offsets.sort((a, b) => a - b)[
+              Math.floor(offsets.length / 2)
+            ];
             strokes.push({
-              start: { x: mx + from * dx, y: my + from * dy },
-              end: { x: mx + last * dx, y: my + last * dy },
-              width: 1,
+              start: {
+                x: mx + from * dx + c * offset,
+                y: my + from * dy + s * offset,
+              },
+              end: {
+                x: mx + last * dx + c * offset,
+                y: my + last * dy + s * offset,
+              },
+              width: strokeWidth <= 2.5 ? 1 : strokeWidth,
               ink: count / (last - from + 1),
+              oblique: true,
             });
+          }
           from = NaN;
           count = 0;
         }
@@ -320,8 +367,9 @@ export function recognizeRaster(
       unique.some(
         (s) =>
           distance(stroke.start, projection(stroke.start, s.start, s.end)) <
-            2 &&
-          distance(stroke.end, projection(stroke.end, s.start, s.end)) < 2,
+            Math.max(2, (stroke.width + s.width) / 2) &&
+          distance(stroke.end, projection(stroke.end, s.start, s.end)) <
+            Math.max(2, (stroke.width + s.width) / 2),
       )
     )
       continue;
@@ -396,6 +444,7 @@ export function recognizeRaster(
   const used = new Set<Stroke>();
   const walls: WallCandidate[] = [];
   const maximumThickness = Math.min(width, height) * 0.1;
+  const maximumFaceStroke = Math.max(8, Math.min(width, height) * 0.015);
   const available = unique.filter((s) => !repetitive.has(s));
   const grayAt = (p: Point) => {
     const x = Math.round(p.x),
@@ -416,7 +465,13 @@ export function recognizeRaster(
       y: a.start.y + dy * t,
     });
     const candidates = available
-      .filter((b) => b !== a && !used.has(b) && a.width <= 4 && b.width <= 4)
+      .filter(
+        (b) =>
+          b !== a &&
+          !used.has(b) &&
+          a.width <= maximumFaceStroke &&
+          b.width <= maximumFaceStroke,
+      )
       .map((b) => {
         const len = distance(b.start, b.end);
         const dot =
@@ -511,7 +566,11 @@ export function recognizeRaster(
       id: `raster-${walls.length}`,
       layer:
         thickness === null ? "Contorni da verificare" : "Muri riconosciuti",
-      kind: pair ? "raster-paired-faces" : "raster-axis",
+      kind: pair
+        ? "raster-paired-faces"
+        : a.oblique
+          ? "raster-oblique-axis"
+          : "raster-axis",
       start: { ...start },
       end: { ...end },
       thicknessUnits: thickness,
@@ -548,7 +607,14 @@ export function recognizeRaster(
     }
   const joined = (a: WallCandidate, end: Point) =>
     walls.some(
-      (b) => b !== a && distance(end, projection(end, b.start, b.end)) < 1.5,
+      (b) =>
+        b !== a &&
+        distance(end, projection(end, b.start, b.end)) < 1.5 &&
+        Math.abs(
+          ((a.end.x - a.start.x) * (b.end.x - b.start.x) +
+            (a.end.y - a.start.y) * (b.end.y - b.start.y)) /
+            (distance(a.start, a.end) * distance(b.start, b.end)),
+        ) < 0.9,
     );
   const result = walls.filter((w) => {
     const both = joined(w, w.start) && joined(w, w.end);

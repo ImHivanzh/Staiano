@@ -2,7 +2,7 @@ import type { Point } from "@/schemas/project";
 import type { ParsedPlan, PlanSegment } from "@/services/import/plan-types";
 import { distance, projection, lineIntersection } from "./primitives";
 
-export const PLAN_ANALYSIS_VERSION = "local-lines-2";
+export const PLAN_ANALYSIS_VERSION = "local-lines-3";
 export type WallCandidate = PlanSegment & {
   thicknessUnits: number | null;
   confidence: number;
