@@ -1,4 +1,5 @@
 import type { LinearPlan, Project } from "@/schemas/project";
+import { installationRoom } from "../installations";
 import type {
   AirTerminalFamily,
   OperatingPoint,
@@ -20,7 +21,9 @@ function ductedSystem(project: Project, systemId: string) {
     (s) => s.id === systemId && s.type === "ducted",
   );
   if (!system) return null;
-  const rooms = project.rooms.filter((r) => system.roomIds.includes(r.id));
+  const rooms = project.rooms
+    .filter((r) => system.roomIds.includes(r.id) && !r.conditioningExclusion)
+    .map((room) => installationRoom(project, room, system.installationId));
   if (!rooms.length || rooms.some((r) => r.geometryStatus !== "closed"))
     return null;
   const airflowM3h = ductedMaximumAirflow(system);
@@ -41,13 +44,17 @@ export function linearOperatingPoint(
   family: AirTerminalFamily,
   index: number,
   variantId?: string,
+  use: LinearUse = "supply",
 ): OperatingPoint | null {
   const point = variantId
     ? family.variants.find((v) => v.id === variantId)?.operatingPoints[index]
     : family.variants.flatMap((v) => v.operatingPoints)[index];
   if (!point || point.quality !== "valid" || !point.airflowPerMeterM3h)
     return null;
-  if ((point.noiseDbA ?? point.noiseUpperBoundDbA ?? Infinity) > 37)
+  if (
+    use === "supply" &&
+    (point.noiseDbA ?? point.noiseUpperBoundDbA ?? Infinity) > 37
+  )
     return null;
   return point;
 }
@@ -101,7 +108,7 @@ export function buildLinearPlan(
     const family = linearFamily(arm.familyCode, version);
     const point =
       family &&
-      linearOperatingPoint(family, arm.operatingPointIndex, arm.variantId);
+      linearOperatingPoint(family, arm.operatingPointIndex, arm.variantId, use);
     if (!family || !point || !point.airflowPerMeterM3h) return null;
     if (!family.use.includes(use)) return null;
     return { family, point };
@@ -180,6 +187,18 @@ export function systemLinearBalances(project: Project, systemId: string) {
   const system = project.hvacSystems.find((s) => s.id === systemId);
   const flow = system && ductedMaximumAirflow(system);
   if (!system || !flow) return [];
+  const rooms = project.rooms
+    .filter(
+      (room) => system.roomIds.includes(room.id) && !room.conditioningExclusion,
+    )
+    .map((room) => installationRoom(project, room, system.installationId));
+  const allocations =
+    rooms.length &&
+    rooms.every(
+      (room) => room.geometryStatus === "closed" && room.designLoadW > 0,
+    )
+      ? distributeAirflow(rooms, flow)
+      : [];
   return (["supply", "return"] as const).flatMap((use) => {
     const plan = system.linearPlan;
     const first = project.airTerminals.find(
@@ -211,7 +230,7 @@ export function systemLinearBalances(project: Project, systemId: string) {
     const terminals = project.airTerminals.filter(
       (t) => t.systemId === systemId && t.use === use,
     );
-    const availableAirflowM3h = terminals.reduce((sum, terminal) => {
+    const capacities = terminals.map((terminal) => {
       const family = airTerminalFamilyAtVersion(
         terminal.family,
         terminal.catalogVersion,
@@ -228,14 +247,51 @@ export function systemLinearBalances(project: Project, systemId: string) {
         (point.use && point.use !== use) ||
         terminal.legacyUnverified
       )
-        return sum;
-      return (
-        sum +
-        (family.isLinearPerMeter
+        return { terminal, airflowM3h: 0 };
+      return {
+        terminal,
+        airflowM3h: family.isLinearPerMeter
           ? (terminal.widthMm / 1000) * (point.airflowPerMeterM3h ?? 0)
-          : point.airflowM3h)
+          : point.airflowM3h,
+      };
+    });
+    const availableAirflowM3h = capacities.reduce(
+      (sum, item) => sum + item.airflowM3h,
+      0,
+    );
+    const roomBalances = allocations.map((allocation) => {
+      const room = rooms.find((room) => room.id === allocation.roomId)!;
+      const installed = capacities.filter(
+        ({ terminal }) => terminal.roomId === room.id,
       );
-    }, 0);
+      const available = installed.reduce(
+        (sum, item) => sum + item.airflowM3h,
+        0,
+      );
+      const installedM = installed.reduce(
+        (sum, { terminal }) =>
+          sum +
+          (airTerminalFamilyAtVersion(terminal.family, terminal.catalogVersion)
+            ?.isLinearPerMeter
+            ? terminal.widthMm / 1000
+            : 0),
+        0,
+      );
+      return {
+        roomId: room.id,
+        roomName: room.name,
+        share: allocation.share,
+        requiredM: requiredLinearMeters(allocation.airflowM3h, effectiveRate),
+        installedM,
+        terminalCount: installed.length,
+        airflowM3h: allocation.airflowM3h,
+        availableAirflowM3h: available,
+        status:
+          available + 1e-7 >= allocation.airflowM3h
+            ? ("ok" as const)
+            : ("deficit" as const),
+      };
+    });
     const mixedModels =
       new Set(terminals.map((t) => `${t.productId}:${t.operatingPointIndex}`))
         .size > 1 ||
@@ -245,7 +301,12 @@ export function systemLinearBalances(project: Project, systemId: string) {
             ?.isLinearPerMeter,
       );
     const equivalentInstalledM = availableAirflowM3h / effectiveRate;
-    const enough = availableAirflowM3h + 1e-7 >= flow;
+    // Supply capacity in one room cannot cover another room; return may be central.
+    const enough =
+      availableAirflowM3h + 1e-7 >= flow &&
+      (use === "return" ||
+        (roomBalances.length > 0 &&
+          roomBalances.every((room) => room.status === "ok")));
     return [
       {
         use,
@@ -259,6 +320,7 @@ export function systemLinearBalances(project: Project, systemId: string) {
         equivalentInstalledM,
         airflowM3h: flow,
         airflowPerMeterM3h: effectiveRate,
+        rooms: roomBalances,
         operatingPointLabel:
           (use === "supply"
             ? plan?.operatingPointLabel

@@ -29,6 +29,7 @@ export type ParsedPlan = {
   pageCount?: number;
   pageNumber?: number;
   analysis?: PlanAnalysis;
+  analysisDataUrl?: string;
   originalDataUrl?: string;
 };
 export type ImportedPlan = {

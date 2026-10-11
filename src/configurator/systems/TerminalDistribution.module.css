@@ -1,0 +1,31 @@
+.rooms {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0;
+  font-variant-numeric: tabular-nums;
+}
+.row {
+  display: grid;
+  gap: 6px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--bordo);
+  font-size: 13px;
+}
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  color: var(--testo);
+}
+.track {
+  height: 10px;
+  background: var(--carta-3);
+}
+.bar {
+  height: 100%;
+  background: var(--tinta);
+}
+.deficit {
+  color: var(--rosso);
+}

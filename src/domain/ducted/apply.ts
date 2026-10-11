@@ -8,24 +8,30 @@ import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine, distributeAirflow } from "./calculate";
 import { ductedMaximumAirflow } from "./machine";
 import { refreshDuctedBindings } from "./refresh";
+import { assignInstallationRooms, installationRoom } from "../installations";
 export function applyDuctedSystem(
   project: Project,
   roomIds: string[],
   manufacturer: string,
   existingId: string | null,
+  productId: string | null = null,
+  installationId?: string,
 ): Project {
+  project = assignInstallationRooms(project, installationId, "ducted", roomIds);
   const rooms = project.rooms.filter((r) => roomIds.includes(r.id));
   if (
     !rooms.length ||
     rooms.length !== new Set(roomIds).size ||
     rooms.some(
       (r) =>
+        !!r.conditioningExclusion ||
         r.geometryStatus === "unresolved" ||
         !project.floors.find((f) => f.id === r.floorId)?.scaleVerified,
     )
   )
     throw new Error("Selezionare stanze valide con scala verificata.");
   if (
+    !installationId &&
     project.hvacSystems.some(
       (s) =>
         s.id !== existingId && s.roomIds.some((id) => roomIds.includes(id)),
@@ -35,18 +41,34 @@ export function applyDuctedSystem(
       "Una stanza è già servita da un altro sistema. Modificare prima quella zona.",
     );
   const load = rooms.reduce((sum, r) => sum + r.designLoadW, 0),
-    machine = selectDuctedMachine(load, manufacturer, hvacCatalog.products)[0];
+    candidates = selectDuctedMachine(load, manufacturer, hvacCatalog.products),
+    machine = productId
+      ? candidates.find((product) => product.id === productId)
+      : candidates[0];
   if (!machine)
     throw new Error(
-      "Nessuna macchina verificata di questa marca soddisfa il fabbisogno totale.",
+      productId
+        ? "La macchina scelta non è compatibile con marca e fabbisogno degli ambienti."
+        : "Nessuna macchina verificata di questa marca soddisfa il fabbisogno totale.",
     );
   const id = existingId ?? crypto.randomUUID(),
     previous = project.hvacSystems.find((s) => s.id === existingId),
     removedRoomIds =
       previous?.roomIds.filter((r) => !roomIds.includes(r)) ?? [];
+  if (
+    installationId &&
+    previous?.installationId &&
+    previous.installationId !== installationId
+  )
+    throw new Error("La macchina appartiene a un altro impianto.");
   const system: Project["hvacSystems"][number] = {
     id,
     type: "ducted",
+    ...(installationId
+      ? { installationId }
+      : previous?.installationId
+        ? { installationId: previous.installationId }
+        : {}),
     ...(previous?.name !== undefined ? { name: previous.name } : {}),
     ...(previous?.plenumSettings
       ? { plenumSettings: previous.plenumSettings }
@@ -96,9 +118,18 @@ export function applyDuctedSystem(
     catalogVersions: { ...project.catalogVersions, HVAC: hvacCatalog.version },
   };
 }
-export function ductedRoomAllocation(project: Project, roomId: string) {
+export function ductedRoomAllocation(
+  project: Project,
+  roomId: string,
+  installationId?: string,
+) {
+  if (project.rooms.find((room) => room.id === roomId)?.conditioningExclusion)
+    return null;
   const system = project.hvacSystems.find(
-    (s) => s.type === "ducted" && s.roomIds.includes(roomId),
+    (s) =>
+      s.type === "ducted" &&
+      s.roomIds.includes(roomId) &&
+      (!installationId || s.installationId === installationId),
   );
   if (!system) return null;
   const maximumAirflowM3h = ductedMaximumAirflow(system);
@@ -110,7 +141,9 @@ export function ductedRoomAllocation(project: Project, roomId: string) {
   )
     return null;
   const allocation = distributeAirflow(
-    project.rooms.filter((r) => system.roomIds.includes(r.id)),
+    project.rooms
+      .filter((r) => system.roomIds.includes(r.id) && !r.conditioningExclusion)
+      .map((room) => installationRoom(project, room, system.installationId)),
     maximumAirflowM3h,
   ).find((a) => a.roomId === roomId);
   return allocation
@@ -122,7 +155,9 @@ export function applyManualDuctedSystem(
   roomIds: string[],
   input: ManualDuctedMachine,
   existingId: string | null = null,
+  installationId?: string,
 ): Project {
+  project = assignInstallationRooms(project, installationId, "ducted", roomIds);
   const parsed = manualDuctedMachineSchema.safeParse(input);
   if (!parsed.success)
     throw new Error(
@@ -134,12 +169,14 @@ export function applyManualDuctedSystem(
     rooms.length !== new Set(roomIds).size ||
     rooms.some(
       (r) =>
+        !!r.conditioningExclusion ||
         r.geometryStatus === "unresolved" ||
         !project.floors.find((f) => f.id === r.floorId)?.scaleVerified,
     )
   )
     throw new Error("Selezionare stanze valide con scala verificata.");
   if (
+    !installationId &&
     project.hvacSystems.some(
       (s) =>
         s.id !== existingId && s.roomIds.some((id) => roomIds.includes(id)),
@@ -149,6 +186,12 @@ export function applyManualDuctedSystem(
       "Una stanza è già servita da un altro sistema. Modificare prima quella zona.",
     );
   const previous = project.hvacSystems.find((s) => s.id === existingId);
+  if (
+    installationId &&
+    previous?.installationId &&
+    previous.installationId !== installationId
+  )
+    throw new Error("La macchina appartiene a un altro impianto.");
   if (previous && previous.type !== "ducted")
     throw new Error("Selezionare un sistema canalizzato da modificare.");
   const id = previous?.id ?? crypto.randomUUID();
@@ -158,6 +201,11 @@ export function applyManualDuctedSystem(
   const system: Project["hvacSystems"][number] = {
     id,
     type: "ducted",
+    ...(installationId
+      ? { installationId }
+      : previous?.installationId
+        ? { installationId: previous.installationId }
+        : {}),
     ...(previous?.name !== undefined ? { name: previous.name } : {}),
     ...(previous?.plenumSettings
       ? { plenumSettings: previous.plenumSettings }

@@ -1,10 +1,13 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm, formatNumber } from "@/utils/format";
 import { removeSelection } from "@/domain/geometry/selection";
 import { calculateSupplyPlenum } from "@/domain/ducted/plenum";
 import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
+import { DuctedMachinePicker } from "@/configurator/systems/DuctedMachinePicker";
+import { FullscreenSection } from "../FullscreenDialog";
 
 export function StructuralProperties({
   project,
@@ -34,6 +37,14 @@ export function StructuralProperties({
             ? "Pilastro"
             : "Macchina canalizzata"}
       </h3>
+      {system &&
+        project.rooms.find((room) => room.id === system.roomIds[0]) && (
+          <DuctedMachinePicker
+            key={system.id}
+            project={project}
+            room={project.rooms.find((room) => room.id === system.roomIds[0])!}
+          />
+        )}
       {plenum && (
         <>
           <p>
@@ -114,13 +125,20 @@ export function StructuralProperties({
             ["width", "Larghezza (mm)", item.widthMm],
             ["height", "Altezza (mm)", item.heightMm],
             ["depth", "Profondità (mm)", item.depthMm],
-          ].map(([name, label, value]) => (
-            <label className="campo" key={name}>
-              <span>{label}</span>
-              <input
+          ].map(([name, label, value]) =>
+            /\((m|mm|cm)\)$/.test(String(label)) ? (
+              <LengthInput
+                key={name}
+                label={String(label).replace(/ \((m|mm|cm)\)$/, "")}
+                baseUnit={
+                  String(label).endsWith("(mm)")
+                    ? "mm"
+                    : String(label).endsWith("(cm)")
+                      ? "cm"
+                      : "m"
+                }
                 name={String(name)}
                 aria-label={String(label)}
-                type="number"
                 step="any"
                 defaultValue={value}
                 required
@@ -129,20 +147,34 @@ export function StructuralProperties({
                   ["width", "height", "depth"].includes(String(name))
                 }
               />
-            </label>
-          ))}
-          {plenum && (
-            <>
-              <label className="campo">
-                <span>Quota centro plenum (m)</span>
+            ) : (
+              <label className="campo" key={name}>
+                <span>{label}</span>
                 <input
-                  name="elevation"
                   type="number"
-                  step="0.01"
-                  defaultValue={plenum.elevationM}
+                  name={String(name)}
+                  aria-label={String(label)}
+                  step="any"
+                  defaultValue={value}
                   required
+                  disabled={
+                    !!machine &&
+                    ["width", "height", "depth"].includes(String(name))
+                  }
                 />
               </label>
+            ),
+          )}
+          {plenum && (
+            <>
+              <LengthInput
+                label="Quota centro plenum"
+                baseUnit="m"
+                name="elevation"
+                step="0.01"
+                defaultValue={plenum.elevationM}
+                required
+              />
               <label className="campo">
                 <span>Identificativo / modello plenum</span>
                 <input
@@ -168,10 +200,9 @@ export function StructuralProperties({
         Elimina oggetto
       </button>
       {plenum && (
-        <details>
-          <summary>Collegamenti e scheda plenum</summary>
+        <FullscreenSection title="Collegamenti e scheda plenum">
           <SupplyPlenumPanel project={project} systemId={plenum.systemId} />
-        </details>
+        </FullscreenSection>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import { expect, test } from "./browser-test";
+import { openDisclosure } from "./ui-helpers";
 import { PDFDocument, rgb } from "pdf-lib";
 
 function cad() {
@@ -120,11 +121,13 @@ test("PDF vettoriale locale: pagina, anteprima, due punti e sfondo calibrato", a
     .getByRole("button", { name: "Importa sfondo calibrato" })
     .click();
   await expect(dialog).toHaveCount(0);
+  await openDisclosure(page, "Modifica");
   await expect(
     page.getByRole("button", { name: "Ricalibra", exact: true }),
   ).toBeVisible();
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
+  await openDisclosure(page, "Modifica");
   await expect(
     page.getByRole("button", { name: "Ricalibra", exact: true }),
   ).toBeVisible();

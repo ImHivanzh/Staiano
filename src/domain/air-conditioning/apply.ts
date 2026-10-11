@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { assignInstallationRooms } from "../installations";
 import { splitCatalog } from "@/domain/catalogs/splits";
 import type { SplitCatalog } from "@/domain/catalogs/split-schema";
 import { positionAlongRoomWall } from "@/domain/geometry/placement";
@@ -81,7 +82,26 @@ export function applySplitSystem(
   manufacturer: string,
   existingId: string | null,
   preferredCombinationId?: string,
+  installationId?: string,
 ): Project {
+  project = assignInstallationRooms(project, installationId, "split", roomIds);
+  const previousSystem = project.hvacSystems.find(
+    (item) => item.id === existingId,
+  );
+  if (
+    installationId &&
+    previousSystem?.installationId &&
+    previousSystem.installationId !== installationId
+  )
+    throw new Error("La macchina appartiene a un altro impianto.");
+  if (
+    project.rooms.some(
+      (room) => roomIds.includes(room.id) && room.conditioningExclusion,
+    )
+  )
+    throw new Error(
+      "Riattivare la climatizzazione degli ambienti selezionati.",
+    );
   if (
     roomIds.some(
       (id) =>
@@ -92,6 +112,7 @@ export function applySplitSystem(
   )
     throw new Error("Configurare stanze con scala verificata.");
   if (
+    !installationId &&
     project.hvacSystems.some(
       (s) =>
         s.id !== existingId && s.roomIds.some((id) => roomIds.includes(id)),
@@ -126,7 +147,15 @@ export function applySplitSystem(
   ]);
   return {
     ...project,
-    hvacSystems: [...others, system],
+    hvacSystems: [
+      ...others,
+      {
+        ...system,
+        installationId:
+          installationId ??
+          project.hvacSystems.find((s) => s.id === existingId)?.installationId,
+      },
+    ],
     rooms: project.rooms.map((r) =>
       affected.has(r.id)
         ? {

@@ -22,6 +22,7 @@ type State = {
   revision: number;
   dirty: boolean;
   saveStatus: "loading" | "saving" | "saved" | "error";
+  saveConflict: boolean;
   error: string | null;
   snap: SnapOptions;
   showGrid: boolean;
@@ -50,6 +51,7 @@ export const useProjectStore = create<State>((set, get) => ({
   revision: 0,
   dirty: false,
   saveStatus: "loading",
+  saveConflict: false,
   error: null,
   snap: {
     enabled: true,
@@ -76,6 +78,7 @@ export const useProjectStore = create<State>((set, get) => ({
       revision: get().revision + 1,
       dirty: false,
       saveStatus: "saved",
+      saveConflict: false,
       error: null,
     });
   },

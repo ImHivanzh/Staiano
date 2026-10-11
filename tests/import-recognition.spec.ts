@@ -118,14 +118,11 @@ for (const viewport of [
     await expect(
       page.getByRole("button", { name: "Dossier PDF", exact: true }),
     ).toBeHidden();
-    await openDisclosure(page, "Documento e progetto");
+    await openDisclosure(page, "File");
     await expect(
       page.getByRole("button", { name: "Dossier PDF", exact: true }),
     ).toBeVisible();
-    await page
-      .locator("summary")
-      .filter({ hasText: "Documento e progetto" })
-      .click();
+    await page.locator("summary").filter({ hasText: "File" }).click();
     const size = await page.evaluate(() => ({
       height: innerHeight,
       width: innerWidth,

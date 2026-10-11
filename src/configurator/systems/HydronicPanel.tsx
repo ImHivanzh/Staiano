@@ -24,7 +24,9 @@ export function HydronicPanel({
   floorId: string;
 }) {
   const { commit, select } = useProjectStore();
-  const rooms = project.rooms.filter((r) => r.floorId === floorId);
+  const rooms = project.rooms.filter(
+    (r) => r.floorId === floorId && !r.conditioningExclusion,
+  );
   const [manufacturer, setManufacturer] = useState("Chaffoteaux");
   const [productId, setProductId] = useState(heatPumpCatalog.products[0].id);
   const [operatingPointIndex, setOperatingPointIndex] = useState(1);

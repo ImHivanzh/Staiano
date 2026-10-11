@@ -8,6 +8,7 @@ import {
 import { decodeProject, encodeProject, parseProject } from "./format";
 import { IndexedDbProjectRepository } from "./repository";
 import { useProjectStore } from "@/stores/project-store";
+import { CURRENT_SCHEMA_VERSION } from "@/schemas/project";
 const fixture = () => {
   const p = createProject("Casa Rossi");
   return addRectangle(p, p.floors[0].id, {
@@ -63,7 +64,7 @@ describe("formato e archivio", () => {
       }),
     };
     const next = parseProject(old);
-    expect(next.schemaVersion).toBe(3);
+    expect(next.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
     expect(next.rooms[0].supplyPoints).toBe(1);
   });
   it("migra v2 in modo additivo senza alterare i dati esistenti", () => {
@@ -75,14 +76,14 @@ describe("formato e archivio", () => {
     delete v2.floors[0].importAnalysis;
     delete v2.projectSettings.dimensionMode;
     const next = parseProject(v2);
-    expect(next.schemaVersion).toBe(3);
+    expect(next.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
     expect(next.projectSettings.dimensionMode).toBe("internal");
     expect(next.plenums).toEqual([]);
     expect(next.walls[0].locked).toBe(false);
     expect(next.rooms[0].usage).toBe("");
     // Preservation proof: removing v3-only keys restores the v2 payload.
     const rolledBack = JSON.parse(JSON.stringify(next));
-    expect(rolledBack.schemaVersion).toBe(3);
+    expect(rolledBack.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
     for (const w of rolledBack.walls) delete w.locked;
     for (const r of rolledBack.rooms) delete r.usage;
     delete rolledBack.plenums;

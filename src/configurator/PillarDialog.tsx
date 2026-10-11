@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "./LengthInput";
 import { useProjectStore } from "@/stores/project-store";
 import { addPillar } from "@/domain/geometry/pillars";
 import { numberFromForm } from "@/utils/format";
@@ -64,19 +65,38 @@ export function PillarDialog() {
             ["x", "Posizione X pilastro (m)", room?.centroid.x ?? 0],
             ["y", "Posizione Y pilastro (m)", room?.centroid.y ?? 0],
             ["rotation", "Orientamento pilastro (gradi)", 0],
-          ].map(([name, label, value]) => (
-            <label className="campo" key={name}>
-              <span>{label}</span>
-              <input
+          ].map(([name, label, value]) =>
+            /\((m|mm|cm)\)$/.test(String(label)) ? (
+              <LengthInput
+                key={name}
+                label={String(label).replace(/ \((m|mm|cm)\)$/, "")}
+                baseUnit={
+                  String(label).endsWith("(mm)")
+                    ? "mm"
+                    : String(label).endsWith("(cm)")
+                      ? "cm"
+                      : "m"
+                }
                 name={String(name)}
                 aria-label={String(label)}
-                type="number"
                 step="any"
                 defaultValue={value}
                 required
               />
-            </label>
-          ))}
+            ) : (
+              <label className="campo" key={name}>
+                <span>{label}</span>
+                <input
+                  type="number"
+                  name={String(name)}
+                  aria-label={String(label)}
+                  step="any"
+                  defaultValue={value}
+                  required
+                />
+              </label>
+            ),
+          )}
           <p className="nota">
             Ingombro reale in 2D e 3D; superficie occupata sottratta alla
             superficie interna utile.

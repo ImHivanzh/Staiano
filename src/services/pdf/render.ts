@@ -345,7 +345,9 @@ export async function renderDossierPdf(
       p.rooms.map((room) => {
         const sides = roomMeasuredSides(p, room, "internal");
         return [
-          room.name,
+          room.conditioningExclusion
+            ? `${room.name} — non climatizzato: ${room.conditioningExclusion.reason}`
+            : room.name,
           room.geometryStatus === "unresolved"
             ? "Contorno aperto"
             : sides
@@ -559,7 +561,9 @@ export async function renderDossierPdf(
         r.geometryStatus === "unresolved" ? "Da ricalcolare" : n(r.volumeM3),
         r.geometryStatus === "unresolved"
           ? "NON VALIDABILE"
-          : `${n(r.designLoadW / 1000, 3)} / ${n(wattsToBtuh(r.designLoadW), 0)}`,
+          : r.conditioningExclusion
+            ? "Escluso"
+            : `${n(r.designLoadW / 1000, 3)} / ${n(wattsToBtuh(r.designLoadW), 0)}`,
       ]),
       [0.38, 0.13, 0.1, 0.17, 0.22],
     );
@@ -967,6 +971,11 @@ export async function renderDossierPdf(
       paragraph(
         `Piano: ${p.floors.find((f) => f.id === r.floorId)?.name}; impianto: ${{ none: "da definire", radiator: "radiatori", ducted: "canalizzato", split: "split", fanCoil: "ventilconvettori" }[r.systemType]}`,
       );
+      if (r.conditioningExclusion)
+        paragraph(
+          `AMBIENTE NON CLIMATIZZATO — ${r.conditioningExclusion.reason}. Escluso dal fabbisogno da dimensionare; geometria e apparecchi conservati.`,
+          11,
+        );
       table(
         ["Superficie netta", "Perimetro", "Altezza", "Volume netto"],
         [
@@ -985,7 +994,9 @@ export async function renderDossierPdf(
           : "Fabbisogno convenzionale",
       );
       paragraph(
-        `${n(r.netAreaM2, 4)} m² x ${n(r.heightM, 4)} m x 35 W/m³ = ${n(r.designLoadW, 2)} W = ${n(r.designLoadW / 1000, 3)} kW = ${n(wattsToBtuh(r.designLoadW), 0)} BTU/h. Calcolo senza arrotondamenti intermedi; valori stampati arrotondati.`,
+        r.conditioningExclusion
+          ? "Carico da dimensionare: 0 W per esclusione esplicita dell’operatore."
+          : `${n(r.netAreaM2, 4)} m² x ${n(r.heightM, 4)} m x 35 W/m³ = ${n(r.designLoadW, 2)} W = ${n(r.designLoadW / 1000, 3)} kW = ${n(wattsToBtuh(r.designLoadW), 0)} BTU/h. Calcolo senza arrotondamenti intermedi; valori stampati arrotondati.`,
       );
       const rad = p.radiators.filter((d) => d.roomId === r.id);
       if (rad.length) {
@@ -1032,7 +1043,7 @@ export async function renderDossierPdf(
           [0.31, 0.24, 0.28, 0.17],
         );
         paragraph(
-          "Rumore: riferimento del costruttore e punto operativo selezionato; limite configuratore 37 dB(A). Il valore non rappresenta una verifica acustica complessiva in ambiente. Le misure commerciali restano distinte dalla lunghezza teorica.",
+          "Rumore: riferimento del costruttore e punto operativo selezionato; limite configuratore 37 dB(A) solo per la mandata. La ripresa si dimensiona sulla portata macchina. Il valore non rappresenta una verifica acustica complessiva in ambiente. Le misure commerciali restano distinte dalla lunghezza teorica.",
           9,
           muted,
         );

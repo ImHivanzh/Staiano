@@ -1,5 +1,5 @@
 import { expect, test } from "./browser-test";
-import { openInspector } from "./ui-helpers";
+import { openInspector, openDisclosure } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 
@@ -90,6 +90,7 @@ test("room copy, group drag, undo and contour deletion preserve project data", a
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Copia selezione" }).click();
   await expect(page.getByTestId("wall")).toHaveCount(8);
   await expect(page.locator(".nome-stanza")).toHaveCount(2);
@@ -108,11 +109,13 @@ test("room copy, group drag, undo and contour deletion preserve project data", a
   });
   await page.mouse.up();
   await expect(polygon).not.toHaveAttribute("points", pointsBefore!);
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Annulla", exact: true }).click();
   await page.getByRole("button", { name: /Soggiorno — copia/ }).click();
   await expect(polygon).toHaveAttribute("points", pointsBefore!);
   await page.getByTestId("wall").first().click();
   page.once("dialog", (dialog) => dialog.accept());
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Elimina selezione" }).click();
   await expect(page.locator(".nome-stanza")).toHaveCount(2);
   await page.getByRole("button", { name: /^Soggiorno 15,96/ }).click();

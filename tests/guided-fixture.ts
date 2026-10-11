@@ -97,3 +97,34 @@ export function addGuidedTerminal(
     }),
   );
 }
+
+export function threeRoomTerminalFixture() {
+  let project = guidedProjectFixture(6);
+  for (const [index, name] of ["Camera", "Studio"].entries()) {
+    project = addRectangle(project, project.floors[0].id, {
+      width: 5,
+      length: 4,
+      height: 2.7,
+      name,
+      origin: { x: 10 + index * 7, y: 0 },
+    });
+  }
+  project.rooms = project.rooms.map((room, index) => ({
+    ...room,
+    designLoadW: [3000, 2000, 1000][index],
+    supplyPoints: index === 1 ? 2 : 1,
+  }));
+  project = applyManualDuctedSystem(
+    project,
+    project.rooms.map((room) => room.id),
+    project.hvacSystems[0].genericMachine!,
+    project.hvacSystems[0].id,
+  );
+  const plan = buildLinearPlan(
+    project,
+    project.hvacSystems[0].id,
+    { supply: guidedTerminalPoint() },
+    airTerminalCatalog.version,
+  )!;
+  return saveLinearPlan(project, project.hvacSystems[0].id, plan);
+}

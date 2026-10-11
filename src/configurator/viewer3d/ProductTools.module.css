@@ -1,34 +1,49 @@
 .panel {
   position: absolute;
   right: 16px;
-  top: 76px;
-  bottom: 48px;
+  top: 64px;
+  bottom: 56px;
   width: 360px;
   max-width: calc(100% - 32px);
   z-index: 25;
-  background: #fbfcf8;
-  border: 1px solid #cedbd3;
+  background: var(--carta);
+  border: 0;
   border-radius: 14px;
-  box-shadow: 0 12px 36px #28483a26;
+  box-shadow: 0 12px 36px #18324926;
   display: flex;
   flex-direction: column;
-  color: #253a36;
+  color: var(--testo);
   font-size: 13px;
   overflow: hidden;
+  animation: openPanel 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes openPanel {
+  from {
+    transform: translateX(10px);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    animation: none;
+  }
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 18px 20px 14px;
-  border-bottom: 1px solid #e0e7df;
+  border-bottom: 1px solid var(--bordo);
   background: #fff;
 }
 .header span {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #698178;
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--testo-tenue);
 }
 .header h2 {
   font-size: 23px;
@@ -37,11 +52,11 @@
 }
 .close {
   border: 0;
-  background: #eef3ee;
+  background: var(--carta-3);
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  color: #38574e;
+  color: var(--testo);
   font-size: 23px;
   cursor: pointer;
 }
@@ -50,6 +65,62 @@
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
+}
+.terminalCatalog .room {
+  max-width: 440px;
+}
+.catalogContent .room {
+  max-width: 440px;
+}
+.catalogContent .gallery {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.terminalLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 440px);
+  gap: 32px;
+  align-items: start;
+}
+.terminalCatalog,
+.terminalConfiguration {
+  min-width: 0;
+}
+.terminalConfiguration {
+  border-left: 1px solid var(--bordo);
+  padding-left: 32px;
+}
+.terminalConfiguration h3 {
+  margin: 10px 0 16px;
+  font-size: 19px;
+}
+.terminalCatalog .gallery {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.terminalCatalog .product img {
+  height: 110px;
+}
+.terminalCatalog .product strong,
+.terminalCatalog .product span {
+  font-size: 13px;
+}
+@media (max-width: 1100px) {
+  .terminalLayout {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+    gap: 24px;
+  }
+  .terminalConfiguration {
+    padding-left: 24px;
+  }
+}
+@media (max-width: 760px) {
+  .terminalLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .terminalConfiguration {
+    border-left: 0;
+    border-top: 1px solid var(--bordo);
+    padding: 16px 0 0;
+  }
 }
 .room,
 .advanced label {
@@ -64,9 +135,9 @@
 .panel input:not([type="checkbox"]) {
   width: 100%;
   background: white;
-  border: 1px solid #c9d7ce;
+  border: 1px solid var(--bordo-forte);
   border-radius: 7px;
-  color: #284239;
+  color: var(--testo);
   padding: 9px;
   min-height: 36px;
   font: inherit;
@@ -74,7 +145,7 @@
 .hint {
   font-size: 12px;
   line-height: 1.55;
-  color: #61796d;
+  color: var(--testo-tenue);
   margin: 10px 0 16px;
 }
 .gallery {
@@ -87,20 +158,20 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  border: 1px solid #d4ded5;
+  border: 1px solid var(--bordo);
   background: #fff;
   border-radius: 10px;
   padding: 9px;
   cursor: pointer;
   min-width: 0;
-  color: #355145;
+  color: var(--testo);
   overflow: hidden;
   gap: 4px;
 }
 .product[aria-pressed="true"] {
-  border-color: #009eb7;
-  box-shadow: inset 0 0 0 1px #009eb7;
-  background: #f0fafa;
+  border-color: var(--tinta);
+  box-shadow: inset 0 0 0 1px var(--tinta);
+  background: var(--tinta-tenue);
 }
 .product:disabled {
   cursor: default;
@@ -111,7 +182,7 @@
   width: 100%;
   height: 84px;
   object-fit: contain;
-  background: #f4f6f0;
+  background: var(--carta-2);
   border-radius: 5px;
   margin-bottom: 5px;
 }
@@ -119,7 +190,7 @@
 .product small {
   font-size: 10px;
   line-height: 1.4;
-  color: #6c8172;
+  color: var(--testo-tenue);
 }
 .product strong {
   font-size: 12px;
@@ -134,21 +205,21 @@
 }
 .brands button {
   flex: 1;
-  border: 1px solid #cbd9cf;
+  border: 1px solid var(--bordo-forte);
   border-radius: 7px;
   background: #fff;
-  color: #466050;
+  color: var(--testo-tenue);
   padding: 9px 6px;
   font-size: 11px;
   cursor: pointer;
 }
 .brands button[aria-pressed="true"] {
-  background: #e5f6f5;
-  border-color: #009eb7;
-  color: #007f92;
+  background: var(--tinta-tenue);
+  border-color: var(--tinta);
+  color: var(--tinta-scura);
 }
 .advanced {
-  border-top: 1px solid #dde5da;
+  border-top: 1px solid var(--bordo);
   padding: 12px 0;
   margin: 10px 0;
 }
@@ -158,7 +229,7 @@
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 10px;
-  color: #42624e;
+  color: var(--testo);
 }
 .advanced fieldset {
   border: 0;
@@ -184,9 +255,9 @@
 .result {
   padding: 14px;
   border-radius: 9px;
-  background: #eff4eb;
+  background: var(--carta-2);
   margin: 12px 0;
-  color: #34513f;
+  color: var(--testo);
   font-size: 12px;
   line-height: 1.5;
 }
@@ -195,7 +266,7 @@
   font-size: 10px;
   letter-spacing: 0.06em;
   margin-bottom: 5px;
-  color: #687f64;
+  color: var(--testo-tenue);
 }
 .result > strong {
   display: block;
@@ -210,13 +281,13 @@
   margin-top: 12px;
 }
 .result a {
-  color: #007f93;
+  color: var(--tinta);
 }
 .cta {
   width: 100%;
   border: 0;
   border-radius: 8px;
-  background: #009eb7;
+  background: var(--tinta);
   color: #fff;
   padding: 12px 14px;
   font-size: 13px;
@@ -224,9 +295,12 @@
   cursor: pointer;
   margin-top: 10px;
 }
+.cta:hover:not(:disabled) {
+  background: var(--tinta-scura);
+}
 .cta:disabled {
-  background: #d0ddd4;
-  color: #61786b;
+  background: var(--carta-3);
+  color: var(--testo-tenue);
   cursor: default;
 }
 .warning {
@@ -242,7 +316,7 @@
   font: inherit;
   background: none;
   border: 0;
-  color: #00889b;
+  color: var(--tinta);
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
@@ -251,14 +325,14 @@
 .panel input:focus-visible,
 .panel select:focus-visible,
 .panel summary:focus-visible {
-  outline: 2px solid #008ba3;
+  outline: 2px solid var(--tinta);
   outline-offset: 3px;
 }
 @media (max-width: 700px) {
   .panel {
-    top: 124px;
+    top: 64px;
     right: 8px;
-    bottom: 40px;
+    bottom: 70px;
     width: 350px;
     max-width: calc(100% - 16px);
   }

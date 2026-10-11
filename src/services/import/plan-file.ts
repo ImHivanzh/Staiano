@@ -206,7 +206,25 @@ async function readPdf(file: File, pageNumber: number): Promise<ParsedPlan> {
       background: "white",
     }).promise;
     const dataUrl = canvas.toDataURL("image/png");
-    if (dataUrl.length > 28_000_000)
+    const textOps = new Set([
+      pdfjs.OPS.showText,
+      pdfjs.OPS.showSpacedText,
+      pdfjs.OPS.nextLineShowText,
+      pdfjs.OPS.nextLineSetSpacingShowText,
+    ]);
+    let analysisDataUrl: string | undefined;
+    if (operators.fnArray.some((op) => textOps.has(op))) {
+      // Omit glyph painting instead of erasing boxes that may overlap walls.
+      await page.render({
+        canvas,
+        canvasContext: context,
+        viewport,
+        background: "white",
+        operationsFilter: (index) => !textOps.has(operators.fnArray[index]),
+      }).promise;
+      analysisDataUrl = canvas.toDataURL("image/png");
+    }
+    if (Math.max(dataUrl.length, analysisDataUrl?.length ?? 0) > 28_000_000)
       throw new Error(
         "Pagina PDF troppo pesante. Ridurre la risoluzione e riprovare.",
       );
@@ -232,6 +250,7 @@ async function readPdf(file: File, pageNumber: number): Promise<ParsedPlan> {
       sizeBytes: file.size,
       segments: vectors.segments,
       annotations,
+      analysisDataUrl,
       layers: vectors.segments.length
         ? [
             {

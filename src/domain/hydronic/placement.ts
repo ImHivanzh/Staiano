@@ -1,5 +1,6 @@
 import type { Point, Project } from "@/schemas/project";
 import type { HeatPumpProduct } from "@/domain/catalogs/heat-pumps";
+import { nearestIndoorPoint } from "@/domain/geometry/indoor-route";
 import {
   footprintCorners,
   convexFootprintsOverlap,
@@ -25,6 +26,15 @@ export const hydronicOutdoorFootprint = (unit: HydronicOutdoorUnit) =>
     unit.depthMm / 1000,
     unit.rotation,
   );
+
+export function hydronicOutwardRotation(
+  project: Project,
+  unit: HydronicOutdoorUnit,
+): number {
+  const wall = nearestIndoorPoint(project, unit.floorId, unit.position);
+  if (!wall) return unit.rotation;
+  return Math.atan2(wall.x - unit.position.x, unit.position.y - wall.y);
+}
 
 /** Handles concave rooms too: containment plus all edge crossings, not convex SAT. */
 function overlapsPolygon(a: Point[], b: Point[]) {
@@ -134,7 +144,8 @@ export function initialHydronicOutdoorPose(
         x: b.minX + width / 2 + step * (width + 0.3),
         y: b.minY - wallMargin - depth / 2 - 0.5,
       },
-      rotation: 0,
+      // Placement is beyond minY; face the fan away from the building.
+      rotation: Math.PI,
       elevationM: product.heightMm / 2000,
     };
     if (

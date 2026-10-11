@@ -11,6 +11,7 @@ const publicPaths = new Set([
   "/api/auth/login",
   "/favicon.ico",
   "/logo.svg",
+  "/fonts/Inter-Variable.woff2",
 ]);
 
 /** No matcher exclusions: API, workers, catalogs and models require the same session. */

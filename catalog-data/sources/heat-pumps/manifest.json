@@ -12,6 +12,18 @@
     "page": null
   },
   {
+    "name": "chaffoteaux-arianext-lite",
+    "timestampBasis": "file-acquired-at",
+    "manufacturer": "Chaffoteaux",
+    "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+    "sourceType": "pdf",
+    "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+    "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+    "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+    "importedAt": "2026-10-08T23:29:36.187506+00:00",
+    "page": null
+  },
+  {
     "name": "gree-versati-v",
     "timestampBasis": "file-acquired-at",
     "manufacturer": "Gree",

@@ -1,16 +1,17 @@
 import type { Project } from "@/schemas/project";
 import { renderDossierPdf } from "./render";
 import type { PanoramaOptions } from "@/services/render3d/export";
+import { downloadFile } from "@/services/project/format";
 
 export type DossierDownloadOptions = PanoramaOptions & {
   includeRenders?: boolean;
   variant?: "complete" | "summary";
 };
 
-export async function downloadDossier(
+export async function generateDossier(
   project: Project,
   options: DossierDownloadOptions = {},
-): Promise<void> {
+): Promise<{ blob: Blob; name: string }> {
   const snapshot = structuredClone(project);
   options.signal?.throwIfAborted();
   const response = await fetch("/logo.svg");
@@ -31,10 +32,16 @@ export async function downloadDossier(
   });
   options.signal?.throwIfAborted();
   const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
-  const url = URL.createObjectURL(blob),
-    anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}.pdf`;
-  anchor.click();
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  return {
+    blob,
+    name: `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}.pdf`,
+  };
+}
+
+export async function downloadDossier(
+  project: Project,
+  options: DossierDownloadOptions = {},
+): Promise<void> {
+  const document = await generateDossier(project, options);
+  downloadFile(document.name, document.blob);
 }

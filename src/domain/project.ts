@@ -1,5 +1,5 @@
 import type { Point, Project, Room, Wall } from "@/schemas/project";
-import { projectSchema } from "@/schemas/project";
+import { projectSchema, CURRENT_SCHEMA_VERSION } from "@/schemas/project";
 import {
   add,
   bounds,
@@ -17,12 +17,13 @@ import { reconcileRooms, overlappingPolygons } from "@/domain/geometry/rooms";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
 import { calculateThermal } from "@/domain/thermal/calculate";
 import { pillarAreaInRoom } from "@/domain/geometry/pillars";
+import { ensureInstallations } from "./installations";
 
 export const newId = () => crypto.randomUUID();
 export function createProject(name = "Nuovo progetto"): Project {
   const now = new Date().toISOString();
   return {
-    schemaVersion: 3,
+    schemaVersion: CURRENT_SCHEMA_VERSION,
     id: newId(),
     name,
     createdAt: now,
@@ -41,6 +42,7 @@ export function createProject(name = "Nuovo progetto"): Project {
     rooms: [],
     openings: [],
     hvacSystems: [],
+    installations: [],
     plenums: [],
     pillars: [],
     ducts: [],
@@ -59,6 +61,37 @@ export function createProject(name = "Nuovo progetto"): Project {
     },
     catalogVersions: {},
     sourceFilesMetadata: [],
+  };
+}
+export function clearProjectSystems(project: Project): Project {
+  return {
+    ...project,
+    installations: [],
+    hvacSystems: [],
+    hydronicSystems: [],
+    radiators: [],
+    fanCoils: [],
+    airTerminals: [],
+    plenums: [],
+    ducts: [],
+    rooms: project.rooms.map((room) => ({
+      ...room,
+      systemType: "none",
+      supplyPoints: 1,
+      returnPoints: 1,
+    })),
+    floors: project.floors.map((floor) => ({
+      ...floor,
+      configurationWizard: floor.configurationWizard
+        ? {
+            step: Math.min(floor.configurationWizard.step, 8),
+            confirmedSteps: floor.configurationWizard.confirmedSteps.filter(
+              (step) => step < 8,
+            ),
+            status: "paused",
+          }
+        : floor.configurationWizard,
+    })),
   };
 }
 export function recomputeProject(project: Project): Project {
@@ -116,7 +149,12 @@ export function recomputeProject(project: Project): Project {
       .filter((c) => c.floorId === room.floorId)
       .reduce((sum, c) => sum + pillarAreaInRoom(c, room.polygon), 0);
     const netAreaM2 = Math.max(0, room.netAreaM2 - occupied);
-    return { ...room, netAreaM2, ...calculateThermal(netAreaM2, room.heightM) };
+    return {
+      ...room,
+      netAreaM2,
+      ...calculateThermal(netAreaM2, room.heightM),
+      ...(room.conditioningExclusion ? { designLoadW: 0 } : {}),
+    };
   });
   // An unfinished edit must never silently discard the room or its devices.
   // Keep last closed geometry explicitly unresolved, with current valid wall references.
@@ -273,7 +311,7 @@ export function recomputeProject(project: Project): Project {
             ? "fanCoil"
             : room.systemType,
   }));
-  return p;
+  return ensureInstallations(p);
 }
 export function addWall(
   p: Project,
@@ -502,7 +540,12 @@ export function updateRoom(
   patch: Partial<
     Pick<
       Room,
-      "name" | "heightM" | "systemType" | "supplyPoints" | "returnPoints"
+      | "name"
+      | "heightM"
+      | "systemType"
+      | "supplyPoints"
+      | "returnPoints"
+      | "conditioningExclusion"
     >
   >,
 ): Project {
@@ -514,6 +557,7 @@ export function updateRoom(
       return {
         ...updated,
         ...calculateThermal(updated.netAreaM2, updated.heightM),
+        ...(updated.conditioningExclusion ? { designLoadW: 0 } : {}),
       };
     }),
   };
@@ -533,6 +577,13 @@ export function mergeRooms(
   if (resultingHeightM === undefined && a.heightM !== b.heightM)
     throw new Error(
       "Le stanze hanno altezze diverse. Indicare l’altezza del nuovo ambiente.",
+    );
+  if (
+    JSON.stringify(a.conditioningExclusion) !==
+    JSON.stringify(b.conditioningExclusion)
+  )
+    throw new Error(
+      "Allineare la scelta di climatizzazione e il motivo di esclusione prima di unire gli ambienti.",
     );
   const heightM = resultingHeightM ?? a.heightM;
   if (!Number.isFinite(heightM) || heightM <= 0 || heightM > 30)
@@ -554,6 +605,7 @@ export function mergeRooms(
     throw new Error("L’unione non genera un contorno chiuso valido.");
   merged.heightM = heightM;
   Object.assign(merged, calculateThermal(merged.netAreaM2, heightM));
+  if (merged.conditioningExclusion) merged.designLoadW = 0;
   return result;
 }
 export function duplicateProject(

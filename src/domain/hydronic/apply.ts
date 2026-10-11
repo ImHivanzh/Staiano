@@ -46,7 +46,7 @@ export function applyHydronicSystem(
     rooms = roomIds.map((id) => project.rooms.find((r) => r.id === id));
   if (
     !rooms.length ||
-    rooms.some((r) => !r) ||
+    rooms.some((r) => !r || r.conditioningExclusion) ||
     rooms.some((r) => r!.floorId !== rooms[0]!.floorId)
   )
     throw new Error("Selezionare ambienti esistenti sullo stesso piano.");

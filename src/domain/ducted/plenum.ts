@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { installationRoom } from "../installations";
 import { terminalSupplyConnections } from "@/domain/air-terminals/commercial-bom";
 import {
   machinePlenumGeometry,
@@ -152,9 +153,8 @@ function terminalVerified(terminal: Terminal, requireCapacity = true) {
     op &&
     family?.use.includes(terminal.use) &&
     op.quality === "valid" &&
-    noise !== null &&
-    noise !== undefined &&
-    noise <= 37 &&
+    (terminal.use === "return" ||
+      (noise !== null && noise !== undefined && noise <= 37)) &&
     op.noiseDbA === terminal.noiseDbA &&
     op.noiseUpperBoundDbA === terminal.noiseUpperBoundDbA &&
     op.pressureDropPa === terminal.pressureDropPa &&
@@ -213,7 +213,9 @@ export function calculateSupplyPlenum(
     });
     return result;
   }
-  const rooms = project.rooms.filter((r) => system.roomIds.includes(r.id));
+  const rooms = project.rooms
+    .filter((r) => system.roomIds.includes(r.id))
+    .map((room) => installationRoom(project, room, system.installationId));
   const machine = hvacProductAtVersion(system.productId, system.catalogVersion);
   const resolved = resolveDuctedMachine(system);
   result.machineModel = resolved?.model ?? machine?.indoorModel ?? null;
@@ -231,6 +233,7 @@ export function calculateSupplyPlenum(
     rooms.length === 0 ||
     rooms.some(
       (r) =>
+        !!r.conditioningExclusion ||
         r.geometryStatus === "unresolved" ||
         !project.floors.find((f) => f.id === r.floorId)?.scaleVerified,
     )
@@ -256,6 +259,31 @@ export function calculateSupplyPlenum(
   const valid = new Map<string, boolean>();
   for (const use of ["supply", "return"] as const) {
     const selected = terminals.filter((t) => t.use === use);
+    if (use === "return") {
+      const capacity = selected.reduce(
+        (sum, terminal) => sum + terminal.availableAirflowM3h,
+        0,
+      );
+      result.returnTerminalCount = selected.length;
+      result.returnAirflowM3h = Math.min(capacity, system.airflowM3h);
+      result.returnComplete =
+        selected.length > 0 &&
+        selected.every((terminal) => terminalVerified(terminal, false)) &&
+        capacity + 1e-7 >= system.airflowM3h;
+      if (!result.returnComplete) {
+        result.pendingReturnPoints.push({
+          roomId: rooms[0].id,
+          roomName: rooms[0].name,
+          pointIndex: 0,
+        });
+        result.issues.push({
+          code: "returnCapacity",
+          entityId: system.id,
+          message: `Ripresa totale ${Math.round(capacity)} m³/h / macchina ${Math.round(system.airflowM3h)} m³/h: completa o verifica le griglie.`,
+        });
+      }
+      continue;
+    }
     const pending =
       use === "supply"
         ? result.pendingSupplyPoints

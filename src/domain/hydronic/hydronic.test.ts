@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { addRectangle, createProject } from "@/domain/project";
 import { projectSchema } from "@/schemas/project";
 import { applyFanCoil } from "@/domain/fan-coils/apply";
 import {
   heatPumpCatalog,
+  heatPumpCatalogAtVersion,
   heatPumpProductAtVersion,
 } from "@/domain/catalogs/heat-pumps";
 import {
@@ -35,7 +39,7 @@ function pump(p = fixture()) {
 
 describe("impianto idronico documentato", () => {
   it("has official capacities at explicit conditions and reproducible sources", () => {
-    expect(heatPumpCatalog.products).toHaveLength(5);
+    expect(heatPumpCatalog.products).toHaveLength(13);
     const gree = heatPumpProductAtVersion(
       "gree-versati-v-8-monofase",
       heatPumpCatalog.version,
@@ -50,6 +54,105 @@ describe("impianto idronico documentato", () => {
       1206, 880, 445,
     ]);
     expect(heatPumpProductAtVersion(gree.id, "missing-version")).toBeNull();
+  });
+  it.each([
+    ["35-m", 3302018, 756, 3500, 3000, 3510, 3500, 5.1, 3.74, 3.1, 3.4],
+    ["50-m", 3302019, 756, 5000, 4050, 5000, 5000, 5, 3.65, 2.9, 2.85],
+    ["80-m", 3302020, 1106, 8000, 6000, 7410, 7000, 4.8, 3.7, 3, 3.1],
+    ["80-m-t", 3302021, 1106, 8000, 6000, 7410, 7000, 4.8, 3.7, 3, 3.1],
+    ["120-m", 3302022, 1506, 12000, 8200, 9510, 9050, 4.9, 4.1, 3.2, 3.15],
+    ["120-m-t", 3302023, 1506, 12000, 8200, 9510, 9050, 4.9, 4.1, 3.2, 3.15],
+    ["150-m", 3302024, 1506, 15000, 9900, 11000, 11000, 4.7, 4, 3.1, 2.93],
+    ["150-m-t", 3302025, 1506, 15000, 9900, 11000, 11000, 4.7, 4, 3.1, 2.93],
+  ])(
+    "places LITE %s with documented nominal performance and dimensions",
+    (
+      variant,
+      code,
+      height,
+      heat35,
+      heat45,
+      heatMinus7,
+      cold,
+      cop35,
+      cop45,
+      copMinus7,
+      eer,
+    ) => {
+      const product = heatPumpProductAtVersion(
+        `chaffoteaux-arianext-lite-${variant}-r32`,
+        heatPumpCatalog.version,
+      )!;
+      expect(product.family).toBe("ARIANEXT LITE M LINK R32");
+      expect(product.features).toContain(`Codice sistema ${code}`);
+      expect([product.widthMm, product.heightMm, product.depthMm]).toEqual([
+        1016,
+        height,
+        383,
+      ]);
+      expect(
+        product.operatingPoints.map((point) => [
+          point.heatingW,
+          point.coolingW,
+          point.cop,
+          point.eer,
+          point.heatingWaterSupplyC,
+          point.heatingOutdoorC,
+          point.coolingWaterSupplyC,
+          point.coolingOutdoorC,
+        ]),
+      ).toEqual([
+        [heat35, cold, cop35, eer, 35, 7, 7, 35],
+        [heat45, cold, cop45, eer, 45, 7, 7, 35],
+        [heatMinus7, cold, copMinus7, eer, 35, -7, 7, 35],
+      ]);
+      const p = fixture();
+      const next = applyHydronicSystem(p, {
+        productId: product.id,
+        roomIds: [p.rooms[0].id],
+        fanCoilIds: [],
+        operatingPointIndex: 1,
+      });
+      const system = next.hydronicSystems![0];
+      expect(system.outdoorUnit).toMatchObject({
+        widthMm: 1016,
+        heightMm: height,
+        depthMm: 383,
+      });
+      expect(hydronicOutdoorValid(next, system.outdoorUnit)).toBe(true);
+      expect(
+        projectSchema.parse(JSON.parse(JSON.stringify(next))).hydronicSystems,
+      ).toEqual(next.hydronicSystems);
+    },
+  );
+  it("keeps all eight LITE variants, their offline photo and original catalog revisions", () => {
+    const lite = heatPumpCatalog.products.filter(
+      (product) => product.family === "ARIANEXT LITE M LINK R32",
+    );
+    expect(lite).toHaveLength(8);
+    expect(
+      lite.filter((product) => product.model.includes("M-T")),
+    ).toHaveLength(3);
+    const product = lite[0];
+    expect(product.sourceMetadata).toMatchObject({
+      page: 4,
+      sourceType: "pdf",
+      sha256:
+        "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+    });
+    const photo = readFileSync(
+      join(process.cwd(), "public", product.productPhoto.localPath),
+    );
+    expect(createHash("sha256").update(photo).digest("hex")).toBe(
+      product.productPhoto.sha256,
+    );
+    const original = heatPumpCatalogAtVersion("heat-pumps-dd01394cdc900d50")!;
+    expect(original.products).toHaveLength(5);
+    for (const previous of original.products) {
+      expect(
+        heatPumpProductAtVersion(previous.id, heatPumpCatalog.version),
+      ).toEqual(previous);
+    }
   });
   it("places multiple outdoor units beyond complete wall bounds, preserves save/reload and originals", () => {
     const first = pump(),

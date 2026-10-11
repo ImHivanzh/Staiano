@@ -1,0 +1,134 @@
+.primary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+.primary:has(> button:only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+.other img {
+  width: 100%;
+  height: 72px;
+  object-fit: contain;
+}
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0;
+  color: var(--testo-tenue);
+  font-size: 12px;
+}
+.preview img {
+  width: min(180px, 45%);
+  height: 80px;
+  object-fit: contain;
+}
+.primary button {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--bordo-forte);
+  border-radius: 10px;
+  background: var(--carta);
+  color: var(--testo);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.primary button[aria-pressed="true"] {
+  border-color: var(--tinta);
+  background: var(--tinta-tenue);
+}
+.primary button:hover:not(:disabled) {
+  border-color: var(--tinta);
+}
+.primary button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.primary img {
+  width: 100%;
+  height: 56px;
+  object-fit: contain;
+}
+.primary strong {
+  font-size: 15px;
+}
+.primary[data-selected="true"] img,
+.primary[data-selected="true"] span {
+  display: none;
+}
+.primary[data-selected="true"] button {
+  padding: 8px 12px;
+}
+.primary span,
+.primary small {
+  color: var(--testo-tenue);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.catalog {
+  margin: 12px 0 16px;
+  font-size: 12px;
+}
+.catalog summary {
+  cursor: pointer;
+  padding: 6px 0;
+  color: var(--testo-tenue);
+}
+.catalog label {
+  margin-top: 12px;
+}
+.other {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.other button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--bordo);
+  border-radius: 6px;
+  background: var(--carta);
+  color: var(--testo);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.other button[aria-pressed="true"] {
+  border-color: var(--tinta);
+  background: var(--tinta-tenue);
+}
+.other button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.other span,
+.other small {
+  color: var(--testo-tenue);
+  font-size: 11px;
+}
+.version {
+  margin-bottom: 12px;
+}
+@media (max-width: 560px) {
+  .primary {
+    gap: 6px;
+  }
+  .primary button {
+    padding: 8px;
+  }
+  .primary img {
+    height: 44px;
+  }
+  .primary span {
+    display: none;
+  }
+}

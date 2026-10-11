@@ -50,7 +50,12 @@ async function recognize(
       worker.postMessage(
         {
           kind: "analyze",
-          plan: { ...plan, background: null, originalDataUrl: undefined },
+          plan: {
+            ...plan,
+            background: null,
+            originalDataUrl: undefined,
+            analysisDataUrl: undefined,
+          },
           pixels,
           width,
           height,
@@ -78,7 +83,7 @@ export async function analyzePlan(
   )
     return (await recognize(source)).vector;
   const img = new Image();
-  img.src = plan.background.dataUrl;
+  img.src = plan.analysisDataUrl ?? plan.background.dataUrl;
   await img.decode();
   const left = region ? Math.max(0, Math.min(region.start.x, region.end.x)) : 0;
   const top = region ? Math.max(0, Math.min(region.start.y, region.end.y)) : 0;

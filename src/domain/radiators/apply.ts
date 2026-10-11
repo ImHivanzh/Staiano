@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { assignInstallationRooms } from "../installations";
 import { newId } from "@/domain/project";
 import {
   roomWallSpan,
@@ -17,7 +18,11 @@ export function applyRadiatorSolution(
   roomId: string,
   solution: RadiatorSolution,
   fixedWallId: string | null,
+  installationId?: string,
 ): Project {
+  project = assignInstallationRooms(project, installationId, "radiator", [
+    roomId,
+  ]);
   const room = project.rooms.find((r) => r.id === roomId);
   if (
     !room ||
@@ -27,6 +32,10 @@ export function applyRadiatorSolution(
   if (room.geometryStatus === "unresolved")
     throw new Error(
       "Chiudere il contorno della stanza prima di dimensionare i radiatori.",
+    );
+  if (room.conditioningExclusion)
+    throw new Error(
+      "Riattivare la climatizzazione dell’ambiente prima di inserire apparecchi.",
     );
   const walls = project.walls
     .filter(
@@ -45,7 +54,22 @@ export function applyRadiatorSolution(
     throw new Error(
       "La soluzione non copre il fabbisogno attuale della stanza. Ricalcolare i radiatori.",
     );
-  const footprints: ReturnType<typeof footprintCorners>[] = [];
+  const footprints: ReturnType<typeof footprintCorners>[] = installationId
+    ? project.radiators
+        .filter(
+          (radiator) =>
+            radiator.roomId === roomId &&
+            radiator.installationId !== installationId,
+        )
+        .map((radiator) =>
+          footprintCorners(
+            radiator.position,
+            radiator.widthMm / 1000,
+            radiator.depthMm / 1000,
+            radiator.rotation,
+          ),
+        )
+    : [];
   const units = solution.units.map(({ variant, elements, widthMm, powerW }) => {
     if (
       (solution.selectedManufacturer &&
@@ -124,6 +148,7 @@ export function applyRadiatorSolution(
     space.occupied = offset + widthM + 0.1;
     return {
       id: newId(),
+      ...(installationId ? { installationId } : {}),
       roomId,
       floorId: room.floorId,
       wallId: space.wall.id,
@@ -143,9 +168,14 @@ export function applyRadiatorSolution(
     };
   });
   const radiators = [
-    ...project.radiators.filter((r) => r.roomId !== roomId),
+    ...project.radiators.filter(
+      (r) =>
+        r.roomId !== roomId ||
+        (!!installationId && r.installationId !== installationId),
+    ),
     ...units,
   ].map((r) => {
+    if (installationId && r.installationId !== installationId) return r;
     const product = radiatorProductAtVersion(r.productId, r.catalogVersion);
     return product
       ? {
@@ -160,8 +190,15 @@ export function applyRadiatorSolution(
     ...project,
     projectSettings: {
       ...project.projectSettings,
-      radiatorDeltaTK: solution.deltaTK,
+      radiatorDeltaTK: installationId
+        ? project.projectSettings.radiatorDeltaTK
+        : solution.deltaTK,
     },
+    installations: project.installations.map((item) =>
+      item.id === installationId
+        ? { ...item, radiatorDeltaTK: solution.deltaTK }
+        : item,
+    ),
     rooms: project.rooms.map((r) =>
       r.id === roomId ? { ...r, systemType: "radiator" } : r,
     ),

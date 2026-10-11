@@ -1,10 +1,21 @@
+.tipo-selezione {
+  font-size: 11px;
+  color: var(--testo-tenue);
+  margin: 5px 0 0;
+}
+.proprieta > .titolo-pannello:has(.tipo-selezione) {
+  background: var(--carta-2);
+}
+.proprieta > .campo {
+  margin: 12px 20px;
+}
 .proprieta .dati-stanza {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px 8px;
   margin-bottom: 8px;
 }
 .proprieta .dati-stanza dd {
-  font-size: 20px;
+  font-size: 19px;
 }
 .nota-fabbisogno {
   margin: 0 0 20px;

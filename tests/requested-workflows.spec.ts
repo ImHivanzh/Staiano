@@ -1,7 +1,11 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "./browser-test";
 import { projectSchema } from "../src/schemas/project";
-import { openDisclosure } from "./ui-helpers";
+import {
+  openDisclosure,
+  chooseTerminalModel,
+  confirmTerminalPlacement,
+} from "./ui-helpers";
 
 async function start(page: import("@playwright/test").Page) {
   await page.goto("/");
@@ -18,6 +22,7 @@ async function start(page: import("@playwright/test").Page) {
 }
 async function snapshot(page: import("@playwright/test").Page) {
   const waiting = page.waitForEvent("download");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Esporta", exact: true }).click();
   const file = await (await waiting).path();
   return projectSchema.parse(JSON.parse(readFileSync(file!, "utf8")));
@@ -30,6 +35,7 @@ test("manual machine uses the declared maximum, selectable return and original p
   await page.setViewportSize({ width: 1680, height: 1050 });
   await start(page);
   const viewer = page.getByTestId("viewer-3d");
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await viewer
     .getByRole("button", { name: "Macchina manuale", exact: true })
     .click();
@@ -43,28 +49,35 @@ test("manual machine uses the declared maximum, selectable return and original p
   await machine
     .getByRole("button", { name: "Inserisci macchina manuale", exact: true })
     .click();
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await viewer.getByRole("button", { name: "Bocchette", exact: true }).click();
-  let palette = page.getByRole("dialog", { name: "Catalogo bocchette" });
-  await palette
-    .getByRole("button", { name: "Scegli EDLS", exact: true })
+  await page
+    .getByRole("button", { name: "Configura canalizzazione", exact: true })
     .click();
+  const palette = page.getByRole("dialog", {
+    name: "Configura canalizzazione",
+  });
+  await chooseTerminalModel(palette, "EDLS");
   await expect(
     palette.getByRole("region", {
-      name: "Distribuzione consigliata nelle stanze",
+      name: "Bocchette della stanza",
     }),
   ).toContainText("900");
   await palette
-    .getByRole("button", { name: "Inserisci bocchette", exact: true })
+    .getByLabel("Lunghezza singola bocchetta", { exact: true })
+    .fill("1000");
+  await palette
+    .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
     .click();
-  await viewer.getByRole("button", { name: "Bocchette", exact: true }).click();
-  palette = page.getByRole("dialog", { name: "Catalogo bocchette" });
+  await confirmTerminalPlacement(page);
   await palette.getByRole("button", { name: "Ripresa", exact: true }).click();
+  await chooseTerminalModel(palette, "EGQ");
   await palette
-    .getByRole("button", { name: "Scegli EGQ", exact: true })
+    .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
     .click();
-  await palette
-    .getByRole("button", { name: "Inserisci bocchette", exact: true })
-    .click();
+  await confirmTerminalPlacement(page);
+  await palette.getByRole("button", { name: "Chiudi configurazione" }).click();
+  await page.getByRole("button", { name: "Chiudi catalogo" }).click();
   const p = await snapshot(page),
     system = p.hvacSystems[0];
   expect(system.genericMachine).toMatchObject({
@@ -80,6 +93,7 @@ test("manual machine uses the declared maximum, selectable return and original p
         .filter((t) => t.use === use)
         .reduce((sum, t) => sum + t.requiredAirflowM3h, 0),
     ).toBeCloseTo(900, 10);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await viewer.getByRole("button", { name: "Plenum", exact: true }).click();
   const plenum = page.getByRole("dialog", {
     name: "Plenum degli impianti autonomi",
@@ -110,6 +124,7 @@ test("official radiator photos and four independent finish choices persist witho
   test.setTimeout(90000);
   await page.setViewportSize({ width: 1680, height: 1050 });
   await start(page);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await page
     .getByTestId("viewer-3d")
     .getByRole("button", { name: "Radiatori", exact: true })

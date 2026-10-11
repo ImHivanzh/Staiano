@@ -12,7 +12,7 @@ test("dossier PDF locale scaricato con logo, planimetria e schede stanza", async
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
-  await openDisclosure(page, "Documento e progetto");
+  await openDisclosure(page, "File");
   const [download] = await Promise.all([
     page.waitForEvent("download"),
     page.getByRole("button", { name: "Dossier PDF", exact: true }).click(),
@@ -73,7 +73,7 @@ test("render document cancellation releases the offscreen scene and creates no d
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
-  await openDisclosure(page, "Documento e progetto");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Dossier PDF", exact: true }).click();
   await expect(page.locator('[data-staiano-render-export="true"]')).toHaveCount(
     1,

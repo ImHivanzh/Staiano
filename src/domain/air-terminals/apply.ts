@@ -40,7 +40,7 @@ export function applyAirTerminalSolution(
     !family ||
     !variant ||
     !family.use.includes(use) ||
-    !family.mountings?.includes(mounting)
+    (family.mountings ? !family.mountings.includes(mounting) : !dimensions)
   )
     throw new Error("Famiglia o montaggio non compatibili.");
   if (
@@ -68,7 +68,11 @@ export function applyAirTerminalSolution(
       ? dimensions.depthMm
       : (variant.bodyDepthMm ?? null),
     existing = project.airTerminals.filter(
-      (t) => mode === "append" || t.roomId !== roomId || t.use !== use,
+      (t) =>
+        mode === "append" ||
+        t.roomId !== roomId ||
+        t.use !== use ||
+        t.systemId !== systemId,
     ),
     added: AirTerminal[] = [];
   const footprint = (t: AirTerminal) =>
@@ -210,17 +214,37 @@ export function applyAirTerminalSolution(
         ...(dimensions ? { manualDimensions: true } : {}),
       });
     }
+  const installationId = project.hvacSystems.find(
+    (system) => system.id === systemId,
+  )?.installationId;
   return {
     ...project,
     airTerminals: [...existing, ...added],
     rooms: project.rooms.map((r) =>
-      r.id === roomId && mode === "replace"
+      r.id === roomId && mode === "replace" && !installationId
         ? {
             ...r,
             [use === "supply" ? "supplyPoints" : "returnPoints"]:
               solution.numberOfPoints,
           }
         : r,
+    ),
+    installations: project.installations.map((item) =>
+      item.id === installationId && mode === "replace"
+        ? {
+            ...item,
+            roomAirPoints: {
+              ...item.roomAirPoints,
+              [roomId]: {
+                supply:
+                  item.roomAirPoints?.[roomId]?.supply ?? room.supplyPoints,
+                return:
+                  item.roomAirPoints?.[roomId]?.return ?? room.returnPoints,
+                [use]: solution.numberOfPoints,
+              },
+            },
+          }
+        : item,
     ),
     catalogVersions: {
       ...project.catalogVersions,

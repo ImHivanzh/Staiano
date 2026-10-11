@@ -1,5 +1,14 @@
 import type { Project } from "@/schemas/project";
 import { parseProject } from "./format";
+export class ProjectConflictError extends Error {
+  constructor() {
+    super(
+      "Il progetto è stato modificato o eliminato in un’altra scheda. Salva una copia delle tue modifiche oppure carica la versione nell’archivio.",
+    );
+    this.name = "ProjectConflictError";
+  }
+}
+type SavedVersion = { revision: string | null; updatedAt: string | null };
 export interface ProjectRepository {
   list(): Promise<Project[]>;
   get(id: string): Promise<Project | null>;
@@ -26,6 +35,7 @@ const completed = (tx: IDBTransaction) =>
   });
 export class IndexedDbProjectRepository implements ProjectRepository {
   private connection: Promise<IDBDatabase> | null = null;
+  private versions = new Map<string, SavedVersion>();
   constructor(private readonly databaseName = "staiano-hvac-v1") {}
   private db() {
     this.connection ??= new Promise<IDBDatabase>((resolve, reject) => {
@@ -66,9 +76,16 @@ export class IndexedDbProjectRepository implements ProjectRepository {
   }
   async get(id: string) {
     const db = await this.db();
-    const raw = await request(
-      db.transaction("projects").objectStore("projects").get(id),
-    );
+    const tx = db.transaction(["projects", "meta"]);
+    const [raw, revision] = await Promise.all([
+      request(tx.objectStore("projects").get(id)),
+      request(tx.objectStore("meta").get(`revision:${id}`)),
+    ]);
+    if (raw || !this.versions.has(id))
+      this.versions.set(id, {
+        revision: revision ?? null,
+        updatedAt: raw?.updatedAt ?? null,
+      });
     return raw ? parseProject(raw) : null;
   }
   async previous(id: string) {
@@ -79,19 +96,43 @@ export class IndexedDbProjectRepository implements ProjectRepository {
     return raw ? parseProject(raw) : null;
   }
   async save(project: Project) {
+    const expected = this.versions.get(project.id) ?? {
+      revision: null,
+      updatedAt: null,
+    };
+    const revision = crypto.randomUUID();
+    let conflict = false;
     const p = parseProject(project),
       db = await this.db(),
-      tx = db.transaction(["projects", "previous"], "readwrite"),
+      tx = db.transaction(["projects", "previous", "meta"], "readwrite"),
       done = completed(tx);
     const store = tx.objectStore("projects"),
       req = store.get(p.id);
     req.onsuccess = () => {
       const old = req.result as Project | undefined;
-      if (old && old.updatedAt !== p.updatedAt)
-        tx.objectStore("previous").put(old, p.id);
-      store.put(p, p.id);
+      const version = tx.objectStore("meta").get(`revision:${p.id}`);
+      version.onsuccess = () => {
+        if (
+          (version.result ?? null) !== expected.revision ||
+          (old?.updatedAt ?? null) !== expected.updatedAt
+        ) {
+          conflict = true;
+          tx.abort();
+          return;
+        }
+        if (old && old.updatedAt !== p.updatedAt)
+          tx.objectStore("previous").put(old, p.id);
+        store.put(p, p.id);
+        tx.objectStore("meta").put(revision, `revision:${p.id}`);
+      };
     };
-    await done;
+    try {
+      await done;
+    } catch (error) {
+      if (conflict) throw new ProjectConflictError();
+      throw error;
+    }
+    this.versions.set(p.id, { revision, updatedAt: p.updatedAt });
   }
   async delete(id: string) {
     const db = await this.db(),
@@ -99,6 +140,7 @@ export class IndexedDbProjectRepository implements ProjectRepository {
       done = completed(tx);
     tx.objectStore("projects").delete(id);
     tx.objectStore("previous").delete(id);
+    tx.objectStore("meta").delete(`revision:${id}`);
     const req = tx.objectStore("meta").get("active");
     req.onsuccess = () => {
       if (req.result === id) tx.objectStore("meta").delete("active");

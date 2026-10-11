@@ -1,0 +1,99 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: min(1440px, calc(100vw - 64px));
+  height: calc(100dvh - 64px);
+  max-width: calc(100vw - 64px);
+  max-height: calc(100dvh - 64px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  box-shadow: 0 24px 80px #18324940;
+  overflow: hidden;
+  background: var(--carta);
+  color: var(--testo);
+  font: inherit;
+}
+.dialog[open] {
+  display: flex;
+  flex-direction: column;
+  animation: openDialog 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dialog::backdrop {
+  background: #18324966;
+}
+.dialog[open]::backdrop {
+  animation: openBackdrop 200ms ease-out;
+}
+@keyframes openDialog {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes openBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--bordo);
+}
+.header h2 {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.2;
+}
+.content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 20px 24px 32px;
+}
+.content > * {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.dialog :is(button, input, select, summary, a):focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 3px;
+}
+@media (max-width: 760px) {
+  .header,
+  .content {
+    padding: 16px;
+  }
+  .header h2 {
+    font-size: 19px;
+  }
+}
+@media (max-width: 1200px) {
+  .dialog {
+    width: calc(100vw - 32px);
+    height: calc(100dvh - 32px);
+    max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 32px);
+    border-radius: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+}

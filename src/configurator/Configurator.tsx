@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { FullscreenDialog } from "./FullscreenDialog";
+import { CustomerViewButton } from "./CustomerViewButton";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { deviceCodes } from "@/services/export/device-codes";
@@ -29,26 +31,39 @@ import {
   Wind,
   Snowflake,
   Users,
+  ArrowRight,
+  SidebarSimple,
+  MagicWand,
+  SignOut,
 } from "@phosphor-icons/react";
 import { useProjectStore, type Tool } from "@/stores/project-store";
 import {
   addRectangle,
+  clearProjectSystems,
   createProject,
   duplicateProject,
   newId,
 } from "@/domain/project";
-import { validateProject } from "@/domain/validation";
+import {
+  validateProject,
+  projectProgress,
+  resolveCheckTarget,
+  filterProjectChecks,
+  type Check,
+  type CheckFilterStatus,
+} from "@/domain/validation";
 import {
   duplicateSelection,
   removeSelection,
 } from "@/domain/geometry/selection";
-import { exportProject } from "@/services/project/format";
+import { exportProject, downloadFile } from "@/services/project/format";
 import { importProjectFile } from "@/services/import/project-file";
 import {
   configureProjectSession,
   flushSave,
   repository,
   saveCurrent,
+  settlePendingSaves,
 } from "@/services/project/session";
 import { applyPlanImport } from "@/domain/geometry/import-plan";
 import type { ImportedPlan } from "@/services/import/plan-types";
@@ -61,6 +76,9 @@ import type { Project } from "@/schemas/project";
 import { CatalogAdmin } from "./systems/CatalogAdmin";
 import { EcoclimaBill } from "./systems/EcoclimaBill";
 import { AdminUsers } from "./AdminUsers";
+import { ProjectSettings } from "./ProjectSettings";
+import { LengthInput } from "./LengthInput";
+import { PdfPreview } from "./PdfPreview";
 
 const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), {
   ssr: false,
@@ -90,9 +108,14 @@ export function Configurator() {
   const s = useProjectStore(),
     p = s.project;
   const [page, setPage] = useState<
-      "editor" | "projects" | "checks" | "catalogs" | "users"
+      "editor" | "projects" | "checks" | "catalogs" | "users" | "settings"
     >("editor"),
     [projects, setProjects] = useState<Project[]>([]);
+  const [projectSearch, setProjectSearch] = useState("");
+  const [projectOrder, setProjectOrder] = useState("recent");
+  const [checkStatus, setCheckStatus] = useState<CheckFilterStatus>("problems");
+  const [checkFloor, setCheckFloor] = useState("");
+  const [checkRoom, setCheckRoom] = useState("");
   const [rectangleOpen, setRectangleOpen] = useState(false),
     [ready, setReady] = useState(false),
     [newDialog, setNewDialog] = useState(false);
@@ -102,7 +125,13 @@ export function Configurator() {
     "complete",
   );
   const [billOpen, setBillOpen] = useState(false);
+  const [inspectorOpen, setInspectorOpen] = useState(true);
+  const revealedCheck = useRef<Check | null>(null);
   const [pdfProgress, setPdfProgress] = useState("");
+  const [pdfPreview, setPdfPreview] = useState<{
+    blob: Blob;
+    name: string;
+  } | null>(null);
   const pdfController = useRef<AbortController | null>(null);
   const [planOpen, setPlanOpen] = useState(false);
   const [planFile, setPlanFile] = useState<File | undefined>(undefined);
@@ -177,7 +206,57 @@ export function Configurator() {
     };
   }, []);
   useEffect(() => {
+    const check = revealedCheck.current;
+    if (!check || page !== "editor") return;
+    const panel = document.getElementById("proprieta-progetto");
+    if (!panel) return;
+    const kind = useProjectStore.getState().selection[0]?.kind;
+    const section = check.code.startsWith("opening")
+      ? "Porte e finestre"
+      : kind === "device"
+        ? "Posizione"
+        : check.code === "thermal"
+          ? "Dettagli tecnici"
+          : ["geometry", "name", "overlap"].includes(check.code)
+            ? "Modifica stanza"
+            : "Configura impianto";
+    panel.querySelectorAll<HTMLDetailsElement>("details").forEach((details) => {
+      if (details.querySelector("summary")?.textContent?.includes(section))
+        details.open = true;
+    });
+    panel.focus({ preventScroll: true });
+    panel.scrollIntoView({ block: "nearest" });
+    revealedCheck.current = null;
+  }, [page]);
+  useEffect(() => {
+    const closeMenus = () => {
+      document
+        .querySelectorAll<HTMLDetailsElement>(
+          'details[name="workspace-menus"][open], details[name="viewer-menus"][open]',
+        )
+        .forEach((menu) => {
+          menu.open = false;
+        });
+    };
+    const outsideMenu = (event: PointerEvent) => {
+      if (
+        event.target instanceof Element &&
+        !event.target.closest(
+          'details[name="workspace-menus"], details[name="viewer-menus"]',
+        )
+      )
+        closeMenus();
+    };
     const handler = (e: KeyboardEvent) => {
+      if (
+        e.key === "Escape" &&
+        document.querySelector(
+          'details[name="workspace-menus"][open], details[name="viewer-menus"][open]',
+        )
+      ) {
+        closeMenus();
+        return;
+      }
       if (
         e.target instanceof HTMLElement &&
         (e.target.matches("input,select,textarea") ||
@@ -218,7 +297,11 @@ export function Configurator() {
       }
     };
     window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    window.addEventListener("pointerdown", outsideMenu);
+    return () => {
+      window.removeEventListener("keydown", handler);
+      window.removeEventListener("pointerdown", outsideMenu);
+    };
   }, []);
   function copySelection() {
     const store = useProjectStore.getState();
@@ -235,20 +318,35 @@ export function Configurator() {
       return;
     store.commit((project) => removeSelection(project, store.selection));
   }
+  function deleteSystems() {
+    if (
+      !window.confirm(
+        "Cancellare l’impianto su tutti i piani? Verranno rimossi apparecchi, plenum, bocchette e collegamenti. Planimetria, muri, stanze, porte e finestre restano invariati. Sbloccare prima gli apparecchi bloccati. Ctrl+Z annulla.",
+      )
+    )
+      return;
+    s.commit(clearProjectSystems);
+  }
   async function newProject(
-    mode: "manual" | "import",
+    mode: "manual" | "import" | "guided",
     name = "Nuovo progetto",
   ) {
     try {
       await flushSave();
       const next = createProject(name);
+      if (mode === "guided")
+        next.floors[0].configurationWizard = {
+          step: 0,
+          confirmedSteps: [],
+          status: "active",
+        };
       await repository.save(next);
       await repository.setActiveId(next.id);
       s.load(next);
       setPage("editor");
       setNewDialog(false);
       if (mode === "manual") setRectangleOpen(true);
-      else {
+      else if (mode === "import") {
         setPlanFile(undefined);
         setPlanOpen(true);
       }
@@ -257,6 +355,31 @@ export function Configurator() {
         e instanceof Error ? e.message : "Creazione progetto fallita.",
       );
     }
+  }
+  async function startWizard() {
+    if (!p) {
+      await newProject("guided");
+    } else {
+      s.commit((project) => ({
+        ...project,
+        floors: project.floors.map((item) =>
+          item.id === s.activeFloorId
+            ? {
+                ...item,
+                configurationWizard: {
+                  ...(item.configurationWizard ?? {
+                    step: rooms.length ? 7 : 0,
+                    confirmedSteps: [],
+                  }),
+                  status: "active",
+                },
+              }
+            : item,
+        ),
+      }));
+    }
+    setPage("editor");
+    setInspectorOpen(true);
   }
   async function showProjects() {
     try {
@@ -297,6 +420,76 @@ export function Configurator() {
       s.setError("Salvataggio con nome fallito.");
     }
   }
+  async function resolveSaveConflict(copy: boolean) {
+    const current = useProjectStore.getState().project;
+    if (!current) return;
+    if (
+      !copy &&
+      !window.confirm(
+        "Caricare la versione nell’archivio e sostituire le modifiche non salvate? Salva prima una copia se vuoi conservarle.",
+      )
+    )
+      return;
+    try {
+      await settlePendingSaves();
+      if (!copy) await repository.setActiveId(current.id);
+      const next = copy
+        ? duplicateProject(current, `${current.name} — copia locale`)
+        : await repository.get(current.id);
+      if (!next) {
+        s.setError(
+          "Il progetto è stato eliminato dall’archivio. Salva una copia delle tue modifiche per conservarle.",
+        );
+        return;
+      }
+      if (copy) {
+        await repository.save(next);
+        await repository.setActiveId(next.id);
+      }
+      s.load(next);
+      setPage("editor");
+    } catch (error) {
+      s.setError(
+        error instanceof Error
+          ? error.message
+          : "Recupero del progetto fallito. Esporta le tue modifiche per conservarle.",
+      );
+    }
+  }
+  async function createPdf(preview: boolean) {
+    if (!p) return;
+    setPdfBusy(true);
+    setPdfProgress("Preparazione documento");
+    const controller = new AbortController();
+    pdfController.current = controller;
+    try {
+      const { generateDossier, downloadDossier } =
+        await import("@/services/pdf/download");
+      const options = {
+        includeRenders,
+        variant: dossierVariant,
+        floorId: s.activeFloorId,
+        roomId: s.selection.find((item) => item.kind === "room")?.id,
+        signal: controller.signal,
+        onProgress: setPdfProgress,
+      };
+      if (preview) {
+        const document = await generateDossier(p, options);
+        setPdfPreview(document);
+      } else await downloadDossier(p, options);
+    } catch (error) {
+      if (!(error instanceof Error && error.name === "AbortError"))
+        s.setError(
+          error instanceof Error
+            ? error.message
+            : "PDF non generato. Riprovare.",
+        );
+    } finally {
+      setPdfBusy(false);
+      pdfController.current = null;
+      setPdfProgress("");
+    }
+  }
   function importRaster(file: File) {
     setPlanFile(file);
     setPlanOpen(true);
@@ -321,11 +514,59 @@ export function Configurator() {
       setPlanFile(undefined);
       setPage("editor");
       state.setTool("select");
+      setInspectorOpen(true);
     }
   }
   const checks = p ? validateProject(p) : [],
     errors = checks.filter((c) => c.status === "invalid"),
     warnings = checks.filter((c) => c.status === "warning");
+  const progress = p ? projectProgress(p, checks) : null;
+  const effectiveCheckFloor = p?.floors.some((item) => item.id === checkFloor)
+    ? checkFloor
+    : "";
+  const checkRooms =
+    p?.rooms.filter(
+      (room) => !effectiveCheckFloor || room.floorId === effectiveCheckFloor,
+    ) ?? [];
+  const effectiveCheckRoom = checkRooms.some((room) => room.id === checkRoom)
+    ? checkRoom
+    : "";
+  const visibleChecks = p
+    ? filterProjectChecks(p, checks, {
+        status: checkStatus,
+        floorId: effectiveCheckFloor,
+        roomId: effectiveCheckRoom,
+      })
+    : [];
+  const visibleProjects = projects
+    .filter((project) =>
+      project.name
+        .toLocaleLowerCase("it-IT")
+        .includes(projectSearch.trim().toLocaleLowerCase("it-IT")),
+    )
+    .toSorted((a, b) =>
+      projectOrder === "name"
+        ? a.name.localeCompare(b.name, "it-IT")
+        : b.updatedAt.localeCompare(a.updatedAt),
+    );
+  function showCheck(check: Check) {
+    if (!p) return;
+    const target = resolveCheckTarget(p, check.entityId);
+    if (!target) return;
+    s.setFloor(target.floorId);
+    s.select(target.selection);
+    s.setTool(
+      check.code === "scale" &&
+        p.floors.find((f) => f.id === target.floorId)?.background
+        ? "calibrate"
+        : "select",
+    );
+    s.setView("2d");
+    useProjectStore.setState({ presentation: false });
+    setInspectorOpen(true);
+    revealedCheck.current = check;
+    setPage("editor");
+  }
   const floor = p?.floors.find((f) => f.id === s.activeFloorId),
     rooms = p?.rooms.filter((r) => r.floorId === s.activeFloorId) ?? [];
   return (
@@ -370,21 +611,24 @@ export function Configurator() {
           </span>
         </div>
         <div className="gruppo-voci">Progettazione</div>
-        <nav className="voci">
+        <nav className="voci" aria-label="Navigazione principale">
           <button
             className={`voce-nav ${page === "editor" ? "attiva" : ""}`}
+            aria-current={page === "editor" ? "page" : undefined}
             onClick={() => setPage("editor")}
           >
             <HouseLine /> Planimetria
           </button>
           <button
             className={`voce-nav ${page === "projects" ? "attiva" : ""}`}
+            aria-current={page === "projects" ? "page" : undefined}
             onClick={() => void showProjects()}
           >
             <FolderOpen /> Progetti locali
           </button>
           <button
             className={`voce-nav ${page === "checks" ? "attiva" : ""}`}
+            aria-current={page === "checks" ? "page" : undefined}
             onClick={() => setPage("checks")}
             disabled={!p}
           >
@@ -395,6 +639,7 @@ export function Configurator() {
           </button>
           <button
             className={`voce-nav ${page === "catalogs" ? "attiva" : ""}`}
+            aria-current={page === "catalogs" ? "page" : undefined}
             onClick={() => setPage("catalogs")}
           >
             <SquaresFour />
@@ -403,6 +648,7 @@ export function Configurator() {
           {identity?.role === "admin" && (
             <button
               className={`voce-nav ${page === "users" ? "attiva" : ""}`}
+              aria-current={page === "users" ? "page" : undefined}
               onClick={() => setPage("users")}
             >
               <Users />
@@ -458,6 +704,7 @@ export function Configurator() {
                 <button
                   key={r.id}
                   className={`stanza-nav ${s.selection.some((v) => v.id === r.id) ? "attiva" : ""}`}
+                  aria-pressed={s.selection.some((v) => v.id === r.id)}
                   onClick={(e) => {
                     s.select({ kind: "room", id: r.id }, e.shiftKey);
                     setPage("editor");
@@ -487,247 +734,332 @@ export function Configurator() {
           </div>
         )}
         <div className="piede-lato">
-          <span className="locale-indicatore">Archivio sul dispositivo</span>
-          <small>Utenti autorizzati · Archivio locale</small>
+          <span className="locale-indicatore">
+            {userName || "Staiano HVAC"}
+          </span>
+          <small>Archivio sul dispositivo</small>
         </div>
       </aside>
       <div className="contenuto contenuto-hvac">
         <header className="testata testata-hvac">
-          <div>
-            <span className="occhiello">
-              Termoidraulica Staiano{userName ? ` · ${userName}` : ""}
-            </span>
-            <h1>{p?.name ?? "Progetta il tuo impianto"}</h1>
+          <div className="titolo-progetto">
+            <h1>
+              {page === "projects"
+                ? "Progetti locali"
+                : page === "catalogs"
+                  ? "Cataloghi tecnici"
+                  : page === "checks"
+                    ? "Controlli progetto"
+                    : page === "users"
+                      ? "Gestione utenti"
+                      : page === "settings"
+                        ? "Impostazioni progetto"
+                        : (p?.name ?? "Il tuo spazio di progettazione")}
+            </h1>
+            <p className="sottotitolo-progetto">
+              {page === "editor"
+                ? "Planimetrie, ambienti e impianti"
+                : "Termoidraulica Staiano"}
+            </p>
           </div>
           <div className="azioni-testata">
-            <form action="/api/auth/logout" method="post">
-              <button className="bottone tenue piccolo" type="submit">
-                Esci
-              </button>
-            </form>
             <span
               className={`stato-salvataggio ${s.saveStatus === "error" ? "errore" : ""}`}
               role="status"
-              data-testid="save-status"
             >
-              {!p
-                ? "Locale"
-                : s.saveStatus === "saved"
-                  ? "Salvato"
-                  : s.saveStatus === "saving"
-                    ? "Salvataggio…"
-                    : s.saveStatus === "error"
-                      ? "Non salvato"
-                      : "Caricamento…"}
+              <span data-testid="save-status">
+                {!p
+                  ? "Locale"
+                  : s.saveStatus === "saved"
+                    ? "Salvato"
+                    : s.saveStatus === "saving"
+                      ? "Salvataggio…"
+                      : s.saveStatus === "error"
+                        ? "Non salvato"
+                        : "Caricamento…"}
+              </span>
+              {p && s.saveStatus === "saved" && (
+                <span>su questo dispositivo</span>
+              )}
             </span>
+            <button
+              className="bottone pieno avvio-wizard"
+              onClick={() => void startWizard()}
+              disabled={!ready}
+            >
+              <MagicWand aria-hidden="true" />
+              {floor?.configurationWizard?.status === "paused"
+                ? "Riprendi wizard"
+                : floor?.configurationWizard
+                  ? "Apri wizard"
+                  : "Avvia wizard"}
+            </button>
             <button className="bottone" onClick={() => setNewDialog(true)}>
               <Plus />
               Nuovo
             </button>
-            {p && (
-              <>
-                <button
-                  className="bottone solo-icona"
-                  title="Salva · Ctrl+S"
-                  aria-label="Salva progetto"
-                  onClick={() => void saveCurrent().catch(() => {})}
-                >
-                  <FloppyDisk />
-                </button>
+            <details className="menu-progetto" name="workspace-menus">
+              <summary className="bottone">
+                <FolderOpen aria-hidden="true" /> File
+              </summary>
+              <div className="comandi-progetto">
+                <p className="nota">
+                  I progetti restano nel browser di questo dispositivo. Usa
+                  Esporta per backup o trasferimento.
+                </p>
+                {p && (
+                  <>
+                    <button
+                      className="bottone"
+                      onClick={(event) => {
+                        setPage("settings");
+                        event.currentTarget
+                          .closest("details")
+                          ?.removeAttribute("open");
+                      }}
+                    >
+                      Impostazioni progetto e piani
+                    </button>
+                    <button
+                      className="bottone"
+                      title="Salva · Ctrl+S"
+                      aria-label="Salva progetto"
+                      onClick={(event) => {
+                        void saveCurrent().catch(() => {});
+                        event.currentTarget
+                          .closest("details")
+                          ?.removeAttribute("open");
+                      }}
+                    >
+                      <FloppyDisk />
+                      Salva progetto
+                    </button>
+                    <button
+                      className="bottone"
+                      onClick={(event) => {
+                        try {
+                          exportProject(p);
+                          event.currentTarget
+                            .closest("details")
+                            ?.removeAttribute("open");
+                        } catch {
+                          s.setError(
+                            "Esportazione non riuscita. Verificare il progetto.",
+                          );
+                        }
+                      }}
+                    >
+                      <DownloadSimple />
+                      Esporta
+                    </button>
+                  </>
+                )}
                 <button
                   className="bottone"
-                  onClick={() => {
-                    try {
-                      exportProject(p);
-                    } catch {
-                      s.setError(
-                        "Esportazione non riuscita. Verificare il progetto.",
-                      );
-                    }
+                  onClick={(event) => {
+                    fileInput.current?.click();
+                    event.currentTarget
+                      .closest("details")
+                      ?.removeAttribute("open");
                   }}
                 >
-                  <DownloadSimple />
-                  Esporta
+                  <UploadSimple />
+                  Apri progetto
                 </button>
-              </>
-            )}
-            <button
-              className="bottone"
-              onClick={() => fileInput.current?.click()}
-            >
-              <UploadSimple />
-              Apri progetto
-            </button>
+                {p && (
+                  <>
+                    <h2 className="titolo-menu">Documenti</h2>
+                    <label className="opzione-render-pdf">
+                      Documento{" "}
+                      <select
+                        aria-label="Tipo dossier"
+                        value={dossierVariant}
+                        disabled={pdfBusy}
+                        onChange={(e) =>
+                          setDossierVariant(
+                            e.target.value as "complete" | "summary",
+                          )
+                        }
+                      >
+                        <option value="complete">Dossier completo</option>
+                        <option value="summary">Dossier sintetico</option>
+                      </select>
+                    </label>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={pdfBusy}
+                      onClick={() => void createPdf(false)}
+                    >
+                      <DownloadSimple />{" "}
+                      {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
+                    </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={pdfBusy}
+                      onClick={() => void createPdf(true)}
+                    >
+                      Anteprima PDF
+                    </button>
+                    <label className="opzione-render-pdf">
+                      <input
+                        type="checkbox"
+                        checked={includeRenders}
+                        disabled={pdfBusy}
+                        onChange={(e) => setIncludeRenders(e.target.checked)}
+                      />
+                      Includi render 3D
+                    </label>
+                    <button
+                      className="bottone tenue piccolo"
+                      onClick={() => setBillOpen(true)}
+                    >
+                      Listino materiali
+                    </button>
+                    {pdfBusy && (
+                      <>
+                        <span role="status" className="nota">
+                          {pdfProgress}
+                        </span>
+                        <button
+                          className="bottone piccolo tenue"
+                          onClick={() => pdfController.current?.abort()}
+                        >
+                          Annulla documento
+                        </button>
+                      </>
+                    )}
+                    <button
+                      className="bottone tenue piccolo"
+                      onClick={() => void saveAs()}
+                    >
+                      Salva con nome
+                    </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      onClick={() => {
+                        const name = window.prompt("Nome progetto", p.name);
+                        if (name?.trim())
+                          s.commit((p) => ({ ...p, name: name.trim() }));
+                      }}
+                    >
+                      Rinomina progetto
+                    </button>
+                  </>
+                )}
+                <form action="/api/auth/logout" method="post">
+                  <button
+                    className="bottone tenue"
+                    type="submit"
+                    aria-label="Esci"
+                    title="Esci"
+                  >
+                    <SignOut aria-hidden="true" />
+                    Esci
+                  </button>
+                </form>
+              </div>
+            </details>
           </div>
         </header>
-        {p && (
-          <details className="menu-progetto">
-            <summary className="bottone tenue piccolo">
-              Documento e progetto
-            </summary>
-            <div className="comandi-progetto">
-              <label className="opzione-render-pdf">
-                Documento{" "}
-                <select
-                  aria-label="Tipo dossier"
-                  value={dossierVariant}
-                  disabled={pdfBusy}
-                  onChange={(e) =>
-                    setDossierVariant(e.target.value as "complete" | "summary")
-                  }
-                >
-                  <option value="complete">Dossier completo</option>
-                  <option value="summary">Dossier sintetico</option>
-                </select>
-              </label>
-              <button
-                className="bottone tenue piccolo"
-                disabled={pdfBusy}
-                onClick={() => {
-                  setPdfBusy(true);
-                  setPdfProgress("Preparazione documento");
-                  const controller = new AbortController();
-                  pdfController.current = controller;
-                  void import("@/services/pdf/download")
-                    .then(({ downloadDossier }) =>
-                      downloadDossier(p, {
-                        includeRenders,
-                        variant: dossierVariant,
-                        floorId: s.activeFloorId,
-                        roomId: s.selection.find((v) => v.kind === "room")?.id,
-                        signal: controller.signal,
-                        onProgress: setPdfProgress,
-                      }),
-                    )
-                    .catch((error) => {
-                      if (!(
-                        error instanceof DOMException &&
-                        error.name === "AbortError"
-                      ))
-                        s.setError(
-                          error instanceof Error
-                            ? error.message
-                            : "PDF non generato. Verificare il progetto e riprovare.",
-                        );
-                    })
-                    .finally(() => {
-                      setPdfBusy(false);
-                      pdfController.current = null;
-                      setPdfProgress("");
-                    });
-                }}
-              >
-                <DownloadSimple />{" "}
-                {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
-              </button>
-              <label className="opzione-render-pdf">
-                <input
-                  type="checkbox"
-                  checked={includeRenders}
-                  disabled={pdfBusy}
-                  onChange={(e) => setIncludeRenders(e.target.checked)}
-                />
-                Includi render 3D
-              </label>
-              <button
-                className="bottone tenue piccolo"
-                onClick={() => setBillOpen(true)}
-              >
-                Listino materiali
-              </button>
-              {pdfBusy && (
-                <>
-                  <span role="status" className="nota">
-                    {pdfProgress}
-                  </span>
-                  <button
-                    className="bottone piccolo tenue"
-                    onClick={() => pdfController.current?.abort()}
-                  >
-                    Annulla documento
-                  </button>
-                </>
-              )}
-              <button
-                className="bottone tenue piccolo"
-                onClick={() => void saveAs()}
-              >
-                Salva con nome
-              </button>
-              <button
-                className="bottone tenue piccolo"
-                onClick={() => {
-                  const name = window.prompt("Nome progetto", p.name);
-                  if (name?.trim())
-                    s.commit((p) => ({ ...p, name: name.trim() }));
-                }}
-              >
-                Rinomina progetto
-              </button>
-            </div>
-          </details>
-        )}
         {billOpen && p && (
-          <div
-            className="sfondo-listino"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Listino materiali Ecoclima"
+          <FullscreenDialog
+            open
+            title="Listino materiali Ecoclima"
+            closeLabel="Chiudi listino"
+            onClose={() => setBillOpen(false)}
           >
-            <div className="documento-listino">
-              <button
-                className="bottone piccolo tenue"
-                aria-label="Chiudi listino"
-                onClick={() => setBillOpen(false)}
-              >
-                Chiudi
-              </button>
-              <EcoclimaBill project={p} />
-            </div>
-          </div>
+            <EcoclimaBill project={p} />
+          </FullscreenDialog>
         )}
-        {s.error && (
+        {(s.error || s.saveConflict) && (
           <div className="avviso grave errore-app" role="alert">
             <WarningCircle />
-            <span>{s.error}</span>
-            <button
-              aria-label="Chiudi errore"
-              className="bottone tenue piccolo"
-              onClick={() => s.setError(null)}
-            >
-              <X />
-            </button>
+            <span>
+              {s.error ??
+                "Conflitto di salvataggio. Conserva una copia delle tue modifiche o carica la versione nell’archivio."}
+            </span>
+            {s.saveConflict ? (
+              <div className="azioni">
+                <button
+                  className="bottone piccolo"
+                  onClick={() => void resolveSaveConflict(true)}
+                >
+                  Salva copia delle mie modifiche
+                </button>
+                <button
+                  className="bottone piccolo"
+                  onClick={() => void resolveSaveConflict(false)}
+                >
+                  Carica versione archivio
+                </button>
+              </div>
+            ) : (
+              <button
+                aria-label="Chiudi errore"
+                className="bottone tenue piccolo"
+                onClick={() => s.setError(null)}
+              >
+                <X />
+              </button>
+            )}
           </div>
         )}
         {!ready ? (
           <div className="vuoto">Apertura archivio locale…</div>
         ) : page === "catalogs" ? (
           <CatalogAdmin />
+        ) : page === "settings" && p ? (
+          <ProjectSettings project={p} />
         ) : page === "users" && identity?.role === "admin" ? (
           <AdminUsers username={identity.username} />
-        ) : !p ? (
+        ) : !p && page !== "projects" ? (
           <main className="inizio">
-            <span className="etichetta tinta">HVAC · 2D / 3D</span>
-            <h2>
-              Da misure reali
-              <br />a un progetto chiaro.
-            </h2>
+            <h2>Da misure reali a un progetto chiaro.</h2>
             <p>
               Costruisci la planimetria, definisci gli ambienti e verifica il
               fabbisogno. Tutto resta sul tuo dispositivo.
             </p>
             <div className="scelte-inizio">
-              <button onClick={() => void newProject("manual")}>
-                <Square size={32} />
+              <button
+                className="inizio-manuale"
+                onClick={() => void newProject("manual")}
+              >
+                <span className="icona-inizio">
+                  <Square size={28} aria-hidden="true" />
+                </span>
                 <strong>Disegna manualmente</strong>
                 <span>Parti da zero. Muri, quote esatte e stanze.</span>
+                <span className="azione-inizio">
+                  Crea progetto <ArrowRight size={18} aria-hidden="true" />
+                </span>
               </button>
-              <button onClick={() => void newProject("import")}>
-                <UploadSimple size={32} />
+              <button
+                className="inizio-import"
+                onClick={() => void newProject("import")}
+              >
+                <span className="icona-inizio">
+                  <UploadSimple size={28} aria-hidden="true" />
+                </span>
                 <strong>Importa planimetria</strong>
-                <span>DXF, PDF o immagini: verifica scala e geometrie.</span>
+                <span>
+                  DWG, DXF, PDF o immagini. Verifica scala e geometrie.
+                </span>
+                <span className="azione-inizio">
+                  Carica file <ArrowRight size={18} aria-hidden="true" />
+                </span>
               </button>
             </div>
+            <ol className="passi-inizio" aria-label="Fasi del progetto">
+              <li>
+                <span>01</span> Definisci gli ambienti
+              </li>
+              <li>
+                <span>02</span> Verifica il fabbisogno
+              </li>
+              <li>
+                <span>03</span> Configura l’impianto
+              </li>
+            </ol>
             <p className="nota">
               Altezza suggerita 2,70 m. Modificabile per ogni stanza.
             </p>
@@ -744,11 +1076,46 @@ export function Configurator() {
                 Nuovo progetto
               </button>
             </div>
+            <p className="nota">
+              Archivio di questo browser, separato dagli altri dispositivi.
+              Esporta i progetti in .hvacproj per conservarne una copia.
+            </p>
+            <div
+              className="filtri-progetto"
+              role="search"
+              aria-label="Ricerca progetti"
+            >
+              <label className="campo">
+                <span>Cerca progetto</span>
+                <input
+                  type="search"
+                  value={projectSearch}
+                  onChange={(event) => setProjectSearch(event.target.value)}
+                />
+              </label>
+              <label className="campo">
+                <span>Ordina progetti</span>
+                <select
+                  value={projectOrder}
+                  onChange={(event) => setProjectOrder(event.target.value)}
+                >
+                  <option value="recent">Ultima modifica</option>
+                  <option value="name">Nome A–Z</option>
+                </select>
+              </label>
+            </div>
+            <p className="nota" role="status">
+              {visibleProjects.length} di {projects.length} progetti
+            </p>
             {projects.length === 0 ? (
               <div className="vuoto">Nessun progetto salvato.</div>
+            ) : !visibleProjects.length ? (
+              <div className="vuoto">
+                Nessun progetto corrisponde alla ricerca.
+              </div>
             ) : (
               <div className="elenco">
-                {projects.map((item) => (
+                {visibleProjects.map((item) => (
                   <div className="voce progetto-voce" key={item.id}>
                     <div>
                       <strong>{item.name}</strong>
@@ -822,6 +1189,8 @@ export function Configurator() {
                                 )
                               ) {
                                 await flushSave();
+                                await repository.setActiveId(previous.id);
+                                await repository.get(previous.id);
                                 s.load(previous);
                                 s.commit((p) => p);
                                 setPage("editor");
@@ -876,11 +1245,80 @@ export function Configurator() {
           <main className="pagina controlli">
             <h2>Controllo progetto</h2>
             <p className="nota">
-              Controlli separati per geometria, scala e fabbisogno. Dati
-              impianti saranno verificati dopo la selezione dei prodotti.
+              Geometria e completezza dell’impianto sono verificate
+              separatamente. Il dossier resta preliminare e richiede verifica
+              tecnica prima dell’esecuzione.
+            </p>
+            {progress && (
+              <div className="stato-progetto" aria-label="Stato del progetto">
+                <span
+                  className={progress.geometryVerified ? "valid" : "warning"}
+                >
+                  {progress.geometryVerified
+                    ? "Geometria verificata"
+                    : "Geometria da verificare"}
+                </span>
+                <strong className={progress.status}>{progress.label}</strong>
+              </div>
+            )}
+            <div className="filtri-progetto" aria-label="Filtri controlli">
+              <label className="campo">
+                <span>Esito controlli</span>
+                <select
+                  value={checkStatus}
+                  onChange={(event) =>
+                    setCheckStatus(event.target.value as CheckFilterStatus)
+                  }
+                >
+                  <option value="problems">Errori e avvisi</option>
+                  <option value="invalid">Solo errori</option>
+                  <option value="warning">Solo avvisi</option>
+                  <option value="all">Tutti i controlli</option>
+                </select>
+              </label>
+              <label className="campo">
+                <span>Piano dei controlli</span>
+                <select
+                  value={effectiveCheckFloor}
+                  onChange={(event) => {
+                    setCheckFloor(event.target.value);
+                    setCheckRoom("");
+                  }}
+                >
+                  <option value="">Tutti i piani</option>
+                  {p?.floors.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="campo">
+                <span>Ambiente dei controlli</span>
+                <select
+                  value={effectiveCheckRoom}
+                  onChange={(event) => setCheckRoom(event.target.value)}
+                >
+                  <option value="">Tutti gli ambienti</option>
+                  {checkRooms.map((room) => (
+                    <option key={room.id} value={room.id}>
+                      {room.name || "Senza nome"}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <p className="nota" role="status">
+              {visibleChecks.length} di {checks.length} controlli. I controlli
+              generali restano visibili nei filtri per piano e ambiente.
             </p>
             <div className="elenco lista-controlli">
-              {checks.map((c, i) => (
+              {!visibleChecks.length && (
+                <p className="vuoto">
+                  Nessun controllo corrisponde ai filtri selezionati.
+                </p>
+              )}
+              {visibleChecks.map((c, i) => (
                 <div
                   key={`${c.code}-${i}`}
                   className={`voce controllo ${c.status}`}
@@ -899,122 +1337,87 @@ export function Configurator() {
                       · {c.code}
                     </small>
                   </div>
+                  {p &&
+                    c.status !== "valid" &&
+                    resolveCheckTarget(p, c.entityId) && (
+                      <button
+                        className="bottone piccolo azione-controllo"
+                        onClick={() => showCheck(c)}
+                      >
+                        Mostra nel progetto
+                      </button>
+                    )}
                 </div>
               ))}
             </div>
           </main>
-        ) : (
-          <main className="configuratore">
-            <div className="barra-strumenti">
-              <div className="strumenti-disegno">
-                <select
-                  aria-label="Elemento nel progetto"
-                  value={
-                    s.selection[0]?.kind === "device" ? s.selection[0].id : ""
-                  }
-                  onChange={(e) =>
-                    s.select(
-                      e.target.value
-                        ? { kind: "device", id: e.target.value }
-                        : null,
-                    )
-                  }
-                >
-                  <option value="">Seleziona apparecchio</option>
-                  {[
-                    ...p.radiators,
-                    ...p.airTerminals,
-                    ...(p.fanCoils ?? []),
-                    ...p.plenums,
-                    ...(p.pillars ?? []),
-                    ...p.hvacSystems.flatMap((system) => system.indoorUnits),
-                    ...(p.hydronicSystems?.map(
-                      (system) => system.outdoorUnit,
-                    ) ?? []),
-                  ]
-                    .filter((o) => o.floorId === s.activeFloorId)
-                    .map((o) => (
-                      <option value={o.id} key={o.id}>
-                        {deviceCodes(p).get(o.id)} ·{" "}
-                        {"family" in o
-                          ? String(o.family)
-                          : "model" in o
-                            ? String(o.model ?? "Plenum")
-                            : "productId" in o
-                              ? String(o.productId)
-                              : "Oggetto"}
-                      </option>
+        ) : p ? (
+          <main
+            className={`configuratore ${inspectorOpen ? "" : "inspector-chiuso"} ${floor?.configurationWizard?.status === "active" ? "wizard-attivo" : ""} ${s.view === "3d" ? "modo-3d" : ""}`}
+          >
+            {s.view === "2d" && (
+              <div className="barra-strumenti">
+                <div className="strumenti-disegno">
+                  {s.view === "2d" &&
+                    tools.map((t) => (
+                      <button
+                        key={t.id}
+                        className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
+                        title={`${t.label} · ${t.shortcut}`}
+                        aria-label={t.label}
+                        aria-pressed={s.tool === t.id}
+                        onClick={() => s.setTool(t.id)}
+                      >
+                        <t.icon />
+                        <span>{t.label}</span>
+                        <kbd>{t.shortcut}</kbd>
+                      </button>
                     ))}
-                </select>
-                <button
-                  className="bottone piccolo tenue"
-                  onClick={() =>
-                    useProjectStore.setState({ pillarDialog: true })
-                  }
-                >
-                  Aggiungi pilastro
-                </button>
-                {s.view === "2d" &&
-                  tools.map((t) => (
-                    <button
-                      key={t.id}
-                      className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
-                      title={`${t.label} · ${t.shortcut}`}
-                      aria-label={t.label}
-                      aria-pressed={s.tool === t.id}
-                      onClick={() => s.setTool(t.id)}
-                    >
-                      <t.icon />
-                      <span>{t.label}</span>
-                    </button>
-                  ))}
-                <button
-                  className="bottone piccolo"
-                  onClick={() => setRectangleOpen(true)}
-                >
-                  <Square />
-                  {s.view === "3d" ? "Aggiungi stanza" : "Stanza rettangolare"}
-                </button>
+                  <button
+                    className="bottone piccolo strumento-stanza"
+                    onClick={() => setRectangleOpen(true)}
+                  >
+                    <Square />
+                    Stanza rettangolare
+                  </button>
+                </div>
               </div>
-              <div className="strumenti-cronologia">
-                <button
-                  className="bottone piccolo tenue"
-                  aria-label="Annulla"
-                  title="Annulla · Ctrl+Z"
-                  disabled={!s.past.length}
-                  onClick={s.undo}
-                >
-                  <ArrowCounterClockwise />
-                </button>
-                <button
-                  className="bottone piccolo tenue"
-                  aria-label="Ripeti"
-                  title="Ripeti · Ctrl+Y"
-                  disabled={!s.future.length}
-                  onClick={s.redo}
-                >
-                  <ArrowClockwise />
-                </button>
-                <button
-                  className="bottone piccolo tenue"
-                  aria-label="Copia selezione"
-                  disabled={!s.selection.length}
-                  onClick={copySelection}
-                >
-                  <Copy />
-                </button>
-                <button
-                  className="bottone piccolo pericolo"
-                  aria-label="Elimina selezione"
-                  disabled={!s.selection.length}
-                  onClick={deleteSelection}
-                >
-                  <Trash />
-                </button>
-              </div>
-            </div>
+            )}
             <div className="barra-vista">
               <div className="titolo-vista">
+                <div className="piano-mobile">
+                  <select
+                    aria-label="Piano attivo su schermo ridotto"
+                    value={s.activeFloorId}
+                    onChange={(e) => s.setFloor(e.target.value)}
+                  >
+                    {p.floors.map((f) => (
+                      <option key={f.id} value={f.id}>
+                        {f.name}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    aria-label="Ambiente su schermo ridotto"
+                    value={
+                      s.selection[0]?.kind === "room" ? s.selection[0].id : ""
+                    }
+                    onChange={(e) =>
+                      s.select(
+                        e.target.value
+                          ? { kind: "room", id: e.target.value }
+                          : null,
+                      )
+                    }
+                  >
+                    <option value="">Seleziona ambiente</option>
+                    {rooms.map((r) => (
+                      <option key={r.id} value={r.id}>
+                        {r.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <strong>{floor?.name}</strong>
                 <span>
                   {s.view === "3d"
@@ -1023,74 +1426,194 @@ export function Configurator() {
                 </span>
               </div>
               <div className="opzioni-vista">
-                {s.view === "2d" && (
-                  <>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={s.showGrid}
-                        onChange={(e) =>
-                          useProjectStore.setState({
-                            showGrid: e.target.checked,
-                          })
-                        }
-                      />
-                      Griglia
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={s.snap.enabled}
-                        onChange={(e) =>
-                          useProjectStore.setState({
-                            snap: { ...s.snap, enabled: e.target.checked },
-                          })
-                        }
-                      />
-                      Snap
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={s.snap.angle45}
-                        onChange={(e) =>
-                          useProjectStore.setState({
-                            snap: { ...s.snap, angle45: e.target.checked },
-                          })
-                        }
-                      />
-                      45°
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={s.showDimensions}
-                        onChange={(e) =>
-                          useProjectStore.setState({
-                            showDimensions: e.target.checked,
-                          })
-                        }
-                      />
-                      Quote
-                    </label>
-                  </>
-                )}
-                <button
-                  className="bottone piccolo tenue"
-                  onClick={() => {
-                    setPlanFile(undefined);
-                    setPlanOpen(true);
-                  }}
+                <details
+                  className="menu-progetto menu-modifica"
+                  name="workspace-menus"
                 >
-                  Importa planimetria
-                </button>
-                {floor?.background && (
-                  <button
-                    className="bottone piccolo tenue"
-                    onClick={() => s.setTool("calibrate")}
-                  >
-                    Ricalibra
-                  </button>
+                  <summary className="bottone piccolo">Modifica</summary>
+                  <div className="comandi-progetto">
+                    <button
+                      className="bottone piccolo tenue"
+                      onClick={() => {
+                        setPlanFile(undefined);
+                        setPlanOpen(true);
+                      }}
+                    >
+                      Importa planimetria
+                    </button>
+                    {floor?.background && (
+                      <button
+                        className="bottone piccolo tenue"
+                        onClick={() => s.setTool("calibrate")}
+                      >
+                        Ricalibra
+                      </button>
+                    )}
+                    {s.view === "3d" && (
+                      <button
+                        className="bottone piccolo"
+                        onClick={() => setRectangleOpen(true)}
+                      >
+                        Aggiungi stanza
+                      </button>
+                    )}
+                    <select
+                      aria-label="Elemento nel progetto"
+                      value={
+                        s.selection[0]?.kind === "device"
+                          ? s.selection[0].id
+                          : ""
+                      }
+                      onChange={(e) => {
+                        s.select(
+                          e.target.value
+                            ? { kind: "device", id: e.target.value }
+                            : null,
+                        );
+                        e.currentTarget
+                          .closest("details")
+                          ?.removeAttribute("open");
+                      }}
+                    >
+                      <option value="">Seleziona apparecchio</option>
+                      {[
+                        ...p.radiators,
+                        ...p.airTerminals,
+                        ...(p.fanCoils ?? []),
+                        ...p.plenums,
+                        ...(p.pillars ?? []),
+                        ...p.hvacSystems.flatMap(
+                          (system) => system.indoorUnits,
+                        ),
+                        ...(p.hydronicSystems?.map(
+                          (system) => system.outdoorUnit,
+                        ) ?? []),
+                      ]
+                        .filter((o) => o.floorId === s.activeFloorId)
+                        .map((o) => (
+                          <option value={o.id} key={o.id}>
+                            {deviceCodes(p).get(o.id)} ·{" "}
+                            {"family" in o
+                              ? String(o.family)
+                              : "model" in o
+                                ? String(o.model ?? "Plenum")
+                                : "productId" in o
+                                  ? String(o.productId)
+                                  : "Oggetto"}
+                          </option>
+                        ))}
+                    </select>
+                    <button
+                      className="bottone piccolo tenue strumento-pilastro"
+                      onClick={() =>
+                        useProjectStore.setState({ pillarDialog: true })
+                      }
+                    >
+                      Aggiungi pilastro
+                    </button>
+                    <div className="strumenti-cronologia">
+                      <button
+                        className="bottone piccolo tenue"
+                        aria-label="Annulla"
+                        title="Annulla · Ctrl+Z"
+                        disabled={!s.past.length}
+                        onClick={s.undo}
+                      >
+                        <ArrowCounterClockwise />
+                        Annulla
+                      </button>
+                      <button
+                        className="bottone piccolo tenue"
+                        aria-label="Ripeti"
+                        title="Ripeti · Ctrl+Y"
+                        disabled={!s.future.length}
+                        onClick={s.redo}
+                      >
+                        <ArrowClockwise />
+                        Ripeti
+                      </button>
+                      <button
+                        className="bottone piccolo tenue"
+                        aria-label="Copia selezione"
+                        disabled={!s.selection.length}
+                        onClick={copySelection}
+                      >
+                        <Copy />
+                        Copia
+                      </button>
+                      <button
+                        className="bottone piccolo pericolo"
+                        aria-label="Elimina selezione"
+                        disabled={!s.selection.length}
+                        onClick={deleteSelection}
+                      >
+                        <Trash />
+                        Elimina
+                      </button>
+                    </div>
+                    <button
+                      className="bottone piccolo pericolo"
+                      onClick={deleteSystems}
+                    >
+                      <Trash aria-hidden="true" />
+                      Cancella impianto
+                    </button>
+                  </div>
+                </details>
+                {s.view === "2d" && (
+                  <details className="menu-progetto" name="workspace-menus">
+                    <summary className="bottone piccolo">Opzioni 2D</summary>
+                    <div className="comandi-progetto">
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={s.showGrid}
+                          onChange={(e) =>
+                            useProjectStore.setState({
+                              showGrid: e.target.checked,
+                            })
+                          }
+                        />
+                        Griglia
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={s.snap.enabled}
+                          onChange={(e) =>
+                            useProjectStore.setState({
+                              snap: { ...s.snap, enabled: e.target.checked },
+                            })
+                          }
+                        />
+                        Snap
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={s.snap.angle45}
+                          onChange={(e) =>
+                            useProjectStore.setState({
+                              snap: { ...s.snap, angle45: e.target.checked },
+                            })
+                          }
+                        />
+                        45°
+                      </label>
+                      <label>
+                        <input
+                          type="checkbox"
+                          checked={s.showDimensions}
+                          onChange={(e) =>
+                            useProjectStore.setState({
+                              showDimensions: e.target.checked,
+                            })
+                          }
+                        />
+                        Quote
+                      </label>
+                    </div>
+                  </details>
                 )}
                 <div className="selettore-vista">
                   <button
@@ -1110,6 +1633,18 @@ export function Configurator() {
                     3D
                   </button>
                 </div>
+                <button
+                  className={`bottone piccolo ${inspectorOpen ? "chiara" : "tenue"}`}
+                  aria-label="Mostra proprietà"
+                  title="Mostra o nascondi proprietà"
+                  aria-expanded={inspectorOpen}
+                  aria-controls="proprieta-progetto"
+                  onClick={() => setInspectorOpen((open) => !open)}
+                >
+                  <SidebarSimple aria-hidden="true" />
+                  Proprietà
+                </button>
+                <CustomerViewButton />
               </div>
             </div>
             <div className="spazio-progetto">
@@ -1118,9 +1653,20 @@ export function Configurator() {
               ) : (
                 <Viewer3D />
               )}
-              <div className="pannello-progetto">
-                <ConfigurationWizard />
-                <Properties />
+              <div
+                className="pannello-progetto"
+                id="proprieta-progetto"
+                tabIndex={-1}
+                hidden={!inspectorOpen}
+              >
+                <ConfigurationWizard
+                  onDrawRoom={() => setRectangleOpen(true)}
+                  onImportPlan={() => {
+                    setPlanFile(undefined);
+                    setPlanOpen(true);
+                  }}
+                />
+                {s.selection.length > 0 && <Properties />}
               </div>
             </div>
             <footer className="riepilogo-progetto">
@@ -1151,19 +1697,57 @@ export function Configurator() {
               </div>
               <button
                 onClick={() => setPage("checks")}
-                className={`esito-controlli ${errors.length ? "invalid" : warnings.length ? "warning" : "valid"}`}
+                className={`esito-controlli ${progress?.status}`}
               >
-                {errors.length ? <WarningCircle /> : <CheckCircle />}
-                {errors.length
-                  ? `${errors.length} errori`
-                  : warnings.length
-                    ? `${warnings.length} avvisi`
-                    : "Geometria verificata"}
+                {progress?.status === "valid" ? (
+                  <CheckCircle />
+                ) : (
+                  <WarningCircle />
+                )}
+                <span className="stato-progetto" data-testid="project-progress">
+                  <span
+                    className={progress?.geometryVerified ? "valid" : "warning"}
+                  >
+                    {progress?.geometryVerified
+                      ? "Geometria verificata"
+                      : "Geometria da verificare"}
+                  </span>
+                  <strong>{progress?.label}</strong>
+                  {!!(errors.length + warnings.length) && (
+                    <span>
+                      {errors.length} errori · {warnings.length} avvisi
+                    </span>
+                  )}
+                </span>
               </button>
             </footer>
           </main>
-        )}
+        ) : null}
       </div>
+      {pdfPreview && (
+        <FullscreenDialog
+          open
+          title="Anteprima dossier PDF"
+          closeLabel="Chiudi anteprima PDF"
+          onClose={() => setPdfPreview(null)}
+        >
+          <div className="anteprima-pdf">
+            <p className="nota">
+              Documento preliminare. Controlla tavole e avvisi prima della
+              consegna.
+            </p>
+            <PdfPreview blob={pdfPreview.blob} />
+            <div className="azioni">
+              <button
+                className="bottone pieno"
+                onClick={() => downloadFile(pdfPreview.name, pdfPreview.blob)}
+              >
+                Scarica questo PDF
+              </button>
+            </div>
+          </div>
+        </FullscreenDialog>
+      )}
       {rectangleOpen && p && (
         <div className="sfondo-dialogo">
           <section
@@ -1216,45 +1800,37 @@ export function Configurator() {
                 />
               </label>
               <div className="griglia-misure">
-                <label className="campo">
-                  <span>Larghezza netta (m)</span>
-                  <input
-                    name="width"
-                    type="number"
-                    defaultValue="4.20"
-                    step="0.01"
-                    min="0.1"
-                    max="100"
-                    required
-                  />
-                </label>
-                <label className="campo">
-                  <span>Lunghezza netta (m)</span>
-                  <input
-                    name="length"
-                    type="number"
-                    defaultValue="3.80"
-                    step="0.01"
-                    min="0.1"
-                    max="100"
-                    required
-                  />
-                </label>
-              </div>
-              <label className="campo">
-                <span>Altezza (m)</span>
-                <input
-                  name="height"
-                  type="number"
-                  defaultValue={p.projectSettings.defaultHeightM}
-                  step="0.01"
-                  min="0.1"
-                  max="30"
+                <LengthInput
+                  label="Larghezza netta"
+                  name="width"
+                  defaultValue={4.2}
+                  step={0.01}
+                  min={0.1}
+                  max={100}
                   required
                 />
-              </label>
+                <LengthInput
+                  label="Lunghezza netta"
+                  name="length"
+                  defaultValue={3.8}
+                  step={0.01}
+                  min={0.1}
+                  max={100}
+                  required
+                />
+              </div>
+              <LengthInput
+                label="Altezza"
+                name="height"
+                defaultValue={p.projectSettings.defaultHeightM}
+                step={0.01}
+                min={0.1}
+                max={30}
+                required
+              />
               <p className="nota">
-                2,70 m è un valore suggerito. Inserisci l&apos;altezza reale.
+                {formatNumber(p.projectSettings.defaultHeightM)} m è il valore
+                predefinito. Inserisci l&apos;altezza reale.
               </p>
               <p className="avviso">
                 Le misure sono interne. Il sistema genera quattro muri esterni

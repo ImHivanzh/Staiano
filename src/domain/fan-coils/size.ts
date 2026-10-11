@@ -12,12 +12,20 @@ import {
   type FanCoilPose,
 } from "./placement";
 
-export function installedFanCoilCapacity(project: Project, roomId: string) {
+export function installedFanCoilCapacity(
+  project: Project,
+  roomId: string,
+  installationId?: string,
+) {
   let coolingW = 0,
     heatingW = 0,
     unknownCount = 0;
   for (const unit of project.fanCoils ?? []) {
-    if (unit.roomId !== roomId) continue;
+    if (
+      unit.roomId !== roomId ||
+      (installationId && unit.installationId !== installationId)
+    )
+      continue;
     const point = fanCoilProductAtVersion(unit.productId, unit.catalogVersion)
       ?.operatingPoints[unit.operatingPointIndex];
     if (!point) {
@@ -46,10 +54,15 @@ export function sizeFanCoils(
     mounting?: FanCoilPlacement["mounting"];
     requiredCoolingW?: number;
     requiredHeatingW?: number;
+    installationId?: string;
   } = {},
   catalog: FanCoilCatalog = fanCoilCatalog,
 ): FanCoilSuggestion[] {
-  const installed = installedFanCoilCapacity(project, room.id);
+  const installed = installedFanCoilCapacity(
+    project,
+    room.id,
+    options.installationId,
+  );
   const coolingW =
     options.requiredCoolingW ??
     Math.max(0, room.designLoadW - installed.coolingW);

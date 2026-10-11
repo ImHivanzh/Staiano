@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import type { Point, Selection } from "@/schemas/project";
+import type { Point, Project, Selection } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { addWall, moveWall } from "@/domain/project";
-import { rescaleFloor } from "@/domain/geometry/rescale-floor";
+import { RecalibrationDialog } from "../RecalibrationDialog";
 import {
   add,
   bounds,
@@ -34,18 +34,38 @@ type Drag = {
   delta: Point;
   selection?: Selection[];
 };
-export function Editor2D() {
+export function Editor2D({
+  placement,
+}: {
+  placement?: {
+    project: Project;
+    terminalId: string;
+    onMove: (point: Point) => void;
+  };
+} = {}) {
   const {
-    project,
-    activeFloorId,
-    tool,
+    project: savedProject,
+    activeFloorId: savedFloorId,
+    tool: savedTool,
     snap,
     showGrid,
     showDimensions,
-    selection,
+    selection: savedSelection,
     commit,
     select,
   } = useProjectStore();
+  const project = placement?.project ?? savedProject;
+  const activeFloorId = placement
+    ? placement.project.airTerminals.find(
+        (item) => item.id === placement.terminalId,
+      )!.floorId
+    : savedFloorId;
+  const tool = placement ? "select" : savedTool;
+  const selection: Selection[] = placement
+    ? [{ kind: "device", id: placement.terminalId }]
+    : savedSelection;
+  const placing = useRef(false);
+  const initialPlacementFit = useRef(!!placement);
   const svg = useRef<SVGSVGElement>(null),
     drag = useRef<Drag | null>(null);
   const [view, setView] = useState<View>({ x: -2, y: -2, w: 14, h: 10 });
@@ -57,6 +77,9 @@ export function Editor2D() {
     [measure, setMeasure] = useState<[Point, Point] | null>(null);
   const [delta, setDelta] = useState<Point | null>(null),
     [exact, setExact] = useState("");
+  const [calibrationDistance, setCalibrationDistance] = useState<number | null>(
+    null,
+  );
   const [size, setSize] = useState({ width: 900, height: 700 });
   const [terminalPose, setTerminalPose] = useState<ReturnType<
     typeof snapTerminalPose
@@ -65,15 +88,20 @@ export function Editor2D() {
     rooms = project?.rooms.filter((r) => r.floorId === activeFloorId) ?? [];
   const floor = project?.floors.find((f) => f.id === activeFloorId);
   const u = Math.max(view.w / size.width, view.h / size.height);
+  const fitRef = useRef(fit);
   useEffect(() => {
     const node = svg.current;
     if (!node) return;
-    const observer = new ResizeObserver(([entry]) =>
+    const observer = new ResizeObserver(([entry]) => {
       setSize({
         width: Math.max(1, entry.contentRect.width),
         height: Math.max(1, entry.contentRect.height),
-      }),
-    );
+      });
+      if (initialPlacementFit.current && entry.contentRect.width > 0) {
+        initialPlacementFit.current = false;
+        fitRef.current();
+      }
+    });
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
@@ -219,17 +247,9 @@ export function Editor2D() {
       setMeasure([anchor, hit]);
       setAnchor(null);
     } else if (tool === "calibrate") {
-      const real = Number(
-        window
-          .prompt("Distanza reale tra i due punti, in metri (es. 4,23)")
-          ?.replace(",", "."),
-      );
-      if (real > 0 && distance(anchor, hit) > 0.01 && floor?.background) {
-        const factor = real / distance(anchor, hit),
-          origin = floor.background.origin;
-        commit((p) => rescaleFloor(p, activeFloorId, factor, origin));
-        useProjectStore.getState().setTool("select");
-      } else if (real !== 0)
+      if (distance(anchor, hit) > 0.01 && floor?.background) {
+        setCalibrationDistance(distance(anchor, hit));
+      } else
         useProjectStore
           .getState()
           .setError("Distanza reale positiva e due punti distinti richiesti.");
@@ -377,8 +397,9 @@ export function Editor2D() {
       groupWalls.some((w) => samePoint(p, w.start) || samePoint(p, w.end)))
       ? add(p, delta)
       : p;
-  const instructions =
-    tool === "wall"
+  const instructions = placement
+    ? "Clicca nell’ambiente e trascina la bocchetta. Conferma posizione per aggiornare il totale."
+    : tool === "wall"
       ? "Clic per iniziare. Chiudi sul punto iniziale. Esc termina il tratto."
       : tool === "measure"
         ? "Seleziona due punti per misurare."
@@ -392,11 +413,61 @@ export function Editor2D() {
         role="application"
         aria-label="Editor planimetrico 2D"
         data-testid="editor-2d"
+        tabIndex={placement ? 0 : undefined}
+        onKeyDown={
+          placement
+            ? (event) => {
+                const movement = {
+                  ArrowLeft: [-1, 0],
+                  ArrowRight: [1, 0],
+                  ArrowUp: [0, -1],
+                  ArrowDown: [0, 1],
+                }[event.key];
+                if (!movement) return;
+                event.preventDefault();
+                event.stopPropagation();
+                const item = placement.project.airTerminals.find(
+                  (terminal) => terminal.id === placement.terminalId,
+                )!;
+                placement.onMove({
+                  x: item.position.x + movement[0] * snap.stepM,
+                  y: item.position.y + movement[1] * snap.stepM,
+                });
+              }
+            : undefined
+        }
         viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
+        onPointerDownCapture={
+          placement
+            ? (event) => {
+                event.stopPropagation();
+                if (event.button !== 0) return;
+                placing.current = true;
+                svg.current?.setPointerCapture(event.pointerId);
+                placement.onMove(world(event.clientX, event.clientY));
+              }
+            : undefined
+        }
         onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
+        onPointerMove={
+          placement
+            ? (event) => {
+                if (placing.current)
+                  placement.onMove(world(event.clientX, event.clientY));
+              }
+            : onMove
+        }
+        onPointerUp={
+          placement
+            ? (event) => {
+                placing.current = false;
+                if (svg.current?.hasPointerCapture(event.pointerId))
+                  svg.current.releasePointerCapture(event.pointerId);
+              }
+            : onUp
+        }
         onPointerCancel={() => {
+          placing.current = false;
           drag.current = null;
           setDelta(null);
         }}
@@ -405,7 +476,7 @@ export function Editor2D() {
       >
         <defs>
           <pattern
-            id="grid"
+            id={placement ? "placement-grid" : "grid"}
             width="0.5"
             height="0.5"
             patternUnits="userSpaceOnUse"
@@ -442,7 +513,7 @@ export function Editor2D() {
             y={view.y - 100}
             width={view.w + 200}
             height={view.h + 200}
-            fill="url(#grid)"
+            fill={placement ? "url(#placement-grid)" : "url(#grid)"}
             pointerEvents="none"
           />
         )}
@@ -612,6 +683,7 @@ export function Editor2D() {
                 data-testid="opening-2d"
                 transform={`translate(${x} ${y}) rotate(${(Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI})`}
                 onPointerDown={(e) => {
+                  if (tool !== "select") return;
                   e.stopPropagation();
                   select({ kind: "wall", id: wall.id });
                 }}
@@ -886,6 +958,12 @@ export function Editor2D() {
                     }
                     strokeWidth={u * 1.5}
                   />
+                  <path
+                    d={`M ${-unit.widthMm / 3000} ${unit.depthMm / 2000} h ${unit.widthMm / 1500}`}
+                    stroke="#374047"
+                    strokeWidth={u * 4}
+                    pointerEvents="none"
+                  />
                   <text
                     textAnchor="middle"
                     fontSize={u * 11}
@@ -1001,6 +1079,15 @@ export function Editor2D() {
         )}
       </svg>
       <div className="indicazione-editor">{instructions}</div>
+      {calibrationDistance !== null && project && (
+        <RecalibrationDialog
+          key={`${project.id}-${activeFloorId}`}
+          project={project}
+          floorId={activeFloorId}
+          measuredM={calibrationDistance}
+          onClose={() => setCalibrationDistance(null)}
+        />
+      )}
       {tool === "wall" && (
         <label className="quota-esatta">
           Lunghezza esatta (m)

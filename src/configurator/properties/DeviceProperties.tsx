@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
 import { useProjectStore } from "@/stores/project-store";
@@ -103,16 +104,14 @@ export function DeviceProperties({
                 ))}
             </select>
           </label>
-          <label className="campo">
-            <span>Distanza centro dall&apos;inizio (m)</span>
-            <input
-              type="number"
-              name="offset"
-              min="0"
-              step="0.01"
-              defaultValue="1"
-            />
-          </label>
+          <LengthInput
+            label="Distanza centro dall'inizio"
+            baseUnit="m"
+            name="offset"
+            min="0"
+            step="0.01"
+            defaultValue="1"
+          />
           <button className="bottone chiara" type="submit">
             Sposta radiatore
           </button>

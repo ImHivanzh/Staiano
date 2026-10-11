@@ -36,12 +36,24 @@ export function addOperatorTerminal(
   project: Project,
   input: OperatorTerminalInput,
 ): Project {
+  if (
+    project.rooms.find((room) => room.id === input.roomId)
+      ?.conditioningExclusion
+  )
+    throw new Error(
+      "Riattivare la climatizzazione dell’ambiente prima di inserire bocchette.",
+    );
   const family = airTerminalCatalog.families.find(
     (f) => f.familyCode === input.familyCode,
   );
   const variant = family?.variants.find((v) => v.id === input.variantId);
   const op = variant?.operatingPoints[input.operatingPointIndex];
-  const allocation = ductedRoomAllocation(project, input.roomId);
+  const allocation = ductedRoomAllocation(
+    project,
+    input.roomId,
+    project.hvacSystems.find((system) => system.id === input.systemId)
+      ?.installationId,
+  );
   if (
     !family ||
     !variant ||
@@ -49,7 +61,7 @@ export function addOperatorTerminal(
     !allocation ||
     allocation.system.id !== input.systemId ||
     op.quality !== "valid" ||
-    (acousticUpperBound(op) ?? Infinity) > 37 ||
+    (input.use === "supply" && (acousticUpperBound(op) ?? Infinity) > 37) ||
     (op.use && op.use !== input.use)
   )
     throw new Error("Punto di catalogo e macchina compatibili necessari.");
@@ -78,7 +90,10 @@ export function addOperatorTerminal(
       operatingPoint: op,
       numberOfPoints: 1,
       quantityPerPoint: 1,
-      requiredAirflowPerPointM3h: allocation.airflowM3h,
+      requiredAirflowPerPointM3h:
+        input.use === "return"
+          ? (allocation.system.airflowM3h ?? allocation.airflowM3h)
+          : allocation.airflowM3h,
       theoreticalLengthM: null,
       commercialLengthM: family.isLinearPerMeter ? input.lengthMm / 1000 : null,
       availableAirflowPerPointM3h: available,
@@ -171,7 +186,9 @@ export function editOperatorTerminal(
     op.quality !== "valid" ||
     (op.use && op.use !== before.use) ||
     !family.use.includes(before.use) ||
-    !family.mountings?.includes(before.mounting as "wall" | "ceiling")
+    (family.mountings
+      ? !family.mountings.includes(before.mounting as "wall" | "ceiling")
+      : !before.manualDimensions)
   )
     throw new Error(
       "Modello o punto di funzionamento non compatibile: selezionare un punto valido.",

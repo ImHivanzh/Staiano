@@ -30,6 +30,9 @@ import { SceneEffects } from "./SceneEffects";
 import { RoomLabelProjection } from "./RoomLabels";
 import { CeilingReference } from "./CeilingReference";
 import { ProductTools } from "./ProductTools";
+import { FullscreenDialog } from "../FullscreenDialog";
+import { installationLabels } from "@/domain/installations";
+import { DuctedMachinePicker } from "../systems/DuctedMachinePicker";
 import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
 import { sceneFrame, type SceneFrame } from "./scene-layout";
 import styles from "./Viewer3D.module.css";
@@ -65,11 +68,18 @@ class WebGLError extends Component<
     );
   }
 }
-function RenderMarker({ selected }: { selected: string }) {
+function RenderMarker({
+  selected,
+  cutWallCount,
+}: {
+  selected: string;
+  cutWallCount: number;
+}) {
   useFrame(({ gl, camera }) => {
     gl.domElement.dataset.rendered = "true";
     gl.domElement.dataset.scene = "realistic";
     gl.domElement.dataset.selection = selected;
+    gl.domElement.dataset.cutWalls = String(cutWallCount);
     gl.domElement.dataset.cameraPosition = camera.position
       .toArray()
       .map((n) => n.toFixed(3))
@@ -83,7 +93,7 @@ function RenderMarker({ selected }: { selected: string }) {
   return null;
 }
 
-export default function Viewer3D() {
+export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const {
     project: p,
     activeFloorId,
@@ -115,13 +125,17 @@ export default function Viewer3D() {
   const [channelPanel, setChannelPanel] = useState(false);
   const [hydronicPanel, setHydronicPanel] = useState(false);
   const [fanCoilPanel, setFanCoilPanel] = useState(false);
+  const [fanCoilRoomId, setFanCoilRoomId] = useState("");
   const [loadMap, setLoadMap] = useState(false);
   const [tour, setTour] = useState(false);
-  const [comfortMode, setComfortMode] = useState<ComfortMode | "off">("cool");
-  const tourIndex = useRef(0);
-  const [transformMode, setTransformMode] = useState<TransformMode | null>(
-    null,
+  const [comfortMode, setComfortMode] = useState<ComfortMode | "off">(
+    readOnly ? "off" : "cool",
   );
+  const tourIndex = useRef(0);
+  const [transformChoice, setTransformChoice] = useState<{
+    id?: string;
+    mode: TransformMode | null;
+  } | null>(null);
   const [preview, setPreview] = useState<Project | null>(null);
   const [dragGuide, setDragGuide] = useState("");
   const onPreview = useCallback((next: Project | null) => setPreview(next), []);
@@ -153,6 +167,18 @@ export default function Viewer3D() {
       })),
       ...p.hvacSystems.flatMap((s) => s.indoorUnits),
     ].find((d) => d.id === selectedId);
+  const selectedOutdoor = p?.hydronicSystems?.find(
+    (s) => s.outdoorUnit.id === selectedId,
+  )?.outdoorUnit;
+  const outdoorEditable = !!selectedOutdoor && !selectedOutdoor.locked;
+  const transformMode =
+    transformChoice && transformChoice.id === selectedId
+      ? transformChoice.mode
+      : outdoorEditable
+        ? "translate"
+        : null;
+  const setTransformMode = (mode: TransformMode | null) =>
+    setTransformChoice({ id: selectedId, mode });
   const selectedRoom = p?.rooms.find(
     (r) => r.id === selectedId || r.id === chosenDevice?.roomId,
   );
@@ -353,7 +379,7 @@ export default function Viewer3D() {
   return (
     <div
       ref={container}
-      className={`area-editor vista-3d ${styles.viewer} ${presentation ? styles.presentation : ""}`}
+      className={`area-editor vista-3d ${styles.viewer} ${presentation ? styles.presentation : ""} ${readOnly ? styles.customer : ""}`}
       data-testid="viewer-3d"
     >
       {!walls.length ? (
@@ -362,184 +388,154 @@ export default function Viewer3D() {
           <span>
             Disegna i muri o crea una stanza per costruire il modello.
           </span>
-          <button className="bottone" onClick={() => setView("2d")}>
-            Disegna in 2D
-          </button>
+          {!readOnly && (
+            <button className="bottone" onClick={() => setView("2d")}>
+              Disegna in 2D
+            </button>
+          )}
         </div>
       ) : (
         <>
-          <div className={styles.toolbar}>
-            <div className={styles.group}>
-              <button
-                aria-pressed={presentation}
-                onClick={() => {
-                  useProjectStore.setState({ presentation: !presentation });
-                  setProductTool(null);
-                  setPlenumOpen(false);
-                  setChannelPanel(false);
-                  setHydronicPanel(false);
-                  setFanCoilPanel(false);
-                  setTransformMode(null);
-                  if (!presentation && !fullscreen) void toggleFullscreen();
-                  if (presentation && fullscreen) void toggleFullscreen();
-                  if (presentation) setTour(false);
-                }}
-              >
-                {presentation
-                  ? "Torna alla progettazione"
-                  : "Presentazione cliente"}
-              </button>
-              <button
-                aria-pressed={channelView}
-                onClick={() => {
-                  setChannelView(!channelView);
-                  setChannelPanel(!channelView && !presentation);
-                }}
-              >
-                Vista Canale
-              </button>
-              <button
-                aria-pressed={loadMap}
-                onClick={() => setLoadMap(!loadMap)}
-              >
-                Mappa fabbisogno
-              </button>
-              <button
-                aria-pressed={tour}
-                onClick={() => {
-                  tourIndex.current = 0;
-                  setTour(!tour);
-                  setFocused(!tour);
-                }}
-              >
-                {" "}
-                {tour ? "Ferma tour" : "Tour del progetto"}
-              </button>
-              {presentation && (
-                <label className={styles.comfortChoice}>
-                  <span>Comfort</span>
-                  <select
-                    aria-label="Flusso aria e calore"
-                    value={comfortMode}
-                    onChange={(e) =>
-                      setComfortMode(e.target.value as ComfortMode | "off")
-                    }
-                  >
-                    <option value="cool">Aria fresca</option>
-                    <option value="heat">Calore</option>
-                    <option value="off">Flussi spenti</option>
-                  </select>
-                </label>
+          {!readOnly && (
+            <div className={styles.toolbar}>
+              {(p?.installations.length ?? 0) > 0 && (
+                <details
+                  className={styles.settings}
+                  name="viewer-menus"
+                  data-testid="installation-overview"
+                >
+                  <summary>Impianti · {p?.installations.length}</summary>
+                  <div className={styles.settingsBody}>
+                    <p>
+                      Vista complessiva: tutti gli impianti sono visibili
+                      insieme.
+                    </p>
+                    {p?.installations.map((item) => (
+                      <p key={item.id}>
+                        <strong>
+                          {item.name} · {installationLabels[item.type]}
+                        </strong>
+                        <br />
+                        {p.rooms
+                          .filter((room) => item.roomIds.includes(room.id))
+                          .map((room) => room.name)
+                          .join(" · ")}
+                      </p>
+                    ))}
+                  </div>
+                </details>
               )}
-            </div>
-            <div className={`${styles.group} ${styles.editingTools}`}>
-              <button
-                onClick={() => {
-                  setHydronicPanel(!hydronicPanel);
-                  setFanCoilPanel(false);
-                  setProductTool(null);
-                }}
+              <details className={styles.settings} name="viewer-menus">
+                <summary>Vista 3D</summary>
+                <div className={styles.viewBody}>
+                  <div className={`${styles.group} ${styles.modeTools}`}>
+                    <button
+                      aria-pressed={presentation}
+                      onClick={() => {
+                        useProjectStore.setState({
+                          presentation: !presentation,
+                        });
+                        setProductTool(null);
+                        setPlenumOpen(false);
+                        setChannelPanel(false);
+                        setHydronicPanel(false);
+                        setFanCoilPanel(false);
+                        setTransformMode(null);
+                        if (!presentation && !fullscreen)
+                          void toggleFullscreen();
+                        if (presentation && fullscreen) void toggleFullscreen();
+                        if (presentation) setTour(false);
+                      }}
+                    >
+                      {presentation
+                        ? "Torna alla progettazione"
+                        : "Presentazione cliente"}
+                    </button>
+                    <button
+                      aria-pressed={channelView}
+                      onClick={() => {
+                        setChannelView(!channelView);
+                        setChannelPanel(false);
+                      }}
+                    >
+                      Vista Canale
+                    </button>
+                    <button
+                      aria-pressed={loadMap}
+                      onClick={() => setLoadMap(!loadMap)}
+                    >
+                      Mappa fabbisogno
+                    </button>
+                    <button
+                      aria-pressed={tour}
+                      onClick={() => {
+                        tourIndex.current = 0;
+                        setTour(!tour);
+                        setFocused(!tour);
+                      }}
+                    >
+                      {" "}
+                      {tour ? "Ferma tour" : "Tour del progetto"}
+                    </button>
+                    {presentation && (
+                      <label className={styles.comfortChoice}>
+                        <span>Comfort</span>
+                        <select
+                          aria-label="Flusso aria e calore"
+                          value={comfortMode}
+                          onChange={(e) =>
+                            setComfortMode(
+                              e.target.value as ComfortMode | "off",
+                            )
+                          }
+                        >
+                          <option value="cool">Aria fresca</option>
+                          <option value="heat">Calore</option>
+                          <option value="off">Flussi spenti</option>
+                        </select>
+                      </label>
+                    )}
+                  </div>
+                  <div
+                    className={`${styles.group} ${styles.editingTools} ${styles.cameraTools}`}
+                  >
+                    <button
+                      className={top ? styles.active : undefined}
+                      onClick={() => setTop(!top)}
+                    >
+                      {top ? "Vista prospettica" : "Vista dall'alto"}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setFocused(false);
+                        setFitNonce((n) => n + 1);
+                      }}
+                    >
+                      Adatta vista
+                    </button>
+                    <button
+                      disabled={!selectedId}
+                      onClick={() => {
+                        setFocused(true);
+                        setFitNonce((n) => n + 1);
+                      }}
+                    >
+                      Avvicina selezione
+                    </button>
+                    <button onClick={toggleFullscreen}>
+                      {fullscreen ? "Esci da schermo intero" : "Schermo intero"}
+                    </button>
+                    <button onClick={saveRender} disabled={renderBusy}>
+                      <Camera size={16} aria-hidden="true" />
+                      {renderBusy ? "Generazione render…" : "Salva render"}
+                    </button>
+                  </div>
+                </div>
+              </details>
+              <details
+                className={`${styles.settings} ${styles.editingTools}`}
+                name="viewer-menus"
               >
-                Pompa di calore
-              </button>
-              <button
-                onClick={() => {
-                  setFanCoilPanel(!fanCoilPanel);
-                  setHydronicPanel(false);
-                  setProductTool(null);
-                }}
-              >
-                Ventilconvettori
-              </button>
-              <button
-                onClick={() => useProjectStore.setState({ pillarDialog: true })}
-              >
-                Pilastro
-              </button>
-              <button
-                className={top ? styles.active : undefined}
-                onClick={() => setTop(!top)}
-              >
-                {top ? "Vista prospettica" : "Vista dall'alto"}
-              </button>
-              <button
-                onClick={() => {
-                  setFocused(false);
-                  setFitNonce((n) => n + 1);
-                }}
-              >
-                Adatta vista
-              </button>
-              <button
-                disabled={!selectedId}
-                onClick={() => {
-                  setFocused(true);
-                  setFitNonce((n) => n + 1);
-                }}
-              >
-                Avvicina selezione
-              </button>
-              <button onClick={toggleFullscreen}>
-                {fullscreen ? "Esci da schermo intero" : "Schermo intero"}
-              </button>
-              <button onClick={saveRender} disabled={renderBusy}>
-                <Camera size={16} aria-hidden="true" />
-                {renderBusy ? "Generazione render…" : "Salva render"}
-              </button>
-            </div>
-            <div className={`${styles.group} ${styles.editingTools}`}>
-              <button
-                className={
-                  productTool === "radiator" ? styles.active : undefined
-                }
-                onClick={() => setProductTool("radiator")}
-              >
-                <Columns size={22} aria-hidden="true" />
-                Radiatori
-              </button>
-              <button
-                className={productTool === "split" ? styles.active : undefined}
-                onClick={() => setProductTool("split")}
-              >
-                <Snowflake size={22} aria-hidden="true" />
-                Climatizzatori
-              </button>
-              <button
-                className={
-                  productTool === "terminal" ? styles.active : undefined
-                }
-                onClick={() => setProductTool("terminal")}
-              >
-                <Wind size={22} aria-hidden="true" />
-                Bocchette
-              </button>
-              <button onClick={() => setProductTool("machine")}>
-                <Wind size={20} aria-hidden="true" />
-                Macchina manuale
-              </button>
-              <button
-                disabled={
-                  !p?.hvacSystems.some((system) => system.type === "ducted")
-                }
-                onClick={() => {
-                  setPlenumSystemId(
-                    p?.hvacSystems.find(
-                      (system) =>
-                        system.type === "ducted" &&
-                        system.roomIds.includes(selectedRoom?.id ?? ""),
-                    )?.id ??
-                      p?.hvacSystems.find((system) => system.type === "ducted")
-                        ?.id ??
-                      "",
-                  );
-                  setProductTool(null);
-                  setPlenumOpen(true);
-                }}
-              >
-                <Wind size={20} aria-hidden="true" />
-                Plenum
-              </button>
-              <details className={styles.settings}>
                 <summary>
                   <SlidersHorizontal size={18} aria-hidden="true" />
                   Aspetto
@@ -593,9 +589,107 @@ export default function Viewer3D() {
                   </select>
                 </div>
               </details>
+              {!presentation && (
+                <>
+                  <details className={styles.settings} name="viewer-menus">
+                    <summary>Aggiungi apparecchio</summary>
+                    <div
+                      className={styles.productMenu}
+                      onClick={(event) =>
+                        event.currentTarget
+                          .closest("details")
+                          ?.removeAttribute("open")
+                      }
+                    >
+                      <button
+                        className={
+                          productTool === "radiator" ? styles.active : undefined
+                        }
+                        onClick={() => setProductTool("radiator")}
+                      >
+                        <Columns size={22} aria-hidden="true" />
+                        Radiatori
+                      </button>
+                      <button
+                        className={
+                          productTool === "split" ? styles.active : undefined
+                        }
+                        onClick={() => setProductTool("split")}
+                      >
+                        <Snowflake size={22} aria-hidden="true" />
+                        Climatizzatori
+                      </button>
+                      <button
+                        className={
+                          productTool === "terminal" ? styles.active : undefined
+                        }
+                        onClick={() => setProductTool("terminal")}
+                      >
+                        <Wind size={22} aria-hidden="true" />
+                        Bocchette
+                      </button>
+                      <button onClick={() => setProductTool("machine")}>
+                        <Wind size={20} aria-hidden="true" />
+                        Macchina manuale
+                      </button>
+                      <button
+                        disabled={
+                          !p?.hvacSystems.some(
+                            (system) => system.type === "ducted",
+                          )
+                        }
+                        onClick={() => {
+                          setPlenumSystemId(
+                            p?.hvacSystems.find(
+                              (system) =>
+                                system.type === "ducted" &&
+                                system.roomIds.includes(selectedRoom?.id ?? ""),
+                            )?.id ??
+                              p?.hvacSystems.find(
+                                (system) => system.type === "ducted",
+                              )?.id ??
+                              "",
+                          );
+                          setProductTool(null);
+                          setPlenumOpen(true);
+                        }}
+                      >
+                        <Wind size={20} aria-hidden="true" />
+                        Plenum
+                      </button>
+                      <button
+                        onClick={() => {
+                          setHydronicPanel(!hydronicPanel);
+                          setFanCoilPanel(false);
+                          setProductTool(null);
+                        }}
+                      >
+                        Pompa di calore
+                      </button>
+                      <button
+                        onClick={() => {
+                          setFanCoilPanel(!fanCoilPanel);
+                          setFanCoilRoomId(selectedRoom?.id ?? "");
+                          setHydronicPanel(false);
+                          setProductTool(null);
+                        }}
+                      >
+                        Ventilconvettori
+                      </button>
+                      <button
+                        onClick={() =>
+                          useProjectStore.setState({ pillarDialog: true })
+                        }
+                      >
+                        Pilastro
+                      </button>
+                    </div>
+                  </details>
+                </>
+              )}
             </div>
-          </div>
-          {!presentation && chosenDevice && (
+          )}
+          {!readOnly && !presentation && chosenDevice && (
             <div className={styles.transformBar}>
               {(["translate", "rotate", "scale"] as const).map((mode) => (
                 <button
@@ -603,6 +697,7 @@ export default function Viewer3D() {
                   aria-pressed={transformMode === mode}
                   disabled={
                     chosenDevice.locked ||
+                    (mode === "scale" && !!selectedOutdoor) ||
                     (mode !== "translate" && "elements" in chosenDevice)
                   }
                   onClick={() =>
@@ -618,6 +713,18 @@ export default function Viewer3D() {
                   }
                 </button>
               ))}
+              {selectedOutdoor && (
+                <button
+                  onClick={() => {
+                    setFocused(true);
+                    setTop(false);
+                    setIsolated(false);
+                    setFitNonce((value) => value + 1);
+                  }}
+                >
+                  Vista ventilatore
+                </button>
+              )}
               <label>
                 <input
                   type="checkbox"
@@ -633,22 +740,29 @@ export default function Viewer3D() {
             </div>
           )}
           {channelPanel && p && !presentation && (
-            <aside className={styles.plenumPanel}>
-              <header>
-                <strong>Canalizzazione collegata</strong>
-                <button
-                  aria-label="Chiudi canali"
-                  onClick={() => setChannelPanel(false)}
-                >
-                  ×
-                </button>
-              </header>
-              {p.hvacSystems
-                .filter((s) => s.type === "ducted")
-                .map((s) => (
-                  <DuctPanel key={s.id} project={p} systemId={s.id} />
-                ))}
-            </aside>
+            <FullscreenDialog
+              open
+              title="Canalizzazione collegata"
+              closeLabel="Chiudi canali"
+              onClose={() => setChannelPanel(false)}
+            >
+              <div>
+                {p.hvacSystems
+                  .filter((s) => s.type === "ducted")
+                  .map((s) => (
+                    <details key={s.id} className={styles.channelSystem}>
+                      <summary>
+                        {codes.get(s.id)} ·{" "}
+                        {p.ducts?.filter(
+                          (duct) => duct.systemId === s.id && duct.terminalId,
+                        ).length ?? 0}{" "}
+                        rami
+                      </summary>
+                      <DuctPanel project={p} systemId={s.id} />
+                    </details>
+                  ))}
+              </div>
+            </FullscreenDialog>
           )}
           {channelView && !presentation && !channelPanel && (
             <button
@@ -658,7 +772,7 @@ export default function Viewer3D() {
               Configura percorsi
             </button>
           )}
-          {presentation && p && (
+          {!readOnly && presentation && p && (
             <div className={styles.clientHeader}>
               <span>TERMOIDRAULICA STAIANO / PROGETTAZIONE 3D</span>
               <h2>{p.name}</h2>
@@ -671,36 +785,57 @@ export default function Viewer3D() {
               </p>
             </div>
           )}
-          <PillarDialog />
+          {!readOnly && <PillarDialog />}
           {p && (hydronicPanel || fanCoilPanel) && !presentation && (
-            <aside className={styles.plenumPanel}>
-              <header>
-                <strong>
-                  {hydronicPanel
-                    ? "Impianto idronico · macchina esterna"
-                    : "Ventilconvettori e comandi"}
-                </strong>
-                <button
-                  aria-label="Chiudi impianto idronico"
-                  onClick={() => {
-                    setHydronicPanel(false);
-                    setFanCoilPanel(false);
-                  }}
-                >
-                  ×
-                </button>
-              </header>
-              {hydronicPanel ? (
-                <HydronicPanel project={p} floorId={activeFloorId} />
-              ) : selectedRoom ? (
-                <FanCoilPanel project={p} room={selectedRoom} />
-              ) : (
-                <p>
-                  Seleziona un ambiente nel modello 3D per inserire i
-                  ventilconvettori.
-                </p>
-              )}
-            </aside>
+            <FullscreenDialog
+              open
+              title={
+                hydronicPanel
+                  ? "Impianto idronico · macchina esterna"
+                  : "Ventilconvettori e comandi"
+              }
+              closeLabel="Chiudi impianto idronico"
+              onClose={() => {
+                setHydronicPanel(false);
+                setFanCoilPanel(false);
+              }}
+            >
+              <div className={styles.systemConfiguration}>
+                {!hydronicPanel && (
+                  <label className="campo">
+                    <span>Ambiente ventilconvettore</span>
+                    <select
+                      value={fanCoilRoomId}
+                      onChange={(event) => setFanCoilRoomId(event.target.value)}
+                    >
+                      <option value="">Scegli un ambiente</option>
+                      {p.rooms
+                        .filter(
+                          (room) =>
+                            room.floorId === activeFloorId &&
+                            !room.conditioningExclusion,
+                        )
+                        .map((room) => (
+                          <option key={room.id} value={room.id}>
+                            {room.name}
+                          </option>
+                        ))}
+                    </select>
+                  </label>
+                )}
+                {hydronicPanel ? (
+                  <HydronicPanel project={p} floorId={activeFloorId} />
+                ) : p.rooms.find((room) => room.id === fanCoilRoomId) ? (
+                  <FanCoilPanel
+                    key={fanCoilRoomId}
+                    project={p}
+                    room={p.rooms.find((room) => room.id === fanCoilRoomId)!}
+                  />
+                ) : (
+                  <p>Scegli l’ambiente in cui inserire i ventilconvettori.</p>
+                )}
+              </div>
+            </FullscreenDialog>
           )}
           {productTool && p && (
             <ProductTools
@@ -713,42 +848,52 @@ export default function Viewer3D() {
             />
           )}
           {plenumOpen && p && (
-            <div
-              className={styles.plenumPanel}
-              role="dialog"
-              aria-label="Plenum degli impianti autonomi"
+            <FullscreenDialog
+              open={plenumOpen}
+              title="Plenum degli impianti autonomi"
+              closeLabel="Chiudi plenum"
+              onClose={() => setPlenumOpen(false)}
             >
-              <header>
-                <strong>Plenum mandata</strong>
-                <button
-                  aria-label="Chiudi plenum"
-                  onClick={() => setPlenumOpen(false)}
-                >
-                  ×
-                </button>
-              </header>
-              <label className="campo">
-                <span>Impianto autonomo</span>
-                <select
-                  aria-label="Impianto plenum"
-                  value={plenumSystemId}
-                  onChange={(e) => setPlenumSystemId(e.target.value)}
-                >
-                  {p.hvacSystems
-                    .filter((system) => system.type === "ducted")
-                    .map((system) => (
-                      <option key={system.id} value={system.id}>
-                        {system.name ||
-                          p.rooms
-                            .filter((room) => system.roomIds.includes(room.id))
-                            .map((room) => room.name)
-                            .join(", ")}
-                      </option>
-                    ))}
-                </select>
-              </label>
-              <SupplyPlenumPanel project={p} systemId={plenumSystemId} />
-            </div>
+              <div>
+                <label className="campo">
+                  <span>Impianto autonomo</span>
+                  <select
+                    aria-label="Impianto plenum"
+                    value={plenumSystemId}
+                    onChange={(e) => setPlenumSystemId(e.target.value)}
+                  >
+                    {p.hvacSystems
+                      .filter((system) => system.type === "ducted")
+                      .map((system) => (
+                        <option key={system.id} value={system.id}>
+                          {system.name ||
+                            p.rooms
+                              .filter((room) =>
+                                system.roomIds.includes(room.id),
+                              )
+                              .map((room) => room.name)
+                              .join(", ")}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                {p.rooms
+                  .filter((room) =>
+                    p.hvacSystems
+                      .find((system) => system.id === plenumSystemId)
+                      ?.roomIds.includes(room.id),
+                  )
+                  .slice(0, 1)
+                  .map((room) => (
+                    <DuctedMachinePicker
+                      key={plenumSystemId}
+                      project={p}
+                      room={room}
+                    />
+                  ))}
+                <SupplyPlenumPanel project={p} systemId={plenumSystemId} />
+              </div>
+            </FullscreenDialog>
           )}
           <div className={styles.scene}>
             <WebGLError>
@@ -895,9 +1040,12 @@ export default function Viewer3D() {
                     "mounting" in chosenDevice &&
                     chosenDevice.mounting === "ceiling"
                   }
-                  animate={presentation || tour}
+                  animate={!readOnly && (presentation || tour)}
                 />
-                <RenderMarker selected={selectedId ?? ""} />
+                <RenderMarker
+                  selected={selectedId ?? ""}
+                  cutWallCount={cutaway ? cutWallIds.size : 0}
+                />
                 <SceneEffects enabled={walls.length < 150} />
               </Canvas>
             </WebGLError>
@@ -930,7 +1078,7 @@ export default function Viewer3D() {
             </div>
           </div>
           <div className={styles.bottom}>
-            {presentation && p && (
+            {!readOnly && presentation && p && (
               <div className={styles.clientStats}>
                 <strong>
                   {selectedPlenum
@@ -995,7 +1143,7 @@ export default function Viewer3D() {
             <div className={styles.caption}>
               <strong>
                 {chosenDevice
-                  ? `${codes.get(chosenDevice.id) ?? ""} · ${"family" in chosenDevice ? chosenDevice.family : "Split"}`
+                  ? `${codes.get(chosenDevice.id) ?? ""} · ${selectedOutdoor ? "Pompa di calore" : "family" in chosenDevice ? chosenDevice.family : "Split"}`
                   : `${floorName} · ${rooms.length} ${rooms.length === 1 ? "ambiente" : "ambienti"}`}
               </strong>
               {chosenDevice

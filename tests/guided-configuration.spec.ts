@@ -1,3 +1,5 @@
+import { chooseTerminalModel, confirmTerminalPlacement } from "./ui-helpers";
+import { openDisclosure } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Page, TestInfo } from "@playwright/test";
 import { PerspectiveCamera, Vector3 } from "three";
@@ -8,7 +10,13 @@ import { projectSchema, type Project } from "../src/schemas/project";
 // Playwright's native ESM loader cannot import this project's catalogue JSON.
 const fixtures = JSON.parse(
   readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
-) as { empty: Project; network: Project; single: Project; otherPorts: number };
+) as {
+  empty: Project;
+  network: Project;
+  single: Project;
+  threeRooms: Project;
+  otherPorts: number;
+};
 
 async function importFixture(page: Page, project: Project) {
   await page.setViewportSize({ width: 1680, height: 1050 });
@@ -24,6 +32,7 @@ async function importFixture(page: Page, project: Project) {
 
 async function exported(page: Page, info: TestInfo, name: string) {
   const waiting = page.waitForEvent("download");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Esporta", exact: true }).click();
   const file = info.outputPath(`${name}.hvacproj`);
   await (await waiting).saveAs(file);
@@ -47,21 +56,29 @@ test("operator explicitly adds four lengths in the 3D catalogue while the requir
     "true",
     { timeout: 30000 },
   );
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await viewer.getByRole("button", { name: "Bocchette", exact: true }).click();
-  const catalog = page.getByRole("dialog", { name: "Catalogo bocchette" });
+  await page
+    .getByRole("button", { name: "Configura canalizzazione", exact: true })
+    .click();
+  const catalog = page.getByRole("dialog", {
+    name: "Configura canalizzazione",
+  });
   await catalog
     .getByRole("combobox", { name: "Ambiente destinazione" })
     .selectOption(initial.rooms[0].id);
-  await catalog
-    .getByRole("button", { name: "Scegli EDLS", exact: true })
-    .click();
+  await chooseTerminalModel(catalog, "EDLS");
   const choice = catalog.getByRole("region", {
     name: "Scelta singola bocchetta",
   });
   await expect(
-    choice.getByRole("button", { name: "Aggiungi singola bocchetta" }),
+    choice.getByRole("button", { name: "Posiziona nell’ambiente" }),
   ).toBeDisabled();
   for (const length of [1000, 2000, 800, 800]) {
+    const another = catalog.getByRole("button", {
+      name: "Aggiungi un’altra bocchetta",
+    });
+    if (await another.isVisible()) await chooseTerminalModel(catalog, "EDLS");
     await choice
       .getByRole("textbox", {
         name: "Lunghezza singola bocchetta",
@@ -69,11 +86,14 @@ test("operator explicitly adds four lengths in the 3D catalogue while the requir
       })
       .fill(String(length));
     await choice
-      .getByRole("button", { name: "Aggiungi singola bocchetta" })
+      .getByRole("button", { name: "Posiziona nell’ambiente" })
       .click();
+    await confirmTerminalPlacement(page);
   }
-  await expect(choice).toContainText("Installati: 4600 mm");
-  await catalog.getByRole("button", { name: "Chiudi catalogo" }).click();
+  await openDisclosure(catalog, "Bilancio bocchette per ambiente");
+  await expect(catalog).toContainText("Installati: 4600 mm");
+  await catalog.getByRole("button", { name: "Chiudi configurazione" }).click();
+  await page.getByRole("button", { name: "Chiudi catalogo" }).click();
   const result = await exported(page, info, "operator-four-pieces");
   expect(result.airTerminals.map((t) => t.widthMm)).toEqual([
     1000, 2000, 800, 800,
@@ -91,24 +111,92 @@ test("operator explicitly adds four lengths in the 3D catalogue while the requir
   ).toEqual(result.airTerminals);
 });
 
-test("all eleven guided steps persist confirmations, pause, final review and reopening", async ({
+test("linear vent meters show proportional room shares and warn about missing supply in other rooms", async ({
+  page,
+}, info) => {
+  test.setTimeout(90000);
+  const initial = fixtures.threeRooms;
+  await importFixture(page, initial);
+  await page
+    .getByRole("button", { name: "Continua liberamente nell’editor" })
+    .click();
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  const viewer = page.getByTestId("viewer-3d");
+  await expect(viewer.locator("canvas")).toHaveAttribute(
+    "data-rendered",
+    "true",
+    { timeout: 30000 },
+  );
+  await openDisclosure(viewer, "Aggiungi apparecchio");
+  await viewer.getByRole("button", { name: "Bocchette", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Configura canalizzazione", exact: true })
+    .click();
+  const catalog = page.getByRole("dialog", {
+    name: "Configura canalizzazione",
+  });
+  await catalog
+    .getByRole("combobox", { name: "Ambiente destinazione" })
+    .selectOption(initial.rooms[0].id);
+  await chooseTerminalModel(catalog, "EDLS");
+  const choice = catalog.getByRole("region", {
+    name: "Scelta singola bocchetta",
+  });
+  await openDisclosure(catalog, "Bilancio bocchette per ambiente");
+  const graph = catalog
+    .getByRole("list", { name: "Metri lineari per ambiente" })
+    .first();
+  const rows = graph.getByRole("listitem");
+  await expect(rows).toHaveCount(3);
+  const totalLoad = initial.rooms.reduce(
+    (sum, room) => sum + room.designLoadW,
+    0,
+  );
+  for (const [index, room] of initial.rooms.entries()) {
+    await expect(rows.nth(index)).toContainText(room.name);
+    const ratio = await rows
+      .nth(index)
+      .locator('[aria-hidden="true"] > div')
+      .evaluate(
+        (bar) =>
+          bar.getBoundingClientRect().width /
+          bar.parentElement!.getBoundingClientRect().width,
+      );
+    expect(ratio).toBeCloseTo(room.designLoadW / totalLoad, 2);
+  }
+  await graph.screenshot({ path: info.outputPath("room-meters-desktop.png") });
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await graph.screenshot({ path: info.outputPath("room-meters-ipad.png") });
+  await choice
+    .getByRole("textbox", { name: "Lunghezza singola bocchetta", exact: true })
+    .fill("6000");
+  await choice.getByRole("button", { name: "Posiziona nell’ambiente" }).click();
+  await confirmTerminalPlacement(page);
+  const balance = catalog.getByRole("region", { name: "Mandata per ambiente" });
+  await expect(balance).toContainText("Installati: 6000 mm");
+  await expect(
+    balance.getByText("Mandata assente", { exact: true }),
+  ).toHaveCount(2);
+  await expect(balance.getByRole("alert")).toBeVisible();
+});
+
+test("five guided phases persist all confirmations, pause, final review and reopening", async ({
   page,
 }, info) => {
   test.setTimeout(90000);
   await importFixture(page, fixtures.empty);
   const wizard = page.getByRole("region", { name: "Configurazione guidata" });
-  const steps = page.getByRole("combobox", { name: "Passo configurazione" });
-  await expect(steps.locator("option")).toHaveCount(11);
-  for (let n = 0; n < 10; n++) {
-    await expect(wizard).toContainText(`Passo ${n + 1}/11`);
-    await wizard
-      .getByRole("button", { name: "Conferma verifica e avanti" })
-      .click();
+  await expect(wizard.getByRole("navigation").getByRole("button")).toHaveCount(
+    5,
+  );
+  for (let n = 0; n < 4; n++) {
+    await expect(wizard).toContainText(`Passo ${n + 1} di 5`);
+    await wizard.getByRole("button", { name: "Conferma e continua" }).click();
   }
-  await expect(wizard).toContainText("Passo 11/11");
+  await expect(wizard).toContainText("Passo 5 di 5");
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
-  await expect(wizard).toContainText("Passo 11/11");
+  await expect(wizard).toContainText("Passo 5 di 5");
   await wizard
     .getByRole("button", { name: "Continua liberamente nell’editor" })
     .click();
@@ -116,9 +204,7 @@ test("all eleven guided steps persist confirmations, pause, final review and reo
   await page
     .getByRole("button", { name: "Riprendi configurazione guidata" })
     .click();
-  await wizard
-    .getByRole("button", { name: "Conferma revisione e termina" })
-    .click();
+  await wizard.getByRole("button", { name: "Concludi configurazione" }).click();
   const project = await exported(page, info, "guided-complete");
   expect(project.floors[0].configurationWizard).toEqual({
     step: 10,
@@ -198,10 +284,12 @@ test("dragging the actual 3D X handle commits one move and 2D reload retains it"
   expect(moved.airTerminals[0].position.x - t.position.x).toBeGreaterThan(0.2);
   expect(moved.airTerminals[0].position.x - t.position.x).toBeLessThan(0.6);
   expect(moved.airTerminals[0].widthMm).toBe(1000);
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Annulla", exact: true }).click();
   expect(
     (await exported(page, info, "gizmo-undo")).airTerminals[0].position,
   ).toEqual(t.position);
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Ripeti", exact: true }).click();
   await page.getByRole("button", { name: "2D", exact: true }).click();
   await expect(page.getByTestId("terminal-supply")).toHaveCount(1);
@@ -221,6 +309,7 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
   await page
     .getByRole("button", { name: "Continua liberamente nell’editor" })
     .click();
+  await openDisclosure(page, "Modifica");
   await page
     .getByRole("combobox", { name: "Elemento nel progetto" })
     .selectOption(initial.airTerminals[0].id);
@@ -252,14 +341,24 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
       .slice(1)
       .map((t) => ({ ...t, requiredAirflowM3h: expect.any(Number) })),
   );
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Annulla", exact: true }).click();
   expect(
     (await exported(page, info, "terminal-undo")).airTerminals[0].widthMm,
   ).toBe(2000);
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Ripeti", exact: true }).click();
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await viewer
     .getByRole("button", { name: "Vista Canale", exact: true })
     .click();
+  await page
+    .getByRole("button", { name: "Configura percorsi", exact: true })
+    .click();
+  const channels = page.getByRole("complementary", {
+    name: "Canalizzazione collegata",
+  });
+  await channels.locator("details > summary").first().click();
   await page
     .getByRole("button", { name: "Genera / aggiorna percorsi proposti" })
     .click();
@@ -268,6 +367,7 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
     fixtures.otherPorts,
   );
   const netBefore = after.rooms[0].netAreaM2;
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await viewer.getByRole("button", { name: "Pilastro", exact: true }).click();
   const pillar = page.getByRole("dialog", { name: "Aggiungi pilastro" });
   await pillar
@@ -290,6 +390,7 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
     path: info.outputPath("guided-connected-3d.png"),
     fullPage: true,
   });
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await viewer
     .getByRole("button", { name: "Presentazione cliente", exact: true })
     .click();

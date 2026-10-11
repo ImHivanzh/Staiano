@@ -22,6 +22,8 @@ import {
   PlusSquare,
 } from "@phosphor-icons/react";
 import "./inspector.css";
+import { LengthInput } from "../LengthInput";
+import { RoomConditioning } from "./RoomConditioning";
 import {
   wallMeasuredLength,
   roomRectSides,
@@ -59,15 +61,6 @@ export function Properties() {
   return (
     <aside className="proprieta">
       <div className="titolo-pannello">
-        <span className="occhiello">
-          {r
-            ? "Stanza selezionata"
-            : w
-              ? "Parete selezionata"
-              : deviceId
-                ? "Apparecchio selezionato"
-                : "Il tuo progetto"}
-        </span>
         <h2>
           {selection.length > 1
             ? `${selection.length} elementi selezionati`
@@ -79,6 +72,15 @@ export function Properties() {
                   ? "Apparecchio"
                   : "Seleziona un elemento"}
         </h2>
+        <p className="tipo-selezione">
+          {r
+            ? "Stanza selezionata"
+            : w
+              ? "Parete selezionata"
+              : deviceId
+                ? "Apparecchio selezionato"
+                : "Il tuo progetto"}
+        </p>
       </div>
       {deviceId && <DeviceProperties project={p} id={deviceId} />}
       {selectedObject && (
@@ -179,7 +181,9 @@ export function Properties() {
               </dd>
             </div>
             <div className="carico">
-              <dt>Fabbisogno</dt>
+              <dt>
+                {r.conditioningExclusion ? "Non climatizzato" : "Fabbisogno"}
+              </dt>
               <dd data-testid="room-load">
                 {formatNumber(r.designLoadW / 1000)} <small>kW</small>
               </dd>
@@ -190,16 +194,21 @@ export function Properties() {
           </p>
           <p className="impianto-attuale">
             <GearSix size={17} aria-hidden="true" />
-            {r.systemType === "none"
-              ? "Impianto da configurare"
-              : r.systemType === "radiator"
-                ? `${p.radiators.filter((d) => d.roomId === r.id).length} radiatori nella stanza`
-                : p.hvacSystems.find(
-                    (s) => s.type === r.systemType && s.roomIds.includes(r.id),
-                  )?.name ||
-                  (r.systemType === "ducted"
-                    ? "Impianto canalizzato"
-                    : "Climatizzazione split")}
+            {r.conditioningExclusion
+              ? "Escluso dalla climatizzazione"
+              : r.systemType === "fanCoil"
+                ? `${p.fanCoils?.filter((unit) => unit.roomId === r.id).length ?? 0} ventilconvettori nella stanza`
+                : r.systemType === "none"
+                  ? "Impianto da configurare"
+                  : r.systemType === "radiator"
+                    ? `${p.radiators.filter((d) => d.roomId === r.id).length} radiatori nella stanza`
+                    : p.hvacSystems.find(
+                        (s) =>
+                          s.type === r.systemType && s.roomIds.includes(r.id),
+                      )?.name ||
+                      (r.systemType === "ducted"
+                        ? "Impianto canalizzato"
+                        : "Climatizzazione split")}
           </p>
           <details className="azione-inspector">
             <summary>
@@ -229,23 +238,24 @@ export function Properties() {
                   aria-label="Nome stanza"
                 />
               </label>
-              <label className="campo">
-                <span>Altezza stanza (m)</span>
-                <input
-                  name="height"
-                  type="number"
-                  min="0.1"
-                  max="30"
-                  step="0.01"
-                  defaultValue={r.heightM}
-                  required
-                  aria-label="Altezza stanza"
-                />
-              </label>
+              <LengthInput
+                label="Altezza stanza"
+                aria-label="Altezza stanza"
+                name="height"
+                min={0.1}
+                max={30}
+                step={0.01}
+                defaultValue={r.heightM}
+                required
+              />
               <button className="bottone chiara" type="submit">
                 Applica proprietà
               </button>
             </form>
+            <RoomConditioning
+              key={`${r.id}-${r.conditioningExclusion?.reason ?? "active"}`}
+              room={r}
+            />
             {roomRectSides(r) && (
               <form
                 onSubmit={(e) => {
@@ -263,34 +273,30 @@ export function Properties() {
               >
                 <h3>Quote nette stanza</h3>
                 <p className="nota">Modifica anche i muri collegati.</p>
-                <label className="campo">
-                  <span>Larghezza netta (m)</span>
-                  <input
-                    name="width"
-                    type="number"
-                    min="0.1"
-                    max="100"
-                    step="0.01"
-                    defaultValue={(
-                      bounds(r.polygon).maxX - bounds(r.polygon).minX
-                    ).toFixed(3)}
-                    required
-                  />
-                </label>
-                <label className="campo">
-                  <span>Lunghezza netta (m)</span>
-                  <input
-                    name="length"
-                    type="number"
-                    min="0.1"
-                    max="100"
-                    step="0.01"
-                    defaultValue={(
-                      bounds(r.polygon).maxY - bounds(r.polygon).minY
-                    ).toFixed(3)}
-                    required
-                  />
-                </label>
+                <LengthInput
+                  label="Larghezza netta"
+                  baseUnit="m"
+                  name="width"
+                  min="0.1"
+                  max="100"
+                  step="0.01"
+                  defaultValue={(
+                    bounds(r.polygon).maxX - bounds(r.polygon).minX
+                  ).toFixed(3)}
+                  required
+                />
+                <LengthInput
+                  label="Lunghezza netta"
+                  baseUnit="m"
+                  name="length"
+                  min="0.1"
+                  max="100"
+                  step="0.01"
+                  defaultValue={(
+                    bounds(r.polygon).maxY - bounds(r.polygon).minY
+                  ).toFixed(3)}
+                  required
+                />
                 <button className="bottone" type="submit">
                   Aggiorna quote nette
                 </button>
@@ -327,7 +333,8 @@ export function Properties() {
             <summary>
               <GearSix size={20} aria-hidden="true" />
               <span>
-                Configura impianto<small>Radiatori, canalizzato o split</small>
+                Configura impianto
+                <small>Radiatori, canalizzato, split o ventilconvettori</small>
               </span>
             </summary>
             <RoomSystems key={r.id} room={r} project={p} />
@@ -352,7 +359,10 @@ export function Properties() {
             <p className="formula">
               {formatNumber(r.netAreaM2)} m² × {formatNumber(r.heightM)} m<br />
               = {formatNumber(r.volumeM3)} m³
-              <br />× 35 W/m³ = {formatNumber(r.designLoadW)} W
+              <br />
+              {r.conditioningExclusion
+                ? `Escluso dalla climatizzazione: ${r.conditioningExclusion.reason}. Carico da dimensionare: 0 W.`
+                : `× 35 W/m³ = ${formatNumber(r.designLoadW)} W`}
             </p>
             <p className="nota">
               Stima convenzionale. Verifica tecnica necessaria prima
@@ -404,17 +414,34 @@ export function Properties() {
                   ["sy", "Inizio Y (m)", w.start.y],
                   ["ex", "Fine X (m)", w.end.x],
                   ["ey", "Fine Y (m)", w.end.y],
-                ].map(([name, label, value]) => (
-                  <label className="campo" key={name}>
-                    <span>{label}</span>
-                    <input
+                ].map(([name, label, value]) =>
+                  /\((m|mm|cm)\)$/.test(String(label)) ? (
+                    <LengthInput
+                      key={name}
+                      label={String(label).replace(/ \((m|mm|cm)\)$/, "")}
+                      baseUnit={
+                        String(label).endsWith("(mm)")
+                          ? "mm"
+                          : String(label).endsWith("(cm)")
+                            ? "cm"
+                            : "m"
+                      }
                       name={String(name)}
-                      type="number"
                       step="any"
                       defaultValue={value}
                     />
-                  </label>
-                ))}
+                  ) : (
+                    <label className="campo" key={name}>
+                      <span>{label}</span>
+                      <input
+                        type="number"
+                        name={String(name)}
+                        step="any"
+                        defaultValue={value}
+                      />
+                    </label>
+                  ),
+                )}
                 <button className="bottone piccolo" disabled={w.locked}>
                   Applica estremi e angolo
                 </button>
@@ -428,15 +455,13 @@ export function Properties() {
                   );
                 }}
               >
-                <label className="campo">
-                  <span>Posizione divisione lungo asse (m)</span>
-                  <input
-                    name="offset"
-                    type="number"
-                    step="0.01"
-                    defaultValue={distance(w.start, w.end) / 2}
-                  />
-                </label>
+                <LengthInput
+                  label="Posizione divisione lungo asse"
+                  baseUnit="m"
+                  name="offset"
+                  step="0.01"
+                  defaultValue={distance(w.start, w.end) / 2}
+                />
                 <button className="bottone piccolo" disabled={w.locked}>
                   Dividi segmento
                 </button>
@@ -473,19 +498,17 @@ export function Properties() {
             }}
           >
             {walls.length === 1 && (
-              <label className="campo">
-                <span>Lunghezza interna utile (m)</span>
-                <input
-                  type="number"
-                  name="length"
-                  min="0.05"
-                  max="100"
-                  step="0.01"
-                  defaultValue={wallMeasuredLength(p, w, "internal").toFixed(3)}
-                  required
-                  aria-label="Lunghezza muro"
-                />
-              </label>
+              <LengthInput
+                label="Lunghezza interna utile"
+                baseUnit="m"
+                name="length"
+                min="0.05"
+                max="100"
+                step="0.01"
+                defaultValue={wallMeasuredLength(p, w, "internal").toFixed(3)}
+                required
+                aria-label="Lunghezza muro"
+              />
             )}
             <label className="campo">
               <span>Tipo muro</span>
@@ -494,18 +517,16 @@ export function Properties() {
                 <option value="ESTERNO">Esterno</option>
               </select>
             </label>
-            <label className="campo">
-              <span>Spessore (mm)</span>
-              <input
-                type="number"
-                name="thickness"
-                min="10"
-                max="2000"
-                step="1"
-                defaultValue={w.thickness * 1000}
-                required
-              />
-            </label>
+            <LengthInput
+              label="Spessore"
+              baseUnit="mm"
+              name="thickness"
+              min="10"
+              max="2000"
+              step="1"
+              defaultValue={w.thickness * 1000}
+              required
+            />
             <p className="nota">
               Quote e superficie stanza riferite alle facce interne dei muri.
             </p>
@@ -548,30 +569,26 @@ export function Properties() {
                     maxLength={100}
                   />
                 </label>
-                <label className="campo">
-                  <span>Profondità netta (m)</span>
-                  <input
-                    type="number"
-                    name="depth"
-                    min="0.1"
-                    max="30"
-                    step="0.01"
-                    defaultValue="3"
-                    required
-                  />
-                </label>
-                <label className="campo">
-                  <span>Altezza (m)</span>
-                  <input
-                    type="number"
-                    name="height"
-                    min="0.1"
-                    max="30"
-                    step="0.01"
-                    defaultValue={p.projectSettings.defaultHeightM}
-                    required
-                  />
-                </label>
+                <LengthInput
+                  label="Profondità netta"
+                  baseUnit="m"
+                  name="depth"
+                  min="0.1"
+                  max="30"
+                  step="0.01"
+                  defaultValue="3"
+                  required
+                />
+                <LengthInput
+                  label="Altezza"
+                  baseUnit="m"
+                  name="height"
+                  min="0.1"
+                  max="30"
+                  step="0.01"
+                  defaultValue={p.projectSettings.defaultHeightM}
+                  required
+                />
                 <button className="bottone" type="submit">
                   Crea ambiente adiacente
                 </button>

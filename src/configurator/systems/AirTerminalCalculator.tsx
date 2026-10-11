@@ -117,7 +117,10 @@ export function AirTerminalCalculator() {
                   {f.familyCode} · {f.mountingType}
                 </span>
                 <small>
-                  Portata compatibile · Punti di riferimento ≤37 dB(A)
+                  Portata compatibile ·{" "}
+                  {query.use === "supply"
+                    ? "Punti di riferimento ≤37 dB(A)"
+                    : "Ripresa: dimensioni in funzione della portata"}
                 </small>
               </button>
             ))}

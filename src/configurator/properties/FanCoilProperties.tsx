@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import Image from "next/image";
 import type { Project } from "@/schemas/project";
 import {
@@ -173,40 +174,34 @@ export function FanCoilProperties({
                       ))}
                   </select>
                 </label>
-                <label className="campo">
-                  <span>Distanza centro dall’inizio interno (m)</span>
-                  <input
-                    type="number"
-                    name="offset"
-                    min="0"
-                    step="0.01"
-                    defaultValue={Math.round(currentOffset * 1000) / 1000}
-                    required
-                  />
-                </label>
+                <LengthInput
+                  label="Distanza centro dall’inizio interno"
+                  baseUnit="m"
+                  name="offset"
+                  min="0"
+                  step="0.01"
+                  defaultValue={Math.round(currentOffset * 1000) / 1000}
+                  required
+                />
               </>
             ) : (
               <>
-                <label className="campo">
-                  <span>Posizione X (m)</span>
-                  <input
-                    type="number"
-                    name="x"
-                    step="0.01"
-                    defaultValue={unit.position.x}
-                    required
-                  />
-                </label>
-                <label className="campo">
-                  <span>Posizione Y (m)</span>
-                  <input
-                    type="number"
-                    name="y"
-                    step="0.01"
-                    defaultValue={unit.position.y}
-                    required
-                  />
-                </label>
+                <LengthInput
+                  label="Posizione X"
+                  baseUnit="m"
+                  name="x"
+                  step="0.01"
+                  defaultValue={unit.position.x}
+                  required
+                />
+                <LengthInput
+                  label="Posizione Y"
+                  baseUnit="m"
+                  name="y"
+                  step="0.01"
+                  defaultValue={unit.position.y}
+                  required
+                />
               </>
             )}
             <label className="campo">

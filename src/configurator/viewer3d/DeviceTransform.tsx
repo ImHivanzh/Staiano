@@ -133,7 +133,7 @@ export function DeviceTransform({
         object={proxy}
         mode={mode}
         space={mode === "translate" ? "world" : "local"}
-        size={0.8}
+        size={outdoor ? 1.2 : 0.8}
         showX={mode !== "rotate"}
         showY={mode === "rotate"}
         showZ={mode === "translate"}

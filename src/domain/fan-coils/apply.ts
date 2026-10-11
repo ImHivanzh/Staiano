@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { assignInstallationRooms } from "../installations";
 import {
   fanCoilCatalog,
   fanCoilCatalogAtVersion,
@@ -40,12 +41,20 @@ export function applyFanCoil(
   options: {
     mounting?: FanCoilPlacement["mounting"];
     controllerId?: string | null;
+    installationId?: string;
   } = {},
 ): Project {
+  project = assignInstallationRooms(
+    project,
+    options.installationId,
+    "fanCoil",
+    [roomId],
+  );
   const room = project.rooms.find((r) => r.id === roomId),
     product = fanCoilCatalog.products.find((p) => p.id === productId);
   if (
     !room ||
+    room.conditioningExclusion ||
     !project.floors.find((f) => f.id === room.floorId)?.scaleVerified
   )
     throw new Error("Configurare un ambiente con scala verificata.");
@@ -71,6 +80,9 @@ export function applyFanCoil(
     {
       ...pose,
       id: crypto.randomUUID(),
+      ...(options.installationId
+        ? { installationId: options.installationId }
+        : {}),
       roomId,
       floorId: room.floorId,
       productId,

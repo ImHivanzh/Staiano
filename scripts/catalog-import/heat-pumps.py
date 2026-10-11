@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "catalog-data/sources/heat-pumps"
 DOCS = {
     "chaffoteaux": ("https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf", "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9", "Scheda ARIANEXT PLUS M LINK R32 2022"),
+    "chaffoteaux-arianext-lite": ("https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf", "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca", "Scheda ARIANEXT LITE M LINK R32 2022"),
     "gree-versati-v": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf", "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b", "Brochure VERSATI V 2025"),
 }
 
@@ -55,6 +56,24 @@ for size, height, heat35, heat45, heatminus7, cold, cop35, cop45, copminus7, eer
         features=["Monoblocco inverter R32", "Expert HD e Wi-Fi di serie", "Gestione ChaffoLink", "ACS con bollitore opzionale"], productPhoto=chaff_photo, sourceMetadata=source("chaffoteaux", "Chaffoteaux", 4),
         operatingPoints=[point("Caldo A7/W35 · freddo A35/W7", heat35, cold, cop35, eer), point("Caldo A7/W45 · freddo A35/W7", heat45, cold, cop45, eer, 45), point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold, copminus7, eer, 35, -7)]))
 
+lite_photo = photo("chaffoteaux-arianext-lite.png", "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png", "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna.")
+# Reviewed page 4 exact nominal rows, not rounded page 2 summaries; dimensions on page 3.
+for size, phase, code, height, heat35, heat45, heatminus7, cold, cop35, cop45, copminus7, eer in [
+    (35, "M", 3302018, 756, 3.5, 3.0, 3.51, 3.5, 5.1, 3.74, 3.1, 3.4),
+    (50, "M", 3302019, 756, 5.0, 4.05, 5.0, 5.0, 5.0, 3.65, 2.9, 2.85),
+    (80, "M", 3302020, 1106, 8.0, 6.0, 7.41, 7.0, 4.8, 3.7, 3.0, 3.1),
+    (80, "M-T", 3302021, 1106, 8.0, 6.0, 7.41, 7.0, 4.8, 3.7, 3.0, 3.1),
+    (120, "M", 3302022, 1506, 12.0, 8.2, 9.51, 9.05, 4.9, 4.1, 3.2, 3.15),
+    (120, "M-T", 3302023, 1506, 12.0, 8.2, 9.51, 9.05, 4.9, 4.1, 3.2, 3.15),
+    (150, "M", 3302024, 1506, 15.0, 9.9, 11.0, 11.0, 4.7, 4.0, 3.1, 2.93),
+    (150, "M-T", 3302025, 1506, 15.0, 9.9, 11.0, 11.0, 4.7, 4.0, 3.1, 2.93),
+]:
+    supply = "Monofase 230 V / 50 Hz" if phase == "M" else "Trifase 400 V / 50 Hz"
+    products.append(dict(id=f"chaffoteaux-arianext-lite-{size}-{phase.lower()}-r32", manufacturer="Chaffoteaux", family="ARIANEXT LITE M LINK R32", model=f"ARIANEXT LITE {size} {phase} LINK R32",
+        widthMm=1016, heightMm=height, depthMm=383, dimensionNote="Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+        features=["Monoblocco inverter R32", supply, f"Codice sistema {code}", "Expert HD e Wi-Fi di serie", "Gestione ChaffoLink", "Light Box IPX5", "Puffer e resistenza integrativa opzionali", "ACS con bollitore e kit opzionali"], productPhoto=lite_photo, sourceMetadata=source("chaffoteaux-arianext-lite", "Chaffoteaux", 4),
+        operatingPoints=[point("Caldo A7/W35 · freddo A35/W7", heat35, cold, cop35, eer), point("Caldo A7/W45 · freddo A35/W7", heat45, cold, cop45, eer, 45), point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold, copminus7, eer, 35, -7)]))
+
 gree_photo = photo("gree-versati-v.png", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png", "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW.")
 reader = PdfReader(SOURCE / "gree-versati-v.pdf")
 for size, page in [(6, 8), (8, 10)]:
@@ -89,5 +108,5 @@ if out.exists():
         history[previous["version"]] = previous
 out.write_text(json.dumps(catalog, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
 history_path.write_text(json.dumps(history, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
-manifest_path.write_text(json.dumps([dict(name=name, timestampBasis="file-acquired-at", **source(name, "Chaffoteaux" if name=="chaffoteaux" else "Gree", None)) for name in DOCS], indent=2, ensure_ascii=False)+"\n", encoding="utf8")
+manifest_path.write_text(json.dumps([dict(name=name, timestampBasis="file-acquired-at", **source(name, "Chaffoteaux" if name.startswith("chaffoteaux") else "Gree", None)) for name in DOCS], indent=2, ensure_ascii=False)+"\n", encoding="utf8")
 print(f"Generated {len(products)} models from pinned official PDFs")

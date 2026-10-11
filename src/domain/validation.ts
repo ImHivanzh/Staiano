@@ -1,4 +1,4 @@
-import type { Project } from "@/schemas/project";
+import type { Project, Selection } from "@/schemas/project";
 import {
   area,
   distance,
@@ -48,6 +48,72 @@ export type Check = {
   message: string;
   entityId?: string;
 };
+export type CheckFilterStatus = "problems" | "invalid" | "warning" | "all";
+
+export function filterProjectChecks(
+  project: Project,
+  checks: Check[],
+  filter: { status: CheckFilterStatus; floorId: string; roomId: string },
+): Check[] {
+  const generalCodes = ["walls", "closure", "rooms", "overlap"];
+  const rank = { invalid: 0, warning: 1, valid: 2 };
+  return checks
+    .filter((check) => {
+      if (filter.status === "problems" && check.status === "valid")
+        return false;
+      if (
+        !["all", "problems"].includes(filter.status) &&
+        check.status !== filter.status
+      )
+        return false;
+      if (
+        (!filter.floorId && !filter.roomId) ||
+        generalCodes.includes(check.code)
+      )
+        return true;
+      const target = resolveCheckTarget(project, check.entityId);
+      if (!target) return true;
+      const duct = project.ducts?.find((item) => item.id === check.entityId);
+      const system =
+        project.hvacSystems.find(
+          (item) => item.id === check.entityId || item.id === duct?.systemId,
+        ) ??
+        project.hydronicSystems?.find(
+          (item) =>
+            item.id === check.entityId ||
+            item.outdoorUnit.id === check.entityId,
+        );
+      const device = [
+        ...project.radiators,
+        ...project.airTerminals,
+        ...(project.fanCoils ?? []),
+        ...project.plenums,
+        ...(project.pillars ?? []),
+        ...project.hvacSystems.flatMap((item) => item.indoorUnits),
+      ].find((item) => item.id === target.selection?.id);
+      const relatedRooms = project.rooms.filter((room) =>
+        system
+          ? system.roomIds.includes(room.id)
+          : target.selection?.kind === "room"
+            ? room.id === target.selection.id
+            : target.selection?.kind === "wall"
+              ? room.wallIds.includes(target.selection.id)
+              : device && "roomId" in device && device.roomId
+                ? device.roomId === room.id
+                : room.floorId === target.floorId,
+      );
+      if (
+        filter.floorId &&
+        target.floorId !== filter.floorId &&
+        !relatedRooms.some((room) => room.floorId === filter.floorId)
+      )
+        return false;
+      return (
+        !filter.roomId || relatedRooms.some((room) => room.id === filter.roomId)
+      );
+    })
+    .toSorted((a, b) => rank[a.status] - rank[b.status]);
+}
 export function validateProject(p: Project): Check[] {
   const checks: Check[] = [];
   const codes = deviceCodes(p);
@@ -134,6 +200,7 @@ export function validateProject(p: Project): Check[] {
   checks.push({
     code: "walls",
     status: badWalls.length ? "invalid" : "valid",
+    entityId: badWalls[0]?.id,
     message: badWalls.length
       ? `${badWalls.length} muri non validi`
       : `${p.walls.length} muri validi`,
@@ -148,12 +215,14 @@ export function validateProject(p: Project): Check[] {
     checks.push({
       code: "closure",
       status: "warning",
+      entityId: open[0].id,
       message: `${open.length} muri senza stanza chiusa. Verificare contorni e intersezioni.`,
     });
   if (!p.rooms.length)
     checks.push({
       code: "rooms",
       status: "warning",
+      entityId: p.floors[0]?.id,
       message:
         "Nessuna stanza chiusa. Disegnare un contorno o creare un rettangolo.",
     });
@@ -173,10 +242,14 @@ export function validateProject(p: Project): Check[] {
     checks.push({
       code: "thermal",
       status:
-        valid && Math.abs(r.designLoadW - r.netAreaM2 * r.heightM * 35) < 1e-5
+        valid &&
+        Math.abs(
+          r.designLoadW -
+            (r.conditioningExclusion ? 0 : r.netAreaM2 * r.heightM * 35),
+        ) < 1e-5
           ? "valid"
           : "invalid",
-      message: `${r.name}: fabbisogno convenzionale`,
+      message: `${r.name}: ${r.conditioningExclusion ? "ambiente non climatizzato: " + r.conditioningExclusion.reason : "fabbisogno convenzionale"}`,
       entityId: r.id,
     });
     if (!r.name.trim())
@@ -187,6 +260,39 @@ export function validateProject(p: Project): Check[] {
         entityId: r.id,
       });
     const radiators = p.radiators.filter((d) => d.roomId === r.id);
+    const configured =
+      r.systemType === "radiator"
+        ? radiators.length > 0
+        : r.systemType === "fanCoil"
+          ? !!p.fanCoils?.some((unit) => unit.roomId === r.id)
+          : p.hvacSystems.some(
+              (system) =>
+                system.type === r.systemType &&
+                system.roomIds.includes(r.id) &&
+                system.indoorUnits.some(
+                  (unit) => system.type === "ducted" || unit.roomId === r.id,
+                ),
+            );
+    checks.push({
+      code: "systemConfiguration",
+      status: configured || r.conditioningExclusion ? "valid" : "warning",
+      entityId: r.id,
+      message: `${r.name || "Senza nome"}: ${r.conditioningExclusion ? "escluso dalla climatizzazione — " + r.conditioningExclusion.reason : configured ? "impianto configurato; verificare potenze e posa nei controlli dedicati" : "impianto da completare: scegliere e inserire gli apparecchi"}.`,
+    });
+    if (
+      r.conditioningExclusion &&
+      (radiators.length ||
+        p.airTerminals.some((unit) => unit.roomId === r.id) ||
+        p.fanCoils?.some((unit) => unit.roomId === r.id) ||
+        p.hvacSystems.some((system) => system.roomIds.includes(r.id)) ||
+        p.hydronicSystems?.some((system) => system.roomIds.includes(r.id)))
+    )
+      checks.push({
+        code: "excludedRoomEquipment",
+        status: "warning",
+        entityId: r.id,
+        message: `${r.name}: ambiente non climatizzato con apparecchi o impianti ancora associati; verificare e scollegare quelli non previsti. I dati sono conservati.`,
+      });
     const systemKinds = new Set<string>(
       p.hvacSystems.filter((s) => s.roomIds.includes(r.id)).map((s) => s.type),
     );
@@ -197,9 +303,9 @@ export function validateProject(p: Project): Check[] {
     )
       checks.push({
         code: "multipleSystems",
-        status: "warning",
+        status: "valid",
         entityId: r.id,
-        message: `${r.name}: più impianti presenti; verificare gli apparecchi da mantenere.`,
+        message: `${r.name}: impianti distinti presenti nella vista complessiva.`,
       });
     if (r.systemType === "radiator") {
       const outputW = radiators.reduce((sum, d) => sum + d.outputW, 0);
@@ -245,16 +351,20 @@ export function validateProject(p: Project): Check[] {
           "Finestra: quota davanzale da verificare; il 3D non inventa l’altezza della posa.",
       });
   }
+  let overlapRoomId: string | undefined;
   for (let i = 0; i < p.rooms.length; i++)
     for (let j = i + 1; j < p.rooms.length; j++)
       if (
         p.rooms[i].floorId === p.rooms[j].floorId &&
         overlappingPolygons(p.rooms[i].polygon, p.rooms[j].polygon)
-      )
+      ) {
         overlap++;
+        overlapRoomId ??= p.rooms[i].id;
+      }
   checks.push({
     code: "overlap",
     status: overlap ? "invalid" : "valid",
+    entityId: overlapRoomId,
     message: overlap
       ? `${overlap} sovrapposizioni tra stanze`
       : "Nessuna sovrapposizione tra stanze",
@@ -334,7 +444,15 @@ export function validateProject(p: Project): Check[] {
         code: "linearMeters",
         status: balance.status === "deficit" ? "warning" : "valid",
         entityId: system.id,
-        message: `${system.name || codes.get(system.id)} ${balance.use === "supply" ? "mandata" : "ripresa"}: richiesti ${balance.requiredM.toFixed(2)} m, installati ${balance.installedM.toFixed(2)} m, margine ${balance.marginM >= 0 ? "+" : ""}${balance.marginM.toFixed(2)} m.${balance.mixedModels ? ` Modelli misti: capacità ${balance.availableAirflowM3h.toFixed(1)} / ${balance.airflowM3h.toFixed(1)} m³/h; metri riferiti a ${balance.familyCode}.` : ""}`,
+        message: `${system.name || codes.get(system.id)} ${balance.use === "supply" ? "mandata" : "ripresa"}: richiesti ${balance.requiredM.toFixed(2)} m, installati ${balance.installedM.toFixed(2)} m, margine ${balance.marginM >= 0 ? "+" : ""}${balance.marginM.toFixed(2)} m.${
+          balance.use === "supply" &&
+          balance.rooms.some((room) => room.status === "deficit")
+            ? ` Mandata da completare in: ${balance.rooms
+                .filter((room) => room.status === "deficit")
+                .map((room) => room.roomName)
+                .join(", ")}.`
+            : ""
+        }${balance.mixedModels ? ` Modelli misti: capacità ${balance.availableAirflowM3h.toFixed(1)} / ${balance.airflowM3h.toFixed(1)} m³/h; metri riferiti a ${balance.familyCode}.` : ""}`,
       });
     const product = hvacProductAtVersion(
         system.productId,
@@ -405,9 +523,9 @@ export function validateProject(p: Project): Check[] {
       });
     }
     for (const roomId of system.roomIds) {
-      const allocation = ductedRoomAllocation(p, roomId);
+      const allocation = ductedRoomAllocation(p, roomId, system.installationId);
       if (!allocation) continue;
-      for (const use of ["supply", "return"] as const) {
+      for (const use of ["supply"] as const) {
         const terms = p.airTerminals.filter(
             (t) =>
               t.roomId === roomId &&
@@ -430,6 +548,24 @@ export function validateProject(p: Project): Check[] {
         });
       }
     }
+    const returnCapacity = p.airTerminals
+      .filter(
+        (terminal) =>
+          terminal.systemId === system.id &&
+          terminal.use === "return" &&
+          !needsTerminalReconfiguration(terminal),
+      )
+      .reduce((sum, terminal) => sum + terminal.availableAirflowM3h, 0);
+    const machineAirflow = ductedMaximumAirflow(system);
+    checks.push({
+      code: "returnAirflow",
+      status:
+        machineAirflow !== null && returnCapacity >= machineAirflow
+          ? "valid"
+          : "invalid",
+      message: `${system.name || codes.get(system.id)}: ripresa totale ${Math.round(returnCapacity)} m³/h / ${machineAirflow === null ? "portata macchina da verificare" : `${Math.round(machineAirflow)} m³/h macchina`}`,
+      entityId: system.id,
+    });
   }
   for (const r of p.radiators) {
     const product = radiatorProductAtVersion(r.productId, r.catalogVersion);
@@ -461,8 +597,12 @@ export function validateProject(p: Project): Check[] {
     checks.push({
       code: "deltaT",
       status:
-        r.deltaTK === p.projectSettings.radiatorDeltaTK ? "valid" : "invalid",
-      message: `${r.productId}: ΔT progetto ${p.projectSettings.radiatorDeltaTK} K`,
+        r.deltaTK ===
+        (p.installations.find((item) => item.id === r.installationId)
+          ?.radiatorDeltaTK ?? p.projectSettings.radiatorDeltaTK)
+          ? "valid"
+          : "invalid",
+      message: `${r.productId}: ΔT impianto ${p.installations.find((item) => item.id === r.installationId)?.radiatorDeltaTK ?? p.projectSettings.radiatorDeltaTK} K`,
       entityId: r.id,
     });
     checks.push({
@@ -566,7 +706,12 @@ export function validateProject(p: Project): Check[] {
       noise = t.noiseDbA ?? t.noiseUpperBoundDbA;
     checks.push({
       code: "noise",
-      status: noise === null ? "warning" : noise <= 37 ? "valid" : "invalid",
+      status:
+        noise === null
+          ? "warning"
+          : t.use === "return" || noise <= 37
+            ? "valid"
+            : "invalid",
       message: `${t.productId}: ${noise === null ? "rumore non disponibile" : `${t.noiseLabel} dB(A)`}`,
       entityId: t.id,
     });
@@ -755,4 +900,90 @@ export function validateProject(p: Project): Check[] {
       });
   }
   return checks;
+}
+
+export function projectProgress(project: Project, checks: Check[]) {
+  const geometryCodes = [
+    "scale",
+    "walls",
+    "closure",
+    "rooms",
+    "geometry",
+    "overlap",
+    "openingDimensions",
+    "openingElevation",
+    "recognitionPending",
+  ];
+  const geometryVerified =
+    project.rooms.length > 0 &&
+    checks
+      .filter((check) => geometryCodes.includes(check.code))
+      .every((check) => check.status === "valid");
+  const errors = checks.filter((check) => check.status === "invalid").length;
+  const warnings = checks.filter((check) => check.status === "warning").length;
+  const missingSystems = checks.filter(
+    (check) => check.code === "systemConfiguration" && check.status !== "valid",
+  ).length;
+  return {
+    geometryVerified,
+    status: errors ? "invalid" : warnings ? "warning" : "valid",
+    label: errors
+      ? "Errori da correggere"
+      : !project.rooms.length
+        ? "Ambienti da definire"
+        : missingSystems
+          ? `Impianti da completare: ${missingSystems}`
+          : warnings
+            ? "Revisione tecnica richiesta"
+            : "Pronto per dossier preliminare",
+  };
+}
+
+export function resolveCheckTarget(
+  project: Project,
+  entityId: string | undefined,
+): { floorId: string; selection: Selection | null } | null {
+  if (!entityId) return null;
+  const floor = project.floors.find((item) => item.id === entityId);
+  if (floor) return { floorId: floor.id, selection: null };
+  const room = project.rooms.find((item) => item.id === entityId);
+  if (room)
+    return { floorId: room.floorId, selection: { kind: "room", id: room.id } };
+  const opening = project.openings.find((item) => item.id === entityId);
+  const wall = project.walls.find(
+    (item) => item.id === (opening?.wallId ?? entityId),
+  );
+  if (wall)
+    return { floorId: wall.floorId, selection: { kind: "wall", id: wall.id } };
+  const duct = project.ducts?.find((item) => item.id === entityId);
+  const system = project.hvacSystems.find(
+    (item) => item.id === entityId || item.id === duct?.systemId,
+  );
+  const deviceId =
+    (duct && project.plenums.some((plenum) => plenum.id === duct.plenumId)
+      ? duct.plenumId
+      : system?.indoorUnits[0]?.id) ?? entityId;
+  const device = [
+    ...project.radiators,
+    ...project.airTerminals,
+    ...(project.fanCoils ?? []),
+    ...project.plenums,
+    ...(project.pillars ?? []),
+    ...project.hvacSystems.flatMap((item) => item.indoorUnits),
+    ...(project.hydronicSystems ?? []).map((item) => item.outdoorUnit),
+  ].find((item) => item.id === deviceId);
+  if (device)
+    return {
+      floorId: device.floorId,
+      selection: { kind: "device", id: device.id },
+    };
+  const servedRoom = project.rooms.find((item) =>
+    system?.roomIds.includes(item.id),
+  );
+  if (servedRoom)
+    return {
+      floorId: servedRoom.floorId,
+      selection: { kind: "room", id: servedRoom.id },
+    };
+  return null;
 }

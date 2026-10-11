@@ -1,7 +1,5 @@
 .dialog {
-  width: min(1100px, 95vw);
-  max-height: 94dvh;
-  overflow: auto;
+  width: 100%;
 }
 .dialog input:not([type="checkbox"]),
 .dialog select {
@@ -84,9 +82,6 @@
   }
   .preview {
     height: 300px;
-  }
-  .dialog {
-    width: 97vw;
   }
   .sidebar {
     gap: 8px;

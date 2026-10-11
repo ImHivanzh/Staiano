@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import { useState } from "react";
 import type { Project } from "@/schemas/project";
 import { airTerminalCatalogAtVersion } from "@/domain/catalogs/air-terminals";
@@ -31,7 +32,9 @@ export function TerminalEditForm({
     airTerminalCatalogAtVersion(t.catalogVersion)?.families.filter(
       (f) =>
         f.use.includes(t.use) &&
-        f.mountings?.includes(t.mounting as "wall" | "ceiling"),
+        (f.mountings
+          ? f.mountings.includes(t.mounting as "wall" | "ceiling")
+          : t.manualDimensions),
     ) ?? [];
   const family = families.find((f) =>
     f.variants.some((v) => v.id === variantId),
@@ -181,13 +184,20 @@ export function TerminalEditForm({
             ],
             ["x", "Posizione X bocchetta (m)", t.position.x],
             ["y", "Posizione Y bocchetta (m)", t.position.y],
-          ].map(([name, label, value]) => (
-            <label className="campo" key={String(name)}>
-              <span>{label}</span>
-              <input
+          ].map(([name, label, value]) =>
+            /\((m|mm|cm)\)$/.test(String(label)) ? (
+              <LengthInput
+                key={String(name)}
+                label={String(label).replace(/ \((m|mm|cm)\)$/, "")}
+                baseUnit={
+                  String(label).endsWith("(mm)")
+                    ? "mm"
+                    : String(label).endsWith("(cm)")
+                      ? "cm"
+                      : "m"
+                }
                 name={String(name)}
                 aria-label={String(label)}
-                type="number"
                 step="any"
                 required
                 defaultValue={value ?? ""}
@@ -196,8 +206,24 @@ export function TerminalEditForm({
                   !family?.isLinearPerMeter
                 }
               />
-            </label>
-          ))}
+            ) : (
+              <label className="campo" key={String(name)}>
+                <span>{label}</span>
+                <input
+                  type="number"
+                  name={String(name)}
+                  aria-label={String(label)}
+                  step="any"
+                  required
+                  defaultValue={value ?? ""}
+                  disabled={
+                    (name === "length" || name === "height") &&
+                    !family?.isLinearPerMeter
+                  }
+                />
+              </label>
+            ),
+          )}
           {t.mounting === "wall" && (
             <>
               <label className="campo">
@@ -213,15 +239,13 @@ export function TerminalEditForm({
                     ))}
                 </select>
               </label>
-              <label className="campo">
-                <span>Distanza centro dall’inizio parete (m)</span>
-                <input
-                  name="offset"
-                  type="number"
-                  step="0.01"
-                  defaultValue={1}
-                />
-              </label>
+              <LengthInput
+                label="Distanza centro dall’inizio parete"
+                baseUnit="m"
+                name="offset"
+                step="0.01"
+                defaultValue={1}
+              />
             </>
           )}
           {(["style", "color", "finish", "productCode"] as const).map(

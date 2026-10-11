@@ -1,6 +1,7 @@
 import type { Duct, Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "@/domain/project";
 import { placedPlenumGeometry } from "./placement";
+import { indoorRoute } from "@/domain/geometry/indoor-route";
 
 export type RoutePoint = Point & { elevationM: number };
 export function plenumLocalToPlan(
@@ -43,10 +44,14 @@ export function ductRoute(
       (port.centerMm[2] + port.collarLengthMm) / 1000,
     ]);
     const end = { ...terminal.position, elevationM: terminal.elevationM ?? 0 };
-    const automatic = [
-      { x: start.x, y: end.y, elevationM: start.elevationM },
-      { x: end.x, y: end.y, elevationM: start.elevationM },
-    ];
+    const automatic =
+      duct.routing === "manual"
+        ? []
+        : indoorRoute(project, plenum.floorId, start, end).map((p) => ({
+            ...p,
+            elevationM: start.elevationM,
+          }));
+    if (duct.routing !== "manual" && !automatic.length) return [];
     return [
       start,
       ...(duct.routing === "manual" ? duct.waypoints : automatic),
@@ -68,7 +73,20 @@ export function ductRoute(
       machine.heightMm / 2000 -
       0.05,
   };
-  return [start, ...duct.waypoints, plenumLocalToPlan(plenum, [0, 0, 0])];
+  const end = plenumLocalToPlan(plenum, [0, 0, 0]);
+  if (duct.routing === "manual" || duct.waypoints.length)
+    return [start, ...duct.waypoints, end];
+  const automatic = indoorRoute(project, plenum.floorId, start, end);
+  return automatic.length
+    ? [
+        start,
+        ...automatic.slice(1).map((p) => ({
+          ...p,
+          elevationM: start.elevationM,
+        })),
+        end,
+      ]
+    : [];
 }
 
 export function generateDuctRoutes(

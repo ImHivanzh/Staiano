@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
 import { writeFile } from "node:fs/promises";
 import { test, expect } from "./browser-test";
+import { openDisclosure } from "./ui-helpers";
 import type corpusMetadata from "./fixtures/plan-recognition/manifest.json";
 
 const corpus: typeof corpusMetadata = JSON.parse(
@@ -76,12 +77,14 @@ test("raster senza muri: mostra il limite, conserva lo sfondo e non inventa geom
     .getByRole("button", { name: "Importa sfondo calibrato", exact: true })
     .click();
   await expect(page.getByTestId("wall")).toHaveCount(0);
+  await openDisclosure(page, "Modifica");
   await expect(
     page.getByRole("button", { name: "Ricalibra", exact: true }),
   ).toBeVisible();
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await expect(page.getByTestId("wall")).toHaveCount(0);
+  await openDisclosure(page, "Modifica");
   await expect(
     page.getByRole("button", { name: "Ricalibra", exact: true }),
   ).toBeVisible();

@@ -40,7 +40,8 @@ export function sizeAirTerminal(
       if (point.quality === "review") continue;
       if (point.use && point.use !== use) continue;
       const noise = acousticUpperBound(point);
-      if (noise === null || noise > MAX_NOISE_DBA) continue;
+      if (use === "supply" && (noise === null || noise > MAX_NOISE_DBA))
+        continue;
       if (family.isLinearPerMeter) {
         if (!point.airflowPerMeterM3h) continue;
         const theoreticalLengthM = perPoint / point.airflowPerMeterM3h;

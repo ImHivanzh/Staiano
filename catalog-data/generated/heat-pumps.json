@@ -1,5 +1,5 @@
 {
-  "version": "heat-pumps-dd01394cdc900d50",
+  "version": "heat-pumps-6b5487027be7da66",
   "products": [
     {
       "id": "chaffoteaux-arianext-plus-35-m-r32",
@@ -211,6 +211,622 @@
           "coolingW": 7000,
           "cop": 3.0,
           "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-35-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 35 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 756,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Codice sistema 3302018",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 3500,
+          "coolingW": 3500,
+          "cop": 5.1,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 3000,
+          "coolingW": 3500,
+          "cop": 3.74,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 3510,
+          "coolingW": 3500,
+          "cop": 3.1,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-50-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 50 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 756,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Codice sistema 3302019",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 5000,
+          "coolingW": 5000,
+          "cop": 5.0,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 4050,
+          "coolingW": 5000,
+          "cop": 3.65,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 5000,
+          "coolingW": 5000,
+          "cop": 2.9,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-80-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 80 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1106,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Codice sistema 3302020",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 7000,
+          "cop": 4.8,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 6000,
+          "coolingW": 7000,
+          "cop": 3.7,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7410,
+          "coolingW": 7000,
+          "cop": 3.0,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-80-m-t-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 80 M-T LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1106,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Trifase 400 V / 50 Hz",
+        "Codice sistema 3302021",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 7000,
+          "cop": 4.8,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 6000,
+          "coolingW": 7000,
+          "cop": 3.7,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7410,
+          "coolingW": 7000,
+          "cop": 3.0,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-120-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 120 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1506,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Codice sistema 3302022",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 12000,
+          "coolingW": 9050,
+          "cop": 4.9,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 8200,
+          "coolingW": 9050,
+          "cop": 4.1,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9510,
+          "coolingW": 9050,
+          "cop": 3.2,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-120-m-t-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 120 M-T LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1506,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Trifase 400 V / 50 Hz",
+        "Codice sistema 3302023",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 12000,
+          "coolingW": 9050,
+          "cop": 4.9,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 8200,
+          "coolingW": 9050,
+          "cop": 4.1,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9510,
+          "coolingW": 9050,
+          "cop": 3.2,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-150-m-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 150 M LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1506,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Codice sistema 3302024",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 15000,
+          "coolingW": 11000,
+          "cop": 4.7,
+          "eer": 2.93,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 9900,
+          "coolingW": 11000,
+          "cop": 4.0,
+          "eer": 2.93,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 11000,
+          "coolingW": 11000,
+          "cop": 3.1,
+          "eer": 2.93,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "chaffoteaux-arianext-lite-150-m-t-r32",
+      "manufacturer": "Chaffoteaux",
+      "family": "ARIANEXT LITE M LINK R32",
+      "model": "ARIANEXT LITE 150 M-T LINK R32",
+      "widthMm": 1016,
+      "heightMm": 1506,
+      "depthMm": 383,
+      "dimensionNote": "Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Trifase 400 V / 50 Hz",
+        "Codice sistema 3302025",
+        "Expert HD e Wi-Fi di serie",
+        "Gestione ChaffoLink",
+        "Light Box IPX5",
+        "Puffer e resistenza integrativa opzionali",
+        "ACS con bollitore e kit opzionali"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/chaffoteaux-arianext-lite.png",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/img/produits_pers/png55595-20261007161226.png",
+        "sha256": "6c373d100edf2e3ee641d70d01568fd2495bbe4e1685b01d3dd108e4164b9d82",
+        "caption": "Foto ufficiale di gamma ARIANEXT LITE M LINK R32, con Light Box e Expert HD; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Chaffoteaux",
+        "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
+        "sourceType": "pdf",
+        "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
+        "documentRevision": "Scheda ARIANEXT LITE M LINK R32 2022",
+        "retrievedAt": "2026-10-08T23:29:36.187506+00:00",
+        "importedAt": "2026-10-08T23:29:36.187506+00:00",
+        "page": 4
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 15000,
+          "coolingW": 11000,
+          "cop": 4.7,
+          "eer": 2.93,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 9900,
+          "coolingW": 11000,
+          "cop": 4.0,
+          "eer": 2.93,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 11000,
+          "coolingW": 11000,
+          "cop": 3.1,
+          "eer": 2.93,
           "heatingWaterSupplyC": 35,
           "coolingWaterSupplyC": 7,
           "heatingOutdoorC": -7,

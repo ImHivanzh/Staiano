@@ -1,5 +1,5 @@
 import { expect, test } from "./browser-test";
-import { openInspector } from "./ui-helpers";
+import { openInspector, openDisclosure } from "./ui-helpers";
 test("canalizzato, mandata/ripresa reali, reload e selezione3D", async ({
   page,
 }) => {
@@ -14,6 +14,9 @@ test("canalizzato, mandata/ripresa reali, reload e selezione3D", async ({
   await page
     .getByRole("group", { name: "Impianto da configurare" })
     .getByRole("button", { name: "Canalizzato", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Scegli macchina", exact: true })
     .click();
   await page
     .getByRole("button", { name: "Configura canalizzato", exact: true })
@@ -132,6 +135,7 @@ test("radiatori reali, vincoli, posizionamento e reload", async ({ page }) => {
   await expect(
     page.getByLabel("Numero radiatori", { exact: true }),
   ).toHaveValue("2");
+  await page.getByRole("button", { name: "Chiudi configurazione" }).click();
   await page.getByTestId("radiator-2d").first().click();
   await openInspector(page, "Posizione");
   await expect(page.getByText("Distanza centro dall'inizio (m)")).toBeVisible();
@@ -139,6 +143,7 @@ test("radiatori reali, vincoli, posizionamento e reload", async ({ page }) => {
     .getByRole("button", { name: "Controlli", exact: false })
     .first()
     .click();
+  await page.getByLabel("Esito controlli").selectOption("all");
   await expect(page.getByText(/resa da formula produttore/)).toHaveCount(2);
   await expect(page.locator(".controllo.invalid")).toHaveCount(0);
 });
@@ -180,13 +185,16 @@ test("creazione manuale, quote, altezza, autosave, import/export e 3D", async ({
   await page.getByRole("spinbutton", { name: "Larghezza netta (m)" }).fill("6");
   await page.getByRole("button", { name: "Aggiorna quote nette" }).click();
   await expect(page.getByTestId("room-area")).toContainText("24,00");
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Annulla", exact: true }).click();
   await page.getByRole("button", { name: /Soggiorno Rossi.*20,00/ }).click();
   await expect(page.getByTestId("room-area")).toContainText("20,00");
+  await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Ripeti", exact: true }).click();
   await page.getByRole("button", { name: /Soggiorno Rossi.*24,00/ }).click();
   await expect(page.getByTestId("room-area")).toContainText("24,00");
   const downloadPromise = page.waitForEvent("download");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Esporta", exact: true }).click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toMatch(/\.hvacproj$/);
@@ -206,6 +214,7 @@ test("creazione manuale, quote, altezza, autosave, import/export e 3D", async ({
     "true",
   );
   await page.screenshot({ path: "test-results/manual-3d.png", fullPage: true });
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page.getByRole("button", { name: "Vista dall'alto" }).click();
   await page.getByRole("button", { name: "2D", exact: true }).click();
   await expect(page.getByTestId("editor-2d")).toBeVisible();

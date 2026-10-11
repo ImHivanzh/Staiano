@@ -211,7 +211,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
       p.hvacSystems.map((s) => s.name),
     );
     const removed = removeHvacSystem(restored, first.system.id);
-    expect(removed.hvacSystems).toEqual([untouched]);
+    expect(removed.hvacSystems).toMatchObject([untouched]);
     expect(removed.airTerminals).toEqual(untouchedTerminals);
     expect(ductedRoomAllocation(removed, night.id)?.airflowM3h).toBe(
       second.airflowM3h,
@@ -388,7 +388,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
     expect(p.airTerminals).toHaveLength(2);
     expect(p.airTerminals[0].depthMm).toBe(60);
     const restored = decodeProject(encodeProject(p));
-    expect(restored.schemaVersion).toBe(3);
+    expect(restored.schemaVersion).toBe(5);
     expect(restored.hvacSystems).toHaveLength(1);
     expect(restored.airTerminals).toHaveLength(2);
     expect(

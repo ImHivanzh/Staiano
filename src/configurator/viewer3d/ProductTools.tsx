@@ -8,25 +8,21 @@ import {
   radiatorProducts,
   radiatorProductPhoto,
 } from "@/domain/catalogs/radiators";
-import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { ManualMachineForm } from "@/configurator/systems/ManualMachineForm";
-import { TerminalDistribution } from "@/configurator/systems/TerminalDistribution";
 import { sizeRadiatorsInWorker } from "@/domain/radiators/size-client";
 import type { RadiatorSolution } from "@/domain/radiators/size";
 import { applyRadiatorSolution } from "@/domain/radiators/apply";
 import { splitCatalog } from "@/domain/catalogs/splits";
 import { sizeSplitSystems } from "@/domain/air-conditioning/size";
 import { applySplitSystem } from "@/domain/air-conditioning/apply";
-import { hvacCatalog } from "@/domain/catalogs/hvac";
-import { selectDuctedMachine } from "@/domain/ducted/calculate";
-import { applyDuctedSystem, ductedRoomAllocation } from "@/domain/ducted/apply";
-import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
-import { sizeAirTerminal } from "@/domain/air-terminals/size";
-import { OperatorTerminalControls } from "@/configurator/systems/OperatorTerminalControls";
-import { airTerminalModelDescription } from "@/domain/air-terminals/description";
+
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { roomWallSpan } from "@/domain/geometry/placement";
 import styles from "./ProductTools.module.css";
+import { FullscreenDialog } from "../FullscreenDialog";
+import { DuctedPanel } from "../systems/DuctedPanel";
+import { createInstallation } from "@/domain/installations";
+
 import { splitUnitPresentation } from "@/domain/catalogs/split-presentation";
 
 export type ProductTool = "radiator" | "split" | "terminal" | "machine";
@@ -39,6 +35,7 @@ export type ProductToolsProps = {
   onClose: () => void;
 };
 type PlacementProps = {
+  installationId?: string;
   project: Project;
   room: Room;
   selectedWall?: Wall;
@@ -126,11 +123,19 @@ function RadiatorProducts({
   room,
   selectedWall,
   apply,
+  installationId,
 }: PlacementProps) {
-  const installed = project.radiators.filter((item) => item.roomId === room.id);
+  const installed = project.radiators.filter(
+    (item) =>
+      item.roomId === room.id &&
+      (!installationId || item.installationId === installationId),
+  );
   const [familyKey, setFamilyKey] = useState<string | null>(null);
   const [count, setCount] = useState(installed.length || 1);
-  const [deltaT, setDeltaT] = useState(project.projectSettings.radiatorDeltaTK);
+  const [deltaT, setDeltaT] = useState(
+    project.installations.find((item) => item.id === installationId)
+      ?.radiatorDeltaTK ?? project.projectSettings.radiatorDeltaTK,
+  );
   const [maxWidth, setMaxWidth] = useState("");
   const [maxHeight, setMaxHeight] = useState("");
   const [maxDepth, setMaxDepth] = useState("");
@@ -194,6 +199,7 @@ function RadiatorProducts({
                   room.id,
                   solution,
                   wallId || null,
+                  installationId,
                 );
                 return true;
               } catch {
@@ -228,6 +234,7 @@ function RadiatorProducts({
     project,
     room.id,
     wallId,
+    installationId,
   ]);
   const current = result?.key === key ? result : null;
   const solution = current?.solution;
@@ -411,6 +418,7 @@ function RadiatorProducts({
               room.id,
               solution,
               wallId || null,
+              installationId,
             ),
           )
         }
@@ -421,9 +429,17 @@ function RadiatorProducts({
   );
 }
 
-function SplitProducts({ project, room, apply }: PlacementProps) {
+function SplitProducts({
+  project,
+  room,
+  apply,
+  installationId,
+}: PlacementProps) {
   const existing = project.hvacSystems.find(
-    (system) => system.type === "split" && system.roomIds.includes(room.id),
+    (system) =>
+      system.type === "split" &&
+      system.roomIds.includes(room.id) &&
+      (!installationId || system.installationId === installationId),
   );
   const [manufacturer, setManufacturer] = useState(
     existing?.manufacturer ?? brands[0],
@@ -631,6 +647,7 @@ function SplitProducts({ project, room, apply }: PlacementProps) {
               manufacturer,
               existing?.id ?? null,
               chosen.combination.id,
+              installationId,
             ),
           )
         }
@@ -641,359 +658,15 @@ function SplitProducts({ project, room, apply }: PlacementProps) {
   );
 }
 
-function TerminalProducts({ project, room, apply }: PlacementProps) {
-  const allocation = ductedRoomAllocation(project, room.id);
-  const [manufacturer, setManufacturer] = useState(brands[0]);
-  const [use, setUse] = useState<"supply" | "return">("supply");
-  const [familyCode, setFamilyCode] = useState<string | null>(null);
-  const [mounting, setMounting] = useState<"wall" | "ceiling">("ceiling");
-  const [choice, setChoice] = useState(0);
-  const [familySearch, setFamilySearch] = useState("");
-  const [showAllFamilies, setShowAllFamilies] = useState(false);
-  const [servedRoomIds, setServedRoomIds] = useState([room.id]);
-  const points = use === "supply" ? room.supplyPoints : room.returnPoints;
-  const options = airTerminalCatalog.families.map((family) => ({
-    family,
-    solutions: allocation
-      ? sizeAirTerminal(allocation.airflowM3h, points, family, use)
-      : [],
-  }));
-  const selected = options.find(
-    (option) => option.family.familyCode === familyCode,
-  );
-  const solution = selected?.solutions[choice] ?? selected?.solutions[0];
-  if (!allocation) {
-    const machine = selectDuctedMachine(
-      project.rooms
-        .filter((item) => servedRoomIds.includes(item.id))
-        .reduce((total, item) => total + item.designLoadW, 0),
-      manufacturer,
-      hvacCatalog.products,
-    )[0];
-    const conflicting = project.hvacSystems.some((system) =>
-      system.roomIds.some((id) => servedRoomIds.includes(id)),
-    );
-    return (
-      <>
-        <p className={styles.hint}>
-          Prima delle bocchette serve la portata della macchina canalizzata.
-          Configurala per questo ambiente, poi scegli il terminale.
-        </p>
-        <BrandChoice value={manufacturer} onChange={setManufacturer} />
-        <p className={styles.hint}>
-          Impianto autonomo:{" "}
-          {project.rooms
-            .filter((item) => servedRoomIds.includes(item.id))
-            .map((item) => item.name)
-            .join(", ")}
-          .
-        </p>
-        <details className={styles.advanced}>
-          <summary>Ambienti di questo impianto</summary>
-          <fieldset>
-            <legend>Stanze indipendenti dagli altri impianti</legend>
-            {project.rooms
-              .filter((item) => item.floorId === room.floorId)
-              .map((item) => {
-                const assigned = project.hvacSystems.find((system) =>
-                  system.roomIds.includes(item.id),
-                );
-                return (
-                  <label key={item.id} className={styles.check}>
-                    <input
-                      type="checkbox"
-                      checked={servedRoomIds.includes(item.id)}
-                      disabled={
-                        item.id === room.id ||
-                        Boolean(assigned) ||
-                        item.geometryStatus !== "closed"
-                      }
-                      onChange={(e) =>
-                        setServedRoomIds(
-                          e.target.checked
-                            ? [...servedRoomIds, item.id]
-                            : servedRoomIds.filter((id) => id !== item.id),
-                        )
-                      }
-                    />
-                    {item.name}
-                    {assigned ? " · già servito" : ""}
-                  </label>
-                );
-              })}
-          </fieldset>
-        </details>
-        {machine && (
-          <div className={styles.result}>
-            <strong>{machine.indoorModel}</strong>
-            <p>
-              {formatNumber(machine.coolingCapacityW / 1000)} kW ·{" "}
-              {formatNumber(maximumAirflowOption(machine)?.airflowM3h ?? 0)}{" "}
-              m³/h
-            </p>
-          </div>
-        )}
-        {conflicting && (
-          <p className={styles.warning}>
-            Ambiente già servito da un altro sistema. Modifica prima quel
-            sistema nelle proprietà.
-          </p>
-        )}
-        <button
-          type="button"
-          className={styles.cta}
-          disabled={!machine || conflicting}
-          onClick={() =>
-            apply(
-              (currentProject) =>
-                applyDuctedSystem(
-                  currentProject,
-                  servedRoomIds,
-                  manufacturer,
-                  null,
-                ),
-              false,
-            )
-          }
-        >
-          Configura canalizzato
-        </button>
-      </>
-    );
-  }
+function TerminalProducts({ project, room, installationId }: PlacementProps) {
   return (
-    <>
-      <p className={styles.hint}>
-        Impianto autonomo:{" "}
-        {project.rooms
-          .filter((item) => allocation.system.roomIds.includes(item.id))
-          .map((item) => item.name)
-          .join(", ")}
-        .<br />
-        Portata assegnata: {formatNumber(allocation.airflowM3h)} m³/h. Scegli
-        l’aspetto tra famiglie verificate.
-      </p>
-      <div className={styles.brands}>
-        {(["supply", "return"] as const).map((value) => (
-          <button
-            type="button"
-            key={value}
-            aria-pressed={use === value}
-            onClick={() => {
-              setUse(value);
-              setFamilyCode(null);
-              setChoice(0);
-            }}
-          >
-            {value === "supply" ? "Mandata" : "Ripresa"}
-          </button>
-        ))}
-      </div>
-      <label className={styles.room}>
-        Cerca nel catalogo Ecoclima
-        <input
-          aria-label="Cerca bocchette Ecoclima"
-          value={familySearch}
-          onChange={(e) => setFamilySearch(e.target.value)}
-          placeholder="EDLS, EDSC, EGA, push…"
-        />
-      </label>
-      <div className={styles.gallery}>
-        {options
-          .filter(({ family }) =>
-            familySearch.trim()
-              ? familySearch
-                  .trim()
-                  .toLowerCase()
-                  .split(/\s+/)
-                  .every((word) =>
-                    `${family.familyCode} ${family.name} ${family.description} ${family.closureOptions?.join(" ") ?? ""}`
-                      .toLowerCase()
-                      .includes(word),
-                  )
-              : showAllFamilies ||
-                [
-                  "EDLS",
-                  "EDSC-C",
-                  "EDSC-Q",
-                  "EGA6",
-                  "EGQ-PUSH",
-                  "EBLF",
-                  "EGQ",
-                  "EVVMC",
-                ].includes(family.familyCode),
-          )
-          .map(({ family, solutions }) => (
-            <button
-              type="button"
-              key={family.familyCode}
-              className={styles.product}
-              disabled={!solutions.length}
-              aria-label={`Scegli ${family.familyCode}`}
-              aria-pressed={familyCode === family.familyCode}
-              onClick={() => {
-                setFamilyCode(family.familyCode);
-                setChoice(0);
-                setMounting(family.mountings?.[0] ?? "wall");
-              }}
-            >
-              {family.image && (
-                <Image
-                  src={family.image}
-                  alt={family.name}
-                  width={180}
-                  height={100}
-                  unoptimized
-                />
-              )}
-              <strong>{family.familyCode}</strong>
-              <span>{family.name}</span>
-              {!solutions.length && (
-                <small>Dati o portata non compatibili</small>
-              )}
-            </button>
-          ))}
-      </div>
-      <button
-        type="button"
-        className="bottone piccolo tenue"
-        onClick={() => setShowAllFamilies(!showAllFamilies)}
-      >
-        {showAllFamilies
-          ? "Mostra i modelli comuni"
-          : "Tutti i modelli Ecoclima"}
-      </button>
-      <details className={styles.advanced}>
-        <summary>Quantità e montaggio</summary>
-        <label>
-          {use === "supply" ? "Punti mandata" : "Punti ripresa"}
-          <input
-            type="number"
-            min={1}
-            max={100}
-            value={points}
-            onChange={(e) => {
-              const count = Number(e.target.value);
-              if (Number.isInteger(count) && count >= 1 && count <= 100) {
-                apply(
-                  (currentProject) => ({
-                    ...currentProject,
-                    rooms: currentProject.rooms.map((item) =>
-                      item.id === room.id
-                        ? {
-                            ...item,
-                            [use === "supply"
-                              ? "supplyPoints"
-                              : "returnPoints"]: count,
-                          }
-                        : item,
-                    ),
-                  }),
-                  false,
-                );
-                setChoice(0);
-              }
-            }}
-          />
-        </label>
-        {selected && (
-          <>
-            <label>
-              Montaggio terminale
-              <select
-                aria-label="Montaggio terminale"
-                value={mounting}
-                onChange={(e) =>
-                  setMounting(e.target.value as "wall" | "ceiling")
-                }
-              >
-                {selected.family.mountings?.map((value) => (
-                  <option key={value} value={value}>
-                    {value === "wall" ? "Parete" : "Soffitto"}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Misura commerciale
-              <select
-                aria-label="Soluzione terminale"
-                value={choice}
-                onChange={(e) => setChoice(Number(e.target.value))}
-              >
-                {selected.solutions.map((item, index) => (
-                  <option key={index} value={index}>
-                    {airTerminalModelDescription(
-                      selected.family,
-                      item.variant.id,
-                    )}
-                    {item.commercialLengthM
-                      ? ` · ${formatNumber(item.commercialLengthM)} m`
-                      : ` · ${item.quantityPerPoint} unità/punto`}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </>
-        )}
-      </details>
-      {selected && solution && (
-        <div className={styles.result}>
-          <TerminalDistribution
-            project={project}
-            systemId={allocation.system.id}
-            family={selected.family}
-            solution={solution}
-            use={use}
-          />
-          <strong>
-            {airTerminalModelDescription(selected.family, solution.variant.id)}
-          </strong>
-          <p>
-            {solution.commercialLengthM
-              ? `${formatNumber(solution.commercialLengthM)} m · `
-              : ""}
-            {points * solution.quantityPerPoint}{" "}
-            {points * solution.quantityPerPoint === 1
-              ? "terminale"
-              : "terminali"}{" "}
-            · {mounting === "wall" ? "parete" : "soffitto"}
-          </p>
-          <p>
-            {formatNumber(solution.availableAirflowPerPointM3h)} m³/h per punto
-            · {solution.operatingPoint.noiseLabel} dB(A) di riferimento
-          </p>
-          <details>
-            <summary>Scheda e calcolo</summary>
-            {solution.log.map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
-            <p>{selected.family.operatingConditions}</p>
-            <a
-              href={selected.family.sourceMetadata.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Scheda ufficiale
-            </a>
-          </details>
-        </div>
-      )}
-      {selected && solution && (
-        <OperatorTerminalControls
-          project={project}
-          room={room}
-          systemId={allocation.system.id}
-          family={selected.family}
-          solution={solution}
-          use={use}
-          mounting={mounting}
-        />
-      )}
-    </>
+    <DuctedPanel
+      project={project}
+      room={room}
+      installationId={installationId}
+    />
   );
 }
-
 export function ProductTools({
   type,
   project,
@@ -1007,14 +680,31 @@ export function ProductTools({
     selectedRoom?.id ?? (rooms.length === 1 ? rooms[0].id : ""),
   );
   const room = rooms.find((item) => item.id === roomId);
-  const incompatibleSystem = project.hvacSystems.find(
-    (system) =>
-      system.roomIds.includes(roomId) &&
-      ((type === "split" && system.type === "ducted") ||
-        (type === "terminal" && system.type === "split")),
-  );
+  const installationType =
+    type === "terminal" || type === "machine" ? "ducted" : type;
+  const [installationId, setInstallationId] = useState<string | null>(null);
+  const installation =
+    project.installations.find(
+      (item) =>
+        item.id === installationId &&
+        item.type === installationType &&
+        item.roomIds.includes(roomId),
+    ) ??
+    project.installations.find(
+      (item) => item.type === installationType && item.roomIds.includes(roomId),
+    );
+  useEffect(() => {
+    if (!roomId || installation) return;
+    const state = useProjectStore.getState();
+    const existing = state.project?.installations.find(
+      (item) => item.type === installationType && item.roomIds.includes(roomId),
+    );
+    if (existing) return;
+    state.commit((p) => createInstallation(p, installationType, roomId));
+  }, [roomId, installation, installationType]);
   const [error, setError] = useState<string | null>(null);
   const dialog = useRef<HTMLElement>(null);
+  const [configurationOpen, setConfigurationOpen] = useState(false);
   const closeRef = useRef(onClose);
   useEffect(() => {
     closeRef.current = onClose;
@@ -1023,6 +713,8 @@ export function ProductTools({
     const previousFocus = document.activeElement;
     dialog.current?.querySelector<HTMLButtonElement>("button")?.focus();
     const keydown = (event: KeyboardEvent) => {
+      if (event.target instanceof Element && event.target.closest("dialog"))
+        return;
       if (event.key === "Escape") {
         event.stopPropagation();
         closeRef.current();
@@ -1078,8 +770,7 @@ export function ProductTools({
   const valid =
     room &&
     room.geometryStatus === "closed" &&
-    project.floors.find((floor) => floor.id === room.floorId)?.scaleVerified &&
-    !incompatibleSystem;
+    project.floors.find((floor) => floor.id === room.floorId)?.scaleVerified;
   const title =
     type === "radiator"
       ? "Radiatori"
@@ -1088,103 +779,188 @@ export function ProductTools({
         : type === "machine"
           ? "Macchine"
           : "Bocchette";
+  const content = (
+    <div className={styles.catalogContent}>
+      <label className={styles.room}>
+        Ambiente destinazione
+        <select
+          aria-label="Ambiente destinazione"
+          value={roomId}
+          onChange={(e) => {
+            setRoomId(e.target.value);
+            setError(null);
+          }}
+        >
+          <option value="">Scegli un ambiente</option>
+          {rooms.map((item) => {
+            const system = project.hvacSystems.find((entry) =>
+              entry.roomIds.includes(item.id),
+            );
+            const blocked = !!item.conditioningExclusion;
+            return (
+              <option key={item.id} value={item.id} disabled={blocked}>
+                {item.name || "Ambiente"}
+                {system
+                  ? ` · ${system.type === "ducted" ? "canalizzato" : "split"} ${system.manufacturer}`
+                  : ""}
+              </option>
+            );
+          })}
+        </select>
+      </label>
+      {!room && (
+        <p className={styles.hint}>
+          Scegli l’ambiente in cui inserire l’apparecchio.
+        </p>
+      )}
+      {room && !valid && (
+        <p className={styles.warning}>
+          Richiudi il contorno e verifica la scala della stanza prima di
+          configurare gli apparecchi.
+        </p>
+      )}
+      {valid && room && (
+        <div key={`${type}-${room.id}-${installation?.id}`}>
+          <div className="azioni">
+            <label className="campo">
+              <span>Impianto di destinazione</span>
+              <select
+                aria-label="Impianto di destinazione"
+                value={installation?.id ?? ""}
+                onChange={(event) => {
+                  const selected = project.installations.find(
+                    (item) => item.id === event.target.value,
+                  );
+                  if (selected) {
+                    setInstallationId(selected.id);
+                    if (!selected.roomIds.includes(roomId))
+                      setRoomId(selected.roomIds[0]);
+                  }
+                }}
+              >
+                {project.installations
+                  .filter((item) => item.type === installationType)
+                  .map((item) => (
+                    <option value={item.id} key={item.id}>
+                      {item.name} · {item.roomIds.length} stanze
+                    </option>
+                  ))}
+              </select>
+            </label>
+            <button
+              type="button"
+              className="bottone piccolo"
+              onClick={() => {
+                useProjectStore
+                  .getState()
+                  .commit((p) =>
+                    createInstallation(p, installationType, room.id),
+                  );
+                const added = useProjectStore
+                  .getState()
+                  .project?.installations.at(-1);
+                if (added) setInstallationId(added.id);
+              }}
+            >
+              Nuovo impianto
+            </button>
+          </div>
+          {type === "radiator" ? (
+            <RadiatorProducts
+              project={project}
+              room={room}
+              selectedWall={selectedWall}
+              apply={apply}
+              installationId={installation?.id}
+            />
+          ) : type === "split" ? (
+            <SplitProducts
+              project={project}
+              room={room}
+              apply={apply}
+              installationId={installation?.id}
+            />
+          ) : type === "machine" ? (
+            <ManualMachineForm
+              project={project}
+              roomIds={[room.id]}
+              onApplied={onClose}
+              installationId={installation?.id}
+            />
+          ) : (
+            <TerminalProducts
+              project={project}
+              room={room}
+              apply={apply}
+              installationId={installation?.id}
+            />
+          )}
+        </div>
+      )}
+      {error && (
+        <p className={styles.warning} role="alert">
+          {error}
+        </p>
+      )}
+    </div>
+  );
   return (
     <aside
       ref={dialog}
       className={styles.panel}
-      role="dialog"
-      aria-label={`Catalogo ${title.toLowerCase()}`}
+      role={type === "terminal" ? "dialog" : undefined}
+      aria-label={type === "terminal" ? "Catalogo bocchette" : undefined}
       aria-modal="false"
     >
-      <header className={styles.header}>
-        <div>
-          <span>Catalogo</span>
-          <h2>{title}</h2>
-        </div>
-        <button
-          type="button"
-          className={styles.close}
-          aria-label="Chiudi catalogo"
-          onClick={onClose}
-        >
-          ×
-        </button>
-      </header>
-      <div className={styles.content}>
-        <label className={styles.room}>
-          Ambiente destinazione
-          <select
-            aria-label="Ambiente destinazione"
-            value={roomId}
-            onChange={(e) => {
-              setRoomId(e.target.value);
-              setError(null);
-            }}
-          >
-            <option value="">Scegli un ambiente</option>
-            {rooms.map((item) => {
-              const system = project.hvacSystems.find((entry) =>
-                entry.roomIds.includes(item.id),
-              );
-              const blocked =
-                (type === "split" && system?.type === "ducted") ||
-                (type === "terminal" && system?.type === "split");
-              return (
-                <option key={item.id} value={item.id} disabled={blocked}>
-                  {item.name || "Ambiente"}
-                  {system
-                    ? ` · ${system.type === "ducted" ? "canalizzato" : "split"} ${system.manufacturer}`
-                    : ""}
-                </option>
-              );
-            })}
-          </select>
-        </label>
-        {!room && (
-          <p className={styles.hint}>
-            Scegli l’ambiente in cui inserire l’apparecchio.
-          </p>
-        )}
-        {incompatibleSystem && (
-          <p className={styles.warning}>
-            Questo ambiente è già servito da un altro tipo di impianto. Scegli
-            un ambiente libero o modifica l’impianto nelle proprietà.
-          </p>
-        )}
-        {room && !valid && !incompatibleSystem && (
-          <p className={styles.warning}>
-            Richiudi il contorno e verifica la scala della stanza prima di
-            configurare gli apparecchi.
-          </p>
-        )}
-        {valid && room && (
-          <div key={`${type}-${room.id}`}>
-            {type === "radiator" ? (
-              <RadiatorProducts
-                project={project}
-                room={room}
-                selectedWall={selectedWall}
-                apply={apply}
-              />
-            ) : type === "split" ? (
-              <SplitProducts project={project} room={room} apply={apply} />
-            ) : type === "machine" ? (
-              <ManualMachineForm
-                project={project}
-                roomIds={[room.id]}
-                onApplied={onClose}
-              />
-            ) : (
-              <TerminalProducts project={project} room={room} apply={apply} />
-            )}
+      {type === "terminal" && (
+        <header className={styles.header}>
+          <div>
+            <span>Catalogo</span>
+            <h2>{title}</h2>
           </div>
-        )}
-        {error && (
-          <p className={styles.warning} role="alert">
-            {error}
-          </p>
-        )}
-      </div>
+          <button
+            type="button"
+            className={styles.close}
+            aria-label="Chiudi catalogo"
+            onClick={onClose}
+          >
+            ×
+          </button>
+        </header>
+      )}
+      {type === "terminal" ? (
+        <>
+          <div className={styles.content}>
+            <p className={styles.hint}>
+              Configura macchina, mandata, ripresa e bocchette in uno spazio
+              dedicato.
+            </p>
+            <button
+              type="button"
+              className={styles.cta}
+              onClick={() => setConfigurationOpen(true)}
+            >
+              Configura canalizzazione
+            </button>
+          </div>
+          <FullscreenDialog
+            open={configurationOpen}
+            title="Configura canalizzazione"
+            onClose={() => setConfigurationOpen(false)}
+          >
+            {content}
+          </FullscreenDialog>
+        </>
+      ) : (
+        <FullscreenDialog
+          open
+          title={`Catalogo ${title.toLowerCase()}`}
+          closeLabel="Chiudi catalogo"
+          onClose={onClose}
+        >
+          {content}
+        </FullscreenDialog>
+      )}
     </aside>
   );
 }

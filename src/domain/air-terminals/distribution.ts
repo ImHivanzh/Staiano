@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { installationRoom } from "../installations";
 import type { AirTerminalFamily } from "@/domain/catalogs/air-terminal-schema";
 import { resolveDuctedMachine } from "@/domain/ducted/machine";
 import { distributeAirflow } from "@/domain/ducted/calculate";
@@ -17,9 +18,11 @@ export function terminalDistribution(
   );
   const machine = system && resolveDuctedMachine(system);
   if (!system || !machine) return null;
-  const rooms = project.rooms.filter((room) =>
-    system.roomIds.includes(room.id),
-  );
+  const rooms = project.rooms
+    .filter(
+      (room) => system.roomIds.includes(room.id) && !room.conditioningExclusion,
+    )
+    .map((room) => installationRoom(project, room, system.installationId));
   if (!rooms.length || rooms.some((room) => room.geometryStatus !== "closed"))
     return null;
   const allocations = distributeAirflow(rooms, machine.maxAirflowM3h);
@@ -45,9 +48,9 @@ export function terminalDistribution(
       points,
       solution,
       theoreticalLengthM:
-        solution?.theoreticalLengthM === null || !solution
-          ? null
-          : solution.theoreticalLengthM * points,
+        family.isLinearPerMeter && choice.operatingPoint.airflowPerMeterM3h
+          ? allocation.airflowM3h / choice.operatingPoint.airflowPerMeterM3h
+          : null,
       commercialLengthM:
         physicalLength === null || !solution
           ? null

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { FullscreenDialog } from "../FullscreenDialog";
 import type { Point } from "@/schemas/project";
 import type { ImportedPlan, ParsedPlan } from "@/services/import/plan-types";
 import { readPlanFile } from "@/services/import/plan-file";
@@ -21,8 +22,7 @@ export function PlanImportWizard({
   onImport: (plan: ImportedPlan) => void;
   initialFile?: File;
 }) {
-  const dialogRef = useRef<HTMLDivElement>(null),
-    previewRef = useRef<SVGSVGElement>(null),
+  const previewRef = useRef<SVGSVGElement>(null),
     fileRef = useRef<HTMLInputElement>(null),
     generation = useRef(0);
   const [view, setView] = useState<{ zoom: number; center: Point | null }>({
@@ -190,43 +190,9 @@ export function PlanImportWizard({
   }
   useEffect(() => {
     const counter = generation;
-    const element = dialogRef.current,
-      previous = document.activeElement as HTMLElement | null;
-    element?.focus();
-    function keys(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        e.stopPropagation();
-        onClose();
-      }
-      if (e.key === "Tab" && element) {
-        const all = Array.from(
-          element.querySelectorAll<HTMLElement>(
-            'button:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex="0"]',
-          ),
-        );
-        const first = all[0],
-          last = all.at(-1);
-        if (
-          e.shiftKey &&
-          (document.activeElement === first ||
-            document.activeElement === element)
-        ) {
-          e.preventDefault();
-          last?.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first?.focus();
-        }
-      }
-    }
-    element?.addEventListener("keydown", keys);
     return () => {
       counter.current++;
-      element?.removeEventListener("keydown", keys);
-      previous?.focus();
     };
-    // The owning screen may update while autosaving; keep this dialog session intact.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     const timer = initialFile
@@ -351,30 +317,16 @@ export function PlanImportWizard({
     }
   }
   return (
-    <div className="sfondo-dialogo">
-      <div
-        ref={dialogRef}
-        className={`dialogo ${styles.dialog}`}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="plan-import-title"
-        tabIndex={-1}
-      >
-        <div className="testata-dialogo">
-          <div>
-            <h2 id="plan-import-title">Importa planimetria</h2>
-            <p className={styles.notice}>
-              1 File · 2 Geometrie · 3 Scala · 4 Verifica manuale
-            </p>
-          </div>
-          <button
-            className="bottone tenue"
-            onClick={onClose}
-            aria-label="Chiudi importazione"
-          >
-            ×
-          </button>
-        </div>
+    <FullscreenDialog
+      open
+      title="Importa planimetria"
+      closeLabel="Chiudi importazione"
+      onClose={onClose}
+    >
+      <div className={styles.dialog}>
+        <p className={styles.notice}>
+          1 File · 2 Geometrie · 3 Scala · 4 Verifica manuale
+        </p>
         <input
           ref={fileRef}
           type="file"
@@ -929,6 +881,6 @@ export function PlanImportWizard({
           </>
         )}
       </div>
-    </div>
+    </FullscreenDialog>
   );
 }

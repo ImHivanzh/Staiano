@@ -1,0 +1,199 @@
+.panel {
+  min-width: 0;
+  container-type: inline-size;
+}
+.balance {
+  padding: 12px 0;
+  margin: 0 0 12px;
+  border-bottom: 1px solid var(--bordo);
+  font-variant-numeric: tabular-nums;
+}
+.balance strong {
+  color: var(--tinta-scura);
+}
+.balance span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--testo-tenue);
+}
+.result {
+  margin: 16px 0;
+}
+.placement {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 440px;
+  gap: 12px;
+}
+.placement > :global(.area-editor) {
+  flex: 1;
+  min-height: 260px;
+  border-radius: 8px;
+}
+.placement > p {
+  margin: 0;
+}
+.placement > button {
+  align-self: flex-end;
+}
+.flowDetails {
+  margin: 12px 0;
+  font-size: 12px;
+}
+.flowDetails summary {
+  cursor: pointer;
+  color: var(--testo-tenue);
+}
+.flowDetails[open] .sizing {
+  margin-top: 8px;
+}
+.panel h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+.intro {
+  margin: 0 0 16px;
+  color: var(--testo-tenue);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.switch {
+  display: flex;
+  gap: 8px;
+}
+.switch button {
+  min-height: 38px;
+  flex: 1;
+}
+.purpose {
+  margin: 10px 0 16px;
+  color: var(--testo-tenue);
+  font-size: 12px;
+}
+.sizing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: 16px;
+  background: var(--carta-2);
+  border-radius: 8px;
+}
+.sizing > label {
+  flex: 0 1 130px;
+  margin: 0;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.facts dt {
+  font-size: 12px;
+  color: var(--testo-tenue);
+}
+.facts dd {
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.choiceHeading {
+  margin: 20px 0 12px;
+  font-size: 14px;
+}
+.modelHeading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0 12px;
+}
+.modelHeading .choiceHeading {
+  margin: 0;
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.gallery button {
+  min-width: 0;
+  padding: 12px;
+}
+.gallery img {
+  display: block;
+  width: 100%;
+  height: 72px;
+  object-fit: contain;
+  margin: 0 0 8px;
+}
+.gallery strong {
+  font-size: 13px;
+}
+.gallery span {
+  font-size: 11px;
+  line-height: 1.4;
+}
+.selection {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  padding-top: 4px;
+  margin-bottom: 20px;
+  border-top: 1px solid var(--bordo);
+}
+.selection > section,
+.selection > details {
+  grid-column: 1 / -1;
+}
+.selection > section {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+}
+.selection > section > label {
+  margin: 0;
+}
+.selection > section > details,
+.selection > section > p {
+  grid-column: 1 / -1;
+  font-size: 12px;
+}
+.selection > section > button {
+  margin: 0;
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.panel .selection > section > :global(.campo),
+.panel .selection > section > :global(.bottone) {
+  margin: 0;
+}
+.panel .selection > section > :global(.bottone) {
+  height: 38px;
+}
+.selection h4 {
+  margin: 16px 0;
+  font-size: 15px;
+}
+.technical {
+  margin: 0 0 6px;
+  font-size: 12px;
+}
+@container (max-width: 440px) {
+  .selection,
+  .selection > section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.technical summary {
+  cursor: pointer;
+  color: var(--testo-tenue);
+}

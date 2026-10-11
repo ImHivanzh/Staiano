@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import Image from "next/image";
 import type { Project } from "@/schemas/project";
 import {
@@ -11,6 +12,7 @@ import {
   moveHydronicOutdoorUnit,
 } from "@/domain/hydronic/apply";
 import { validateHydronicSystem } from "@/domain/hydronic/validation";
+import { hydronicOutwardRotation } from "@/domain/hydronic/placement";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber, numberFromForm } from "@/utils/format";
 
@@ -140,6 +142,34 @@ export function HydronicProperties({
       </form>
       <details className="azione-inspector" open>
         <summary>Posizione all’esterno delle mura</summary>
+        <button
+          type="button"
+          className="bottone chiara"
+          disabled={unit.locked}
+          onClick={() =>
+            commit((p) =>
+              moveHydronicOutdoorUnit(p, id, {
+                rotation: hydronicOutwardRotation(p, unit),
+              }),
+            )
+          }
+        >
+          Rivolgi ventilatore all’esterno
+        </button>
+        <button
+          type="button"
+          className="bottone chiara"
+          disabled={unit.locked}
+          onClick={() =>
+            commit((p) =>
+              moveHydronicOutdoorUnit(p, id, {
+                rotation: unit.rotation + Math.PI,
+              }),
+            )
+          }
+        >
+          Inverti verso (180°)
+        </button>
         <p className="nota">
           Ingombro L×H×P {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm.
           L’intero ingombro deve restare fuori da ambienti e muri. Distanze di
@@ -165,26 +195,22 @@ export function HydronicProperties({
         >
           <fieldset disabled={unit.locked}>
             <legend>Posa macchina esterna</legend>
-            <label className="campo">
-              <span>Posizione X (m)</span>
-              <input
-                type="number"
-                name="x"
-                step="0.01"
-                defaultValue={unit.position.x}
-                required
-              />
-            </label>
-            <label className="campo">
-              <span>Posizione Y (m)</span>
-              <input
-                type="number"
-                name="y"
-                step="0.01"
-                defaultValue={unit.position.y}
-                required
-              />
-            </label>
+            <LengthInput
+              label="Posizione X"
+              baseUnit="m"
+              name="x"
+              step="0.01"
+              defaultValue={unit.position.x}
+              required
+            />
+            <LengthInput
+              label="Posizione Y"
+              baseUnit="m"
+              name="y"
+              step="0.01"
+              defaultValue={unit.position.y}
+              required
+            />
             <label className="campo">
               <span>Rotazione (°)</span>
               <input
@@ -195,17 +221,15 @@ export function HydronicProperties({
                 required
               />
             </label>
-            <label className="campo">
-              <span>Quota base dal pavimento (m)</span>
-              <input
-                type="number"
-                name="elevation"
-                step="0.01"
-                min="0"
-                defaultValue={unit.elevationM - unit.heightMm / 2000}
-                required
-              />
-            </label>
+            <LengthInput
+              label="Quota base dal pavimento"
+              baseUnit="m"
+              name="elevation"
+              step="0.01"
+              min="0"
+              defaultValue={unit.elevationM - unit.heightMm / 2000}
+              required
+            />
             <button className="bottone chiara" type="submit">
               Aggiorna posizione esterna
             </button>

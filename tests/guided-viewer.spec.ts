@@ -3,7 +3,12 @@ import type { Page, TestInfo } from "@playwright/test";
 import { expect, test } from "./browser-test";
 import { projectSchema, type Project } from "../src/schemas/project";
 import { splitCatalogSchema } from "../src/domain/catalogs/split-schema";
-import { openInspector, openDisclosure } from "./ui-helpers";
+import {
+  openInspector,
+  openDisclosure,
+  chooseTerminalModel,
+  confirmTerminalPlacement,
+} from "./ui-helpers";
 
 async function exportProject(
   page: Page,
@@ -11,6 +16,7 @@ async function exportProject(
   name: string,
 ): Promise<Project> {
   const waiting = page.waitForEvent("download");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Esporta", exact: true }).click();
   const download = await waiting;
   const path = testInfo.outputPath(`${name}.hvacproj`);
@@ -58,6 +64,7 @@ test("novice inserts a real tubular radiator in seven meaningful clicks and save
     "data-rendered",
     "true",
   );
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await viewer.getByRole("button", { name: "Radiatori", exact: true }).click();
   meaningfulClicks++;
   const palette = page.getByRole("dialog", { name: "Catalogo radiatori" });
@@ -98,6 +105,7 @@ test("novice inserts a real tubular radiator in seven meaningful clicks and save
     radiator.id,
   );
   const imageWaiting = page.waitForEvent("download");
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await viewer
     .getByRole("button", { name: "Salva render", exact: true })
     .click();
@@ -130,6 +138,7 @@ test("3D climatizzatori palette inserts the explicitly chosen real brand and ind
 }, testInfo) => {
   await page.setViewportSize({ width: 1680, height: 1050 });
   await createManualRoom(page);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await page
     .getByTestId("viewer-3d")
     .getByRole("button", { name: "Climatizzatori", exact: true })
@@ -211,34 +220,47 @@ test("two independently configured ducted zones keep each terminal assigned afte
     await page
       .getByRole("button", { name: new RegExp(`^${roomName} 17,52`) })
       .click();
+    await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
     await viewer
       .getByRole("button", { name: "Bocchette", exact: true })
       .click();
-    let palette = page.getByRole("dialog", { name: "Catalogo bocchette" });
-    await palette.getByRole("button", { name: brand, exact: true }).click();
+    await page
+      .getByRole("button", { name: "Configura canalizzazione", exact: true })
+      .click();
+    const palette = page.getByRole("dialog", {
+      name: "Configura canalizzazione",
+    });
     await palette
+      .getByRole("button", { name: "Scegli macchina", exact: true })
+      .click();
+    const machinePicker = page.getByRole("dialog", {
+      name: "Scegli macchina canalizzata",
+    });
+    await machinePicker.getByLabel("Marca canalizzato").selectOption(brand);
+    await machinePicker
       .getByRole("button", { name: "Configura canalizzato", exact: true })
       .click();
     await expect(
       palette.getByRole("button", { name: "Mandata", exact: true }),
     ).toBeVisible();
+    await chooseTerminalModel(palette, "EDLS");
     await palette
-      .getByRole("button", { name: "Scegli EDLS", exact: true })
-      .click();
+      .getByLabel("Lunghezza singola bocchetta", { exact: true })
+      .fill("1000");
     await palette
-      .getByRole("button", { name: "Inserisci bocchette", exact: true })
+      .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
       .click();
-    await viewer
-      .getByRole("button", { name: "Bocchette", exact: true })
-      .click();
-    palette = page.getByRole("dialog", { name: "Catalogo bocchette" });
+    await confirmTerminalPlacement(page);
     await palette.getByRole("button", { name: "Ripresa", exact: true }).click();
+    await chooseTerminalModel(palette, "EGQ");
     await palette
-      .getByRole("button", { name: "Scegli EGQ", exact: true })
+      .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
       .click();
+    await confirmTerminalPlacement(page);
     await palette
-      .getByRole("button", { name: "Inserisci bocchette", exact: true })
+      .getByRole("button", { name: "Chiudi configurazione" })
       .click();
+    await page.getByRole("button", { name: "Chiudi catalogo" }).click();
   }
   const before = await exportProject(page, testInfo, "two-independent-zones");
   expect(before.hvacSystems).toHaveLength(2);
@@ -273,11 +295,15 @@ test("two independently configured ducted zones keep each terminal assigned afte
     .getByRole("button", { name: "Canalizzato", exact: true })
     .click();
   await page
+    .getByRole("button", { name: "Cambia macchina", exact: true })
+    .click();
+  await page
     .getByLabel("Nome impianto canalizzato", { exact: true })
     .fill("Zona studio indipendente");
   await page
     .getByRole("button", { name: "Aggiorna sistema canalizzato", exact: true })
     .click();
+  await page.getByRole("button", { name: "Chiudi configurazione" }).click();
   const after = await exportProject(page, testInfo, "two-zones-edited");
   expect(after.hvacSystems.find((system) => system.id === zoneA.id)).toEqual(
     zoneA,
@@ -298,6 +324,7 @@ test("two independently configured ducted zones keep each terminal assigned afte
   expect(restored.hvacSystems).toEqual(after.hvacSystems);
   expect(restored.airTerminals).toEqual(after.airTerminals);
   await page.getByRole("button", { name: "3D", exact: true }).click();
+  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
   await page
     .getByTestId("viewer-3d")
     .getByRole("button", { name: "Plenum", exact: true })
@@ -341,7 +368,7 @@ test("two independently configured ducted zones keep each terminal assigned afte
     .getByRole("button", { name: "Chiudi plenum", exact: true })
     .click();
   const dossierWaiting = page.waitForEvent("download");
-  await openDisclosure(page, "Documento e progetto");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Dossier PDF", exact: true }).click();
   await (
     await dossierWaiting

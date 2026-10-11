@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { installationRoom } from "../installations";
 import { hvacCatalogAtVersion } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine, distributeAirflow } from "./calculate";
@@ -48,7 +49,9 @@ export function refreshDuctedBindings(project: Project): Project {
         : { ...system, compatibilityStatus: "unverifiable" as const };
     }
     const load = project.rooms
-        .filter((r) => system.roomIds.includes(r.id))
+        .filter(
+          (r) => system.roomIds.includes(r.id) && !r.conditioningExclusion,
+        )
         .reduce((sum, r) => sum + r.designLoadW, 0),
       machine =
         load > 0
@@ -66,8 +69,21 @@ export function refreshDuctedBindings(project: Project): Project {
   });
   const airTerminals = project.airTerminals.map((terminal) => {
     if (needsTerminalReconfiguration(terminal)) return terminal;
-    const room = project.rooms.find((r) => r.id === terminal.roomId);
-    if (!room || room.geometryStatus === "unresolved") return terminal;
+    const originalRoom = project.rooms.find((r) => r.id === terminal.roomId);
+    const room =
+      originalRoom &&
+      installationRoom(
+        project,
+        originalRoom,
+        systems.find((system) => system.id === terminal.systemId)
+          ?.installationId,
+      );
+    if (
+      !room ||
+      room.geometryStatus === "unresolved" ||
+      room.conditioningExclusion
+    )
+      return terminal;
     const system = systems.find(
         (s) =>
           s.id === terminal.systemId &&
@@ -76,7 +92,13 @@ export function refreshDuctedBindings(project: Project): Project {
           s.airflowM3h !== null,
       ),
       rooms = system
-        ? project.rooms.filter((r) => system.roomIds.includes(r.id))
+        ? project.rooms
+            .filter(
+              (r) => system.roomIds.includes(r.id) && !r.conditioningExclusion,
+            )
+            .map((room) =>
+              installationRoom(project, room, system.installationId),
+            )
         : [];
     const allocation =
         system && rooms.length
@@ -111,7 +133,10 @@ export function refreshDuctedBindings(project: Project): Project {
       system.airflowM3h === null
     )
       continue;
-    const rooms = project.rooms.filter((r) => system.roomIds.includes(r.id));
+    const rooms = project.rooms
+      .filter((r) => system.roomIds.includes(r.id) && !r.conditioningExclusion)
+      .map((room) => installationRoom(project, room, system.installationId));
+    if (!rooms.length) continue;
     for (const use of ["supply", "return"] as const) {
       const terminals = airTerminals.filter(
         (t) => t.systemId === system.id && t.use === use,
@@ -156,15 +181,24 @@ export function refreshDuctedBindings(project: Project): Project {
   // demand by declared capacity (length for a homogeneous linear model).
   for (const system of systems.filter((s) => s.type === "ducted")) {
     const flow = ductedMaximumAirflow(system);
-    const rooms = project.rooms.filter((r) => system.roomIds.includes(r.id));
-    if (!flow || rooms.some((r) => r.geometryStatus !== "closed")) continue;
+    const rooms = project.rooms.filter(
+      (r) => system.roomIds.includes(r.id) && !r.conditioningExclusion,
+    );
+    if (
+      !flow ||
+      !rooms.length ||
+      rooms.some((r) => r.geometryStatus !== "closed")
+    )
+      continue;
     const allocations = distributeAirflow(rooms, flow);
-    for (const allocation of allocations)
-      for (const use of ["supply", "return"] as const) {
+    for (const use of ["supply", "return"] as const)
+      for (const allocation of use === "return"
+        ? [{ roomId: null, airflowM3h: flow }]
+        : allocations) {
         const pieces = airTerminals.filter(
           (t) =>
             t.systemId === system.id &&
-            t.roomId === allocation.roomId &&
+            (use === "return" || t.roomId === allocation.roomId) &&
             t.use === use,
         );
         if (

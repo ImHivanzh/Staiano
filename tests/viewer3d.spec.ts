@@ -1,6 +1,6 @@
 import { expect, test } from "./browser-test";
 import type { Page } from "@playwright/test";
-import { openAppearance, openInspector } from "./ui-helpers";
+import { openAppearance, openInspector, openDisclosure } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import { PerspectiveCamera, Vector3 } from "three";
 import { projectSchema } from "../src/schemas/project";
@@ -43,6 +43,7 @@ test("measured shared-wall house: realistic scene, materials, camera and cutaway
   const canvas = await openMeasuredHouse(page);
   await expect(canvas).toHaveAttribute("data-scene", "realistic");
   await openAppearance(page);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page.getByRole("button", { name: "Adatta vista", exact: true }).click();
   await page.screenshot({
     path: testInfo.outputPath("house-oak-cutaway.png"),
@@ -66,6 +67,7 @@ test("measured shared-wall house: realistic scene, materials, camera and cutaway
     .getByLabel("Finitura pavimento", { exact: true })
     .selectOption("oak");
   await page.getByLabel("Nomi ambienti", { exact: true }).uncheck();
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page
     .getByRole("button", { name: "Vista dall'alto", exact: true })
     .click();
@@ -73,6 +75,7 @@ test("measured shared-wall house: realistic scene, materials, camera and cutaway
     path: testInfo.outputPath("house-top.png"),
     fullPage: true,
   });
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page
     .getByRole("button", { name: "Vista prospettica", exact: true })
     .click();
@@ -96,9 +99,11 @@ test("measured shared-wall house: realistic scene, materials, camera and cutaway
     path: testInfo.outputPath("house-orbit.png"),
     fullPage: true,
   });
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page.getByRole("button", { name: "Adatta vista", exact: true }).click();
   await page.getByLabel("Nomi ambienti", { exact: true }).check();
   await page.getByRole("button", { name: /^Camera 17,52/ }).click();
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page
     .getByRole("button", { name: "Avvicina selezione", exact: true })
     .click();
@@ -177,6 +182,7 @@ test("radiator mesh selection and 2D selection stay synchronized in realistic 3D
   const canvas = page.getByTestId("viewer-3d").locator("canvas");
   await expect(canvas).toHaveAttribute("data-rendered", "true");
   await expect(canvas).toHaveAttribute("data-selection", radiator.id);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page
     .getByRole("button", { name: "Avvicina selezione", exact: true })
     .click();
@@ -197,6 +203,7 @@ test("realistic 3D fullscreen and smartphone resize keep usable canvas", async (
   const errors = watchBrowserErrors(page);
   await page.setViewportSize({ width: 1440, height: 1000 });
   const canvas = await openMeasuredHouse(page);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page
     .getByRole("button", { name: "Schermo intero", exact: true })
     .click();
@@ -223,6 +230,7 @@ test("realistic 3D fullscreen and smartphone resize keep usable canvas", async (
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
   await page
     .getByRole("button", { name: "Vista dall'alto", exact: true })
     .click();
@@ -231,6 +239,58 @@ test("realistic 3D fullscreen and smartphone resize keep usable canvas", async (
     fullPage: true,
   });
   expect(errors).toEqual([]);
+});
+
+test("presentation menu fits desktop and phone widths and switches comfort flows", async ({
+  page,
+}, testInfo) => {
+  test.setTimeout(90000);
+  const canvas = await openMeasuredHouse(page);
+  const viewer = page.getByTestId("viewer-3d");
+  await openDisclosure(viewer, "Vista 3D");
+  await viewer
+    .getByRole("button", { name: "Presentazione cliente", exact: true })
+    .click();
+  await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
+  await page.evaluate(async () => {
+    if (document.fullscreenElement) await document.exitFullscreen();
+  });
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 900 });
+    await openDisclosure(viewer, "Vista 3D");
+    const panel = viewer.locator("details[open] > div").first();
+    await expect(panel).toBeVisible();
+    const bounds = await panel.boundingBox();
+    const viewerBounds = await viewer.boundingBox();
+    expect(bounds!.x).toBeGreaterThanOrEqual(viewerBounds!.x);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(
+      viewerBounds!.x + viewerBounds!.width,
+    );
+    expect(
+      await panel.evaluate((node) => node.scrollWidth <= node.clientWidth),
+    ).toBe(true);
+    const choice = viewer.getByRole("combobox", {
+      name: "Flusso aria e calore",
+    });
+    await choice.selectOption("heat");
+    await expect(canvas).toHaveAttribute("data-comfort-mode", "heat");
+    await page.screenshot({
+      path: testInfo.outputPath(`presentation-menu-${width}.png`),
+      fullPage: true,
+    });
+    await choice.selectOption("cool");
+    await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
+  }
+  await viewer
+    .getByRole("combobox", { name: "Flusso aria e calore" })
+    .selectOption("off");
+  await expect(canvas).not.toHaveAttribute("data-comfort-mode");
+  await viewer
+    .getByRole("button", { name: "Torna alla progettazione", exact: true })
+    .click();
+  await expect(
+    viewer.getByRole("button", { name: "Presentazione cliente", exact: true }),
+  ).toBeVisible();
 });
 
 test("real Ecoclima grilles and circular valve keep their catalogue face forms", async ({
@@ -244,6 +304,7 @@ test("real Ecoclima grilles and circular valve keep their catalogue face forms",
     await page.getByRole("button", { name: /^Cucina 17,52/ }).click();
     await openAppearance(page);
     await page.getByLabel("Isola selezione", { exact: true }).check();
+    await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
     await page
       .getByRole("button", { name: "Avvicina selezione", exact: true })
       .click();
@@ -310,6 +371,7 @@ test("measured window creation, sill edit, save/reload and removal update real 3
     "davanzale 0,98 m",
   );
   const downloadPromise = page.waitForEvent("download");
+  await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Esporta", exact: true }).click();
   const download = await downloadPromise;
   const downloadPath = await download.path();

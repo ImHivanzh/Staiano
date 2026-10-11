@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { terminalCommercialOptionsSchema } from "@/domain/catalogs/ecoclima-price-schema";
 
-export const CURRENT_SCHEMA_VERSION = 3;
+export const CURRENT_SCHEMA_VERSION = 5;
 export const DIMENSION_MODES = ["internal", "axis", "external"] as const;
 export const DECISION_ORIGINS = [
   "calculated",
@@ -149,9 +149,13 @@ export const roomSchema = z.object({
   supplyPoints: z.number().int().min(1).max(100),
   returnPoints: z.number().int().min(1).max(100),
   usage: z.string().max(100).default(""),
+  conditioningExclusion: z
+    .object({ reason: z.string().trim().min(1).max(500) })
+    .optional(),
 });
 const placement = z.object({
   id,
+  installationId: id.optional(),
   roomId: id,
   floorId: id,
   wallId: id.nullable(),
@@ -259,6 +263,27 @@ export const projectSchema = z
     floors: z.array(floorSchema).min(1).max(30),
     walls: z.array(wallSchema).max(5000),
     rooms: z.array(roomSchema).max(1000),
+    installations: z
+      .array(
+        z.object({
+          id,
+          name: z.string().trim().min(1).max(100),
+          type: z.enum(["radiator", "ducted", "split", "fanCoil"]),
+          radiatorDeltaTK: finite.min(1).max(100).optional(),
+          roomAirPoints: z
+            .record(
+              id,
+              z.object({
+                supply: z.number().int().min(1).max(100),
+                return: z.number().int().min(1).max(100),
+              }),
+            )
+            .optional(),
+          roomIds: z.array(id).min(1).max(1000),
+        }),
+      )
+      .max(2000)
+      .default([]),
     openings: z
       .array(
         z.object({
@@ -278,6 +303,7 @@ export const projectSchema = z
         z.object({
           id,
           type: z.enum(["split", "ducted"]),
+          installationId: id.optional(),
           name: z.string().trim().max(100).optional(),
           plenumSettings: z
             .object({
@@ -463,6 +489,46 @@ export const projectSchema = z
     const floors = new Set(p.floors.map((f) => f.id));
     const walls = new Map(p.walls.map((w) => [w.id, w]));
     const rooms = new Map(p.rooms.map((r) => [r.id, r]));
+    const installations = new Map(
+      p.installations.map((item) => [item.id, item]),
+    );
+    if (installations.size !== p.installations.length)
+      ctx.addIssue({
+        code: "custom",
+        message: "Impianti con identificativi duplicati",
+      });
+    for (const installation of p.installations) {
+      if (
+        new Set(installation.roomIds).size !== installation.roomIds.length ||
+        installation.roomIds.some((roomId) => !rooms.has(roomId))
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Stanze dell’impianto non valide",
+        });
+    }
+    for (const [type, devices] of [
+      ["radiator", p.radiators],
+      ["fanCoil", p.fanCoils ?? []],
+      ["ducted", p.hvacSystems.filter((s) => s.type === "ducted")],
+      ["split", p.hvacSystems.filter((s) => s.type === "split")],
+    ] as const) {
+      for (const device of devices) {
+        if (!device.installationId) continue;
+        const installation = installations.get(device.installationId);
+        const roomIds = "roomIds" in device ? device.roomIds : [device.roomId];
+        if (
+          !installation ||
+          installation.type !== type ||
+          roomIds.some((roomId) => !installation.roomIds.includes(roomId))
+        )
+          ctx.addIssue({
+            code: "custom",
+            message:
+              "Apparecchio associato a un impianto di tipo o stanze incoerenti",
+          });
+      }
+    }
     for (const e of [
       ...p.walls,
       ...p.rooms,

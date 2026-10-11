@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import { useState } from "react";
 import type { Project, Wall } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
@@ -19,88 +20,106 @@ export function WallOpenings({
   const opening = project.openings.find((o) => o.id === editing);
   const items = project.openings.filter((o) => o.wallId === wall.id);
   return (
-    <details>
-      <summary>Porte e finestre</summary>
-      <p className="nota">
-        Quote reali del foro. Distanza dall’inizio dell’asse parete; davanzale
-        dal pavimento. Infissi e finiture nel 3D sono illustrativi.
-      </p>
-      {items.map((item) => (
-        <div key={item.id} className="apertura-parete">
-          <strong>
-            {item.type === "door" ? "Porta" : "Finestra"} ·{" "}
-            {formatNumber(item.widthM)} × {formatNumber(item.heightM)} m
-          </strong>
-          <span className="nota">
-            A {formatNumber(item.offsetM)} m
-            {item.type === "window"
-              ? ` · davanzale ${item.sillHeightM === null ? "da verificare" : `${formatNumber(item.sillHeightM)} m`}`
-              : ""}
-          </span>
-          <button
-            type="button"
-            className="bottone piccolo"
-            onClick={() => {
-              setEditing(item.id);
-              setType(item.type);
-            }}
-          >
-            Modifica apertura
-          </button>
-          <button
-            type="button"
-            className="bottone piccolo tenue"
-            onClick={() => {
-              commit((p) => ({
-                ...p,
-                openings: p.openings.filter((o) => o.id !== item.id),
-              }));
-              if (editing === item.id) setEditing(undefined);
-            }}
-          >
-            Rimuovi apertura
-          </button>
-        </div>
-      ))}
-      <form
-        key={`${editing ?? "new"}-${type}-${wall.id}`}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const form = new FormData(e.currentTarget);
+    <>
+      <button
+        type="button"
+        className="bottone piccolo"
+        disabled={items.some((item) => item.type === "door")}
+        onClick={() =>
           commit((p) =>
-            saveOpening(
-              p,
-              wall.id,
-              {
-                type,
-                offsetM: numberFromForm(form.get("offset")),
-                widthM: numberFromForm(form.get("width")),
-                heightM: numberFromForm(form.get("height")),
-                sillHeightM:
-                  type === "window" ? numberFromForm(form.get("sill")) : 0,
-              },
-              editing,
-            ),
-          );
-        }}
+            saveOpening(p, wall.id, {
+              type: "door",
+              offsetM: (distance(wall.start, wall.end) - 0.9) / 2,
+              widthM: 0.9,
+              heightM: 2.1,
+              sillHeightM: 0,
+            }),
+          )
+        }
       >
-        <label className="campo">
-          <span>Tipo apertura</span>
-          <select
-            aria-label="Tipo apertura"
-            value={type}
-            onChange={(e) => setType(e.target.value as "door" | "window")}
-          >
-            <option value="door">Porta</option>
-            <option value="window">Finestra</option>
-          </select>
-        </label>
-        <label className="campo">
-          <span>Distanza dall’inizio parete (m)</span>
-          <input
+        Aggiungi porta centrata
+      </button>
+      <details>
+        <summary>Porte e finestre</summary>
+        <p className="nota">
+          Quote reali del foro. Distanza dall’inizio dell’asse parete; davanzale
+          dal pavimento. Infissi e finiture nel 3D sono illustrativi.
+        </p>
+        {items.map((item) => (
+          <div key={item.id} className="apertura-parete">
+            <strong>
+              {item.type === "door" ? "Porta" : "Finestra"} ·{" "}
+              {formatNumber(item.widthM)} × {formatNumber(item.heightM)} m
+            </strong>
+            <span className="nota">
+              A {formatNumber(item.offsetM)} m
+              {item.type === "window"
+                ? ` · davanzale ${item.sillHeightM === null ? "da verificare" : `${formatNumber(item.sillHeightM)} m`}`
+                : ""}
+            </span>
+            <button
+              type="button"
+              className="bottone piccolo"
+              onClick={() => {
+                setEditing(item.id);
+                setType(item.type);
+              }}
+            >
+              Modifica apertura
+            </button>
+            <button
+              type="button"
+              className="bottone piccolo tenue"
+              onClick={() => {
+                commit((p) => ({
+                  ...p,
+                  openings: p.openings.filter((o) => o.id !== item.id),
+                }));
+                if (editing === item.id) setEditing(undefined);
+              }}
+            >
+              Rimuovi apertura
+            </button>
+          </div>
+        ))}
+        <form
+          key={`${editing ?? "new"}-${type}-${wall.id}`}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = new FormData(e.currentTarget);
+            commit((p) =>
+              saveOpening(
+                p,
+                wall.id,
+                {
+                  type,
+                  offsetM: numberFromForm(form.get("offset")),
+                  widthM: numberFromForm(form.get("width")),
+                  heightM: numberFromForm(form.get("height")),
+                  sillHeightM:
+                    type === "window" ? numberFromForm(form.get("sill")) : 0,
+                },
+                editing,
+              ),
+            );
+          }}
+        >
+          <label className="campo">
+            <span>Tipo apertura</span>
+            <select
+              aria-label="Tipo apertura"
+              value={type}
+              onChange={(e) => setType(e.target.value as "door" | "window")}
+            >
+              <option value="door">Porta</option>
+              <option value="window">Finestra</option>
+            </select>
+          </label>
+          <LengthInput
+            label="Distanza dall’inizio parete"
+            baseUnit="m"
             aria-label="Distanza apertura"
             name="offset"
-            type="number"
             min="0"
             max={distance(wall.start, wall.end)}
             step=".01"
@@ -115,61 +134,55 @@ export function WallOpenings({
               ).toFixed(2)
             }
           />
-        </label>
-        <label className="campo">
-          <span>Larghezza foro (m)</span>
-          <input
+          <LengthInput
+            label="Larghezza foro"
+            baseUnit="m"
             aria-label="Larghezza apertura"
             name="width"
-            type="number"
             min=".1"
             step=".01"
             required
             defaultValue={opening?.widthM ?? (type === "door" ? 0.9 : 1.2)}
           />
-        </label>
-        <label className="campo">
-          <span>Altezza foro (m)</span>
-          <input
+          <LengthInput
+            label="Altezza foro"
+            baseUnit="m"
             aria-label="Altezza apertura"
             name="height"
-            type="number"
             min=".1"
             step=".01"
             required
             defaultValue={opening?.heightM ?? (type === "door" ? 2.1 : 1.2)}
           />
-        </label>
-        {type === "window" && (
-          <label className="campo">
-            <span>Quota davanzale (m)</span>
-            <input
+          {type === "window" && (
+            <LengthInput
+              label="Quota davanzale"
+              baseUnit="m"
               aria-label="Quota davanzale"
               name="sill"
-              type="number"
               min="0"
               step=".01"
               required
               defaultValue={opening?.sillHeightM ?? 0.9}
             />
-          </label>
-        )}
-        <p className="nota">
-          Misure iniziali suggerite: verifica prima di aggiungere.
-        </p>
-        <button className="bottone chiara" type="submit">
-          {editing ? "Salva apertura" : "Aggiungi apertura"}
-        </button>
-        {editing && (
-          <button
-            className="bottone tenue"
-            type="button"
-            onClick={() => setEditing(undefined)}
-          >
-            Nuova apertura
+          )}
+          <p className="nota">
+            Misure iniziali suggerite: verifica prima di aggiungere.
+          </p>
+          <button className="bottone chiara" type="submit">
+            {editing ? "Salva apertura" : "Aggiungi apertura"}
           </button>
-        )}
-      </form>
-    </details>
+          {editing && (
+            <button
+              className="bottone tenue"
+              type="button"
+              onClick={() => setEditing(undefined)}
+            >
+              Nuova apertura
+            </button>
+          )}
+        </form>
+      </details>
+    </>
   );
 }

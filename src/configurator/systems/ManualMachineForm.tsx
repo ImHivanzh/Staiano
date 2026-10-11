@@ -1,4 +1,5 @@
 "use client";
+import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { applyManualDuctedSystem } from "@/domain/ducted/apply";
@@ -8,15 +9,18 @@ export function ManualMachineForm({
   project,
   roomIds,
   onApplied,
+  installationId,
 }: {
   project: Project;
   roomIds: string[];
   onApplied?: () => void;
+  installationId?: string;
 }) {
   const existing = project.hvacSystems.find(
     (system) =>
       system.type === "ducted" &&
-      system.roomIds.some((id) => roomIds.includes(id)),
+      system.roomIds.some((id) => roomIds.includes(id)) &&
+      (!installationId || system.installationId === installationId),
   );
   const input = existing?.genericMachine;
   const { commit } = useProjectStore();
@@ -54,6 +58,7 @@ export function ManualMachineForm({
                 : {}),
             },
             existing?.id ?? null,
+            installationId,
           ),
         );
         if (!useProjectStore.getState().error) onApplied?.();
@@ -114,18 +119,36 @@ export function ManualMachineForm({
           ],
           ["cooling", "Potenza freddo (W)", input?.coolingCapacityW],
           ["heating", "Potenza caldo (W)", input?.heatingCapacityW],
-        ].map(([key, label, value]) => (
-          <label className="campo" key={String(key)}>
-            <span>{label}</span>
-            <input
+        ].map(([key, label, value]) =>
+          /\((m|mm|cm)\)$/.test(String(label)) ? (
+            <LengthInput
+              key={String(key)}
+              label={String(label).replace(/ \((m|mm|cm)\)$/, "")}
+              baseUnit={
+                String(label).endsWith("(mm)")
+                  ? "mm"
+                  : String(label).endsWith("(cm)")
+                    ? "cm"
+                    : "m"
+              }
               name={String(key)}
-              type="number"
               min="1"
               step="any"
               defaultValue={value}
             />
-          </label>
-        ))}
+          ) : (
+            <label className="campo" key={String(key)}>
+              <span>{label}</span>
+              <input
+                type="number"
+                name={String(key)}
+                min="1"
+                step="any"
+                defaultValue={value}
+              />
+            </label>
+          ),
+        )}
       </details>
       <button className="bottone chiara" type="submit">
         {existing ? "Aggiorna macchina manuale" : "Inserisci macchina manuale"}

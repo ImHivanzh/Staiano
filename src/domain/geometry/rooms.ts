@@ -234,6 +234,12 @@ export function reconcileRooms(
         centroid: center,
         heightM,
         ...calculateThermal(netAreaM2, heightM),
+        ...(parent?.conditioningExclusion
+          ? {
+              conditioningExclusion: parent.conditioningExclusion,
+              designLoadW: 0,
+            }
+          : {}),
         systemType: parent?.systemType ?? "none",
         supplyPoints: parent?.supplyPoints ?? 1,
         returnPoints: parent?.returnPoints ?? 1,

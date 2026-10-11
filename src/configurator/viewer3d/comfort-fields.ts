@@ -37,30 +37,33 @@ export function comfortFields(
     if (!room || room.geometryStatus !== "closed") return;
     const width = Math.min(item.widthMm / 1000, 1.7);
     const forward = { x: -Math.sin(item.rotation), y: Math.cos(item.rotation) };
+    const rising = mode === "heat" && !returned;
+    const startHeight = returned
+      ? elevation
+      : Math.min(elevation, room.heightM - 0.08);
+    const endHeight = rising
+      ? Math.min(room.heightM - 0.02, startHeight + 0.95)
+      : Math.max(0.04, startHeight - (ceiling ? 1.1 : 0.55));
     for (let i = 0; i < 3; i++) {
       const across = (i - 1) * width * 0.28;
       const x = item.position.x + across * Math.cos(item.rotation);
       const z = item.position.y + across * Math.sin(item.rotation);
-      const distance = Math.min(1.8, Math.sqrt(room.netAreaM2) * 0.36);
-      const start: ComfortField["start"] = [x, elevation, z];
-      const end: ComfortField["end"] = ceiling
-        ? [
-            x + forward.x * 0.3,
-            Math.max(0.25, elevation - 1.1),
-            z + forward.y * 0.3,
-          ]
-        : [
-            x + forward.x * distance,
-            Math.max(0.25, elevation - 0.55),
-            z + forward.y * distance,
-          ];
-      const control: ComfortField["control"] = ceiling
-        ? [x, elevation - 0.45, z]
-        : [
-            x + forward.x * distance * 0.6,
-            elevation - 0.05,
-            z + forward.y * distance * 0.6,
-          ];
+      const distance =
+        ceiling && !rising
+          ? 0.3
+          : Math.min(1.8, Math.sqrt(room.netAreaM2) * 0.36);
+      const spread = (i - 1) * width * 0.18;
+      const start: ComfortField["start"] = [x, startHeight, z];
+      const end: ComfortField["end"] = [
+        x + forward.x * distance + spread * Math.cos(item.rotation),
+        endHeight,
+        z + forward.y * distance + spread * Math.sin(item.rotation),
+      ];
+      const control: ComfortField["control"] = [
+        x + forward.x * distance * 0.6,
+        startHeight + (endHeight - startHeight) * 0.25,
+        z + forward.y * distance * 0.6,
+      ];
       fields.push({
         deviceId: item.id,
         kind: returned ? "return" : "supply",

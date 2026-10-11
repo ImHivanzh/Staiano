@@ -5,8 +5,9 @@ import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import type { Project } from "@/schemas/project";
 import { comfortFields, type ComfortMode } from "./comfort-fields";
+import { comfortFlowCurve } from "./comfort-curve";
 
-/** One GPU instance batch animates all arrows; placement always comes from Project. */
+/** One GPU instance batch animates the streaks; placement always comes from Project. */
 export function ComfortFlows({
   project,
   floorId,
@@ -18,7 +19,7 @@ export function ComfortFlows({
   mode: ComfortMode;
   roomId?: string;
 }) {
-  const arrows = useRef<THREE.InstancedMesh>(null);
+  const streaks = useRef<THREE.InstancedMesh>(null);
   const { gl } = useThree();
   const reduced =
     typeof window !== "undefined" &&
@@ -27,69 +28,82 @@ export function ComfortFlows({
     () =>
       comfortFields(project, floorId, mode, roomId).map((field) => ({
         field,
-        curve: new THREE.QuadraticBezierCurve3(
-          new THREE.Vector3(...field.start),
-          new THREE.Vector3(...field.control),
-          new THREE.Vector3(...field.end),
+        color: new THREE.Color(
+          field.kind === "return"
+            ? "#81a9af"
+            : mode === "heat"
+              ? "#e89a56"
+              : "#42b9dd",
         ),
+        curve: comfortFlowCurve(field),
       })),
     [project, floorId, mode, roomId],
   );
   const transform = useMemo(() => new THREE.Object3D(), []);
   const up = useMemo(() => new THREE.Vector3(0, 1, 0), []);
-  const color = mode === "heat" ? "#e8a465" : "#64c8e5";
+  const tangent = useMemo(() => new THREE.Vector3(), []);
   useEffect(() => {
+    if (streaks.current) {
+      paths.forEach(({ color }, i) => {
+        for (let j = 0; j < 5; j++)
+          streaks.current!.setColorAt(i * 5 + j, color);
+      });
+      if (streaks.current.instanceColor)
+        streaks.current.instanceColor.needsUpdate = true;
+    }
     gl.domElement.setAttribute("data-comfort-mode", mode);
     gl.domElement.setAttribute("data-comfort-streams", String(paths.length));
     return () => {
       gl.domElement.removeAttribute("data-comfort-mode");
       gl.domElement.removeAttribute("data-comfort-streams");
     };
-  }, [gl, mode, paths.length]);
+  }, [gl, mode, paths]);
   useFrame(({ clock, invalidate }) => {
-    if (!arrows.current) return;
+    if (!streaks.current) return;
     for (let i = 0; i < paths.length; i++)
       for (let j = 0; j < 5; j++) {
         const t = reduced
           ? (j + 0.5) / 5
-          : (clock.elapsedTime * 0.22 + j / 5 + i * 0.13) % 1;
-        transform.position.copy(paths[i].curve.getPoint(t));
+          : (clock.elapsedTime * 0.16 + j / 5 + i * 0.13) % 1;
+        paths[i].curve.getPoint(t, transform.position);
         transform.quaternion.setFromUnitVectors(
           up,
-          paths[i].curve.getTangent(t).normalize(),
+          paths[i].curve.getTangent(t, tangent).normalize(),
         );
-        transform.scale.setScalar(paths[i].field.kind === "return" ? 0.72 : 1);
+        const fade = Math.sin(Math.PI * t);
+        const size = paths[i].field.kind === "return" ? 0.72 : 1;
+        transform.scale.set(
+          0.022 * fade * size,
+          0.13 * fade * size,
+          0.022 * fade * size,
+        );
         transform.updateMatrix();
-        arrows.current.setMatrixAt(i * 5 + j, transform.matrix);
+        streaks.current.setMatrixAt(i * 5 + j, transform.matrix);
       }
-    arrows.current.instanceMatrix.needsUpdate = true;
-    if (!reduced) invalidate();
+    streaks.current.instanceMatrix.needsUpdate = true;
+    if (!reduced && paths.length > 0) invalidate();
   });
   return (
     <group>
-      {paths.map(({ field, curve }, i) => (
+      {paths.map(({ field, curve, color }, i) => (
         <Line
           key={`${field.deviceId}:${i}`}
-          points={curve.getPoints(20)}
-          color={field.kind === "return" ? "#81a9af" : color}
-          lineWidth={2.5}
+          points={curve.getPoints(96)}
+          color={color}
+          lineWidth={1.5}
           transparent
-          opacity={0.3}
+          opacity={0.2}
+          depthWrite={false}
         />
       ))}
       {paths.length > 0 && (
         <instancedMesh
-          ref={arrows}
+          ref={streaks}
           args={[undefined, undefined, paths.length * 5]}
           frustumCulled={false}
         >
-          <coneGeometry args={[0.035, 0.11, 10]} />
-          <meshBasicMaterial
-            color={color}
-            transparent
-            opacity={0.72}
-            depthWrite={false}
-          />
+          <sphereGeometry args={[1, 10, 6]} />
+          <meshBasicMaterial transparent opacity={0.68} depthWrite={false} />
         </instancedMesh>
       )}
     </group>

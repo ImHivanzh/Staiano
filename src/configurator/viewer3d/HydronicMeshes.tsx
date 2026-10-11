@@ -1,5 +1,5 @@
 "use client";
-import { Html, Line } from "@react-three/drei";
+import { Line } from "@react-three/drei";
 import type { Project, Selection } from "@/schemas/project";
 import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
@@ -82,30 +82,6 @@ export function HydronicMeshes({
                     <meshStandardMaterial color="#252e35" roughness={0.65} />
                   </mesh>
                 ))}
-                {selected && (
-                  <Html
-                    position={[0, h / 2 + 0.14, 0]}
-                    center
-                    style={{
-                      pointerEvents: "none",
-                      whiteSpace: "nowrap",
-                      background: "#132632",
-                      color: "white",
-                      padding: "8px 12px",
-                      borderRadius: 8,
-                      fontSize: 12,
-                    }}
-                  >
-                    <strong>
-                      {m?.manufacturer} · {m?.model ?? s.productId}
-                    </strong>
-                    <br />
-                    Unità esterna · L×H×P {u.widthMm}×{u.heightMm}×{u.depthMm}{" "}
-                    mm
-                    <br />
-                    <span>Ingombro documentato · dettagli illustrativi</span>
-                  </Html>
-                )}
               </group>
               {showPipes &&
                 s.fanCoilIds.map((id) => {
@@ -137,27 +113,6 @@ export function HydronicMeshes({
                     </group>
                   );
                 })}
-              {showPipes && selected && (
-                <Html
-                  position={[
-                    u.position.x,
-                    u.elevationM + h / 2 + 0.5,
-                    u.position.y,
-                  ]}
-                  center
-                  style={{
-                    pointerEvents: "none",
-                    whiteSpace: "nowrap",
-                    fontSize: 12,
-                    color: "#153141",
-                    background: "#ffffffed",
-                    padding: "6px 10px",
-                  }}
-                >
-                  Mandata / ritorno · percorso illustrativo, diametri da
-                  progettare
-                </Html>
-              )}
             </group>
           );
         })}

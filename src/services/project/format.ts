@@ -1,4 +1,8 @@
-import { projectSchema, type Project } from "@/schemas/project";
+import {
+  projectSchema,
+  CURRENT_SCHEMA_VERSION,
+  type Project,
+} from "@/schemas/project";
 import { recomputeProject } from "@/domain/project";
 import { refreshDuctedBindings } from "@/domain/ducted/refresh";
 import { refreshSplitBindings } from "@/domain/air-conditioning/refresh";
@@ -9,7 +13,7 @@ export function migrateProject(data: unknown): unknown {
   if (typeof data !== "object" || data === null || !("schemaVersion" in data))
     throw new Error("Formato progetto non riconosciuto.");
   const version = (data as { schemaVersion: unknown }).schemaVersion;
-  if (typeof version !== "number" || version > 3)
+  if (typeof version !== "number" || version > CURRENT_SCHEMA_VERSION)
     throw new Error(
       "Versione progetto non supportata. Aggiornare l'applicazione.",
     );
@@ -62,7 +66,7 @@ export function migrateProject(data: unknown): unknown {
     const asArray = (v: unknown) => (Array.isArray(v) ? v : []);
     // Additive only: v3 readers fill the same defaults, so rollback is key
     // removal and no v2 information is altered or dropped.
-    return {
+    return migrateProject({
       ...old,
       schemaVersion: 3,
       floors: asArray(old.floors).map((f: Record<string, unknown>) => ({
@@ -118,9 +122,14 @@ export function migrateProject(data: unknown): unknown {
           (old.projectSettings as Record<string, unknown> | undefined)
             ?.dimensionMode ?? "internal",
       },
-    };
+    });
   }
-  if (version !== 3)
+  if (version === 3 || version === 4)
+    return {
+      ...(data as Record<string, unknown>),
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+    };
+  if (version !== CURRENT_SCHEMA_VERSION)
     throw new Error("Migration mancante per questa versione progetto.");
   return data;
 }

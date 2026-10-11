@@ -132,9 +132,9 @@ describe("selection geometry and data preservation", () => {
       { kind: "device", id: p.radiators[0].id },
     ]);
     expect(next.radiators).toHaveLength(3);
-    expect(next.radiators.find((d) => d.id === p.radiators[0].id)).toEqual(
-      p.radiators[0],
-    );
+    expect(
+      next.radiators.find((d) => d.id === p.radiators[0].id),
+    ).toMatchObject(p.radiators[0]);
     expect(new Set(next.radiators.map((d) => d.id)).size).toBe(3);
   });
 });
