@@ -145,6 +145,24 @@ La stessa stanza può appartenere a impianti distinti, mostrati insieme nella vi
 complessiva. EDLS, EDFL ed EDSC-C sono le scelte principali per le bocchette;
 il resto del catalogo rimane disponibile.
 
+## Scansione planimetria
+
+In **Importa planimetria**, **Scansiona planimetria** acquisisce una pagina A4
+in grigio dalla Pantum BM4240ADW, dal vassoio ADF o dal piano, a 150/300 DPI.
+Il PDF acquisito passa alla stessa anteprima, analisi e calibrazione dei file importati.
+Verificare sempre scala e geometrie prima di importare.
+
+La scansione è autonoma: il server Staiano esegue il bridge locale
+`native/pantum/scansione.py`, che chiama direttamente il driver Pantum Windows.
+Non richiede altri applicativi o servizi HTTP. Richiede Python Windows x64 con
+Pillow (`python -m pip install -r native/pantum/requirements.txt`) e il driver
+Pantum BM4200 installato. Python deve essere nel PATH dell'attività Windows;
+in alternativa impostare `STAIANO_SCANNER_PYTHON` al percorso del suo eseguibile.
+Lo scanner è configurato in `SCANNER_HOST`; il bridge verifica l'hash del driver
+prima di caricarlo. Le scansioni Staiano concorrenti vengono bloccate, i PDF
+temporanei eliminati al termine. L'API richiede sessione e stessa origine.
+Non viene inviata alcuna email. Limiti: una pagina A4, niente colore o duplex.
+
 ## Verifica
 
 ```powershell

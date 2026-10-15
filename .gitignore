@@ -24,6 +24,7 @@ tmp/
 istruzioni apiduck.txt
 native/**/bin/
 native/**/obj/
+native/pantum/__pycache__/
 native/runtime/*.exe
 native/runtime/*.pdb
 deploy/caddy/Caddyfile.proposed

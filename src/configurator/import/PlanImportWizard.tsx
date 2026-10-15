@@ -54,6 +54,44 @@ export function PlanImportWizard({
     [originX, setOriginX] = useState("0"),
     [originY, setOriginY] = useState("0");
   const [areaPoints, setAreaPoints] = useState<Point[]>([]);
+  const [scanning, setScanning] = useState(false);
+  const [scanSource, setScanSource] = useState("adf");
+  const [scanDpi, setScanDpi] = useState(150);
+  const scanInProgress = useRef(false);
+
+  async function scan() {
+    if (scanInProgress.current || loading) return;
+    scanInProgress.current = true;
+    const token = ++generation.current;
+    setScanning(true);
+    setError("");
+    try {
+      const response = await fetch("/api/import/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dpi: scanDpi, sorgente: scanSource }),
+      });
+      if (!response.ok) {
+        const result = await response.json().catch(() => null);
+        throw new Error(result?.message || "Scansione non riuscita.");
+      }
+      const pdf = await response.blob();
+      if (token !== generation.current) return;
+      await load(
+        new File([pdf], "Planimetria-scansionata.pdf", {
+          type: "application/pdf",
+        }),
+      );
+    } catch (error) {
+      if (token === generation.current)
+        setError(
+          error instanceof Error ? error.message : "Scansione non riuscita.",
+        );
+    } finally {
+      scanInProgress.current = false;
+      setScanning(false);
+    }
+  }
   function applyAnalysis(parsed: ParsedPlan) {
     const recognized = parsed.analysis?.walls ?? [];
     parsed.segments = [
@@ -332,12 +370,55 @@ export function PlanImportWizard({
           type="file"
           accept=".dxf,.dwg,.pdf,.png,.jpg,.jpeg,.webp"
           aria-label="File planimetria"
+          disabled={scanning || loading}
           onChange={(e) => {
             const next = e.target.files?.[0];
             if (next) void load(next);
             e.target.value = "";
           }}
         />
+        <fieldset disabled={scanning || loading}>
+          <legend>Acquisisci dalla Pantum BM4240ADW</legend>
+          <div className={styles.fields}>
+            <label>
+              Sorgente scansione
+              <select
+                value={scanSource}
+                onChange={(event) => setScanSource(event.target.value)}
+              >
+                <option value="adf">Vassoio (ADF)</option>
+                <option value="piano">Piano scanner</option>
+              </select>
+            </label>
+            <label>
+              Risoluzione scansione
+              <select
+                value={scanDpi}
+                onChange={(event) => setScanDpi(Number(event.target.value))}
+              >
+                <option value={150}>150 DPI</option>
+                <option value={300}>300 DPI</option>
+              </select>
+            </label>
+          </div>
+          <p className={styles.notice}>
+            Una pagina A4 in grigio. Inserisci il foglio nel vassoio o
+            posizionalo sul piano scanner.
+          </p>
+          <button
+            type="button"
+            className="bottone tenue"
+            onClick={() => void scan()}
+          >
+            {scanning ? "Scansione in corso…" : "Scansiona planimetria"}
+          </button>
+        </fieldset>
+        {scanning && (
+          <p role="status">
+            Acquisizione dalla Pantum in corso. Attendi il caricamento
+            dell’anteprima.
+          </p>
+        )}
         <p className={styles.notice}>
           Analisi locale con affidabilità visibile. DXF, DWG, PDF, PNG/JPEG.
           Verificare sempre scala, muri e aperture. Limite 32 MB; immagini 15
