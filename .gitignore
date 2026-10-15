@@ -4,6 +4,10 @@ node_modules/
 out/
 coverage/
 test-results/
+test-results-*/
+.impeccable/questions/
+.impeccable/review/
+output/verification/
 playwright-report/
 *.tsbuildinfo
 .npm-cache/

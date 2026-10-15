@@ -76,10 +76,9 @@
 }
 .model {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(100px, 0.9fr) minmax(
-      100px,
-      0.9fr
-    ) auto;
+  grid-template-columns:
+    minmax(0, 1fr) minmax(100px, 0.9fr) minmax(100px, 0.9fr)
+    auto;
   align-items: center;
   gap: 12px;
   padding: 16px;
@@ -94,6 +93,20 @@
 .model[aria-pressed="true"] {
   border-color: var(--tinta);
   background: var(--tinta-tenue);
+}
+.model[data-recommended="true"] {
+  border-color: var(--tinta);
+  border-width: 2px;
+  padding: 15px;
+}
+.model .recommendedLabel {
+  justify-self: start;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+  font-size: 12px;
+  font-weight: 650;
 }
 .model:hover {
   border-color: var(--tinta);

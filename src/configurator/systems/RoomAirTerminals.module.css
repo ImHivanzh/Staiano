@@ -18,7 +18,7 @@
   color: var(--testo-tenue);
 }
 .result {
-  margin: 16px 0;
+  margin: 8px 0;
 }
 .placement {
   display: flex;
@@ -39,7 +39,7 @@
   align-self: flex-end;
 }
 .flowDetails {
-  margin: 12px 0;
+  margin: 8px 0;
   font-size: 12px;
 }
 .flowDetails summary {
@@ -77,7 +77,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px 20px;
+  gap: 8px 12px;
   padding: 16px;
   background: var(--carta-2);
   border-radius: 8px;
@@ -89,7 +89,7 @@
 .facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 24px;
+  gap: 8px 16px;
   margin: 0;
   font-variant-numeric: tabular-nums;
 }
@@ -103,7 +103,7 @@
   font-weight: 600;
 }
 .choiceHeading {
-  margin: 20px 0 12px;
+  margin: 12px 0 8px;
   font-size: 14px;
 }
 .modelHeading {
@@ -112,7 +112,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin: 16px 0 12px;
+  margin: 12px 0 8px;
 }
 .modelHeading .choiceHeading {
   margin: 0;
@@ -121,7 +121,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 .gallery button {
   min-width: 0;
@@ -146,7 +146,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px 12px;
   padding-top: 4px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   border-top: 1px solid var(--bordo);
 }
 .selection > section,
@@ -159,7 +159,74 @@
   align-items: end;
   gap: 12px;
 }
+.operatorSelection {
+  border-top: 0;
+  padding-top: 0;
+}
+.operatorSettings {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+}
+.operatorSettings > label,
+.operatorSettings > :global(.campo) {
+  margin: 0;
+}
+.operatorSettings > details,
+.operatorSettings > p,
+.operatorSettings > button {
+  grid-column: 1 / -1;
+}
+.operatorSettings > button {
+  justify-self: start;
+}
+.operatorSettings > p {
+  font-size: 12px;
+}
+.plenumPanel {
+  grid-column: 1 / -1;
+}
+.operatorSettings[hidden],
+.plenumPanel[hidden] {
+  display: none;
+}
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin: 8px 0 12px;
+  border-bottom: 1px solid var(--bordo);
+}
+.tabs button {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 6px 6px 0 0;
+  background: var(--carta-2);
+  color: var(--testo-tenue);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.tabs button:hover {
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+}
+.tabs button[aria-selected="true"] {
+  border-bottom-color: var(--tinta);
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+  font-weight: 600;
+}
 .selection > section > label {
+  margin: 0;
+}
+.moduleLength {
+  align-self: start;
+  min-width: 0;
+}
+.moduleLength > :global(.campo) {
   margin: 0;
 }
 .selection > section > details,
@@ -180,20 +247,165 @@
   height: 38px;
 }
 .selection h4 {
-  margin: 16px 0;
+  margin: 8px 0;
   font-size: 15px;
 }
 .technical {
+  grid-column: 1 / -1;
+  min-width: 0;
   margin: 0 0 6px;
   font-size: 12px;
 }
+.sizeChoices {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 10px 0;
+}
+.sizeLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.sizeButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+.sizeChoices button {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 44px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  padding: 8px 12px;
+  border: 1px solid var(--bordo-forte);
+  border-radius: 6px;
+  background: var(--carta);
+  color: var(--testo);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.sizeChoices button[data-recommended="true"] {
+  border: 2px solid var(--tinta);
+  background: var(--tinta-tenue);
+}
+.sizeChoices button[aria-pressed="true"] {
+  background: var(--tinta);
+  color: var(--su-tinta);
+  border-color: var(--tinta);
+}
+.sizeChoices button:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+.sizeBadge {
+  font-size: 11px;
+  font-weight: 650;
+}
+.sizeTable {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.sizeTable table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.sizeTable caption {
+  padding: 8px 0;
+  text-align: left;
+  font-weight: 600;
+}
+.sizeTable th,
+.sizeTable td {
+  padding: 5px;
+  border: 1px solid var(--bordo);
+  text-align: center;
+}
+.sizeTable th {
+  background: var(--carta-2);
+}
+.recommendedSize {
+  padding: 12px 16px;
+  border: 2px solid var(--tinta);
+  border-radius: 8px;
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+  font-size: 13px;
+}
 @container (max-width: 440px) {
   .selection,
-  .selection > section {
+  .selection > section,
+  .operatorSettings {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 .technical summary {
   cursor: pointer;
   color: var(--testo-tenue);
+}
+.plenumSettings {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+  margin: 4px 0;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid var(--bordo);
+}
+.plenumSettings legend {
+  padding: 0 8px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.plenumChoice {
+  grid-column: 1 / -1;
+  min-width: 0;
+  font-size: 13px;
+}
+.plenumChoice .sizeButtons {
+  gap: 6px;
+  margin: 4px 0;
+}
+.plenumChoice button {
+  min-height: 44px;
+}
+.plenumChoice button[aria-pressed="true"] {
+  background: var(--tinta);
+  color: var(--su-tinta);
+  border-color: var(--tinta);
+}
+.plenumChoice a {
+  font-size: 12px;
+}
+.plenumSettings > label {
+  min-width: 0;
+  margin: 0;
+}
+.plenumSettings > p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+:global(.corpo-proprieta) .plenumSettings {
+  grid-template-columns: minmax(0, 1fr);
+}
+.plenumOptions {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+@container (max-width: 440px) {
+  .plenumSettings {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

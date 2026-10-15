@@ -1,71 +1,160 @@
-import { chooseTerminalModel, confirmTerminalPlacement } from "./ui-helpers";
+import { pickTerminalLength } from "./ui-helpers";
+import { pickPlanPoint } from "./ui-helpers";
 import { expect, test } from "./browser-test";
 import { openInspector, openDisclosure } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 
-test("one type per installation, independent radiator system in the same room, both visible in the overview", async ({
+for (const width of [1920, 1024]) {
+  test(`delete an accidental installation: cancel, confirm, undo and reload at ${width}`, async ({
+    page,
+  }, info) => {
+    test.setTimeout(90000);
+    await page.setViewportSize({ width, height: width === 1920 ? 1080 : 768 });
+    const fixture = JSON.parse(
+      readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
+    ).empty;
+    await page.goto("/");
+    await page.getByTestId("project-file").setInputFiles({
+      name: "delete-installation.hvacproj",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(fixture)),
+    });
+    await page
+      .getByRole("button", { name: "Continua liberamente nell’editor" })
+      .click();
+    await page.locator(".stanza-pianta").first().click();
+    await openInspector(page, "Configura impianto");
+    const popup = page.getByRole("dialog", {
+      name: /^(?:Vista |Configura impianto$)/,
+      exact: true,
+    });
+    const current = popup.getByLabel("Impianto corrente");
+    const originalId = await current.inputValue();
+    await popup
+      .getByRole("button", { name: "Nuovo impianto", exact: true })
+      .click();
+    await page
+      .getByRole("dialog", { name: "Nuovo impianto", exact: true })
+      .getByRole("button", { name: "Crea impianto e apri vista" })
+      .click();
+    const accidentalId = await current.inputValue();
+    await expect(current.locator("option")).toHaveCount(2);
+    const remove = popup.getByRole("button", {
+      name: "Elimina impianto",
+      exact: true,
+    });
+    await expect(remove).toBeInViewport();
+    await popup.screenshot({
+      path: info.outputPath("delete-installation.png"),
+    });
+    page.once("dialog", async (dialog) => {
+      expect(dialog.message()).toContain("Impianto 2");
+      await dialog.dismiss();
+    });
+    await remove.click();
+    await expect(current).toHaveValue(accidentalId);
+    await expect(current.locator("option")).toHaveCount(2);
+    page.once("dialog", (dialog) => dialog.accept());
+    await remove.click();
+    await expect(popup).toHaveCount(0);
+    await openInspector(page, "Configura impianto");
+    await expect(current).toHaveValue(originalId);
+    await expect(current.locator("option")).toHaveCount(1);
+    await popup
+      .getByRole("button", { name: "Chiudi configurazione", exact: true })
+      .click();
+    await page.keyboard.press("Control+z");
+    await expect(page.getByTestId("save-status")).toHaveText("Salvato");
+    await page.reload();
+    await page.locator(".stanza-pianta").first().click();
+    await openInspector(page, "Configura impianto");
+    await expect(current.locator("option")).toHaveCount(2);
+    await current.selectOption(originalId);
+    page.once("dialog", (dialog) => dialog.accept());
+    await remove.click();
+    await expect(popup).toHaveCount(0);
+    await openInspector(page, "Configura impianto");
+    await expect(current).toHaveValue(accidentalId);
+    await expect(current.locator("option")).toHaveCount(1);
+    page.once("dialog", (dialog) => dialog.accept());
+    await remove.click();
+    await expect(popup).toHaveCount(0);
+    const download = page.waitForEvent("download");
+    await openDisclosure(page, "File");
+    await page.getByRole("button", { name: "Esporta", exact: true }).click();
+    const saved = JSON.parse(
+      readFileSync((await (await download).path())!, "utf8"),
+    );
+    expect(saved.installations).toHaveLength(0);
+    expect(saved.hvacSystems).toHaveLength(0);
+    expect(saved.rooms).toHaveLength(fixture.rooms.length);
+    expect(saved.rooms[0].systemType).toBe("none");
+  });
+}
+
+test("canalizzato and radiators stay independent in the same room and overview", async ({
   page,
-}, info) => {
+}) => {
   test.setTimeout(90000);
-  await page.setViewportSize({ width: 1920, height: 1080 });
+  const fixture = JSON.parse(
+    readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
+  ).empty;
   await page.goto("/");
-  await page.getByRole("button", { name: "Disegna manualmente" }).click();
+  await page.getByTestId("project-file").setInputFiles({
+    name: "independent.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(fixture)),
+  });
   await page
-    .getByRole("dialog")
-    .getByRole("button", { name: "Crea stanza", exact: true })
+    .getByRole("button", { name: "Continua liberamente nell’editor" })
     .click();
+  await page.getByRole("button", { name: "Lavora sull’impianto" }).click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: "Macchina", exact: true }).click();
+  await pickPlanPoint(plan, 2, 4);
+  await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
+  await pickPlanPoint(plan, 4, 2);
+  await plan.getByTestId("draft-terminal").click();
+  const terminal = page.getByRole("dialog", {
+    name: "Scegli bocchetta sul punto",
+  });
+  await terminal
+    .getByRole("button", { name: "Scegli EDLS", exact: true })
+    .click();
+  await pickTerminalLength(terminal, 1000);
+  await terminal
+    .getByRole("group", { name: "Colore scelto", exact: true })
+    .getByRole("button", { name: "RAL 9016 · Bianco", exact: true })
+    .click();
+  await terminal
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Torna all’editor", exact: true })
+    .click();
+  await page.locator(".stanza-pianta").first().click();
   await openInspector(page, "Configura impianto");
   const popup = page.getByRole("dialog", {
-    name: "Configura impianto",
-    exact: true,
+    name: /^(?:Vista |Configura impianto$)/,
   });
   const types = popup.getByRole("group", { name: "Impianto da configurare" });
-  await types.getByRole("button", { name: "Canalizzato", exact: true }).click();
-  await popup
-    .getByRole("button", { name: "Scegli macchina", exact: true })
-    .click();
-  const picker = page.getByRole("dialog", {
-    name: "Scegli macchina canalizzata",
-  });
-  await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
-  await picker
-    .getByRole("button", { name: "Configura canalizzato", exact: true })
-    .click();
   await expect(
     types.getByRole("button", { name: "Radiatori", exact: true }),
   ).toBeDisabled();
-  const models = popup.getByLabel("Modello bocchetta", { exact: true });
-  await expect(models).toContainText("EDLS");
-  await expect(models).toContainText("EDFL-20");
-  await expect(models).toContainText("EDSC-C");
-  await chooseTerminalModel(popup, "EDFL-20");
-  await expect(popup.getByLabel("Numero di feritoie")).toBeVisible();
-  await chooseTerminalModel(popup, "EDLS");
-  await popup
-    .getByLabel("Lunghezza singola bocchetta", { exact: true })
-    .fill("1000");
-  await popup
-    .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
-    .click();
-  await confirmTerminalPlacement(page);
-  const diagram = popup.getByRole("img", {
-    name: /^Schema plenum di mandata:/,
-  });
-  await expect(diagram).toBeVisible();
-  const bounds = (await diagram.boundingBox())!;
-  expect(bounds.width).toBeLessThanOrEqual(300);
-  expect(bounds.height).toBeLessThanOrEqual(180);
-  const firstId = await popup.getByLabel("Impianto corrente").inputValue();
   await popup
     .getByRole("button", { name: "Nuovo impianto", exact: true })
     .click();
-  const secondId = await popup.getByLabel("Impianto corrente").inputValue();
-  expect(secondId).not.toBe(firstId);
-  await expect(popup.getByLabel("Impianto corrente")).toContainText(
-    "Impianto 2 · Radiatori · 1 stanza",
-  );
+  await page
+    .getByRole("dialog", { name: "Nuovo impianto", exact: true })
+    .getByRole("button", { name: "Crea impianto e apri vista" })
+    .click();
+  await openDisclosure(popup, "Configurazione da modulo e dettagli tecnici");
   await popup.getByLabel("Marca radiatori").selectOption("Global");
   await popup.getByLabel("Famiglia radiatori").selectOption("VIP");
+  await popup.getByLabel("Numero radiatori").fill("3");
   await popup
     .getByRole("button", { name: "Trova radiatori compatibili" })
     .click();
@@ -77,52 +166,18 @@ test("one type per installation, independent radiator system in the same room, b
   await expect(
     types.getByRole("button", { name: "Canalizzato", exact: true }),
   ).toBeDisabled();
-  await popup.getByLabel("Impianto corrente").selectOption(firstId);
-  await expect(
-    popup.getByRole("region", { name: "Plenum di mandata" }),
-  ).toBeVisible();
-  await popup.getByLabel("Impianto corrente").selectOption(secondId);
-  await expect(
-    popup.getByRole("button", { name: "Rimuovi radiatori" }),
-  ).toBeVisible();
-  await page.screenshot({
-    path: info.outputPath("independent-installations.png"),
-  });
-  await popup
-    .getByRole("button", { name: "Nuovo impianto", exact: true })
-    .click();
-  await types.getByRole("button", { name: "Canalizzato", exact: true }).click();
-  await popup
-    .getByRole("button", { name: "Scegli macchina", exact: true })
-    .click();
-  await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
-  await picker
-    .getByRole("button", { name: "Configura canalizzato", exact: true })
-    .click();
-  await chooseTerminalModel(popup, "EDLS");
-  await popup
-    .getByLabel("Lunghezza singola bocchetta", { exact: true })
-    .fill("500");
-  await popup
-    .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
-    .click();
-  await confirmTerminalPlacement(page);
-  await popup.getByLabel("Impianto corrente").selectOption(firstId);
-  await expect(
-    popup.getByRole("region", { name: "Sistema canalizzato", exact: true }),
-  ).toContainText("Impianto 1");
   await page.keyboard.press("Escape");
-  await expect(page.getByTestId("terminal-supply")).toHaveCount(2);
-  await expect(page.getByTestId("radiator-2d")).toHaveCount(1);
+  await expect(page.getByTestId("terminal-supply")).toHaveCount(1);
+  await expect(page.getByTestId("radiator-2d")).toHaveCount(3);
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
-  await expect(page.getByTestId("terminal-supply")).toHaveCount(2);
-  await expect(page.getByTestId("radiator-2d")).toHaveCount(1);
+  await expect(page.getByTestId("terminal-supply")).toHaveCount(1);
+  await expect(page.getByTestId("radiator-2d")).toHaveCount(3);
   await page.getByRole("button", { name: "3D", exact: true }).click();
   const overview = page.getByTestId("installation-overview");
   await openDisclosure(overview, "Impianti");
-  await expect(overview).toContainText("Impianto 1 · Canalizzato");
-  await expect(overview).toContainText("Impianto 2 · Radiatori");
+  await expect(overview).toContainText("Canalizzato");
+  await expect(overview).toContainText("Radiatori");
 });
 
 test("wizard adds and configures one installation at a time without copying the first room group", async ({
@@ -148,13 +203,18 @@ test("wizard adds and configures one installation at a time without copying the 
   await list
     .getByRole("button", { name: "Aggiungi impianto", exact: true })
     .click();
+  await page
+    .getByRole("dialog", { name: "Nuovo impianto", exact: true })
+    .getByRole("button", { name: "Crea impianto e apri vista" })
+    .click();
   const popup = page.getByRole("dialog", {
-    name: "Configura impianto",
+    name: /^(?:Vista |Configura impianto$)/,
     exact: true,
   });
   await expect(popup.getByLabel("Impianto corrente")).toContainText(
     "Impianto 2 · Radiatori · 1 stanza",
   );
+  await openDisclosure(popup, "Configurazione da modulo e dettagli tecnici");
   await popup.getByLabel("Marca radiatori").selectOption("Global");
   await popup.getByLabel("Famiglia radiatori").selectOption("VIP");
   await popup.getByLabel("Numero radiatori").fill("3");

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Project, Room } from "@/schemas/project";
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
@@ -9,20 +9,36 @@ import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { ManualMachineForm } from "./ManualMachineForm";
+import { lastAvailableManufacturer } from "./manufacturer-preference";
 import styles from "./DuctedMachinePicker.module.css";
 export function DuctedMachinePicker({
   project,
   room,
   installationId,
+  systemId,
+  initialOpen = false,
+  onClosed,
+  onPlace,
+  connectedRooms,
+  hydronic = false,
 }: {
   project: Project;
   room: Room;
   installationId?: string;
+  systemId?: string | null;
+  initialOpen?: boolean;
+  onClosed?: () => void;
+  onPlace?: (change: (project: Project) => Project) => void;
+  connectedRooms?: string[];
+  hydronic?: boolean;
 }) {
   const savedSystem = project.hvacSystems.find(
     (s) =>
       s.type === "ducted" &&
-      s.roomIds.includes(room.id) &&
+      (systemId === undefined || s.id === systemId) &&
+      (systemId !== undefined ||
+        s.roomIds.includes(room.id) ||
+        s.indoorUnits.some((unit) => unit.roomId === room.id)) &&
       (!installationId || s.installationId === installationId),
   );
   const { commit, error } = useProjectStore();
@@ -31,27 +47,45 @@ export function DuctedMachinePicker({
   );
   const initialName =
     installation?.name ?? `Impianto ${project.installations.length + 1}`;
-  const [open, setOpen] = useState(false);
-  const brands = [
+  const [open, setOpen] = useState(initialOpen);
+  const saveButton = useRef<HTMLButtonElement>(null);
+  const apply = onPlace ?? commit;
+  function close() {
+    setOpen(false);
+    onClosed?.();
+  }
+  const brands: string[] = [
     ...new Set(
       hvacCatalog.products
         .filter((p) => p.kind === "ducted")
         .map((p) => p.manufacturer),
     ),
   ];
+  const preferredManufacturer = lastAvailableManufacturer(
+    project.hvacSystems
+      .filter((system) => system.type === "ducted")
+      .map((system) => system.manufacturer),
+    brands,
+  );
   const [manufacturer, setManufacturer] = useState(
-    savedSystem?.genericMachine
-      ? brands[0]
-      : (savedSystem?.manufacturer ?? brands[0]),
+    savedSystem?.manufacturer && brands.includes(savedSystem.manufacturer)
+      ? savedSystem.manufacturer
+      : preferredManufacturer,
   );
-  const [servedIds, setServedIds] = useState(
-    savedSystem?.roomIds ?? installation?.roomIds ?? [room.id],
-  );
+  const servedIds = connectedRooms ?? [
+    ...new Set([
+      ...(savedSystem?.roomIds ?? []),
+      ...(savedSystem?.indoorUnits.map((unit) => unit.roomId) ?? []),
+      room.id,
+    ]),
+  ];
   const [systemName, setSystemName] = useState(
     savedSystem?.name ?? initialName,
   );
   const [productId, setProductId] = useState(savedSystem?.productId ?? "");
-  const [manual, setManual] = useState(!!savedSystem?.genericMachine);
+  const [manual, setManual] = useState(
+    hydronic || !!savedSystem?.genericMachine,
+  );
   const load = project.rooms
     .filter((r) => servedIds.includes(r.id))
     .reduce((total, r) => total + r.designLoadW, 0);
@@ -62,41 +96,67 @@ export function DuctedMachinePicker({
   const selected = candidates.find((p) => p.id === productId) ?? candidates[0];
   return (
     <>
-      <button
-        type="button"
-        className="bottone chiara"
-        onClick={() => {
-          setManufacturer(
-            savedSystem?.genericMachine
-              ? brands[0]
-              : (savedSystem?.manufacturer ?? brands[0]),
-          );
-          setServedIds(
-            savedSystem?.roomIds ?? installation?.roomIds ?? [room.id],
-          );
-          setSystemName(savedSystem?.name ?? initialName);
-          setProductId(savedSystem?.productId ?? "");
-          setManual(!!savedSystem?.genericMachine);
-          setOpen(true);
-        }}
-      >
-        {savedSystem ? "Cambia macchina" : "Scegli macchina"}
-      </button>
+      {!initialOpen && (
+        <button
+          type="button"
+          className="bottone chiara"
+          onClick={() => {
+            setManufacturer(
+              savedSystem?.manufacturer &&
+                brands.includes(savedSystem.manufacturer)
+                ? savedSystem.manufacturer
+                : preferredManufacturer,
+            );
+            setSystemName(savedSystem?.name ?? initialName);
+            setProductId(savedSystem?.productId ?? "");
+            setManual(hydronic || !!savedSystem?.genericMachine);
+            setOpen(true);
+          }}
+        >
+          {savedSystem ? "Cambia macchina" : "Scegli macchina"}
+        </button>
+      )}
       <FullscreenDialog
         open={open}
         title="Scegli macchina canalizzata"
-        onClose={() => setOpen(false)}
+        onClose={close}
+        closeLabel={onPlace ? "Annulla" : undefined}
+        footer={
+          onPlace ? (
+            <>
+              <button className="bottone" onClick={close}>
+                Annulla
+              </button>
+              <button
+                className="bottone pieno"
+                onClick={() => {
+                  if (saveButton.current && !saveButton.current.disabled)
+                    saveButton.current.click();
+                  else
+                    useProjectStore
+                      .getState()
+                      .setError(
+                        "Scegli un modello compatibile con il fabbisogno.",
+                      );
+                }}
+              >
+                Salva
+              </button>
+            </>
+          ) : undefined
+        }
       >
         <div className={styles.picker}>
           <p className="nota">
-            Scegli marca e modello per gli ambienti serviti. I modelli proposti
-            coprono il fabbisogno di {formatNumber(load / 1000)} kW.
+            Scegli marca e modello per la macchina. I modelli proposti coprono
+            il fabbisogno di {formatNumber(load / 1000)} kW.
           </p>
           <div className="azioni" role="group" aria-label="Origine macchina">
             <button
               type="button"
               className="bottone"
               aria-pressed={!manual}
+              disabled={hydronic}
               onClick={() => setManual(false)}
             >
               Catalogo verificato
@@ -110,23 +170,34 @@ export function DuctedMachinePicker({
               Dati manuali
             </button>
           </div>
+          {hydronic && (
+            <p role="status" className="nota">
+              Unità canalizzata ad acqua collegata alla PdC. Inserisci portata e
+              potenze dalla scheda del modello idronico.
+            </p>
+          )}
           {manual ? (
             <ManualMachineForm
               project={project}
-              roomIds={
-                savedSystem?.roomIds ?? installation?.roomIds ?? [room.id]
-              }
-              onApplied={() => setOpen(false)}
+              roomIds={servedIds}
+              onApplied={close}
               installationId={installationId}
+              systemId={systemId}
+              onPlace={onPlace}
+              saveButtonRef={saveButton}
             />
           ) : (
             <div className={styles.layout}>
               <div className={styles.controls}>
-                <h3>Ambienti e marca</h3>
+                <h3>Macchina e marca</h3>
                 <label className="campo">
-                  <span>Nome impianto</span>
+                  <span>{onPlace ? "Nome macchina" : "Nome impianto"}</span>
                   <input
-                    aria-label="Nome impianto canalizzato"
+                    aria-label={
+                      onPlace
+                        ? "Nome macchina canalizzata"
+                        : "Nome impianto canalizzato"
+                    }
                     value={systemName}
                     maxLength={100}
                     onChange={(e) => setSystemName(e.target.value)}
@@ -143,51 +214,10 @@ export function DuctedMachinePicker({
                     ))}
                   </select>
                 </label>
-                <details open>
-                  <summary>Ambienti serviti · {servedIds.length}</summary>
-                  <fieldset>
-                    <legend>Ambienti serviti</legend>
-                    {project.rooms
-                      .filter(
-                        (r) =>
-                          r.floorId === room.floorId &&
-                          !r.conditioningExclusion,
-                      )
-                      .map((r) => {
-                        const otherSystem = project.hvacSystems.find(
-                          (s) =>
-                            s.id !== savedSystem?.id &&
-                            s.roomIds.includes(r.id),
-                        );
-                        return (
-                          <label className="ambiente-servito" key={r.id}>
-                            <input
-                              type="checkbox"
-                              disabled={
-                                r.geometryStatus === "unresolved" ||
-                                (!installationId && !!otherSystem)
-                              }
-                              checked={servedIds.includes(r.id)}
-                              onChange={(e) =>
-                                setServedIds(
-                                  e.target.checked
-                                    ? [...servedIds, r.id]
-                                    : servedIds.filter((id) => id !== r.id),
-                                )
-                              }
-                            />
-                            {r.name} · {formatNumber(r.designLoadW / 1000)} kW
-                            {otherSystem
-                              ? ` · già servita da ${otherSystem.name || otherSystem.manufacturer}`
-                              : ""}
-                          </label>
-                        );
-                      })}
-                  </fieldset>
-                </details>
                 <p className="nota">
-                  Stanze e macchina appartengono soltanto a questo impianto. Un
-                  altro impianto parte dalla singola stanza selezionata.
+                  Gli ambienti serviti si aggiornano automaticamente collegando
+                  le bocchette alla macchina. Il dimensionamento considera gli
+                  ambienti raggiunti dai collegamenti.
                 </p>
                 {selected && (
                   <div
@@ -204,6 +234,8 @@ export function DuctedMachinePicker({
                   </div>
                 )}
                 <button
+                  ref={saveButton}
+                  style={onPlace ? { display: "none" } : undefined}
                   className="bottone chiara"
                   disabled={
                     room.geometryStatus === "unresolved" ||
@@ -216,7 +248,7 @@ export function DuctedMachinePicker({
                     )
                   }
                   onClick={() => {
-                    commit((p) => {
+                    apply((p) => {
                       const updated = applyDuctedSystem(
                         p,
                         servedIds,
@@ -246,14 +278,18 @@ export function DuctedMachinePicker({
                           item.id === installationId
                             ? {
                                 ...item,
-                                name: systemName.trim() || initialName,
-                                roomIds: servedIds,
+                                ...(onPlace
+                                  ? {}
+                                  : { name: systemName.trim() || initialName }),
+                                roomIds: [
+                                  ...new Set([...item.roomIds, ...servedIds]),
+                                ],
                               }
                             : item,
                         ),
                       };
                     });
-                    if (!useProjectStore.getState().error) setOpen(false);
+                    if (!useProjectStore.getState().error) close();
                   }}
                 >
                   {savedSystem

@@ -1,4 +1,41 @@
-import type { Project } from "@/schemas/project";
+import type { Point, Project } from "@/schemas/project";
+import { pointInPolygon } from "../geometry/primitives";
+
+export function placeHeatPumpDraft(
+  project: Project,
+  floorId: string,
+  position: Point,
+  draftId?: string,
+): Project {
+  if (
+    !project.floors.some(
+      (floor) => floor.id === floorId && floor.scaleVerified,
+    ) ||
+    !project.rooms.some(
+      (room) => room.floorId === floorId && room.geometryStatus === "closed",
+    ) ||
+    !Number.isFinite(position.x) ||
+    !Number.isFinite(position.y) ||
+    project.rooms.some(
+      (room) =>
+        room.floorId === floorId && pointInPolygon(position, room.polygon),
+    )
+  )
+    throw new Error(
+      "Scegli un punto esterno agli ambienti su un piano con scala verificata.",
+    );
+  if (draftId && !project.heatPumpDrafts?.some((draft) => draft.id === draftId))
+    throw new Error("Pompa da configurare non trovata.");
+  const draft = { id: draftId ?? crypto.randomUUID(), floorId, position };
+  return {
+    ...project,
+    heatPumpDrafts: draftId
+      ? project.heatPumpDrafts?.map((item) =>
+          item.id === draftId ? { ...item, ...draft } : item,
+        )
+      : [...(project.heatPumpDrafts ?? []), draft],
+  };
+}
 import {
   heatPumpCatalog,
   heatPumpProductAtVersion,
@@ -98,6 +135,7 @@ export function applyHydronicSystem(
     catalogVersion: version,
     roomIds,
     fanCoilIds,
+    terminalIds: existing?.terminalIds,
     operatingPointIndex: input.operatingPointIndex,
     outdoorUnit: unit,
     pipeWaypoints: existing?.pipeWaypoints?.filter((w) =>

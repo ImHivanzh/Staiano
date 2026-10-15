@@ -1,9 +1,8 @@
-import { chooseTerminalModel, confirmTerminalPlacement } from "./ui-helpers";
+import { pickPlanPoint } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Locator } from "@playwright/test";
 import { expect, test } from "./browser-test";
 import { openDisclosure, openInspector } from "./ui-helpers";
-import { projectSchema } from "../src/schemas/project";
 
 async function expectPopupFrame(
   dialog: Locator,
@@ -58,140 +57,56 @@ for (const viewport of [
     await viewer
       .getByRole("button", { name: "Bocchette", exact: true })
       .click();
-    const launch = page.getByRole("button", {
-      name: "Configura canalizzazione",
-      exact: true,
-    });
-    await expect(page.getByLabel("Ambiente destinazione")).toBeHidden();
-    await launch.click();
+    await page
+      .getByRole("button", { name: "Configura canalizzazione", exact: true })
+      .click();
     const configuration = page.getByRole("dialog", {
       name: "Configura canalizzazione",
       exact: true,
     });
-    await expect(configuration).toBeVisible();
-    expect(await configuration.evaluate((node) => node.matches(":modal"))).toBe(
-      true,
-    );
     await expectPopupFrame(configuration, viewport);
     await configuration
-      .getByRole("button", { name: "Scegli macchina", exact: true })
+      .getByRole("button", { name: "Configura sulla pianta principale" })
       .click();
+    await expect(configuration).toHaveCount(0);
+    const plan = page.getByRole("region", {
+      name: "Configurazione grafica canalizzato",
+    });
+    await plan
+      .getByRole("button", { name: "Macchina", exact: true })
+      .click();
+    await pickPlanPoint(plan, 2, 2);
+    await plan.getByTestId("draft-machine").click();
     const picker = page.getByRole("dialog", {
       name: "Scegli macchina canalizzata",
       exact: true,
     });
-    await expect(picker).toBeVisible();
     await expectPopupFrame(picker, viewport);
     await page.keyboard.press("Escape");
-    await expect(picker).toBeHidden();
-    await expect(configuration).toBeVisible();
-    await configuration
-      .getByRole("button", { name: "Scegli macchina", exact: true })
-      .click();
+    await expect(plan.getByTestId("draft-machine")).toHaveCount(1);
+    await plan.getByTestId("draft-machine").click();
     await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
     const models = picker
       .getByRole("region", { name: "Modelli macchina compatibili" })
       .getByRole("button");
-    expect(await models.count()).toBeGreaterThan(1);
     await models.last().click();
-    const chosenModel = await models.last().locator("strong").innerText();
+    const chosen = await models.last().locator("strong").innerText();
+    await expect(
+      picker
+        .locator("footer")
+        .getByRole("button", { name: "Salva", exact: true }),
+    ).toBeInViewport();
     await picker.screenshot({ path: info.outputPath("machine-picker.png") });
     await picker
-      .getByRole("button", { name: "Configura canalizzato", exact: true })
+      .locator("footer")
+      .getByRole("button", { name: "Salva", exact: true })
       .click();
-    await expect(picker).toBeHidden();
-    await expect(
-      configuration.getByRole("button", {
-        name: "Cambia macchina",
-        exact: true,
-      }),
-    ).toBeVisible();
-    await chooseTerminalModel(configuration, "EDLS");
-    const choice = configuration.getByRole("region", {
-      name: "Scelta singola bocchetta",
-    });
-    await choice
-      .getByLabel("Lunghezza singola bocchetta", { exact: true })
-      .fill("1000");
-    await choice
-      .getByRole("button", { name: "Posiziona nell’ambiente" })
-      .click();
-    await confirmTerminalPlacement(page);
-    await openDisclosure(configuration, "Bilancio bocchette per ambiente");
-    await expect(configuration).toContainText("Installati: 1000 mm");
-    await configuration.screenshot({
-      path: info.outputPath("duct-configuration.png"),
-    });
-    expect(
-      await configuration.evaluate(
-        (node) => node.scrollWidth <= node.clientWidth,
-      ),
-    ).toBe(true);
-    await page.keyboard.press("Escape");
-    await expect(configuration).toBeHidden();
-    await expect(launch).toBeFocused();
-    await launch.click();
-    await expect(configuration).toContainText(
-      "Bocchetta posizionata. Totale aggiornato.",
+    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+    await expect(models.filter({ hasText: chosen })).toHaveAttribute(
+      "aria-pressed",
+      "true",
     );
-    await configuration
-      .getByRole("button", { name: "Cambia macchina", exact: true })
-      .click();
-    await expect(
-      models.filter({ hasText: chosenModel }).first(),
-    ).toHaveAttribute("aria-pressed", "true");
-    await models.first().click();
-    await picker
-      .getByRole("button", {
-        name: "Aggiorna sistema canalizzato",
-        exact: true,
-      })
-      .click();
-    await configuration
-      .getByRole("button", { name: "Chiudi configurazione" })
-      .click();
-    await page.getByRole("button", { name: "Chiudi catalogo" }).click();
-    const download = page.waitForEvent("download");
-    await openDisclosure(page, "File");
-    await page.getByRole("button", { name: "Esporta", exact: true }).click();
-    const project = projectSchema.parse(
-      JSON.parse(readFileSync((await (await download).path())!, "utf8")),
-    );
-    expect(project.airTerminals).toHaveLength(1);
-    expect(project.airTerminals[0].widthMm).toBe(1000);
-    expect(project.airTerminals[0].systemId).toBe(project.hvacSystems[0].id);
-    await openDisclosure(viewer, "Aggiungi apparecchio");
-    await viewer.getByRole("button", { name: "Plenum", exact: true }).click();
-    const plenum = page.getByRole("dialog", {
-      name: "Plenum degli impianti autonomi",
-    });
-    await expect(plenum).toBeVisible();
-    await expectPopupFrame(plenum, viewport);
-    await expect(
-      plenum.getByRole("button", { name: "Cambia macchina", exact: true }),
-    ).toBeVisible();
-    await plenum.getByRole("button", { name: "Chiudi plenum" }).click();
-    await openDisclosure(viewer, "Aggiungi apparecchio");
-    await viewer
-      .getByRole("button", { name: "Macchina manuale", exact: true })
-      .click();
-    const manual = page.getByRole("dialog", { name: "Catalogo macchine" });
-    await expect(manual).toBeVisible();
-    await expectPopupFrame(manual, viewport);
     await page.keyboard.press("Escape");
-    await expect(manual).toHaveCount(0);
-    await openDisclosure(viewer, "Vista 3D");
-    await viewer
-      .getByRole("button", { name: "Vista Canale", exact: true })
-      .click();
-    await viewer.getByRole("button", { name: "Configura percorsi" }).click();
-    const channels = page.getByRole("dialog", {
-      name: "Canalizzazione collegata",
-      exact: true,
-    });
-    await expect(channels).toBeVisible();
-    await expectPopupFrame(channels, viewport);
-    await channels.getByRole("button", { name: "Chiudi canali" }).click();
   });
 
   test(`extended rounded popup surfaces at ${viewport.width}`, async ({
@@ -207,7 +122,7 @@ for (const viewport of [
       .click();
     await openInspector(page, "Configura impianto");
     const systems = page.getByRole("dialog", {
-      name: "Configura impianto",
+      name: /^(?:Vista |Configura impianto$)/,
       exact: true,
     });
     await expectPopupFrame(systems, viewport);
@@ -220,6 +135,10 @@ for (const viewport of [
         .getByRole("group", { name: "Impianto da configurare" })
         .getByRole("button", { name: mode, exact: true })
         .click();
+      await openDisclosure(
+        systems,
+        "Configurazione da modulo e dettagli tecnici",
+      );
       await expect(
         systems.getByRole("heading", { name: heading, exact: true }),
       ).toBeVisible();
@@ -229,7 +148,10 @@ for (const viewport of [
     });
     await page.keyboard.press("Escape");
     await expect(
-      page.getByRole("button", { name: "Configura impianto", exact: true }),
+      page.getByRole("button", {
+        name: /^(?:Vista |Configura impianto$)/,
+        exact: true,
+      }),
     ).toBeFocused();
     await page.getByRole("button", { name: "3D", exact: true }).click();
     const viewer = page.getByTestId("viewer-3d");
@@ -299,7 +221,7 @@ for (const viewport of [
   });
 }
 
-test("2D inspector opens canalizzazione rounded popup and changes the chosen machine", async ({
+test("2D inspector routes machine editing to the plan popup", async ({
   page,
 }) => {
   await page.goto("/");
@@ -309,56 +231,47 @@ test("2D inspector opens canalizzazione rounded popup and changes the chosen mac
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
   await openInspector(page, "Configura impianto");
-  await page
+  const settings = page.getByRole("dialog", {
+    name: /^(?:Vista |Configura impianto$)/,
+  });
+  await settings
     .getByRole("group", { name: "Impianto da configurare" })
     .getByRole("button", { name: "Canalizzato", exact: true })
     .click();
-
-  const configuration = page.getByRole("dialog", {
-    name: "Configura impianto",
-    exact: true,
-  });
-  await expect(configuration).toBeVisible();
-  await configuration
-    .getByRole("button", { name: "Scegli macchina", exact: true })
+  await settings
+    .getByRole("button", { name: "Apri planimetria operativa" })
     .click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan
+    .getByRole("button", { name: "Macchina", exact: true })
+    .click();
+  await pickPlanPoint(plan, 2, 2);
+  await plan.getByTestId("draft-machine").click();
   const picker = page.getByRole("dialog", {
     name: "Scegli macchina canalizzata",
   });
   await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
-  await picker
+  const models = picker
     .getByRole("region", { name: "Modelli macchina compatibili" })
-    .getByRole("button")
-    .filter({ hasText: "FBA50A9" })
-    .click();
+    .getByRole("button");
+  await models.filter({ hasText: "FBA50A9" }).click();
   await picker
-    .getByRole("button", { name: "Configura canalizzato", exact: true })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
-  await expect(
-    configuration.getByRole("heading", { name: "FBA50A9", exact: true }),
-  ).toBeVisible();
-  await configuration
-    .getByRole("button", { name: "Cambia macchina", exact: true })
-    .click();
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  await models.filter({ hasText: "FBA60A9" }).click();
   await picker
-    .getByRole("region", { name: "Modelli macchina compatibili" })
-    .getByRole("button")
-    .filter({ hasText: "FBA60A9" })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
-  await picker
-    .getByRole("button", { name: "Aggiorna sistema canalizzato", exact: true })
-    .click();
-  await expect(
-    configuration.getByRole("heading", { name: "FBA60A9", exact: true }),
-  ).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(configuration).toBeHidden();
-  await page
-    .getByRole("button", { name: "Configura impianto", exact: true })
-    .click();
-  await expect(
-    configuration.getByRole("heading", { name: "FBA60A9", exact: true }),
-  ).toBeVisible();
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  await expect(models.filter({ hasText: "FBA60A9" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
 });
 
 test("wizard and selected plenum open their detailed configuration rounded popup", async ({

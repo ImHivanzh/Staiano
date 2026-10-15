@@ -14,8 +14,14 @@ export function placeDuctedMachine(
   const room = project.rooms.find(
     (r) => r.id === (roomId ?? system?.roomIds[0]),
   );
-  if (!system || !room || !system.roomIds.includes(room.id))
-    throw new Error("Stanza servita necessaria.");
+  if (
+    !system ||
+    !room ||
+    room.conditioningExclusion ||
+    room.geometryStatus !== "closed" ||
+    !project.floors.find((floor) => floor.id === room.floorId)?.scaleVerified
+  )
+    throw new Error("Stanza valida con scala verificata necessaria.");
   const product = hvacProductAtVersion(system.productId, system.catalogVersion);
   const dims = system.genericMachine ?? product;
   if (!dims?.widthMm || !dims.heightMm || !dims.depthMm)

@@ -1,4 +1,5 @@
 import type { Point, Project } from "@/schemas/project";
+import { placeEquipmentDraft } from "./equipment-draft";
 import { distance, projection, pointInPolygon } from "./primitives";
 import { footprintInsideRoom } from "./footprint";
 import { positionAlongRoomWall, roomWallSpan } from "./placement";
@@ -6,13 +7,43 @@ import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { snapTerminalPose } from "./terminal-snap";
 import type { SnapOptions } from "./primitives";
 import { moveSystemObject } from "@/domain/ducted/placement";
-import { moveHydronicOutdoorUnit } from "@/domain/hydronic/apply";
+import {
+  moveHydronicOutdoorUnit,
+  placeHeatPumpDraft,
+} from "@/domain/hydronic/apply";
+import {
+  layoutLinearRun,
+  linearRunMembers,
+} from "@/domain/air-terminals/linear-run";
 export function movePlacedDevice(
   project: Project,
   deviceId: string,
   target: Point,
   snap?: SnapOptions,
 ): Project {
+  const equipmentDraft = project.equipmentDrafts?.find(
+    (draft) => draft.id === deviceId,
+  );
+  if (equipmentDraft) {
+    const room = project.rooms.find(
+      (item) =>
+        item.floorId === equipmentDraft.floorId &&
+        !item.conditioningExclusion &&
+        pointInPolygon(target, item.polygon),
+    );
+    return placeEquipmentDraft(
+      project,
+      room?.id ?? "",
+      target,
+      equipmentDraft.type,
+      deviceId,
+    );
+  }
+  const heatPumpDraft = project.heatPumpDrafts?.find(
+    (draft) => draft.id === deviceId,
+  );
+  if (heatPumpDraft)
+    return placeHeatPumpDraft(project, heatPumpDraft.floorId, target, deviceId);
   if (project.hydronicSystems?.some((s) => s.outdoorUnit.id === deviceId))
     return moveHydronicOutdoorUnit(project, deviceId, { position: target });
   const pillar = project.pillars?.find((c) => c.id === deviceId);
@@ -43,6 +74,63 @@ export function movePlacedDevice(
   const item = all.find((d) => d.id === deviceId);
   if (!item) return project;
   const terminal = project.airTerminals.find((t) => t.id === deviceId);
+  const members = terminal ? linearRunMembers(project, terminal) : [];
+  if (terminal && members.length > 1) {
+    if (members.some((member) => member.locked))
+      throw new Error("Sbloccare tutti i moduli del punto prima di spostarlo.");
+    const widthMm = members.reduce((sum, member) => sum + member.widthMm, 0);
+    const offsetM = (widthMm - members[0].widthMm) / 2000;
+    const center = {
+      x: members[0].position.x + Math.cos(terminal.rotation) * offsetM,
+      y: members[0].position.y + Math.sin(terminal.rotation) * offsetM,
+    };
+    const whole = {
+      ...terminal,
+      widthMm,
+      position: center,
+      heightMm: Math.max(...members.map((member) => member.heightMm)),
+      commercialOptions: undefined,
+    };
+    const collapsed = {
+      ...project,
+      airTerminals: [
+        ...project.airTerminals.filter(
+          (t) => !members.some((member) => member.id === t.id),
+        ),
+        whole,
+      ],
+    };
+    const moved = movePlacedDevice(
+      collapsed,
+      deviceId,
+      {
+        x: target.x + center.x - terminal.position.x,
+        y: target.y + center.y - terminal.position.y,
+      },
+      snap,
+    );
+    const pose = moved.airTerminals.find((t) => t.id === deviceId)!;
+    if (
+      terminal.mounting === "ceiling" &&
+      !footprintInsideRoom(
+        project.rooms.find((room) => room.id === pose.roomId)!,
+        pose.position,
+        widthMm / 1000,
+        whole.heightMm / 1000,
+        pose.rotation,
+      )
+    )
+      throw new Error(
+        "Il punto composto non rientra nel contorno della stanza.",
+      );
+    const arranged = layoutLinearRun(members, pose);
+    return {
+      ...project,
+      airTerminals: project.airTerminals.map(
+        (t) => arranged.find((member) => member.id === t.id) ?? t,
+      ),
+    };
+  }
   const fanCoil = project.fanCoils?.find((t) => t.id === deviceId);
   if (item.locked)
     throw new Error("Sbloccare l’apparecchio prima di spostarlo.");
@@ -121,7 +209,10 @@ export function movePlacedDevice(
     if (
       terminal.systemId &&
       !project.hvacSystems.some(
-        (s) => s.id === terminal.systemId && s.roomIds.includes(room.id),
+        (s) =>
+          s.id === terminal.systemId &&
+          (s.indoorUnits.some((unit) => unit.floorId === room.floorId) ||
+            (!s.indoorUnits.length && s.roomIds.includes(room.id))),
       )
     )
       throw new Error(
@@ -165,7 +256,11 @@ export function movePlacedDevice(
     !project.hvacSystems.some(
       (system) =>
         system.id === terminal.systemId &&
-        system.roomIds.includes(chosen.room.id),
+        (system.indoorUnits.some(
+          (unit) => unit.floorId === chosen.room.floorId,
+        ) ||
+          (!system.indoorUnits.length &&
+            system.roomIds.includes(chosen.room.id))),
     )
   )
     throw new Error("La stanza non è servita dal sistema di questo terminale.");

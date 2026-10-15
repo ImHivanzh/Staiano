@@ -35,8 +35,13 @@ import {
   SidebarSimple,
   MagicWand,
   SignOut,
+  PencilSimple,
 } from "@phosphor-icons/react";
-import { useProjectStore, type Tool } from "@/stores/project-store";
+import {
+  useProjectStore,
+  type Tool,
+  type PlanPlacementTool,
+} from "@/stores/project-store";
 import {
   addRectangle,
   clearProjectSystems,
@@ -69,7 +74,8 @@ import { applyPlanImport } from "@/domain/geometry/import-plan";
 import type { ImportedPlan } from "@/services/import/plan-types";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { Editor2D } from "./editor2d/Editor2D";
-import { Properties } from "./properties/Properties";
+import { GraphicalDuctedConfigurator } from "./systems/GraphicalDuctedConfigurator";
+import { Properties, selectionWithProperties } from "./properties/Properties";
 import { ConfigurationWizard } from "./import/ConfigurationWizard";
 import { PillarDialog } from "./PillarDialog";
 import type { Project } from "@/schemas/project";
@@ -79,6 +85,7 @@ import { AdminUsers } from "./AdminUsers";
 import { ProjectSettings } from "./ProjectSettings";
 import { LengthInput } from "./LengthInput";
 import { PdfPreview } from "./PdfPreview";
+import { ProjectSharing } from "./ProjectSharing";
 
 const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), {
   ssr: false,
@@ -97,11 +104,19 @@ const tools: {
   shortcut: string;
   icon: typeof Cursor;
 }[] = [
-  { id: "select", label: "Seleziona", shortcut: "V", icon: Cursor },
-  { id: "wall", label: "Disegna muro", shortcut: "W", icon: LineSegment },
-  { id: "measure", label: "Misura", shortcut: "M", icon: Ruler },
+  { id: "select", label: "Seleziona", shortcut: "Spazio", icon: Cursor },
+  { id: "wall", label: "Disegna muro", shortcut: "L", icon: LineSegment },
+  { id: "measure", label: "Misura", shortcut: "T", icon: Ruler },
   { id: "pan", label: "Sposta vista", shortcut: "H", icon: Hand },
 ];
+
+const equipmentShortcuts: Record<string, PlanPlacementTool> = {
+  c: "connect",
+  p: "heatPump",
+  s: "split",
+  b: "point",
+  v: "fanCoil",
+};
 
 export function Configurator() {
   const router = useRouter();
@@ -120,12 +135,15 @@ export function Configurator() {
     [ready, setReady] = useState(false),
     [newDialog, setNewDialog] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [sheetsBusy, setSheetsBusy] = useState(false);
+  const [sheetsNotice, setSheetsNotice] = useState("");
   const [includeRenders, setIncludeRenders] = useState(true);
   const [dossierVariant, setDossierVariant] = useState<"complete" | "summary">(
     "complete",
   );
   const [billOpen, setBillOpen] = useState(false);
   const [inspectorOpen, setInspectorOpen] = useState(true);
+  const [navigationOpen, setNavigationOpen] = useState(true);
   const revealedCheck = useRef<Check | null>(null);
   const [pdfProgress, setPdfProgress] = useState("");
   const [pdfPreview, setPdfPreview] = useState<{
@@ -143,6 +161,18 @@ export function Configurator() {
   const fileInput = useRef<HTMLInputElement>(null),
     rasterInput = useRef<HTMLInputElement>(null),
     started = useRef(false);
+  const activeProjectId = p?.id;
+  useEffect(() => {
+    const access = () =>
+      useProjectStore.setState({
+        readOnly: activeProjectId
+          ? repository.isReadOnly(activeProjectId)
+          : false,
+      });
+    access();
+    window.addEventListener("shared-project-access", access);
+    return () => window.removeEventListener("shared-project-access", access);
+  }, [activeProjectId]);
   useEffect(() => {
     if (started.current) return;
     started.current = true;
@@ -264,8 +294,29 @@ export function Configurator() {
       )
         return;
       const store = useProjectStore.getState();
+      if (
+        e.altKey ||
+        (e.key !== "Escape" &&
+          document.querySelector(
+            'dialog[open],[role="dialog"][aria-modal="true"]',
+          ))
+      )
+        return;
+      if (e.key === " " && !e.ctrlKey && !e.metaKey) {
+        if (
+          e.target instanceof Element &&
+          e.target.closest("button,summary,a,[role=button]") &&
+          !e.target.closest('[role="toolbar"]')
+        )
+          return;
+        e.preventDefault();
+        store.setTool("select");
+        useProjectStore.setState({ planPlacementTool: "select" });
+        return;
+      }
       if (e.key === "Escape") {
         store.setTool("select");
+        useProjectStore.setState({ planPlacementTool: "select" });
         store.select(null);
         setRectangleOpen(false);
         return;
@@ -287,10 +338,35 @@ export function Configurator() {
         }
         return;
       }
+      const placement = equipmentShortcuts[e.key.toLowerCase()];
+      if (
+        placement &&
+        store.project?.rooms.some(
+          (room) => room.floorId === store.activeFloorId,
+        )
+      ) {
+        e.preventDefault();
+        if (placement !== "connect" && store.view === "3d") store.setView("2d");
+        store.setTool("select");
+        useProjectStore.setState({
+          planPlacementTool: placement,
+          selection: [],
+        });
+        return;
+      }
       const tool = tools.find(
         (t) => t.shortcut.toLowerCase() === e.key.toLowerCase(),
       );
-      if (tool) store.setTool(tool.id);
+      if (tool) {
+        e.preventDefault();
+        store.setTool(tool.id);
+      }
+      if (e.key.toLowerCase() === "r" && store.view === "2d") {
+        e.preventDefault();
+        store.setTool("select");
+        useProjectStore.setState({ planPlacementTool: "select" });
+        setRectangleOpen(true);
+      }
       if (e.key === "Delete" || e.key === "Backspace") {
         e.preventDefault();
         deleteSelection();
@@ -306,6 +382,41 @@ export function Configurator() {
   function copySelection() {
     const store = useProjectStore.getState();
     store.commit((project) => duplicateSelection(project, store.selection));
+  }
+  async function downloadTechnicalSheets() {
+    if (!p || sheetsBusy) return;
+    setSheetsBusy(true);
+    setSheetsNotice("");
+    try {
+      const response = await fetch("/api/projects/technical-sheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(p),
+      });
+      if (!response.ok)
+        throw new Error(
+          (await response.json()).message ??
+            "Download schede tecniche fallito.",
+        );
+      const blob = await response.blob();
+      downloadFile(
+        `${p.name.replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 70)}-schede-tecniche.zip`,
+        blob,
+      );
+      const count = Number(response.headers.get("X-Sheet-Count"));
+      const missing = Number(response.headers.get("X-Missing-Sheet-Count"));
+      setSheetsNotice(
+        `${count} documenti scaricati.${missing ? ` ${missing} apparati senza scheda: vedi l’indice nello ZIP.` : ""}`,
+      );
+    } catch (error) {
+      s.setError(
+        error instanceof Error
+          ? error.message
+          : "Download schede tecniche fallito.",
+      );
+    } finally {
+      setSheetsBusy(false);
+    }
   }
   function deleteSelection() {
     const store = useProjectStore.getState();
@@ -357,6 +468,23 @@ export function Configurator() {
     }
   }
   async function startWizard() {
+    if (floor?.configurationWizard?.status === "active") {
+      s.commit((project) => ({
+        ...project,
+        floors: project.floors.map((item) =>
+          item.id === s.activeFloorId && item.configurationWizard
+            ? {
+                ...item,
+                configurationWizard: {
+                  ...item.configurationWizard,
+                  status: "paused",
+                },
+              }
+            : item,
+        ),
+      }));
+      return;
+    }
     if (!p) {
       await newProject("guided");
     } else {
@@ -569,8 +697,94 @@ export function Configurator() {
   }
   const floor = p?.floors.find((f) => f.id === s.activeFloorId),
     rooms = p?.rooms.filter((r) => r.floorId === s.activeFloorId) ?? [];
+  const ductedSelection =
+    s.selection.length > 0 &&
+    s.selection.every(
+      (item) =>
+        item.kind === "device" &&
+        (p?.airTerminals.some((terminal) => terminal.id === item.id) ||
+          p?.ductedDrafts?.some((draft) => draft.id === item.id) ||
+          p?.hydronicSystems?.some(
+            (system) => system.outdoorUnit.id === item.id,
+          ) ||
+          p?.hvacSystems.some(
+            (system) =>
+              system.type === "ducted" &&
+              system.indoorUnits.some((unit) => unit.id === item.id),
+          )),
+    );
+  const propertySelection = p ? selectionWithProperties(p, s.selection) : [];
+  const showInspector =
+    inspectorOpen &&
+    s.view === "2d" &&
+    ((propertySelection.length > 0 && !ductedSelection) ||
+      floor?.configurationWizard?.status === "active");
+  const ActiveDrawingIcon =
+    tools.find((tool) => tool.id === s.tool && tool.id !== "select")?.icon ??
+    PencilSimple;
+  const drawingTools = (
+    <details className="menu-progetto" name="workspace-menus">
+      <summary
+        className="bottone piccolo"
+        aria-label="Disegno e misure"
+        title={
+          s.tool === "select"
+            ? "Disegno e misure"
+            : `${tools.find((tool) => tool.id === s.tool)?.label ?? "Disegno"} attivo · Disegno e misure`
+        }
+        data-active={s.tool !== "select"}
+      >
+        <ActiveDrawingIcon size={20} aria-hidden="true" />
+      </summary>
+      <div className="strumenti-disegno">
+        {(rooms.length
+          ? tools.filter((tool) => tool.id !== "select")
+          : tools
+        ).map((t) => (
+          <button
+            type="button"
+            key={t.id}
+            className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
+            title={`${t.label} · ${t.shortcut}`}
+            aria-label={t.label}
+            aria-keyshortcuts={t.id === "select" ? "Space" : t.shortcut}
+            aria-pressed={s.tool === t.id}
+            onClick={(event) => {
+              s.setTool(t.id);
+              const menu = event.currentTarget.closest("details");
+              if (menu) {
+                menu.open = false;
+                menu.querySelector("summary")?.focus();
+              }
+            }}
+          >
+            <t.icon aria-hidden="true" />
+            <span>{t.label}</span>
+            <kbd>{t.shortcut}</kbd>
+          </button>
+        ))}
+        <button
+          type="button"
+          className="bottone piccolo strumento-stanza"
+          aria-label="Stanza rettangolare"
+          title="Stanza rettangolare · R"
+          aria-keyshortcuts="R"
+          onClick={(event) => {
+            const menu = event.currentTarget.closest("details");
+            if (menu) menu.open = false;
+            setRectangleOpen(true);
+          }}
+        >
+          <Square aria-hidden="true" />
+          Stanza rettangolare <kbd>R</kbd>
+        </button>
+      </div>
+    </details>
+  );
   return (
-    <div className={`app hvac-app ${s.presentation ? "modo-cliente" : ""}`}>
+    <div
+      className={`app hvac-app ${navigationOpen ? "" : "navigazione-compatta"} ${s.presentation ? "modo-cliente" : ""}`}
+    >
       <input
         ref={fileInput}
         type="file"
@@ -595,7 +809,7 @@ export function Configurator() {
           e.target.value = "";
         }}
       />
-      <aside className="barra-lato">
+      <aside className="barra-lato" id="navigazione-progetto">
         <div className="marchio">
           <span className="bollo">
             <Image
@@ -615,6 +829,8 @@ export function Configurator() {
           <button
             className={`voce-nav ${page === "editor" ? "attiva" : ""}`}
             aria-current={page === "editor" ? "page" : undefined}
+            aria-label="Planimetria"
+            title="Planimetria"
             onClick={() => setPage("editor")}
           >
             <HouseLine /> Planimetria
@@ -622,13 +838,17 @@ export function Configurator() {
           <button
             className={`voce-nav ${page === "projects" ? "attiva" : ""}`}
             aria-current={page === "projects" ? "page" : undefined}
+            aria-label="Progetti"
+            title="Progetti locali e condivisi"
             onClick={() => void showProjects()}
           >
-            <FolderOpen /> Progetti locali
+            <FolderOpen /> Progetti
           </button>
           <button
             className={`voce-nav ${page === "checks" ? "attiva" : ""}`}
             aria-current={page === "checks" ? "page" : undefined}
+            aria-label="Controlli"
+            title="Controlli"
             onClick={() => setPage("checks")}
             disabled={!p}
           >
@@ -640,6 +860,8 @@ export function Configurator() {
           <button
             className={`voce-nav ${page === "catalogs" ? "attiva" : ""}`}
             aria-current={page === "catalogs" ? "page" : undefined}
+            aria-label="Cataloghi tecnici"
+            title="Cataloghi tecnici"
             onClick={() => setPage("catalogs")}
           >
             <SquaresFour />
@@ -649,6 +871,8 @@ export function Configurator() {
             <button
               className={`voce-nav ${page === "users" ? "attiva" : ""}`}
               aria-current={page === "users" ? "page" : undefined}
+              aria-label="Gestione utenti"
+              title="Gestione utenti"
               onClick={() => setPage("users")}
             >
               <Users />
@@ -742,10 +966,20 @@ export function Configurator() {
       </aside>
       <div className="contenuto contenuto-hvac">
         <header className="testata testata-hvac">
+          <button
+            className="bottone tenue comando-icona"
+            aria-label="Pannello ambienti"
+            title="Mostra o nascondi ambienti e navigazione"
+            aria-expanded={navigationOpen}
+            aria-controls="navigazione-progetto"
+            onClick={() => setNavigationOpen((open) => !open)}
+          >
+            <SidebarSimple aria-hidden="true" />
+          </button>
           <div className="titolo-progetto">
             <h1>
               {page === "projects"
-                ? "Progetti locali"
+                ? "Progetti locali e condivisi"
                 : page === "catalogs"
                   ? "Cataloghi tecnici"
                   : page === "checks"
@@ -763,6 +997,47 @@ export function Configurator() {
             </p>
           </div>
           <div className="azioni-testata">
+            {p && identity && (
+              <ProjectSharing
+                key={p.id}
+                project={p}
+                username={identity.username}
+              />
+            )}
+            {p && page === "editor" && (
+              <div
+                className="comandi-rapidi"
+                role="group"
+                aria-label="Salvataggio e cronologia"
+              >
+                <button
+                  className="bottone tenue comando-icona"
+                  aria-label="Salva"
+                  title="Salva · Ctrl+S"
+                  onClick={() => void saveCurrent().catch(() => {})}
+                >
+                  <FloppyDisk aria-hidden="true" />
+                </button>
+                <button
+                  className="bottone tenue comando-icona"
+                  aria-label="Annulla"
+                  title="Annulla · Ctrl+Z"
+                  disabled={!s.past.length || s.readOnly}
+                  onClick={s.undo}
+                >
+                  <ArrowCounterClockwise aria-hidden="true" />
+                </button>
+                <button
+                  className="bottone tenue comando-icona"
+                  aria-label="Ripristina"
+                  title="Ripristina · Ctrl+Y"
+                  disabled={!s.future.length || s.readOnly}
+                  onClick={s.redo}
+                >
+                  <ArrowClockwise aria-hidden="true" />
+                </button>
+              </div>
+            )}
             <span
               className={`stato-salvataggio ${s.saveStatus === "error" ? "errore" : ""}`}
               role="status"
@@ -779,22 +1054,48 @@ export function Configurator() {
                         : "Caricamento…"}
               </span>
               {p && s.saveStatus === "saved" && (
-                <span>su questo dispositivo</span>
+                <span>
+                  {p && repository.isShared(p.id)
+                    ? "sul server condiviso"
+                    : "su questo dispositivo"}
+                </span>
               )}
             </span>
             <button
               className="bottone pieno avvio-wizard"
+              aria-label={
+                floor?.configurationWizard?.status === "active"
+                  ? "Chiudi wizard"
+                  : floor?.configurationWizard?.status === "paused"
+                    ? "Riprendi wizard"
+                    : floor?.configurationWizard
+                      ? "Apri wizard"
+                      : "Avvia wizard"
+              }
+              title={
+                floor?.configurationWizard?.status === "active"
+                  ? "Chiudi wizard"
+                  : "Percorso guidato"
+              }
+              aria-pressed={floor?.configurationWizard?.status === "active"}
               onClick={() => void startWizard()}
               disabled={!ready}
             >
               <MagicWand aria-hidden="true" />
-              {floor?.configurationWizard?.status === "paused"
-                ? "Riprendi wizard"
-                : floor?.configurationWizard
-                  ? "Apri wizard"
-                  : "Avvia wizard"}
+              {floor?.configurationWizard?.status === "active"
+                ? "Chiudi wizard"
+                : floor?.configurationWizard?.status === "paused"
+                  ? "Riprendi wizard"
+                  : floor?.configurationWizard
+                    ? "Apri wizard"
+                    : "Avvia wizard"}
             </button>
-            <button className="bottone" onClick={() => setNewDialog(true)}>
+            <button
+              className="bottone nuovo-progetto"
+              aria-label="Nuovo"
+              title="Nuovo progetto"
+              onClick={() => setNewDialog(true)}
+            >
               <Plus />
               Nuovo
             </button>
@@ -900,6 +1201,17 @@ export function Configurator() {
                     >
                       Anteprima PDF
                     </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={sheetsBusy}
+                      onClick={() => void downloadTechnicalSheets()}
+                    >
+                      <DownloadSimple />
+                      {sheetsBusy
+                        ? "Preparazione schede tecniche…"
+                        : "Scarica schede tecniche"}
+                    </button>
+                    {sheetsNotice && <span role="status">{sheetsNotice}</span>}
                     <label className="opzione-render-pdf">
                       <input
                         type="checkbox"
@@ -1017,7 +1329,7 @@ export function Configurator() {
             <h2>Da misure reali a un progetto chiaro.</h2>
             <p>
               Costruisci la planimetria, definisci gli ambienti e verifica il
-              fabbisogno. Tutto resta sul tuo dispositivo.
+              fabbisogno. I progetti restano locali finché non li condividi.
             </p>
             <div className="scelte-inizio">
               <button
@@ -1210,7 +1522,7 @@ export function Configurator() {
                           void (async () => {
                             if (
                               !window.confirm(
-                                `Eliminare ${item.name} dall'archivio locale? Esportare prima se necessario.`,
+                                `Eliminare ${item.name} dall'archivio? Se condiviso, viene eliminato per tutti. Esportare prima se necessario.`,
                               )
                             )
                               return;
@@ -1353,303 +1665,292 @@ export function Configurator() {
           </main>
         ) : p ? (
           <main
-            className={`configuratore ${inspectorOpen ? "" : "inspector-chiuso"} ${floor?.configurationWizard?.status === "active" ? "wizard-attivo" : ""} ${s.view === "3d" ? "modo-3d" : ""}`}
+            className={`configuratore ${showInspector ? "" : "inspector-chiuso"} ${floor?.configurationWizard?.status === "active" ? "wizard-attivo" : ""} ${s.view === "3d" ? "modo-3d" : ""}`}
           >
-            {s.view === "2d" && (
-              <div className="barra-strumenti">
-                <div className="strumenti-disegno">
-                  {s.view === "2d" &&
-                    tools.map((t) => (
-                      <button
-                        key={t.id}
-                        className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
-                        title={`${t.label} · ${t.shortcut}`}
-                        aria-label={t.label}
-                        aria-pressed={s.tool === t.id}
-                        onClick={() => s.setTool(t.id)}
-                      >
-                        <t.icon />
-                        <span>{t.label}</span>
-                        <kbd>{t.shortcut}</kbd>
-                      </button>
-                    ))}
-                  <button
-                    className="bottone piccolo strumento-stanza"
-                    onClick={() => setRectangleOpen(true)}
+            {s.view === "2d" && !s.installationPlanId && rooms.length === 0 && (
+              <div className="barra-strumenti">{drawingTools}</div>
+            )}
+            {!s.installationPlanId && (
+              <div className="barra-vista">
+                <div className="titolo-vista">
+                  <div className="piano-mobile">
+                    <select
+                      aria-label="Piano attivo su schermo ridotto"
+                      value={s.activeFloorId}
+                      onChange={(e) => s.setFloor(e.target.value)}
+                    >
+                      {p.floors.map((f) => (
+                        <option key={f.id} value={f.id}>
+                          {f.name}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      aria-label="Ambiente su schermo ridotto"
+                      value={
+                        s.selection[0]?.kind === "room" ? s.selection[0].id : ""
+                      }
+                      onChange={(e) =>
+                        s.select(
+                          e.target.value
+                            ? { kind: "room", id: e.target.value }
+                            : null,
+                        )
+                      }
+                    >
+                      <option value="">Seleziona ambiente</option>
+                      {rooms.map((r) => (
+                        <option key={r.id} value={r.id}>
+                          {r.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <strong>{floor?.name}</strong>
+                  <span>
+                    {s.view === "3d"
+                      ? "Ambienti e impianti"
+                      : "Planimetria in metri"}
+                  </span>
+                </div>
+                <div className="opzioni-vista">
+                  <details
+                    className="menu-progetto menu-modifica"
+                    name="workspace-menus"
                   >
-                    <Square />
-                    Stanza rettangolare
-                  </button>
+                    <summary className="bottone piccolo">Modifica</summary>
+                    <div className="comandi-progetto">
+                      <button
+                        className="bottone piccolo tenue"
+                        onClick={() => {
+                          setPlanFile(undefined);
+                          setPlanOpen(true);
+                        }}
+                      >
+                        Importa planimetria
+                      </button>
+                      {floor?.background && (
+                        <button
+                          className="bottone piccolo tenue"
+                          onClick={() => s.setTool("calibrate")}
+                        >
+                          Ricalibra
+                        </button>
+                      )}
+                      {s.view === "3d" && (
+                        <button
+                          className="bottone piccolo"
+                          onClick={() => setRectangleOpen(true)}
+                        >
+                          Aggiungi stanza
+                        </button>
+                      )}
+                      <select
+                        aria-label="Elemento nel progetto"
+                        value={
+                          s.selection[0]?.kind === "device"
+                            ? s.selection[0].id
+                            : ""
+                        }
+                        onChange={(e) => {
+                          s.select(
+                            e.target.value
+                              ? { kind: "device", id: e.target.value }
+                              : null,
+                          );
+                          e.currentTarget
+                            .closest("details")
+                            ?.removeAttribute("open");
+                        }}
+                      >
+                        <option value="">Seleziona apparecchio</option>
+                        {[
+                          ...p.radiators,
+                          ...p.airTerminals,
+                          ...(p.fanCoils ?? []),
+                          ...p.plenums,
+                          ...(p.pillars ?? []),
+                          ...p.hvacSystems.flatMap(
+                            (system) => system.indoorUnits,
+                          ),
+                          ...(p.hydronicSystems?.map(
+                            (system) => system.outdoorUnit,
+                          ) ?? []),
+                        ]
+                          .filter((o) => o.floorId === s.activeFloorId)
+                          .map((o) => (
+                            <option value={o.id} key={o.id}>
+                              {deviceCodes(p).get(o.id)} ·{" "}
+                              {"family" in o
+                                ? String(o.family)
+                                : "model" in o
+                                  ? String(o.model ?? "Plenum")
+                                  : "productId" in o
+                                    ? String(o.productId)
+                                    : "Oggetto"}
+                            </option>
+                          ))}
+                      </select>
+                      <button
+                        className="bottone piccolo tenue strumento-pilastro"
+                        onClick={() =>
+                          useProjectStore.setState({ pillarDialog: true })
+                        }
+                      >
+                        Aggiungi pilastro
+                      </button>
+                      <div className="strumenti-cronologia">
+                        <button
+                          className="bottone piccolo tenue"
+                          aria-label="Annulla"
+                          title="Annulla · Ctrl+Z"
+                          disabled={!s.past.length}
+                          onClick={s.undo}
+                        >
+                          <ArrowCounterClockwise />
+                          Annulla
+                        </button>
+                        <button
+                          className="bottone piccolo tenue"
+                          aria-label="Ripeti"
+                          title="Ripeti · Ctrl+Y"
+                          disabled={!s.future.length}
+                          onClick={s.redo}
+                        >
+                          <ArrowClockwise />
+                          Ripeti
+                        </button>
+                        <button
+                          className="bottone piccolo tenue"
+                          aria-label="Copia selezione"
+                          disabled={!s.selection.length}
+                          onClick={copySelection}
+                        >
+                          <Copy />
+                          Copia
+                        </button>
+                        <button
+                          className="bottone piccolo pericolo"
+                          aria-label="Elimina selezione"
+                          disabled={!s.selection.length}
+                          onClick={deleteSelection}
+                        >
+                          <Trash />
+                          Elimina
+                        </button>
+                      </div>
+                      <button
+                        className="bottone piccolo pericolo"
+                        onClick={deleteSystems}
+                      >
+                        <Trash aria-hidden="true" />
+                        Cancella impianto
+                      </button>
+                    </div>
+                  </details>
+                  {s.view === "2d" && (
+                    <details className="menu-progetto" name="workspace-menus">
+                      <summary className="bottone piccolo">Opzioni 2D</summary>
+                      <div className="comandi-progetto">
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={s.showGrid}
+                            onChange={(e) =>
+                              useProjectStore.setState({
+                                showGrid: e.target.checked,
+                              })
+                            }
+                          />
+                          Griglia
+                        </label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={s.snap.enabled}
+                            onChange={(e) =>
+                              useProjectStore.setState({
+                                snap: { ...s.snap, enabled: e.target.checked },
+                              })
+                            }
+                          />
+                          Snap
+                        </label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={s.snap.angle45}
+                            onChange={(e) =>
+                              useProjectStore.setState({
+                                snap: { ...s.snap, angle45: e.target.checked },
+                              })
+                            }
+                          />
+                          45°
+                        </label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={s.showDimensions}
+                            onChange={(e) =>
+                              useProjectStore.setState({
+                                showDimensions: e.target.checked,
+                              })
+                            }
+                          />
+                          Quote
+                        </label>
+                      </div>
+                    </details>
+                  )}
+                  <div className="selettore-vista">
+                    <button
+                      aria-pressed={s.view === "2d"}
+                      className={s.view === "2d" ? "attivo" : ""}
+                      onClick={() => s.setView("2d")}
+                    >
+                      <SquaresFour />
+                      2D
+                    </button>
+                    <button
+                      aria-pressed={s.view === "3d"}
+                      className={s.view === "3d" ? "attivo" : ""}
+                      onClick={() => s.setView("3d")}
+                    >
+                      <Cube />
+                      3D
+                    </button>
+                  </div>
+                  {s.view === "2d" && (
+                    <button
+                      className={`bottone piccolo ${showInspector ? "chiara" : "tenue"}`}
+                      aria-label="Mostra proprietà"
+                      title="Mostra o nascondi proprietà"
+                      aria-expanded={showInspector}
+                      aria-controls="proprieta-progetto"
+                      onClick={() => setInspectorOpen((open) => !open)}
+                    >
+                      <SidebarSimple aria-hidden="true" />
+                      Proprietà
+                    </button>
+                  )}
+                  <CustomerViewButton />
                 </div>
               </div>
             )}
-            <div className="barra-vista">
-              <div className="titolo-vista">
-                <div className="piano-mobile">
-                  <select
-                    aria-label="Piano attivo su schermo ridotto"
-                    value={s.activeFloorId}
-                    onChange={(e) => s.setFloor(e.target.value)}
-                  >
-                    {p.floors.map((f) => (
-                      <option key={f.id} value={f.id}>
-                        {f.name}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    aria-label="Ambiente su schermo ridotto"
-                    value={
-                      s.selection[0]?.kind === "room" ? s.selection[0].id : ""
-                    }
-                    onChange={(e) =>
-                      s.select(
-                        e.target.value
-                          ? { kind: "room", id: e.target.value }
-                          : null,
-                      )
-                    }
-                  >
-                    <option value="">Seleziona ambiente</option>
-                    {rooms.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <strong>{floor?.name}</strong>
-                <span>
-                  {s.view === "3d"
-                    ? "Ambienti e impianti"
-                    : "Planimetria in metri"}
-                </span>
-              </div>
-              <div className="opzioni-vista">
-                <details
-                  className="menu-progetto menu-modifica"
-                  name="workspace-menus"
-                >
-                  <summary className="bottone piccolo">Modifica</summary>
-                  <div className="comandi-progetto">
-                    <button
-                      className="bottone piccolo tenue"
-                      onClick={() => {
-                        setPlanFile(undefined);
-                        setPlanOpen(true);
-                      }}
-                    >
-                      Importa planimetria
-                    </button>
-                    {floor?.background && (
-                      <button
-                        className="bottone piccolo tenue"
-                        onClick={() => s.setTool("calibrate")}
-                      >
-                        Ricalibra
-                      </button>
-                    )}
-                    {s.view === "3d" && (
-                      <button
-                        className="bottone piccolo"
-                        onClick={() => setRectangleOpen(true)}
-                      >
-                        Aggiungi stanza
-                      </button>
-                    )}
-                    <select
-                      aria-label="Elemento nel progetto"
-                      value={
-                        s.selection[0]?.kind === "device"
-                          ? s.selection[0].id
-                          : ""
-                      }
-                      onChange={(e) => {
-                        s.select(
-                          e.target.value
-                            ? { kind: "device", id: e.target.value }
-                            : null,
-                        );
-                        e.currentTarget
-                          .closest("details")
-                          ?.removeAttribute("open");
-                      }}
-                    >
-                      <option value="">Seleziona apparecchio</option>
-                      {[
-                        ...p.radiators,
-                        ...p.airTerminals,
-                        ...(p.fanCoils ?? []),
-                        ...p.plenums,
-                        ...(p.pillars ?? []),
-                        ...p.hvacSystems.flatMap(
-                          (system) => system.indoorUnits,
-                        ),
-                        ...(p.hydronicSystems?.map(
-                          (system) => system.outdoorUnit,
-                        ) ?? []),
-                      ]
-                        .filter((o) => o.floorId === s.activeFloorId)
-                        .map((o) => (
-                          <option value={o.id} key={o.id}>
-                            {deviceCodes(p).get(o.id)} ·{" "}
-                            {"family" in o
-                              ? String(o.family)
-                              : "model" in o
-                                ? String(o.model ?? "Plenum")
-                                : "productId" in o
-                                  ? String(o.productId)
-                                  : "Oggetto"}
-                          </option>
-                        ))}
-                    </select>
-                    <button
-                      className="bottone piccolo tenue strumento-pilastro"
-                      onClick={() =>
-                        useProjectStore.setState({ pillarDialog: true })
-                      }
-                    >
-                      Aggiungi pilastro
-                    </button>
-                    <div className="strumenti-cronologia">
-                      <button
-                        className="bottone piccolo tenue"
-                        aria-label="Annulla"
-                        title="Annulla · Ctrl+Z"
-                        disabled={!s.past.length}
-                        onClick={s.undo}
-                      >
-                        <ArrowCounterClockwise />
-                        Annulla
-                      </button>
-                      <button
-                        className="bottone piccolo tenue"
-                        aria-label="Ripeti"
-                        title="Ripeti · Ctrl+Y"
-                        disabled={!s.future.length}
-                        onClick={s.redo}
-                      >
-                        <ArrowClockwise />
-                        Ripeti
-                      </button>
-                      <button
-                        className="bottone piccolo tenue"
-                        aria-label="Copia selezione"
-                        disabled={!s.selection.length}
-                        onClick={copySelection}
-                      >
-                        <Copy />
-                        Copia
-                      </button>
-                      <button
-                        className="bottone piccolo pericolo"
-                        aria-label="Elimina selezione"
-                        disabled={!s.selection.length}
-                        onClick={deleteSelection}
-                      >
-                        <Trash />
-                        Elimina
-                      </button>
-                    </div>
-                    <button
-                      className="bottone piccolo pericolo"
-                      onClick={deleteSystems}
-                    >
-                      <Trash aria-hidden="true" />
-                      Cancella impianto
-                    </button>
-                  </div>
-                </details>
-                {s.view === "2d" && (
-                  <details className="menu-progetto" name="workspace-menus">
-                    <summary className="bottone piccolo">Opzioni 2D</summary>
-                    <div className="comandi-progetto">
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={s.showGrid}
-                          onChange={(e) =>
-                            useProjectStore.setState({
-                              showGrid: e.target.checked,
-                            })
-                          }
-                        />
-                        Griglia
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={s.snap.enabled}
-                          onChange={(e) =>
-                            useProjectStore.setState({
-                              snap: { ...s.snap, enabled: e.target.checked },
-                            })
-                          }
-                        />
-                        Snap
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={s.snap.angle45}
-                          onChange={(e) =>
-                            useProjectStore.setState({
-                              snap: { ...s.snap, angle45: e.target.checked },
-                            })
-                          }
-                        />
-                        45°
-                      </label>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={s.showDimensions}
-                          onChange={(e) =>
-                            useProjectStore.setState({
-                              showDimensions: e.target.checked,
-                            })
-                          }
-                        />
-                        Quote
-                      </label>
-                    </div>
-                  </details>
-                )}
-                <div className="selettore-vista">
-                  <button
-                    aria-pressed={s.view === "2d"}
-                    className={s.view === "2d" ? "attivo" : ""}
-                    onClick={() => s.setView("2d")}
-                  >
-                    <SquaresFour />
-                    2D
-                  </button>
-                  <button
-                    aria-pressed={s.view === "3d"}
-                    className={s.view === "3d" ? "attivo" : ""}
-                    onClick={() => s.setView("3d")}
-                  >
-                    <Cube />
-                    3D
-                  </button>
-                </div>
-                <button
-                  className={`bottone piccolo ${inspectorOpen ? "chiara" : "tenue"}`}
-                  aria-label="Mostra proprietà"
-                  title="Mostra o nascondi proprietà"
-                  aria-expanded={inspectorOpen}
-                  aria-controls="proprieta-progetto"
-                  onClick={() => setInspectorOpen((open) => !open)}
-                >
-                  <SidebarSimple aria-hidden="true" />
-                  Proprietà
-                </button>
-                <CustomerViewButton />
-              </div>
-            </div>
             <div className="spazio-progetto">
               {s.view === "2d" ? (
-                <Editor2D key={`${p.id}-${s.activeFloorId}`} />
+                rooms.length > 0 ? (
+                  <GraphicalDuctedConfigurator
+                    key={`${p.id}-${s.activeFloorId}`}
+                    project={p}
+                    room={rooms[0]}
+                    mainPlan
+                    drawingTools={drawingTools}
+                  />
+                ) : (
+                  <Editor2D key={`${p.id}-${s.activeFloorId}`} />
+                )
               ) : (
                 <Viewer3D />
               )}
@@ -1657,7 +1958,7 @@ export function Configurator() {
                 className="pannello-progetto"
                 id="proprieta-progetto"
                 tabIndex={-1}
-                hidden={!inspectorOpen}
+                hidden={!showInspector || !!s.installationPlanId}
               >
                 <ConfigurationWizard
                   onDrawRoom={() => setRectangleOpen(true)}
@@ -1666,7 +1967,7 @@ export function Configurator() {
                     setPlanOpen(true);
                   }}
                 />
-                {s.selection.length > 0 && <Properties />}
+                {propertySelection.length > 0 && <Properties />}
               </div>
             </div>
             <footer className="riepilogo-progetto">

@@ -1,6 +1,6 @@
-import { chooseTerminalModel, confirmTerminalPlacement } from "./ui-helpers";
+import { pickPlanPoint } from "./ui-helpers";
 import { expect, test } from "./browser-test";
-import { openInspector } from "./ui-helpers";
+import { openInspector, openDisclosure } from "./ui-helpers";
 
 for (const viewport of [
   { width: 1920, height: 1080 },
@@ -25,7 +25,7 @@ for (const viewport of [
         .click();
       await openInspector(page, "Configura impianto");
       const dialog = page.getByRole("dialog", {
-        name: "Configura impianto",
+        name: /^(?:Vista |Configura impianto$)/,
         exact: true,
       });
       const choice = dialog.getByRole("group", {
@@ -48,13 +48,22 @@ for (const viewport of [
         )
         .toBeLessThanOrEqual(1);
       await choice.getByRole("button", { name: system, exact: true }).click();
+      if (system !== "Canalizzato")
+        await openDisclosure(
+          dialog,
+          "Configurazione da modulo e dettagli tecnici",
+        );
       await expect(
         choice.getByRole("button", { name: system, exact: true }),
       ).toHaveAttribute("aria-pressed", "true");
-      if (system === "Radiatori")
+      if (system === "Radiatori") {
+        await dialog
+          .getByRole("button", { name: "Trova radiatori compatibili" })
+          .scrollIntoViewIfNeeded();
         await expect(
           dialog.getByRole("button", { name: "Trova radiatori compatibili" }),
         ).toBeInViewport();
+      }
       await dialog.screenshot({ path: info.outputPath("initial.png") });
 
       if (system === "Radiatori") {
@@ -74,84 +83,39 @@ for (const viewport of [
         ).toBeEnabled();
       } else if (system === "Canalizzato") {
         await dialog
-          .getByRole("button", { name: "Scegli macchina", exact: true })
+          .getByRole("button", { name: "Apri planimetria operativa" })
           .click();
+        const plan = page.getByRole("region", {
+          name: "Configurazione grafica canalizzato",
+        });
+        await plan
+          .getByRole("button", { name: "Macchina", exact: true })
+          .click();
+        await pickPlanPoint(plan, 2, 2);
+        await plan.getByTestId("draft-machine").click();
         const picker = page.getByRole("dialog", {
           name: "Scegli macchina canalizzata",
         });
         await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
-        await picker
-          .getByRole("region", { name: "Modelli macchina compatibili" })
-          .getByRole("button")
-          .filter({ hasText: "FBA50A9" })
-          .click();
-        await expect(picker.getByLabel("Macchina selezionata")).toContainText(
-          "FBA50A9",
-        );
+        const recommended = picker.locator('[data-recommended="true"]');
+        await expect(recommended).toHaveCount(1);
+        await expect(recommended).toHaveAttribute("aria-pressed", "true");
+        await expect(
+          picker
+            .locator("footer")
+            .getByRole("button", { name: "Salva", exact: true }),
+        ).toBeInViewport();
         await picker.screenshot({
           path: info.outputPath("machine-picker.png"),
         });
         await picker
-          .getByRole("button", { name: "Configura canalizzato", exact: true })
+          .locator("footer")
+          .getByRole("button", { name: "Salva", exact: true })
           .click();
-        const plenum = dialog.getByRole("region", {
-          name: "Plenum di mandata",
-        });
         await expect(
-          plenum.getByRole("heading", { name: "Prima aggiungi le bocchette" }),
-        ).toBeVisible();
-        await expect(plenum.getByRole("img")).toHaveCount(0);
-        await chooseTerminalModel(dialog, "EDLS");
-        await expect(
-          dialog.getByRole("heading", {
-            name: "Passo 2 di 3 · EDLS",
-            exact: true,
-          }),
-        ).toBeVisible();
-        await expect(
-          dialog.getByLabel("Lunghezza singola bocchetta", { exact: true }),
-        ).toBeInViewport();
-        await expect(
-          dialog.getByRole("button", {
-            name: "Posiziona nell’ambiente",
-            exact: true,
-          }),
-        ).toBeInViewport();
-        await expect
-          .poll(() =>
-            dialog.evaluate((node) => {
-              const input = node
-                .querySelector('[aria-label="Lunghezza singola bocchetta"]')!
-                .getBoundingClientRect();
-              const button = [...node.querySelectorAll("button")]
-                .find(
-                  (item) =>
-                    item.textContent?.trim() === "Posiziona nell’ambiente",
-                )!
-                .getBoundingClientRect();
-              return button.top - input.bottom;
-            }),
-          )
-          .toBeGreaterThanOrEqual(0);
-        await dialog
-          .getByLabel("Lunghezza singola bocchetta", { exact: true })
-          .fill("1000");
-        await dialog
-          .getByRole("button", {
-            name: "Posiziona nell’ambiente",
-            exact: true,
-          })
-          .click();
-        await confirmTerminalPlacement(page);
-        const diagram = plenum.getByRole("img", {
-          name: /^Schema plenum di mandata:/,
-        });
-        await expect(diagram).toBeVisible();
-        await expect(
-          plenum.getByLabel("Da completare nel plenum"),
-        ).toContainText("ripresa");
-        expect((await diagram.boundingBox())!.width).toBeLessThanOrEqual(300);
-        expect((await diagram.boundingBox())!.height).toBeLessThanOrEqual(180);
+          plan.getByRole("button", { name: /^Macchina UI/ }),
+        ).toHaveCount(1);
+        return;
       } else if (system === "Split") {
         await dialog.getByLabel("Marca split").selectOption("Gree");
         await expect(
@@ -181,6 +145,7 @@ for (const viewport of [
           .evaluate((node) => {
             node.scrollTop = 0;
           });
+        await add.scrollIntoViewIfNeeded();
         await expect(add).toBeInViewport();
       }
 

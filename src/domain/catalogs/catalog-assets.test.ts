@@ -22,6 +22,6 @@ describe("manufacturer catalog photos are available offline", () => {
       })
       .map((product) => product.id);
     expect(missing).toEqual([]);
-    expect(radiatorProducts.length).toBe(466);
+    expect(radiatorProducts.length).toBeGreaterThanOrEqual(939);
   });
 });

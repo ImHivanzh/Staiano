@@ -117,6 +117,27 @@ export function filterProjectChecks(
 export function validateProject(p: Project): Check[] {
   const checks: Check[] = [];
   const codes = deviceCodes(p);
+  for (const draft of p.equipmentDrafts ?? [])
+    checks.push({
+      code: "equipment-incomplete",
+      status: "warning",
+      entityId: draft.roomId,
+      message: `${draft.type === "radiator" ? "Radiatore" : draft.type === "fanCoil" ? "Ventilconvettore" : "Split"} da configurare: escluso da calcoli e computi.`,
+    });
+  for (const draft of p.heatPumpDrafts ?? [])
+    checks.push({
+      code: "heat-pump-incomplete",
+      status: "warning",
+      entityId: draft.id,
+      message: "Pompa di calore da configurare: esclusa da calcoli e computi.",
+    });
+  for (const draft of p.ductedDrafts ?? [])
+    checks.push({
+      code: "ducted-incomplete",
+      status: "warning",
+      entityId: draft.roomId,
+      message: `${draft.kind === "machine" ? "Macchina canalizzata" : "Bocchetta"} da configurare: esclusa da calcoli e computi.`,
+    });
   for (const system of p.hydronicSystems ?? []) {
     const result = validateHydronicSystem(p, system);
     checks.push({

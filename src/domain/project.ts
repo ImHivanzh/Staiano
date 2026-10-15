@@ -46,6 +46,9 @@ export function createProject(name = "Nuovo progetto"): Project {
     plenums: [],
     pillars: [],
     ducts: [],
+    ductedDrafts: [],
+    heatPumpDrafts: [],
+    equipmentDrafts: [],
     fanCoils: [],
     hydronicSystems: [],
     radiators: [],
@@ -74,6 +77,9 @@ export function clearProjectSystems(project: Project): Project {
     airTerminals: [],
     plenums: [],
     ducts: [],
+    ductedDrafts: [],
+    heatPumpDrafts: [],
+    equipmentDrafts: [],
     rooms: project.rooms.map((room) => ({
       ...room,
       systemType: "none",
@@ -230,6 +236,19 @@ export function recomputeProject(project: Project): Project {
         : u.elevationM,
   }));
   p.airTerminals = reassociate(p.airTerminals);
+  p.ductedDrafts = p.ductedDrafts?.filter(
+    (draft) =>
+      p.rooms.some((room) => room.id === draft.roomId) &&
+      p.installations.some((item) => item.id === draft.installationId),
+  );
+  p.heatPumpDrafts = p.heatPumpDrafts?.filter((draft) =>
+    p.floors.some((floor) => floor.id === draft.floorId),
+  );
+  p.equipmentDrafts = p.equipmentDrafts?.filter((draft) =>
+    p.rooms.some(
+      (room) => room.id === draft.roomId && room.floorId === draft.floorId,
+    ),
+  );
   p.openings = p.openings.filter((o) => p.walls.some((w) => w.id === o.wallId));
   p.hvacSystems = p.hvacSystems
     .map((s) => ({
@@ -254,19 +273,30 @@ export function recomputeProject(project: Project): Project {
               )
               .map((room) => room.id),
     }))
-    .filter((s) => s.roomIds.length > 0);
+    .filter(
+      (s) =>
+        s.roomIds.length > 0 ||
+        (s.type === "ducted" && s.indoorUnits.length > 0),
+    );
   const systemIds = new Set(p.hvacSystems.map((s) => s.id));
   p.airTerminals = p.airTerminals.map((t) => ({
     ...t,
     systemId: t.systemId && systemIds.has(t.systemId) ? t.systemId : null,
+    pendingSystemId:
+      t.pendingSystemId && systemIds.has(t.pendingSystemId)
+        ? t.pendingSystemId
+        : undefined,
   }));
   p.plenums = p.plenums
     .filter((pl) => systemIds.has(pl.systemId))
     .map((pl) => ({
       ...pl,
-      roomId: p.hvacSystems
-        .find((s) => s.id === pl.systemId)
-        ?.roomIds.includes(pl.roomId ?? "")
+      roomId: p.hvacSystems.some(
+        (s) =>
+          s.id === pl.systemId &&
+          (s.roomIds.includes(pl.roomId ?? "") ||
+            s.indoorUnits.some((unit) => unit.roomId === pl.roomId)),
+      )
         ? pl.roomId
         : null,
     }));

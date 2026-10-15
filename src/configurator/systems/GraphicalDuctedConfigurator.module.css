@@ -1,0 +1,332 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1;
+  min-width: 0;
+  min-height: 0;
+  padding: 12px 20px;
+  overflow: hidden;
+}
+.plan > header {
+  flex-shrink: 0;
+}
+.operating {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.mainPlan {
+  min-width: 0;
+  height: 100%;
+}
+.operating > .toolbar {
+  flex-shrink: 0;
+  align-items: center;
+  min-height: 50px;
+  margin: 0;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--bordo);
+  background: var(--carta);
+}
+.iconButton {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+.operating .toolbar .iconButton,
+.operating .toolbar .iconSummary,
+.operating .toolbar :global(.menu-progetto > summary) {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--testo-tenue);
+}
+.operating .toolbar .iconButton:hover,
+.operating .toolbar .iconSummary:hover,
+.operating .toolbar :global(.menu-progetto > summary:hover) {
+  background: var(--tinta-tenue);
+  border-color: var(--tinta-linea);
+  color: var(--tinta-scura);
+}
+.operating .toolbar .iconButton:focus-visible,
+.operating .toolbar .iconSummary:focus-visible,
+.operating .toolbar :global(.menu-progetto > summary:focus-visible) {
+  outline: 2px solid var(--tinta);
+  outline-offset: 2px;
+}
+.toolbar .iconButton :global(svg),
+.toolbar .iconSummary :global(svg),
+.toolbar :global(.menu-progetto > summary svg) {
+  width: 22px;
+  height: 22px;
+}
+.toolSeparator {
+  height: 24px;
+  width: 1px;
+  margin: 0 3px;
+  background: var(--bordo);
+}
+.toolbar :global(.menu-progetto > summary),
+.moreActions .iconSummary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  list-style: none;
+}
+.toolbar :global(.menu-progetto > summary)::marker,
+.moreActions .iconSummary::marker {
+  content: "";
+}
+.toolbar :global(.menu-progetto > summary[data-active="true"]) {
+  background: var(--tinta);
+  color: var(--su-tinta);
+}
+.toolbar :global(.strumenti-disegno) {
+  display: grid;
+  min-width: 220px;
+  gap: 4px;
+}
+.terminalUse {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  background: var(--carta-2);
+}
+.terminalUse button[aria-pressed="true"] {
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+}
+.moreActions {
+  position: relative;
+  margin-left: auto;
+  color: var(--testo-tenue);
+  font-size: 13px;
+}
+.moreActions summary {
+  padding: 9px 11px;
+  border: 1px solid var(--bordo);
+  border-radius: 6px;
+  background: var(--carta);
+  cursor: pointer;
+  list-style-position: inside;
+}
+.actionMenu {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 6px);
+  right: 0;
+  display: grid;
+  min-width: 216px;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  background: var(--carta);
+  box-shadow: 0 8px 24px #18324920;
+}
+.actionMenu button {
+  justify-content: flex-start;
+}
+.plan h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.plan .toolbar {
+  align-items: center;
+}
+.plan .toolbar :global(.campo) {
+  margin: 0;
+  width: auto;
+  max-width: 240px;
+}
+.plan .toolbar button[aria-pressed="true"],
+.operating .toolbar .iconButton[aria-pressed="true"] {
+  background: var(--tinta);
+  color: var(--su-tinta);
+}
+.operating .toolbar .terminalUse button[aria-pressed="true"] {
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+  border-color: var(--tinta-linea);
+}
+.operating .canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 260px;
+}
+.operating .canvas > :global(.area-editor) {
+  flex: 1;
+  min-height: 260px;
+  border-radius: 0;
+}
+.balance :global(.campo) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 16px 8px 0;
+}
+.balance select {
+  max-width: 360px;
+}
+.canvas {
+  min-width: 0;
+}
+.canvas > :global(.area-editor) {
+  border: 1px solid var(--bordo);
+}
+.canvas :global(g[role="button"]) {
+  outline: none;
+  cursor: pointer;
+}
+.canvas :global(g[role="button"]:focus-visible > rect),
+.canvas :global(g[role="button"]:focus-visible > circle) {
+  stroke: var(--tinta);
+  stroke-width: 3px;
+  vector-effect: non-scaling-stroke;
+}
+.balance {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bordo);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.balance strong {
+  color: var(--tinta-scura);
+}
+.point {
+  cursor: pointer;
+}
+.point:focus {
+  outline: none;
+  stroke: var(--tinta);
+  stroke-width: 0.08;
+}
+.status {
+  flex-shrink: 0;
+  margin: 6px 0;
+  font-size: 13px;
+}
+@media (max-width: 800px) {
+  .operating > .toolbar {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
+  }
+  .moreActions {
+    margin-left: 0;
+  }
+}
+@media (pointer: coarse) {
+  .iconButton,
+  .toolbar :global(.menu-progetto > summary),
+  .moreActions .iconSummary {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+  }
+}
+
+@media (min-width: 1100px) and (pointer: fine) {
+  .mainPlan {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-rows: auto minmax(260px, 1fr) auto auto;
+    overflow: visible;
+  }
+  .mainPlan > .toolbar {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 8px;
+    border-bottom: 0;
+    border-right: 1px solid var(--bordo);
+    background: var(--carta-2);
+  }
+  .mainPlan .toolSeparator {
+    width: 28px;
+    height: 1px;
+    margin: 4px 0;
+  }
+  .mainPlan .terminalUse {
+    flex-direction: column;
+    padding: 0;
+    gap: 2px;
+    border: 0;
+  }
+  .mainPlan .moreActions {
+    margin: auto 0 0;
+  }
+  .mainPlan .actionMenu {
+    top: auto;
+    bottom: 0;
+    left: calc(100% + 8px);
+    right: auto;
+  }
+  .mainPlan .toolbar :global(.menu-progetto > .strumenti-disegno) {
+    position: absolute;
+    z-index: 25;
+    padding: 8px;
+    border: 1px solid var(--bordo);
+    border-radius: 8px;
+    background: var(--carta);
+    box-shadow: 0 8px 24px #18324920;
+    top: 0;
+    left: calc(100% + 8px);
+    right: auto;
+  }
+  .mainPlan > .balance {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+  .mainPlan > .canvas {
+    grid-column: 2;
+    grid-row: 2;
+    min-height: 0;
+  }
+  .mainPlan > details {
+    grid-column: 2;
+    min-width: 0;
+  }
+  .mainPlan > .status {
+    grid-column: 2;
+    grid-row: 3;
+    margin: 0;
+    padding: 6px 12px;
+    border-top: 1px solid var(--bordo);
+    background: var(--carta);
+    font-size: 12px;
+  }
+  .mainPlan > :global(.nota) {
+    grid-column: 2;
+    grid-row: 4;
+    margin: 0;
+    padding: 2px 12px 6px;
+    background: var(--carta);
+    font-size: 11px;
+  }
+}

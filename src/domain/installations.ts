@@ -106,6 +106,79 @@ export function createInstallation(
   };
 }
 
+export function removeInstallation(
+  project: Project,
+  installationId: string,
+): Project {
+  const installation = project.installations.find(
+    (item) => item.id === installationId,
+  );
+  if (!installation) return project;
+  const systemIds = new Set(
+    project.hvacSystems
+      .filter((system) => system.installationId === installationId)
+      .map((system) => system.id),
+  );
+  const next = {
+    ...project,
+    installations: project.installations.filter(
+      (item) => item.id !== installationId,
+    ),
+    hvacSystems: project.hvacSystems.filter(
+      (system) => !systemIds.has(system.id),
+    ),
+    ductedDrafts: project.ductedDrafts?.filter(
+      (draft) => draft.installationId !== installationId,
+    ),
+    radiators: project.radiators.filter(
+      (device) => device.installationId !== installationId,
+    ),
+    fanCoils: project.fanCoils?.filter(
+      (device) => device.installationId !== installationId,
+    ),
+    airTerminals: project.airTerminals.filter(
+      (device) =>
+        device.installationId !== installationId &&
+        (!device.systemId || !systemIds.has(device.systemId)) &&
+        (!device.pendingSystemId || !systemIds.has(device.pendingSystemId)),
+    ),
+    plenums: project.plenums.filter(
+      (device) => !systemIds.has(device.systemId),
+    ),
+    ducts: project.ducts?.filter((device) => !systemIds.has(device.systemId)),
+  };
+  return {
+    ...next,
+    hydronicSystems: next.hydronicSystems?.map((system) => ({
+      ...system,
+      fanCoilIds: system.fanCoilIds.filter((id) =>
+        next.fanCoils?.some((device) => device.id === id),
+      ),
+      pipeWaypoints: system.pipeWaypoints?.filter((route) =>
+        next.fanCoils?.some((device) => device.id === route.fanCoilId),
+      ),
+    })),
+    rooms: next.rooms.map((room) =>
+      installation.roomIds.includes(room.id)
+        ? {
+            ...room,
+            systemType:
+              next.hvacSystems.find((system) =>
+                system.roomIds.includes(room.id),
+              )?.type ??
+              (next.radiators.some((device) => device.roomId === room.id)
+                ? "radiator"
+                : next.fanCoils?.some((device) => device.roomId === room.id)
+                  ? "fanCoil"
+                  : (next.installations.find((item) =>
+                      item.roomIds.includes(room.id),
+                    )?.type ?? "none")),
+          }
+        : room,
+    ),
+  };
+}
+
 export function assignInstallationRooms(
   project: Project,
   installationId: string | undefined,

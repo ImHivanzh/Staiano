@@ -9,6 +9,7 @@ import { splitCatalog } from "@/domain/catalogs/splits";
 import { splitSeriesPresentations } from "@/domain/catalogs/split-presentation";
 import { fanCoilCatalog } from "@/domain/catalogs/fan-coils";
 import { CommercialCatalog } from "./CommercialCatalog";
+import { StoveCatalog } from "./StoveCatalog";
 export function CatalogAdmin() {
   return (
     <main className="pagina cataloghi">
@@ -18,6 +19,7 @@ export function CatalogAdmin() {
         Internet.
       </p>
       <Models3DPanel />
+      <StoveCatalog />
       <CommercialCatalog />
       <section className="catalogo-scheda">
         <h3>Climatizzazione · cataloghi locali</h3>

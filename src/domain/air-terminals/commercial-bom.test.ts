@@ -97,6 +97,51 @@ function installedFamily(
 }
 
 describe("official Ecoclima list-price BOM", () => {
+  it("keeps customized plenums unpriced and never invents their supply ports", () => {
+    for (const patch of [
+      { plenumMaterial: "galvanized" as const, insulatedPlenum: false },
+      { plenumShape: "trapezoidal" as const },
+      { connectionPosition: "lower" as const },
+      { connectionPosition: "rear" as const },
+      {
+        connectionPosition: "custom" as const,
+        connectionNote: "Doppio laterale",
+      },
+    ]) {
+      const item = terminal();
+      item.commercialOptions = {
+        ...item.commercialOptions!,
+        connectionPosition: "lateral",
+        ...patch,
+      };
+      const line = quote([item]).lines.find(
+        (entry) => entry.kind === "insulated-plenum",
+      )!;
+      expect(line.status).toBe("unknown");
+      expect(line.unitPriceCents).toBeNull();
+      expect(line.reason).toContain("fornitore");
+      const connections = terminalSupplyConnections(
+        { airTerminals: [item] },
+        "system",
+      );
+      expect(connections.connections).toEqual([]);
+      expect(connections.issues).toHaveLength(1);
+    }
+  });
+  it("includes the white paint supplement and does not quote other RAL colours at the anodized price", () => {
+    const base = installedFamily("EGA6", () => true);
+    const line = (color: string) =>
+      quote([{ ...base, color }]).lines.find(
+        (item) => item.kind === "terminal",
+      )!;
+    const anodized = line("Alluminio anodizzato naturale");
+    expect(anodized.unitPriceCents).not.toBeNull();
+    expect(line("RAL9016").unitPriceCents).toBe(
+      Math.round(anodized.unitPriceCents! * 1.2),
+    );
+    expect(line("RAL7035").unitPriceCents).toBeNull();
+    expect(line("RAL7035").reason).toContain("quotare");
+  });
   it("calculates exact published diffuser, isolated plenum and required bridges in integer cents", () => {
     const result = quote([terminal()]);
     expect(result.complete).toBe(true);

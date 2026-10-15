@@ -16,6 +16,8 @@ import { SystemMeshes } from "./SystemMeshes";
 import { FanCoilMeshes } from "./FanCoilMeshes";
 import { HydronicMeshes } from "./HydronicMeshes";
 import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
+import { Html, Line } from "@react-three/drei";
+import { pendingConnections } from "@/domain/ducted/plan-connections";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
 const rounded = new RoundedBoxGeometry(1, 1, 1, 2, 0.12);
@@ -603,6 +605,73 @@ export function DeviceMeshes({
             ) : null;
           }),
         )}
+      {pendingConnections(project)
+        .filter(
+          (line) =>
+            line.floorId === activeFloorId &&
+            line.points.length > 1 &&
+            !isolatedRoomId,
+        )
+        .map((line) => (
+          <Line
+            key={line.id}
+            points={line.points.map(
+              (p) => [p.x, 2.4, p.y] as [number, number, number],
+            )}
+            color="#b45309"
+            lineWidth={2}
+            dashed
+            dashSize={0.12}
+            gapSize={0.08}
+          />
+        ))}
+      {[
+        ...(project.ductedDrafts?.filter(visible) ?? []),
+        ...(project.equipmentDrafts?.filter(visible) ?? []).map((item) => ({
+          ...item,
+          kind: item.type,
+        })),
+        ...(project.heatPumpDrafts ?? [])
+          .filter((item) => item.floorId === activeFloorId && !isolatedRoomId)
+          .map((item) => ({ ...item, roomId: "", kind: "heatPump" as const })),
+      ].map((item) => (
+        <group
+          key={item.id}
+          position={[
+            item.position.x,
+            item.kind === "heatPump"
+              ? 0.5
+              : (project.rooms.find((room) => room.id === item.roomId)
+                  ?.heightM ?? 2.7) - 0.2,
+            item.position.y,
+          ]}
+          onClick={choose(item.id)}
+        >
+          <mesh>
+            <boxGeometry
+              args={[
+                item.kind !== "terminal" ? 0.8 : 0.5,
+                item.kind === "heatPump" ? 1 : 0.12,
+                0.24,
+              ]}
+            />
+            <meshStandardMaterial color="#b45309" wireframe />
+          </mesh>
+          <Html
+            center
+            style={{
+              pointerEvents: "none",
+              whiteSpace: "nowrap",
+              background: "#fdf3e3",
+              color: "#b45309",
+              padding: "2px 6px",
+              fontSize: 12,
+            }}
+          >
+            Da configurare
+          </Html>
+        </group>
+      ))}
       {project.airTerminals
         .filter(visible)
         .filter((item) => !needsTerminalReconfiguration(item))

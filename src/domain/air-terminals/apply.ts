@@ -1,5 +1,8 @@
 import type { Point, Project } from "@/schemas/project";
-import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
+import {
+  airTerminalCatalog,
+  airTerminalMountings,
+} from "@/domain/catalogs/air-terminals";
 import type { AirTerminalSolution } from "./size";
 import { newId } from "@/domain/project";
 import { bounds, distance } from "@/domain/geometry/primitives";
@@ -40,7 +43,9 @@ export function applyAirTerminalSolution(
     !family ||
     !variant ||
     !family.use.includes(use) ||
-    (family.mountings ? !family.mountings.includes(mounting) : !dimensions)
+    (airTerminalMountings(family)
+      ? !airTerminalMountings(family)!.includes(mounting)
+      : !dimensions)
   )
     throw new Error("Famiglia o montaggio non compatibili.");
   if (

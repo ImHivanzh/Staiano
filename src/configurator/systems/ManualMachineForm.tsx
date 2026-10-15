@@ -4,22 +4,32 @@ import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { applyManualDuctedSystem } from "@/domain/ducted/apply";
 import { numberFromForm } from "@/utils/format";
+import type { Ref } from "react";
 
 export function ManualMachineForm({
   project,
   roomIds,
   onApplied,
   installationId,
+  systemId,
+  onPlace,
+  saveButtonRef,
 }: {
   project: Project;
   roomIds: string[];
   onApplied?: () => void;
   installationId?: string;
+  systemId?: string | null;
+  onPlace?: (change: (project: Project) => Project) => void;
+  saveButtonRef?: Ref<HTMLButtonElement>;
 }) {
   const existing = project.hvacSystems.find(
     (system) =>
       system.type === "ducted" &&
-      system.roomIds.some((id) => roomIds.includes(id)) &&
+      (systemId === undefined || system.id === systemId) &&
+      (systemId !== undefined ||
+        system.roomIds.some((id) => roomIds.includes(id)) ||
+        system.indoorUnits.some((unit) => roomIds.includes(unit.roomId))) &&
       (!installationId || system.installationId === installationId),
   );
   const input = existing?.genericMachine;
@@ -32,18 +42,22 @@ export function ManualMachineForm({
         const values = new FormData(event.currentTarget);
         const optional = (key: string) =>
           values.get(key) ? numberFromForm(values.get(key)) : undefined;
+        const coolingKw = optional("cooling"),
+          heatingKw = optional("heating");
         const connectionWidthMm = optional("connectionWidth"),
           connectionHeightMm = optional("connectionHeight");
-        commit((p) =>
+        (onPlace ?? commit)((p) =>
           applyManualDuctedSystem(
             p,
-            existing?.roomIds ?? roomIds,
+            roomIds,
             {
               manufacturer: String(values.get("brand")),
               model: String(values.get("model")),
               maxAirflowM3h: numberFromForm(values.get("flow")),
-              coolingCapacityW: optional("cooling"),
-              heatingCapacityW: optional("heating"),
+              coolingCapacityW:
+                coolingKw === undefined ? undefined : coolingKw * 1000,
+              heatingCapacityW:
+                heatingKw === undefined ? undefined : heatingKw * 1000,
               widthMm: optional("width"),
               heightMm: optional("height"),
               depthMm: optional("depth"),
@@ -101,7 +115,7 @@ export function ManualMachineForm({
           required
         />
       </label>
-      <details>
+      <details open={!!onPlace}>
         <summary>Quote e potenze, se disponibili</summary>
         {[
           ["width", "Larghezza macchina (mm)", input?.widthMm],
@@ -117,8 +131,20 @@ export function ManualMachineForm({
             "Altezza attacco mandata (mm)",
             input?.dischargeConnection?.connectionHeightMm,
           ],
-          ["cooling", "Potenza freddo (W)", input?.coolingCapacityW],
-          ["heating", "Potenza caldo (W)", input?.heatingCapacityW],
+          [
+            "cooling",
+            "Potenza freddo (kW)",
+            input?.coolingCapacityW === undefined
+              ? undefined
+              : input.coolingCapacityW / 1000,
+          ],
+          [
+            "heating",
+            "Potenza caldo (kW)",
+            input?.heatingCapacityW === undefined
+              ? undefined
+              : input.heatingCapacityW / 1000,
+          ],
         ].map(([key, label, value]) =>
           /\((m|mm|cm)\)$/.test(String(label)) ? (
             <LengthInput
@@ -135,6 +161,9 @@ export function ManualMachineForm({
               min="1"
               step="any"
               defaultValue={value}
+              required={
+                !!onPlace && ["width", "height", "depth"].includes(String(key))
+              }
             />
           ) : (
             <label className="campo" key={String(key)}>
@@ -142,7 +171,7 @@ export function ManualMachineForm({
               <input
                 type="number"
                 name={String(key)}
-                min="1"
+                min="0.001"
                 step="any"
                 defaultValue={value}
               />
@@ -150,7 +179,12 @@ export function ManualMachineForm({
           ),
         )}
       </details>
-      <button className="bottone chiara" type="submit">
+      <button
+        ref={saveButtonRef}
+        style={saveButtonRef ? { display: "none" } : undefined}
+        className="bottone chiara"
+        type="submit"
+      >
         {existing ? "Aggiorna macchina manuale" : "Inserisci macchina manuale"}
       </button>
     </form>

@@ -124,7 +124,7 @@ export function migrateProject(data: unknown): unknown {
       },
     });
   }
-  if (version === 3 || version === 4)
+  if (version === 3 || version === 4 || version === 5)
     return {
       ...(data as Record<string, unknown>),
       schemaVersion: CURRENT_SCHEMA_VERSION,

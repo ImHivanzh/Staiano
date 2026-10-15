@@ -15,6 +15,8 @@ DOCS = {
     "chaffoteaux": ("https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf", "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9", "Scheda ARIANEXT PLUS M LINK R32 2022"),
     "chaffoteaux-arianext-lite": ("https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf", "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca", "Scheda ARIANEXT LITE M LINK R32 2022"),
     "gree-versati-v": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf", "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b", "Brochure VERSATI V 2025"),
+    "gree-versati-iii": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/Service%20Manual%20for%20VERSATI%20R32%20SPLIT.pdf", "781db69b864400db2204e825486109fd0eb3d02454cc45ce957f28dffb620e75", "Service Manual VERSATI III Split · technical data"),
+    "gree-versati-iii-all-in-one": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20versati%20split%20all%20in%20one.pdf", "5451e894bd01085fc7a4a20ccac9110d37ff6e3db698939b3aef802c79135760", "Service Manual VERSATI III All In One · technical data"),
 }
 
 def sha(path):
@@ -75,10 +77,13 @@ for size, phase, code, height, heat35, heat45, heatminus7, cold, cop35, cop45, c
         operatingPoints=[point("Caldo A7/W35 · freddo A35/W7", heat35, cold, cop35, eer), point("Caldo A7/W45 · freddo A35/W7", heat45, cold, cop45, eer, 45), point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold, copminus7, eer, 35, -7)]))
 
 gree_photo = photo("gree-versati-v.png", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png", "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW.")
+gree_16_photo = photo("gree-versati-v-16.jpg", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Product/VersatiV_16kW_LR.jpg", "Foto ufficiale Gree VERSATI V 16 kW, unità esterna a due ventilatori.")
 reader = PdfReader(SOURCE / "gree-versati-v.pdf")
-for size, page in [(6, 8), (8, 10)]:
+for size, page in [(6, 8), (8, 10), (10, 12), (12, 14), (14, 16), (16, 20)]:
     text = reader.pages[page-1].extract_text()
-    if f"GRS-CQ{size}.0Pd/NpG4-E" not in text or "880/1206/445" not in text:
+    model_size = f"{size}.0" if size < 10 else str(size)
+    dimensions = (943, 1615, 464) if size == 16 else (1206, 880, 445)
+    if f"GRS-CQ{model_size}Pd/NpG4-E" not in text or "/".join(map(str, [dimensions[1], dimensions[0], dimensions[2]])) not in text:
         raise ValueError("Gree source row/dimensions missing")
     # Same-page named nominal capacity / EER-COP rows, no promotional rated values.
     import re
@@ -93,9 +98,43 @@ for size, page in [(6, 8), (8, 10)]:
         cold = convert(capacities[1][0])
         eer = convert(efficiency[1][0])
         points.append(point(f"Caldo A7/W{water} · freddo A35/W7", heat, cold, cop, eer, water))
-    products.append(dict(id=f"gree-versati-v-{size}-monofase", manufacturer="Gree", family="VERSATI V", model=f"GRS-CQ{size}.0Pd/NpG4-E", widthMm=1206, heightMm=880, depthMm=445,
+    for phase, suffix in [("monofase", "E")] + ([("trifase", "M")] if size >= 10 else []):
+        if f"GRS-CQ{model_size}Pd/NpG4-{suffix}" not in text:
+            raise ValueError("Gree phase model missing")
+        products.append(dict(id=f"gree-versati-v-{size}-{phase}", manufacturer="Gree", family="VERSATI V", model=f"GRS-CQ{model_size}Pd/NpG4-{suffix}", widthMm=dimensions[0], heightMm=dimensions[1], depthMm=dimensions[2],
         dimensionNote=f"Ingombro unità esterna L×H×P, brochure pag. {page}. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
-        features=["Monoblocco DC Inverter R290", "Mandata fino a 80 °C nei limiti di funzionamento", "Pannello remoto di serie", "ACS con accumulo e valvola opzionali"], productPhoto=gree_photo, sourceMetadata=source("gree-versati-v", "Gree", page), operatingPoints=points))
+        features=["Monoblocco DC Inverter R290", "Mandata fino a 80 °C nei limiti di funzionamento", "Pannello remoto di serie", "ACS con accumulo e valvola opzionali"] + (["Monofase 230 V / 50 Hz" if phase == "monofase" else "Trifase 400 V / 50 Hz"] if size >= 10 else []), productPhoto=gree_16_photo if size == 16 else gree_photo, sourceMetadata=source("gree-versati-v", "Gree", page), operatingPoints=points))
+
+# Reviewed parameter tables: Split pages 9–10, All In One pages 9–10.
+# Each system has its own documented EER; do not copy performance between variants.
+for configuration in ["split", "all-in-one"]:
+    document = "gree-versati-iii" if configuration == "split" else "gree-versati-iii-all-in-one"
+    pages = PdfReader(SOURCE / f"{document}.pdf").pages
+    technical = pages[8].extract_text() + pages[9].extract_text()
+    if "975×396×702" not in technical or "982×427×787" not in technical or "12°C/7°C" not in technical:
+        raise ValueError("Gree III reviewed technical table missing")
+    official_photo = photo(f"gree-versati-iii-{configuration}.png", f"https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-{'SPLIT' if configuration == 'split' else 'ALL-IN-ONE'}.png", f"Foto ufficiale di gamma VERSATI III {configuration}; il 3D rappresenta l’unità esterna.")
+    for size, heat35, heat45, cold, cop35, cop45, eer in [
+        (4, 4, 4, 3.15, 5.1, 3.9, 3.4),
+        (6, 6, 5.9, 4.09, 5.0, 3.9, 3.2),
+        (8, 8, 8, 5.3, 4.7, 3.7, 3.0 if configuration == "split" else 3.1),
+        (10, 9.5, 9.5, 6.5, 4.6, 3.6, 2.9),
+    ]:
+        code = {4: "ER010W1510", 6: "ER010W1500", 8: "ER010W1480", 10: "ER010W1730"}[size]
+        if code not in technical:
+            raise ValueError(f"Gree III model missing: {code}")
+        model_size = f"{size}.0" if size < 10 else str(size)
+        width, height, depth = (975, 702, 396) if size <= 6 else (982, 787, 427)
+        indoor_code = ({4: "ER010N1510", 6: "ER010N1500", 8: "ER010N1480", 10: "ER010N1750"} if configuration == "split" else {4: "ER010N1770", 6: "ER010N1780", 8: "ER010N1760", 10: "ER010N1730"})[size]
+        products.append(dict(id=f"gree-versati-iii-{size}-{configuration}-monofase", manufacturer="Gree", family=f"VERSATI III {'Split' if configuration == 'split' else 'All In One'}", model=f"GRS-CQ{model_size}Pd/NhH-E(O) + {indoor_code}",
+            widthMm=width, heightMm=height, depthMm=depth,
+            dimensionNote=f"Ingombro unità esterna L×H×P da Service Manual pag. {'9' if configuration == 'split' else '10'}. Modulo interno {'460×860×318 mm' if configuration == 'split' else '600×1756×600 mm'}, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+            features=["DC Inverter R32", "Monofase 230 V / 50 Hz", f"Unità esterna {code}", f"Unità interna {indoor_code}", "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento", "Modulo interno idronico" if configuration == "split" else "Modulo interno con accumulo ACS integrato"],
+            productPhoto=official_photo, sourceMetadata=source(document, "Gree", 9),
+            operatingPoints=[point("Caldo A7/W35 · freddo A35/W7", heat35, cold, cop35, eer), point("Caldo A7/W45 · freddo A35/W7", heat45, cold, cop45, eer, 45)]))
+
+# The live VERSATI listing has 10 monoblocco + 4 Split + 4 All In One systems.
+assert len([p for p in products if p["manufacturer"] == "Gree"]) == 18
 
 version_hash = hashlib.sha256(json.dumps(products, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
 catalog = dict(version=f"heat-pumps-{version_hash}", products=products)

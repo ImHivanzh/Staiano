@@ -2,10 +2,19 @@ import type { Project } from "@/schemas/project";
 import {
   airTerminalCatalog,
   airTerminalFamilyAtVersion,
+  airTerminalMountings,
 } from "@/domain/catalogs/air-terminals";
+import {
+  terminalPlenumOptionsSchema,
+  type TerminalPlenumOptions,
+} from "@/domain/catalogs/ecoclima-price-schema";
 import { ductedRoomAllocation } from "@/domain/ducted/apply";
 import { applyAirTerminalSolution } from "./apply";
 import { acousticUpperBound } from "./size";
+import { newId } from "@/domain/project";
+import { resolveTerminalAccessorySpecification } from "./commercial-bom";
+import { layoutLinearRun, linearRunMembers } from "./linear-run";
+import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import {
   buildLinearPlan,
   markLinearPlanModified,
@@ -14,16 +23,20 @@ import {
 
 export type OperatorTerminalInput = {
   roomId: string;
-  systemId: string;
+  systemId: string | null;
+  installationId?: string;
   familyCode: string;
   variantId: string;
   operatingPointIndex: number;
   use: "supply" | "return";
   mounting: "wall" | "ceiling";
   lengthMm: number;
+  customLength?: boolean;
+  moduleLengthsMm?: number[];
   style?: string;
   color?: string;
   finish?: string;
+  plenumOptions?: TerminalPlenumOptions;
   manualDimensions?: {
     widthMm: number;
     heightMm: number;
@@ -31,11 +44,66 @@ export type OperatorTerminalInput = {
   };
 };
 
-/** One explicit operator action adds ONE piece. Required meters never set its length. */
+/** One operator action adds one point, optionally composed of joined modules. */
 export function addOperatorTerminal(
   project: Project,
   input: OperatorTerminalInput,
 ): Project {
+  if (input.moduleLengthsMm) {
+    const lengths = input.moduleLengthsMm;
+    if (
+      lengths.length < 2 ||
+      lengths.length > 100 ||
+      lengths.some(
+        (length) => !Number.isFinite(length) || length <= 0 || length > 10000,
+      ) ||
+      lengths.reduce((sum, length) => sum + length, 0) !== input.lengthMm ||
+      (input.manualDimensions !== undefined &&
+        input.manualDimensions.widthMm !== input.lengthMm) ||
+      !airTerminalCatalog.families.find(
+        (family) => family.familyCode === input.familyCode,
+      )?.isLinearPerMeter
+    )
+      throw new Error(
+        "Composizione non valida: almeno due moduli positivi, totale fino a 10000 mm.",
+      );
+    const placed = addOperatorTerminal(project, {
+      ...input,
+      moduleLengthsMm: undefined,
+    });
+    const whole = placed.airTerminals.at(-1)!;
+    const runId = newId();
+    const members = layoutLinearRun(
+      lengths.map((widthMm, index) => ({
+        ...whole,
+        id: index === 0 ? whole.id : newId(),
+        widthMm,
+        availableAirflowM3h:
+          (whole.availableAirflowM3h * widthMm) / whole.widthMm,
+        requiredAirflowM3h:
+          (whole.requiredAirflowM3h * widthMm) / whole.widthMm,
+        commercialOptions: {
+          ...whole.commercialOptions,
+          insulatedPlenum: whole.commercialOptions?.insulatedPlenum ?? true,
+          fixingBridges: true,
+          continuityKit: true,
+          linearRunId: runId,
+          linearRunOrder: index,
+        },
+      })),
+      whole,
+    );
+    if (
+      members.some(
+        (item) =>
+          !resolveTerminalAccessorySpecification(item)?.continuitySupported,
+      )
+    )
+      throw new Error(
+        "Kit di continuità non disponibile per queste misure. Scegli moduli compatibili di catalogo.",
+      );
+    return { ...placed, airTerminals: [...project.airTerminals, ...members] };
+  }
   if (
     project.rooms.find((room) => room.id === input.roomId)
       ?.conditioningExclusion
@@ -53,18 +121,29 @@ export function addOperatorTerminal(
     input.roomId,
     project.hvacSystems.find((system) => system.id === input.systemId)
       ?.installationId,
+    input.systemId ?? undefined,
   );
   if (
     !family ||
     !variant ||
     !op ||
-    !allocation ||
-    allocation.system.id !== input.systemId ||
+    (input.systemId &&
+      (!allocation || allocation.system.id !== input.systemId)) ||
     op.quality !== "valid" ||
     (input.use === "supply" && (acousticUpperBound(op) ?? Infinity) > 37) ||
     (op.use && op.use !== input.use)
   )
     throw new Error("Punto di catalogo e macchina compatibili necessari.");
+  if (
+    input.installationId &&
+    !project.installations.some(
+      (item) =>
+        item.id === input.installationId &&
+        item.type === "ducted" &&
+        item.roomIds.includes(input.roomId),
+    )
+  )
+    throw new Error("Impianto canalizzato coerente necessario.");
   if (
     !Number.isFinite(input.lengthMm) ||
     input.lengthMm <= 0 ||
@@ -90,10 +169,11 @@ export function addOperatorTerminal(
       operatingPoint: op,
       numberOfPoints: 1,
       quantityPerPoint: 1,
-      requiredAirflowPerPointM3h:
-        input.use === "return"
-          ? (allocation.system.airflowM3h ?? allocation.airflowM3h)
-          : allocation.airflowM3h,
+      requiredAirflowPerPointM3h: !input.systemId
+        ? 0
+        : input.use === "return"
+          ? (allocation!.system.airflowM3h ?? allocation!.airflowM3h)
+          : allocation!.airflowM3h,
       theoreticalLengthM: null,
       commercialLengthM: family.isLinearPerMeter ? input.lengthMm / 1000 : null,
       availableAirflowPerPointM3h: available,
@@ -114,10 +194,20 @@ export function addOperatorTerminal(
       ...existing,
       {
         ...added,
+        installationId:
+          input.installationId ?? allocation?.system.installationId,
         decisionOrigin: "manual",
         style: input.style ?? "",
         color: input.color ?? "",
         finish: input.finish ?? "",
+        commercialOptions: input.plenumOptions
+          ? {
+              fixingBridges: true,
+              continuityKit: true,
+              ...added.commercialOptions,
+              ...terminalPlenumOptionsSchema.parse(input.plenumOptions),
+            }
+          : added.commercialOptions,
         pointIndex: null,
         unitIndex: null,
         plenumId:
@@ -128,7 +218,11 @@ export function addOperatorTerminal(
       },
     ],
   };
-  if (family.isLinearPerMeter && !allocation.system.linearPlan) {
+  if (
+    input.systemId &&
+    family.isLinearPerMeter &&
+    !allocation!.system.linearPlan
+  ) {
     const plan = buildLinearPlan(
       next,
       input.systemId,
@@ -143,7 +237,7 @@ export function addOperatorTerminal(
     );
     if (plan) next = saveLinearPlan(next, input.systemId, plan);
   }
-  return markLinearPlanModified(next, input.systemId);
+  return input.systemId ? markLinearPlanModified(next, input.systemId) : next;
 }
 
 export function editOperatorTerminal(
@@ -186,8 +280,10 @@ export function editOperatorTerminal(
     op.quality !== "valid" ||
     (op.use && op.use !== before.use) ||
     !family.use.includes(before.use) ||
-    (family.mountings
-      ? !family.mountings.includes(before.mounting as "wall" | "ceiling")
+    (airTerminalMountings(family)
+      ? !airTerminalMountings(family)!.includes(
+          before.mounting as "wall" | "ceiling",
+        )
       : !before.manualDimensions)
   )
     throw new Error(
@@ -225,7 +321,7 @@ export function editOperatorTerminal(
   const pose = { ...patch };
   delete pose.familyCode;
   delete pose.variantId;
-  const next = {
+  let next = {
     ...project,
     airTerminals: project.airTerminals.map((t) =>
       t.id === id
@@ -254,5 +350,56 @@ export function editOperatorTerminal(
         : t,
     ),
   };
+  const members = linearRunMembers(
+    next,
+    next.airTerminals.find((t) => t.id === id)!,
+  );
+  if (members.length > 1) {
+    if (members.some((item) => item.locked))
+      throw new Error(
+        "Sbloccare tutti i moduli del punto prima di modificarlo.",
+      );
+    const updated = next.airTerminals.find((t) => t.id === id)!;
+    if (
+      members.some(
+        (item) =>
+          item.family !== updated.family ||
+          item.productId !== updated.productId ||
+          item.heightMm !== updated.heightMm ||
+          !resolveTerminalAccessorySpecification(item)?.continuitySupported,
+      )
+    )
+      throw new Error(
+        "Per il punto composto scegli moduli dello stesso modello e misure compatibili con il kit.",
+      );
+    const arranged = layoutLinearRun(
+      members,
+      updated,
+      members.findIndex((t) => t.id === id),
+    );
+    if (
+      arranged.some(
+        (item) =>
+          !footprintInsideRoom(
+            next.rooms.find((room) => room.id === item.roomId)!,
+            item.position,
+            item.widthMm / 1000,
+            (item.mounting === "ceiling"
+              ? item.heightMm
+              : (item.depthMm ?? 0)) / 1000,
+            item.rotation,
+          ),
+      )
+    )
+      throw new Error(
+        "Il punto composto non rientra nel contorno della stanza.",
+      );
+    next = {
+      ...next,
+      airTerminals: next.airTerminals.map(
+        (t) => arranged.find((item) => item.id === t.id) ?? t,
+      ),
+    };
+  }
   return before.systemId ? markLinearPlanModified(next, before.systemId) : next;
 }

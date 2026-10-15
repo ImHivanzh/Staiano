@@ -19,13 +19,7 @@ export function snapTerminalPose(
   if (!item) throw new Error("Bocchetta inesistente.");
   const room =
     project.rooms.find(
-      (r) =>
-        r.floorId === item.floorId &&
-        pointInPolygon(target, r.polygon) &&
-        (!item.systemId ||
-          project.hvacSystems.some(
-            (s) => s.id === item.systemId && s.roomIds.includes(r.id),
-          )),
+      (r) => r.floorId === item.floorId && pointInPolygon(target, r.polygon),
     ) ?? project.rooms.find((r) => r.id === item.roomId)!;
   const free = {
     roomId: room.id,
@@ -41,14 +35,7 @@ export function snapTerminalPose(
     .filter((w) => w.floorId === item.floorId)
     .flatMap((wall) =>
       project.rooms
-        .filter(
-          (r) =>
-            r.wallIds.includes(wall.id) &&
-            (!item.systemId ||
-              project.hvacSystems.some(
-                (s) => s.id === item.systemId && s.roomIds.includes(r.id),
-              )),
-        )
+        .filter((r) => r.wallIds.includes(wall.id))
         .flatMap((r) => {
           const span = roomWallSpan(r, wall);
           return span

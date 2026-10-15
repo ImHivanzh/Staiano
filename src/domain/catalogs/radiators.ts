@@ -1,6 +1,7 @@
 import cordivari from "../../../catalog-data/generated/cordivari.json";
 import global from "../../../catalog-data/generated/global.json";
 import cordivariComfort from "../../../catalog-data/generated/cordivari-comfort.json";
+import cordivariRange from "../../../catalog-data/generated/cordivari-range.json";
 import zehnder from "../../../catalog-data/generated/zehnder.json";
 import lazzarini from "../../../catalog-data/generated/lazzarini.json";
 import familyPhotos from "../../../catalog-data/generated/radiator-family-photos.json";
@@ -10,6 +11,7 @@ export const radiatorCatalogs = [
   radiatorCatalogSchema.parse(cordivari),
   radiatorCatalogSchema.parse(global),
   radiatorCatalogSchema.parse(cordivariComfort),
+  radiatorCatalogSchema.parse(cordivariRange),
   radiatorCatalogSchema.parse(zehnder),
   radiatorCatalogSchema.parse(lazzarini),
 ];

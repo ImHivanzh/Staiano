@@ -101,6 +101,21 @@ export function translateSelection(
     radiators: next.radiators.map(moveRoomDevice),
     fanCoils: next.fanCoils?.map(moveRoomDevice),
     airTerminals: next.airTerminals.map(moveRoomDevice),
+    ductedDrafts: next.ductedDrafts?.map((draft) =>
+      roomIds.has(draft.roomId) || deviceIds.has(draft.id)
+        ? { ...draft, position: add(draft.position, delta) }
+        : draft,
+    ),
+    heatPumpDrafts: next.heatPumpDrafts?.map((draft) =>
+      deviceIds.has(draft.id)
+        ? { ...draft, position: add(draft.position, delta) }
+        : draft,
+    ),
+    equipmentDrafts: next.equipmentDrafts?.map((draft) =>
+      roomIds.has(draft.roomId) || deviceIds.has(draft.id)
+        ? { ...draft, position: add(draft.position, delta) }
+        : draft,
+    ),
     plenums: next.plenums.map((pl) =>
       pl.roomId && roomIds.has(pl.roomId)
         ? { ...pl, position: add(pl.position, delta) }
@@ -160,7 +175,8 @@ export function removeSelection(
     }))
     .filter(
       (system) =>
-        system.roomIds.length > 0 &&
+        (system.roomIds.length > 0 ||
+          (system.type === "ducted" && system.indoorUnits.length > 0)) &&
         (system.type !== "split" || system.indoorUnits.length > 0),
     );
   const systemIds = new Set(systems.map((system) => system.id));
@@ -169,6 +185,22 @@ export function removeSelection(
     walls: project.walls.filter((wall) => !wallIds.has(wall.id)),
     rooms: project.rooms.filter((room) => !roomIds.has(room.id)),
     radiators: project.radiators.filter(keepDevice),
+    ductedDrafts: project.ductedDrafts?.filter(keepDevice).map((draft) => ({
+      ...draft,
+      machineId:
+        draft.machineId &&
+        !deviceIds.has(draft.machineId) &&
+        (systemIds.has(draft.machineId) ||
+          project.ductedDrafts?.some(
+            (m) => m.id === draft.machineId && keepDevice(m),
+          ))
+          ? draft.machineId
+          : undefined,
+    })),
+    heatPumpDrafts: project.heatPumpDrafts?.filter(
+      (draft) => !deviceIds.has(draft.id),
+    ),
+    equipmentDrafts: project.equipmentDrafts?.filter(keepDevice),
     fanCoils: project.fanCoils?.filter(keepDevice),
     airTerminals: project.airTerminals.filter(keepDevice).map((device) => ({
       ...device,
@@ -328,11 +360,32 @@ export function duplicateSelection(
     .filter(selectedDevice)
     .map((device) => ({
       ...copiedRoomDevice(device),
+      pendingMachineId: undefined,
       systemId:
         device.systemId && roomIds.has(device.roomId)
           ? (systemMap.get(device.systemId) ?? null)
           : device.systemId,
+      pendingSystemId:
+        device.pendingSystemId && roomIds.has(device.roomId)
+          ? systemMap.get(device.pendingSystemId)
+          : device.pendingSystemId,
     }));
+  const runCopies = new Map<string, string>();
+  for (const terminal of copiedTerminals) {
+    const runId = terminal.commercialOptions?.linearRunId;
+    if (!runId) continue;
+    const complete = project.airTerminals
+      .filter((item) => item.commercialOptions?.linearRunId === runId)
+      .every((item) => deviceMap.has(item.id));
+    if (complete && !runCopies.has(runId)) runCopies.set(runId, newId());
+    terminal.commercialOptions = {
+      ...terminal.commercialOptions!,
+      linearRunId: complete ? runCopies.get(runId) : undefined,
+      linearRunOrder: complete
+        ? terminal.commercialOptions?.linearRunOrder
+        : undefined,
+    };
+  }
   const copiedPlenums = project.plenums
     .filter((pl) => systemMap.has(pl.systemId) && roomMap.has(pl.roomId ?? ""))
     .map((pl) => ({
@@ -380,6 +433,54 @@ export function duplicateSelection(
         .map((u) => ({ ...copiedRoomDevice(u), locked: false })),
     ],
     airTerminals: [...project.airTerminals, ...copiedTerminals],
+    equipmentDrafts: [
+      ...(project.equipmentDrafts ?? []),
+      ...(project.equipmentDrafts ?? [])
+        .filter((draft) => roomMap.has(draft.roomId) || deviceIds.has(draft.id))
+        .map((draft) => ({
+          ...draft,
+          id: newId(),
+          roomId: roomMap.get(draft.roomId) ?? draft.roomId,
+          position: add(draft.position, offset),
+        })),
+    ],
+    heatPumpDrafts: [
+      ...(project.heatPumpDrafts ?? []),
+      ...(project.heatPumpDrafts ?? [])
+        .filter((draft) => deviceIds.has(draft.id))
+        .map((draft) => ({
+          ...draft,
+          id: newId(),
+          position: add(draft.position, delta),
+          terminalIds: undefined,
+        })),
+    ],
+    ductedDrafts: [
+      ...(project.ductedDrafts ?? []),
+      ...(project.ductedDrafts ?? [])
+        .filter((draft) => roomMap.has(draft.roomId) || deviceIds.has(draft.id))
+        .map((draft) => ({
+          ...draft,
+          id: newId(),
+          roomId: roomMap.get(draft.roomId) ?? draft.roomId,
+          position: add(draft.position, offset),
+          machineId: undefined,
+        })),
+    ],
+    installations: project.installations.map((item) => ({
+      ...item,
+      roomIds: [
+        ...new Set([
+          ...item.roomIds,
+          ...(project.ductedDrafts ?? [])
+            .filter(
+              (draft) =>
+                draft.installationId === item.id && roomMap.has(draft.roomId),
+            )
+            .map((draft) => roomMap.get(draft.roomId)!),
+        ]),
+      ],
+    })),
     hvacSystems: [...systems, ...copiedSystems],
     plenums: [...project.plenums, ...copiedPlenums],
     pillars: [

@@ -19,12 +19,15 @@ export function acousticUpperBound(point: OperatingPoint): number | null {
   return point.noiseDbA ?? point.noiseUpperBoundDbA;
 }
 export function sizeAirTerminal(
-  requiredAirflowM3h: number,
+  requiredAirflowM3h: number | null,
   numberOfPoints: number,
   family: AirTerminalFamily,
   use: "supply" | "return",
 ): AirTerminalSolution[] {
-  if (!Number.isFinite(requiredAirflowM3h) || requiredAirflowM3h <= 0)
+  if (
+    requiredAirflowM3h !== null &&
+    (!Number.isFinite(requiredAirflowM3h) || requiredAirflowM3h <= 0)
+  )
     throw new Error("Portata richiesta positiva necessaria.");
   if (
     !Number.isInteger(numberOfPoints) ||
@@ -33,7 +36,7 @@ export function sizeAirTerminal(
   )
     throw new Error("Numero punti da 1 a 100.");
   if (!family.use.includes(use)) return [];
-  const perPoint = requiredAirflowM3h / numberOfPoints,
+  const perPoint = (requiredAirflowM3h ?? 0) / numberOfPoints,
     solutions: AirTerminalSolution[] = [];
   for (const variant of family.variants)
     for (const point of variant.operatingPoints) {
@@ -55,7 +58,9 @@ export function sizeAirTerminal(
           }))
           .sort(
             (a, b) =>
-              a.mm * a.quantity - b.mm * b.quantity || a.quantity - b.quantity,
+              Number(a.quantity > 1) - Number(b.quantity > 1) ||
+              a.mm * a.quantity - b.mm * b.quantity ||
+              a.quantity - b.quantity,
           );
         const selectedModule = modules[0];
         if (!selectedModule) continue;
@@ -82,7 +87,7 @@ export function sizeAirTerminal(
           ],
         });
       } else {
-        const quantity = Math.ceil(perPoint / point.airflowM3h);
+        const quantity = Math.max(1, Math.ceil(perPoint / point.airflowM3h));
         // Noise data is per unit. Multiple-unit combined room noise is not claimed.
         solutions.push({
           variant,
@@ -104,6 +109,11 @@ export function sizeAirTerminal(
           ],
         });
       }
+    }
+  if (requiredAirflowM3h === null)
+    for (const solution of solutions) {
+      solution.theoreticalLengthM = null;
+      solution.log = [];
     }
   return solutions.sort(
     (a, b) =>

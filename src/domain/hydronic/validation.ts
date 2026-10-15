@@ -2,6 +2,7 @@ import type { Project } from "@/schemas/project";
 import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
 import { fanCoilProductAtVersion } from "@/domain/catalogs/fan-coils";
 import { hydronicOutdoorValid, type HydronicSystem } from "./placement";
+import { hydronicTargets, hydronicRoomIds } from "../ducted/plan-connections";
 
 export function validateHydronicSystem(
   project: Project,
@@ -26,9 +27,19 @@ export function validateHydronicSystem(
     warnings.push(
       "Posizione esterna non valida: verificare muri, ambienti e ostacoli.",
     );
-  if (!system.fanCoilIds.length)
+  const connectedTargets = hydronicTargets(project, system.outdoorUnit.id);
+  const ductedUnits = project.hvacSystems.filter(
+    (s) =>
+      s.type === "ducted" &&
+      s.indoorUnits.some((u) => system.terminalIds?.includes(u.id)),
+  );
+  if (!system.fanCoilIds.length && !connectedTargets.length)
     warnings.push(
       "Nessun ventilconvettore collegato: aggiungere e associare i terminali agli ambienti.",
+    );
+  if (ductedUnits.length)
+    warnings.push(
+      "Unità canalizzate ad acqua con dati manuali: verificare potenze e portate idrauliche alle temperature della PdC; escluse dal totale dei ventilconvettori con temperature verificate.",
     );
   const sameTemperature = (conditions: string, water: number) => {
     const match = conditions.match(/acqua\s+(\d+(?:[.,]\d+)?)\s*\/\s*\d+/i);
@@ -81,7 +92,8 @@ export function validateHydronicSystem(
     if (
       !system.fanCoilIds.some((id) =>
         project.fanCoils?.some((u) => u.id === id && u.roomId === room.id),
-      )
+      ) &&
+      !hydronicRoomIds(project, system.outdoorUnit.id).includes(room.id)
     )
       warnings.push(
         `${room.name}: ambiente servito senza ventilconvettori associati.`,

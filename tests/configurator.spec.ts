@@ -251,13 +251,13 @@ test("input errato preserva progetto, archivio duplica e recupera autosave", asy
     "Versione progetto non supportata",
   );
   await expect(page.getByTestId("wall")).toHaveCount(4);
-  await page.getByRole("button", { name: "Progetti locali" }).click();
+  await page.getByRole("button", { name: "Progetti" }).click();
   page.once("dialog", (d) => d.accept());
   await page.getByRole("button", { name: "Recupera autosave" }).click();
   await expect(
     page.getByRole("button", { name: /Soggiorno.*15,96/ }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Progetti locali" }).click();
+  await page.getByRole("button", { name: "Progetti" }).click();
   page.once("dialog", (d) => d.accept("Casa duplicata"));
   await page.getByRole("button", { name: "Duplica", exact: true }).click();
   await expect(page.getByText("Casa duplicata", { exact: true })).toBeVisible();

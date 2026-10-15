@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo } from "react";
+import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Plenum, Project, Selection } from "@/schemas/project";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
@@ -184,6 +185,18 @@ export function SystemMeshes({
   isolatedRoomId?: string;
 }) {
   const chosen = (id: string) => selection.some((s) => s.id === id);
+  const { gl } = useThree();
+  const plenumCount = project.plenums.filter(
+    (plenum) =>
+      plenum.floorId === activeFloorId &&
+      (!isolatedRoomId || plenum.roomId === isolatedRoomId),
+  ).length;
+  useEffect(() => {
+    gl.domElement.setAttribute("data-plenum-count", String(plenumCount));
+    return () => {
+      gl.domElement.removeAttribute("data-plenum-count");
+    };
+  }, [gl, plenumCount]);
   return (
     <group>
       {(project.pillars ?? [])

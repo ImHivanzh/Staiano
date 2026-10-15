@@ -1,8 +1,9 @@
 import { useProjectStore } from "@/stores/project-store";
-import { IndexedDbProjectRepository, ProjectConflictError } from "./repository";
-export let repository = new IndexedDbProjectRepository();
+import { ProjectConflictError } from "./repository";
+import { SharedProjectRepository } from "./shared-repository";
+export let repository = new SharedProjectRepository();
 export function configureProjectSession(username: string) {
-  repository = new IndexedDbProjectRepository(
+  repository = new SharedProjectRepository(
     username === "admin"
       ? "staiano-hvac-v1"
       : `staiano-hvac-v1-user-${username}`,
@@ -29,7 +30,9 @@ export function saveCurrent() {
         error:
           error instanceof ProjectConflictError
             ? error.message
-            : "Salvataggio locale fallito. Esportare il progetto per conservarlo.",
+            : error instanceof Error
+              ? error.message
+              : "Salvataggio fallito. Esportare il progetto per conservarlo.",
       });
     throw error;
   });

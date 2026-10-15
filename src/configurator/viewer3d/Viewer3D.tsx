@@ -10,14 +10,9 @@ import {
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
 import * as THREE from "three";
-import {
-  Columns,
-  Snowflake,
-  Wind,
-  Camera,
-  SlidersHorizontal,
-} from "@phosphor-icons/react";
+import { Camera, SlidersHorizontal, LinkSimple } from "@phosphor-icons/react";
 import { useProjectStore } from "@/stores/project-store";
+import { EquipmentIcon } from "../EquipmentIcon";
 import { bounds } from "@/domain/geometry/primitives";
 import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
 import { formatNumber } from "@/utils/format";
@@ -32,11 +27,20 @@ import { CeilingReference } from "./CeilingReference";
 import { ProductTools } from "./ProductTools";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { installationLabels } from "@/domain/installations";
-import { DuctedMachinePicker } from "../systems/DuctedMachinePicker";
 import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
 import { sceneFrame, type SceneFrame } from "./scene-layout";
 import styles from "./Viewer3D.module.css";
-import type { Project } from "@/schemas/project";
+import type { Project, Selection } from "@/schemas/project";
+import { GraphicalDuctedConfigurator } from "../systems/GraphicalDuctedConfigurator";
+import { Properties } from "../properties/Properties";
+import { WallOpenings } from "../properties/WallOpenings";
+import { connectTerminalOnPlan } from "@/domain/ducted/graphic-installation";
+import { connectionSelection } from "./connection-selection";
+import {
+  configurationBlock,
+  connectDraftOnPlan,
+  connectHydronicOnPlan,
+} from "@/domain/ducted/plan-connections";
 import { DeviceTransform, type TransformMode } from "./DeviceTransform";
 import { DuctMeshes } from "./DuctMeshes";
 import { DuctPanel } from "@/configurator/systems/DuctPanel";
@@ -71,15 +75,18 @@ class WebGLError extends Component<
 function RenderMarker({
   selected,
   cutWallCount,
+  doorCount,
 }: {
   selected: string;
   cutWallCount: number;
+  doorCount: number;
 }) {
   useFrame(({ gl, camera }) => {
     gl.domElement.dataset.rendered = "true";
     gl.domElement.dataset.scene = "realistic";
     gl.domElement.dataset.selection = selected;
     gl.domElement.dataset.cutWalls = String(cutWallCount);
+    gl.domElement.dataset.doorCount = String(doorCount);
     gl.domElement.dataset.cameraPosition = camera.position
       .toArray()
       .map((n) => n.toFixed(3))
@@ -103,6 +110,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
     setError,
     setView,
     presentation,
+    planPlacementTool,
   } = useProjectStore();
   const [top, setTop] = useState(false);
   const [isolated, setIsolated] = useState(false);
@@ -118,19 +126,23 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [productTool, setProductTool] = useState<
     "radiator" | "split" | "terminal" | "machine" | null
   >(null);
+  const [configurationTarget, setConfigurationTarget] = useState<{
+    id: string;
+    nonce: number;
+  } | null>(null);
+  const [wallOpen, setWallOpen] = useState(false);
+  const [propertiesOpen, setPropertiesOpen] = useState(false);
   const [renderBusy, setRenderBusy] = useState(false);
   const [plenumOpen, setPlenumOpen] = useState(false);
   const [plenumSystemId, setPlenumSystemId] = useState("");
-  const [channelView, setChannelView] = useState(false);
+  const [channelView, setChannelView] = useState(readOnly);
   const [channelPanel, setChannelPanel] = useState(false);
   const [hydronicPanel, setHydronicPanel] = useState(false);
   const [fanCoilPanel, setFanCoilPanel] = useState(false);
   const [fanCoilRoomId, setFanCoilRoomId] = useState("");
   const [loadMap, setLoadMap] = useState(false);
   const [tour, setTour] = useState(false);
-  const [comfortMode, setComfortMode] = useState<ComfortMode | "off">(
-    readOnly ? "off" : "cool",
-  );
+  const [comfortMode, setComfortMode] = useState<ComfortMode | "off">("cool");
   const tourIndex = useRef(0);
   const [transformChoice, setTransformChoice] = useState<{
     id?: string;
@@ -142,6 +154,70 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const sceneProject = preview ?? p;
   const container = useRef<HTMLDivElement>(null);
   const selectedId = selection[0]?.id;
+  const selectedWall = p?.walls.find((wall) => wall.id === selectedId);
+  const configurationRoom = p?.rooms.find(
+    (room) => room.floorId === activeFloorId,
+  );
+  const pickDevice = (target: Selection) => {
+    if (!p) return;
+    if (planPlacementTool === "connect" && !readOnly && !presentation) {
+      const pair = connectionSelection(p, selectedId, target.id);
+      if (pair) {
+        useProjectStore
+          .getState()
+          .commit((project) =>
+            pair.hydronic
+              ? connectHydronicOnPlan(project, pair.terminalId, pair.machineId)
+              : project.ductedDrafts?.some(
+                    (t) => t.id === pair.terminalId || t.id === pair.systemId,
+                  )
+                ? connectDraftOnPlan(project, pair.terminalId, pair.systemId)
+                : connectTerminalOnPlan(
+                    project,
+                    pair.terminalId,
+                    pair.systemId,
+                  ),
+          );
+        if (!useProjectStore.getState().error)
+          select({ kind: "device", id: pair.machineId });
+      } else if (
+        p.ductedDrafts?.some((item) => item.id === target.id) ||
+        p.heatPumpDrafts?.some((item) => item.id === target.id) ||
+        p.hydronicSystems?.some((item) => item.outdoorUnit.id === target.id) ||
+        p.radiators.some((item) => item.id === target.id) ||
+        p.fanCoils?.some((item) => item.id === target.id) ||
+        p.airTerminals.some((item) => item.id === target.id) ||
+        p.hvacSystems.some(
+          (item) =>
+            item.type === "ducted" &&
+            item.indoorUnits.some((unit) => unit.id === target.id),
+        )
+      ) {
+        select(target);
+        setError(null);
+      } else setError("Seleziona una macchina e un terminale da collegare.");
+      return;
+    }
+    select(target);
+    if (readOnly || presentation) return;
+    const blocked = configurationBlock(p, target.id);
+    if (blocked) {
+      setConfigurationTarget(null);
+      setError(blocked);
+      return;
+    }
+    useProjectStore.setState({ planPlacementTool: "select" });
+    if (
+      p.plenums.some((item) => item.id === target.id) ||
+      p.pillars?.some((item) => item.id === target.id)
+    )
+      setPropertiesOpen(true);
+    else
+      setConfigurationTarget((previous) => ({
+        id: target.id,
+        nonce: (previous?.nonce ?? 0) + 1,
+      }));
+  };
   const chosenDevice =
     p &&
     [
@@ -591,6 +667,36 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               </details>
               {!presentation && (
                 <>
+                  <button
+                    className={
+                      planPlacementTool === "connect"
+                        ? `bottone piccolo ${styles.active}`
+                        : "bottone piccolo"
+                    }
+                    aria-pressed={planPlacementTool === "connect"}
+                    aria-keyshortcuts="C"
+                    title="Collega macchina e bocchetta · C"
+                    onClick={() => {
+                      setConfigurationTarget(null);
+                      useProjectStore.setState({
+                        planPlacementTool:
+                          planPlacementTool === "connect"
+                            ? "select"
+                            : "connect",
+                      });
+                      setChannelView(true);
+                    }}
+                  >
+                    <LinkSimple size={18} aria-hidden="true" /> Collega
+                  </button>
+                  {selectedWall && (
+                    <button
+                      className="bottone piccolo"
+                      onClick={() => setWallOpen(true)}
+                    >
+                      Porte e finestre
+                    </button>
+                  )}
                   <details className={styles.settings} name="viewer-menus">
                     <summary>Aggiungi apparecchio</summary>
                     <div
@@ -607,7 +713,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         }
                         onClick={() => setProductTool("radiator")}
                       >
-                        <Columns size={22} aria-hidden="true" />
+                        <EquipmentIcon type="radiator" />
                         Radiatori
                       </button>
                       <button
@@ -616,7 +722,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         }
                         onClick={() => setProductTool("split")}
                       >
-                        <Snowflake size={22} aria-hidden="true" />
+                        <EquipmentIcon type="split" />
                         Climatizzatori
                       </button>
                       <button
@@ -625,11 +731,11 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         }
                         onClick={() => setProductTool("terminal")}
                       >
-                        <Wind size={22} aria-hidden="true" />
+                        <EquipmentIcon type="terminal" />
                         Bocchette
                       </button>
                       <button onClick={() => setProductTool("machine")}>
-                        <Wind size={20} aria-hidden="true" />
+                        <EquipmentIcon type="machine" />
                         Macchina manuale
                       </button>
                       <button
@@ -654,7 +760,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                           setPlenumOpen(true);
                         }}
                       >
-                        <Wind size={20} aria-hidden="true" />
+                        <EquipmentIcon type="plenum" />
                         Plenum
                       </button>
                       <button
@@ -664,6 +770,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                           setProductTool(null);
                         }}
                       >
+                        <EquipmentIcon type="heatPump" />
                         Pompa di calore
                       </button>
                       <button
@@ -674,6 +781,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                           setProductTool(null);
                         }}
                       >
+                        <EquipmentIcon type="fanCoil" />
                         Ventilconvettori
                       </button>
                       <button
@@ -681,6 +789,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                           useProjectStore.setState({ pillarDialog: true })
                         }
                       >
+                        <EquipmentIcon type="pillar" />
                         Pilastro
                       </button>
                     </div>
@@ -847,6 +956,48 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               onClose={() => setProductTool(null)}
             />
           )}
+          {!readOnly && !presentation && planPlacementTool === "connect" && (
+            <p className="nota" role="status">
+              Collega: clicca macchina e bocchetta, in qualsiasi ordine. Escape
+              termina.
+            </p>
+          )}
+          {!readOnly &&
+            !presentation &&
+            p &&
+            configurationRoom &&
+            configurationTarget &&
+            planPlacementTool !== "connect" && (
+              <GraphicalDuctedConfigurator
+                key={`${configurationTarget.id}-${configurationTarget.nonce}`}
+                project={p}
+                room={configurationRoom}
+                mainPlan
+                configurationOnly
+              />
+            )}
+          {!readOnly && !presentation && p && selectedWall && wallOpen && (
+            <FullscreenDialog
+              open
+              title="Porte e finestre nella parete"
+              onClose={() => setWallOpen(false)}
+            >
+              <WallOpenings
+                key={selectedWall.id}
+                project={p}
+                wall={selectedWall}
+              />
+            </FullscreenDialog>
+          )}
+          {!readOnly && !presentation && propertiesOpen && (
+            <FullscreenDialog
+              open
+              title="Configura elemento 3D"
+              onClose={() => setPropertiesOpen(false)}
+            >
+              <Properties />
+            </FullscreenDialog>
+          )}
           {plenumOpen && p && (
             <FullscreenDialog
               open={plenumOpen}
@@ -885,11 +1036,22 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   )
                   .slice(0, 1)
                   .map((room) => (
-                    <DuctedMachinePicker
-                      key={plenumSystemId}
-                      project={p}
-                      room={room}
-                    />
+                    <button
+                      key={room.id}
+                      className="bottone chiara"
+                      onClick={() => {
+                        const installationId = p.hvacSystems.find(
+                          (item) => item.id === plenumSystemId,
+                        )?.installationId;
+                        if (installationId)
+                          useProjectStore
+                            .getState()
+                            .openInstallationPlan(installationId);
+                        setPlenumOpen(false);
+                      }}
+                    >
+                      Configura sulla planimetria 2D
+                    </button>
                   ))}
                 <SupplyPlenumPanel project={p} systemId={plenumSystemId} />
               </div>
@@ -956,7 +1118,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     activeFloorId={activeFloorId}
                     selection={selection}
                     isolatedRoomId={isolatedRoomId}
-                    onSelect={select}
+                    onSelect={pickDevice}
                     showHydronicPipes={channelView}
                   />
                 )}
@@ -964,19 +1126,21 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   <DuctMeshes
                     project={sceneProject}
                     activeFloorId={activeFloorId}
-                    animated={presentation}
+                    animated={presentation || readOnly}
                     flowMode={comfortMode === "heat" ? "heat" : "cool"}
                   />
                 )}
                 {loadMap && <LoadMap rooms={rooms} />}
-                {presentation && sceneProject && comfortMode !== "off" && (
-                  <ComfortFlows
-                    project={sceneProject}
-                    floorId={activeFloorId}
-                    mode={comfortMode}
-                    roomId={isolatedRoomId}
-                  />
-                )}
+                {(presentation || readOnly) &&
+                  sceneProject &&
+                  comfortMode !== "off" && (
+                    <ComfortFlows
+                      project={sceneProject}
+                      floorId={activeFloorId}
+                      mode={comfortMode}
+                      roomId={isolatedRoomId}
+                    />
+                  )}
                 {p && selectedId && transformMode && !presentation && (
                   <DeviceTransform
                     project={p}
@@ -1045,6 +1209,13 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                 <RenderMarker
                   selected={selectedId ?? ""}
                   cutWallCount={cutaway ? cutWallIds.size : 0}
+                  doorCount={
+                    p?.openings.filter(
+                      (opening) =>
+                        opening.type === "door" &&
+                        walls.some((wall) => wall.id === opening.wallId),
+                    ).length ?? 0
+                  }
                 />
                 <SceneEffects enabled={walls.length < 150} />
               </Canvas>

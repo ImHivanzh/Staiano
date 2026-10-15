@@ -7,6 +7,7 @@ import { projectSchema } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { installationLabels } from "@/domain/installations";
 import styles from "./CustomerView.module.css";
+import { StoveCatalog } from "./systems/StoveCatalog";
 
 const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), { ssr: false });
 export function CustomerView() {
@@ -14,6 +15,7 @@ export function CustomerView() {
   const activeFloor = useProjectStore((state) => state.activeFloorId);
   const [status, setStatus] = useState("In attesa del configuratore…");
   const [fullscreenError, setFullscreenError] = useState("");
+  const [showStoves, setShowStoves] = useState(false);
   useEffect(() => {
     const token = window.location.hash.slice(1);
     if (!/^[a-f0-9-]{36}$/i.test(token)) return;
@@ -87,6 +89,14 @@ export function CustomerView() {
           <p role="status">{status}</p>
         </div>
         <button
+          type="button"
+          className="bottone piccolo tenue"
+          aria-pressed={showStoves}
+          onClick={() => setShowStoves((value) => !value)}
+        >
+          {showStoves ? "Mostra progetto" : "Catalogo stufe"}
+        </button>
+        <button
           className="bottone piccolo tenue"
           onClick={() => {
             const action = document.fullscreenElement
@@ -103,8 +113,10 @@ export function CustomerView() {
         </button>
       </header>
       {fullscreenError && <p role="alert">{fullscreenError}</p>}
-      <div className={styles.model}>
-        {project ? (
+      <div className={showStoves ? styles.catalog : styles.model}>
+        {showStoves ? (
+          <StoveCatalog />
+        ) : project ? (
           <Viewer3D key={project.id} readOnly />
         ) : (
           <div className={styles.waiting}>
@@ -115,7 +127,7 @@ export function CustomerView() {
           </div>
         )}
       </div>
-      {project && (
+      {project && !showStoves && (
         <footer className={styles.footer}>
           <span>
             {project.floors.find((floor) => floor.id === activeFloor)?.name}

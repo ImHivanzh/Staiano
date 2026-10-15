@@ -11,7 +11,7 @@ export function terminalAirflowBalance(
   const system = project.hvacSystems.find((item) => item.id === systemId);
   const required = system
     ? use === "supply" && roomId
-      ? (ductedRoomAllocation(project, roomId, system.installationId)
+      ? (ductedRoomAllocation(project, roomId, system.installationId, systemId)
           ?.airflowM3h ?? 0)
       : (ductedMaximumAirflow(system) ?? 0)
     : 0;

@@ -6,7 +6,6 @@ import { numberFromForm, formatNumber } from "@/utils/format";
 import { removeSelection } from "@/domain/geometry/selection";
 import { calculateSupplyPlenum } from "@/domain/ducted/plenum";
 import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
-import { DuctedMachinePicker } from "@/configurator/systems/DuctedMachinePicker";
 import { FullscreenSection } from "../FullscreenDialog";
 
 export function StructuralProperties({
@@ -37,14 +36,19 @@ export function StructuralProperties({
             ? "Pilastro"
             : "Macchina canalizzata"}
       </h3>
-      {system &&
-        project.rooms.find((room) => room.id === system.roomIds[0]) && (
-          <DuctedMachinePicker
-            key={system.id}
-            project={project}
-            room={project.rooms.find((room) => room.id === system.roomIds[0])!}
-          />
-        )}
+      {system && project.rooms.find((room) => room.id === machine?.roomId) && (
+        <button
+          className="bottone chiara"
+          onClick={() =>
+            system.installationId &&
+            useProjectStore
+              .getState()
+              .openInstallationPlan(system.installationId)
+          }
+        >
+          Configura sulla planimetria 2D
+        </button>
+      )}
       {plenum && (
         <>
           <p>

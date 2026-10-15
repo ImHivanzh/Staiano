@@ -388,7 +388,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
     expect(p.airTerminals).toHaveLength(2);
     expect(p.airTerminals[0].depthMm).toBe(60);
     const restored = decodeProject(encodeProject(p));
-    expect(restored.schemaVersion).toBe(5);
+    expect(restored.schemaVersion).toBe(6);
     expect(restored.hvacSystems).toHaveLength(1);
     expect(restored.airTerminals).toHaveLength(2);
     expect(
@@ -403,7 +403,9 @@ describe("canalizzato, portate e terminali persistenti", () => {
       length: 4,
       name: "Camera",
     });
-    const f = airTerminalCatalog.families[0],
+    const f = airTerminalCatalog.families.find(
+        (family) => family.familyCode === "EVVMC",
+      )!,
       s = sizeAirTerminal(300, 1, f, "supply")[0];
     expect(() =>
       applyAirTerminalSolution(

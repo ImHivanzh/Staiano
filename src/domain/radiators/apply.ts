@@ -19,6 +19,7 @@ export function applyRadiatorSolution(
   solution: RadiatorSolution,
   fixedWallId: string | null,
   installationId?: string,
+  append = false,
 ): Project {
   project = assignInstallationRooms(project, installationId, "radiator", [
     roomId,
@@ -48,8 +49,9 @@ export function applyRadiatorSolution(
   if (!solution.searchComplete)
     throw new Error("Attendere la certificazione completa della soluzione.");
   if (
+    !append &&
     solution.units.reduce((sum, unit) => sum + unit.powerW, 0) <
-    room.designLoadW
+      room.designLoadW
   )
     throw new Error(
       "La soluzione non copre il fabbisogno attuale della stanza. Ricalcolare i radiatori.",
@@ -59,7 +61,7 @@ export function applyRadiatorSolution(
         .filter(
           (radiator) =>
             radiator.roomId === roomId &&
-            radiator.installationId !== installationId,
+            (append || radiator.installationId !== installationId),
         )
         .map((radiator) =>
           footprintCorners(
@@ -77,8 +79,8 @@ export function applyRadiatorSolution(
       (solution.selectedFamily && variant.family !== solution.selectedFamily)
     )
       throw new Error("Combinazione radiatori estranea alla famiglia scelta.");
-    const version = radiatorCatalogs.find(
-      (c) => c.manufacturer === variant.manufacturer,
+    const version = radiatorCatalogs.find((c) =>
+      c.products.some((product) => product.id === variant.id),
     )?.version;
     if (!version) throw new Error("Versione catalogo non disponibile.");
     if (
@@ -171,6 +173,7 @@ export function applyRadiatorSolution(
     ...project.radiators.filter(
       (r) =>
         r.roomId !== roomId ||
+        append ||
         (!!installationId && r.installationId !== installationId),
     ),
     ...units,

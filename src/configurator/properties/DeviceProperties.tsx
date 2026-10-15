@@ -16,6 +16,7 @@ import { RadiatorFinishes } from "./RadiatorFinishes";
 import { StructuralProperties } from "./StructuralProperties";
 import { FanCoilProperties } from "./FanCoilProperties";
 import { HydronicProperties } from "./HydronicProperties";
+import { configurationBlock } from "@/domain/ducted/plan-connections";
 export function DeviceProperties({
   project,
   id,
@@ -25,6 +26,13 @@ export function DeviceProperties({
 }) {
   const device = project.radiators.find((r) => r.id === id),
     { commit } = useProjectStore();
+  const blocked = configurationBlock(project, id);
+  if (blocked)
+    return (
+      <p role="status" className="nota">
+        {blocked}
+      </p>
+    );
   if (project.fanCoils?.some((u) => u.id === id))
     return <FanCoilProperties project={project} id={id} />;
   if (project.hydronicSystems?.some((s) => s.outdoorUnit.id === id))

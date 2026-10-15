@@ -146,13 +146,13 @@ it("migrates v3 without data loss, remains idempotent and marks new files as v5"
   const project = fixture();
   const legacy = { ...structuredClone(project), schemaVersion: 3 };
   const migrated = parseProject(legacy);
-  expect(migrated.schemaVersion).toBe(5);
+  expect(migrated.schemaVersion).toBe(6);
   expect({ ...migrated, schemaVersion: 3 }).toEqual(legacy);
   expect(parseProject(migrated)).toEqual(migrated);
   const excluded = updateRoom(migrated, migrated.rooms[0].id, {
     conditioningExclusion: { reason: "Non riscaldato" },
   });
   const file = JSON.parse(encodeProject(excluded));
-  expect(file.schemaVersion).toBe(5);
+  expect(file.schemaVersion).toBe(6);
   expect(file.rooms[0].conditioningExclusion.reason).toBe("Non riscaldato");
 });

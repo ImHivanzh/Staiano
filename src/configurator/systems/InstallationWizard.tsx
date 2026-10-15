@@ -1,9 +1,6 @@
 "use client";
-import { useState } from "react";
 import type { Project, Room } from "@/schemas/project";
-import { createInstallation, installationLabels } from "@/domain/installations";
 import { useProjectStore } from "@/stores/project-store";
-import { RoomSystems } from "./RoomSystems";
 
 export function InstallationWizard({
   project,
@@ -12,89 +9,61 @@ export function InstallationWizard({
   project: Project;
   rooms: Room[];
 }) {
-  const [roomId, setRoomId] = useState(rooms[0]?.id ?? "");
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const { commit } = useProjectStore();
-  const installations = project.installations.filter((item) =>
-    rooms.some((room) => item.roomIds.includes(room.id)),
-  );
-  const active = project.installations.find((item) => item.id === activeId);
-  const activeRoom = project.rooms.find(
-    (room) => room.id === active?.roomIds[0],
+  const machines = project.hvacSystems.filter((system) =>
+    system.roomIds.some((id) => rooms.some((room) => room.id === id)) ||
+    system.indoorUnits.some((unit) => rooms.some((room) => room.floorId === unit.floorId)),
   );
   return (
     <section aria-label="Impianti del progetto">
       <p>
-        Aggiungi e configura un impianto per volta. Ogni impianto ha tipo e
-        stanze propri; nella vista complessiva li vedrai tutti insieme.
+        Ogni macchina è un impianto. Inserisci gli apparecchi sulla pianta e
+        cliccali per configurarli.
       </p>
-      {installations.map((item) => (
-        <div className="formula" key={item.id}>
+      <button
+        className="bottone pieno"
+        disabled={!rooms.length}
+        onClick={() => {
+          useProjectStore.getState().setView("2d");
+          useProjectStore.setState({
+            planPlacementTool: "machine",
+            tool: "select",
+            selection: [],
+          });
+        }}
+      >
+        Inserisci macchina sulla pianta
+      </button>
+      {machines.map((machine) => (
+        <div className="formula" key={machine.id}>
           <strong>
-            {item.name} · {installationLabels[item.type]}
+            {machine.name ||
+              `${machine.manufacturer} · ${machine.type === "ducted" ? "Canalizzato" : "Split"}`}
           </strong>
           <p className="nota">
             {project.rooms
-              .filter((room) => item.roomIds.includes(room.id))
+              .filter((room) => machine.roomIds.includes(room.id))
               .map((room) => room.name)
-              .join(" · ")}
+              .join(" · ") || "Collega le bocchette: gli ambienti serviti si aggiornano automaticamente."}
           </p>
           <button
-            type="button"
             className="bottone piccolo"
-            onClick={() => setActiveId(item.id)}
+            onClick={() => {
+              if (machine.installationId)
+                useProjectStore
+                  .getState()
+                  .openInstallationPlan(machine.installationId);
+              const unit = machine.indoorUnits[0];
+              if (unit)
+                useProjectStore
+                  .getState()
+                  .select({ kind: "device", id: unit.id });
+            }}
           >
-            Configura {item.name}
+            Seleziona macchina
           </button>
         </div>
       ))}
-      {!installations.length && (
-        <p className="nota">Nessun impianto. Aggiungi il primo per iniziare.</p>
-      )}
-      <label className="campo">
-        <span>Stanza iniziale del nuovo impianto</span>
-        <select
-          aria-label="Stanza iniziale del nuovo impianto"
-          value={roomId}
-          onChange={(event) => setRoomId(event.target.value)}
-        >
-          {rooms
-            .filter((room) => !room.conditioningExclusion)
-            .map((room) => (
-              <option key={room.id} value={room.id}>
-                {room.name}
-              </option>
-            ))}
-        </select>
-      </label>
-      <button
-        type="button"
-        className="bottone chiara"
-        disabled={
-          !rooms.some(
-            (room) => room.id === roomId && !room.conditioningExclusion,
-          )
-        }
-        onClick={() => {
-          commit((p) => createInstallation(p, "radiator", roomId));
-          const added = useProjectStore
-            .getState()
-            .project?.installations.at(-1);
-          if (added) setActiveId(added.id);
-        }}
-      >
-        Aggiungi impianto
-      </button>
-      {active && activeRoom && (
-        <RoomSystems
-          key={active.id}
-          project={project}
-          room={activeRoom}
-          installationId={active.id}
-          initialOpen
-          onClosed={() => setActiveId(null)}
-        />
-      )}
+      {!machines.length && <p className="nota">Nessuna macchina inserita.</p>}
     </section>
   );
 }

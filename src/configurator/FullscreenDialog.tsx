@@ -15,12 +15,14 @@ export function FullscreenDialog({
   onClose,
   closeLabel = "Chiudi configurazione",
   children,
+  footer,
 }: {
   open: boolean;
   title: string;
   onClose: () => void;
   closeLabel?: string;
   children: ReactNode;
+  footer?: ReactNode;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const pressedOutside = useRef(false);
@@ -79,6 +81,7 @@ export function FullscreenDialog({
         </button>
       </header>
       <div className={styles.content}>{children}</div>
+      {footer && <footer className={styles.footer}>{footer}</footer>}
     </dialog>
   );
 }

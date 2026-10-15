@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, type Ref } from "react";
 import Image from "next/image";
 import type { Project, Room } from "@/schemas/project";
 import {
@@ -22,17 +22,42 @@ export function FanCoilPanel({
   project,
   room,
   installationId,
+  onPlace,
+  saveButtonRef,
+  existingDeviceId,
 }: {
   project: Project;
   room: Room;
   installationId?: string;
+  onPlace?: (change: (project: Project) => Project) => void;
+  saveButtonRef?: Ref<HTMLButtonElement>;
+  existingDeviceId?: string;
 }) {
   const { commit, select } = useProjectStore();
-  const [manufacturer, setManufacturer] = useState("Innova");
-  const [productId, setProductId] = useState(fanCoilCatalog.products[0].id);
-  const [operatingPointIndex, setOperatingPointIndex] = useState(0);
-  const [mounting, setMounting] = useState<"wall" | "ceiling">("wall");
-  const [controllerId, setControllerId] = useState("");
+  const existingDevice = project.fanCoils?.find(
+    (item) => item.id === existingDeviceId,
+  );
+  const existingProduct = existingDevice
+    ? fanCoilProductAtVersion(
+        existingDevice.productId,
+        existingDevice.catalogVersion,
+      )
+    : undefined;
+  const [manufacturer, setManufacturer] = useState(
+    existingProduct?.manufacturer ?? "Innova",
+  );
+  const [productId, setProductId] = useState(
+    existingDevice?.productId ?? fanCoilCatalog.products[0].id,
+  );
+  const [operatingPointIndex, setOperatingPointIndex] = useState(
+    existingDevice?.operatingPointIndex ?? 0,
+  );
+  const [mounting, setMounting] = useState<"wall" | "ceiling">(
+    existingDevice?.mounting ?? "wall",
+  );
+  const [controllerId, setControllerId] = useState(
+    existingDevice?.controllerId ?? "",
+  );
   const products = fanCoilCatalog.products.filter(
     (p) => p.manufacturer === manufacturer,
   );
@@ -49,12 +74,33 @@ export function FanCoilPanel({
   const totals = installedFanCoilCapacity(project, room.id, installationId);
   const remainingCoolingW = Math.max(0, room.designLoadW - totals.coolingW);
   const remainingHeatingW = Math.max(0, room.designLoadW - totals.heatingW);
-  const suggestion = sizeFanCoils(project, room, {
-    manufacturer,
+  const sizingProject = existingDevice
+    ? {
+        ...project,
+        fanCoils: project.fanCoils?.filter(
+          (item) => item.id !== existingDevice.id,
+        ),
+      }
+    : project;
+  const suggestion =
+    sizeFanCoils(sizingProject, room, {
+      manufacturer,
+      mounting,
+      installationId,
+    })[0] ?? sizeFanCoils(sizingProject, room, { mounting, installationId })[0];
+  const pose = initialFanCoilPose(
+    existingDevice
+      ? {
+          ...project,
+          fanCoils: project.fanCoils?.filter(
+            (item) => item.id !== existingDevice.id,
+          ),
+        }
+      : project,
+    room,
+    product,
     mounting,
-    installationId,
-  })[0];
-  const pose = initialFanCoilPose(project, room, product, mounting);
+  );
   return (
     <section
       className={styles.panel}
@@ -189,26 +235,6 @@ export function FanCoilPanel({
               separata.
             </p>
           )}
-          {suggestion ? (
-            <button
-              className="bottone piccolo"
-              type="button"
-              onClick={() => {
-                setProductId(suggestion.product.id);
-                setOperatingPointIndex(suggestion.operatingPointIndex);
-                setControllerId("");
-              }}
-            >
-              Usa suggerimento: {suggestion.product.model} ·{" "}
-              {suggestion.point.label}
-            </button>
-          ) : (
-            <p className="nota">
-              Nessun singolo modello di questa marca copre il fabbisogno residuo
-              rispettando spazio e limite acustico verificabile. Puoi
-              configurare più apparecchi.
-            </p>
-          )}
           {controls.length > 0 ? (
             <>
               <label className="campo">
@@ -266,6 +292,33 @@ export function FanCoilPanel({
           )}
         </div>
         <div className={styles.result}>
+          {suggestion ? (
+            <div
+              className={styles.recommendation}
+              aria-label="Ventilconvettore consigliato"
+            >
+              <strong>Consigliato</strong>
+              <button
+                className="bottone piccolo"
+                type="button"
+                onClick={() => {
+                  setManufacturer(suggestion.product.manufacturer);
+                  setProductId(suggestion.product.id);
+                  setOperatingPointIndex(suggestion.operatingPointIndex);
+                  setControllerId("");
+                }}
+              >
+                Usa consigliato: {suggestion.product.manufacturer} ·{" "}
+                {suggestion.product.model} · {suggestion.point.label}
+              </button>
+            </div>
+          ) : (
+            <p className="nota">
+              Nessun singolo modello di questa marca copre il fabbisogno residuo
+              rispettando spazio e limite acustico verificabile. Puoi
+              configurare più apparecchi.
+            </p>
+          )}
           <h4>Apparecchio da aggiungere</h4>
           <div className={styles.product}>
             {product.productPhoto && (
@@ -292,8 +345,11 @@ export function FanCoilPanel({
             type="button"
             className="bottone chiara"
             disabled={!pose}
+            ref={saveButtonRef}
+            hidden={!!saveButtonRef}
+            style={saveButtonRef ? { display: "none" } : undefined}
             onClick={() =>
-              commit((p) =>
+              (onPlace ?? commit)((p) =>
                 applyFanCoil(p, room.id, product.id, operatingPointIndex, {
                   mounting,
                   controllerId: controller?.id ?? null,
@@ -329,46 +385,50 @@ export function FanCoilPanel({
             </p>
           )}
           <p className="nota">
-            Aggiunge un apparecchio. Quelli già posizionati restano nel
-            progetto.
+            {existingDevice
+              ? "Modifica l’apparecchio selezionato conservando i collegamenti."
+              : "Aggiunge un apparecchio. Quelli già posizionati restano nel progetto."}
           </p>
-          {installed.length > 0 && <h4>Apparecchi nella stanza</h4>}
-          {installed.map((unit, i) => {
-            const model = fanCoilProductAtVersion(
-              unit.productId,
-              unit.catalogVersion,
-            );
-            const speed = model?.operatingPoints[unit.operatingPointIndex];
-            return (
-              <div key={unit.id} className={styles.installed}>
-                <div>
-                  <strong>
-                    {i + 1}. {model?.model ?? unit.productId}
-                  </strong>
-                  <br />
-                  {speed?.label ?? "Punto non verificabile"} ·{" "}
-                  {unit.mounting === "wall" ? "Parete" : "Soffitto"}
+          {!saveButtonRef && installed.length > 0 && (
+            <h4>Apparecchi nella stanza</h4>
+          )}
+          {!saveButtonRef &&
+            installed.map((unit, i) => {
+              const model = fanCoilProductAtVersion(
+                unit.productId,
+                unit.catalogVersion,
+              );
+              const speed = model?.operatingPoints[unit.operatingPointIndex];
+              return (
+                <div key={unit.id} className={styles.installed}>
+                  <div>
+                    <strong>
+                      {i + 1}. {model?.model ?? unit.productId}
+                    </strong>
+                    <br />
+                    {speed?.label ?? "Punto non verificabile"} ·{" "}
+                    {unit.mounting === "wall" ? "Parete" : "Soffitto"}
+                  </div>
+                  <div className={styles.actions}>
+                    <button
+                      type="button"
+                      className="bottone piccolo"
+                      onClick={() => select({ kind: "device", id: unit.id })}
+                    >
+                      Posizione e dettagli
+                    </button>{" "}
+                    <button
+                      type="button"
+                      className="bottone piccolo pericolo"
+                      disabled={unit.locked}
+                      onClick={() => commit((p) => removeFanCoil(p, unit.id))}
+                    >
+                      Rimuovi
+                    </button>
+                  </div>
                 </div>
-                <div className={styles.actions}>
-                  <button
-                    type="button"
-                    className="bottone piccolo"
-                    onClick={() => select({ kind: "device", id: unit.id })}
-                  >
-                    Posizione e dettagli
-                  </button>{" "}
-                  <button
-                    type="button"
-                    className="bottone piccolo pericolo"
-                    disabled={unit.locked}
-                    onClick={() => commit((p) => removeFanCoil(p, unit.id))}
-                  >
-                    Rimuovi
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
           <details>
             <summary>Condizioni dei dati e fonte</summary>
             <p className="nota">{product.features.join(" · ")}</p>

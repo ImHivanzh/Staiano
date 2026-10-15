@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, type Ref } from "react";
 import type { Project, Room } from "@/schemas/project";
 import {
   splitCatalog,
@@ -15,24 +15,36 @@ import { formatNumber } from "@/utils/format";
 import { splitUnitPresentation } from "@/domain/catalogs/split-presentation";
 import Image from "next/image";
 import styles from "./SystemConfiguration.module.css";
+import { lastAvailableManufacturer } from "./manufacturer-preference";
 export function SplitPanel({
   project,
   room,
   installationId,
+  onPlace,
+  saveButtonRef,
+  existingDeviceId,
 }: {
   project: Project;
   room: Room;
   installationId?: string;
+  onPlace?: (change: (project: Project) => Project) => void;
+  saveButtonRef?: Ref<HTMLButtonElement>;
+  existingDeviceId?: string;
 }) {
   const existing = project.hvacSystems.find(
       (s) =>
         s.type === "split" &&
+        (!existingDeviceId ||
+          s.indoorUnits.some((unit) => unit.id === existingDeviceId)) &&
         s.roomIds.includes(room.id) &&
         (!installationId || s.installationId === installationId),
     ),
     { commit } = useProjectStore();
   const [manufacturer, setManufacturer] = useState(
-      existing?.manufacturer ?? "Daikin",
+      existing?.manufacturer ?? lastAvailableManufacturer(
+        project.hvacSystems.map((system) => system.manufacturer),
+        ["Daikin", "Mitsubishi Electric", "Gree"],
+      ),
     ),
     [roomIds, setRoomIds] = useState(
       existing?.roomIds ??
@@ -121,6 +133,30 @@ export function SplitPanel({
               ))}
             </fieldset>
           </details>
+          {solutions[0] && (
+            <div
+              className={styles.recommendation}
+              aria-label="Split consigliato"
+            >
+              <strong>Consigliato</strong>
+              <p>
+                {solutions[0].assignments
+                  .map((item) => item.indoor.model)
+                  .join(" + ")}{" "}
+                / {solutions[0].combination.outdoorModel}
+              </p>
+              <button
+                type="button"
+                className="bottone"
+                aria-pressed={
+                  preview?.combination.id === solutions[0].combination.id
+                }
+                onClick={() => setCombinationId(solutions[0].combination.id)}
+              >
+                Usa consigliato
+              </button>
+            </div>
+          )}
         </div>
         <div className={styles.result}>
           <h4>
@@ -201,8 +237,11 @@ export function SplitPanel({
           <button
             className="bottone chiara"
             disabled={!preview}
+            ref={saveButtonRef}
+            hidden={!!saveButtonRef}
+            style={saveButtonRef ? { display: "none" } : undefined}
             onClick={() =>
-              commit((p) =>
+              (onPlace ?? commit)((p) =>
                 applySplitSystem(
                   p,
                   roomIds,
@@ -218,7 +257,7 @@ export function SplitPanel({
               ? "Aggiorna climatizzazione"
               : "Configura climatizzazione"}
           </button>
-          {existing && (
+          {existing && !saveButtonRef && (
             <button
               className="bottone piccolo pericolo"
               onClick={() => {

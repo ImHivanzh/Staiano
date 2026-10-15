@@ -86,6 +86,59 @@ describe("EDLS e limite acustico su dati ufficiali", () => {
       sizeAirTerminal(200, 1, { ...family, variants: [variant] }, "supply"),
     ).toEqual([]);
   });
+  it("300 m³/h recommends a sufficient single length for each selected performance", () => {
+    const variant = family.variants.find(
+      (item) => item.slotCount === 1 && item.slotWidthMm === 30,
+    )!;
+    const solutions = sizeAirTerminal(
+      300,
+      1,
+      { ...family, variants: [variant] },
+      "supply",
+    );
+    const louder = solutions.find(
+      (item) => item.operatingPoint.noiseDbA === 37,
+    )!;
+    const quieter = solutions.find(
+      (item) => item.operatingPoint.noiseDbA === 32,
+    )!;
+    expect(louder.commercialLengthM).toBe(1.2);
+    expect(quieter.commercialLengthM).toBe(1.5);
+    for (const solution of [louder, quieter]) {
+      expect(solution.quantityPerPoint).toBe(1);
+      expect(solution.availableAirflowPerPointM3h).toBeGreaterThanOrEqual(300);
+      const shorter = variant.commercialLengthsMm
+        .filter((length) => length < solution.commercialLengthM! * 1000)
+        .at(-1)!;
+      expect(
+        (shorter / 1000) * solution.operatingPoint.airflowPerMeterM3h!,
+      ).toBeLessThan(300);
+    }
+  });
+  it("prefers one sufficient terminal over several shorter modules", () => {
+    const variant = {
+      ...family.variants[0],
+      commercialLengthsMm: [800, 2000],
+      operatingPoints: [family.variants[0].operatingPoints[3]],
+    };
+    const [solution] = sizeAirTerminal(
+      250,
+      1,
+      { ...family, variants: [variant] },
+      "supply",
+    );
+    expect(solution.quantityPerPoint).toBe(1);
+    expect(solution.commercialLengthM).toBe(2);
+    expect(solution.availableAirflowPerPointM3h).toBe(350);
+    const [multiple] = sizeAirTerminal(
+      1000,
+      1,
+      { ...family, variants: [variant] },
+      "supply",
+    );
+    expect(multiple.quantityPerPoint).toBeGreaterThan(1);
+    expect(multiple.availableAirflowPerPointM3h).toBeGreaterThanOrEqual(1000);
+  });
   it("<20 è limite superiore dichiarato, non valore esatto", () => {
     const point = family.variants[0].operatingPoints[0];
     expect(point.noiseDbA).toBeNull();

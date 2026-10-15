@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { terminalCommercialOptionsSchema } from "@/domain/catalogs/ecoclima-price-schema";
 
-export const CURRENT_SCHEMA_VERSION = 5;
+export const CURRENT_SCHEMA_VERSION = 6;
 export const DIMENSION_MODES = ["internal", "axis", "external"] as const;
 export const DECISION_ORIGINS = [
   "calculated",
@@ -313,7 +313,7 @@ export const projectSchema = z
             .optional(),
           manufacturer: z.string().max(100),
           productId: id,
-          roomIds: z.array(id).min(1),
+          roomIds: z.array(id),
           capacityW: finite.positive().nullable(),
           genericMachine: manualDuctedMachineSchema.optional(),
           dataOrigin: z.enum(["catalog", "manual"]).optional(),
@@ -326,6 +326,44 @@ export const projectSchema = z
         }),
       )
       .max(1000),
+    equipmentDrafts: z
+      .array(
+        z.object({
+          id,
+          roomId: id,
+          floorId: id,
+          position: pointSchema,
+          type: z.enum(["radiator", "fanCoil", "split"]),
+        }),
+      )
+      .max(2000)
+      .optional(),
+    heatPumpDrafts: z
+      .array(
+        z.object({
+          id,
+          floorId: id,
+          position: pointSchema,
+          terminalIds: z.array(id).max(2000).optional(),
+        }),
+      )
+      .max(2000)
+      .optional(),
+    ductedDrafts: z
+      .array(
+        z.object({
+          id,
+          installationId: id,
+          roomId: id,
+          floorId: id,
+          position: pointSchema,
+          kind: z.enum(["machine", "terminal"]),
+          use: z.enum(["supply", "return"]),
+          machineId: id.optional(),
+        }),
+      )
+      .max(2000)
+      .optional(),
     plenums: z.array(plenumSchema).max(1000).default([]),
     pillars: z.array(pillarSchema).max(2000).optional(),
     ducts: z.array(ductSchema).max(5000).optional(),
@@ -338,6 +376,7 @@ export const projectSchema = z
           catalogVersion: z.string().max(100),
           roomIds: z.array(id).min(1).max(1000),
           fanCoilIds: z.array(id).max(2000),
+          terminalIds: z.array(id).max(2000).optional(),
           operatingPointIndex: z.number().int().nonnegative().max(100),
           outdoorUnit: z.object({
             id,
@@ -399,13 +438,15 @@ export const projectSchema = z
       .array(
         placement.extend({
           use: z.enum(["supply", "return"]),
-          requiredAirflowM3h: finite.positive(),
+          requiredAirflowM3h: finite.nonnegative(),
           availableAirflowM3h: finite.positive(),
           noiseDbA: finite.nonnegative().nullable(),
           theoreticalLengthM: finite.positive().nullable(),
           family: z.string().max(100),
           depthMm: finite.positive().nullable(),
           systemId: id.nullable(),
+          pendingSystemId: id.optional(),
+          pendingMachineId: id.optional(),
           mounting: z.enum(["wall", "ceiling", "unknown"]),
           shape: z.enum(["rectangle", "circle", "unknown"]),
           elevationM: finite.positive().max(30).nullable(),
@@ -482,16 +523,60 @@ export const projectSchema = z
       p.hydronicSystems ?? [],
       p.hydronicSystems?.map((s) => s.outdoorUnit) ?? [],
       p.hvacSystems.flatMap((s) => s.indoorUnits),
+      p.ductedDrafts ?? [],
+      p.heatPumpDrafts ?? [],
+      p.equipmentDrafts ?? [],
     ];
     const ids = groups.flat().map((e) => e.id);
     if (new Set(ids).size !== ids.length)
       ctx.addIssue({ code: "custom", message: "Identificativi duplicati" });
     const floors = new Set(p.floors.map((f) => f.id));
+    for (const draft of p.heatPumpDrafts ?? []) {
+      if (!floors.has(draft.floorId))
+        ctx.addIssue({
+          code: "custom",
+          message: "Pompa da configurare senza piano coerente",
+        });
+    }
     const walls = new Map(p.walls.map((w) => [w.id, w]));
     const rooms = new Map(p.rooms.map((r) => [r.id, r]));
+    for (const draft of p.equipmentDrafts ?? []) {
+      if (rooms.get(draft.roomId)?.floorId !== draft.floorId)
+        ctx.addIssue({
+          code: "custom",
+          message: "Apparecchio da configurare senza ambiente o piano coerente",
+        });
+    }
     const installations = new Map(
       p.installations.map((item) => [item.id, item]),
     );
+    for (const draft of p.ductedDrafts ?? []) {
+      const installation = installations.get(draft.installationId);
+      if (
+        installation?.type !== "ducted" ||
+        !installation.roomIds.includes(draft.roomId) ||
+        rooms.get(draft.roomId)?.floorId !== draft.floorId
+      )
+        ctx.addIssue({
+          code: "custom",
+          message:
+            "Elemento da configurare senza impianto, stanza o piano coerenti",
+        });
+    }
+    for (const terminal of p.airTerminals) {
+      if (!terminal.installationId) continue;
+      const installation = installations.get(terminal.installationId);
+      const system = p.hvacSystems.find((s) => s.id === terminal.systemId);
+      if (
+        installation?.type !== "ducted" ||
+        !installation.roomIds.includes(terminal.roomId) ||
+        (system && system.installationId !== terminal.installationId)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Bocchetta associata a un impianto incoerente",
+        });
+    }
     if (installations.size !== p.installations.length)
       ctx.addIssue({
         code: "custom",
@@ -560,6 +645,8 @@ export const projectSchema = z
         ctx.addIssue({ code: "custom", message: "Apparecchio senza muro" });
     }
     for (const s of p.hvacSystems) {
+      if (s.type === "split" && !s.roomIds.length)
+        ctx.addIssue({ code: "custom", message: "Sistema split senza stanza" });
       if (
         (s.genericMachine || s.dataOrigin === "manual") &&
         s.type !== "ducted"
@@ -599,6 +686,25 @@ export const projectSchema = z
           message: "Terminale senza sistema canalizzato coerente",
         });
     const plenumIds = new Map(p.plenums.map((pl) => [pl.id, pl]));
+    for (const terminal of p.airTerminals)
+      if (
+        terminal.pendingSystemId &&
+        (terminal.systemId ||
+          !p.hvacSystems.some(
+            (system) =>
+              system.id === terminal.pendingSystemId &&
+              system.type === "ducted" &&
+              (system.roomIds.includes(terminal.roomId) ||
+                system.indoorUnits.some(
+                  (unit) => unit.floorId === terminal.floorId,
+                )),
+          ))
+      )
+        ctx.addIssue({
+          code: "custom",
+          message:
+            "Punto bocchetta in attesa senza macchina di destinazione coerente",
+        });
     for (const pl of p.plenums) {
       const system = p.hvacSystems.find((s) => s.id === pl.systemId);
       if (!system || system.type !== "ducted")
@@ -606,7 +712,11 @@ export const projectSchema = z
           code: "custom",
           message: "Plenum senza sistema canalizzato coerente",
         });
-      if (pl.roomId && !system?.roomIds.includes(pl.roomId))
+      if (
+        pl.roomId &&
+        !system?.roomIds.includes(pl.roomId) &&
+        !system?.indoorUnits.some((unit) => unit.roomId === pl.roomId)
+      )
         ctx.addIssue({
           code: "custom",
           message: "Plenum in stanza non servita dal sistema",

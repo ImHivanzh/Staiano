@@ -80,7 +80,7 @@ export function applyDuctedSystem(
     airflowM3h: maximumAirflowOption(machine)!.airflowM3h,
     catalogVersion: hvacCatalog.version,
     indoorUnits: (previous?.indoorUnits ?? []).map((u) => {
-      const room = rooms.find((r) => r.id === u.roomId) ?? rooms[0];
+      const room = project.rooms.find((r) => r.id === u.roomId) ?? rooms[0];
       return {
         ...u,
         roomId: room.id,
@@ -97,7 +97,7 @@ export function applyDuctedSystem(
     decisionOrigin: "confirmed",
     linearPlan: previous?.linearPlan ?? null,
   };
-  return {
+  return refreshDuctedBindings({
     ...project,
     hvacSystems: [...project.hvacSystems.filter((s) => s.id !== id), system],
     rooms: project.rooms.map((r) =>
@@ -112,22 +112,21 @@ export function applyDuctedSystem(
             }
           : r,
     ),
-    airTerminals: project.airTerminals.filter(
-      (t) => t.systemId !== id || roomIds.includes(t.roomId),
-    ),
     catalogVersions: { ...project.catalogVersions, HVAC: hvacCatalog.version },
-  };
+  });
 }
 export function ductedRoomAllocation(
   project: Project,
   roomId: string,
   installationId?: string,
+  systemId?: string,
 ) {
   if (project.rooms.find((room) => room.id === roomId)?.conditioningExclusion)
     return null;
   const system = project.hvacSystems.find(
     (s) =>
       s.type === "ducted" &&
+      (!systemId || s.id === systemId) &&
       s.roomIds.includes(roomId) &&
       (!installationId || s.installationId === installationId),
   );
@@ -221,7 +220,8 @@ export function applyManualDuctedSystem(
     indoorUnits:
       manual.widthMm && manual.heightMm && manual.depthMm
         ? (previous?.indoorUnits ?? []).map((u) => {
-            const room = rooms.find((r) => r.id === u.roomId) ?? rooms[0];
+            const room =
+              project.rooms.find((r) => r.id === u.roomId) ?? rooms[0];
             return {
               ...u,
               roomId: room.id,
@@ -254,9 +254,6 @@ export function applyManualDuctedSystem(
             }
           : r,
     ),
-    airTerminals: project.airTerminals.filter(
-      (t) => t.systemId !== id || roomIds.includes(t.roomId),
-    ),
   });
 }
 export function removeHvacSystem(project: Project, id: string): Project {
@@ -265,7 +262,9 @@ export function removeHvacSystem(project: Project, id: string): Project {
     ...project,
     hvacSystems: remaining,
     plenums: project.plenums.filter((pl) => pl.systemId !== id),
-    airTerminals: project.airTerminals.filter((t) => t.systemId !== id),
+    airTerminals: project.airTerminals.filter(
+      (t) => t.systemId !== id && t.pendingSystemId !== id,
+    ),
     rooms: project.rooms.map((r) => ({
       ...r,
       systemType: remaining.some(

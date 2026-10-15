@@ -1,10 +1,14 @@
 "use client";
-import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import type { Duct, Project } from "@/schemas/project";
-import { ductRoute, type RoutePoint } from "@/domain/ducted/routes";
+import {
+  airConnectionRoutes,
+  ductRoute,
+  type RoutePoint,
+} from "@/domain/ducted/routes";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
 
 function FlowParticles({
@@ -58,7 +62,7 @@ function FlowParticles({
       frustumCulled={false}
     >
       <sphereGeometry args={[0.024, 10, 8]} />
-      <meshBasicMaterial color={color} depthTest={false} />
+      <meshBasicMaterial color={color} />
     </instancedMesh>
   ) : null;
 }
@@ -71,7 +75,7 @@ function DuctSegment({
 }: {
   start: RoutePoint;
   end: RoutePoint;
-  duct: Duct;
+  duct: Pick<Duct, "shape" | "diameterMm" | "widthMm" | "heightMm">;
   color: string;
 }) {
   const vector = new THREE.Vector3(
@@ -138,6 +142,14 @@ export function DuctMeshes({
   animated?: boolean;
   flowMode?: "cool" | "heat";
 }) {
+  const { gl } = useThree();
+  const connections = useMemo(
+    () => airConnectionRoutes(project, activeFloorId),
+    [project, activeFloorId],
+  );
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const ducts = useMemo(() => {
     const geometries = new Map(
       project.plenums
@@ -152,8 +164,43 @@ export function DuctMeshes({
       }));
   }, [project, activeFloorId]);
   const systems = project.hvacSystems.filter((s) => s.type === "ducted");
+  useEffect(() => {
+    gl.domElement.setAttribute(
+      "data-air-connections",
+      String(connections.length),
+    );
+    gl.domElement.setAttribute("data-duct-count", String(ducts.length));
+    return () => {
+      gl.domElement.removeAttribute("data-air-connections");
+      gl.domElement.removeAttribute("data-duct-count");
+    };
+  }, [gl, connections.length, ducts.length]);
   return (
     <group>
+      {/* shortcut: collegamenti senza canale con spessore illustrativo; usare dimensioni salvate dopo configurazione del canale. */}
+      {connections.map(({ terminalId, points }) => (
+        <group key={terminalId}>
+          {points.slice(1).map((end, index) => (
+            <DuctSegment
+              key={index}
+              start={points[index]}
+              end={end}
+              duct={{
+                shape: "circle",
+                diameterMm: 70,
+                widthMm: null,
+                heightMm: null,
+              }}
+              color="#65aebe"
+            />
+          ))}
+          <FlowParticles
+            points={points}
+            animated={animated && !reducedMotion}
+            color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
+          />
+        </group>
+      ))}
       {ducts.map(({ duct, points }) => {
         const color =
           systems.findIndex((s) => s.id === duct.systemId) % 2 === 0
@@ -183,7 +230,7 @@ export function DuctMeshes({
             )}
             <FlowParticles
               points={points}
-              animated={animated}
+              animated={animated && !reducedMotion}
               color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
             />
           </group>

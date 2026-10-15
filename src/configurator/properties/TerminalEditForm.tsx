@@ -1,8 +1,6 @@
 "use client";
 import { LengthInput } from "../LengthInput";
-import { useState } from "react";
 import type { Project } from "@/schemas/project";
-import { airTerminalCatalogAtVersion } from "@/domain/catalogs/air-terminals";
 import { editOperatorTerminal } from "@/domain/air-terminals/operator";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import {
@@ -26,20 +24,6 @@ export function TerminalEditForm({
 }) {
   const t = project.airTerminals.find((t) => t.id === id)!;
   const { commit, snap } = useProjectStore();
-  const [variantId, setVariantId] = useState(t.productId);
-  const [opIndex, setOpIndex] = useState(t.operatingPointIndex ?? 0);
-  const families =
-    airTerminalCatalogAtVersion(t.catalogVersion)?.families.filter(
-      (f) =>
-        f.use.includes(t.use) &&
-        (f.mountings
-          ? f.mountings.includes(t.mounting as "wall" | "ceiling")
-          : t.manualDimensions),
-    ) ?? [];
-  const family = families.find((f) =>
-    f.variants.some((v) => v.id === variantId),
-  );
-  const variant = family?.variants.find((v) => v.id === variantId);
   const room = project.rooms.find((r) => r.id === t.roomId)!;
   return (
     <section aria-label="Modifica bocchetta">
@@ -98,19 +82,7 @@ export function TerminalEditForm({
             return editOperatorTerminal(current, id, {
               position: target,
               rotation,
-              widthMm: family?.isLinearPerMeter
-                ? numberFromForm(data.get("length"))
-                : (variant?.faceWidthMm ?? t.widthMm),
-              heightMm: family?.isLinearPerMeter
-                ? numberFromForm(data.get("height"))
-                : (variant?.faceHeightMm ?? t.heightMm),
               elevationM: numberFromForm(data.get("elevation")),
-              familyCode: family?.familyCode,
-              variantId,
-              operatingPointIndex: opIndex,
-              style: String(data.get("style")),
-              color: String(data.get("color")),
-              finish: String(data.get("finish")),
               productCode: String(data.get("productCode")),
               plenumId: String(data.get("plenum")) || null,
             });
@@ -118,64 +90,7 @@ export function TerminalEditForm({
         }}
       >
         <fieldset disabled={t.locked}>
-          <label className="campo">
-            <span>Modello bocchetta</span>
-            <select
-              aria-label="Modello bocchetta"
-              value={variantId}
-              onChange={(e) => {
-                setVariantId(e.target.value);
-                setOpIndex(0);
-              }}
-            >
-              {families.map((f) => (
-                <optgroup key={f.familyCode} label={f.familyCode}>
-                  {f.variants.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.id}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
-            </select>
-          </label>
-          <label className="campo">
-            <span>Punto di funzionamento</span>
-            <select
-              value={opIndex}
-              onChange={(e) => setOpIndex(Number(e.target.value))}
-            >
-              {variant?.operatingPoints.map((op, i) => (
-                <option
-                  key={i}
-                  value={i}
-                  disabled={
-                    op.quality !== "valid" || (!!op.use && op.use !== t.use)
-                  }
-                >
-                  {op.airflowPerMeterM3h
-                    ? `${op.airflowPerMeterM3h} m³/h/m`
-                    : `${op.airflowM3h} m³/h`}{" "}
-                  · {op.noiseLabel} dB(A)
-                </option>
-              ))}
-            </select>
-          </label>
           {[
-            [
-              "length",
-              "Lunghezza bocchetta (mm)",
-              family?.isLinearPerMeter
-                ? t.widthMm
-                : (variant?.faceWidthMm ?? t.widthMm),
-            ],
-            [
-              "height",
-              "Altezza faccia bocchetta (mm)",
-              family?.isLinearPerMeter
-                ? t.heightMm
-                : (variant?.faceHeightMm ?? t.heightMm),
-            ],
             ["elevation", "Quota bocchetta (m)", t.elevationM],
             [
               "rotation",
@@ -201,10 +116,6 @@ export function TerminalEditForm({
                 step="any"
                 required
                 defaultValue={value ?? ""}
-                disabled={
-                  (name === "length" || name === "height") &&
-                  !family?.isLinearPerMeter
-                }
               />
             ) : (
               <label className="campo" key={String(name)}>
@@ -216,10 +127,6 @@ export function TerminalEditForm({
                   step="any"
                   required
                   defaultValue={value ?? ""}
-                  disabled={
-                    (name === "length" || name === "height") &&
-                    !family?.isLinearPerMeter
-                  }
                 />
               </label>
             ),
@@ -248,23 +155,14 @@ export function TerminalEditForm({
               />
             </>
           )}
-          {(["style", "color", "finish", "productCode"] as const).map(
-            (name) => (
-              <label className="campo" key={name}>
-                <span>
-                  {
-                    {
-                      style: "Stile",
-                      color: "Colore",
-                      finish: "Finitura",
-                      productCode: "Codice prodotto dichiarato",
-                    }[name]
-                  }
-                </span>
-                <input name={name} maxLength={100} defaultValue={t[name]} />
-              </label>
-            ),
-          )}
+          <label className="campo">
+            <span>Codice prodotto dichiarato</span>
+            <input
+              name="productCode"
+              maxLength={100}
+              defaultValue={t.productCode}
+            />
+          </label>
           <label className="campo">
             <span>Plenum associato</span>
             <select name="plenum" defaultValue={t.plenumId ?? ""}>
@@ -272,7 +170,9 @@ export function TerminalEditForm({
               {project.plenums
                 .filter(
                   (pl) =>
-                    pl.systemId === t.systemId && pl.floorId === t.floorId,
+                    t.use === "supply" &&
+                    pl.systemId === t.systemId &&
+                    pl.floorId === t.floorId,
                 )
                 .map((pl) => (
                   <option value={pl.id} key={pl.id}>
@@ -282,8 +182,8 @@ export function TerminalEditForm({
             </select>
           </label>
           <p className="nota">
-            Colore, finitura e modifiche dimensionali sono scelte di progetto;
-            disponibilità e prestazioni acustiche vanno verificate sulla fonte.
+            Modello, lunghezza, colore e finitura si configurano cliccando la
+            bocchetta nella pianta principale.
           </p>
           <button className="bottone chiara" type="submit">
             Applica modifiche bocchetta

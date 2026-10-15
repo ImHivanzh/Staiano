@@ -19,9 +19,11 @@ import { formatNumber, numberFromForm } from "@/utils/format";
 export function HydronicProperties({
   project,
   id,
+  positionOnly = false,
 }: {
   project: Project;
   id: string;
+  positionOnly?: boolean;
 }) {
   const { commit } = useProjectStore();
   const system = project.hydronicSystems?.find((s) => s.outdoorUnit.id === id);
@@ -34,112 +36,116 @@ export function HydronicProperties({
   const rooms = project.rooms.filter((r) => r.floorId === unit.floorId);
   return (
     <div className="corpo-proprieta">
-      <h3>{model?.model ?? system.productId}</h3>
-      <p>{model?.manufacturer} · unità esterna</p>
-      {model && (
-        <Image
-          unoptimized
-          src={model.productPhoto.localPath}
-          alt={model.productPhoto.caption}
-          width={400}
-          height={170}
-          style={{ width: "100%", height: 150, objectFit: "contain" }}
-        />
-      )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          const d = new FormData(e.currentTarget);
-          commit((p) =>
-            applyHydronicSystem(p, {
-              systemId: system.id,
-              name: String(d.get("name")),
-              productId: String(d.get("product")),
-              operatingPointIndex: numberFromForm(d.get("point")),
-              roomIds: d.getAll("room").map(String),
-              fanCoilIds: d.getAll("coil").map(String),
-            }),
-          );
-        }}
-      >
-        <fieldset disabled={unit.locked || !model}>
-          <legend>Impianto idronico</legend>
-          <label className="campo">
-            <span>Nome impianto</span>
-            <input
-              name="name"
-              defaultValue={system.name}
-              maxLength={100}
-              required
+      {!positionOnly && (
+        <>
+          <h3>{model?.model ?? system.productId}</h3>
+          <p>{model?.manufacturer} · unità esterna</p>
+          {model && (
+            <Image
+              unoptimized
+              src={model.productPhoto.localPath}
+              alt={model.productPhoto.caption}
+              width={400}
+              height={170}
+              style={{ width: "100%", height: 150, objectFit: "contain" }}
             />
-          </label>
-          <label className="campo">
-            <span>Pompa di calore</span>
-            <select name="product" defaultValue={system.productId}>
-              {catalog?.products.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.manufacturer} · {p.model}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="campo">
-            <span>Condizioni pompa</span>
-            <select name="point" defaultValue={system.operatingPointIndex}>
-              {model?.operatingPoints.map((p, i) => (
-                <option key={i} value={i}>
-                  {p.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <p className="nota">
-            Cambiando modello, le condizioni selezionate devono essere
-            disponibili nel nuovo catalogo.
-          </p>
-          {rooms.map((r) => (
-            <label className="campo" key={r.id}>
-              <span>
-                <input
-                  type="checkbox"
-                  name="room"
-                  value={r.id}
-                  defaultChecked={system.roomIds.includes(r.id)}
-                />{" "}
-                {r.name}
-              </span>
-            </label>
-          ))}
-          <p>Ventilconvettori associati</p>
-          {(project.fanCoils ?? [])
-            .filter((u) => u.floorId === unit.floorId)
-            .map((u) => {
-              const occupied = project.hydronicSystems?.some(
-                (s) => s.id !== system.id && s.fanCoilIds.includes(u.id),
+          )}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const d = new FormData(e.currentTarget);
+              commit((p) =>
+                applyHydronicSystem(p, {
+                  systemId: system.id,
+                  name: String(d.get("name")),
+                  productId: String(d.get("product")),
+                  operatingPointIndex: numberFromForm(d.get("point")),
+                  roomIds: d.getAll("room").map(String),
+                  fanCoilIds: d.getAll("coil").map(String),
+                }),
               );
-              return (
-                <label className="campo" key={u.id}>
+            }}
+          >
+            <fieldset disabled={unit.locked || !model}>
+              <legend>Impianto idronico</legend>
+              <label className="campo">
+                <span>Nome impianto</span>
+                <input
+                  name="name"
+                  defaultValue={system.name}
+                  maxLength={100}
+                  required
+                />
+              </label>
+              <label className="campo">
+                <span>Pompa di calore</span>
+                <select name="product" defaultValue={system.productId}>
+                  {catalog?.products.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.manufacturer} · {p.model}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="campo">
+                <span>Condizioni pompa</span>
+                <select name="point" defaultValue={system.operatingPointIndex}>
+                  {model?.operatingPoints.map((p, i) => (
+                    <option key={i} value={i}>
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <p className="nota">
+                Cambiando modello, le condizioni selezionate devono essere
+                disponibili nel nuovo catalogo.
+              </p>
+              {rooms.map((r) => (
+                <label className="campo" key={r.id}>
                   <span>
                     <input
                       type="checkbox"
-                      name="coil"
-                      value={u.id}
-                      disabled={occupied}
-                      defaultChecked={system.fanCoilIds.includes(u.id)}
+                      name="room"
+                      value={r.id}
+                      defaultChecked={system.roomIds.includes(r.id)}
                     />{" "}
-                    {fanCoilProductAtVersion(u.productId, u.catalogVersion)
-                      ?.model ?? u.productId}{" "}
-                    · {rooms.find((r) => r.id === u.roomId)?.name}
-                    {occupied ? " · altro impianto" : ""}
+                    {r.name}
                   </span>
                 </label>
-              );
-            })}
-          <button type="submit" className="bottone chiara">
-            Aggiorna impianto
-          </button>
-        </fieldset>
-      </form>
+              ))}
+              <p>Ventilconvettori associati</p>
+              {(project.fanCoils ?? [])
+                .filter((u) => u.floorId === unit.floorId)
+                .map((u) => {
+                  const occupied = project.hydronicSystems?.some(
+                    (s) => s.id !== system.id && s.fanCoilIds.includes(u.id),
+                  );
+                  return (
+                    <label className="campo" key={u.id}>
+                      <span>
+                        <input
+                          type="checkbox"
+                          name="coil"
+                          value={u.id}
+                          disabled={occupied}
+                          defaultChecked={system.fanCoilIds.includes(u.id)}
+                        />{" "}
+                        {fanCoilProductAtVersion(u.productId, u.catalogVersion)
+                          ?.model ?? u.productId}{" "}
+                        · {rooms.find((r) => r.id === u.roomId)?.name}
+                        {occupied ? " · altro impianto" : ""}
+                      </span>
+                    </label>
+                  );
+                })}
+              <button type="submit" className="bottone chiara">
+                Aggiorna impianto
+              </button>
+            </fieldset>
+          </form>
+        </>
+      )}
       <details className="azione-inspector" open>
         <summary>Posizione all’esterno delle mura</summary>
         <button

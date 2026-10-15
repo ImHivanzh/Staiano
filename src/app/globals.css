@@ -350,6 +350,10 @@
   border-radius: var(--r-p);
   box-shadow: 0 8px 24px #263f4d24;
 }
+.menu-modifica > .comandi-progetto {
+  left: 0;
+  right: auto;
+}
 .titolo-menu {
   font-size: 12px;
   margin: 10px 0 0;
@@ -1907,4 +1911,95 @@ input[type="checkbox"] {
   height: auto;
   max-height: 220px;
   object-fit: contain;
+}
+
+/* Desktop: comandi compatti, pannelli richiudibili, canvas centrale. */
+@media (min-width: 1100px) and (pointer: fine) {
+  .hvac-app .testata-hvac {
+    min-height: 52px;
+    padding: 8px 14px;
+    gap: 12px;
+  }
+  .testata-hvac .titolo-progetto {
+    flex: 1;
+  }
+  .testata-hvac .titolo-progetto h1 {
+    font-size: 15px;
+  }
+  .testata-hvac .sottotitolo-progetto,
+  .testata-hvac .stato-salvataggio > span + span {
+    display: none;
+  }
+  .testata-hvac .azioni-testata {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  .comandi-rapidi {
+    display: flex;
+    gap: 2px;
+    padding-right: 8px;
+    border-right: 1px solid var(--bordo);
+  }
+  .hvac-app .comando-icona,
+  .testata-hvac .avvio-wizard,
+  .testata-hvac .nuovo-progetto,
+  .barra-vista button[aria-label="Mostra proprietà"] {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+  .testata-hvac .avvio-wizard,
+  .testata-hvac .nuovo-progetto,
+  .barra-vista button[aria-label="Mostra proprietà"] {
+    font-size: 0;
+    gap: 0;
+  }
+  .hvac-app .comando-icona svg,
+  .testata-hvac .avvio-wizard svg,
+  .testata-hvac .nuovo-progetto svg {
+    width: 19px;
+    height: 19px;
+  }
+  .hvac-app .barra-vista {
+    padding: 5px 14px;
+    align-items: center;
+  }
+  .hvac-app .riepilogo-progetto {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+  .hvac-app.navigazione-compatta {
+    --barra-l: 60px;
+  }
+  .hvac-app.navigazione-compatta > .barra-lato {
+    width: 60px;
+    padding: 14px 8px;
+  }
+  .navigazione-compatta .marchio {
+    padding: 0 0 16px;
+    justify-content: center;
+  }
+  .navigazione-compatta .marchio > span + span,
+  .navigazione-compatta .gruppo-voci,
+  .navigazione-compatta .navigazione-piano,
+  .navigazione-compatta .piede-lato,
+  .navigazione-compatta .voce-nav .conta {
+    display: none;
+  }
+  .hvac-app.navigazione-compatta .voce-nav {
+    font-size: 0;
+    gap: 0;
+    justify-content: center;
+    padding: 10px;
+  }
+}
+.scelta-colore {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.scelta-colore .bottone {
+  min-height: 44px;
 }

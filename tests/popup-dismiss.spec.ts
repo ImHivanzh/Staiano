@@ -19,7 +19,7 @@ for (const [width, height, reducedMotion] of [
       .click();
     await openInspector(page, "Configura impianto");
     const popup = page.getByRole("dialog", {
-      name: "Configura impianto",
+      name: /^(?:Vista |Configura impianto$)/,
       exact: true,
     });
     const css = await popup.evaluate((node) => {
@@ -39,7 +39,10 @@ for (const [width, height, reducedMotion] of [
       expect(css.duration).toBe("0.2s");
     }
     await popup
-      .getByRole("heading", { name: "Configura impianto", exact: true })
+      .getByRole("heading", {
+        name: /^(?:Vista |Configura impianto$)/,
+        exact: true,
+      })
       .click();
     await expect(popup).toBeVisible();
     const frame = (await popup.boundingBox())!;
@@ -55,33 +58,30 @@ for (const [width, height, reducedMotion] of [
     await expect(popup).toBeVisible();
 
     await popup
-      .getByRole("group", { name: "Impianto da configurare" })
-      .getByRole("button", { name: "Canalizzato", exact: true })
-      .click();
-    await popup
-      .getByRole("button", { name: "Scegli macchina", exact: true })
+      .getByRole("button", { name: "Nuovo impianto", exact: true })
       .click();
     const picker = page.getByRole("dialog", {
-      name: "Scegli macchina canalizzata",
+      name: "Nuovo impianto",
+      exact: true,
     });
     await expect(picker).toBeVisible();
     await page.mouse.click(5, 5);
     await expect(picker).toBeHidden();
     await expect(popup).toBeVisible();
     await expect(
-      popup.getByRole("button", { name: "Scegli macchina", exact: true }),
+      popup.getByRole("button", { name: "Nuovo impianto", exact: true }),
     ).toBeFocused();
     await page.screenshot({ path: info.outputPath("rounded-popup.png") });
     await page.mouse.click(5, 5);
     await expect(popup).toBeHidden();
     const launch = page.getByRole("button", {
-      name: "Configura impianto",
+      name: /^(?:Vista |Configura impianto$)/,
       exact: true,
     });
     await expect(launch).toBeFocused();
     await launch.click();
     await expect(
-      popup.getByRole("button", { name: "Scegli macchina", exact: true }),
+      popup.getByRole("button", { name: "Nuovo impianto", exact: true }),
     ).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(popup).toBeHidden();

@@ -1,6 +1,101 @@
-import { chooseTerminalModel, confirmTerminalPlacement } from "./ui-helpers";
+import { chooseTerminalModel, pickPlanPoint } from "./ui-helpers";
 import { expect, test } from "./browser-test";
 import { openDisclosure, openInspector } from "./ui-helpers";
+import { execFileSync } from "node:child_process";
+
+test("customer view shows graphical connection pipes, saved plenums and air flows live", async ({
+  page,
+}, info) => {
+  test.setTimeout(90000);
+  const fixture = JSON.parse(
+    execFileSync(
+      process.execPath,
+      [
+        "--import",
+        "tsx",
+        "--input-type=module",
+        "-e",
+        `
+    import { guidedProjectFixture, guidedTerminalPoint } from './tests/guided-fixture.ts';
+    import { placeMachineOnPlan, saveTerminalOnPlan, connectTerminalOnPlan } from './src/domain/ducted/graphic-installation.ts';
+    import { placeSupplyPlenum } from './src/domain/ducted/placement.ts';
+    let p = guidedProjectFixture();
+    const systemId = p.hvacSystems[0].id;
+    p = placeMachineOnPlan(p, systemId, p.rooms[0].id, { x: 2, y: 4 });
+    p = saveTerminalOnPlan(p, { ...guidedTerminalPoint(), roomId: p.rooms[0].id, systemId, color: 'RAL9016', use: 'supply', mounting: 'ceiling', lengthMm: 1000 }, { x: 4, y: 2 });
+    p = connectTerminalOnPlan(p, p.airTerminals[0].id, systemId);
+    console.log(JSON.stringify(placeSupplyPlenum(p, systemId)));
+  `,
+      ],
+      { encoding: "utf8" },
+    ),
+  );
+  await page.goto("/");
+  await page.getByTestId("project-file").setInputFiles({
+    name: "client-air.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(fixture)),
+  });
+  await page
+    .getByRole("button", { name: "Continua liberamente nell’editor" })
+    .click();
+  const opened = page.waitForEvent("popup");
+  await page
+    .getByRole("button", { name: "Apri vista cliente", exact: true })
+    .click();
+  const client = await opened;
+  const errors: string[] = [];
+  client.on("pageerror", (error) => errors.push(error.message));
+  for (const width of [1920, 1024]) {
+    await client.setViewportSize({
+      width,
+      height: width === 1920 ? 1080 : 768,
+    });
+    const canvas = client.locator("canvas");
+    await expect(canvas).toHaveAttribute("data-air-connections", "1", {
+      timeout: 30000,
+    });
+    await expect(canvas).toHaveAttribute("data-plenum-count", "1");
+    await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
+    await expect
+      .poll(async () =>
+        Number(await canvas.getAttribute("data-comfort-streams")),
+      )
+      .toBeGreaterThan(0);
+    await client.screenshot({
+      path: info.outputPath(`customer-air-${width}.png`),
+    });
+  }
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  expect(
+    await plan.getByTestId("air-connection").evaluate((node) => {
+      const terminal = node
+        .closest("svg")!
+        .querySelector('[data-testid="terminal-supply"]')!;
+      return !!(
+        node.compareDocumentPosition(terminal) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+      );
+    }),
+  ).toBe(true);
+  await plan.getByTestId("terminal-supply").click();
+  await page.keyboard.press("Escape");
+  await plan.locator('summary[aria-label="Azioni bocchetta"]').click();
+  await plan.getByRole("button", { name: "Scollega", exact: true }).click();
+  await expect(client.locator("canvas")).toHaveAttribute(
+    "data-air-connections",
+    "0",
+  );
+  await page.keyboard.press("Control+z");
+  await expect(client.locator("canvas")).toHaveAttribute(
+    "data-air-connections",
+    "1",
+  );
+  expect(errors).toEqual([]);
+  await client.close();
+});
 
 test("separate customer window receives edits and undo without exposing editor controls", async ({
   page,
@@ -82,7 +177,7 @@ test("separate customer window receives edits and undo without exposing editor c
   expect(errors).toEqual([]);
 });
 
-test("guided return offers EGA 6 Push and all sizes, hiding supply-only families", async ({
+test("guided return offers EGA 6 Push and all sizes, disabling supply-only families", async ({
   page,
 }) => {
   test.setTimeout(90000);
@@ -95,98 +190,79 @@ test("guided return offers EGA 6 Push and all sizes, hiding supply-only families
     .click();
   await openInspector(page, "Configura impianto");
   const popup = page.getByRole("dialog", {
-    name: "Configura impianto",
+    name: /^(?:Vista |Configura impianto$)/,
     exact: true,
   });
   await popup.getByRole("button", { name: "Canalizzato", exact: true }).click();
   await popup
-    .getByRole("button", { name: "Scegli macchina", exact: true })
+    .getByRole("button", { name: "Apri planimetria operativa" })
     .click();
-  const picker = page.getByRole("dialog", {
-    name: "Scegli macchina canalizzata",
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
   });
-  await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
-  await picker
-    .getByRole("button", { name: "Configura canalizzato", exact: true })
+  await plan
+    .getByRole("group", { name: "Funzione bocchetta", exact: true })
+    .getByRole("button", { name: "Ripresa", exact: true })
     .click();
-  await popup.getByRole("button", { name: "Ripresa", exact: true }).click();
+  await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
+  await pickPlanPoint(plan, 2, 2);
+  await plan.getByTestId("draft-terminal").click();
+  const terminalPopup = page.getByRole("dialog", {
+    name: "Scegli bocchetta sul punto",
+  });
+  await terminalPopup
+    .getByRole("button", { name: "Ripresa", exact: true })
+    .click();
   await expect(
-    popup.getByLabel("Modello bocchetta", { exact: true }),
-  ).toContainText("EGA 6 Push");
+    terminalPopup.getByRole("group", { name: "Bocchette principali" }),
+  ).toContainText("EGA6 Push");
   await expect(
-    popup
-      .getByLabel("Modello bocchetta", { exact: true })
-      .locator('option[value="EDLS"]'),
+    terminalPopup
+      .getByRole("group", { name: "Bocchette principali" })
+      .getByRole("button", { name: "Scegli EDLS", exact: true }),
   ).toHaveCount(0);
-  await chooseTerminalModel(popup, "EGA6");
+  await chooseTerminalModel(terminalPopup, "EGA6");
   await expect(
-    popup.getByRole("heading", { name: "Passo 2 di 3 · EGA6" }),
+    terminalPopup.getByRole("heading", { name: "Modello · EGA6" }),
   ).toBeVisible();
-  const sizes = popup.getByLabel("Soluzione terminale");
+  const sizes = terminalPopup.getByRole("group", {
+    name: "Soluzione terminale",
+    exact: true,
+  });
   await expect(sizes).toContainText("1000 × 200 mm");
   await expect(sizes).toContainText("600 × 600 mm");
-  const selected = await sizes
-    .locator("option")
-    .evaluateAll(
-      (options) =>
-        (options as HTMLOptionElement[]).find((option) =>
-          option.textContent?.includes("600 × 600 mm"),
-        )?.value,
-    );
-  await sizes.selectOption(selected!);
-  await expect(
-    popup.getByText(/Macchina: .*m³\/h. Griglia scelta:/),
-  ).toBeVisible();
-  await popup.getByLabel("Larghezza faccia dichiarata").fill("600");
-  await popup.getByLabel("Altezza faccia dichiarata").fill("600");
-  await popup
-    .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
+  await sizes
+    .getByRole("button", { name: "600 × 600 mm", exact: true })
     .click();
-  await confirmTerminalPlacement(page);
-  await openDisclosure(popup, "Terminali posizionati");
-  await expect(popup).toContainText("Ripresa · EGA6");
-  await popup.screenshot({
-    path: ".impeccable/review/customer-view/return-selected.png",
-  });
-  await expect(
-    popup
-      .getByRole("region", { name: "Bocchette della stanza" })
-      .getByRole("img"),
-  ).toHaveCount(0);
-  await popup.screenshot({
-    path: ".impeccable/review/customer-view/return.png",
-  });
-  await popup.getByRole("button", { name: "Mandata", exact: true }).click();
-  await expect(
-    popup
-      .getByLabel("Modello bocchetta", { exact: true })
-      .locator('option[value="EGA6"]'),
-  ).toHaveCount(0);
-  await expect(
-    popup.getByLabel("Modello bocchetta", { exact: true }),
-  ).toContainText("EDSC-C");
-  await openDisclosure(popup, "Terminali posizionati");
-  await popup.getByRole("button", { name: /^Ripresa · EGA6/ }).click();
-  const close = popup.getByRole("button", {
-    name: "Chiudi configurazione",
+  await terminalPopup.getByLabel("Larghezza faccia dichiarata").fill("600");
+  await terminalPopup.getByLabel("Altezza faccia dichiarata").fill("600");
+  await terminalPopup
+    .getByLabel("Colore scelto", { exact: true })
+    .fill("RAL9016");
+  await terminalPopup
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+  await expect(plan.getByTestId("terminal-return")).toHaveCount(1);
+  await plan.getByTestId("terminal-return").click();
+  const edited = page.getByRole("dialog", {
+    name: "Configura bocchetta",
     exact: true,
   });
-  if (await close.isVisible()) await close.click();
-  const edit = page.getByRole("region", {
-    name: "Modifica bocchetta",
-    exact: true,
-  });
-  await expect(edit.getByLabel("Modello bocchetta")).toHaveValue(
-    "ecoclima-ega6-600x600",
+  await expect(edited.getByLabel("Larghezza faccia dichiarata")).toHaveValue(
+    "600",
   );
-  await edit.getByLabel("Finitura", { exact: true }).fill("Bianco scelto");
-  await edit
-    .getByRole("button", { name: "Applica modifiche bocchetta", exact: true })
+  await expect(edited.getByLabel("Altezza faccia dichiarata")).toHaveValue(
+    "600",
+  );
+  await edited
+    .locator("footer")
+    .getByRole("button", { name: "Annulla", exact: true })
     .click();
-  await expect(page.getByTestId("save-status")).toHaveText("Salvato");
-  await expect(edit.getByLabel("Finitura", { exact: true })).toHaveValue(
-    "Bianco scelto",
-  );
+  await page
+    .getByRole("button", { name: "Torna all’editor", exact: true })
+    .click();
+  await page.getByRole("button", { name: "3D", exact: true }).click();
   const opened = page.waitForEvent("popup");
   await page
     .getByRole("button", { name: "Apri vista cliente", exact: true })

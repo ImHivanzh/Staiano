@@ -10,13 +10,29 @@ export const terminalCommercialOptionsSchema = z.object({
   insulatedPlenum: z.boolean().default(true),
   fixingBridges: z.boolean().default(true),
   continuityKit: z.boolean().default(true),
-  connectionPosition: z.enum(["lateral", "upper"]).optional(),
+  plenumMaterial: z.enum(["insulated", "galvanized"]).optional(),
+  plenumShape: z.enum(["rectangular", "trapezoidal"]).optional(),
+  connectionPosition: z
+    .enum(["lateral", "upper", "lower", "rear", "custom"])
+    .optional(),
+  connectionNote: z.string().max(200).optional(),
   linearRunId: z.string().min(1).max(120).optional(),
   linearRunOrder: z.number().int().nonnegative().max(2000).optional(),
 });
 export type TerminalCommercialOptions = z.infer<
   typeof terminalCommercialOptionsSchema
 >;
+export const terminalPlenumOptionsSchema = terminalCommercialOptionsSchema.pick(
+  {
+    insulatedPlenum: true,
+    plenumModelCode: true,
+    plenumMaterial: true,
+    plenumShape: true,
+    connectionPosition: true,
+    connectionNote: true,
+  },
+);
+export type TerminalPlenumOptions = z.infer<typeof terminalPlenumOptionsSchema>;
 
 const mm = z.number().int().positive().nullable();
 export const commercialDimensionsSchema = z.object({

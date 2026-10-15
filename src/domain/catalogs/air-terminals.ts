@@ -1,6 +1,15 @@
 import raw from "../../../catalog-data/generated/ecoclima.json";
 import history from "../../../catalog-data/generated/ecoclima-history.json";
-import { airTerminalCatalogSchema } from "./air-terminal-schema";
+import {
+  airTerminalCatalogSchema,
+  type AirTerminalFamily,
+} from "./air-terminal-schema";
+
+export function airTerminalMountings(family: AirTerminalFamily) {
+  return family.isLinearPerMeter
+    ? (["ceiling", "wall"] as const)
+    : family.mountings;
+}
 export const airTerminalCatalog = airTerminalCatalogSchema.parse(raw);
 const versions = new Map(
   Object.entries(history).map(([version, data]) => [

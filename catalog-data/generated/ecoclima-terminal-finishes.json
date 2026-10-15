@@ -1,0 +1,389 @@
+{
+  "catalogVersion": "2026-10-07-ecoclima-ebf9e1e5a329",
+  "entries": [
+    {
+      "familyCodes": [
+        "EBA"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
+      "requestNote": "Verniciatura colore bianco RAL 9016 o altri colori RAL a scelta. Fori su cornice per installazione con viti Boccole per verniciatura a polveri"
+    },
+    {
+      "familyCodes": [
+        "EBCV"
+      ],
+      "standardFinish": "Zincato",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari",
+      "requestNote": "Verniciatura colore RAL9016 o altri colori RAL a scelta Boccole per verniciatura a polveri"
+    },
+    {
+      "familyCodes": [
+        "EBIA"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm",
+      "requestNote": "Verniciatura nei colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EBL"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebl-bocchette-lineari-a-barre-orizzontali-fisse",
+      "requestNote": "Verniciatura colore colori RAL a scelta. Fori su cornice per installazione con viti. Pacco alettato estraibile (solo versione EBL 20 in costruzione speciale con telaio avente profondità 40mm). EBL 20/0 ed EBL 20/15 in co"
+    },
+    {
+      "familyCodes": [
+        "EBLR"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
+      "requestNote": "Verniciatura colore RAL9016 o altri colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EBLS"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa?locale=it",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EBP"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebp-ebp-r-griglie-pedonabili",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EBP-T"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebp-t-ebp-tr-griglie-pedonabili",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EBV"
+      ],
+      "standardFinish": "Zincato",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebv-bocchette-di-mandata-in-acciaio-passo-20-mm",
+      "requestNote": "Verniciatura colore bianco RAL9016 o altri colori RAL a scelta. Clips per installazione a parete. Boccole per verniciatura a polveri"
+    },
+    {
+      "familyCodes": [
+        "EDC1",
+        "EDC2",
+        "EDC3",
+        "EDC4",
+        "EDC5",
+        "EDC6"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDFDS"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfds-diffusori-circolari-da-pavimento",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDFL-10",
+        "EDFL-20",
+        "EDFL-30",
+        "EDFL-40",
+        "EDFL-50"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDFLB-20",
+        "EDFLB-40",
+        "EDFLB-50"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDFLNA-10",
+        "EDFLNA-20",
+        "EDFLNA-40",
+        "EDFLNA-50"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDFLBNA-10",
+        "EDFLBNA-20",
+        "EDFLBNA-40",
+        "EDFLBNA-50"
+      ],
+      "standardFinish": "RAL9010",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDQF3"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqf3-diffusori-quadrati-forellinati",
+      "requestNote": "Verniciatura nei colori RAL a scelta (prezzi a richiesta); Fori per viti sulla cornice del diffusore."
+    },
+    {
+      "familyCodes": [
+        "EDQMC"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare",
+      "requestNote": "Verniciatura del solo pannello (esclusi gli ugelli bianchi) nei colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EDQMQ"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata",
+      "requestNote": "Verniciatura del solo pannello (esclusi gli ugelli bianchi) nei colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EGA1-4"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro?locale=it",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EGA50-3F"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm",
+      "requestNote": "Verniciatura nei colori RAL a scelta; Tegolo rompigoccia."
+    },
+    {
+      "familyCodes": [
+        "EGA50-3S"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione",
+      "requestNote": "Verniciatura nei colori RAL a scelta; Tegolo rompigoccia; Rete antivolatile; Rete antinsetto."
+    },
+    {
+      "familyCodes": [
+        "EGA50"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
+      "requestNote": "Verniciatura nei colori RAL a scelta; Tegolo rompigoccia; Rete antivolatile. Rete antinsetto."
+    },
+    {
+      "familyCodes": [
+        "EGA6"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro?locale=it",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EGF"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-griglie-forellinate",
+      "requestNote": "Verniciatura nei colori RAL a scelta; Fori su cornice per installazione con viti."
+    },
+    {
+      "familyCodes": [
+        "EGFF"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egff-griglie-forellinate-senza-cornice",
+      "requestNote": "Verniciatura nei colori RAL a scelta;"
+    },
+    {
+      "familyCodes": [
+        "EGFR"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-griglie-forellinate-con-cornice-da-15-mm",
+      "requestNote": "Verniciatura nei colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EGFR-PUSH"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm",
+      "requestNote": "Verniciatura colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EGQ-PUSH"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro?locale=it",
+      "requestNote": "Verniciatura colore bianco RAL 9016 o altri colori RAL a scelta; Dimensioni speciali; Grigliato a maglia quadra 13x13 mm inclinata a 45°."
+    },
+    {
+      "familyCodes": [
+        "EGQ1-4"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro?locale=it",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EGQIF"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
+      "requestNote": "Verniciatura nei colori RAL a scelta;"
+    },
+    {
+      "familyCodes": [
+        "EGQR"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm",
+      "requestNote": "Verniciatura colore bianco RAL 9016 o altri colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EGQR-PUSH"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm?locale=it",
+      "requestNote": "Verniciatura RAL 9016 o altri colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EGZ100"
+      ],
+      "standardFinish": "Zincato",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
+      "requestNote": "Verniciatura nei colori RAL a scelta; Rete antivolatile."
+    },
+    {
+      "familyCodes": [
+        "EGZ50"
+      ],
+      "standardFinish": "Zincato",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz50-griglie-di-ripresa-in-acciaio-passo-50-mm",
+      "requestNote": "Verniciatura nei colori RAL a scelta; Rete antivolatile."
+    },
+    {
+      "familyCodes": [
+        "ETA"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": false,
+      "whiteSurchargePercent": 20,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/eta-griglie-di-transito-in-alluminio",
+      "surchargeSourceUrl": "https://www.ecoclima.com/download/xlsx/diffusione/griglie/eta-griglie-di-transito-in-alluminio?locale=it",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EBLF"
+      ],
+      "standardFinish": "Alluminio anodizzato naturale",
+      "customRal": true,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-passo-12-mm",
+      "requestNote": "Verniciatura colore bianco RAL 9016 o altri colori RAL a scelta."
+    }
+  ]
+}

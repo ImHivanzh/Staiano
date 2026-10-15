@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 6,
+  "id": "fd3a0171-01f6-49a9-93b2-f21b41abaff0",
+  "name": "Staiano — accettazione configurazione guidata",
+  "createdAt": "2026-10-15T06:59:39.973Z",
+  "updatedAt": "2026-10-15T06:59:39.973Z",
+  "floors": [
+    {
+      "id": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "name": "Piano terra",
+      "elevationM": 0,
+      "scaleVerified": true,
+      "background": null,
+      "importAnalysis": null
+    }
+  ],
+  "walls": [
+    {
+      "id": "667db056-0777-43f2-b4af-16b9f7b08f36",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "start": {
+        "x": 0,
+        "y": 0
+      },
+      "end": {
+        "x": 8.3,
+        "y": 0
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    },
+    {
+      "id": "2770c4d1-74ac-41c7-bca3-74cba59e7a86",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "start": {
+        "x": 8.3,
+        "y": 0
+      },
+      "end": {
+        "x": 8.3,
+        "y": 6.3
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    },
+    {
+      "id": "1a244353-e0ca-4283-ab2a-df09da51b563",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "start": {
+        "x": 8.3,
+        "y": 6.3
+      },
+      "end": {
+        "x": 0,
+        "y": 6.3
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    },
+    {
+      "id": "7d220ec1-ca4b-4087-9554-493e47932f17",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "start": {
+        "x": 0,
+        "y": 6.3
+      },
+      "end": {
+        "x": 0,
+        "y": 0
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    }
+  ],
+  "rooms": [
+    {
+      "id": "0e956806-9dfd-4530-88ad-a2e253dad10f",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "name": "Soggiorno",
+      "geometryStatus": "closed",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 0.15000000000000124
+        },
+        {
+          "x": 8.15,
+          "y": 0.15
+        },
+        {
+          "x": 8.15,
+          "y": 6.149999999999999
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 6.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "667db056-0777-43f2-b4af-16b9f7b08f36",
+        "2770c4d1-74ac-41c7-bca3-74cba59e7a86",
+        "1a244353-e0ca-4283-ab2a-df09da51b563",
+        "7d220ec1-ca4b-4087-9554-493e47932f17"
+      ],
+      "netAreaM2": 47.999999999999986,
+      "perimeterM": 28,
+      "centroid": {
+        "x": 4.150000000000001,
+        "y": 3.1500000000000004
+      },
+      "heightM": 2.7,
+      "volumeM3": 129.59999999999997,
+      "designLoadW": 4535.999999999999,
+      "systemType": "ducted",
+      "supplyPoints": 1,
+      "returnPoints": 1,
+      "usage": ""
+    }
+  ],
+  "openings": [],
+  "hvacSystems": [],
+  "installations": [
+    {
+      "id": "installation-55989386-6da4-42e8-9d7c-087eee9c89ab",
+      "name": "Impianto 1",
+      "type": "ducted",
+      "roomIds": [
+        "0e956806-9dfd-4530-88ad-a2e253dad10f"
+      ]
+    }
+  ],
+  "plenums": [],
+  "pillars": [],
+  "ducts": [],
+  "ductedDrafts": [
+    {
+      "id": "b3a837c5-6984-4278-8376-b63eb23c2843",
+      "installationId": "installation-55989386-6da4-42e8-9d7c-087eee9c89ab",
+      "roomId": "0e956806-9dfd-4530-88ad-a2e253dad10f",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "position": {
+        "x": 2,
+        "y": 4
+      },
+      "kind": "machine",
+      "use": "supply"
+    },
+    {
+      "id": "ffd72af0-601d-4bbf-9cc9-3e444e679bf7",
+      "installationId": "installation-55989386-6da4-42e8-9d7c-087eee9c89ab",
+      "roomId": "0e956806-9dfd-4530-88ad-a2e253dad10f",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "position": {
+        "x": 4,
+        "y": 2
+      },
+      "kind": "terminal",
+      "use": "supply"
+    }
+  ],
+  "heatPumpDrafts": [
+    {
+      "id": "f9f6fdcf-4c3d-4857-a4d5-85224c15cad3",
+      "floorId": "e98a0713-28af-426c-8980-9639f0d93d53",
+      "position": {
+        "x": -2,
+        "y": 3
+      }
+    }
+  ],
+  "equipmentDrafts": [],
+  "fanCoils": [],
+  "hydronicSystems": [],
+  "radiators": [],
+  "airTerminals": [],
+  "projectSettings": {
+    "radiatorDeltaTK": 50,
+    "defaultHeightM": 2.7,
+    "internalWallThicknessM": 0.1,
+    "externalWallThicknessM": 0.3,
+    "coefficientWm3": 35,
+    "maxNoiseDbA": 37,
+    "dimensionMode": "internal"
+  },
+  "catalogVersions": {},
+  "sourceFilesMetadata": []
+}

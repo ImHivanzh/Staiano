@@ -1,30 +1,28 @@
 "use client";
-import { useId, useState } from "react";
-import type { Project, Room } from "@/schemas/project";
+import { useState, type Ref } from "react";
+import type { Point, Project, Room } from "@/schemas/project";
+import { saveTerminalOnPlan } from "@/domain/ducted/graphic-installation";
+import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import type { AirTerminalFamily } from "@/domain/catalogs/air-terminal-schema";
 import type { AirTerminalSolution } from "@/domain/air-terminals/size";
 import { useProjectStore } from "@/stores/project-store";
+import { type OperatorTerminalInput } from "@/domain/air-terminals/operator";
+import styles from "./RoomAirTerminals.module.css";
+import { SizeButtons } from "./TerminalSizeChoices";
+import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
 import {
-  addOperatorTerminal,
-  type OperatorTerminalInput,
-} from "@/domain/air-terminals/operator";
-import { TerminalPlacement } from "./TerminalPlacement";
-import {
-  buildLinearPlan,
-  saveLinearPlan,
-  systemLinearBalances,
-  type LinearArm,
-} from "@/domain/air-terminals/linear-meters";
-import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
-import {
-  acceptTerminalProposal,
-  cancelTerminalProposal,
-} from "@/domain/air-terminals/proposal";
+  continuityModuleLengths,
+  terminalPlenumConnections,
+} from "@/domain/air-terminals/commercial-bom";
 import { formatNumber, numberFromForm } from "@/utils/format";
+import { RoomMeterDistribution } from "./TerminalDistribution";
+import { TerminalPlenumFields } from "./TerminalPlenumFields";
+import type { TerminalPlenumOptions } from "@/domain/catalogs/ecoclima-price-schema";
 import {
-  RoomMeterDistribution,
-  TerminalDistribution,
-} from "./TerminalDistribution";
+  terminalFinishChoices,
+  terminalFinishLabel,
+  terminalFinishSpecification,
+} from "@/domain/air-terminals/finishes";
 
 export function LinearSummary({
   project,
@@ -94,179 +92,458 @@ export function OperatorTerminalControls({
   systemId,
   family,
   solution,
+  recommendedSolution,
   use,
   mounting,
-  selectOnAdd = true,
   compact = false,
+  plenumOnly = false,
   onPlaced,
+  point,
+  existingTerminalId,
+  installationId,
+  draftId,
+  saveButtonRef,
 }: {
   project: Project;
   room: Room;
-  systemId: string;
+  systemId: string | null;
+  installationId?: string;
+  draftId?: string;
+  saveButtonRef?: Ref<HTMLButtonElement>;
   family: AirTerminalFamily;
   solution: AirTerminalSolution;
+  recommendedSolution?: AirTerminalSolution;
   use: "supply" | "return";
   mounting: "wall" | "ceiling";
-  selectOnAdd?: boolean;
   compact?: boolean;
+  plenumOnly?: boolean;
   onPlaced?: () => void;
+  point: Point;
+  existingTerminalId?: string;
 }) {
-  const { commit, select } = useProjectStore();
-  const [length, setLength] = useState("");
-  const [style, setStyle] = useState(
-    family.familyCode === "EGA6" ? "Chiusura Push (a richiesta)" : "",
+  const { commit } = useProjectStore();
+  const existing = project.airTerminals.find(
+    (item) => item.id === existingTerminalId,
   );
-  const [color, setColor] = useState("");
-  const [finish, setFinish] = useState("");
-  const finishListId = useId();
-  const [placement, setPlacement] = useState<{
-    project: Project;
-    input: OperatorTerminalInput;
-  } | null>(null);
+  const members = existing ? linearRunMembers(project, existing) : [];
+  const [customLength, setCustomLength] = useState(
+    members.length === 1 &&
+      !solution.variant.commercialLengthsMm.includes(members[0].widthMm),
+  );
+  const recommendedLength = recommendedSolution?.commercialLengthM
+    ? recommendedSolution.commercialLengthM * 1000
+    : null;
+  const [length, setLength] = useState(
+    members[0]?.widthMm.toString() ?? recommendedLength?.toString() ?? "",
+  );
+  const [moduleLengths, setModuleLengths] = useState<string[]>(
+    members.slice(1).map((item) => item.widthMm.toString()),
+  );
+  const [style, setStyle] = useState(
+    existing?.style ??
+      (family.familyCode === "EGA6" ? "Chiusura Push (a richiesta)" : ""),
+  );
+  const [color, setColor] = useState(existing?.color ?? "");
+  const [finish, setFinish] = useState(existing?.finish ?? "");
+  const publishedConnections = terminalPlenumConnections(family.familyCode);
+  const [plenumOptions, setPlenumOptions] = useState<TerminalPlenumOptions>({
+    insulatedPlenum: existing?.commercialOptions?.insulatedPlenum ?? true,
+    plenumModelCode: existing?.commercialOptions?.plenumModelCode,
+    plenumMaterial: existing?.commercialOptions?.plenumMaterial,
+    plenumShape: existing?.commercialOptions?.plenumShape,
+    connectionPosition:
+      existing?.commercialOptions?.connectionPosition ??
+      (!existing && publishedConnections.length === 1
+        ? publishedConnections[0].position
+        : undefined),
+    connectionNote: existing?.commercialOptions?.connectionNote,
+  });
+  const finishChoices = terminalFinishChoices(family);
+  const finishSpecification = terminalFinishSpecification(family.familyCode);
+  const [customRal, setCustomRal] = useState(
+    !!finishSpecification?.customRal &&
+      !!color &&
+      !finishChoices.includes(color),
+  );
   const [placementError, setPlacementError] = useState<string | null>(null);
-  const [manualWidth, setManualWidth] = useState("");
-  const [manualHeight, setManualHeight] = useState("");
-  const [manualDepth, setManualDepth] = useState("");
+  const [manualWidth, setManualWidth] = useState(
+    existing?.widthMm.toString() ?? "",
+  );
+  const [manualHeight, setManualHeight] = useState(
+    existing?.heightMm.toString() ?? "",
+  );
+  const [manualDepth, setManualDepth] = useState(
+    existing?.depthMm?.toString() ?? "",
+  );
   const missingFace =
     !solution.variant.faceHeightMm ||
     (!family.isLinearPerMeter && !solution.variant.faceWidthMm);
-  const plan = project.hvacSystems.find((s) => s.id === systemId)?.linearPlan;
+  const [faceVariant, setFaceVariant] = useState(solution.variant.id);
+  if (faceVariant !== solution.variant.id) {
+    setFaceVariant(solution.variant.id);
+    if (!family.isLinearPerMeter && missingFace) {
+      // Le misure dichiarate appartengono alla taglia, non all’intera famiglia.
+      const original =
+        existing?.productId === solution.variant.id ? existing : undefined;
+      setManualWidth(original?.widthMm.toString() ?? "");
+      setManualHeight(original?.heightMm.toString() ?? "");
+      setManualDepth(original?.depthMm?.toString() ?? "");
+    }
+  }
+  const commercialModules = family.isLinearPerMeter
+    ? continuityModuleLengths(family.familyCode, solution.variant)
+    : [];
+  const composable = commercialModules.length > 0;
+  const availableLengths = moduleLengths.length
+    ? commercialModules
+    : solution.variant.commercialLengthsMm;
+  const lengthsMm = [length, ...moduleLengths].map((value) =>
+    numberFromForm(value),
+  );
+  const totalLengthMm = lengthsMm.reduce((sum, value) => sum + value, 0);
   const opIndex = solution.variant.operatingPoints.indexOf(
     solution.operatingPoint,
   );
-  const snapshot = (p: Project) => {
-    const arms: { supply?: LinearArm; return?: LinearArm } = {};
-    if (plan?.supplyVariantId && plan.supplyOperatingPointIndex !== undefined)
-      arms.supply = {
-        familyCode: plan.familyCode,
-        variantId: plan.supplyVariantId,
-        operatingPointIndex: plan.supplyOperatingPointIndex,
-      };
-    if (
-      plan?.returnFamilyCode &&
-      plan.returnVariantId &&
-      plan.returnOperatingPointIndex !== undefined
-    )
-      arms.return = {
-        familyCode: plan.returnFamilyCode,
-        variantId: plan.returnVariantId,
-        operatingPointIndex: plan.returnOperatingPointIndex,
-      };
-    arms[use] = {
-      familyCode: family.familyCode,
-      variantId: solution.variant.id,
-      operatingPointIndex: opIndex,
-    };
-    const next = buildLinearPlan(p, systemId, arms, airTerminalCatalog.version);
-    if (!next)
-      throw new Error(
-        "Dati per metro insufficienti: nessun requisito inventato.",
-      );
-    return saveLinearPlan(p, systemId, next);
-  };
   return (
     <section aria-label="Scelta singola bocchetta">
-      {!compact && (
-        <>
-          <TerminalDistribution
-            project={project}
-            systemId={systemId}
-            family={family}
-            solution={solution}
-            use={use}
-          />
-          <LinearSummary project={project} systemId={systemId} />
-        </>
-      )}
-      {family.isLinearPerMeter && (
-        <label className="campo">
-          <span>Lunghezza singola bocchetta (mm)</span>
-          <input
-            aria-label="Lunghezza singola bocchetta"
-            inputMode="decimal"
-            value={
-              family.isLinearPerMeter
-                ? length
-                : (solution.variant.faceWidthMm ?? "")
-            }
-            disabled={!family.isLinearPerMeter}
-            onChange={(e) => setLength(e.target.value)}
-            placeholder="Scegli la lunghezza"
-          />
-        </label>
-      )}
-      {missingFace && (
-        <>
-          <p className="avviso attenzione">
-            Ingombro frontale non disponibile nella fonte. Inserisci quote reali
-            dichiarate dall’operatore; non saranno presentate come dati di
-            catalogo.
+      <div hidden={plenumOnly} className={styles.operatorSettings}>
+        {family.isLinearPerMeter && (
+          <>
+            <SizeButtons
+              label={
+                moduleLengths.length
+                  ? "Lunghezza modulo 1"
+                  : "Lunghezza singola bocchetta"
+              }
+              values={[
+                ...availableLengths,
+                ...(!customLength &&
+                length &&
+                !availableLengths.includes(numberFromForm(length))
+                  ? [numberFromForm(length)]
+                  : []),
+              ]}
+              value={customLength ? null : numberFromForm(length) || null}
+              recommended={recommendedLength}
+              onChange={(value) => {
+                setCustomLength(false);
+                setLength(String(value));
+              }}
+            />
+            {recommendedSolution && recommendedLength && (
+              <p
+                className="nota"
+                aria-label="Portata della lunghezza consigliata"
+              >
+                {recommendedSolution.quantityPerPoint === 1
+                  ? `Lunghezza consigliata: ${formatNumber(recommendedLength, 0)} mm`
+                  : `Composizione consigliata: ${recommendedSolution.quantityPerPoint} moduli da ${formatNumber(recommendedLength, 0)} mm`}
+                {" · "}Fabbisogno per punto:{" "}
+                {formatNumber(recommendedSolution.requiredAirflowPerPointM3h)}{" "}
+                m³/h
+                {" · "}Capacità:{" "}
+                {formatNumber(recommendedSolution.availableAirflowPerPointM3h)}{" "}
+                m³/h
+              </p>
+            )}
+            {!moduleLengths.length && (
+              <button
+                type="button"
+                className="bottone"
+                aria-pressed={customLength}
+                onClick={() => {
+                  setCustomLength(true);
+                  setLength("");
+                }}
+              >
+                SU MISURA · quotazione Ecoclima
+              </button>
+            )}
+            {recommendedLength &&
+              recommendedSolution &&
+              (recommendedSolution.quantityPerPoint === 1 || composable) && (
+                <button
+                  type="button"
+                  className="bottone"
+                  onClick={() => {
+                    setCustomLength(false);
+                    setLength(String(recommendedLength));
+                    setModuleLengths(
+                      Array.from(
+                        { length: recommendedSolution.quantityPerPoint - 1 },
+                        () => String(recommendedLength),
+                      ),
+                    );
+                  }}
+                >
+                  Usa taglia consigliata ·{" "}
+                  {recommendedSolution.quantityPerPoint}{" "}
+                  {recommendedSolution.quantityPerPoint === 1
+                    ? "modulo"
+                    : "moduli"}
+                </button>
+              )}
+            {customLength && (
+              <>
+                <label className={`campo ${styles.moduleLength}`}>
+                  <span>Lunghezza su misura (mm)</span>
+                  <input
+                    aria-label="Lunghezza su misura (mm)"
+                    inputMode="decimal"
+                    value={length}
+                    onChange={(event) => setLength(event.target.value)}
+                    placeholder="Inserisci la misura richiesta"
+                  />
+                </label>
+                <p className="avviso attenzione" role="status">
+                  SU MISURA: quotazione da richiedere a Ecoclima. Prezzo e
+                  fattibilità da confermare.
+                </p>
+              </>
+            )}
+            {moduleLengths.map((value, index) => (
+              <div key={index} className={styles.moduleLength}>
+                <SizeButtons
+                  label={`Lunghezza modulo ${index + 2}`}
+                  values={commercialModules}
+                  value={numberFromForm(value) || null}
+                  recommended={recommendedLength}
+                  onChange={(length) =>
+                    setModuleLengths((current) =>
+                      current.map((item, i) =>
+                        i === index ? String(length) : item,
+                      ),
+                    )
+                  }
+                />
+                <button
+                  className="bottone piccolo tenue"
+                  onClick={() =>
+                    setModuleLengths((current) =>
+                      current.filter((_, i) => i !== index),
+                    )
+                  }
+                >
+                  Rimuovi modulo {index + 2}
+                </button>
+              </div>
+            ))}
+            {composable && (
+              <>
+                <button
+                  className="bottone piccolo"
+                  disabled={customLength || moduleLengths.length >= 99}
+                  onClick={() =>
+                    setModuleLengths((current) => [...current, ""])
+                  }
+                >
+                  Aggiungi modulo nello stesso punto
+                </button>
+                <p className="nota" role="status">
+                  {moduleLengths.length > 0
+                    ? `Punto composto: ${formatNumber(totalLengthMm, 0)} mm · ${moduleLengths.length} kit di continuità.`
+                    : "Per punti separati, inserisci e posiziona una bocchetta alla volta. Per unirle, aggiungi moduli nello stesso punto."}
+                </p>
+                {moduleLengths.length > 0 && (
+                  <p className="nota">
+                    Misure componibili:{" "}
+                    {commercialModules
+                      .map((value) => formatNumber(value, 0))
+                      .join(", ")}{" "}
+                    mm.
+                  </p>
+                )}
+              </>
+            )}
+          </>
+        )}
+        {missingFace && (
+          <>
+            <p className="avviso attenzione">
+              Ingombro frontale non disponibile nella fonte. Inserisci quote
+              reali dichiarate dall’operatore; non saranno presentate come dati
+              di catalogo.
+            </p>
+            <label className="campo">
+              <span>Larghezza faccia dichiarata (mm)</span>
+              <input
+                aria-label="Larghezza faccia dichiarata"
+                inputMode="decimal"
+                value={manualWidth}
+                onChange={(e) => setManualWidth(e.target.value)}
+              />
+            </label>
+            <label className="campo">
+              <span>Altezza faccia dichiarata (mm)</span>
+              <input
+                aria-label="Altezza faccia dichiarata"
+                inputMode="decimal"
+                value={manualHeight}
+                onChange={(e) => setManualHeight(e.target.value)}
+              />
+            </label>
+            <label className="campo">
+              <span>Profondità dichiarata, se nota (mm)</span>
+              <input
+                aria-label="Profondità dichiarata"
+                inputMode="decimal"
+                value={manualDepth}
+                onChange={(e) => setManualDepth(e.target.value)}
+              />
+            </label>
+          </>
+        )}
+        <div className="campo">
+          <span>Colore / finitura · obbligatorio</span>
+          {finishChoices.length ? (
+            <div
+              role="group"
+              aria-label="Colore scelto"
+              className="scelta-colore"
+            >
+              {(color && !customRal && !finishChoices.includes(color)
+                ? [color, ...finishChoices]
+                : finishChoices
+              ).map((value) => (
+                <button
+                  key={value}
+                  type="button"
+                  className={`bottone${color === value ? " pieno" : ""}`}
+                  aria-pressed={color === value}
+                  onClick={() => {
+                    setColor(value);
+                    setFinish(value);
+                    setCustomRal(false);
+                  }}
+                >
+                  {terminalFinishLabel(value)}
+                  {value === "RAL9016" &&
+                    finishSpecification?.whiteSurchargePercent &&
+                    ` · +${finishSpecification.whiteSurchargePercent}%`}
+                  {!finishChoices.includes(value) && " · valore precedente"}
+                </button>
+              ))}
+              {finishSpecification?.customRal && (
+                <button
+                  type="button"
+                  className={`bottone${customRal ? " pieno" : ""}`}
+                  aria-pressed={customRal}
+                  onClick={() => {
+                    setCustomRal(true);
+                    setColor("");
+                    setFinish("");
+                  }}
+                >
+                  RAL a scelta · da quotare
+                </button>
+              )}
+            </div>
+          ) : (
+            <input
+              aria-label="Colore scelto"
+              required
+              maxLength={100}
+              placeholder="Specifica colore o codice RAL"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+            />
+          )}
+        </div>
+        {customRal && (
+          <label className="campo">
+            <span>Codice RAL a scelta</span>
+            <input
+              aria-label="Codice RAL a scelta"
+              maxLength={8}
+              placeholder="Es. RAL 7035"
+              value={color}
+              onChange={(event) => {
+                const value = event.target.value
+                  .toUpperCase()
+                  .replace(/\s/g, "");
+                setColor(value);
+                setFinish(value);
+              }}
+            />
+          </label>
+        )}
+        {finishSpecification?.whiteSurchargePercent && (
+          <p className="nota">
+            Verniciatura Bianco RAL 9016: +
+            {finishSpecification.whiteSurchargePercent}% sul prezzo base del
+            terminale anodizzato. Gli altri colori richiedono quotazione.{" "}
+            <a
+              href={finishSpecification.surchargeSourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Listino Ecoclima
+            </a>
           </p>
+        )}
+        {finishSpecification?.customRal && (
+          <p className="nota">
+            {finishSpecification.requestNote?.includes("solo pannello")
+              ? finishSpecification.requestNote
+              : "Verniciatura RAL a scelta disponibile su richiesta."}{" "}
+            Prezzo da quotare. Eventuali supplementi del bianco valgono solo per
+            RAL 9016.
+          </p>
+        )}
+        {!finishChoices.length && (
+          <p className="nota">
+            Colore richiesto da verificare con Ecoclima: il catalogo non
+            dichiara le finiture disponibili.
+          </p>
+        )}
+        <p className="nota">
+          Portata di questa bocchetta:{" "}
+          {formatNumber(
+            family.isLinearPerMeter
+              ? (totalLengthMm / 1000) *
+                  (solution.operatingPoint.airflowPerMeterM3h ?? 0)
+              : solution.operatingPoint.airflowM3h,
+            0,
+          )}{" "}
+          m³/h. Il totale cambia dopo la conferma della posizione.
+        </p>
+        <details open={!compact}>
+          <summary>Aspetto e finiture facoltativi</summary>
           <label className="campo">
-            <span>Larghezza faccia dichiarata (mm)</span>
+            <span>Stile scelto</span>
             <input
-              aria-label="Larghezza faccia dichiarata"
-              inputMode="decimal"
-              value={manualWidth}
-              onChange={(e) => setManualWidth(e.target.value)}
+              value={style}
+              maxLength={100}
+              onChange={(event) => setStyle(event.target.value)}
             />
           </label>
-          <label className="campo">
-            <span>Altezza faccia dichiarata (mm)</span>
-            <input
-              aria-label="Altezza faccia dichiarata"
-              inputMode="decimal"
-              value={manualHeight}
-              onChange={(e) => setManualHeight(e.target.value)}
-            />
-          </label>
-          <label className="campo">
-            <span>Profondità dichiarata, se nota (mm)</span>
-            <input
-              aria-label="Profondità dichiarata"
-              inputMode="decimal"
-              value={manualDepth}
-              onChange={(e) => setManualDepth(e.target.value)}
-            />
-          </label>
-        </>
-      )}
-      <label className="campo">
-        <span>Finitura scelta</span>
-        <input
-          value={finish}
-          aria-label="Finitura scelta"
-          maxLength={100}
-          list={finishListId}
-          onChange={(event) => setFinish(event.target.value)}
-          placeholder="Scegli o dichiara la finitura"
+        </details>
+      </div>
+      <div hidden={!plenumOnly} className={styles.plenumPanel}>
+        <TerminalPlenumFields
+          familyCode={family.familyCode}
+          options={plenumOptions}
+          onChange={(patch) =>
+            setPlenumOptions((current) => ({
+              ...current,
+              ...patch,
+              plenumModelCode: undefined,
+            }))
+          }
         />
-        <datalist id={finishListId}>
-          {family.finishes?.map((value) => (
-            <option key={value} value={value} />
-          ))}
-        </datalist>
-      </label>
-      <p className="nota">
-        Portata di questa bocchetta:{" "}
-        {formatNumber(
-          family.isLinearPerMeter
-            ? (numberFromForm(length || "0") / 1000) *
-                (solution.operatingPoint.airflowPerMeterM3h ?? 0)
-            : solution.operatingPoint.airflowM3h,
-          0,
-        )}{" "}
-        m³/h. Il totale cambia dopo la conferma della posizione.
-      </p>
+      </div>
       {placementError && (
         <p className="avviso attenzione" role="alert">
           {placementError}
         </p>
       )}
       <button
+        ref={saveButtonRef}
+        style={saveButtonRef ? { display: "none" } : undefined}
         className="bottone pieno"
         disabled={
-          (family.isLinearPerMeter && !length.trim()) ||
+          (family.isLinearPerMeter &&
+            [length, ...moduleLengths].some((value) => !value.trim())) ||
           (missingFace && (!manualWidth.trim() || !manualHeight.trim()))
         }
         onClick={() => {
@@ -274,22 +551,26 @@ export function OperatorTerminalControls({
             const input: OperatorTerminalInput = {
               roomId: room.id,
               systemId,
+              installationId,
               familyCode: family.familyCode,
               variantId: solution.variant.id,
               operatingPointIndex: opIndex,
               use,
               mounting,
               lengthMm: family.isLinearPerMeter
-                ? numberFromForm(length)
+                ? totalLengthMm
                 : (solution.variant.faceWidthMm ?? numberFromForm(manualWidth)),
+              customLength,
+              ...(moduleLengths.length ? { moduleLengthsMm: lengthsMm } : {}),
               style,
-              color,
+              color: color.trim(),
               finish,
+              plenumOptions,
               ...(missingFace
                 ? {
                     manualDimensions: {
                       widthMm: family.isLinearPerMeter
-                        ? numberFromForm(length)
+                        ? totalLengthMm
                         : numberFromForm(manualWidth),
                       heightMm: numberFromForm(manualHeight),
                       depthMm: manualDepth.trim()
@@ -299,10 +580,18 @@ export function OperatorTerminalControls({
                   }
                 : {}),
             };
-            setPlacement({
-              project: addOperatorTerminal(project, input),
-              input,
-            });
+            commit((current) =>
+              saveTerminalOnPlan(
+                current,
+                input,
+                point,
+                existingTerminalId,
+                draftId,
+              ),
+            );
+            const failure = useProjectStore.getState().error;
+            if (failure) throw new Error(failure);
+            onPlaced?.();
             setPlacementError(null);
           } catch (cause) {
             setPlacementError(
@@ -311,99 +600,8 @@ export function OperatorTerminalControls({
           }
         }}
       >
-        Posiziona nell’ambiente
+        Salva bocchetta sul punto
       </button>
-      {placement && (
-        <TerminalPlacement
-          preview={placement.project}
-          input={placement.input}
-          onClose={() => setPlacement(null)}
-          onConfirmed={() => {
-            setPlacement(null);
-            const terminal = useProjectStore
-              .getState()
-              .project?.airTerminals.at(-1);
-            if (terminal && selectOnAdd)
-              select({ kind: "device", id: terminal.id });
-            onPlaced?.();
-          }}
-        />
-      )}
-      <details open={!compact}>
-        <summary>Aspetto e finiture facoltativi</summary>
-        <label className="campo">
-          <span>Stile scelto</span>
-          <input
-            value={style}
-            maxLength={100}
-            onChange={(e) => setStyle(e.target.value)}
-          />
-        </label>
-        <label className="campo">
-          <span>Colore scelto</span>
-          <input
-            value={color}
-            maxLength={100}
-            onChange={(e) => setColor(e.target.value)}
-            placeholder="Dichiarato dall’operatore"
-          />
-        </label>
-      </details>
-      {family.isLinearPerMeter && (
-        <details>
-          <summary>Proposta automatica facoltativa</summary>
-          <p className="nota">
-            Genera il suggerimento per tutti gli ambienti del sistema. Non crea
-            pezzi finché scegli di accettarlo; conserva le modifiche manuali.
-          </p>
-          <button className="bottone piccolo" onClick={() => commit(snapshot)}>
-            Genera proposta
-          </button>
-          {plan && (
-            <>
-              {plan.distribution.map((row) => (
-                <p key={`${row.roomId}-${row.use}`} className="nota">
-                  {project.rooms.find((r) => r.id === row.roomId)?.name} ·{" "}
-                  {row.use === "supply" ? "Mandata" : "Ripresa"}: circa{" "}
-                  {formatNumber(row.suggestedM)} m (suggerimento)
-                </p>
-              ))}
-              <button
-                className="bottone piccolo"
-                disabled={plan.status !== "proposed"}
-                onClick={() =>
-                  commit((p) =>
-                    acceptTerminalProposal(p, systemId, mounting, {
-                      style,
-                      color,
-                      finish,
-                    }),
-                  )
-                }
-              >
-                Accetta proposta e crea moduli di catalogo
-              </button>
-              <button
-                className="bottone piccolo tenue"
-                onClick={() =>
-                  commit((p) => cancelTerminalProposal(p, systemId))
-                }
-              >
-                Cancella proposta
-              </button>
-              <p className="nota">
-                Stato:{" "}
-                {plan.status === "modified"
-                  ? "modificato manualmente"
-                  : plan.status === "accepted"
-                    ? "confermato dall’operatore"
-                    : "suggerito automaticamente"}
-                .
-              </p>
-            </>
-          )}
-        </details>
-      )}
     </section>
   );
 }

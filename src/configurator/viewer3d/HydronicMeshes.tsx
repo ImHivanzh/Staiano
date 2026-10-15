@@ -1,8 +1,75 @@
 "use client";
-import { Line } from "@react-three/drei";
+import { Line, useTexture } from "@react-three/drei";
+import { useEffect, useMemo } from "react";
+import * as THREE from "three";
 import type { Project, Selection } from "@/schemas/project";
 import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
+
+function HeatPumpIdentification({
+  manufacturer,
+  model,
+  width,
+  height,
+  depth,
+}: {
+  manufacturer: "Gree" | "Chaffoteaux";
+  model: string;
+  width: number;
+  height: number;
+  depth: number;
+}) {
+  const logo = useTexture(
+    manufacturer === "Gree"
+      ? "/catalog-assets/brands/gree.png"
+      : "/catalog-assets/brands/chaffoteaux.jpg",
+  );
+  const label = useMemo(() => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1024;
+    canvas.height = 384;
+    const context = canvas.getContext("2d")!;
+    context.fillStyle = "#fff";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = "#123645";
+    context.font = "bold 72px Arial";
+    context.fillText(manufacturer.toUpperCase(), 32, 100, 960);
+    context.font = "56px Arial";
+    context.fillText(model, 32, 210, 960);
+    context.font = "40px Arial";
+    context.fillText("POMPA DI CALORE", 32, 320);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    return texture;
+  }, [manufacturer, model]);
+  useEffect(() => () => label.dispose(), [label]);
+  return (
+    <>
+      <mesh position={[width * 0.23, height * 0.28, depth / 2 + 0.018]}>
+        <planeGeometry args={[width * 0.42, height * 0.13]} />
+        <meshBasicMaterial map={logo} toneMapped={false} />
+      </mesh>
+      <mesh
+        position={[width / 2 + 0.008, height * 0.1, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+      >
+        <planeGeometry
+          args={[depth * 0.86, Math.min(height * 0.3, depth * 0.4)]}
+        />
+        <meshBasicMaterial map={label} toneMapped={false} />
+      </mesh>
+      <mesh
+        position={[-width / 2 - 0.008, height * 0.1, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+      >
+        <planeGeometry
+          args={[depth * 0.86, Math.min(height * 0.3, depth * 0.4)]}
+        />
+        <meshBasicMaterial map={label} toneMapped={false} />
+      </mesh>
+    </>
+  );
+}
 
 export function HydronicMeshes({
   project,
@@ -48,6 +115,15 @@ export function HydronicMeshes({
                     roughness={0.42}
                   />
                 </mesh>
+                {m && (
+                  <HeatPumpIdentification
+                    manufacturer={m.manufacturer}
+                    model={m.model}
+                    width={w}
+                    height={h}
+                    depth={d}
+                  />
+                )}
                 <mesh position={[-w * 0.18, 0, d / 2 + 0.002]}>
                   <circleGeometry args={[fanRadius, 40]} />
                   <meshStandardMaterial color={gree ? "#151c23" : "#374047"} />

@@ -172,8 +172,15 @@ test("radiator mesh selection and 2D selection stay synchronized in realistic 3D
     box.y + ((1 - projected.y) * box.height) / 2,
   );
   await expect(firstCanvas).toHaveAttribute("data-selection", radiator.id);
-  await openInspector(page, "Posizione");
-  await expect(page.getByText("Distanza centro dall'inizio (m)")).toBeVisible();
+  const configuration = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+  });
+  await expect(configuration).toBeVisible();
+  await expect(page.locator("#proprieta-progetto")).not.toBeVisible();
+  await configuration
+    .getByRole("button", { name: "Annulla", exact: true })
+    .first()
+    .click();
   await page.getByRole("button", { name: "2D", exact: true }).click();
   await page.getByTestId("radiator-2d").first().click();
   await openInspector(page, "Posizione");

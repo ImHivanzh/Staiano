@@ -24,7 +24,7 @@ test("archive searches case-insensitively, sorts names, and explains empty resul
     ).toBeVisible();
   }
   await page
-    .getByRole("button", { name: "Progetti locali", exact: true })
+    .getByRole("button", { name: "Progetti", exact: true })
     .click();
   await expect(page.locator(".progetto-voce")).toHaveCount(2);
   await page.getByLabel("Ordina progetti").selectOption("name");
@@ -114,7 +114,7 @@ for (const recovery of ["copy", "reload"] as const) {
     );
     expect(saved.rooms[0].heightM).toBe(recovery === "copy" ? 3.1 : 2.9);
     await second
-      .getByRole("button", { name: "Progetti locali", exact: true })
+      .getByRole("button", { name: "Progetti", exact: true })
       .click();
     await expect(second.locator(".progetto-voce")).toHaveCount(
       recovery === "copy" ? 2 : 1,

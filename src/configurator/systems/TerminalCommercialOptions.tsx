@@ -5,6 +5,13 @@ import {
   commercialChoicesForTerminal,
   commercialPlenumChoicesForTerminal,
 } from "@/domain/air-terminals/commercial-bom";
+import { linearRunMembers } from "@/domain/air-terminals/linear-run";
+import { TerminalPlenumFields } from "./TerminalPlenumFields";
+import styles from "./RoomAirTerminals.module.css";
+import {
+  terminalFinishLabel,
+  terminalFinishSpecification,
+} from "@/domain/air-terminals/finishes";
 
 export function TerminalCommercialOptions({
   project,
@@ -23,16 +30,17 @@ export function TerminalCommercialOptions({
       p.modelCode === terminal.commercialOptions?.profileCode &&
       (p.colorCode ?? undefined) === terminal.commercialOptions?.colorCode,
   );
+  const memberIds = new Set(
+    linearRunMembers(project, terminal).map((item) => item.id),
+  );
   const update = (
     patch: Partial<NonNullable<typeof terminal.commercialOptions>>,
+    individual = false,
   ) =>
     commit((p) => ({
       ...p,
       airTerminals: p.airTerminals.map((t) =>
-        t.roomId === terminal.roomId &&
-        t.family === terminal.family &&
-        t.productId === terminal.productId &&
-        t.use === terminal.use
+        (individual ? t.id === terminalId : memberIds.has(t.id)) && !t.locked
           ? {
               ...t,
               commercialOptions: {
@@ -69,7 +77,15 @@ export function TerminalCommercialOptions({
           <option value="">Scegli modello e finitura</option>
           {choices.map((choice) => (
             <option key={choice.id} value={choice.id}>
-              {choice.modelCode} · {choice.colorCode ?? "finitura non indicata"}{" "}
+              {choice.modelCode} ·{" "}
+              {terminalFinishLabel(
+                choice.colorCode ??
+                  terminalFinishSpecification(choice.modelCode)
+                    ?.standardFinish ??
+                  terminalFinishSpecification(choice.familyCode)
+                    ?.standardFinish ??
+                  "finitura non indicata",
+              )}{" "}
               ·{" "}
               {(choice.unitPriceCents / 100).toLocaleString("it-IT", {
                 style: "currency",
@@ -79,52 +95,74 @@ export function TerminalCommercialOptions({
           ))}
         </select>
       </label>
-      <label className="campo">
-        <span>Plenum isolato compatibile</span>
-        <select
-          aria-label="Plenum isolato Ecoclima"
-          value={
-            terminal.commercialOptions?.plenumModelCode
-              ? `${terminal.commercialOptions.plenumModelCode}|${terminal.commercialOptions.connectionPosition ?? ""}`
-              : ""
+      <fieldset disabled={terminal.locked} className={styles.plenumOptions}>
+        <TerminalPlenumFields
+          familyCode={terminal.family}
+          options={{ insulatedPlenum: true, ...terminal.commercialOptions }}
+          onChange={(patch) =>
+            update({ ...patch, plenumModelCode: undefined }, true)
           }
-          onChange={(e) => {
-            const choice = plenums.find(
-              (p) =>
-                `${p.modelCode}|${p.connectionPosition ?? ""}` ===
-                e.target.value,
-            );
-            update({
-              plenumModelCode: choice?.modelCode,
-              ...(choice?.connectionPosition
-                ? { connectionPosition: choice.connectionPosition }
-                : {}),
-            });
-          }}
-        >
-          <option value="">
-            {plenums.length === 1 ? plenums[0].modelCode : "Scegli il plenum"}
-          </option>
-          {[
-            ...new Map(
-              plenums.map((p) => [`${p.modelCode}:${p.connectionPosition}`, p]),
-            ).values(),
-          ].map((choice) => (
-            <option
-              key={choice.id}
-              value={`${choice.modelCode}|${choice.connectionPosition ?? ""}`}
-            >
-              {choice.modelCode} ·{" "}
-              {choice.connectionPosition === "upper"
-                ? "stacco superiore"
-                : "stacco laterale"}
+        />
+        <label className="campo">
+          <span>Plenum isolato di listino</span>
+          <select
+            aria-label="Plenum isolato Ecoclima"
+            value={
+              terminal.commercialOptions?.plenumModelCode
+                ? `${terminal.commercialOptions.plenumModelCode}|${terminal.commercialOptions.connectionPosition ?? ""}`
+                : ""
+            }
+            onChange={(e) => {
+              const choice = plenums.find(
+                (p) =>
+                  `${p.modelCode}|${p.connectionPosition ?? ""}` ===
+                  e.target.value,
+              );
+              update(
+                {
+                  plenumModelCode: choice?.modelCode,
+                  ...(choice
+                    ? {
+                        insulatedPlenum: true,
+                        plenumMaterial: "insulated",
+                        plenumShape: "rectangular",
+                      }
+                    : {}),
+                  ...(choice?.connectionPosition
+                    ? { connectionPosition: choice.connectionPosition }
+                    : {}),
+                },
+                true,
+              );
+            }}
+          >
+            <option value="">
+              {plenums.length === 1 ? plenums[0].modelCode : "Scegli il plenum"}
             </option>
-          ))}
-        </select>
-      </label>
+            {[
+              ...new Map(
+                plenums.map((p) => [
+                  `${p.modelCode}:${p.connectionPosition}`,
+                  p,
+                ]),
+              ).values(),
+            ].map((choice) => (
+              <option
+                key={choice.id}
+                value={`${choice.modelCode}|${choice.connectionPosition ?? ""}`}
+              >
+                {choice.modelCode} ·{" "}
+                {choice.connectionPosition === "upper"
+                  ? "stacco superiore"
+                  : "stacco laterale"}
+              </option>
+            ))}
+          </select>
+        </label>
+      </fieldset>
       <p className="nota">
-        La scelta si applica ai moduli di questo modello e utilizzo nella
-        stanza. Ponti e kit richiesti dalle istruzioni restano nella distinta.
+        Il plenum si configura per questa bocchetta. Modello e finitura si
+        applicano ai moduli uniti. Ponti e kit richiesti restano nella distinta.
       </p>
       {!choices.length && (
         <p className="nota">

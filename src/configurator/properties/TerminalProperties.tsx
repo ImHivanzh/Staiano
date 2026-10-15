@@ -21,6 +21,14 @@ export function TerminalProperties({
   const room = project.rooms.find((r) => r.id === t.roomId),
     family = airTerminalFamilyAtVersion(t.family, t.catalogVersion),
     legacy = needsTerminalReconfiguration(t);
+  const installationId =
+    t.installationId ??
+    project.hvacSystems.find(
+      (item) => item.id === (t.systemId ?? t.pendingSystemId),
+    )?.installationId ??
+    project.installations.find(
+      (item) => item.type === "ducted" && item.roomIds.includes(t.roomId),
+    )?.id;
   return (
     <div className="corpo-proprieta">
       <TerminalCommercialOptions project={project} terminalId={id} />
@@ -29,6 +37,16 @@ export function TerminalProperties({
       </h3>
       <p className="nota">{airTerminalModelDescription(family, t.productId)}</p>
       <p>{room?.name}</p>
+      {installationId && (
+        <button
+          className="bottone chiara"
+          onClick={() =>
+            useProjectStore.getState().openInstallationPlan(installationId)
+          }
+        >
+          Configura sulla planimetria 2D
+        </button>
+      )}
       <p className="riepilogo-apparecchio">
         <strong>{formatNumber(t.requiredAirflowM3h, 1)} m³/h</strong>
         <br />

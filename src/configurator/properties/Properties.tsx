@@ -1,5 +1,6 @@
 "use client";
 import { useProjectStore } from "@/stores/project-store";
+import type { Project, Selection } from "@/schemas/project";
 import {
   addAdjacentRoom,
   mergeRooms,
@@ -34,9 +35,39 @@ import {
   mergeWallSegments,
 } from "@/domain/geometry/wall-commands";
 
+export function selectionWithProperties(
+  project: Project,
+  selection: Selection[],
+) {
+  const devices = [
+    ...project.radiators,
+    ...(project.fanCoils ?? []),
+    ...(project.hydronicSystems?.map((system) => system.outdoorUnit) ?? []),
+    ...project.airTerminals,
+    ...project.plenums,
+    ...(project.pillars ?? []),
+    ...project.hvacSystems.flatMap((system) => system.indoorUnits),
+  ];
+  return selection.filter((item) =>
+    (item.kind === "room"
+      ? project.rooms
+      : item.kind === "wall"
+        ? project.walls
+        : devices
+    ).some((object) => object.id === item.id),
+  );
+}
+
 export function Properties() {
-  const { project: p, selection, commit, setError } = useProjectStore();
+  const {
+    project: p,
+    selection: selected,
+    commit,
+    setError,
+  } = useProjectStore();
   if (!p) return null;
+  const selection = selectionWithProperties(p, selected);
+  if (!selection.length) return null;
   const rooms = selection
     .filter((s) => s.kind === "room")
     .map((s) => p.rooms.find((r) => r.id === s.id))

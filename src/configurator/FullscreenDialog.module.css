@@ -65,6 +65,16 @@
   overscroll-behavior: contain;
   padding: 20px 24px 32px;
 }
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  padding: 12px 20px;
+  border-top: 1px solid var(--bordo);
+  background: var(--carta);
+}
 .content > * {
   max-width: 1440px;
   margin-inline: auto;

@@ -14,10 +14,14 @@ import {
   applyHydronicSystem,
   moveHydronicOutdoorUnit,
   removeHydronicSystem,
+  placeHeatPumpDraft,
 } from "./apply";
 import { hydronicOutdoorValid, hydronicOutdoorFootprint } from "./placement";
 import { validateHydronicSystem } from "./validation";
 import { hydronicPipeRoute } from "./routes";
+import { clearProjectSystems } from "../project";
+import { movePlacedDevice } from "../geometry/move-device";
+import { removeSelection, duplicateSelection } from "../geometry/selection";
 
 function fixture() {
   const p = createProject();
@@ -38,8 +42,29 @@ function pump(p = fixture()) {
 }
 
 describe("impianto idronico documentato", () => {
+  it("persists pending pumps, validates their placement and supports move, copy, delete and clear", () => {
+    const p = fixture();
+    const pending = placeHeatPumpDraft(p, p.floors[0].id, { x: 4, y: -1 });
+    const draft = pending.heatPumpDrafts![0];
+    expect(
+      projectSchema.parse(JSON.parse(JSON.stringify(pending))).heatPumpDrafts,
+    ).toEqual([draft]);
+    expect(pending.hydronicSystems).toEqual([]);
+    expect(() => placeHeatPumpDraft(p, p.floors[0].id, { x: 4, y: 3 })).toThrow(
+      "punto esterno",
+    );
+    expect(() =>
+      placeHeatPumpDraft(p, p.floors[0].id, { x: NaN, y: -1 }),
+    ).toThrow();
+    const moved = movePlacedDevice(pending, draft.id, { x: 5, y: -1 });
+    expect(moved.heatPumpDrafts![0].position.x).toBe(5);
+    const selection = [{ kind: "device" as const, id: draft.id }];
+    expect(duplicateSelection(moved, selection).heatPumpDrafts).toHaveLength(2);
+    expect(removeSelection(moved, selection).heatPumpDrafts).toEqual([]);
+    expect(clearProjectSystems(moved).heatPumpDrafts).toEqual([]);
+  });
   it("has official capacities at explicit conditions and reproducible sources", () => {
-    expect(heatPumpCatalog.products).toHaveLength(13);
+    expect(heatPumpCatalog.products).toHaveLength(29);
     const gree = heatPumpProductAtVersion(
       "gree-versati-v-8-monofase",
       heatPumpCatalog.version,

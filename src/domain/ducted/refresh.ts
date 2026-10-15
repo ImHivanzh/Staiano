@@ -6,8 +6,33 @@ import { selectDuctedMachine, distributeAirflow } from "./calculate";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { ductedMaximumAirflow } from "./machine";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
+import { hydronicRoomIds } from "./plan-connections";
 /** Refresh automatic machine selection and demand; installed terminal style stays chosen. */
 export function refreshDuctedBindings(project: Project): Project {
+  project = {
+    ...project,
+    hvacSystems: project.hvacSystems.map((system) =>
+      system.type === "ducted" && system.indoorUnits.length
+        ? {
+            ...system,
+            roomIds: [
+              ...new Set([
+                ...project.airTerminals
+                  .filter((terminal) => terminal.systemId === system.id)
+                  .map((terminal) => terminal.roomId),
+                ...(project.ductedDrafts ?? [])
+                  .filter(
+                    (draft) =>
+                      draft.kind === "terminal" &&
+                      draft.machineId === system.id,
+                  )
+                  .map((draft) => draft.roomId),
+              ]),
+            ],
+          }
+        : system,
+    ),
+  };
   const systems = project.hvacSystems.map((system) => {
     if (system.type !== "ducted") return system;
     if (
@@ -220,5 +245,37 @@ export function refreshDuctedBindings(project: Project): Project {
         });
       }
   }
-  return { ...project, hvacSystems: systems, airTerminals };
+  return {
+    ...project,
+    hvacSystems: systems,
+    airTerminals,
+    hydronicSystems: project.hydronicSystems?.map((pump) => {
+      if (!pump.terminalIds) return pump;
+      const roomIds = hydronicRoomIds(project, pump.outdoorUnit.id);
+      return roomIds.length ? { ...pump, roomIds } : pump;
+    }),
+    rooms: project.rooms.map((room) => {
+      const ducted = systems.some(
+        (system) =>
+          system.type === "ducted" && system.roomIds.includes(room.id),
+      );
+      return ducted
+        ? { ...room, systemType: "ducted" as const }
+        : room.systemType === "ducted"
+          ? {
+              ...room,
+              systemType: systems.some(
+                (system) =>
+                  system.type === "split" && system.roomIds.includes(room.id),
+              )
+                ? ("split" as const)
+                : project.radiators.some(
+                      (radiator) => radiator.roomId === room.id,
+                    )
+                  ? ("radiator" as const)
+                  : ("none" as const),
+            }
+          : room;
+    }),
+  };
 }

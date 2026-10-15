@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Point, Project, Selection } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { addWall, moveWall } from "@/domain/project";
@@ -20,8 +20,13 @@ import { deviceCodes } from "@/services/export/device-codes";
 import { ArrowsOut, Minus, Plus } from "@phosphor-icons/react";
 import { wallMeasuredLength } from "@/domain/geometry/dimensions";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
+import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import { ductRoute } from "@/domain/ducted/routes";
+import { ductedMaximumAirflow } from "@/domain/ducted/machine";
+import { terminalAirflowBalance } from "@/domain/air-terminals/airflow-balance";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
+import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
+import { pendingConnections } from "@/domain/ducted/plan-connections";
 
 type View = { x: number; y: number; w: number; h: number };
 type Drag = {
@@ -36,7 +41,21 @@ type Drag = {
 };
 export function Editor2D({
   placement,
+  configuration,
 }: {
+  configuration?: {
+    project?: Project;
+    floorId: string;
+    instruction?: string;
+    overlay?: ReactNode;
+    backgroundOverlay?: ReactNode;
+    selectedDeviceIds?: string[];
+    allowDrawing?: boolean;
+    captureAll?: boolean;
+    deviceIds?: string[];
+    onHover?: (point: Point | null) => void;
+    onPick: (point: Point, deviceId?: string, pointId?: string) => void;
+  };
   placement?: {
     project: Project;
     terminalId: string;
@@ -54,18 +73,47 @@ export function Editor2D({
     commit,
     select,
   } = useProjectStore();
-  const project = placement?.project ?? savedProject;
+  const project = placement?.project ?? configuration?.project ?? savedProject;
   const activeFloorId = placement
     ? placement.project.airTerminals.find(
         (item) => item.id === placement.terminalId,
       )!.floorId
-    : savedFloorId;
-  const tool = placement ? "select" : savedTool;
+    : (configuration?.floorId ?? savedFloorId);
+  const tool =
+    placement || (configuration && !configuration.allowDrawing)
+      ? "select"
+      : savedTool;
   const selection: Selection[] = placement
     ? [{ kind: "device", id: placement.terminalId }]
-    : savedSelection;
+    : configuration?.selectedDeviceIds
+      ? [
+          ...(configuration.allowDrawing
+            ? savedSelection.filter(
+                (item) =>
+                  item.kind !== "device" ||
+                  !configuration.selectedDeviceIds?.includes(item.id),
+              )
+            : []),
+          ...configuration.selectedDeviceIds.map((id) => ({
+            kind: "device" as const,
+            id,
+          })),
+        ]
+      : savedSelection;
   const placing = useRef(false);
-  const initialPlacementFit = useRef(!!placement);
+  const draggedClick = useRef(false);
+  function captures(target: EventTarget) {
+    if (!configuration?.allowDrawing || configuration.captureAll) return true;
+    if (tool !== "select") return false;
+    const hit = (target as Element).closest("[data-device-id],[data-point-id]");
+    return (
+      !!hit?.hasAttribute("data-point-id") ||
+      !!configuration.deviceIds?.includes(
+        hit?.getAttribute("data-device-id") ?? "",
+      )
+    );
+  }
+  const initialPlacementFit = useRef(!!placement || !!configuration);
   const svg = useRef<SVGSVGElement>(null),
     drag = useRef<Drag | null>(null);
   const [view, setView] = useState<View>({ x: -2, y: -2, w: 14, h: 10 });
@@ -84,6 +132,7 @@ export function Editor2D({
   const [terminalPose, setTerminalPose] = useState<ReturnType<
     typeof snapTerminalPose
   > | null>(null);
+  const [runPreview, setRunPreview] = useState<Project["airTerminals"]>([]);
   const walls = project?.walls.filter((w) => w.floorId === activeFloorId) ?? [],
     rooms = project?.rooms.filter((r) => r.floorId === activeFloorId) ?? [];
   const floor = project?.floors.find((f) => f.id === activeFloorId);
@@ -107,9 +156,14 @@ export function Editor2D({
   }, []);
   function fit() {
     const b = bounds(walls.flatMap((w) => [w.start, w.end]));
-    for (const unit of project?.hydronicSystems
-      ?.filter((s) => s.outdoorUnit.floorId === activeFloorId)
-      .map((s) => s.outdoorUnit) ?? []) {
+    for (const unit of [
+      ...(project?.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
+      ...(project?.heatPumpDrafts ?? []).map((draft) => ({
+        ...draft,
+        widthMm: 800,
+        depthMm: 240,
+      })),
+    ].filter((unit) => unit.floorId === activeFloorId)) {
       const radius = Math.hypot(unit.widthMm, unit.depthMm) / 2000;
       b.minX = Math.min(b.minX, unit.position.x - radius);
       b.maxX = Math.max(b.maxX, unit.position.x + radius);
@@ -280,6 +334,27 @@ export function Editor2D({
             (t) => t.id === d.deviceId,
           );
           if (terminal) {
+            if (linearRunMembers(project, terminal).length > 1) {
+              try {
+                const moved = movePlacedDevice(
+                  project,
+                  terminal.id,
+                  add(terminal.position, d.delta),
+                  snap,
+                );
+                setRunPreview(
+                  linearRunMembers(
+                    moved,
+                    moved.airTerminals.find((item) => item.id === terminal.id)!,
+                  ),
+                );
+              } catch {
+                setRunPreview([]);
+              }
+              setTerminalPose(null);
+              setDelta(d.delta);
+              return;
+            }
             const pose = snapTerminalPose(
               project,
               terminal.id,
@@ -318,6 +393,11 @@ export function Editor2D({
         commit((p) =>
           movePlacedDevice(p, d.deviceId!, add(item.position, d.delta), snap),
         );
+      if (configuration && item) {
+        draggedClick.current = true;
+        if (distance(d.delta, { x: 0, y: 0 }) <= 0.001)
+          configuration.onPick(item.position, item.id);
+      }
     }
     if (
       d?.type === "wall" &&
@@ -328,6 +408,7 @@ export function Editor2D({
     drag.current = null;
     setDelta(null);
     setTerminalPose(null);
+    setRunPreview([]);
     if (svg.current?.hasPointerCapture(e.pointerId))
       svg.current.releasePointerCapture(e.pointerId);
   }
@@ -397,15 +478,17 @@ export function Editor2D({
       groupWalls.some((w) => samePoint(p, w.start) || samePoint(p, w.end)))
       ? add(p, delta)
       : p;
-  const instructions = placement
-    ? "Clicca nell’ambiente e trascina la bocchetta. Conferma posizione per aggiornare il totale."
-    : tool === "wall"
-      ? "Clic per iniziare. Chiudi sul punto iniziale. Esc termina il tratto."
-      : tool === "measure"
-        ? "Seleziona due punti per misurare."
-        : tool === "calibrate"
-          ? "Seleziona due punti noti della planimetria."
-          : "Seleziona una stanza o trascina una parete. Rotella per zoom.";
+  const instructions =
+    configuration?.instruction ??
+    (placement
+      ? "Clicca nell’ambiente e trascina la bocchetta. Conferma posizione per aggiornare il totale."
+      : tool === "wall"
+        ? "Clic per iniziare. Chiudi sul punto iniziale. Esc termina il tratto."
+        : tool === "measure"
+          ? "Seleziona due punti per misurare."
+          : tool === "calibrate"
+            ? "Seleziona due punti noti della planimetria."
+            : "Seleziona una stanza o trascina una parete. Rotella per zoom.");
   return (
     <div className="area-editor">
       <svg
@@ -446,6 +529,45 @@ export function Editor2D({
                 svg.current?.setPointerCapture(event.pointerId);
                 placement.onMove(world(event.clientX, event.clientY));
               }
+            : configuration
+              ? (event) => {
+                  if (event.button !== 0) return;
+                  draggedClick.current = false;
+                  if (captures(event.target)) {
+                    event.stopPropagation();
+                    const id = (event.target as Element)
+                      .closest("[data-device-id]")
+                      ?.getAttribute("data-device-id");
+                    if (!configuration.captureAll && id)
+                      beginDeviceDrag(event, id);
+                  }
+                }
+              : undefined
+        }
+        onClickCapture={
+          configuration
+            ? (event) => {
+                if (event.button !== 0) return;
+                if (draggedClick.current) {
+                  draggedClick.current = false;
+                  event.stopPropagation();
+                  return;
+                }
+                if (!captures(event.target)) {
+                  if (tool === "select")
+                    configuration.onPick(world(event.clientX, event.clientY));
+                  return;
+                }
+                event.stopPropagation();
+                const hit = (event.target as Element).closest(
+                  "[data-device-id],[data-point-id]",
+                );
+                configuration.onPick(
+                  world(event.clientX, event.clientY),
+                  hit?.getAttribute("data-device-id") ?? undefined,
+                  hit?.getAttribute("data-point-id") ?? undefined,
+                );
+              }
             : undefined
         }
         onPointerDown={onDown}
@@ -455,8 +577,18 @@ export function Editor2D({
                 if (placing.current)
                   placement.onMove(world(event.clientX, event.clientY));
               }
-            : onMove
+            : configuration
+              ? (event) => {
+                  if (
+                    drag.current ||
+                    (configuration.allowDrawing && !configuration.captureAll)
+                  )
+                    onMove(event);
+                  configuration.onHover?.(world(event.clientX, event.clientY));
+                }
+              : onMove
         }
+        onPointerLeave={() => configuration?.onHover?.(null)}
         onPointerUp={
           placement
             ? (event) => {
@@ -762,6 +894,7 @@ export function Editor2D({
               </polyline>
             );
           })}
+        {configuration?.backgroundOverlay}
         {project?.radiators
           .filter((d) => d.floorId === activeFloorId)
           .map((d) => {
@@ -770,6 +903,21 @@ export function Editor2D({
               <g
                 key={d.id}
                 data-testid="radiator-2d"
+                data-device-id={d.id}
+                role={configuration ? "button" : undefined}
+                tabIndex={configuration ? 0 : undefined}
+                aria-label={
+                  configuration ? `Radiatore ${codes.get(d.id)}` : undefined
+                }
+                onKeyDown={(event) => {
+                  if (
+                    configuration &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    configuration.onPick(d.position, d.id);
+                  }
+                }}
                 transform={`translate(${pos.x} ${pos.y}) rotate(${(d.rotation * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, d.id)}
               >
@@ -789,6 +937,11 @@ export function Editor2D({
                   x={0}
                   y={d.depthMm / 2000 + u * 13}
                   textAnchor="middle"
+                  transform={
+                    configuration
+                      ? `rotate(${(-d.rotation * 180) / Math.PI} 0 ${d.depthMm / 2000 + u * 13})`
+                      : undefined
+                  }
                   fontSize={u * 11}
                   className="quota-pianta"
                 >
@@ -800,7 +953,8 @@ export function Editor2D({
         {project?.airTerminals
           .filter((t) => t.floorId === activeFloorId)
           .map((t) => {
-            const pos = previewDevice(t),
+            const runPose = runPreview.find((item) => item.id === t.id);
+            const pos = runPose?.position ?? previewDevice(t),
               faceDepth =
                 t.mounting === "ceiling" ? t.heightMm : (t.depthMm ?? 0),
               code = codes.get(t.id);
@@ -808,7 +962,24 @@ export function Editor2D({
               <g
                 key={t.id}
                 data-testid={`terminal-${t.use}`}
-                transform={`translate(${pos.x} ${pos.y}) rotate(${((drag.current?.deviceId === t.id && terminalPose ? terminalPose.rotation : t.rotation) * 180) / Math.PI})`}
+                data-device-id={t.id}
+                role={configuration ? "button" : undefined}
+                aria-label={
+                  configuration
+                    ? `Bocchetta ${t.family} ${code}${needsTerminalReconfiguration(t) ? " · Da configurare" : !t.systemId ? " · Da collegare" : ""}`
+                    : undefined
+                }
+                tabIndex={configuration ? 0 : undefined}
+                onKeyDown={(event) => {
+                  if (
+                    configuration &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    configuration.onPick(t.position, t.id);
+                  }
+                }}
+                transform={`translate(${pos.x} ${pos.y}) rotate(${((runPose?.rotation ?? (drag.current?.deviceId === t.id && terminalPose ? terminalPose.rotation : t.rotation)) * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, t.id)}
               >
                 {t.shape === "circle" && t.mounting === "ceiling" ? (
@@ -830,24 +1001,59 @@ export function Editor2D({
                 <text
                   x={0}
                   y={faceDepth / 2000 + u * 14}
+                  transform={
+                    configuration
+                      ? `rotate(${(-t.rotation * 180) / Math.PI} 0 ${faceDepth / 2000 + u * 14})`
+                      : undefined
+                  }
                   textAnchor="middle"
                   fontSize={u * 11}
                   className="quota-pianta"
                 >
                   {code}
+                  {needsTerminalReconfiguration(t)
+                    ? " · Da configurare"
+                    : !t.systemId
+                      ? " · Da collegare"
+                      : ""}
                 </text>
               </g>
             );
           })}
         {project?.hvacSystems
-          .flatMap((system) => system.indoorUnits)
-          .filter((d) => d.floorId === activeFloorId)
-          .map((d) => {
+          .flatMap((system) => system.indoorUnits.map((d) => ({ d, system })))
+          .filter(({ d }) => d.floorId === activeFloorId)
+          .map(({ d, system }) => {
             const pos = previewDevice(d);
+            const maximum = ductedMaximumAirflow(system);
+            const balance =
+              system.type === "ducted"
+                ? terminalAirflowBalance(project, system.id, "supply")
+                : null;
+            const airflowFontSize = Math.min(
+              u * 11,
+              d.widthMm / 8500,
+              d.depthMm / 5300,
+            );
             return (
               <g
                 key={d.id}
                 data-testid="split-2d"
+                data-device-id={d.id}
+                role={configuration ? "button" : undefined}
+                aria-label={
+                  configuration ? `Macchina ${codes.get(d.id)}` : undefined
+                }
+                tabIndex={configuration ? 0 : undefined}
+                onKeyDown={(event) => {
+                  if (
+                    configuration &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    configuration.onPick(d.position, d.id);
+                  }
+                }}
                 transform={`translate(${pos.x} ${pos.y}) rotate(${(d.rotation * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, d.id)}
               >
@@ -871,9 +1077,43 @@ export function Editor2D({
                   stroke="#00aeef"
                   strokeWidth={u}
                 />
+                {balance && (
+                  <text
+                    data-testid="machine-airflow"
+                    data-system-id={system.id}
+                    x={0}
+                    y={-airflowFontSize * 1.6}
+                    textAnchor="middle"
+                    fontSize={airflowFontSize}
+                    fontWeight={600}
+                    fill="var(--testo)"
+                    pointerEvents="none"
+                    style={{ fontVariantNumeric: "tabular-nums" }}
+                  >
+                    <tspan x={0}>Massima:</tspan>
+                    <tspan x={0} dy={airflowFontSize * 1.15}>
+                      {maximum === null
+                        ? "non disponibile"
+                        : `${formatNumber(maximum)} m³/h`}
+                    </tspan>
+                    <tspan x={0} dy={airflowFontSize * 1.15}>
+                      Da coprire:
+                    </tspan>
+                    <tspan x={0} dy={airflowFontSize * 1.15}>
+                      {maximum === null
+                        ? "non disponibile"
+                        : `${formatNumber(balance.remaining)} m³/h`}
+                    </tspan>
+                  </text>
+                )}
                 <text
                   x={0}
                   y={d.depthMm / 2000 + u * 13}
+                  transform={
+                    configuration
+                      ? `rotate(${(-d.rotation * 180) / Math.PI} 0 ${d.depthMm / 2000 + u * 13})`
+                      : undefined
+                  }
                   textAnchor="middle"
                   fontSize={u * 11}
                   className="quota-pianta"
@@ -893,6 +1133,23 @@ export function Editor2D({
               <g
                 key={unit.id}
                 data-testid="fan-coil-2d"
+                data-device-id={unit.id}
+                role={configuration ? "button" : undefined}
+                tabIndex={configuration ? 0 : undefined}
+                aria-label={
+                  configuration
+                    ? `Ventilconvettore ${codes.get(unit.id)}`
+                    : undefined
+                }
+                onKeyDown={(event) => {
+                  if (
+                    configuration &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    configuration.onPick(unit.position, unit.id);
+                  }
+                }}
                 transform={`translate(${pos.x} ${pos.y}) rotate(${(unit.rotation * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, unit.id)}
               >
@@ -913,6 +1170,11 @@ export function Editor2D({
                   textAnchor="middle"
                   fontSize={u * 11}
                   y={depth / 2000 + u * 13}
+                  transform={
+                    configuration
+                      ? `rotate(${(-unit.rotation * 180) / Math.PI} 0 ${depth / 2000 + u * 13})`
+                      : undefined
+                  }
                 >
                   {codes.get(unit.id)}
                 </text>
@@ -942,6 +1204,23 @@ export function Editor2D({
                 ))}
                 <g
                   data-testid="heat-pump-2d"
+                  data-device-id={unit.id}
+                  role={configuration ? "button" : undefined}
+                  tabIndex={configuration ? 0 : undefined}
+                  aria-label={
+                    configuration
+                      ? `Pompa di calore ${codes.get(unit.id)}`
+                      : undefined
+                  }
+                  onKeyDown={(event) => {
+                    if (
+                      configuration &&
+                      (event.key === "Enter" || event.key === " ")
+                    ) {
+                      event.preventDefault();
+                      configuration.onPick(unit.position, unit.id);
+                    }
+                  }}
                   transform={`translate(${pos.x} ${pos.y}) rotate(${(unit.rotation * 180) / Math.PI})`}
                   onPointerDown={(e) => beginDeviceDrag(e, unit.id)}
                 >
@@ -968,6 +1247,11 @@ export function Editor2D({
                     textAnchor="middle"
                     fontSize={u * 11}
                     y={unit.depthMm / 2000 + u * 13}
+                    transform={
+                      configuration
+                        ? `rotate(${(-unit.rotation * 180) / Math.PI} 0 ${unit.depthMm / 2000 + u * 13})`
+                        : undefined
+                    }
                   >
                     {codes.get(unit.id)} · esterna
                   </text>
@@ -1077,8 +1361,131 @@ export function Editor2D({
             </text>
           </g>
         )}
+        {project &&
+          pendingConnections(project)
+            .filter((line) => line.floorId === activeFloorId)
+            .map((line) => (
+              <polyline
+                key={line.id}
+                data-testid="pending-connection"
+                points={line.points.map((p) => `${p.x},${p.y}`).join(" ")}
+                fill="none"
+                stroke="var(--ambra)"
+                strokeWidth={u * 2}
+                strokeDasharray={`${u * 5} ${u * 4}`}
+                pointerEvents="none"
+              />
+            ))}
+        {[
+          ...(project?.ductedDrafts ?? []),
+          ...(project?.equipmentDrafts ?? []).map((item) => ({
+            ...item,
+            kind: item.type,
+            use: "supply" as const,
+            installationId: null,
+          })),
+          ...(project?.heatPumpDrafts ?? []).map((item) => ({
+            ...item,
+            kind: "heatPump" as const,
+            use: "supply" as const,
+            installationId: null,
+          })),
+        ]
+          .filter((item) => item.floorId === activeFloorId)
+          .map((item, index) => (
+            <g
+              key={item.id}
+              data-point-id={item.id}
+              data-testid={`draft-${item.kind}`}
+              role="button"
+              tabIndex={0}
+              aria-label={
+                item.kind === "radiator"
+                  ? `Radiatore da configurare ${index + 1}`
+                  : item.kind === "fanCoil"
+                    ? `Ventilconvettore da configurare ${index + 1}`
+                    : item.kind === "split"
+                      ? `Split da configurare ${index + 1}`
+                      : item.kind === "heatPump"
+                        ? `Pompa di calore da configurare ${index + 1}`
+                        : item.kind === "machine"
+                          ? `Macchina da configurare ${index + 1}`
+                          : `Bocchetta da configurare ${index + 1}`
+              }
+              onClick={
+                configuration
+                  ? undefined
+                  : () =>
+                      item.installationId &&
+                      useProjectStore
+                        .getState()
+                        .openInstallationPlan(item.installationId)
+              }
+              onKeyDown={(event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                if (configuration)
+                  configuration.onPick(item.position, undefined, item.id);
+                else if (item.installationId)
+                  useProjectStore
+                    .getState()
+                    .openInstallationPlan(item.installationId);
+              }}
+            >
+              <path
+                d={`M ${item.position.x - (item.kind !== "terminal" ? 0.4 : 0.25)} ${item.position.y - 0.4} h ${item.kind !== "terminal" ? 0.8 : 0.5} v 0.56 h ${item.kind !== "terminal" ? -0.8 : -0.5} Z`}
+                fill="transparent"
+                stroke="none"
+                pointerEvents="all"
+              />
+              <rect
+                x={item.position.x - (item.kind !== "terminal" ? 0.4 : 0.25)}
+                y={item.position.y - 0.12}
+                width={item.kind !== "terminal" ? 0.8 : 0.5}
+                height={0.24}
+                fill="var(--ambra-tenue)"
+                stroke={
+                  selection.some((s) => s.id === item.id)
+                    ? "var(--tinta)"
+                    : "var(--ambra)"
+                }
+                strokeWidth={
+                  selection.some((s) => s.id === item.id) ? 0.06 : 0.03
+                }
+                strokeDasharray="0.06 0.04"
+              />
+              <text
+                x={item.position.x}
+                y={item.position.y - 0.2}
+                fontSize={0.14}
+                textAnchor="middle"
+                fill="var(--ambra)"
+                paintOrder="stroke"
+                stroke="var(--carta)"
+                strokeWidth={0.035}
+              >
+                {item.kind === "radiator"
+                  ? "Radiatore"
+                  : item.kind === "fanCoil"
+                    ? "Ventilconvettore"
+                    : item.kind === "split"
+                      ? "Split"
+                      : item.kind === "heatPump"
+                        ? "Pompa di calore"
+                        : item.kind === "machine"
+                          ? "Macchina"
+                          : item.use === "supply"
+                            ? "Mandata"
+                            : "Ripresa"}{" "}
+                · Da configurare
+              </text>
+            </g>
+          ))}
+        {configuration?.overlay}
       </svg>
-      <div className="indicazione-editor">{instructions}</div>
+      {!!instructions && (
+        <div className="indicazione-editor">{instructions}</div>
+      )}
       {calibrationDistance !== null && project && (
         <RecalibrationDialog
           key={`${project.id}-${activeFloorId}`}

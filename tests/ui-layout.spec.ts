@@ -3,14 +3,14 @@ import { expect, test } from "./browser-test";
 test("archive opens before creating a project", async ({ page }) => {
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Progetti locali", exact: true })
+    .getByRole("button", { name: "Progetti", exact: true })
     .click();
   await expect(
     page.getByRole("heading", { name: "Progetti sul dispositivo" }),
   ).toBeVisible();
   await expect(page.getByText("Nessun progetto salvato.")).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Progetti locali", exact: true }),
+    page.getByRole("button", { name: "Progetti", exact: true }),
   ).toHaveAttribute("aria-current", "page");
 });
 

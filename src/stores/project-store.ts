@@ -11,7 +11,18 @@ import {
 } from "@/domain/project-commands";
 
 export type Tool = "select" | "wall" | "measure" | "pan" | "calibrate";
+export type PlanPlacementTool =
+  | "select"
+  | "machine"
+  | "point"
+  | "connect"
+  | "move"
+  | "radiator"
+  | "fanCoil"
+  | "heatPump"
+  | "split";
 type State = {
+  planPlacementTool: PlanPlacementTool;
   project: Project | null;
   activeFloorId: string;
   selection: Selection[];
@@ -21,6 +32,7 @@ type State = {
   future: Project[];
   revision: number;
   dirty: boolean;
+  readOnly: boolean;
   saveStatus: "loading" | "saving" | "saved" | "error";
   saveConflict: boolean;
   error: string | null;
@@ -29,6 +41,9 @@ type State = {
   showDimensions: boolean;
   presentation: boolean;
   pillarDialog: boolean;
+  installationPlanId: string | null;
+  ductedInstallationId: string | null;
+  openInstallationPlan(id: string): void;
   load(p: Project): void;
   commit(fn: (p: Project) => Project): void;
   undo(): void;
@@ -41,6 +56,7 @@ type State = {
   markSaved(revision: number): void;
 };
 export const useProjectStore = create<State>((set, get) => ({
+  planPlacementTool: "select",
   project: null,
   activeFloorId: "",
   selection: [],
@@ -50,6 +66,7 @@ export const useProjectStore = create<State>((set, get) => ({
   future: [],
   revision: 0,
   dirty: false,
+  readOnly: false,
   saveStatus: "loading",
   saveConflict: false,
   error: null,
@@ -66,6 +83,28 @@ export const useProjectStore = create<State>((set, get) => ({
   showDimensions: true,
   presentation: false,
   pillarDialog: false,
+  installationPlanId: null,
+  ductedInstallationId: null,
+  openInstallationPlan(id) {
+    const state = get();
+    const installation = state.project?.installations.find(
+      (item) => item.id === id,
+    );
+    const room = state.project?.rooms.find((item) =>
+      installation?.roomIds.includes(item.id),
+    );
+    if (!installation || !room) return;
+    set({
+      planPlacementTool: "select",
+      installationPlanId: null,
+      ductedInstallationId:
+        installation.type === "ducted" ? id : state.ductedInstallationId,
+      activeFloorId: room.floorId,
+      view: "2d",
+      tool: "select",
+      selection: [],
+    });
+  },
   load(p) {
     set({
       project: projectSchema.parse(
@@ -73,6 +112,9 @@ export const useProjectStore = create<State>((set, get) => ({
       ),
       activeFloorId: p.floors[0].id,
       selection: [],
+      planPlacementTool: "select",
+      installationPlanId: null,
+      ductedInstallationId: null,
       past: [],
       future: [],
       revision: get().revision + 1,
@@ -85,6 +127,10 @@ export const useProjectStore = create<State>((set, get) => ({
   commit(fn) {
     const state = get();
     if (!state.project) return;
+    if (state.readOnly) {
+      set({ error: "Progetto condiviso in sola lettura. Acquisisci la modifica dal pannello Condividi progetto." });
+      return;
+    }
     try {
       const changed = fn(structuredClone(state.project));
       checkLockedObjects(state.project, changed);
@@ -129,6 +175,7 @@ export const useProjectStore = create<State>((set, get) => ({
   undo() {
     const s = get(),
       p = s.past.at(-1);
+    if (s.readOnly) return;
     if (!p || !s.project) return;
     set({
       project: { ...p, updatedAt: new Date().toISOString() },
@@ -143,6 +190,7 @@ export const useProjectStore = create<State>((set, get) => ({
   redo() {
     const s = get(),
       p = s.future[0];
+    if (s.readOnly) return;
     if (!p || !s.project) return;
     set({
       project: { ...p, updatedAt: new Date().toISOString() },
@@ -166,13 +214,19 @@ export const useProjectStore = create<State>((set, get) => ({
     }));
   },
   setFloor(id) {
-    set({ activeFloorId: id, selection: [] });
+    set({
+      activeFloorId: id,
+      selection: [],
+      planPlacementTool: "select",
+      installationPlanId: null,
+      ductedInstallationId: null,
+    });
   },
   setTool(tool) {
     set({ tool });
   },
   setView(view) {
-    set({ view });
+    set({ view, installationPlanId: null, planPlacementTool: "select" });
   },
   setError(error) {
     set({ error });

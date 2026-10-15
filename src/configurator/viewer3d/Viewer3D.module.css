@@ -48,6 +48,9 @@
   gap: 6px;
   pointer-events: none;
 }
+.toolbar > button {
+  pointer-events: auto;
+}
 .group {
   display: flex;
   flex-wrap: nowrap;

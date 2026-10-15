@@ -1,5 +1,5 @@
 {
-  "version": "heat-pumps-6b5487027be7da66",
+  "version": "heat-pumps-02e321c6c1440ea8",
   "products": [
     {
       "id": "chaffoteaux-arianext-plus-35-m-r32",
@@ -947,6 +947,990 @@
           "coolingW": 7500,
           "cop": 3.9,
           "eer": 3.2,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-10-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ10Pd/NpG4-E",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 12. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 12
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 10100,
+          "coolingW": 8900,
+          "cop": 4.75,
+          "eer": 3.05,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 10000,
+          "coolingW": 8900,
+          "cop": 3.7,
+          "eer": 3.05,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-10-trifase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ10Pd/NpG4-M",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 12. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 12
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 10100,
+          "coolingW": 8900,
+          "cop": 4.75,
+          "eer": 3.05,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 10000,
+          "coolingW": 8900,
+          "cop": 3.7,
+          "eer": 3.05,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-12-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ12Pd/NpG4-E",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 14. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 14
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 12000,
+          "coolingW": 11600,
+          "cop": 4.95,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 12000,
+          "coolingW": 11600,
+          "cop": 3.8,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-12-trifase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ12Pd/NpG4-M",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 14. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 14
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 12000,
+          "coolingW": 11600,
+          "cop": 4.95,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 12000,
+          "coolingW": 11600,
+          "cop": 3.8,
+          "eer": 3.15,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-14-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ14Pd/NpG4-E",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 16. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 16
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 14000,
+          "coolingW": 12800,
+          "cop": 4.7,
+          "eer": 2.95,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 14000,
+          "coolingW": 12800,
+          "cop": 3.7,
+          "eer": 2.95,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-14-trifase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ14Pd/NpG4-M",
+      "widthMm": 1206,
+      "heightMm": 880,
+      "depthMm": 445,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 16. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png",
+        "sha256": "36901b024a4a8ac94daabf7dd219915f9027d17085e454fddc8751940701e76e",
+        "caption": "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 16
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 14000,
+          "coolingW": 12800,
+          "cop": 4.7,
+          "eer": 2.95,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 14000,
+          "coolingW": 12800,
+          "cop": 3.7,
+          "eer": 2.95,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-16-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ16Pd/NpG4-E",
+      "widthMm": 943,
+      "heightMm": 1615,
+      "depthMm": 464,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 20. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v-16.jpg",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Product/VersatiV_16kW_LR.jpg",
+        "sha256": "2d92abbba320c09c6ea544bf31bc69e199f802f9c1695a454f8a2b2f0b6bdff4",
+        "caption": "Foto ufficiale Gree VERSATI V 16 kW, unità esterna a due ventilatori."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 20
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 15500,
+          "coolingW": 14000,
+          "cop": 4.7,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 15500,
+          "coolingW": 14000,
+          "cop": 3.75,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-v-16-trifase",
+      "manufacturer": "Gree",
+      "family": "VERSATI V",
+      "model": "GRS-CQ16Pd/NpG4-M",
+      "widthMm": 943,
+      "heightMm": 1615,
+      "depthMm": 464,
+      "dimensionNote": "Ingombro unità esterna L×H×P, brochure pag. 20. Distanze di servizio e area di installazione R290 da verificare nel manuale.",
+      "features": [
+        "Monoblocco DC Inverter R290",
+        "Mandata fino a 80 °C nei limiti di funzionamento",
+        "Pannello remoto di serie",
+        "ACS con accumulo e valvola opzionali",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-v-16.jpg",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Product/VersatiV_16kW_LR.jpg",
+        "sha256": "2d92abbba320c09c6ea544bf31bc69e199f802f9c1695a454f8a2b2f0b6bdff4",
+        "caption": "Foto ufficiale Gree VERSATI V 16 kW, unità esterna a due ventilatori."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf",
+        "sourceType": "pdf",
+        "sha256": "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b",
+        "documentRevision": "Brochure VERSATI V 2025",
+        "retrievedAt": "2026-10-07T13:33:45.702239+00:00",
+        "importedAt": "2026-10-07T13:33:45.702239+00:00",
+        "page": 20
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 15500,
+          "coolingW": 14000,
+          "cop": 4.7,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 15500,
+          "coolingW": 14000,
+          "cop": 3.75,
+          "eer": 2.85,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-4-split-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III Split",
+      "model": "GRS-CQ4.0Pd/NhH-E(O) + ER010N1510",
+      "widthMm": 975,
+      "heightMm": 702,
+      "depthMm": 396,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 9. Modulo interno 460×860×318 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1510",
+        "Unità interna ER010N1510",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno idronico"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-split.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-SPLIT.png",
+        "sha256": "97e557fb7f4002004a70f15361a668515d9563494eddfce211680b90f4e26e21",
+        "caption": "Foto ufficiale di gamma VERSATI III split; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/Service%20Manual%20for%20VERSATI%20R32%20SPLIT.pdf",
+        "sourceType": "pdf",
+        "sha256": "781db69b864400db2204e825486109fd0eb3d02454cc45ce957f28dffb620e75",
+        "documentRevision": "Service Manual VERSATI III Split · technical data",
+        "retrievedAt": "2026-10-13T22:14:16.206416+00:00",
+        "importedAt": "2026-10-13T22:14:16.206416+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 4000,
+          "coolingW": 3150,
+          "cop": 5.1,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 4000,
+          "coolingW": 3150,
+          "cop": 3.9,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-6-split-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III Split",
+      "model": "GRS-CQ6.0Pd/NhH-E(O) + ER010N1500",
+      "widthMm": 975,
+      "heightMm": 702,
+      "depthMm": 396,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 9. Modulo interno 460×860×318 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1500",
+        "Unità interna ER010N1500",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno idronico"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-split.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-SPLIT.png",
+        "sha256": "97e557fb7f4002004a70f15361a668515d9563494eddfce211680b90f4e26e21",
+        "caption": "Foto ufficiale di gamma VERSATI III split; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/Service%20Manual%20for%20VERSATI%20R32%20SPLIT.pdf",
+        "sourceType": "pdf",
+        "sha256": "781db69b864400db2204e825486109fd0eb3d02454cc45ce957f28dffb620e75",
+        "documentRevision": "Service Manual VERSATI III Split · technical data",
+        "retrievedAt": "2026-10-13T22:14:16.206416+00:00",
+        "importedAt": "2026-10-13T22:14:16.206416+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 6000,
+          "coolingW": 4090,
+          "cop": 5.0,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 5900,
+          "coolingW": 4090,
+          "cop": 3.9,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-8-split-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III Split",
+      "model": "GRS-CQ8.0Pd/NhH-E(O) + ER010N1480",
+      "widthMm": 982,
+      "heightMm": 787,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 9. Modulo interno 460×860×318 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1480",
+        "Unità interna ER010N1480",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno idronico"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-split.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-SPLIT.png",
+        "sha256": "97e557fb7f4002004a70f15361a668515d9563494eddfce211680b90f4e26e21",
+        "caption": "Foto ufficiale di gamma VERSATI III split; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/Service%20Manual%20for%20VERSATI%20R32%20SPLIT.pdf",
+        "sourceType": "pdf",
+        "sha256": "781db69b864400db2204e825486109fd0eb3d02454cc45ce957f28dffb620e75",
+        "documentRevision": "Service Manual VERSATI III Split · technical data",
+        "retrievedAt": "2026-10-13T22:14:16.206416+00:00",
+        "importedAt": "2026-10-13T22:14:16.206416+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 5300,
+          "cop": 4.7,
+          "eer": 3.0,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 5300,
+          "cop": 3.7,
+          "eer": 3.0,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-10-split-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III Split",
+      "model": "GRS-CQ10Pd/NhH-E(O) + ER010N1750",
+      "widthMm": 982,
+      "heightMm": 787,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 9. Modulo interno 460×860×318 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1730",
+        "Unità interna ER010N1750",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno idronico"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-split.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-SPLIT.png",
+        "sha256": "97e557fb7f4002004a70f15361a668515d9563494eddfce211680b90f4e26e21",
+        "caption": "Foto ufficiale di gamma VERSATI III split; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/Service%20Manual%20for%20VERSATI%20R32%20SPLIT.pdf",
+        "sourceType": "pdf",
+        "sha256": "781db69b864400db2204e825486109fd0eb3d02454cc45ce957f28dffb620e75",
+        "documentRevision": "Service Manual VERSATI III Split · technical data",
+        "retrievedAt": "2026-10-13T22:14:16.206416+00:00",
+        "importedAt": "2026-10-13T22:14:16.206416+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 9500,
+          "coolingW": 6500,
+          "cop": 4.6,
+          "eer": 2.9,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 9500,
+          "coolingW": 6500,
+          "cop": 3.6,
+          "eer": 2.9,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-4-all-in-one-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III All In One",
+      "model": "GRS-CQ4.0Pd/NhH-E(O) + ER010N1770",
+      "widthMm": 975,
+      "heightMm": 702,
+      "depthMm": 396,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 10. Modulo interno 600×1756×600 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1510",
+        "Unità interna ER010N1770",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno con accumulo ACS integrato"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-all-in-one.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-ALL-IN-ONE.png",
+        "sha256": "c5bcf7b2620b80103070c9da69f39c5d2e8c45ab9d367a6c5d3cd9d3ad988ac8",
+        "caption": "Foto ufficiale di gamma VERSATI III all-in-one; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20versati%20split%20all%20in%20one.pdf",
+        "sourceType": "pdf",
+        "sha256": "5451e894bd01085fc7a4a20ccac9110d37ff6e3db698939b3aef802c79135760",
+        "documentRevision": "Service Manual VERSATI III All In One · technical data",
+        "retrievedAt": "2026-10-13T22:14:45.369281+00:00",
+        "importedAt": "2026-10-13T22:14:45.369281+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 4000,
+          "coolingW": 3150,
+          "cop": 5.1,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 4000,
+          "coolingW": 3150,
+          "cop": 3.9,
+          "eer": 3.4,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-6-all-in-one-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III All In One",
+      "model": "GRS-CQ6.0Pd/NhH-E(O) + ER010N1780",
+      "widthMm": 975,
+      "heightMm": 702,
+      "depthMm": 396,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 10. Modulo interno 600×1756×600 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1500",
+        "Unità interna ER010N1780",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno con accumulo ACS integrato"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-all-in-one.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-ALL-IN-ONE.png",
+        "sha256": "c5bcf7b2620b80103070c9da69f39c5d2e8c45ab9d367a6c5d3cd9d3ad988ac8",
+        "caption": "Foto ufficiale di gamma VERSATI III all-in-one; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20versati%20split%20all%20in%20one.pdf",
+        "sourceType": "pdf",
+        "sha256": "5451e894bd01085fc7a4a20ccac9110d37ff6e3db698939b3aef802c79135760",
+        "documentRevision": "Service Manual VERSATI III All In One · technical data",
+        "retrievedAt": "2026-10-13T22:14:45.369281+00:00",
+        "importedAt": "2026-10-13T22:14:45.369281+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 6000,
+          "coolingW": 4090,
+          "cop": 5.0,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 5900,
+          "coolingW": 4090,
+          "cop": 3.9,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-8-all-in-one-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III All In One",
+      "model": "GRS-CQ8.0Pd/NhH-E(O) + ER010N1760",
+      "widthMm": 982,
+      "heightMm": 787,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 10. Modulo interno 600×1756×600 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1480",
+        "Unità interna ER010N1760",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno con accumulo ACS integrato"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-all-in-one.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-ALL-IN-ONE.png",
+        "sha256": "c5bcf7b2620b80103070c9da69f39c5d2e8c45ab9d367a6c5d3cd9d3ad988ac8",
+        "caption": "Foto ufficiale di gamma VERSATI III all-in-one; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20versati%20split%20all%20in%20one.pdf",
+        "sourceType": "pdf",
+        "sha256": "5451e894bd01085fc7a4a20ccac9110d37ff6e3db698939b3aef802c79135760",
+        "documentRevision": "Service Manual VERSATI III All In One · technical data",
+        "retrievedAt": "2026-10-13T22:14:45.369281+00:00",
+        "importedAt": "2026-10-13T22:14:45.369281+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 5300,
+          "cop": 4.7,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 8000,
+          "coolingW": 5300,
+          "cop": 3.7,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 45,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "gree-versati-iii-10-all-in-one-monofase",
+      "manufacturer": "Gree",
+      "family": "VERSATI III All In One",
+      "model": "GRS-CQ10Pd/NhH-E(O) + ER010N1730",
+      "widthMm": 982,
+      "heightMm": 787,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Service Manual pag. 10. Modulo interno 600×1756×600 mm, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "DC Inverter R32",
+        "Monofase 230 V / 50 Hz",
+        "Unità esterna ER010W1730",
+        "Unità interna ER010N1730",
+        "Mandata riscaldamento fino a 60 °C nei limiti di funzionamento",
+        "Modulo interno con accumulo ACS integrato"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/gree-versati-iii-all-in-one.png",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATI-ALL-IN-ONE.png",
+        "sha256": "c5bcf7b2620b80103070c9da69f39c5d2e8c45ab9d367a6c5d3cd9d3ad988ac8",
+        "caption": "Foto ufficiale di gamma VERSATI III all-in-one; il 3D rappresenta l’unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20versati%20split%20all%20in%20one.pdf",
+        "sourceType": "pdf",
+        "sha256": "5451e894bd01085fc7a4a20ccac9110d37ff6e3db698939b3aef802c79135760",
+        "documentRevision": "Service Manual VERSATI III All In One · technical data",
+        "retrievedAt": "2026-10-13T22:14:45.369281+00:00",
+        "importedAt": "2026-10-13T22:14:45.369281+00:00",
+        "page": 9
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W7",
+          "heatingW": 9500,
+          "coolingW": 6500,
+          "cop": 4.6,
+          "eer": 2.9,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        },
+        {
+          "label": "Caldo A7/W45 · freddo A35/W7",
+          "heatingW": 9500,
+          "coolingW": 6500,
+          "cop": 3.6,
+          "eer": 2.9,
           "heatingWaterSupplyC": 45,
           "coolingWaterSupplyC": 7,
           "heatingOutdoorC": 7,

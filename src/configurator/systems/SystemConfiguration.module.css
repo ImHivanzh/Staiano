@@ -1,6 +1,20 @@
 .panel {
   color: var(--testo);
 }
+.recommendation {
+  padding: 14px 16px;
+  margin: 14px 0;
+  border: 2px solid var(--tinta);
+  border-radius: 8px;
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+}
+.recommendation > strong {
+  display: block;
+}
+.recommendation p {
+  margin: 6px 0 10px;
+}
 .heading {
   margin-bottom: 24px;
 }

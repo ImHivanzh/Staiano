@@ -1,5 +1,8 @@
 import type { Project } from "@/schemas/project";
-import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
+import {
+  airTerminalFamilyAtVersion,
+  airTerminalMountings,
+} from "@/domain/catalogs/air-terminals";
 import { sizeAirTerminal } from "./size";
 import { applyAirTerminalSolution } from "./apply";
 import { systemLinearBalances } from "./linear-meters";
@@ -41,7 +44,12 @@ export function acceptTerminalProposal(
       : null;
     const variant = family?.variants.find((v) => v.id === variantId);
     const op = index === undefined ? null : variant?.operatingPoints[index];
-    if (!family || !variant || !op || !family.mountings?.includes(mounting))
+    if (
+      !family ||
+      !variant ||
+      !op ||
+      !airTerminalMountings(family)?.includes(mounting)
+    )
       throw new Error("Modello o montaggio non disponibile per la proposta.");
     const installedFlow = next.airTerminals
       .filter(

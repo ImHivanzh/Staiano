@@ -37,11 +37,21 @@ for (const device of [
       mimeType: "application/json",
       buffer: Buffer.from(JSON.stringify(project)),
     });
-    await page.getByTestId("heat-pump-2d").click();
+    await page.getByRole("button", { name: "3D", exact: true }).click();
+    await expect(page.locator("#proprieta-progetto")).not.toBeVisible();
+    await page.getByRole("button", { name: "2D", exact: true }).click();
+    await openDisclosure(page, "Modifica");
+    await page
+      .getByLabel("Elemento nel progetto", { exact: true })
+      .selectOption(pump.id);
     await page.getByRole("button", { name: "3D", exact: true }).click();
     const viewer = page.getByTestId("viewer-3d"),
       canvas = viewer.locator("canvas");
     await expect(canvas).toHaveAttribute("data-rendered", "true");
+    await expect(page.locator("#proprieta-progetto")).toBeVisible();
+    await expect(page.locator("#proprieta-progetto")).toContainText(
+      "Apparecchio selezionato",
+    );
     await expect(
       viewer.getByRole("button", { name: "Sposta 3D", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
@@ -162,7 +172,7 @@ for (const device of [
     );
   });
 
-test("channel setup stays closed until requested and opens as a compact panel", async ({
+test("channel setup stays closed until requested and opens in the configuration popup", async ({
   page,
 }, info) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -180,6 +190,8 @@ test("channel setup stays closed until requested and opens as a compact panel", 
   });
   await page.getByRole("button", { name: "3D", exact: true }).click();
   const viewer = page.getByTestId("viewer-3d");
+  const panel = page.getByRole("dialog", { name: "Canalizzazione collegata" });
+  await expect(panel).toHaveCount(0);
   await openDisclosure(viewer, "Vista 3D");
   await viewer
     .getByRole("button", { name: "Vista Canale", exact: true })
@@ -187,12 +199,10 @@ test("channel setup stays closed until requested and opens as a compact panel", 
   await viewer
     .getByRole("button", { name: "Configura percorsi", exact: true })
     .click();
-  const panel = viewer.getByRole("complementary", {
-    name: "Canalizzazione collegata",
-  });
+  await expect(panel).toBeVisible();
   const box = (await panel.boundingBox())!;
-  expect(box.width).toBeLessThanOrEqual(370);
-  expect(box.height).toBeLessThan(300);
+  expect(box.width).toBeLessThanOrEqual(1920);
+  expect(box.height).toBeLessThanOrEqual(1080);
   await panel.locator("details > summary").first().click();
   await expect(
     panel
@@ -200,18 +210,21 @@ test("channel setup stays closed until requested and opens as a compact panel", 
       .first(),
   ).toBeVisible();
   await page.screenshot({
-    path: info.outputPath("compact-channels-desktop.png"),
+    path: info.outputPath("channels-popup-desktop.png"),
     fullPage: true,
   });
   await page.setViewportSize({ width: 1024, height: 768 });
   const tablet = (await panel.boundingBox())!;
-  const viewerBox = (await viewer.boundingBox())!;
-  expect(tablet.x).toBeGreaterThanOrEqual(viewerBox.x);
-  expect(tablet.x + tablet.width).toBeLessThanOrEqual(
-    viewerBox.x + viewerBox.width + 1,
-  );
+  expect(tablet.x).toBeGreaterThanOrEqual(0);
+  expect(tablet.y).toBeGreaterThanOrEqual(0);
+  expect(tablet.x + tablet.width).toBeLessThanOrEqual(1024);
+  expect(tablet.y + tablet.height).toBeLessThanOrEqual(768);
   await page.screenshot({
-    path: info.outputPath("compact-channels-ipad.png"),
+    path: info.outputPath("channels-popup-ipad.png"),
     fullPage: true,
   });
+  await panel
+    .getByRole("button", { name: "Chiudi canali", exact: true })
+    .click();
+  await expect(panel).toHaveCount(0);
 });

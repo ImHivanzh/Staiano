@@ -14,6 +14,36 @@ sul dispositivo; non è richiesto un account cloud.
 
 ## Avvio
 
+### Aggiornare il server dopo lo sviluppo su un altro PC
+
+Sul PC di sviluppo eseguire commit e push su Codeberg. Sul PC del server
+avviare `aggiorna.bat` nella copia del progetto: scarica il ramo corrente con
+`git pull --ff-only`, reinstalla le dipendenze, verifica TypeScript, compila
+nella directory alternativa e riavvia l’attività Windows `Staiano HVAC`.
+Controlla PID, BUILD_ID e risposta HTTP sulla porta 3015 prima di confermare.
+Sul server Windows richiede la conferma UAC per fermare anche il processo
+avviato dall’attività; lo script richiede automaticamente l’elevazione.
+Durante installazione e compilazione il servizio viene arrestato, perché Windows
+blocca i moduli nativi caricati da Next. La build precedente rimane conservata.
+Se ci sono modifiche locali o rami divergenti, si ferma senza sovrascriverli.
+Per ricompilare senza scaricare: `powershell -File deploy/update-project.ps1 -SkipPull`.
+Git e Node.js >=22.13.0 devono essere installati; l’accesso Codeberg deve essere
+già configurato. Senza attività Windows, avvia il server locale in background.
+Autenticazione, progetti locali e configurazione HTTPS non vengono trasferiti
+da Git. Su un PC nuovo configurare l’accesso come descritto sotto; per il parser
+DWG eseguire anche `npm run dwg:build` con .NET 8 installato.
+
+### Collegamenti prima della configurazione
+
+Posizionare prima macchine e terminali, poi usare **Collega** in qualsiasi ordine.
+Il canalizzato si configura solo dopo il collegamento delle bocchette; le bocchette
+si configurano dopo il collegamento e la scelta della macchina. La portata usa
+gli ambienti raggiunti, anche quando le bocchette sono ancora da configurare.
+La PdC si collega a radiatori, ventilconvettori o unità canalizzate interne.
+Per queste ultime collegare anche le bocchette; configurare l’unità ad acqua
+con i dati manuali della scheda tecnica, poi la PdC e le bocchette.
+I modelli canalizzati a espansione diretta del catalogo non si collegano alla PdC idronica.
+
 Node.js >=22.13 (verificato con 24.14):
 
 ```powershell

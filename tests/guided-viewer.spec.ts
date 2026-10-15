@@ -1,14 +1,10 @@
+import { addPlanTerminal, pickPlanPoint } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Page, TestInfo } from "@playwright/test";
 import { expect, test } from "./browser-test";
 import { projectSchema, type Project } from "../src/schemas/project";
 import { splitCatalogSchema } from "../src/domain/catalogs/split-schema";
-import {
-  openInspector,
-  openDisclosure,
-  chooseTerminalModel,
-  confirmTerminalPlacement,
-} from "./ui-helpers";
+import { openInspector, openDisclosure } from "./ui-helpers";
 
 async function exportProject(
   page: Page,
@@ -197,9 +193,9 @@ test("two independently configured ducted zones keep each terminal assigned afte
 }, testInfo) => {
   test.setTimeout(90000);
   await page.setViewportSize({ width: 1680, height: 1050 });
-  const blank = projectSchema.parse(
-    JSON.parse(readFileSync("tests/fixtures/realistic-home.hvacproj", "utf8")),
-  );
+  const blank = JSON.parse(
+    readFileSync("tests/fixtures/realistic-home.hvacproj", "utf8"),
+  ) as import("../src/schemas/project").Project;
   blank.hvacSystems = [];
   blank.radiators = [];
   blank.airTerminals = [];
@@ -231,36 +227,51 @@ test("two independently configured ducted zones keep each terminal assigned afte
       name: "Configura canalizzazione",
     });
     await palette
-      .getByRole("button", { name: "Scegli macchina", exact: true })
+      .getByRole("button", { name: "Configura sulla pianta principale" })
       .click();
-    const machinePicker = page.getByRole("dialog", {
+    const plan = page.getByRole("region", {
+      name: "Configurazione grafica canalizzato",
+    });
+    const room = blank.rooms.find((item) => item.name === roomName)!;
+    await plan
+      .getByRole("button", { name: "Macchina", exact: true })
+      .click();
+    await pickPlanPoint(plan, room.centroid.x, room.centroid.y);
+    await plan.getByTestId("draft-machine").click();
+    const picker = page.getByRole("dialog", {
       name: "Scegli macchina canalizzata",
     });
-    await machinePicker.getByLabel("Marca canalizzato").selectOption(brand);
-    await machinePicker
-      .getByRole("button", { name: "Configura canalizzato", exact: true })
+    await picker.getByLabel("Marca canalizzato").selectOption(brand);
+    await picker
+      .locator("footer")
+      .getByRole("button", { name: "Salva", exact: true })
       .click();
-    await expect(
-      palette.getByRole("button", { name: "Mandata", exact: true }),
-    ).toBeVisible();
-    await chooseTerminalModel(palette, "EDLS");
-    await palette
-      .getByLabel("Lunghezza singola bocchetta", { exact: true })
-      .fill("1000");
-    await palette
-      .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
+    await addPlanTerminal(
+      page,
+      room.centroid.x - 1,
+      room.centroid.y - 1,
+      "EDLS",
+      [1000],
+    );
+    await addPlanTerminal(
+      page,
+      room.centroid.x + 1,
+      room.centroid.y - 1,
+      "EDLS",
+      [1000],
+    );
+    await addPlanTerminal(
+      page,
+      room.centroid.x,
+      room.centroid.y + 1,
+      "EGQ",
+      [],
+      "return",
+    );
+    await page
+      .getByRole("button", { name: "Torna all’editor", exact: true })
       .click();
-    await confirmTerminalPlacement(page);
-    await palette.getByRole("button", { name: "Ripresa", exact: true }).click();
-    await chooseTerminalModel(palette, "EGQ");
-    await palette
-      .getByRole("button", { name: "Posiziona nell’ambiente", exact: true })
-      .click();
-    await confirmTerminalPlacement(page);
-    await palette
-      .getByRole("button", { name: "Chiudi configurazione" })
-      .click();
-    await page.getByRole("button", { name: "Chiudi catalogo" }).click();
+    await page.getByRole("button", { name: "3D", exact: true }).click();
   }
   const before = await exportProject(page, testInfo, "two-independent-zones");
   expect(before.hvacSystems).toHaveLength(2);
@@ -295,15 +306,25 @@ test("two independently configured ducted zones keep each terminal assigned afte
     .getByRole("button", { name: "Canalizzato", exact: true })
     .click();
   await page
-    .getByRole("button", { name: "Cambia macchina", exact: true })
+    .getByRole("button", { name: "Apri planimetria operativa" })
     .click();
-  await page
-    .getByLabel("Nome impianto canalizzato", { exact: true })
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  const picker = page.getByRole("dialog", {
+    name: "Scegli macchina canalizzata",
+  });
+  await picker
+    .getByLabel("Nome macchina canalizzata", { exact: true })
     .fill("Zona studio indipendente");
-  await page
-    .getByRole("button", { name: "Aggiorna sistema canalizzato", exact: true })
+  await picker
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
-  await page.getByRole("button", { name: "Chiudi configurazione" }).click();
+  await page
+    .getByRole("button", { name: "Torna all’editor", exact: true })
+    .click();
   const after = await exportProject(page, testInfo, "two-zones-edited");
   expect(after.hvacSystems.find((system) => system.id === zoneA.id)).toEqual(
     zoneA,

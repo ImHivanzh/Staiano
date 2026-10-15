@@ -6,7 +6,28 @@ import {
   lineIntersection,
   onSegment,
   samePoint,
+  projection,
+  distance,
 } from "./primitives";
+export function nearestFootprintEdge(
+  device: {
+    position: Point;
+    widthMm: number;
+    depthMm: number;
+    rotation: number;
+  },
+  target: Point,
+): Point {
+  const corners = footprintCorners(
+    device.position,
+    device.widthMm / 1000,
+    device.depthMm / 1000,
+    device.rotation,
+  );
+  return corners
+    .map((corner, i) => projection(target, corner, corners[(i + 1) % 4]))
+    .sort((a, b) => distance(a, target) - distance(b, target))[0];
+}
 export function footprintCorners(
   position: Point,
   widthM: number,

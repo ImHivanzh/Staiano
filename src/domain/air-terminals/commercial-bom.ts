@@ -1,6 +1,8 @@
 import type { Project } from "@/schemas/project";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import { ecoclimaPriceCatalog } from "@/domain/catalogs/ecoclima-prices";
+import { terminalFinishPrice, terminalFinishLabel } from "./finishes";
+import type { AirTerminalVariant } from "@/domain/catalogs/air-terminal-schema";
 import type {
   EcoclimaPrice,
   EcoclimaPriceCatalog,
@@ -12,6 +14,14 @@ type InstalledTerminal = Project["airTerminals"][number] & {
   commercialOptions?: TerminalCommercialOptions;
 };
 type BomProject = Pick<Project, "airTerminals" | "hvacSystems">;
+function customTerminalPlenum(options: TerminalCommercialOptions | undefined) {
+  return (
+    options?.plenumMaterial === "galvanized" ||
+    options?.plenumShape === "trapezoidal" ||
+    (!!options?.connectionPosition &&
+      !["lateral", "upper"].includes(options.connectionPosition))
+  );
+}
 export type EcoclimaBomLine = {
   id: string;
   terminalIds: string[];
@@ -134,6 +144,52 @@ function familyMatches(priceFamily: string, family: string) {
     (priceFamily === "EDSC-C" && /^(EDSC-CC|EDSC-Q)$/.test(family))
   );
 }
+
+/** Published inlet positions for this terminal family, with the original drawing. */
+export function terminalPlenumConnections(
+  family: string,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+) {
+  return [
+    ...new Map(
+      catalog.accessorySpecifications
+        .filter((item) => familyMatches(item.familyCode, family) && item.plenum)
+        .map(
+          (item) =>
+            [
+              item.plenum!.connectionPosition,
+              {
+                position: item.plenum!.connectionPosition,
+                sourceUrl: (item.plenum!.sourceMetadata ?? item.sourceMetadata)
+                  .sourceUrl,
+              },
+            ] as const,
+        ),
+    ).values(),
+  ];
+}
+export function continuityModuleLengths(
+  familyCode: string,
+  variant: AirTerminalVariant,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+) {
+  return [
+    ...new Set(
+      catalog.accessorySpecifications
+        .filter(
+          (item) =>
+            item.continuitySupported &&
+            familyMatches(item.familyCode, familyCode) &&
+            item.dimensions.lengthMm !== null &&
+            (item.dimensions.slotCount === null ||
+              item.dimensions.slotCount === variant.slotCount) &&
+            (item.dimensions.slotWidthMm === null ||
+              item.dimensions.slotWidthMm === variant.slotWidthMm),
+        )
+        .map((item) => item.dimensions.lengthMm!),
+    ),
+  ].sort((a, b) => a - b);
+}
 export function commercialChoicesForTerminal(
   terminal: InstalledTerminal,
   catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
@@ -188,6 +244,12 @@ function matchingPrices(
   filterOptions = true,
 ) {
   const options = terminal.commercialOptions;
+  if (
+    kind === "insulated-plenum" &&
+    filterOptions &&
+    customTerminalPlenum(options)
+  )
+    return [];
   const dimensions = terminalCommercialDimensions(terminal);
   const specification =
     kind === "insulated-plenum"
@@ -228,6 +290,10 @@ function matchingPrices(
       (kind !== "terminal" ||
         !options?.colorCode ||
         price.colorCode === options.colorCode) &&
+      (kind !== "terminal" ||
+        !price.colorCode ||
+        !/^RAL\d{4}$/.test(terminal.color) ||
+        price.colorCode === terminal.color) &&
       (kind !== "insulated-plenum" ||
         !options?.plenumModelCode ||
         price.modelCode === options.plenumModelCode) &&
@@ -293,6 +359,16 @@ function priceLine(
 ): EcoclimaBomLine {
   const candidates = matchingPrices(terminal, kind, catalog);
   const price = uniquePrice(candidates);
+  const plenumOptions = terminal.commercialOptions;
+  const customPlenum =
+    kind === "insulated-plenum" && customTerminalPlenum(plenumOptions);
+  const connectionLabels = {
+    lateral: "laterale",
+    upper: "superiore",
+    lower: "inferiore",
+    rear: "posteriore",
+    custom: "personalizzato",
+  };
   const labels = {
     terminal: "Terminale",
     "insulated-plenum": "Plenum terminale isolato",
@@ -301,8 +377,13 @@ function priceLine(
     "fixing-kit": "Kit di fissaggio",
     accessory: "Accessorio",
   };
+  const unitPrice = price
+    ? kind === "terminal"
+      ? terminalFinishPrice(price, terminal.color)
+      : price.unitPriceCents
+    : null;
   const extended =
-    price && quantity !== null ? price.unitPriceCents * quantity : null;
+    unitPrice !== null && quantity !== null ? unitPrice * quantity : null;
   if (extended !== null && !Number.isSafeInteger(extended))
     throw new Error("Importo commerciale fuori intervallo sicuro.");
   return {
@@ -311,21 +392,33 @@ function priceLine(
     systemId: terminal.systemId,
     familyCode: terminal.family,
     kind,
-    label: price?.label ?? `${labels[kind]} ${terminal.family}`,
+    label:
+      (customPlenum
+        ? `Plenum terminale ${plenumOptions?.plenumMaterial === "galvanized" ? "zincato non isolato" : "isolato"} ${terminal.family}`
+        : (price?.label ?? `${labels[kind]} ${terminal.family}`)) +
+      (kind === "insulated-plenum"
+        ? ` · ${plenumOptions?.plenumShape === "trapezoidal" ? "trapezoidale" : "rettangolare"}${plenumOptions?.connectionPosition ? ` · stacco ${connectionLabels[plenumOptions.connectionPosition]}${plenumOptions.connectionPosition === "custom" && plenumOptions.connectionNote ? `: ${plenumOptions.connectionNote}` : ""}` : ""}`
+        : "") +
+      (kind === "terminal" && terminal.color
+        ? ` · ${terminalFinishLabel(terminal.color)}`
+        : ""),
     sku: price?.modelCode ?? null,
     quantity,
-    unitPriceCents: price?.unitPriceCents ?? null,
+    unitPriceCents: unitPrice,
     extendedPriceCents: extended,
     currency: "EUR",
     status: extended === null ? "unknown" : "known",
-    reason:
-      quantity === null
+    reason: customPlenum
+      ? "Plenum su richiesta: prezzo e dimensioni degli stacchi da confermare con il fornitore."
+      : quantity === null
         ? "Quantità richiesta non verificata nelle istruzioni del costruttore."
-        : price
-          ? null
-          : candidates.length
-            ? "Variante commerciale ambigua: registrare modello, colore e posizione dello stacco."
-            : "Prezzo di listino ufficiale non disponibile per questa misura e variante esatta.",
+        : price && unitPrice === null
+          ? "Verniciatura del colore scelto: prezzo da quotare a Ecoclima."
+          : price
+            ? null
+            : candidates.length
+              ? "Variante commerciale ambigua: registrare modello, colore e posizione dello stacco."
+              : "Prezzo di listino ufficiale non disponibile per questa misura e variante esatta. Richiedere quotazione a Ecoclima.",
     sourceMetadata: price?.sourceMetadata ?? null,
     quantitySourceMetadata: quantitySource,
   };
@@ -370,7 +463,10 @@ export function calculateEcoclimaBom(
       terminal,
       catalog,
     );
-    if (terminal.commercialOptions?.insulatedPlenum !== false)
+    if (
+      terminal.commercialOptions?.insulatedPlenum !== false ||
+      terminal.commercialOptions?.plenumMaterial
+    )
       lines.push(priceLine(terminal, "insulated-plenum", 1, catalog));
     if (
       specification?.fixingBridgeQuantity ||
@@ -529,11 +625,17 @@ export function terminalSupplyConnections(
       catalog,
     );
     const plenum = specification?.plenum;
-    if (!plenum) {
+    if (
+      !plenum ||
+      customTerminalPlenum(terminal.commercialOptions) ||
+      (terminal.commercialOptions?.insulatedPlenum === false &&
+        !terminal.commercialOptions.plenumMaterial)
+    ) {
       issues.push({
         terminalId: terminal.id,
-        reason:
-          "Plenum e stacchi originali mancanti o posizione dello stacco non registrata.",
+        reason: customTerminalPlenum(terminal.commercialOptions)
+          ? "Plenum su richiesta: dimensioni e numero degli stacchi da confermare."
+          : "Plenum e stacchi originali mancanti o posizione dello stacco non registrata.",
       });
       continue;
     }

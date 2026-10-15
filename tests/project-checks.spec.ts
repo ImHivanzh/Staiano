@@ -43,7 +43,7 @@ test("verified geometry still requires an installation and checks open the relev
   await issue.getByRole("button", { name: "Mostra nel progetto" }).click();
   await expect(page.locator("#proprieta-progetto")).toBeFocused();
   await expect(
-    page.getByRole("button", { name: "Configura impianto", exact: true }),
+    page.getByRole("button", { name: /^(?:Vista |Configura impianto$)/, exact: true }),
   ).toBeVisible();
   await expect(page.locator(".proprieta")).toContainText("Soggiorno");
   await page.reload();
