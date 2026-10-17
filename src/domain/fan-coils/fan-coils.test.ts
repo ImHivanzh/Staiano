@@ -4,6 +4,7 @@ import { projectSchema } from "@/schemas/project";
 import {
   fanCoilCatalog,
   fanCoilProductAtVersion,
+  fanCoilCatalogAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
   type FanCoilCatalog,
@@ -24,6 +25,68 @@ function fixture() {
 }
 
 describe("ventilconvettori originali", () => {
+  it("importa solo taglie P/PO documentate con ingombro senza mobile e condizioni distinte", () => {
+    const concealed = fanCoilCatalog.products.filter((p) =>
+      ["FCZ P", "FCZ PO"].includes(p.family),
+    );
+    expect(concealed.filter((p) => p.family === "FCZ P")).toHaveLength(26);
+    expect(concealed.filter((p) => p.family === "FCZ PO")).toHaveLength(21);
+    expect(
+      concealed.some((p) =>
+        ["FCZ100PO", "FCZ800PO", "FCZ1000PO"].includes(p.model),
+      ),
+    ).toBe(false);
+    for (const product of concealed) {
+      expect(product.depthMm).toBe(216);
+      expect(product.operatingPoints).toHaveLength(3);
+      expect(product.mountings).toEqual(["wall", "ceiling"]);
+      expect(product.sourceMetadata.sourceUrl).toBe(
+        "https://www.aermec.com/download?id=22888",
+      );
+      expect(product.operatingPoints[0].heatingConditions).toContain(
+        product.pipes === "4" ? "65/55" : "45/40",
+      );
+      if (product.family === "FCZ PO") {
+        expect(product.operatingPoints[1].label).toBe("Media · 50 Pa");
+        expect(
+          product.operatingPoints.every((point) => point.noiseDbA === null),
+        ).toBe(true);
+      }
+    }
+    const p = concealed.find((p) => p.model === "FCZ200P")!;
+    const po = concealed.find((p) => p.model === "FCZ200PO")!;
+    expect([p.widthMm, p.heightMm, p.depthMm]).toEqual([562, 453, 216]);
+    expect(p.operatingPoints[2].coolingW).toBe(1600);
+    expect(po.operatingPoints[2].coolingW).toBe(1440);
+    expect(
+      concealed.find((p) => p.model === "FCZ201P")!.operatingPoints[2]
+        .airflowM3h,
+    ).toBeNull();
+  });
+
+  it("posa P/PO a soffitto e conserva i prodotti delle versioni precedenti", () => {
+    const previous = fanCoilCatalogAtVersion("fan-coils-211ce7f343b9c3dd")!;
+    expect(previous).not.toBeNull();
+    for (const product of previous.products) {
+      expect(fanCoilCatalog.products.find((p) => p.id === product.id)).toEqual(
+        product,
+      );
+    }
+    expect(fanCoilCatalog.controls).toEqual(previous.controls);
+    for (const id of ["aermec-fcz200p", "aermec-fcz201po"]) {
+      const p = fixture();
+      const placed = applyFanCoil(p, p.rooms[0].id, id, 1, {
+        mounting: "ceiling",
+      });
+      const loaded = projectSchema.parse(JSON.parse(JSON.stringify(placed)));
+      expect(loaded.fanCoils![0].productId).toBe(id);
+      expect(loaded.fanCoils![0].depthMm).toBe(216);
+      expect(
+        installedFanCoilCapacity(loaded, p.rooms[0].id).coolingW,
+      ).toBeGreaterThan(0);
+    }
+  });
+
   it("persiste più modelli e velocità nello stesso ambiente senza sovrascrivere la posa", () => {
     let p = fixture();
     const roomId = p.rooms[0].id;

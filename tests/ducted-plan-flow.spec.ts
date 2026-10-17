@@ -2,7 +2,7 @@ import { pickTerminalLength, terminalLengthButton } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Locator, Page } from "@playwright/test";
 import { test, expect } from "./browser-test";
-import { openDisclosure } from "./ui-helpers";
+import { dragPlanDevice, openDisclosure } from "./ui-helpers";
 import { projectSchema } from "../src/schemas/project";
 
 const legacy = JSON.parse(
@@ -383,6 +383,7 @@ for (const width of [1920, 1024]) {
   test(`places and moves fan coils and heat pumps on the plan at ${width}`, async ({
     page,
   }, info) => {
+    test.setTimeout(60000);
     await page.setViewportSize({ width, height: width === 1920 ? 1080 : 768 });
     await load(page);
     const plan = await launch(page);
@@ -403,9 +404,8 @@ for (const width of [1920, 1024]) {
     await expect(equipment).toHaveCount(0);
     await page.keyboard.press("Escape");
     await page.keyboard.press("m");
-    await plan.getByTestId("fan-coil-2d").click();
+    await dragPlanDevice(page, plan, plan.getByTestId("fan-coil-2d"), 3, 0.4);
     await expect(page.locator("dialog[open]")).toHaveCount(0);
-    await point(plan, 3, 0.4);
 
     await plan
       .getByRole("button", { name: "Pompa di calore", exact: true })
@@ -419,6 +419,10 @@ for (const width of [1920, 1024]) {
     expect(pending.hydronicSystems).toHaveLength(0);
     await page.reload();
     await expect(plan.getByTestId("draft-heatPump")).toHaveCount(1);
+    await plan.getByRole("button", { name: "Collega", exact: true }).click();
+    await plan.getByTestId("draft-heatPump").click();
+    await plan.getByTestId("fan-coil-2d").click();
+    await page.keyboard.press("Escape");
     await plan.getByTestId("draft-heatPump").click();
     const pumpDialog = page.getByRole("dialog", {
       name: "Scegli pompa di calore",
@@ -434,7 +438,7 @@ for (const width of [1920, 1024]) {
       .getByRole("group", { name: "Ventilconvettori collegati" })
       .getByRole("checkbox")
       .check();
-    await pumpDialog.locator(":scope > div").evaluate((node) => {
+    await pumpDialog.locator(":scope > div:not([popover])").evaluate((node) => {
       node.scrollTop = 0;
     });
     await pumpDialog.screenshot({ path: info.outputPath("pump-popup.png") });
@@ -446,13 +450,12 @@ for (const width of [1920, 1024]) {
     const move = plan.getByRole("button", { name: "Muovi (M)", exact: true });
     await page.keyboard.press("Escape");
     await move.click();
-    await plan.getByTestId("heat-pump-2d").locator("rect").click();
-    await point(plan, 4, 3);
-    await expect(plan.getByRole("alert").first()).toContainText(
+    await dragPlanDevice(page, plan, plan.getByTestId("heat-pump-2d"), 4, 3);
+    await expect(page.locator(".notifica-toast[role=alert]")).toContainText(
       "Posizione rifiutata",
     );
     await expect(move).toHaveAttribute("aria-pressed", "true");
-    await point(plan, 5, -0.6);
+    await dragPlanDevice(page, plan, plan.getByTestId("heat-pump-2d"), 5, -0.6);
     await expect(move).toHaveAttribute("aria-pressed", "false");
     await plan.getByTestId("heat-pump-2d").locator("rect").click();
     await expect(pumpDialog).toBeVisible();
@@ -704,7 +707,7 @@ for (const width of [1920, 1024]) {
     await expect(move).toBeVisible();
     await move.click();
     await point(plan, 3, 3);
-    await expect(plan).toContainText("Seleziona prima l’elemento da muovere.");
+    await expect(plan).toContainText("Trascina l’oggetto");
     await page.keyboard.press("Escape");
 
     await plan.getByRole("button", { name: "Macchina", exact: true }).click();
@@ -716,7 +719,7 @@ for (const width of [1920, 1024]) {
     await expect(move).toHaveAttribute("aria-pressed", "true");
     await machine.click();
     await expect(page.locator("dialog[open]")).toHaveCount(0);
-    await point(plan, 3, 4);
+    await dragPlanDevice(page, plan, machine, 3, 4);
     await expect(machine).not.toHaveAttribute("transform", before!);
 
     await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
@@ -726,7 +729,7 @@ for (const width of [1920, 1024]) {
     const draft = plan.getByTestId("draft-terminal");
     await draft.click();
     await expect(page.locator("dialog[open]")).toHaveCount(0);
-    await point(plan, 5, 2);
+    await dragPlanDevice(page, plan, draft, 5, 2);
     const result = await saved(page);
     expect(result.ductedDrafts!.at(-1)!.position.x).toBeCloseTo(5, 1);
     expect(result.ductedDrafts!.at(-1)!.position.y).toBeCloseTo(2, 1);

@@ -141,6 +141,7 @@ export function RoomAirTerminals({
         .filter((count) => count !== null),
     ),
   ].sort((a, b) => a - b);
+  const recommendedSolution = requiredForSizing ? allSolutions[0] : undefined;
   const countSolutions = allSolutions.filter(
     (item) => slotCount === null || item.variant.slotCount === slotCount,
   );
@@ -152,12 +153,13 @@ export function RoomAirTerminals({
     ),
   ].sort((a, b) => a - b);
   const selectedWidth =
-    slotWidth ?? (slotWidths.includes(30) ? 30 : (slotWidths[0] ?? null));
+    slotWidth ??
+    recommendedSolution?.variant.slotWidthMm ??
+    (slotWidths.includes(30) ? 30 : (slotWidths[0] ?? null));
   const solutions = countSolutions.filter(
     (item) =>
       selectedWidth === null || item.variant.slotWidthMm === selectedWidth,
   );
-  const recommendedSolution = requiredForSizing ? solutions[0] : undefined;
   const solution =
     (choice === null && existing
       ? solutions.find(
@@ -408,7 +410,7 @@ export function RoomAirTerminals({
                     consigliata in base al fabbisogno della stanza.
                   </p>
                 )}
-                <div className={styles.selection}>
+                <div className={`${styles.selection} ${styles.terminalSetup}`}>
                   {slots.length > 0 && (
                     <SizeButtons
                       label="Numero di feritoie"
@@ -442,23 +444,54 @@ export function RoomAirTerminals({
                       disponibili soltanto punti di catalogo entro 37 dB(A).
                     </p>
                   )}
-                  <label className="campo">
-                    <span>Montaggio terminale</span>
-                    <select
-                      value={mounting}
-                      onChange={(event) =>
-                        setMounting(event.target.value as "wall" | "ceiling")
-                      }
-                    >
+                  <div
+                    className={styles.mountingChoices}
+                    role="group"
+                    aria-label="Montaggio terminale"
+                  >
+                    <span className={styles.sizeLabel}>
+                      Montaggio terminale
+                    </span>
+                    <div>
                       {(
                         airTerminalMountings(family) ?? ["wall", "ceiling"]
                       ).map((value) => (
-                        <option key={value} value={value}>
+                        <button
+                          key={value}
+                          type="button"
+                          aria-pressed={mounting === value}
+                          onClick={() => setMounting(value)}
+                        >
+                          <svg viewBox="0 0 64 40" aria-hidden="true">
+                            <path d="M10 34V6H58" />
+                            {value === "wall" ? (
+                              <path
+                                className={styles.mountingTerminal}
+                                d="M10 14V27"
+                              />
+                            ) : (
+                              <path
+                                className={styles.mountingTerminal}
+                                d="M26 6H45"
+                              />
+                            )}
+                            {value === "wall" ? (
+                              <path
+                                className={styles.mountingAir}
+                                d="M17 20H40m-5-4 5 4-5 4"
+                              />
+                            ) : (
+                              <path
+                                className={styles.mountingAir}
+                                d="M35 13V32m-4-5 4 5 4-5"
+                              />
+                            )}
+                          </svg>
                           {value === "wall" ? "Parete" : "Soffitto"}
-                        </option>
+                        </button>
                       ))}
-                    </select>
-                  </label>
+                    </div>
+                  </div>
                   <details
                     className={styles.technical}
                     open={!family.isLinearPerMeter}

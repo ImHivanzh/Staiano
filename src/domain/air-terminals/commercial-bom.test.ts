@@ -8,9 +8,28 @@ import {
   commercialChoicesForTerminal,
   resolveTerminalAccessorySpecification,
   terminalSupplyConnections,
+  terminalPlenumSpecification,
 } from "./commercial-bom";
 
 type Terminal = Project["airTerminals"][number];
+it("resolves every standard EDLS module independently in a composed line", () => {
+  const family = airTerminalCatalog.families.find(
+    (item) => item.familyCode === "EDLS",
+  )!;
+  for (const variant of family.variants) {
+    for (const length of variant.commercialLengthsMm) {
+      expect(
+        terminalPlenumSpecification("EDLS", variant, length)?.lengthMm,
+      ).toBe(length);
+    }
+    const modules = [2000, 2000].map((length) =>
+      terminalPlenumSpecification("EDLS", variant, length)!,
+    );
+    expect(modules.map((item) => item.lengthMm)).toEqual([2000, 2000]);
+    expect(modules.reduce((sum, item) => sum + item.portCount, 0)).toBe(4);
+    expect(terminalPlenumSpecification("EDLS", variant, 4000)).toBeNull();
+  }
+});
 function terminal(lengthMm = 1000, slots = 1, width = 20): Terminal {
   const family = airTerminalCatalog.families.find(
     (item) => item.familyCode === "EDLS",

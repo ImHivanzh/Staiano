@@ -30,7 +30,7 @@ it("rejects foreign origins and invalid parameters before contacting the scanner
     403,
   );
   for (const body of [
-    { dpi: 600, sorgente: "adf" },
+    { dpi: 1200, sorgente: "adf" },
     { dpi: 150, sorgente: "usb" },
     { dpi: 150, sorgente: "adf", host: "external.test" },
     null,
@@ -42,11 +42,11 @@ it("rejects foreign origins and invalid parameters before contacting the scanner
 it("acquires directly through the local bridge and returns the PDF", async () => {
   const pdf = Buffer.from("%PDF-1.7\nscan");
   vi.mocked(scanPantum).mockResolvedValue(pdf);
-  const response = await POST(request({ dpi: 300, sorgente: "piano" }));
+  const response = await POST(request({ dpi: 600, sorgente: "piano" }));
   expect(response.status).toBe(200);
   expect(await response.text()).toBe(pdf.toString());
   expect(response.headers.get("cache-control")).toContain("no-store");
-  expect(scanPantum).toHaveBeenCalledWith(300, "piano");
+  expect(scanPantum).toHaveBeenCalledWith(600, "piano");
 });
 
 it("preserves busy, empty tray, missing runtime and timeout errors", async () => {

@@ -1,20 +1,36 @@
 "use client";
 import type { TerminalPlenumOptions } from "@/domain/catalogs/ecoclima-price-schema";
-import { terminalPlenumConnections } from "@/domain/air-terminals/commercial-bom";
+import {
+  terminalPlenumConnections,
+  terminalPlenumSpecification,
+} from "@/domain/air-terminals/commercial-bom";
+import type { AirTerminalVariant } from "@/domain/catalogs/air-terminal-schema";
+import { TerminalPlenumPreview3D } from "@/configurator/viewer3d/TerminalPlenumPreview3D";
 import styles from "./RoomAirTerminals.module.css";
 
 export function TerminalPlenumFields({
   options,
   onChange,
   familyCode,
+  variant,
+  lengthMm,
+  moduleLengthsMm,
 }: {
   options: TerminalPlenumOptions;
   onChange: (patch: Partial<TerminalPlenumOptions>) => void;
   familyCode: string;
+  variant?: AirTerminalVariant;
+  lengthMm?: number | null;
+  moduleLengthsMm?: number[];
 }) {
   const material =
     options.plenumMaterial ?? (options.insulatedPlenum ? "insulated" : "none");
   const connections = terminalPlenumConnections(familyCode);
+  const plenums = (moduleLengthsMm ?? [lengthMm]).map((moduleLength) =>
+    variant
+      ? terminalPlenumSpecification(familyCode, variant, moduleLength)
+      : null,
+  );
   return (
     <fieldset className={styles.plenumSettings}>
       <legend>Plenum della bocchetta</legend>
@@ -172,6 +188,20 @@ export function TerminalPlenumFields({
           )}
         </>
       )}
+      {material !== "none" &&
+        (moduleLengthsMm?.some(
+          (value) => !Number.isFinite(value) || value <= 0,
+        ) ? (
+          <p className={styles.plenumPreview} role="status">
+            Seleziona la lunghezza di ogni modulo nella scheda Bocchetta per
+            vedere i relativi plenum.
+          </p>
+        ) : (
+          <TerminalPlenumPreview3D
+            plenums={plenums}
+            className={styles.plenumPreview}
+          />
+        ))}
     </fieldset>
   );
 }

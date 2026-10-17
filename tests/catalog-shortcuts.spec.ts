@@ -16,6 +16,15 @@ test("equipment shortcuts preserve inputs and work across 2D and 3D", async ({
   const toolbar = page.getByRole("toolbar", {
     name: "Strumenti della planimetria",
   });
+  for (const button of await toolbar
+    .locator("button[aria-keyshortcuts]")
+    .all()) {
+    const key = await button.getAttribute("aria-keyshortcuts");
+    await expect(button).toHaveAttribute(
+      "title",
+      new RegExp(String.raw`\(${key === "Space" ? "Spazio" : key}\)$`),
+    );
+  }
   for (const [key, label] of [
     ["c", "Collega"],
     ["p", "Pompa di calore"],
@@ -28,6 +37,12 @@ test("equipment shortcuts preserve inputs and work across 2D and 3D", async ({
     await expect(
       toolbar.getByRole("button", { name: label, exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
+    await expect(
+      toolbar.getByRole("button", { name: label, exact: true }),
+    ).toHaveAttribute(
+      "title",
+      new RegExp(String.raw`\(${key.toUpperCase()}\)$`),
+    );
     await page.keyboard.press("Escape");
     await expect(
       toolbar.getByRole("button", { name: "Seleziona", exact: true }),
@@ -44,6 +59,12 @@ test("equipment shortcuts preserve inputs and work across 2D and 3D", async ({
       .getByRole("button", { name: /Collega/ })
       .first(),
   ).toHaveAttribute("aria-pressed", "true");
+  await expect(
+    page
+      .getByTestId("viewer-3d")
+      .getByRole("button", { name: /Collega/ })
+      .first(),
+  ).toHaveAttribute("title", "Collega macchina e bocchetta (C)");
   await page.keyboard.press("Escape");
   await page.keyboard.press("p");
   await expect(

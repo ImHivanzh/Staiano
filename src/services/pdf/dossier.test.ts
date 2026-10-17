@@ -97,7 +97,7 @@ describe("Dossier tecnico locale", () => {
     expect(new Set([...d.codes.values()]).size).toBe(d.codes.size);
     expect(d.sources.length).toBeGreaterThanOrEqual(4);
     expect(d.unresolved).toEqual([]);
-    expect(d.materials.reduce((sum, m) => sum + m.quantity, 0)).toBe(
+    expect(d.materials.reduce((sum, m) => sum + m.pieces, 0)).toBe(
       p.radiators.length + p.airTerminals.length + p.hvacSystems.length,
     );
     expect(TECHNICAL_NOTE).toContain("Non sostituisce");
@@ -105,6 +105,57 @@ describe("Dossier tecnico locale", () => {
       "tecnico qualificato prima dell’esecuzione",
     );
     expect(d.materials.every((row) => row.locales.length > 0)).toBe(true);
+  });
+  it("elenca staffe, valvola, detentore e kit copritubo di ogni radiatore nella distinta", () => {
+    const p = dossierFixture(),
+      d = buildDossier(p);
+    expect(p.radiators.length).toBeGreaterThan(0);
+    for (const noun of [
+      "Staffe di sostegno",
+      "Valvola",
+      "Detentore",
+      "Kit copritubo",
+    ]) {
+      const rows = d.accessories.filter((row) =>
+        row.description.startsWith(`${noun} `),
+      );
+      expect(rows, `accessorio ${noun} una sola riga per modello`).toHaveLength(
+        1,
+      );
+      expect(rows[0].quantity).toBe(p.radiators.length);
+      expect(rows[0].codes).toEqual(
+        p.radiators.map((_, index) => `RAD${index + 1}`),
+      );
+      expect(rows[0].locales.length).toBeGreaterThan(0);
+    }
+    expect(
+      d.accessories
+        .filter((row) => row.description.startsWith("Valvola "))
+        .every((row) => row.details.includes("codice articolo")),
+    ).toBe(true);
+  });
+  it("esprime la quantità dei radiatori in elementi con le dimensioni a colonna", () => {
+    const p = dossierFixture(),
+      d = buildDossier(p);
+    const rows = d.materials.filter((row) =>
+      row.codes.some((code) => code.startsWith("RAD")),
+    );
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows.reduce((sum, row) => sum + row.pieces, 0)).toBe(
+      p.radiators.length,
+    );
+    for (const row of rows) {
+      const elements = p.radiators
+        .filter((_, index) => row.codes.includes(`RAD${index + 1}`))
+        .map((radiator) => radiator.elements);
+      expect(new Set(elements).size).toBe(1);
+      expect(row.unit).toBe("elementi");
+      expect(row.pieceUnit).toBe("batterie");
+      expect(row.pieces).toBe(elements.length);
+      expect(row.quantity).toBe(elements[0] * row.pieces);
+      expect(row.details).toContain(`Batteria da ${elements[0]} elementi`);
+      expect(row.dimensions).toMatch(/^\d+ x \d+ x \d+ mm$/);
+    }
   });
   it("genera PDF reale con cover, A3 vettoriale e schede oltre la distinta", async () => {
     const p = dossierFixture(),

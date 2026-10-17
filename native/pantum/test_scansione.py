@@ -32,7 +32,7 @@ class FakeDriver:
 
 class ScanTests(unittest.TestCase):
     def test_parameters_pixels_and_dpi(self):
-        for dpi in (150, 300):
+        for dpi in (150, 300, 600):
             params = scan._parameters(dpi)
             self.assertEqual(len(params), 1108)
             self.assertEqual(params[:2], b"\0\2")
@@ -41,11 +41,12 @@ class ScanTests(unittest.TestCase):
             self.assertEqual(width % 4, 0)
             self.assertAlmostEqual(width / dpi * 25.4, 210, delta=1)
             self.assertAlmostEqual(height / dpi * 25.4, 297, delta=1)
-        for dpi in (True, 0, 600, "150", 150.0):
+        for dpi in (True, 0, 1200, "150", 150.0):
             with self.assertRaises(scan.ScannerError):
                 scan._parameters(dpi)
 
     def test_header_limits(self):
+        self.assertEqual(scan._image_info(header(width=4960, height=7016, stride=4960, dpi=600), 600), (4960, 7016, 4960))
         self.assertEqual(scan._image_info(header(), 150), (4, 2, 4))
         for value in (b"", header(width=0), header(height=10000), header(stride=1),
                       header(depth=24), header(dpi=300)):

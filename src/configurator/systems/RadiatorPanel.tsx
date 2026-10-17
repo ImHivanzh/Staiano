@@ -83,6 +83,9 @@ export function RadiatorPanel({
     [progress, setProgress] = useState<RadiatorProgress | null>(null);
   const searchController = useRef<AbortController | null>(null);
   const requestId = useRef(0);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const autoKey = useRef<string | null>(null);
+  const [formVersion, setFormVersion] = useState(0);
   useEffect(
     () => () => {
       searchController.current?.abort();
@@ -140,28 +143,51 @@ export function RadiatorPanel({
     change();
     resetSearch();
   }
-  if (room.geometryStatus === "unresolved")
-    return (
-      <section className="pannello-radiatori">
-        <h3>Dimensiona radiatori</h3>
-        <p className="avviso attenzione">
-          Chiudi il contorno della stanza: superficie e fabbisogno devono essere
-          ricalcolati.
-        </p>
-      </section>
-    );
-  if (!project.floors.find((f) => f.id === room.floorId)?.scaleVerified)
-    return (
-      <section className="pannello-radiatori">
-        <h3>Dimensiona radiatori</h3>
-        <p className="avviso attenzione">
-          Verifica la scala della planimetria prima del dimensionamento.
-        </p>
-      </section>
-    );
-  async function search(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget),
+  function applySolution(
+    solution: RadiatorSolution,
+    targetWallId: string | null,
+  ) {
+    (onPlace ?? commit)((p) => {
+      const result = applyRadiatorSolution(
+        p,
+        room.id,
+        solution,
+        targetWallId,
+        installationId,
+        !!onPlace,
+      );
+      const oldIds = new Set(p.radiators.map((radiator) => radiator.id));
+      return {
+        ...result,
+        radiators: result.radiators.map((radiator) =>
+          oldIds.has(radiator.id)
+            ? radiator
+            : {
+                ...radiator,
+                finishes: {
+                  ...(existingDevice?.manufacturer === radiator.manufacturer &&
+                  existingDevice.family === radiator.family
+                    ? existingDevice.finishes
+                    : {}),
+                  bodyColorId:
+                    bodyColorId &&
+                    getRadiatorFinishOptions(
+                      radiator.manufacturer,
+                      radiator.family,
+                      "body",
+                    ).some((finish) => finish.id === bodyColorId)
+                      ? bodyColorId
+                      : undefined,
+                  catalogVersion: radiatorFinishCatalogVersion,
+                },
+              },
+        ),
+      };
+    });
+    if (!useProjectStore.getState().error) setSolutions(null);
+  }
+  async function runSearch(form: HTMLFormElement, auto = false) {
+    const data = new FormData(form),
       optional = (name: string) =>
         data.get(name) ? numberFromForm(data.get(name)) : undefined;
     const selectedWall = String(data.get("wallId"));
@@ -203,6 +229,12 @@ export function RadiatorPanel({
       setSelectedSolution(0);
       setSolutionSignature(roomSignature);
       setError(null);
+      // Con una sola soluzione compatibile non c'è nulla da confrontare.
+      // Dopo una ricerca manuale viene applicata subito; quando invece i criteri
+      // ammettono già un solo radiatore, il calcolo parte da solo e
+      // l'applicazione resta al comando Salva dell'utente.
+      if (found.length === 1 && found[0].searchComplete && !auto)
+        applySolution(found[0], selectedWall || null);
     } catch (e) {
       if (
         currentRequest !== requestId.current ||
@@ -216,6 +248,44 @@ export function RadiatorPanel({
       if (currentRequest === requestId.current) setSearching(false);
     }
   }
+  // Criteri che ammettono un solo radiatore: nulla da confrontare, il calcolo
+  // parte da solo e l'applicazione resta al comando Salva dell'utente.
+  const singleCandidate = !!family && selectedProducts.length === 1;
+  useEffect(() => {
+    if (!singleCandidate) return;
+    const form = formRef.current;
+    if (!form) return;
+    const entries = [...new FormData(form).entries()]
+      .map(([name, value]) => `${name}=${String(value)}`)
+      .join("&");
+    const key = `${manufacturer}|${exactFamily}|${columns ?? ""}|${size}|${entries}`;
+    if (autoKey.current === key) return;
+    const timer = setTimeout(() => {
+      autoKey.current = key;
+      void runSearch(form, true);
+    }, 350);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [singleCandidate, manufacturer, exactFamily, columns, size, formVersion]);
+  if (room.geometryStatus === "unresolved")
+    return (
+      <section className="pannello-radiatori">
+        <h3>Dimensiona radiatori</h3>
+        <p className="avviso attenzione">
+          Chiudi il contorno della stanza: superficie e fabbisogno devono essere
+          ricalcolati.
+        </p>
+      </section>
+    );
+  if (!project.floors.find((f) => f.id === room.floorId)?.scaleVerified)
+    return (
+      <section className="pannello-radiatori">
+        <h3>Dimensiona radiatori</h3>
+        <p className="avviso attenzione">
+          Verifica la scala della planimetria prima del dimensionamento.
+        </p>
+      </section>
+    );
   return (
     <section
       className={`${styles.panel} ${radiatorStyles.panel}`}
@@ -224,20 +294,23 @@ export function RadiatorPanel({
       <header className={styles.heading}>
         <h3>Dimensiona radiatori</h3>
         <p className="nota">
-          Imposta marca e numero di radiatori. Confronta le soluzioni che
-          coprono il fabbisogno della stanza.
+          Scegli marca, famiglia e finitura, poi indica potenza e parete. Se i
+          criteri ammettono un solo radiatore il calcolo parte da solo e
+          confermi con Salva; altrimenti «Trova radiatori compatibili» confronta
+          le soluzioni.
         </p>
       </header>
       <div className={`${styles.layout} ${radiatorStyles.layout}`}>
         <form
+          ref={formRef}
           className={styles.controls}
-          onSubmit={search}
+          onSubmit={(event) => {
+            event.preventDefault();
+            void runSearch(event.currentTarget);
+          }}
           onChange={() => {
-            searchController.current?.abort();
-            requestId.current++;
-            setSearching(false);
-            setSolutions(null);
-            setProgress(null);
+            resetSearch();
+            setFormVersion((value) => value + 1);
           }}
         >
           <h4>Criteri di scelta</h4>
@@ -461,131 +534,154 @@ export function RadiatorPanel({
               )}
             </fieldset>
           )}
-          <div className="griglia-misure">
-            {onPlace && (
+          <div className={radiatorStyles.section}>
+            <h4>Dimensionamento e posa</h4>
+            <div className={radiatorStyles.measures}>
+              {onPlace ? (
+                <label className="campo">
+                  <span>Potenza da coprire con questo punto (W)</span>
+                  <input
+                    name="pointLoad"
+                    aria-label="Potenza da coprire con questo punto (W)"
+                    type="number"
+                    min="1"
+                    step="1"
+                    defaultValue={Math.max(
+                      1,
+                      existingDevice?.outputW ??
+                        Math.ceil(
+                          room.designLoadW -
+                            installed.reduce(
+                              (sum, device) => sum + device.outputW,
+                              0,
+                            ),
+                        ),
+                    )}
+                    required
+                  />
+                  <small className="nota">
+                    Quota di fabbisogno di questo punto.
+                  </small>
+                </label>
+              ) : (
+                <label className="campo">
+                  <span>Numero radiatori</span>
+                  <input
+                    name="number"
+                    aria-label="Numero radiatori"
+                    type="number"
+                    min="1"
+                    max="10"
+                    defaultValue={installed.length || 1}
+                  />
+                  <small className="nota">
+                    Quanti radiatori distribuire nella stanza. Se vuoto: 1.
+                  </small>
+                </label>
+              )}
               <label className="campo">
-                <span>Potenza da coprire con questo punto (W)</span>
+                <span>ΔT progetto (K)</span>
                 <input
-                  name="pointLoad"
-                  aria-label="Potenza da coprire con questo punto (W)"
+                  name="deltaT"
                   type="number"
                   min="1"
+                  max="100"
                   step="1"
-                  defaultValue={Math.max(
-                    1,
-                    existingDevice?.outputW ??
-                      Math.ceil(
-                        room.designLoadW -
-                          installed.reduce(
-                            (sum, device) => sum + device.outputW,
-                            0,
-                          ),
-                      ),
-                  )}
+                  defaultValue={
+                    existingDevice?.deltaTK ??
+                    project.installations.find(
+                      (item) => item.id === installationId,
+                    )?.radiatorDeltaTK ??
+                    project.projectSettings.radiatorDeltaTK
+                  }
                   required
                 />
                 <small className="nota">
-                  Per distribuire il fabbisogno su più punti, indica la quota di
-                  questo radiatore. Il totale resta visibile nella vista
-                  impianto.
+                  Differenza di temperatura mandata/ritorno usata nel calcolo.
                 </small>
               </label>
+            </div>
+            {onPlace && (
+              <p className={`nota ${radiatorStyles.fieldNote}`}>
+                Un radiatore per ogni punto: per aggiungerne altri, crea altri
+                punti sulla pianta. Il totale della stanza resta nella vista
+                impianto.
+              </p>
             )}
             <label className="campo">
-              <span>Numero radiatori</span>
-              <input
-                name="number"
-                aria-label="Numero radiatori"
-                type="number"
-                min="1"
-                max={onPlace ? "1" : "10"}
-                readOnly={!!onPlace}
-                defaultValue={onPlace ? 1 : installed.length || 1}
-              />
-              <small className="nota">
-                {onPlace
-                  ? "Un radiatore su questo punto. Per aggiungerne altri, crea altri punti sulla pianta."
-                  : "Se vuoto: 1 radiatore."}
-              </small>
+              <span>Parete</span>
+              <select name="wallId">
+                <option value="">Distribuzione automatica sulle pareti</option>
+                {project.walls
+                  .filter((w) => room.wallIds.includes(w.id))
+                  .map((w, i) => (
+                    <option key={w.id} value={w.id}>
+                      Parete {i + 1}
+                    </option>
+                  ))}
+              </select>
             </label>
-            <label className="campo">
-              <span>ΔT progetto (K)</span>
-              <input
-                name="deltaT"
-                type="number"
-                min="1"
-                max="100"
-                step="1"
-                defaultValue={
-                  existingDevice?.deltaTK ??
-                  project.installations.find(
-                    (item) => item.id === installationId,
-                  )?.radiatorDeltaTK ??
-                  project.projectSettings.radiatorDeltaTK
-                }
-                required
-              />
-            </label>
+            <details>
+              <summary>Vincoli dimensionali opzionali</summary>
+              <label className="campo">
+                <span>Larghezza max ciascuno (mm)</span>
+                <input type="number" name="maxWidth" min="1" />
+              </label>
+              <label className="campo">
+                <span>Altezza max (mm)</span>
+                <input type="number" name="maxHeight" min="1" />
+              </label>
+              <label className="campo">
+                <span>Profondità max (mm)</span>
+                <input type="number" name="maxDepth" min="1" />
+              </label>
+              <div className="griglia-misure">
+                <label className="campo">
+                  <span>Min elementi</span>
+                  <input type="number" name="minElements" min="1" max="500" />
+                </label>
+                <label className="campo">
+                  <span>Max elementi</span>
+                  <input type="number" name="maxElements" min="1" max="500" />
+                </label>
+              </div>
+            </details>
+            <p className="nota">
+              Base iniziale a 0,10 m dal pavimento. Verificare le distanze nel
+              manuale del modello.
+            </p>
+            {singleCandidate ? (
+              <p className={`nota ${radiatorStyles.fieldNote}`}>
+                {saveButtonRef
+                  ? "Con questi criteri è possibile un solo radiatore: il calcolo è automatico, premi Salva per applicarlo."
+                  : "Con questi criteri è possibile un solo radiatore: il calcolo è automatico."}
+              </p>
+            ) : (
+              <button
+                className={`bottone pieno ${radiatorStyles.submit}`}
+                type="submit"
+                disabled={searching}
+              >
+                {searching
+                  ? "Ricerca radiatori…"
+                  : "Trova radiatori compatibili"}
+              </button>
+            )}
+            {searching && (
+              <button
+                className={`bottone ${radiatorStyles.submit}`}
+                type="button"
+                onClick={() => {
+                  searchController.current?.abort();
+                  requestId.current++;
+                  setSearching(false);
+                  setProgress(null);
+                }}
+              >
+                Annulla ricerca
+              </button>
+            )}
           </div>
-          <button className="bottone chiara" type="submit" disabled={searching}>
-            {searching ? "Ricerca radiatori…" : "Trova radiatori compatibili"}
-          </button>
-          <label className="campo">
-            <span>Parete</span>
-            <select name="wallId">
-              <option value="">Distribuzione automatica sulle pareti</option>
-              {project.walls
-                .filter((w) => room.wallIds.includes(w.id))
-                .map((w, i) => (
-                  <option key={w.id} value={w.id}>
-                    Parete {i + 1}
-                  </option>
-                ))}
-            </select>
-          </label>
-          <details>
-            <summary>Vincoli dimensionali opzionali</summary>
-            <label className="campo">
-              <span>Larghezza max ciascuno (mm)</span>
-              <input type="number" name="maxWidth" min="1" />
-            </label>
-            <label className="campo">
-              <span>Altezza max (mm)</span>
-              <input type="number" name="maxHeight" min="1" />
-            </label>
-            <label className="campo">
-              <span>Profondità max (mm)</span>
-              <input type="number" name="maxDepth" min="1" />
-            </label>
-            <div className="griglia-misure">
-              <label className="campo">
-                <span>Min elementi</span>
-                <input type="number" name="minElements" min="1" max="500" />
-              </label>
-              <label className="campo">
-                <span>Max elementi</span>
-                <input type="number" name="maxElements" min="1" max="500" />
-              </label>
-            </div>
-          </details>
-          <p className="nota">
-            Base iniziale a 0,10 m dal pavimento. Verificare le distanze nel
-            manuale del modello.
-          </p>
-          {searching && (
-            <button
-              className="bottone piccolo"
-              type="button"
-              onClick={() => {
-                searchController.current?.abort();
-                requestId.current++;
-                setSearching(false);
-                setProgress(null);
-              }}
-            >
-              Annulla ricerca
-            </button>
-          )}
         </form>
         <div
           className={`${styles.result} ${radiatorStyles.solutions}`}
@@ -594,10 +690,17 @@ export function RadiatorPanel({
           <h4>Soluzioni compatibili</h4>
           {visibleSolutions === null && !searching && (
             <div className={styles.empty}>
-              <h4>Trova la soluzione per questa stanza</h4>
+              <h4>
+                {singleCandidate
+                  ? "Un solo radiatore possibile"
+                  : "Trova la soluzione per questa stanza"}
+              </h4>
               <p>
-                Completa i criteri e premi “Trova radiatori compatibili”. Potrai
-                confrontare potenza, ingombri e numero di elementi.
+                {singleCandidate
+                  ? saveButtonRef
+                    ? "I criteri scelti ammettono un solo radiatore: il dimensionamento parte da solo e lo applichi con Salva."
+                    : "I criteri scelti ammettono un solo radiatore: il dimensionamento parte da solo."
+                  : "Completa i criteri e premi “Trova radiatori compatibili”. Potrai confrontare potenza, ingombri e numero di elementi."}
               </p>
             </div>
           )}
@@ -738,49 +841,7 @@ export function RadiatorPanel({
                 ref={index === selectedSolution ? saveButtonRef : undefined}
                 hidden={!!saveButtonRef}
                 style={saveButtonRef ? { display: "none" } : undefined}
-                onClick={() => {
-                  (onPlace ?? commit)((p) => {
-                    const result = applyRadiatorSolution(
-                      p,
-                      room.id,
-                      solution,
-                      wallId,
-                      installationId,
-                      !!onPlace,
-                    );
-                    const oldIds = new Set(
-                      p.radiators.map((radiator) => radiator.id),
-                    );
-                    return {
-                      ...result,
-                      radiators: result.radiators.map((radiator) =>
-                        oldIds.has(radiator.id)
-                          ? radiator
-                          : {
-                              ...radiator,
-                              finishes: {
-                                ...(existingDevice?.manufacturer ===
-                                  radiator.manufacturer &&
-                                existingDevice.family === radiator.family
-                                  ? existingDevice.finishes
-                                  : {}),
-                                bodyColorId:
-                                  bodyColorId &&
-                                  getRadiatorFinishOptions(
-                                    radiator.manufacturer,
-                                    radiator.family,
-                                    "body",
-                                  ).some((finish) => finish.id === bodyColorId)
-                                    ? bodyColorId
-                                    : undefined,
-                                catalogVersion: radiatorFinishCatalogVersion,
-                              },
-                            },
-                      ),
-                    };
-                  });
-                  if (!useProjectStore.getState().error) setSolutions(null);
-                }}
+                onClick={() => applySolution(solution, wallId)}
               >
                 Applica e posiziona
               </button>

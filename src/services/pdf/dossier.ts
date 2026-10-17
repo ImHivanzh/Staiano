@@ -2,6 +2,7 @@ import type { Project } from "@/schemas/project";
 import { projectSchema } from "@/schemas/project";
 import { validateProject } from "@/domain/validation";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
+import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import {
   hvacProductAtVersion,
@@ -31,10 +32,17 @@ const display = (value: number) =>
 export type MaterialRow = {
   description: string;
   quantity: number;
+  /** Unita di misura della quantita ordinabile (elementi, pezzi, kit, metri). */
   unit: string;
+  /** Dimensioni pubblicate dal catalogo, in millimetri; vuoto quando assenti. */
+  dimensions?: string;
   details: string;
   codes: string[];
   locales: string[];
+  /** Apparecchi raggruppati dalla stessa riga. */
+  pieces: number;
+  /** Unita di `pieces` quando l'unita di ordine e diversa (radiatori: batterie ed elementi). */
+  pieceUnit?: string;
 };
 export function buildDossier(project: Project) {
   const p = projectSchema.parse(project),
@@ -45,51 +53,117 @@ export function buildDossier(project: Project) {
     if (s) sources.set(`${s.sha256}:${s.page}`, s);
     else unresolved.push(description);
   };
-  const materialMap = new Map<string, MaterialRow>();
-  const material = (
-    key: string,
-    row: Omit<MaterialRow, "quantity" | "codes" | "locales">,
-    code: string,
-  ) => {
-    const deviceId = [...codes.entries()].find(
-      ([, value]) => value === code,
-    )?.[0];
-    const system =
-      p.hvacSystems.find((s) => s.id === deviceId) ??
-      p.hydronicSystems?.find((s) => s.id === deviceId);
-    const device = [
-      ...p.radiators,
-      ...p.airTerminals,
-      ...(p.fanCoils ?? []),
-      ...p.hvacSystems.flatMap((s) => s.indoorUnits),
-    ].find((d) => d.id === deviceId);
-    const roomIds = system?.roomIds ?? (device ? [device.roomId] : []);
-    const locales = p.rooms
-      .filter((r) => roomIds.includes(r.id))
-      .map((r) => r.name);
-    const existing = materialMap.get(key);
-    if (existing) {
-      existing.quantity++;
-      existing.codes.push(code);
-      existing.locales = [...new Set([...existing.locales, ...locales])];
-    } else
-      materialMap.set(key, { ...row, quantity: 1, codes: [code], locales });
-  };
+  const materialMap = new Map<string, MaterialRow>(),
+    accessoryMap = new Map<string, MaterialRow>();
+  const collect =
+    (target: Map<string, MaterialRow>) =>
+    (
+      key: string,
+      row: Omit<MaterialRow, "quantity" | "codes" | "locales" | "pieces">,
+      code: string,
+      step = 1,
+    ) => {
+      const deviceId = [...codes.entries()].find(
+        ([, value]) => value === code,
+      )?.[0];
+      const system =
+        p.hvacSystems.find((s) => s.id === deviceId) ??
+        p.hydronicSystems?.find((s) => s.id === deviceId);
+      const device = [
+        ...p.radiators,
+        ...p.airTerminals,
+        ...(p.fanCoils ?? []),
+        ...p.hvacSystems.flatMap((s) => s.indoorUnits),
+      ].find((d) => d.id === deviceId);
+      const roomIds = system?.roomIds ?? (device ? [device.roomId] : []);
+      const locales = p.rooms
+        .filter((r) => roomIds.includes(r.id))
+        .map((r) => r.name);
+      const existing = target.get(key);
+      if (existing) {
+        existing.quantity += step;
+        existing.pieces++;
+        existing.codes.push(code);
+        existing.locales = [...new Set([...existing.locales, ...locales])];
+      } else
+        target.set(key, {
+          ...row,
+          quantity: step,
+          pieces: 1,
+          codes: [code],
+          locales,
+        });
+    };
+  const material = collect(materialMap),
+    accessoryMaterial = collect(accessoryMap);
   for (const d of p.radiators) {
-    const product = radiatorProductAtVersion(d.productId, d.catalogVersion);
+    const product = radiatorProductAtVersion(d.productId, d.catalogVersion),
+      code = codes.get(d.id)!,
+      model = `${d.manufacturer} ${product?.model ?? d.family}`;
     addSource(
       product?.sourceMetadata,
-      `${codes.get(d.id)}: catalogo radiatori ${d.catalogVersion} non disponibile`,
+      `${code}: catalogo radiatori ${d.catalogVersion} non disponibile`,
     );
+    const sectional = product?.construction !== "fixed";
     material(
       `rad:${d.productId}:${d.elements}:${d.deltaTK}`,
       {
-        description: `${d.manufacturer} ${product?.model ?? d.family}`,
-        unit: "batterie",
-        details: `${d.elements} elementi; ${display(d.widthMm)} x ${display(d.heightMm)} x ${display(d.depthMm)} mm; DT ${display(d.deltaTK)} K; ${display(d.outputW)} W`,
+        description: model,
+        unit: sectional ? "elementi" : "pezzi",
+        ...(sectional ? { pieceUnit: "batterie" } : {}),
+        dimensions: `${display(d.widthMm)} x ${display(d.heightMm)} x ${display(d.depthMm)} mm`,
+        details: `${sectional ? `Batteria da ${d.elements} elementi; ` : ""}DT ${display(d.deltaTK)} K; ${display(d.outputW)} W`,
       },
-      codes.get(d.id)!,
+      code,
+      sectional ? d.elements : 1,
     );
+    const accessory = (
+      key: string,
+      description: string,
+      unit: string,
+      details: string,
+    ) =>
+      accessoryMaterial(
+        `rad-accessorio:${key}:${d.productId}`,
+        { description, unit, details },
+        code,
+      );
+    accessory(
+      "staffe",
+      `Staffe di sostegno ${model}`,
+      "kit",
+      "Fissaggio a muro: numero di staffe e inclusione nella confezione da verificare sul catalogo del produttore.",
+    );
+    for (const { role, field, noun, unit } of [
+      { role: "valve", field: "valveColorId", noun: "Valvola", unit: "pezzi" },
+      {
+        role: "lockshield",
+        field: "lockshieldColorId",
+        noun: "Detentore",
+        unit: "pezzi",
+      },
+      {
+        role: "pipeCover",
+        field: "pipeCoverColorId",
+        noun: "Kit copritubo",
+        unit: "kit",
+      },
+    ] as const) {
+      const finish = resolveRadiatorFinish(
+        d.manufacturer,
+        d.family,
+        role,
+        d.finishes?.[field],
+      );
+      accessory(
+        `${role}:${finish?.id ?? "non-documentata"}`,
+        `${noun} ${model}`,
+        unit,
+        finish
+          ? `Finitura ${finish.label}${finish.ralCode ? `, RAL ${finish.ralCode}` : ""}; scelta grafica separata dalla vendita, codice articolo da verificare sul listino del produttore.`
+          : "Finitura non documentata per questo modello; disponibilita e codice articolo da verificare sul catalogo del produttore.",
+      );
+    }
   }
   for (const d of p.airTerminals) {
     const family = airTerminalFamilyAtVersion(d.family, d.catalogVersion);
@@ -102,7 +176,8 @@ export function buildDossier(project: Project) {
       {
         description: `Ecoclima ${airTerminalModelDescription(family, d.productId)} - ${d.use === "supply" ? "mandata" : "ripresa"}`,
         unit: "pezzi",
-        details: `Faccia ${display(d.widthMm)} x ${display(d.heightMm)} mm; profondità ${d.depthMm === null ? "non pubblicata" : display(d.depthMm) + " mm"}; ${display(d.availableAirflowM3h)} m³/h per unità`,
+        dimensions: `Faccia ${display(d.widthMm)} x ${display(d.heightMm)} mm; profondità ${d.depthMm === null ? "non pubblicata" : display(d.depthMm) + " mm"}`,
+        details: `${display(d.availableAirflowM3h)} m³/h per unità`,
       },
       codes.get(d.id)!,
     );
@@ -146,7 +221,8 @@ export function buildDossier(project: Project) {
         {
           description: `${s.manufacturer} ${indoor?.indoorModel ?? splitIndoor?.model ?? d.productId} - unità interna`,
           unit: "pezzi",
-          details: `${d.widthMm} x ${d.heightMm} x ${d.depthMm} mm; inclusa nel sistema ${codes.get(s.id)}`,
+          dimensions: `${d.widthMm} x ${d.heightMm} x ${d.depthMm} mm`,
+          details: `Inclusa nel sistema ${codes.get(s.id)}`,
         },
         codes.get(d.id)!,
       );
@@ -173,7 +249,8 @@ export function buildDossier(project: Project) {
           ? `${product.manufacturer} ${product.family} ${product.model}`
           : unit.productId,
         unit: "pezzi",
-        details: `${unit.widthMm} x ${unit.heightMm} x ${unit.depthMm} mm; ${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}`,
+        dimensions: `${unit.widthMm} x ${unit.heightMm} x ${unit.depthMm} mm`,
+        details: `${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}`,
       },
       code,
     );
@@ -214,7 +291,8 @@ export function buildDossier(project: Project) {
           ? `${product.manufacturer} ${product.family} ${product.model} - pompa di calore`
           : system.productId,
         unit: "pezzi",
-        details: `${system.outdoorUnit.widthMm} x ${system.outdoorUnit.heightMm} x ${system.outdoorUnit.depthMm} mm; ${point ? `${display(point.heatingW)} W caldo / ${display(point.coolingW)} W freddo; ${point.label}` : "punto operativo non verificabile"}; ventilconvettori ${system.fanCoilIds.map((id) => codes.get(id) ?? id).join(", ") || "nessuno collegato"}`,
+        dimensions: `${system.outdoorUnit.widthMm} x ${system.outdoorUnit.heightMm} x ${system.outdoorUnit.depthMm} mm`,
+        details: `${point ? `${display(point.heatingW)} W caldo / ${display(point.coolingW)} W freddo; ${point.label}` : "punto operativo non verificabile"}; ventilconvettori ${system.fanCoilIds.map((id) => codes.get(id) ?? id).join(", ") || "nessuno collegato"}`,
       },
       codes.get(system.id)!,
     );
@@ -225,6 +303,7 @@ export function buildDossier(project: Project) {
     sources: [...sources.values()],
     unresolved,
     materials: [...materialMap.values()],
+    accessories: [...accessoryMap.values()],
     checks: validateProject(p),
     linearBalances: p.hvacSystems
       .filter((s) => s.type === "ducted")

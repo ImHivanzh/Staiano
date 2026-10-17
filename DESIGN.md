@@ -278,3 +278,10 @@ Il logo Staiano originale occupa un supporto bianco di 52px su desktop e 44px ne
 ## Area di lavoro PC
 
 Su PC con puntatore preciso (larghezza da 1100 px), gli strumenti della pianta principale sono in una toolbar verticale a sinistra. La testata compatta contiene Salva, Annulla e Ripristina con tooltip; 2D/3D e opzioni restano sopra il canvas. Il comando Pannello ambienti richiude la navigazione in una colonna di icone e restituisce spazio alla pianta. Le proprietà restano contestuali e richiudibili; la configurazione canalizzata resta nei popup sulla stessa pianta. Il layout tablet mantiene i controlli precedenti e sarà trattato separatamente.
+
+
+## Feedback e dimensionamento macchina
+
+Le notifiche di esito ed errore usano toast chiudibili, visibili per 8 secondi e accessibili anche sopra i popup. I conflitti di salvataggio restano persistenti con le azioni di recupero. Istruzioni operative e dati tecnici rimangono nel loro contesto. Il popup macchina elenca gli ambienti effettivamente considerati e il carico di ciascuno, con l’invito a collegare tutte le bocchette prima del dimensionamento. I tooltip dei comandi con scorciatoia mostrano il tasto tra parentesi.
+
+Il comando Muovi (M) trascina direttamente gli oggetti, anche se ancora da configurare. La posizione si salva al rilascio; un clic sulla pianta non sposta l’oggetto selezionato.

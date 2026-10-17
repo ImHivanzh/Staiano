@@ -14,7 +14,10 @@ export class ScannerError extends Error {
   }
 }
 
-export async function scanPantum(dpi: 150 | 300, source: "piano" | "adf") {
+export async function scanPantum(
+  dpi: 150 | 300 | 600,
+  source: "piano" | "adf",
+) {
   if (busy)
     throw new ScannerError(
       "Scanner occupato: attendi il termine dell’altra scansione.",

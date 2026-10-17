@@ -59,8 +59,8 @@ it("blocks configuration until connected and preserves links through machine and
   );
   project = connectDraftOnPlan(project, terminal.id, machine.id);
   expect(configurationBlock(project, machine.id)).toBeNull();
-  expect(configurationBlock(project, terminal.id)).toMatch(
-    /configura la macchina/,
+  expect(configurationBlock(project, terminal.id)).toBe(
+    "Configura prima la macchina.",
   );
   expect(connectedRoomIds(project, machine.id)).toEqual([terminal.roomId]);
   project = applyManualDuctedSystem(

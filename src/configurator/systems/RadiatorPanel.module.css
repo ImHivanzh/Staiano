@@ -68,6 +68,35 @@
 .solutions {
   min-width: 0;
 }
+.section {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bordo);
+}
+.section > h4 {
+  margin: 0 0 16px;
+  font-size: 15px;
+}
+.section > details {
+  margin: 16px 0;
+  font-size: 13px;
+}
+.measures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  align-items: start;
+  gap: 12px;
+}
+.measures > :global(.campo) {
+  margin-bottom: 0;
+}
+.fieldNote {
+  margin: 12px 0 14px;
+}
+.submit {
+  width: 100%;
+  margin-top: 12px;
+}
 @container (max-width: 720px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);

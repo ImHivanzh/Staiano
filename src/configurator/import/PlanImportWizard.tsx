@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "../NotificationToast";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FullscreenDialog } from "../FullscreenDialog";
@@ -56,7 +57,7 @@ export function PlanImportWizard({
   const [areaPoints, setAreaPoints] = useState<Point[]>([]);
   const [scanning, setScanning] = useState(false);
   const [scanSource, setScanSource] = useState("adf");
-  const [scanDpi, setScanDpi] = useState(150);
+  const [scanDpi, setScanDpi] = useState(600);
   const scanInProgress = useRef(false);
 
   async function scan() {
@@ -398,6 +399,7 @@ export function PlanImportWizard({
               >
                 <option value={150}>150 DPI</option>
                 <option value={300}>300 DPI</option>
+                <option value={600}>600 DPI</option>
               </select>
             </label>
           </div>
@@ -425,11 +427,7 @@ export function PlanImportWizard({
           MB.
         </p>
         {loading && <p role="status">Lettura e anteprima della planimetria…</p>}
-        {error && (
-          <p className="messaggio errore" role="alert">
-            {error}
-          </p>
-        )}
+        {error && <NotificationToast message={error} />}
         {plan && (
           <>
             {plan.analysis && (

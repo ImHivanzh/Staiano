@@ -19,6 +19,7 @@ import { Editor2D } from "../editor2d/Editor2D";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { EquipmentIcon } from "../EquipmentIcon";
 import { RoomAirTerminals } from "./RoomAirTerminals";
+import { NotificationToast } from "../NotificationToast";
 import { DuctedMachinePicker } from "./DuctedMachinePicker";
 import { SupplyPlenumPanel } from "./SupplyPlenumPanel";
 import { DuctPanel } from "./DuctPanel";
@@ -285,9 +286,7 @@ export function GraphicalDuctedConfigurator({
                   ? "Macchina selezionata: clicca la bocchetta. Escape annulla."
                   : "Seleziona macchina e bocchetta, in qualsiasi ordine. Escape annulla."
               : mode === "move"
-                ? selectedId
-                  ? "Clicca la nuova posizione. Escape annulla."
-                  : "Seleziona l’elemento da muovere, poi clicca la nuova posizione. Escape annulla."
+                ? "Trascina l’oggetto nella nuova posizione e rilascia per confermare. Escape termina."
                 : selectedTerminal
                   ? `Bocchetta ${selectedTerminal.family} selezionata. Trascina per spostarla; usa Ruota 90° a soffitto. A parete si orienta spostandola su un’altra parete.`
                   : selectedMachine
@@ -356,6 +355,48 @@ export function GraphicalDuctedConfigurator({
     const id = installation.id || next.installations.at(-1)!.id;
     return { project: next, id };
   }
+  function moveDevice(id: string, point: Point) {
+    commit((current) => {
+      const draft = current.ductedDrafts?.find((item) => item.id === id);
+      if (!draft)
+        return movePlacedDevice(
+          current,
+          id,
+          point,
+          useProjectStore.getState().snap,
+        );
+      const targetRoom = current.rooms.find(
+        (item) =>
+          item.floorId === draft.floorId &&
+          (mainPlan || installation.roomIds.includes(item.id)) &&
+          !item.conditioningExclusion &&
+          pointInPolygon(point, item.polygon),
+      );
+      const validated = placeDuctedDraft(
+        current,
+        draft.installationId,
+        targetRoom?.id ?? "",
+        point,
+        draft.kind,
+        draft.use,
+      );
+      return {
+        ...current,
+        ductedDrafts: current.ductedDrafts?.map((item) =>
+          item.id === id
+            ? { ...item, ...validated.ductedDrafts.at(-1)!, id }
+            : item,
+        ),
+      };
+    });
+    setSelectedId(id);
+    if (mainPlan) useProjectStore.getState().select({ kind: "device", id });
+    if (!useProjectStore.getState().error) {
+      setMode("select");
+      setCursor(null);
+      setNotice("Posizione aggiornata.");
+    }
+  }
   function pick(point: Point, deviceId?: string, draftId?: string) {
     useProjectStore.getState().setError(null);
     const clickedSystem = systems.find((item) =>
@@ -390,26 +431,17 @@ export function GraphicalDuctedConfigurator({
       if (deviceId || draftId) {
         setSelectedId(draftId ?? deviceId!);
         setNotice("");
-      } else
-        setNotice("Seleziona una macchina e un terminale.");
+      } else setNotice("Seleziona una macchina e un terminale.");
       return;
     }
-    if (
-      mode === "move" &&
-      (deviceId || draftId) &&
-      (draftId ?? deviceId) !== selectedId &&
-      !members.some((item) => item.id === deviceId)
-    ) {
-      setSelectedId(draftId ?? deviceId!);
-      if (mainPlan)
-        useProjectStore
-          .getState()
-          .select({ kind: "device", id: draftId ?? deviceId! });
-      setNotice("");
-      return;
-    }
-    if (mode === "move" && !selectedId) {
-      setNotice("Seleziona prima l’elemento da muovere.");
+    if (mode === "move") {
+      if (deviceId || draftId) {
+        setSelectedId(draftId ?? deviceId!);
+        if (mainPlan)
+          useProjectStore
+            .getState()
+            .select({ kind: "device", id: draftId ?? deviceId! });
+      }
       return;
     }
     if (mode === "heatPump") {
@@ -424,15 +456,6 @@ export function GraphicalDuctedConfigurator({
         setMode("select");
         setCursor(null);
         setNotice("Elemento salvato. Cliccalo per configurarlo.");
-      }
-      return;
-    }
-    if (mode === "move" && (selectedHydronic || selectedHeatPumpDraft)) {
-      commit((current) => movePlacedDevice(current, selectedId!, point));
-      if (!useProjectStore.getState().error) {
-        setMode("select");
-        setCursor(null);
-        setNotice("Posizione aggiornata.");
       }
       return;
     }
@@ -493,7 +516,7 @@ export function GraphicalDuctedConfigurator({
             .select({ kind: "device", id: draftId ?? deviceId! });
         const blocked = configurationBlock(project, draftId ?? deviceId!);
         if (blocked) {
-          setNotice(blocked);
+          setNotice("");
           useProjectStore.getState().setError(blocked);
           return;
         }
@@ -524,7 +547,7 @@ export function GraphicalDuctedConfigurator({
           clickedDraft?.id ?? deviceId!,
         );
         if (blocked) {
-          setNotice(blocked);
+          setNotice("");
           useProjectStore.getState().setError(blocked);
           return;
         }
@@ -551,7 +574,7 @@ export function GraphicalDuctedConfigurator({
           clickedDraft?.id ?? deviceId!,
         );
         if (blocked) {
-          setNotice(blocked);
+          setNotice("");
           useProjectStore.getState().setError(blocked);
           return;
         }
@@ -599,40 +622,7 @@ export function GraphicalDuctedConfigurator({
       return;
     }
     let placedId = selectedId;
-    if (mode === "move") {
-      if (selectedDraft)
-        commit((current) => {
-          const validated = placeDuctedDraft(
-            current,
-            selectedDraft.installationId,
-            targetRoom.id,
-            point,
-            selectedDraft.kind,
-            selectedDraft.use,
-          );
-          return {
-            ...current,
-            ductedDrafts: current.ductedDrafts?.map((item) =>
-              item.id === selectedId
-                ? { ...item, ...validated.ductedDrafts.at(-1)!, id: item.id }
-                : item,
-            ),
-          };
-        });
-      else if (selectedMachine)
-        commit((current) =>
-          movePlacedDevice(current, selectedMachine.id, point),
-        );
-      else if (selectedTerminal)
-        commit((current) =>
-          movePlacedDevice(current, selectedTerminal.id, {
-            x: point.x + selectedTerminal.position.x - position!.x,
-            y: point.y + selectedTerminal.position.y - position!.y,
-          }),
-        );
-      else if (selectedId)
-        commit((current) => movePlacedDevice(current, selectedId, point));
-    } else if (mode === "machine") {
+    if (mode === "machine") {
       const unplaced = systems.find(
         (item) =>
           !item.indoorUnits.length &&
@@ -691,11 +681,7 @@ export function GraphicalDuctedConfigurator({
         useProjectStore.getState().select({ kind: "device", id: placedId });
       setMode("select");
       setCursor(null);
-      setNotice(
-        mode === "move"
-          ? "Posizione aggiornata."
-          : "Elemento salvato. Cliccalo per configurarlo.",
-      );
+      setNotice("Elemento salvato. Cliccalo per configurarlo.");
       if (
         mainPlan &&
         (useProjectStore.getState().project!.ductedDrafts?.length ?? 0) >
@@ -827,7 +813,7 @@ export function GraphicalDuctedConfigurator({
             <button
               className={`bottone ${styles.iconButton}`}
               aria-label="Seleziona"
-              title="Seleziona e configura · Spazio"
+              title="Seleziona e configura (Spazio)"
               aria-keyshortcuts="Space"
               aria-pressed={mode === "select" && drawingTool === "select"}
               onClick={() => start("select")}
@@ -837,7 +823,7 @@ export function GraphicalDuctedConfigurator({
             <button
               className={`bottone chiara ${styles.iconButton}`}
               aria-label="Muovi (M)"
-              title="Muovi · M"
+              title="Muovi (M)"
               aria-keyshortcuts="M"
               aria-pressed={mode === "move"}
               onClick={() => start("move")}
@@ -867,7 +853,7 @@ export function GraphicalDuctedConfigurator({
                   key={type}
                   className={`bottone chiara ${styles.iconButton}`}
                   aria-label={label}
-                  title={`Inserisci ${label.toLowerCase()}${type === "radiator" ? "" : type === "fanCoil" ? " · V" : " · S"}`}
+                  title={`Inserisci ${label.toLowerCase()}${type === "radiator" ? "" : type === "fanCoil" ? " (V)" : " (S)"}`}
                   aria-keyshortcuts={
                     type === "radiator"
                       ? undefined
@@ -885,7 +871,7 @@ export function GraphicalDuctedConfigurator({
               <button
                 className={`bottone chiara ${styles.iconButton}`}
                 aria-label="Pompa di calore"
-                title="Inserisci pompa di calore · P"
+                title="Inserisci pompa di calore (P)"
                 aria-keyshortcuts="P"
                 aria-pressed={mode === "heatPump"}
                 onClick={() => start("heatPump")}
@@ -897,7 +883,7 @@ export function GraphicalDuctedConfigurator({
             <button
               className={`bottone chiara ${styles.iconButton}`}
               aria-label="Bocchetta"
-              title="Inserisci bocchetta · B"
+              title="Inserisci bocchetta (B)"
               aria-keyshortcuts="B"
               aria-pressed={mode === "point"}
               onClick={() => start("point")}
@@ -933,7 +919,7 @@ export function GraphicalDuctedConfigurator({
             <button
               className={`bottone chiara ${styles.iconButton}`}
               aria-label="Collega"
-              title="Collega macchina e bocchetta · C"
+              title="Collega macchina e bocchetta (C)"
               aria-keyshortcuts="C"
               aria-pressed={mode === "connect"}
               onClick={() => start("connect")}
@@ -1093,10 +1079,12 @@ export function GraphicalDuctedConfigurator({
           <p
             className={styles.status}
             hidden={mainPlan && drawingTool !== "select"}
-            role={error ? "alert" : "status"}
           >
-            {error ?? (notice || instruction)}
+            {instruction}
           </p>
+          {notice && !error && (
+            <NotificationToast message={notice} tone="info" />
+          )}
           {drafts.length > 0 && (
             <p className="nota">
               {drafts.length} elementi da configurare, salvati nel progetto.
@@ -1110,6 +1098,8 @@ export function GraphicalDuctedConfigurator({
                 floorId: room.floorId,
                 allowDrawing: mainPlan,
                 captureAll: mode !== "select",
+                dragDevices: mode === "move",
+                onMoveDevice: moveDevice,
                 deviceIds: [
                   ...project.radiators.map((item) => item.id),
                   ...(project.fanCoils ?? []).map((item) => item.id),
@@ -1253,11 +1243,6 @@ export function GraphicalDuctedConfigurator({
           </>
         }
       >
-        {error && (
-          <p className="avviso attenzione" role="alert">
-            {error}
-          </p>
-        )}
         {hydronicOpen && (selectedHeatPumpDraft || selectedHydronic) && (
           <HydronicPanel
             project={project}
@@ -1356,11 +1341,6 @@ export function GraphicalDuctedConfigurator({
           </>
         }
       >
-        {error && (
-          <p className="avviso attenzione" role="alert">
-            {error}
-          </p>
-        )}
         {equipmentTarget &&
           equipmentRoom &&
           (() => {
@@ -1562,11 +1542,6 @@ export function GraphicalDuctedConfigurator({
           </>
         }
       >
-        {error && (
-          <p className="avviso attenzione" role="alert">
-            {error}
-          </p>
-        )}
         {terminalOpen && selectedRoom && position && (
           <RoomAirTerminals
             key={selectedId}

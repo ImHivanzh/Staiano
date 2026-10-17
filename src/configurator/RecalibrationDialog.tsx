@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "./NotificationToast";
 import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/schemas/project";
 import { rescaleFloor } from "@/domain/geometry/rescale-floor";
@@ -103,11 +104,7 @@ export function RecalibrationDialog({
         required
         onValueChange={setRealM}
       />
-      {error && (
-        <p className="errore" role="alert">
-          {error}
-        </p>
-      )}
+      {error && <NotificationToast message={error} />}
       {after && (
         <dl className="anteprima-calibrazione">
           <dt>Superficie netta del piano</dt>

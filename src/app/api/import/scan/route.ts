@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 const options = z
   .object({
-    dpi: z.union([z.literal(150), z.literal(300)]),
+    dpi: z.union([z.literal(150), z.literal(300), z.literal(600)]),
     sorgente: z.enum(["piano", "adf"]),
   })
   .strict();
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   const parsed = options.safeParse(await request.json().catch(() => null));
   if (!parsed.success)
     return Response.json(
-      { message: "Scegli piano/vassoio e 150/300 DPI." },
+      { message: "Scegli piano/vassoio e 150/300/600 DPI." },
       { status: 400, headers },
     );
   try {

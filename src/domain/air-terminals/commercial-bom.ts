@@ -168,6 +168,33 @@ export function terminalPlenumConnections(
     ).values(),
   ];
 }
+export function terminalPlenumSpecification(
+  family: string,
+  variant: AirTerminalVariant,
+  lengthMm?: number | null,
+  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
+) {
+  const dimensions = {
+    lengthMm: lengthMm ?? variant.lengthMm,
+    widthMm: variant.widthMm,
+    heightMm: variant.heightMm,
+    diameterMm: variant.nominalDiameterMm ?? null,
+    slotCount: variant.slotCount,
+    slotWidthMm: variant.slotWidthMm,
+  };
+  const plenums = catalog.accessorySpecifications
+    .filter(
+      (item) =>
+        familyMatches(item.familyCode, family) &&
+        item.plenum &&
+        dimensionsMatch(item.dimensions, dimensions),
+    )
+    .map((item) => item.plenum!);
+  return plenums.length &&
+    plenums.every((item) => JSON.stringify(item) === JSON.stringify(plenums[0]))
+    ? plenums[0]
+    : null;
+}
 export function continuityModuleLengths(
   familyCode: string,
   variant: AirTerminalVariant,

@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState, type FormEvent } from "react";
 import type { ManagedUser } from "@/server/auth";
 
@@ -68,16 +69,8 @@ export function AdminUsers({ username }: { username: string }) {
         Crea account personali e imposta le password iniziali. Ogni utente
         sceglie una password personale al primo accesso.
       </p>
-      {error && (
-        <p className="messaggio errore" role="alert">
-          {error}
-        </p>
-      )}
-      {message && (
-        <p className="messaggio" role="status">
-          {message}
-        </p>
-      )}
+      {error && <NotificationToast message={error} />}
+      {message && <NotificationToast message={message} tone="info" />}
       {busy && <p role="status">Aggiornamento utenti…</p>}
       <div className="gestione-utenti">
         <section aria-label="Nuovo utente">

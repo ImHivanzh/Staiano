@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { NotificationToast } from "./NotificationToast";
 import { FullscreenDialog } from "./FullscreenDialog";
 import { CustomerViewButton } from "./CustomerViewButton";
 import dynamic from "next/dynamic";
@@ -584,7 +585,10 @@ export function Configurator() {
       );
     }
   }
-  async function createPdf(preview: boolean) {
+  async function createPdf(
+    preview: boolean,
+    variant: "complete" | "summary" = dossierVariant,
+  ) {
     if (!p) return;
     setPdfBusy(true);
     setPdfProgress("Preparazione documento");
@@ -595,7 +599,7 @@ export function Configurator() {
         await import("@/services/pdf/download");
       const options = {
         includeRenders,
-        variant: dossierVariant,
+        variant,
         floorId: s.activeFloorId,
         roomId: s.selection.find((item) => item.kind === "room")?.id,
         signal: controller.signal,
@@ -745,7 +749,7 @@ export function Configurator() {
             type="button"
             key={t.id}
             className={`bottone piccolo ${s.tool === t.id ? "chiara" : "tenue"}`}
-            title={`${t.label} · ${t.shortcut}`}
+            title={`${t.label} (${t.shortcut})`}
             aria-label={t.label}
             aria-keyshortcuts={t.id === "select" ? "Space" : t.shortcut}
             aria-pressed={s.tool === t.id}
@@ -767,7 +771,7 @@ export function Configurator() {
           type="button"
           className="bottone piccolo strumento-stanza"
           aria-label="Stanza rettangolare"
-          title="Stanza rettangolare · R"
+          title="Stanza rettangolare (R)"
           aria-keyshortcuts="R"
           onClick={(event) => {
             const menu = event.currentTarget.closest("details");
@@ -1008,12 +1012,12 @@ export function Configurator() {
               <div
                 className="comandi-rapidi"
                 role="group"
-                aria-label="Salvataggio e cronologia"
+                aria-label="Comandi rapidi progetto"
               >
                 <button
                   className="bottone tenue comando-icona"
                   aria-label="Salva"
-                  title="Salva · Ctrl+S"
+                  title="Salva (Ctrl+S)"
                   onClick={() => void saveCurrent().catch(() => {})}
                 >
                   <FloppyDisk aria-hidden="true" />
@@ -1021,7 +1025,7 @@ export function Configurator() {
                 <button
                   className="bottone tenue comando-icona"
                   aria-label="Annulla"
-                  title="Annulla · Ctrl+Z"
+                  title="Annulla (Ctrl+Z)"
                   disabled={!s.past.length || s.readOnly}
                   onClick={s.undo}
                 >
@@ -1030,11 +1034,23 @@ export function Configurator() {
                 <button
                   className="bottone tenue comando-icona"
                   aria-label="Ripristina"
-                  title="Ripristina · Ctrl+Y"
+                  title="Ripristina (Ctrl+Y)"
                   disabled={!s.future.length || s.readOnly}
                   onClick={s.redo}
                 >
                   <ArrowClockwise aria-hidden="true" />
+                </button>
+                <button
+                  className="bottone tenue comando-icona"
+                  aria-label="Scarica dossier sintetico PDF"
+                  title={
+                    pdfBusy ? pdfProgress : "Scarica dossier sintetico PDF"
+                  }
+                  disabled={pdfBusy}
+                  aria-busy={pdfBusy}
+                  onClick={() => void createPdf(false, "summary")}
+                >
+                  <DownloadSimple aria-hidden="true" />
                 </button>
               </div>
             )}
@@ -1123,7 +1139,7 @@ export function Configurator() {
                     </button>
                     <button
                       className="bottone"
-                      title="Salva · Ctrl+S"
+                      title="Salva (Ctrl+S)"
                       aria-label="Salva progetto"
                       onClick={(event) => {
                         void saveCurrent().catch(() => {});
@@ -1211,7 +1227,9 @@ export function Configurator() {
                         ? "Preparazione schede tecniche…"
                         : "Scarica schede tecniche"}
                     </button>
-                    {sheetsNotice && <span role="status">{sheetsNotice}</span>}
+                    {sheetsNotice && (
+                      <NotificationToast message={sheetsNotice} tone="info" />
+                    )}
                     <label className="opzione-render-pdf">
                       <input
                         type="checkbox"
@@ -1284,13 +1302,16 @@ export function Configurator() {
           </FullscreenDialog>
         )}
         {(s.error || s.saveConflict) && (
-          <div className="avviso grave errore-app" role="alert">
-            <WarningCircle />
-            <span>
-              {s.error ??
-                "Conflitto di salvataggio. Conserva una copia delle tue modifiche o carica la versione nell’archivio."}
-            </span>
-            {s.saveConflict ? (
+          <NotificationToast
+            message={
+              s.error ??
+              "Conflitto di salvataggio. Conserva una copia delle tue modifiche o carica la versione nell’archivio."
+            }
+            className="errore-app"
+            persistent={s.saveConflict}
+            onDismiss={() => s.setError(null)}
+          >
+            {s.saveConflict && (
               <div className="azioni">
                 <button
                   className="bottone piccolo"
@@ -1305,16 +1326,8 @@ export function Configurator() {
                   Carica versione archivio
                 </button>
               </div>
-            ) : (
-              <button
-                aria-label="Chiudi errore"
-                className="bottone tenue piccolo"
-                onClick={() => s.setError(null)}
-              >
-                <X />
-              </button>
             )}
-          </div>
+          </NotificationToast>
         )}
         {!ready ? (
           <div className="vuoto">Apertura archivio locale…</div>
@@ -1803,7 +1816,7 @@ export function Configurator() {
                         <button
                           className="bottone piccolo tenue"
                           aria-label="Annulla"
-                          title="Annulla · Ctrl+Z"
+                          title="Annulla (Ctrl+Z)"
                           disabled={!s.past.length}
                           onClick={s.undo}
                         >
@@ -1813,7 +1826,7 @@ export function Configurator() {
                         <button
                           className="bottone piccolo tenue"
                           aria-label="Ripeti"
-                          title="Ripeti · Ctrl+Y"
+                          title="Ripeti (Ctrl+Y)"
                           disabled={!s.future.length}
                           onClick={s.redo}
                         >
@@ -1823,6 +1836,8 @@ export function Configurator() {
                         <button
                           className="bottone piccolo tenue"
                           aria-label="Copia selezione"
+                          title="Copia selezione (Ctrl+C)"
+                          aria-keyshortcuts="Control+C"
                           disabled={!s.selection.length}
                           onClick={copySelection}
                         >
@@ -1832,6 +1847,8 @@ export function Configurator() {
                         <button
                           className="bottone piccolo pericolo"
                           aria-label="Elimina selezione"
+                          title="Elimina selezione (Canc / Backspace)"
+                          aria-keyshortcuts="Delete Backspace"
                           disabled={!s.selection.length}
                           onClick={deleteSelection}
                         >
@@ -2137,7 +2154,6 @@ export function Configurator() {
                 Le misure sono interne. Il sistema genera quattro muri esterni
                 da {p.projectSettings.externalWallThicknessM * 1000} mm.
               </p>
-              {s.error && <p className="errore">{s.error}</p>}
               <div className="azioni">
                 <button
                   type="button"

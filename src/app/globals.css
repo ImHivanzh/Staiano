@@ -596,7 +596,7 @@ input[type="checkbox"] {
   fill: var(--testo-tenue);
   paint-order: stroke;
   stroke: var(--carta-2);
-  stroke-width: 0.035;
+  stroke-width: var(--contorno-quota, 0.035);
   font-variant-numeric: tabular-nums;
   cursor: pointer;
 }
@@ -2002,4 +2002,47 @@ input[type="checkbox"] {
 }
 .scelta-colore .bottone {
   min-height: 44px;
+}
+
+.notifica-toast {
+  position: fixed;
+  inset: auto 20px 20px auto;
+  width: min(460px, calc(100vw - 32px));
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  margin: 0;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+  border: 1px solid var(--bordo);
+  border-radius: 12px;
+  background: var(--carta);
+  color: var(--testo);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 16%);
+  font: inherit;
+  font-size: 14px;
+}
+.notifica-toast:not(:popover-open) {
+  display: none;
+}
+.notifica-toast[data-tone="error"] {
+  border-color: #bd3131;
+  background: #fff1f1;
+  color: #842222;
+}
+.notifica-toast > span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.notifica-toast > button {
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .notifica-toast {
+    right: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
 }

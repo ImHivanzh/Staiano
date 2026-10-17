@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState } from "react";
 import type { Project } from "@/schemas/project";
 import {
@@ -132,7 +133,7 @@ export function ProjectSharing({
           Un solo utente modifica alla volta. Le modifiche sono registrate sul
           server.
         </p>
-        {error && <p role="alert">{error}</p>}
+        {error && <NotificationToast message={error} />}
         {details && (
           <p>
             Proprietario: {details.owner}

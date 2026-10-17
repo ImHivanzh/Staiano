@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import type { Page } from "@playwright/test";
 import { expect, test } from "./browser-test";
-import { openDisclosure, pickPlanPoint } from "./ui-helpers";
+import { dragPlanDevice, openDisclosure, pickPlanPoint } from "./ui-helpers";
 import { projectSchema } from "../src/schemas/project";
 
 async function saved(page: Page) {
@@ -83,8 +83,7 @@ for (const width of [1920, 1024]) {
       await page.reload();
       await expect(draft).toHaveCount(1);
       await page.keyboard.press("m");
-      await draft.click();
-      await pickPlanPoint(plan, 4, 0.4);
+      await dragPlanDevice(page, plan, draft, 4, 0.4);
       await draft.click();
       await expect(popup).toBeVisible();
       await expect(page.locator("#proprieta-progetto")).not.toBeVisible();
@@ -97,11 +96,13 @@ for (const width of [1920, 1024]) {
       async function chooseRadiator() {
         if (type !== "radiator") return;
         await popup
-          .getByLabel("Marca radiatori", { exact: true })
-          .selectOption("Global");
+          .getByRole("group", { name: "Marca radiatori", exact: true })
+          .getByRole("button", { name: "Global", exact: true })
+          .click();
         await popup
-          .getByLabel("Famiglia radiatori", { exact: true })
-          .selectOption("VIP");
+          .getByRole("group", { name: "Famiglia radiatori", exact: true })
+          .getByText("VIP", { exact: true })
+          .click();
         await popup
           .getByLabel("Potenza da coprire con questo punto (W)")
           .fill("1800");
@@ -134,8 +135,7 @@ for (const width of [1920, 1024]) {
       await expect(device).toHaveCount(1);
       await page.keyboard.press("Escape");
       await page.keyboard.press("m");
-      await device.locator("rect").first().click();
-      await pickPlanPoint(plan, 5, 0.4);
+      await dragPlanDevice(page, plan, device, 5, 0.4);
       await plan.locator('summary[aria-label="Azioni apparecchio"]').click();
       page.once("dialog", (dialog) => dialog.accept());
       await plan.getByRole("button", { name: "Elimina", exact: true }).click();

@@ -167,8 +167,88 @@
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: end;
+  align-items: start;
   gap: 12px;
+}
+.mountingChoices {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 4px 0 12px;
+}
+.mountingChoices > div {
+  display: flex;
+  gap: 8px;
+}
+.mountingChoices button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 8px 16px;
+  border: 1px solid var(--bordo-forte);
+  border-radius: 6px;
+  background: var(--carta);
+  color: var(--testo);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.mountingChoices button:hover,
+.mountingChoices button[aria-pressed="true"] {
+  border-color: var(--tinta);
+  background: var(--tinta-tenue);
+  color: var(--tinta-scura);
+}
+.mountingChoices button:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 3px;
+}
+.mountingChoices svg {
+  width: 52px;
+  height: 34px;
+  fill: none;
+  stroke: var(--bordo-forte);
+  stroke-width: 2;
+}
+.mountingChoices .mountingTerminal {
+  stroke: var(--tinta);
+  stroke-width: 5;
+}
+.mountingChoices .mountingAir {
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+.terminalSetup {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px 24px;
+  padding-top: 16px;
+}
+.terminalSetup > .sizeChoices,
+.terminalSetup > .mountingChoices {
+  grid-column: auto;
+  margin: 0;
+}
+.terminalSetup > p {
+  grid-column: 1 / -1;
+  order: 1;
+  margin: 0;
+  font-size: 12px;
+}
+.terminalSetup > details {
+  order: 2;
+  margin: 0;
+}
+@container (max-width: 800px) {
+  .terminalSetup {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container (max-width: 540px) {
+  .terminalSetup {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .operatorSettings > label,
 .operatorSettings > :global(.campo) {
@@ -367,8 +447,15 @@
   font-size: 14px;
   font-weight: 600;
 }
+.plenumPreview {
+  grid-column: 2;
+  grid-row: 2 / span 5;
+  min-width: 0;
+  border-left: 1px solid var(--bordo);
+  padding-left: 16px;
+}
 .plenumChoice {
-  grid-column: 1 / -1;
+  grid-column: 1;
   min-width: 0;
   font-size: 13px;
 }
@@ -392,7 +479,7 @@
   margin: 0;
 }
 .plenumSettings > p {
-  grid-column: 1 / -1;
+  grid-column: 1;
   margin: 0;
 }
 :global(.corpo-proprieta) .plenumSettings {
@@ -407,5 +494,12 @@
 @container (max-width: 440px) {
   .plenumSettings {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .plenumPreview {
+    grid-column: 1;
+    grid-row: auto;
+    border-left: 0;
+    border-top: 1px solid var(--bordo);
+    padding: 14px 0 0;
   }
 }

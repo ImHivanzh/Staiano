@@ -260,6 +260,54 @@ describe("geometria e creazione manuale", () => {
       snapPoint({ x: 3.1, y: 0.02 }, [], { x: 0, y: 0 }, options).point.y,
     ).toBeCloseTo(0);
   });
+  it("con Snap disattivato i muri restano connessi e l'ambiente si chiude", () => {
+    const options = {
+      enabled: false,
+      orthogonal: true,
+      angle45: false,
+      parallel: true,
+      grid: true,
+      stepM: 0.1,
+      toleranceM: 0.12,
+    };
+    const p = rectangle();
+    expect(snapPoint({ x: 0.04, y: 0.02 }, p.walls, null, options)).toEqual({
+      point: p.walls[0].start,
+      kind: "estremo",
+    });
+    expect(snapPoint({ x: 2, y: 0.02 }, p.walls, null, options)).toEqual({
+      point: { x: 2, y: 0 },
+      kind: "segmento",
+    });
+    let project = createProject();
+    const floorId = project.floors[0].id;
+    for (const [start, end] of [
+      [
+        { x: 0, y: 0 },
+        { x: 4, y: 0 },
+      ],
+      [
+        { x: 4, y: 0 },
+        { x: 4, y: 3 },
+      ],
+      [
+        { x: 4, y: 3 },
+        { x: 0, y: 3 },
+      ],
+    ])
+      project = addWall(project, floorId, start, end);
+    const click = (point: { x: number; y: number }) =>
+      snapPoint(point, project.walls, null, options).point;
+    // L'ultimo muro è disegnato a mano vicino, ma non sopra, ai due estremi.
+    project = addWall(
+      project,
+      floorId,
+      click({ x: 0.02, y: 0.03 }),
+      click({ x: -0.03, y: 2.98 }),
+    );
+    expect(project.rooms).toHaveLength(1);
+    expect(project.rooms[0].geometryStatus).toBe("closed");
+  });
   it("auto-intersezioni riconosciute", () => {
     expect(
       selfIntersects([

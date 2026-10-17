@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -112,7 +113,7 @@ export function CustomerView() {
           <ArrowsOut aria-hidden="true" /> Schermo intero
         </button>
       </header>
-      {fullscreenError && <p role="alert">{fullscreenError}</p>}
+      {fullscreenError && <NotificationToast message={fullscreenError} />}
       <div className={showStoves ? styles.catalog : styles.model}>
         {showStoves ? (
           <StoveCatalog />

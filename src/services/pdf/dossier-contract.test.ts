@@ -166,4 +166,62 @@ describe("Readable complete PDF contract", () => {
       await summaryTask.destroy();
     }
   });
+  it("non riporta dati degli impianti assenti e include gli accessori dei radiatori", async () => {
+    const project = pdfQaFixture();
+    project.hvacSystems = [];
+    project.airTerminals = [];
+    project.plenums = [];
+    project.ducts = [];
+    project.fanCoils = [];
+    project.hydronicSystems = [];
+    const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+    const read = async (bytes: Uint8Array) => {
+      const task = pdfjs.getDocument({ data: bytes });
+      const document = await task.promise;
+      try {
+        const pages: string[] = [];
+        for (let page = 1; page <= document.numPages; page++) {
+          const content = await (await document.getPage(page)).getTextContent();
+          pages.push(
+            content.items
+              .map((item) => ("str" in item ? item.str : ""))
+              .join(" "),
+          );
+        }
+        return { text: pages.join(" "), pages: document.numPages };
+      } finally {
+        await task.destroy();
+      }
+    };
+    const summary = await read(
+      await renderDossierPdf(project, { variant: "summary" }),
+    );
+    for (const noun of [
+      "Staffe di sostegno",
+      "Valvola",
+      "Detentore",
+      "Kit copritubo",
+    ])
+      expect(summary.text).toContain(noun);
+    expect(summary.text).toContain("Distinta materiali");
+    expect(summary.text).toContain("Descrizione / codici");
+    expect(summary.text).toContain("Dimensioni");
+    expect(summary.text).toMatch(/\d+ elementi/);
+    for (const absent of [
+      "Bilanci e plenum dedicati",
+      "Nessun bilancio lineare disponibile",
+      "Metri richiesti / installati e capacita reale",
+      "Con modelli misti",
+      "Vista frontale - tutti gli attacchi",
+      "Pompe di calore e collegamenti idronici",
+      "Diametri stacchi nominali",
+    ])
+      expect(summary.text).not.toContain(absent);
+    const complete = await read(await renderDossierPdf(project));
+    expect(complete.text).toContain("Distinta materiali - senza prezzi");
+    expect(complete.text).not.toContain("Sistemi HVAC");
+    expect(complete.text).not.toContain(
+      "Nessun sistema split o canalizzato configurato",
+    );
+  });
 });

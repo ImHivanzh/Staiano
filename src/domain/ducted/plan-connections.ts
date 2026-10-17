@@ -100,13 +100,16 @@ export function configurationBlock(
       : "Collega prima le bocchette alla macchina per determinare gli ambienti serviti.";
   const terminal = project.airTerminals.find((t) => t.id === id);
   if (draft?.kind === "terminal" || terminal) {
-    const owner = draft?.machineId ?? terminal?.systemId;
+    const owner =
+      draft?.machineId ?? terminal?.systemId ?? terminal?.pendingMachineId;
     return owner &&
       project.hvacSystems.some(
         (s) => s.id === owner && s.type === "ducted" && s.indoorUnits.length,
       )
       ? null
-      : "Collega prima la bocchetta alla macchina, poi configura la macchina e infine la bocchetta.";
+      : owner
+        ? "Configura prima la macchina."
+        : "Collega prima la bocchetta alla macchina, poi configura la macchina e infine la bocchetta.";
   }
   return null;
 }

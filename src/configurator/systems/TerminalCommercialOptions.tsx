@@ -5,6 +5,7 @@ import {
   commercialChoicesForTerminal,
   commercialPlenumChoicesForTerminal,
 } from "@/domain/air-terminals/commercial-bom";
+import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import { TerminalPlenumFields } from "./TerminalPlenumFields";
 import styles from "./RoomAirTerminals.module.css";
@@ -23,6 +24,13 @@ export function TerminalCommercialOptions({
   const terminal = project.airTerminals.find((t) => t.id === terminalId);
   const { commit } = useProjectStore();
   if (!terminal) return null;
+  const family = airTerminalFamilyAtVersion(
+    terminal.family,
+    terminal.catalogVersion,
+  );
+  const variant = family?.variants.find(
+    (item) => item.id === terminal.productId,
+  );
   const choices = commercialChoicesForTerminal(terminal);
   const plenums = commercialPlenumChoicesForTerminal(terminal);
   const selected = choices.find(
@@ -98,6 +106,8 @@ export function TerminalCommercialOptions({
       <fieldset disabled={terminal.locked} className={styles.plenumOptions}>
         <TerminalPlenumFields
           familyCode={terminal.family}
+          variant={variant}
+          lengthMm={family?.isLinearPerMeter ? terminal.widthMm : null}
           options={{ insulatedPlenum: true, ...terminal.commercialOptions }}
           onChange={(patch) =>
             update({ ...patch, plenumModelCode: undefined }, true)

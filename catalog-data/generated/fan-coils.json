@@ -1,5 +1,5 @@
 {
-  "version": "fan-coils-211ce7f343b9c3dd",
+  "version": "fan-coils-b244c72c5197bef0",
   "products": [
     {
       "id": "innova-airleaf-sl-200-2t",
@@ -3057,6 +3057,3296 @@
         "documentRevision": "FCZ_I_UN50_16 / dati Eurovent 2025",
         "importedAt": "2026-10-07T09:11:19.373268+00:00",
         "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz100p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ100P",
+      "pipes": "2",
+      "widthMm": 452,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 650,
+          "heatingW": 720,
+          "airflowM3h": 110.0,
+          "noiseDbA": 23.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 840,
+          "heatingW": 990,
+          "airflowM3h": 160.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1000,
+          "heatingW": 1190,
+          "airflowM3h": 200.0,
+          "noiseDbA": 37.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz150p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ150P",
+      "pipes": "2",
+      "widthMm": 452,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 650,
+          "heatingW": 770,
+          "airflowM3h": 110.0,
+          "noiseDbA": 23.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 840,
+          "heatingW": 1090,
+          "airflowM3h": 160.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1000,
+          "heatingW": 1310,
+          "airflowM3h": 200.0,
+          "noiseDbA": 37.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz200p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ200P",
+      "pipes": "2",
+      "widthMm": 562,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 890,
+          "heatingW": 1000,
+          "airflowM3h": 140.0,
+          "noiseDbA": 27.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 1280,
+          "heatingW": 1460,
+          "airflowM3h": 220.0,
+          "noiseDbA": 38.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1600,
+          "heatingW": 1840,
+          "airflowM3h": 290.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz250p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ250P",
+      "pipes": "2",
+      "widthMm": 562,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1060,
+          "heatingW": 1090,
+          "airflowM3h": 140.0,
+          "noiseDbA": 27.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 1550,
+          "heatingW": 1580,
+          "airflowM3h": 220.0,
+          "noiseDbA": 38.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1940,
+          "heatingW": 2010,
+          "airflowM3h": 290.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz300p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ300P",
+      "pipes": "2",
+      "widthMm": 793,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1680,
+          "heatingW": 1720,
+          "airflowM3h": 260.0,
+          "noiseDbA": 26.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2170,
+          "heatingW": 2210,
+          "airflowM3h": 350.0,
+          "noiseDbA": 33.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 2650,
+          "heatingW": 2730,
+          "airflowM3h": 450.0,
+          "noiseDbA": 40.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz350p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ350P",
+      "pipes": "2",
+      "widthMm": 793,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1890,
+          "heatingW": 1870,
+          "airflowM3h": 260.0,
+          "noiseDbA": 26.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2460,
+          "heatingW": 2440,
+          "airflowM3h": 350.0,
+          "noiseDbA": 33.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3020,
+          "heatingW": 3060,
+          "airflowM3h": 450.0,
+          "noiseDbA": 40.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz400p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ400P",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2200,
+          "heatingW": 2140,
+          "airflowM3h": 330.0,
+          "noiseDbA": 29.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2920,
+          "heatingW": 2850,
+          "airflowM3h": 460.0,
+          "noiseDbA": 36.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3600,
+          "heatingW": 3550,
+          "airflowM3h": 600.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz450p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ450P",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2410,
+          "heatingW": 2270,
+          "airflowM3h": 330.0,
+          "noiseDbA": 29.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3210,
+          "heatingW": 3120,
+          "airflowM3h": 460.0,
+          "noiseDbA": 36.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4030,
+          "heatingW": 3880,
+          "airflowM3h": 600.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz500p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ500P",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2680,
+          "heatingW": 2620,
+          "airflowM3h": 400.0,
+          "noiseDbA": 34.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3690,
+          "heatingW": 3630,
+          "airflowM3h": 600.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4250,
+          "heatingW": 4220,
+          "airflowM3h": 720.0,
+          "noiseDbA": 48.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz550p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ550P",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2910,
+          "heatingW": 2890,
+          "airflowM3h": 400.0,
+          "noiseDbA": 34.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 4130,
+          "heatingW": 4140,
+          "airflowM3h": 600.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4790,
+          "heatingW": 4850,
+          "airflowM3h": 720.0,
+          "noiseDbA": 48.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz600p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ600P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3220,
+          "heatingW": 3320,
+          "airflowM3h": 520.0,
+          "noiseDbA": 34.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3900,
+          "heatingW": 4030,
+          "airflowM3h": 720.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4650,
+          "heatingW": 4970,
+          "airflowM3h": 920.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz650p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ650P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3950,
+          "heatingW": 3570,
+          "airflowM3h": 520.0,
+          "noiseDbA": 34.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 4800,
+          "heatingW": 4550,
+          "airflowM3h": 720.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 5670,
+          "heatingW": 5720,
+          "airflowM3h": 920.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz700p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ700P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3920,
+          "heatingW": 4030,
+          "airflowM3h": 700.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 4890,
+          "heatingW": 4870,
+          "airflowM3h": 930.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 5500,
+          "heatingW": 5470,
+          "airflowM3h": 1140.0,
+          "noiseDbA": 54.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz750p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ750P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 4270,
+          "heatingW": 4520,
+          "airflowM3h": 700.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 5340,
+          "heatingW": 5620,
+          "airflowM3h": 930.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 6140,
+          "heatingW": 6210,
+          "airflowM3h": 1140.0,
+          "noiseDbA": 54.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz800p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ800P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 4840,
+          "heatingW": 4870,
+          "airflowM3h": 900.0,
+          "noiseDbA": 48.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 5660,
+          "heatingW": 5370,
+          "airflowM3h": 1120.0,
+          "noiseDbA": 53.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 6100,
+          "heatingW": 5970,
+          "airflowM3h": 1300.0,
+          "noiseDbA": 58.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz850p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ850P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 5260,
+          "heatingW": 5620,
+          "airflowM3h": 900.0,
+          "noiseDbA": 48.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 6290,
+          "heatingW": 6140,
+          "airflowM3h": 1120.0,
+          "noiseDbA": 53.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 6910,
+          "heatingW": 6960,
+          "airflowM3h": 1300.0,
+          "noiseDbA": 58.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz900p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ900P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 4290,
+          "heatingW": 5350,
+          "airflowM3h": 700.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 5000,
+          "heatingW": 6640,
+          "airflowM3h": 930.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 6910,
+          "heatingW": 7530,
+          "airflowM3h": 1140.0,
+          "noiseDbA": 54.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz950p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ950P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 5770,
+          "heatingW": 5570,
+          "airflowM3h": 700.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 7320,
+          "heatingW": 7170,
+          "airflowM3h": 930.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 8600,
+          "heatingW": 8500,
+          "airflowM3h": 1140.0,
+          "noiseDbA": 54.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz1000p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ1000P",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 5690,
+          "heatingW": 6240,
+          "airflowM3h": 900.0,
+          "noiseDbA": 48.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 6880,
+          "heatingW": 7580,
+          "airflowM3h": 1120.0,
+          "noiseDbA": 53.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 7620,
+          "heatingW": 8460,
+          "airflowM3h": 1300.0,
+          "noiseDbA": 58.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 14
+      }
+    },
+    {
+      "id": "aermec-fcz201p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ201P",
+      "pipes": "4",
+      "widthMm": 562,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 890,
+          "heatingW": 1020,
+          "airflowM3h": 140.0,
+          "noiseDbA": 27.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 1280,
+          "heatingW": 1350,
+          "airflowM3h": 220.0,
+          "noiseDbA": 38.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1600,
+          "heatingW": 1600,
+          "airflowM3h": null,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz301p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ301P",
+      "pipes": "4",
+      "widthMm": 793,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1680,
+          "heatingW": 1800,
+          "airflowM3h": 260.0,
+          "noiseDbA": 26.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2170,
+          "heatingW": 2180,
+          "airflowM3h": 350.0,
+          "noiseDbA": 33.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 2650,
+          "heatingW": 2560,
+          "airflowM3h": null,
+          "noiseDbA": 40.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz401p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ401P",
+      "pipes": "4",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2200,
+          "heatingW": 2210,
+          "airflowM3h": 330.0,
+          "noiseDbA": 29.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2920,
+          "heatingW": 2650,
+          "airflowM3h": 460.0,
+          "noiseDbA": 36.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3600,
+          "heatingW": 3120,
+          "airflowM3h": null,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz501p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ501P",
+      "pipes": "4",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2680,
+          "heatingW": 2590,
+          "airflowM3h": 400.0,
+          "noiseDbA": 34.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3690,
+          "heatingW": 3340,
+          "airflowM3h": 600.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4250,
+          "heatingW": 3730,
+          "airflowM3h": null,
+          "noiseDbA": 48.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz601p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ601P",
+      "pipes": "4",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3220,
+          "heatingW": 2960,
+          "airflowM3h": 520.0,
+          "noiseDbA": 34.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3900,
+          "heatingW": 3670,
+          "airflowM3h": 720.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4650,
+          "heatingW": 4360,
+          "airflowM3h": null,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz701p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ701P",
+      "pipes": "4",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3920,
+          "heatingW": 3660,
+          "airflowM3h": 700.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 4890,
+          "heatingW": 4290,
+          "airflowM3h": 930.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 5500,
+          "heatingW": 4940,
+          "airflowM3h": null,
+          "noiseDbA": 54.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz901p",
+      "manufacturer": "Aermec",
+      "family": "FCZ P",
+      "model": "FCZ901P",
+      "pipes": "4",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Unità senza prevalenza",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 4290,
+          "heatingW": 4730,
+          "airflowM3h": 700.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Media",
+          "coolingW": 5000,
+          "heatingW": 5630,
+          "airflowM3h": 930.0,
+          "noiseDbA": 49.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 6910,
+          "heatingW": 5720,
+          "airflowM3h": null,
+          "noiseDbA": 54.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz200po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ200PO",
+      "pipes": "2",
+      "widthMm": 562,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 21 Pa",
+          "coolingW": 930,
+          "heatingW": 1050,
+          "airflowM3h": 148.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 1300,
+          "heatingW": 1490,
+          "airflowM3h": 226.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 63 Pa",
+          "coolingW": 1440,
+          "heatingW": 1650,
+          "airflowM3h": 254.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz250po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ250PO",
+      "pipes": "2",
+      "widthMm": 562,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 21 Pa",
+          "coolingW": 1110,
+          "heatingW": 1140,
+          "airflowM3h": 148.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 1590,
+          "heatingW": 1610,
+          "airflowM3h": 226.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 63 Pa",
+          "coolingW": 1740,
+          "heatingW": 1790,
+          "airflowM3h": 254.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz300po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ300PO",
+      "pipes": "2",
+      "widthMm": 793,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 21 Pa",
+          "coolingW": 1700,
+          "heatingW": 1740,
+          "airflowM3h": 263.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 2400,
+          "heatingW": 2500,
+          "airflowM3h": 404.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 61 Pa",
+          "coolingW": 2630,
+          "heatingW": 2710,
+          "airflowM3h": 446.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz350po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ350PO",
+      "pipes": "2",
+      "widthMm": 793,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 21 Pa",
+          "coolingW": 1910,
+          "heatingW": 1890,
+          "airflowM3h": 263.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 2770,
+          "heatingW": 2780,
+          "airflowM3h": 404.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 61 Pa",
+          "coolingW": 3000,
+          "heatingW": 3030,
+          "airflowM3h": 446.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz400po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ400PO",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 25 Pa",
+          "coolingW": 2290,
+          "heatingW": 2230,
+          "airflowM3h": 346.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 3060,
+          "heatingW": 2990,
+          "airflowM3h": 487.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 66 Pa",
+          "coolingW": 3410,
+          "heatingW": 3350,
+          "airflowM3h": 559.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz450po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ450PO",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 25 Pa",
+          "coolingW": 2510,
+          "heatingW": 2380,
+          "airflowM3h": 346.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 3370,
+          "heatingW": 3290,
+          "airflowM3h": 487.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 66 Pa",
+          "coolingW": 3790,
+          "heatingW": 3680,
+          "airflowM3h": 559.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz500po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ500PO",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 22 Pa",
+          "coolingW": 2680,
+          "heatingW": 2620,
+          "airflowM3h": 400.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 3650,
+          "heatingW": 3590,
+          "airflowM3h": 592.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 56 Pa",
+          "coolingW": 3820,
+          "heatingW": 3770,
+          "airflowM3h": 627.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 15
+      }
+    },
+    {
+      "id": "aermec-fcz550po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ550PO",
+      "pipes": "2",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 22 Pa",
+          "coolingW": 2910,
+          "heatingW": 2890,
+          "airflowM3h": 400.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 4080,
+          "heatingW": 4100,
+          "airflowM3h": 592.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 56 Pa",
+          "coolingW": 4280,
+          "heatingW": 4310,
+          "airflowM3h": 627.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz600po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ600PO",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 27 Pa",
+          "coolingW": 3370,
+          "heatingW": 3410,
+          "airflowM3h": 567.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 4080,
+          "heatingW": 4250,
+          "airflowM3h": 770.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 71 Pa",
+          "coolingW": 4650,
+          "heatingW": 4970,
+          "airflowM3h": 920.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz650po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ650PO",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 27 Pa",
+          "coolingW": 4150,
+          "heatingW": 3790,
+          "airflowM3h": 567.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 5020,
+          "heatingW": 4830,
+          "airflowM3h": 770.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 71 Pa",
+          "coolingW": 5670,
+          "heatingW": 5720,
+          "airflowM3h": 920.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz700po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ700PO",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 32 Pa",
+          "coolingW": 4240,
+          "heatingW": 4360,
+          "airflowM3h": 785.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 4970,
+          "heatingW": 5020,
+          "airflowM3h": 978.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 58 Pa",
+          "coolingW": 5180,
+          "heatingW": 5230,
+          "airflowM3h": 1050.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz750po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ750PO",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 32 Pa",
+          "coolingW": 4690,
+          "heatingW": 4980,
+          "airflowM3h": 785.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 5530,
+          "heatingW": 5790,
+          "airflowM3h": 978.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 58 Pa",
+          "coolingW": 5800,
+          "heatingW": 6010,
+          "airflowM3h": 1050.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz900po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ900PO",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 32 Pa",
+          "coolingW": 4380,
+          "heatingW": 5870,
+          "airflowM3h": 785.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 5330,
+          "heatingW": 6860,
+          "airflowM3h": 978.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 58 Pa",
+          "coolingW": 5950,
+          "heatingW": 7180,
+          "airflowM3h": 1050.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz950po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ950PO",
+      "pipes": "2",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 32 Pa",
+          "coolingW": 6350,
+          "heatingW": 6180,
+          "airflowM3h": 785.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 7620,
+          "heatingW": 7490,
+          "airflowM3h": 978.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 58 Pa",
+          "coolingW": 8070,
+          "heatingW": 7950,
+          "airflowM3h": 1050.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz201po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ201PO",
+      "pipes": "4",
+      "widthMm": 562,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 21 Pa",
+          "coolingW": 930,
+          "heatingW": 1060,
+          "airflowM3h": 148.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 1300,
+          "heatingW": 1370,
+          "airflowM3h": 226.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 63 Pa",
+          "coolingW": 1440,
+          "heatingW": 1480,
+          "airflowM3h": 254.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz301po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ301PO",
+      "pipes": "4",
+      "widthMm": 793,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 21 Pa",
+          "coolingW": 1700,
+          "heatingW": 1820,
+          "airflowM3h": 263.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 2400,
+          "heatingW": 2390,
+          "airflowM3h": 404.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 61 Pa",
+          "coolingW": 2630,
+          "heatingW": 2550,
+          "airflowM3h": 446.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz401po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ401PO",
+      "pipes": "4",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 25 Pa",
+          "coolingW": 2290,
+          "heatingW": 2190,
+          "airflowM3h": 346.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 3060,
+          "heatingW": 2750,
+          "airflowM3h": 487.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 66 Pa",
+          "coolingW": 3410,
+          "heatingW": 2990,
+          "airflowM3h": 559.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz501po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ501PO",
+      "pipes": "4",
+      "widthMm": 1013,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 22 Pa",
+          "coolingW": 2680,
+          "heatingW": 2590,
+          "airflowM3h": 400.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 3650,
+          "heatingW": 3300,
+          "airflowM3h": 592.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 56 Pa",
+          "coolingW": 3820,
+          "heatingW": 3340,
+          "airflowM3h": 627.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz601po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ601PO",
+      "pipes": "4",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 27 Pa",
+          "coolingW": 3370,
+          "heatingW": 3130,
+          "airflowM3h": 567.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 4080,
+          "heatingW": 3850,
+          "airflowM3h": 770.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 71 Pa",
+          "coolingW": 4650,
+          "heatingW": 4350,
+          "airflowM3h": 920.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz701po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ701PO",
+      "pipes": "4",
+      "widthMm": 1147,
+      "heightMm": 453,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 32 Pa",
+          "coolingW": 4240,
+          "heatingW": 4130,
+          "airflowM3h": 785.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 4970,
+          "heatingW": 4400,
+          "airflowM3h": 978.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 58 Pa",
+          "coolingW": 5180,
+          "heatingW": 4600,
+          "airflowM3h": 1050.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
+      }
+    },
+    {
+      "id": "aermec-fcz901po",
+      "manufacturer": "Aermec",
+      "family": "FCZ PO",
+      "model": "FCZ901PO",
+      "pipes": "4",
+      "widthMm": 1147,
+      "heightMm": 558,
+      "depthMm": 216,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+      "features": [
+        "Installazione ad incasso senza mobile",
+        "Installazione verticale e orizzontale",
+        "Canalizzabile con motore potenziato e prevalenza utile",
+        "Ventilatore centrifugo",
+        "Compatibile con sistema VMF (accessorio)"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/aermec-fcz-p.png",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sha256": "8222cb1bfecbfb86488ea7627c55ba30a87a1221018110d02b2164837fa8f4d0",
+        "caption": "Aermec FCZ P/PO da incasso, scheda ufficiale"
+      },
+      "operatingPoints": [
+        {
+          "label": "Bassa · 32 Pa",
+          "coolingW": 4380,
+          "heatingW": 5160,
+          "airflowM3h": 785.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Media · 50 Pa",
+          "coolingW": 5330,
+          "heatingW": 5710,
+          "airflowM3h": 978.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        },
+        {
+          "label": "Alta · 58 Pa",
+          "coolingW": 5950,
+          "heatingW": 5770,
+          "airflowM3h": 1050.0,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s.",
+          "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Aermec",
+        "sourceUrl": "https://www.aermec.com/download?id=22888",
+        "sourceType": "pdf",
+        "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+        "retrievedAt": "2026-10-15T23:05:31.477345+00:00",
+        "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
+        "importedAt": "2026-10-15T23:05:31.477345+00:00",
+        "page": 16
       }
     }
   ],

@@ -1,5 +1,11 @@
 "use client";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import type { Point, Project, Selection } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { addWall, moveWall } from "@/domain/project";
@@ -52,6 +58,8 @@ export function Editor2D({
     selectedDeviceIds?: string[];
     allowDrawing?: boolean;
     captureAll?: boolean;
+    dragDevices?: boolean;
+    onMoveDevice?: (id: string, point: Point) => void;
     deviceIds?: string[];
     onHover?: (point: Point | null) => void;
     onPick: (point: Point, deviceId?: string, pointId?: string) => void;
@@ -381,6 +389,9 @@ export function Editor2D({
       commit((project) => translateSelection(project, d.selection!, d.delta));
     if (d?.type === "device" && d.deviceId && project) {
       const item = [
+        ...(project.ductedDrafts ?? []),
+        ...(project.equipmentDrafts ?? []),
+        ...(project.heatPumpDrafts ?? []),
         ...project.radiators,
         ...(project.fanCoils ?? []),
         ...project.airTerminals,
@@ -389,14 +400,26 @@ export function Editor2D({
         ...(project.hydronicSystems ?? []).map((s) => s.outdoorUnit),
         ...project.hvacSystems.flatMap((system) => system.indoorUnits),
       ].find((r) => r.id === d.deviceId);
-      if (item && distance(d.delta, { x: 0, y: 0 }) > 0.001)
-        commit((p) =>
-          movePlacedDevice(p, d.deviceId!, add(item.position, d.delta), snap),
-        );
+      if (item && distance(d.delta, { x: 0, y: 0 }) > 0.001) {
+        const target = add(item.position, d.delta);
+        if (configuration?.onMoveDevice)
+          configuration.onMoveDevice(item.id, target);
+        else commit((p) => movePlacedDevice(p, d.deviceId!, target, snap));
+      }
       if (configuration && item) {
         draggedClick.current = true;
-        if (distance(d.delta, { x: 0, y: 0 }) <= 0.001)
-          configuration.onPick(item.position, item.id);
+        if (distance(d.delta, { x: 0, y: 0 }) <= 0.001) {
+          const isDraft = [
+            ...(project.ductedDrafts ?? []),
+            ...(project.equipmentDrafts ?? []),
+            ...(project.heatPumpDrafts ?? []),
+          ].some((draft) => draft.id === item.id);
+          configuration.onPick(
+            item.position,
+            isDraft ? undefined : item.id,
+            isDraft ? item.id : undefined,
+          );
+        }
       }
     }
     if (
@@ -418,7 +441,8 @@ export function Editor2D({
     const prior = useProjectStore.getState().selection;
     const group =
       !e.shiftKey && prior.length > 1 && prior.some((s) => s.id === id);
-    if (!group) select({ kind: "device", id }, e.shiftKey);
+    if (!group && (!configuration || e.shiftKey))
+      select({ kind: "device", id }, e.shiftKey);
     if (
       [
         ...(project?.radiators ?? []),
@@ -493,6 +517,7 @@ export function Editor2D({
     <div className="area-editor">
       <svg
         ref={svg}
+        style={{ "--contorno-quota": u * 2 } as CSSProperties}
         role="application"
         aria-label="Editor planimetrico 2D"
         data-testid="editor-2d"
@@ -535,10 +560,17 @@ export function Editor2D({
                   draggedClick.current = false;
                   if (captures(event.target)) {
                     event.stopPropagation();
-                    const id = (event.target as Element)
-                      .closest("[data-device-id]")
-                      ?.getAttribute("data-device-id");
-                    if (!configuration.captureAll && id)
+                    const hit = (event.target as Element).closest(
+                      "[data-device-id],[data-point-id]",
+                    );
+                    const id =
+                      hit?.getAttribute("data-device-id") ??
+                      hit?.getAttribute("data-point-id");
+                    if (
+                      (!configuration.captureAll ||
+                        configuration.dragDevices) &&
+                      id
+                    )
                       beginDeviceDrag(event, id);
                   }
                 }
@@ -602,6 +634,8 @@ export function Editor2D({
           placing.current = false;
           drag.current = null;
           setDelta(null);
+          setTerminalPose(null);
+          setRunPreview([]);
         }}
         onContextMenu={(e) => e.preventDefault()}
         className={`pianta strumento-${tool}`}
@@ -1395,6 +1429,11 @@ export function Editor2D({
           .map((item, index) => (
             <g
               key={item.id}
+              transform={
+                drag.current?.deviceId === item.id && delta
+                  ? `translate(${delta.x} ${delta.y})`
+                  : undefined
+              }
               data-point-id={item.id}
               data-testid={`draft-${item.kind}`}
               role="button"

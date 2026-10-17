@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "../NotificationToast";
 import { useState } from "react";
 import Image from "next/image";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
@@ -86,7 +87,7 @@ export function AirTerminalCalculator() {
           Trova stili compatibili
         </button>
       </form>
-      {error && <p className="errore">{error}</p>}
+      {error && <NotificationToast message={error} />}
       {query && (
         <>
           <h3>Scegli lo stile</h3>

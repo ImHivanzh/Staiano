@@ -1,5 +1,7 @@
 "use client";
+import { NotificationToast } from "../NotificationToast";
 import { useState, type Ref } from "react";
+import { Check, Plus, Ruler, Sparkle, X } from "@phosphor-icons/react";
 import type { Point, Project, Room } from "@/schemas/project";
 import { saveTerminalOnPlan } from "@/domain/ducted/graphic-installation";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
@@ -8,6 +10,7 @@ import type { AirTerminalSolution } from "@/domain/air-terminals/size";
 import { useProjectStore } from "@/stores/project-store";
 import { type OperatorTerminalInput } from "@/domain/air-terminals/operator";
 import styles from "./RoomAirTerminals.module.css";
+import visual from "./OperatorTerminalControls.module.css";
 import { SizeButtons } from "./TerminalSizeChoices";
 import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
 import {
@@ -134,11 +137,15 @@ export function OperatorTerminalControls({
     ? recommendedSolution.commercialLengthM * 1000
     : null;
   const [length, setLength] = useState(
-    members[0]?.widthMm.toString() ?? recommendedLength?.toString() ?? "",
+    members[0]?.widthMm.toString() ??
+      recommendedLength?.toString() ??
+      solution.variant.commercialLengthsMm[0]?.toString() ??
+      "",
   );
   const [moduleLengths, setModuleLengths] = useState<string[]>(
     members.slice(1).map((item) => item.widthMm.toString()),
   );
+  const [activeModule, setActiveModule] = useState(0);
   const [style, setStyle] = useState(
     existing?.style ??
       (family.familyCode === "EGA6" ? "Chiusura Push (a richiesta)" : ""),
@@ -204,105 +211,199 @@ export function OperatorTerminalControls({
   const opIndex = solution.variant.operatingPoints.indexOf(
     solution.operatingPoint,
   );
+  const previewSlots = Math.max(1, solution.variant.slotCount ?? 1);
+  const airflow = family.isLinearPerMeter
+    ? (totalLengthMm / 1000) * (solution.operatingPoint.airflowPerMeterM3h ?? 0)
+    : solution.operatingPoint.airflowM3h;
   return (
     <section aria-label="Scelta singola bocchetta">
       <div hidden={plenumOnly} className={styles.operatorSettings}>
         {family.isLinearPerMeter && (
-          <>
-            <SizeButtons
-              label={
-                moduleLengths.length
-                  ? "Lunghezza modulo 1"
-                  : "Lunghezza singola bocchetta"
-              }
-              values={[
-                ...availableLengths,
-                ...(!customLength &&
-                length &&
-                !availableLengths.includes(numberFromForm(length))
-                  ? [numberFromForm(length)]
-                  : []),
-              ]}
-              value={customLength ? null : numberFromForm(length) || null}
-              recommended={recommendedLength}
-              onChange={(value) => {
-                setCustomLength(false);
-                setLength(String(value));
-              }}
-            />
-            {recommendedSolution && recommendedLength && (
-              <p
-                className="nota"
-                aria-label="Portata della lunghezza consigliata"
+          <div className={visual.builder}>
+            <div className={visual.builderHeading}>
+              <div>
+                <h4>Componi la bocchetta</h4>
+                <p>Seleziona un modulo nel disegno per cambiarne la misura.</p>
+              </div>
+              <span className={visual.totalLength}>
+                {formatNumber(totalLengthMm, 0)} <small>mm totali</small>
+              </span>
+            </div>
+            <div className={visual.composition}>
+              <div
+                className={visual.moduleTrack}
+                role="group"
+                aria-label="Composizione della bocchetta"
               >
-                {recommendedSolution.quantityPerPoint === 1
-                  ? `Lunghezza consigliata: ${formatNumber(recommendedLength, 0)} mm`
-                  : `Composizione consigliata: ${recommendedSolution.quantityPerPoint} moduli da ${formatNumber(recommendedLength, 0)} mm`}
-                {" · "}Fabbisogno per punto:{" "}
-                {formatNumber(recommendedSolution.requiredAirflowPerPointM3h)}{" "}
-                m³/h
-                {" · "}Capacità:{" "}
-                {formatNumber(recommendedSolution.availableAirflowPerPointM3h)}{" "}
-                m³/h
+                {[length, ...moduleLengths].map((value, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className={visual.module}
+                    style={{
+                      flexGrow: Math.max(400, numberFromForm(value) || 800),
+                    }}
+                    aria-label={`Seleziona modulo ${index + 1}`}
+                    aria-pressed={activeModule === index}
+                    onClick={() => setActiveModule(index)}
+                  >
+                    <span className={visual.moduleName}>
+                      Modulo {index + 1}
+                    </span>
+                    <svg
+                      viewBox="0 0 240 64"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                      data-finish={color}
+                    >
+                      <rect
+                        className={visual.face}
+                        x="1"
+                        y="1"
+                        width="238"
+                        height="62"
+                        rx="2"
+                      />
+                      {Array.from({ length: previewSlots }, (_, slot) => (
+                        <rect
+                          className={visual.slot}
+                          key={slot}
+                          x="8"
+                          y={32 + (slot - (previewSlots - 1) / 2) * 12 - 4}
+                          width="224"
+                          height={8}
+                          rx="1"
+                        />
+                      ))}
+                    </svg>
+                    <span className={visual.dimension}>
+                      {value.trim()
+                        ? `${formatNumber(numberFromForm(value), 0)} mm`
+                        : "Scegli misura"}
+                    </span>
+                  </button>
+                ))}
+                {composable && (
+                  <button
+                    type="button"
+                    className={visual.addModule}
+                    aria-label="Aggiungi modulo nello stesso punto"
+                    disabled={customLength || moduleLengths.length >= 99}
+                    onClick={() => {
+                      setModuleLengths((current) => [...current, ""]);
+                      setActiveModule(moduleLengths.length + 1);
+                    }}
+                  >
+                    <Plus size={22} aria-hidden="true" />
+                    <span>Aggiungi modulo</span>
+                  </button>
+                )}
+              </div>
+              <p className={visual.diagramNote}>
+                Schema frontale indicativo · {moduleLengths.length + 1}{" "}
+                {moduleLengths.length
+                  ? "moduli uniti nello stesso punto"
+                  : "modulo"}
+                {moduleLengths.length > 0 &&
+                  ` · ${moduleLengths.length} kit di continuità`}
               </p>
-            )}
-            {!moduleLengths.length && (
-              <button
-                type="button"
-                className="bottone"
-                aria-pressed={customLength}
-                onClick={() => {
-                  setCustomLength(true);
-                  setLength("");
-                }}
-              >
-                SU MISURA · quotazione Ecoclima
-              </button>
-            )}
-            {recommendedLength &&
-              recommendedSolution &&
-              (recommendedSolution.quantityPerPoint === 1 || composable) && (
+            </div>
+            <div className={visual.compositionActions}>
+              {recommendedLength &&
+                recommendedSolution &&
+                (recommendedSolution.quantityPerPoint === 1 || composable) && (
+                  <button
+                    type="button"
+                    className={visual.recommendation}
+                    aria-label={`Usa taglia consigliata · ${recommendedSolution.quantityPerPoint} ${recommendedSolution.quantityPerPoint === 1 ? "modulo" : "moduli"}`}
+                    onClick={() => {
+                      setCustomLength(false);
+                      setLength(String(recommendedLength));
+                      setModuleLengths(
+                        Array.from(
+                          { length: recommendedSolution.quantityPerPoint - 1 },
+                          () => String(recommendedLength),
+                        ),
+                      );
+                      setActiveModule(0);
+                    }}
+                  >
+                    <Sparkle size={19} aria-hidden="true" />
+                    <span>
+                      Usa composizione consigliata{" "}
+                      <small>
+                        {recommendedSolution.quantityPerPoint} ×{" "}
+                        {formatNumber(recommendedLength, 0)} mm
+                      </small>
+                    </span>
+                  </button>
+                )}
+              {!moduleLengths.length && (
                 <button
                   type="button"
-                  className="bottone"
+                  className={visual.customAction}
+                  aria-label="SU MISURA · quotazione Ecoclima"
+                  aria-pressed={customLength}
                   onClick={() => {
-                    setCustomLength(false);
-                    setLength(String(recommendedLength));
-                    setModuleLengths(
-                      Array.from(
-                        { length: recommendedSolution.quantityPerPoint - 1 },
-                        () => String(recommendedLength),
-                      ),
-                    );
+                    setCustomLength(true);
+                    setLength("");
+                    setActiveModule(0);
                   }}
                 >
-                  Usa taglia consigliata ·{" "}
-                  {recommendedSolution.quantityPerPoint}{" "}
-                  {recommendedSolution.quantityPerPoint === 1
-                    ? "modulo"
-                    : "moduli"}
+                  <Ruler size={19} aria-hidden="true" />
+                  <span>
+                    Su misura <small>Quotazione Ecoclima</small>
+                  </span>
                 </button>
               )}
-            {customLength && (
-              <>
-                <label className={`campo ${styles.moduleLength}`}>
-                  <span>Lunghezza su misura (mm)</span>
-                  <input
-                    aria-label="Lunghezza su misura (mm)"
-                    inputMode="decimal"
-                    value={length}
-                    onChange={(event) => setLength(event.target.value)}
-                    placeholder="Inserisci la misura richiesta"
-                  />
-                </label>
-                <p className="avviso attenzione" role="status">
-                  SU MISURA: quotazione da richiedere a Ecoclima. Prezzo e
-                  fattibilità da confermare.
-                </p>
-              </>
-            )}
+            </div>
+            <div className={visual.lengthEditor} hidden={activeModule !== 0}>
+              <SizeButtons
+                label={
+                  moduleLengths.length
+                    ? "Lunghezza modulo 1"
+                    : "Lunghezza singola bocchetta"
+                }
+                values={[
+                  ...availableLengths,
+                  ...(!customLength &&
+                  length &&
+                  !availableLengths.includes(numberFromForm(length))
+                    ? [numberFromForm(length)]
+                    : []),
+                ]}
+                value={customLength ? null : numberFromForm(length) || null}
+                recommended={recommendedLength}
+                onChange={(value) => {
+                  setCustomLength(false);
+                  setLength(String(value));
+                }}
+              />
+              {customLength && (
+                <>
+                  <label className={`campo ${styles.moduleLength}`}>
+                    <span>Lunghezza su misura (mm)</span>
+                    <input
+                      aria-label="Lunghezza su misura (mm)"
+                      inputMode="decimal"
+                      value={length}
+                      onChange={(event) => setLength(event.target.value)}
+                      placeholder="Inserisci la misura richiesta"
+                    />
+                  </label>
+                  <p className="avviso attenzione" role="status">
+                    SU MISURA: quotazione da richiedere a Ecoclima. Prezzo e
+                    fattibilità da confermare.
+                  </p>
+                </>
+              )}
+            </div>
             {moduleLengths.map((value, index) => (
-              <div key={index} className={styles.moduleLength}>
+              <div
+                key={index}
+                className={visual.lengthEditor}
+                hidden={activeModule !== index + 1}
+              >
                 <SizeButtons
                   label={`Lunghezza modulo ${index + 2}`}
                   values={commercialModules}
@@ -317,45 +418,47 @@ export function OperatorTerminalControls({
                   }
                 />
                 <button
-                  className="bottone piccolo tenue"
-                  onClick={() =>
+                  type="button"
+                  className={visual.removeModule}
+                  onClick={() => {
                     setModuleLengths((current) =>
                       current.filter((_, i) => i !== index),
-                    )
-                  }
+                    );
+                    setActiveModule(Math.max(0, index));
+                  }}
                 >
+                  <X size={15} aria-hidden="true" />
                   Rimuovi modulo {index + 2}
                 </button>
               </div>
             ))}
             {composable && (
               <>
-                <button
-                  className="bottone piccolo"
-                  disabled={customLength || moduleLengths.length >= 99}
-                  onClick={() =>
-                    setModuleLengths((current) => [...current, ""])
-                  }
-                >
-                  Aggiungi modulo nello stesso punto
-                </button>
                 <p className="nota" role="status">
                   {moduleLengths.length > 0
                     ? `Punto composto: ${formatNumber(totalLengthMm, 0)} mm · ${moduleLengths.length} kit di continuità.`
                     : "Per punti separati, inserisci e posiziona una bocchetta alla volta. Per unirle, aggiungi moduli nello stesso punto."}
                 </p>
-                {moduleLengths.length > 0 && (
-                  <p className="nota">
-                    Misure componibili:{" "}
-                    {commercialModules
-                      .map((value) => formatNumber(value, 0))
-                      .join(", ")}{" "}
-                    mm.
-                  </p>
-                )}
               </>
             )}
-          </>
+            {recommendedSolution && recommendedLength && (
+              <p
+                className={visual.capacity}
+                aria-label="Portata della lunghezza consigliata"
+              >
+                <Check size={17} aria-hidden="true" />
+                <span>
+                  Fabbisogno per punto:{" "}
+                  {formatNumber(recommendedSolution.requiredAirflowPerPointM3h)}{" "}
+                  m³/h · Capacità:{" "}
+                  {formatNumber(
+                    recommendedSolution.availableAirflowPerPointM3h,
+                  )}{" "}
+                  m³/h <small>della composizione consigliata</small>
+                </span>
+              </p>
+            )}
+          </div>
         )}
         {missingFace && (
           <>
@@ -393,13 +496,13 @@ export function OperatorTerminalControls({
             </label>
           </>
         )}
-        <div className="campo">
+        <div className={`campo ${visual.finishPicker}`}>
           <span>Colore / finitura · obbligatorio</span>
           {finishChoices.length ? (
             <div
               role="group"
               aria-label="Colore scelto"
-              className="scelta-colore"
+              className={visual.finishChoices}
             >
               {(color && !customRal && !finishChoices.includes(color)
                 ? [color, ...finishChoices]
@@ -408,7 +511,8 @@ export function OperatorTerminalControls({
                 <button
                   key={value}
                   type="button"
-                  className={`bottone${color === value ? " pieno" : ""}`}
+                  className="bottone"
+                  data-finish={value}
                   aria-pressed={color === value}
                   onClick={() => {
                     setColor(value);
@@ -416,6 +520,7 @@ export function OperatorTerminalControls({
                     setCustomRal(false);
                   }}
                 >
+                  <span className={visual.swatch} aria-hidden="true" />
                   {terminalFinishLabel(value)}
                   {value === "RAL9016" &&
                     finishSpecification?.whiteSurchargePercent &&
@@ -426,7 +531,7 @@ export function OperatorTerminalControls({
               {finishSpecification?.customRal && (
                 <button
                   type="button"
-                  className={`bottone${customRal ? " pieno" : ""}`}
+                  className="bottone"
                   aria-pressed={customRal}
                   onClick={() => {
                     setCustomRal(true);
@@ -496,16 +601,10 @@ export function OperatorTerminalControls({
             dichiara le finiture disponibili.
           </p>
         )}
-        <p className="nota">
+        <p className={visual.airflow}>
           Portata di questa bocchetta:{" "}
-          {formatNumber(
-            family.isLinearPerMeter
-              ? (totalLengthMm / 1000) *
-                  (solution.operatingPoint.airflowPerMeterM3h ?? 0)
-              : solution.operatingPoint.airflowM3h,
-            0,
-          )}{" "}
-          m³/h. Il totale cambia dopo la conferma della posizione.
+          <strong>{formatNumber(airflow, 0)} m³/h</strong>.
+          <span>Il totale cambia dopo la conferma della posizione.</span>
         </p>
         <details open={!compact}>
           <summary>Aspetto e finiture facoltativi</summary>
@@ -522,6 +621,9 @@ export function OperatorTerminalControls({
       <div hidden={!plenumOnly} className={styles.plenumPanel}>
         <TerminalPlenumFields
           familyCode={family.familyCode}
+          variant={solution.variant}
+          lengthMm={family.isLinearPerMeter ? lengthsMm[0] : null}
+          moduleLengthsMm={family.isLinearPerMeter ? lengthsMm : undefined}
           options={plenumOptions}
           onChange={(patch) =>
             setPlenumOptions((current) => ({
@@ -532,11 +634,10 @@ export function OperatorTerminalControls({
           }
         />
       </div>
-      {placementError && (
-        <p className="avviso attenzione" role="alert">
-          {placementError}
-        </p>
-      )}
+      {placementError &&
+        placementError !== useProjectStore.getState().error && (
+          <NotificationToast message={placementError} />
+        )}
       <button
         ref={saveButtonRef}
         style={saveButtonRef ? { display: "none" } : undefined}

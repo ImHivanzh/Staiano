@@ -76,7 +76,13 @@ export function FullscreenDialog({
     >
       <header className={styles.header}>
         <h2>{title}</h2>
-        <button type="button" className="bottone" onClick={onClose}>
+        <button
+          type="button"
+          className="bottone"
+          title={`${closeLabel} (Esc)`}
+          aria-keyshortcuts="Escape"
+          onClick={onClose}
+        >
           {closeLabel}
         </button>
       </header>

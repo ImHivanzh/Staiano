@@ -1,4 +1,5 @@
 "use client";
+import { NotificationToast } from "./NotificationToast";
 import { useEffect, useRef, useState } from "react";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 
@@ -115,11 +116,7 @@ export function PdfPreview({ blob }: { blob: Blob }) {
           Pagina successiva
         </button>
       </div>
-      {error && (
-        <p role="alert" className="errore">
-          {error}
-        </p>
-      )}
+      {error && <NotificationToast message={error} />}
       <div ref={container} className="pagina-pdf">
         <canvas
           ref={canvas}

@@ -3,7 +3,7 @@ import { PDFDocument, PDFDict, PDFName, PDFRawStream } from "pdf-lib";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { openDisclosure } from "./ui-helpers";
 
-test("dossier PDF locale scaricato con logo, planimetria e schede stanza", async ({
+test("dossier sintetico scaricato dal comando rapido: planimetrie A3 assenti e render incluso", async ({
   page,
 }) => {
   await page.goto("/");
@@ -12,17 +12,25 @@ test("dossier PDF locale scaricato con logo, planimetria e schede stanza", async
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
-  await openDisclosure(page, "File");
   const [download] = await Promise.all([
     page.waitForEvent("download"),
-    page.getByRole("button", { name: "Dossier PDF", exact: true }).click(),
+    page
+      .getByRole("button", {
+        name: "Scarica dossier sintetico PDF",
+        exact: true,
+      })
+      .click(),
   ]);
-  expect(download.suggestedFilename()).toMatch(/-dossier-completo\.pdf$/);
+  expect(download.suggestedFilename()).toMatch(/-dossier-sintetico\.pdf$/);
   const path = await download.path();
   expect(path).toBeTruthy();
   const pdf = await PDFDocument.load(await readFile(path!));
-  expect(pdf.getPageCount()).toBeGreaterThanOrEqual(8);
-  expect(pdf.getPages().some((p) => p.getWidth() > 1100)).toBe(true);
+  expect(pdf.getTitle()).toContain("sintetico");
+  expect(pdf.getPageCount()).toBeGreaterThanOrEqual(4);
+  expect(
+    pdf.getPages().some((p) => p.getWidth() > 900),
+    "Il dossier sintetico non contiene le planimetrie A3, riservate al completo",
+  ).toBe(false);
   const panorama = pdf
     .getPages()
     .find(
@@ -51,7 +59,10 @@ test("dossier PDF locale scaricato con logo, planimetria e schede stanza", async
     0,
   );
   await expect(
-    page.getByRole("button", { name: "Dossier PDF", exact: true }),
+    page.getByRole("button", {
+      name: "Scarica dossier sintetico PDF",
+      exact: true,
+    }),
   ).toBeEnabled();
   await expect(page.locator(".errore-app[role='alert']")).toHaveCount(0);
 });

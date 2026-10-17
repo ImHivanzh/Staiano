@@ -44,7 +44,9 @@ function FanCoilBody({
     d = unit.depthMm / 1000;
   const ceiling = unit.mounting === "ceiling";
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const concealed = product?.family === "AirLeaf SLI";
+  const concealed = ["AirLeaf SLI", "FCZ P", "FCZ PO"].includes(
+    product?.family ?? "",
+  );
   const shell = concealed ? concealedShell : coating;
   const body = useMemo(
     () =>

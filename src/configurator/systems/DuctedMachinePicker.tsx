@@ -41,7 +41,7 @@ export function DuctedMachinePicker({
         s.indoorUnits.some((unit) => unit.roomId === room.id)) &&
       (!installationId || s.installationId === installationId),
   );
-  const { commit, error } = useProjectStore();
+  const { commit } = useProjectStore();
   const installation = project.installations.find(
     (item) => item.id === installationId,
   );
@@ -86,9 +86,8 @@ export function DuctedMachinePicker({
   const [manual, setManual] = useState(
     hydronic || !!savedSystem?.genericMachine,
   );
-  const load = project.rooms
-    .filter((r) => servedIds.includes(r.id))
-    .reduce((total, r) => total + r.designLoadW, 0);
+  const servedRooms = project.rooms.filter((r) => servedIds.includes(r.id));
+  const load = servedRooms.reduce((total, r) => total + r.designLoadW, 0);
   const candidates =
     load > 0
       ? selectDuctedMachine(load, manufacturer, hvacCatalog.products)
@@ -146,7 +145,7 @@ export function DuctedMachinePicker({
           ) : undefined
         }
       >
-        <div className={styles.picker}>
+        <div className={`${styles.picker} ${styles.compactPicker}`}>
           <p className="nota">
             Scegli marca e modello per la macchina. I modelli proposti coprono
             il fabbisogno di {formatNumber(load / 1000)} kW.
@@ -176,128 +175,163 @@ export function DuctedMachinePicker({
               potenze dalla scheda del modello idronico.
             </p>
           )}
-          {manual ? (
-            <ManualMachineForm
-              project={project}
-              roomIds={servedIds}
-              onApplied={close}
-              installationId={installationId}
-              systemId={systemId}
-              onPlace={onPlace}
-              saveButtonRef={saveButton}
-            />
-          ) : (
-            <div className={styles.layout}>
-              <div className={styles.controls}>
-                <h3>Macchina e marca</h3>
-                <label className="campo">
-                  <span>{onPlace ? "Nome macchina" : "Nome impianto"}</span>
-                  <input
-                    aria-label={
-                      onPlace
-                        ? "Nome macchina canalizzata"
-                        : "Nome impianto canalizzato"
-                    }
-                    value={systemName}
-                    maxLength={100}
-                    onChange={(e) => setSystemName(e.target.value)}
-                  />
-                </label>
-                <label className="campo">
-                  <span>Marca canalizzato</span>
-                  <select
-                    value={manufacturer}
-                    onChange={(e) => setManufacturer(e.target.value)}
-                  >
-                    {brands.map((b) => (
-                      <option key={b}>{b}</option>
-                    ))}
-                  </select>
-                </label>
+          <div className={styles.layout}>
+            <div className={styles.controls}>
+              <section
+                className={styles.servedRooms}
+                aria-label="Ambienti considerati"
+              >
+                <h3>Ambienti considerati ({servedRooms.length})</h3>
                 <p className="nota">
-                  Gli ambienti serviti si aggiornano automaticamente collegando
-                  le bocchette alla macchina. Il dimensionamento considera gli
-                  ambienti raggiunti dai collegamenti.
+                  Collega prima tutte le bocchette per dimensionare
+                  correttamente la macchina. Il fabbisogno somma il carico degli
+                  ambienti elencati.
                 </p>
-                {selected && (
-                  <div
-                    className={styles.selection}
-                    aria-label="Macchina selezionata"
-                  >
-                    <span>Modello selezionato</span>
-                    <strong>{selected.indoorModel}</strong>
-                    <p>
-                      {formatNumber(maximumAirflowOption(selected)!.airflowM3h)}{" "}
-                      m³/h · {formatNumber(selected.coolingCapacityW / 1000)} kW
-                      freddo
-                    </p>
-                  </div>
+                {servedRooms.length ? (
+                  <ul>
+                    {servedRooms.map((servedRoom) => (
+                      <li key={servedRoom.id}>
+                        <span>{servedRoom.name}</span>
+                        <strong>
+                          {formatNumber(servedRoom.designLoadW / 1000)} kW
+                        </strong>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="nota">
+                    Nessun ambiente collegato alle bocchette.
+                  </p>
                 )}
-                <button
-                  ref={saveButton}
-                  style={onPlace ? { display: "none" } : undefined}
-                  className="bottone chiara"
-                  disabled={
-                    room.geometryStatus === "unresolved" ||
-                    !selected ||
-                    !servedIds.length ||
-                    servedIds.some(
-                      (id) =>
-                        project.rooms.find((r) => r.id === id)
-                          ?.geometryStatus === "unresolved",
-                    )
-                  }
-                  onClick={() => {
-                    apply((p) => {
-                      const updated = applyDuctedSystem(
-                        p,
-                        servedIds,
-                        manufacturer,
-                        savedSystem?.id ?? null,
-                        selected?.id ?? null,
-                        installationId,
-                      );
-                      const configured = updated.hvacSystems.find(
-                        (s) =>
-                          s.type === "ducted" &&
-                          (!installationId ||
-                            s.installationId === installationId) &&
-                          s.roomIds.some((id) => servedIds.includes(id)),
-                      );
-                      return {
-                        ...updated,
-                        hvacSystems: updated.hvacSystems.map((s) =>
-                          s.id === configured?.id
-                            ? {
-                                ...s,
-                                name: systemName.trim() || initialName,
-                              }
-                            : s,
-                        ),
-                        installations: updated.installations.map((item) =>
-                          item.id === installationId
-                            ? {
-                                ...item,
-                                ...(onPlace
-                                  ? {}
-                                  : { name: systemName.trim() || initialName }),
-                                roomIds: [
-                                  ...new Set([...item.roomIds, ...servedIds]),
-                                ],
-                              }
-                            : item,
-                        ),
-                      };
-                    });
-                    if (!useProjectStore.getState().error) close();
-                  }}
-                >
-                  {savedSystem
-                    ? "Aggiorna sistema canalizzato"
-                    : "Configura canalizzato"}
-                </button>
+              </section>
+              {!manual && (
+                <>
+                  <h3>Macchina e marca</h3>
+                  <label className="campo">
+                    <span>{onPlace ? "Nome macchina" : "Nome impianto"}</span>
+                    <input
+                      aria-label={
+                        onPlace
+                          ? "Nome macchina canalizzata"
+                          : "Nome impianto canalizzato"
+                      }
+                      value={systemName}
+                      maxLength={100}
+                      onChange={(e) => setSystemName(e.target.value)}
+                    />
+                  </label>
+                  <label className="campo">
+                    <span>Marca canalizzato</span>
+                    <select
+                      value={manufacturer}
+                      onChange={(e) => setManufacturer(e.target.value)}
+                    >
+                      {brands.map((b) => (
+                        <option key={b}>{b}</option>
+                      ))}
+                    </select>
+                  </label>
+                  {selected && (
+                    <div
+                      className={styles.selection}
+                      aria-label="Macchina selezionata"
+                    >
+                      <span>Modello selezionato</span>
+                      <strong>{selected.indoorModel}</strong>
+                      <p>
+                        {formatNumber(
+                          maximumAirflowOption(selected)!.airflowM3h,
+                        )}{" "}
+                        m³/h · {formatNumber(selected.coolingCapacityW / 1000)}{" "}
+                        kW freddo
+                      </p>
+                    </div>
+                  )}
+                  <button
+                    ref={saveButton}
+                    style={onPlace ? { display: "none" } : undefined}
+                    className="bottone chiara"
+                    disabled={
+                      room.geometryStatus === "unresolved" ||
+                      !selected ||
+                      !servedIds.length ||
+                      servedIds.some(
+                        (id) =>
+                          project.rooms.find((r) => r.id === id)
+                            ?.geometryStatus === "unresolved",
+                      )
+                    }
+                    onClick={() => {
+                      apply((p) => {
+                        const updated = applyDuctedSystem(
+                          p,
+                          servedIds,
+                          manufacturer,
+                          savedSystem?.id ?? null,
+                          selected?.id ?? null,
+                          installationId,
+                        );
+                        const configured = updated.hvacSystems.find(
+                          (s) =>
+                            s.type === "ducted" &&
+                            (!installationId ||
+                              s.installationId === installationId) &&
+                            s.roomIds.some((id) => servedIds.includes(id)),
+                        );
+                        return {
+                          ...updated,
+                          hvacSystems: updated.hvacSystems.map((s) =>
+                            s.id === configured?.id
+                              ? {
+                                  ...s,
+                                  name: systemName.trim() || initialName,
+                                }
+                              : s,
+                          ),
+                          installations: updated.installations.map((item) =>
+                            item.id === installationId
+                              ? {
+                                  ...item,
+                                  ...(onPlace
+                                    ? {}
+                                    : {
+                                        name: systemName.trim() || initialName,
+                                      }),
+                                  roomIds: [
+                                    ...new Set([...item.roomIds, ...servedIds]),
+                                  ],
+                                }
+                              : item,
+                          ),
+                        };
+                      });
+                      if (!useProjectStore.getState().error) close();
+                    }}
+                  >
+                    {savedSystem
+                      ? "Aggiorna sistema canalizzato"
+                      : "Configura canalizzato"}
+                  </button>
+                </>
+              )}
+            </div>
+            {manual ? (
+              <div className={styles.manualForm}>
+                <ManualMachineForm
+                  project={project}
+                  roomIds={servedIds}
+                  onApplied={close}
+                  installationId={installationId}
+                  systemId={systemId}
+                  onPlace={onPlace}
+                  saveButtonRef={saveButton}
+                />
               </div>
-              <section aria-label="Modelli macchina compatibili">
+            ) : (
+              <section
+                className={styles.catalog}
+                aria-label="Modelli macchina compatibili"
+              >
                 <div className={styles.catalogHeading}>
                   <h3>Modelli compatibili</h3>
                   <span>
@@ -347,13 +381,8 @@ export function DuctedMachinePicker({
                   ))}
                 </div>
               </section>
-            </div>
-          )}
-          {error && (
-            <p role="alert" className="avviso attenzione">
-              {error}
-            </p>
-          )}
+            )}
+          </div>
         </div>
       </FullscreenDialog>
     </>

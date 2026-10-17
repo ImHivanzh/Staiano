@@ -95,8 +95,10 @@ for (const width of [1920, 1024])
       slotWidth.getByRole("button", { name: "30 mm", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
     await expect(
-      popup.getByLabel("Montaggio terminale").locator('option[value="wall"]'),
-    ).toHaveText("Parete");
+      popup
+        .getByRole("group", { name: "Montaggio terminale" })
+        .getByRole("button", { name: "Parete", exact: true }),
+    ).toBeVisible();
     await popup.getByRole("tab", { name: "Plenum", exact: true }).click();
     await expect(slotWidth).not.toBeVisible();
     await popup.getByRole("button", { name: "Zincato", exact: true }).click();
@@ -239,7 +241,10 @@ for (const width of [1920, 1024])
     await expect(edit.getByLabel("Lunghezza su misura (mm)")).toHaveValue(
       "1100",
     );
-    await edit.getByLabel("Montaggio terminale").selectOption("wall");
+    await edit
+      .getByRole("group", { name: "Montaggio terminale" })
+      .getByRole("button", { name: "Parete", exact: true })
+      .click();
     await edit.getByRole("tab", { name: "Plenum", exact: true }).click();
     await edit.getByLabel("Stacco plenum").selectOption("custom");
     await edit.getByLabel("Descrizione stacco").fill("Due stacchi laterali");
@@ -248,7 +253,11 @@ for (const width of [1920, 1024])
       .getByRole("button", { name: "Salva", exact: true })
       .click();
     await plan.getByTestId("terminal-supply").click();
-    await expect(edit.getByLabel("Montaggio terminale")).toHaveValue("wall");
+    await expect(
+      edit
+        .getByRole("group", { name: "Montaggio terminale" })
+        .getByRole("button", { name: "Parete", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
     await page.screenshot({
       path: `output/verification/terminal-bocchetta-${width}.png`,
       animations: "disabled",

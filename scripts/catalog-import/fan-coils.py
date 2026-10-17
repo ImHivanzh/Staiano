@@ -2,6 +2,7 @@
 
 Sources are in catalog-data/sources/fan-coils/manifest.json. Network acquisition
 is explicit (--acquire-images); normal generation is deterministic and offline.
+Use --aermec-p to update only P/PO from their acquired source, retaining other products.
 """
 from pathlib import Path
 from html.parser import HTMLParser
@@ -29,7 +30,8 @@ def metadata(name, manufacturer, page=None):
     return {"manufacturer": manufacturer, **{k: m[k] for k in ("sourceUrl", "sourceType", "sha256", "retrievedAt")},
             "documentRevision": "AirLeaf comandi RS Rev.10" if name == "innova-m7" else
             "Catalogo gennaio 2026" if name == "olimpia-bi2" else
-            "FCZ_I_UN50_16 / dati Eurovent 2025" if name == "aermec-fcz" else "Pagina prodotto acquisita 07/10/2026",
+            "FCZ_I_UN50_16 / dati Eurovent 2025" if name == "aermec-fcz" else
+            "FCZ-P_I_UN50_16 / dati Eurovent 2025" if name == "aermec-fcz-p" else "Pagina prodotto acquisita 07/10/2026",
             "importedAt": m["retrievedAt"], "page": page}
 
 
@@ -98,87 +100,153 @@ def innova_products(name, prefix, photo):
                "sourceMetadata": metadata(name, "Innova")}
 
 
-photos = {
-    "SL": acquired_photo("innova-sl", "https://www.innova.it/site/assets/files/1362/panoramica_-_sl.640x0.jpg", "Innova AirLeaf SL, immagine ufficiale della famiglia"),
-    "SLS": acquired_photo("innova-sls", "https://www.innova.it/site/assets/files/1372/panoramica_sls.640x0.jpg", "Innova AirLeaf SLS, immagine ufficiale della famiglia"),
-    "SLI": acquired_photo("innova-sli", "https://www.innova.it/site/assets/files/1374/panoramica_sli.640x0.jpg", "Innova AirLeaf SLI, immagine ufficiale della famiglia"),
-}
-products = []
-for prefix, name in [("SL", "innova-sl-page"), ("SLS", "innova-sls-page"), ("SLI", "innova-sli-page")]:
-    products.extend(innova_products(name, prefix, photos[prefix]))
+dest = ROOT / "catalog-data/generated/fan-coils.json"
+update_aermec_p = "--aermec-p" in sys.argv
+if update_aermec_p:
+    existing = json.loads(dest.read_text(encoding="utf8"))
+    products = [p for p in existing["products"] if p["family"] not in ["FCZ P", "FCZ PO"]]
+else:
+    photos = {
+        "SL": acquired_photo("innova-sl", "https://www.innova.it/site/assets/files/1362/panoramica_-_sl.640x0.jpg", "Innova AirLeaf SL, immagine ufficiale della famiglia"),
+        "SLS": acquired_photo("innova-sls", "https://www.innova.it/site/assets/files/1372/panoramica_sls.640x0.jpg", "Innova AirLeaf SLS, immagine ufficiale della famiglia"),
+        "SLI": acquired_photo("innova-sli", "https://www.innova.it/site/assets/files/1374/panoramica_sli.640x0.jpg", "Innova AirLeaf SLI, immagine ufficiale della famiglia"),
+    }
+    products = []
+    for prefix, name in [("SL", "innova-sl-page"), ("SLS", "innova-sls-page"), ("SLI", "innova-sli-page")]:
+        products.extend(innova_products(name, prefix, photos[prefix]))
 
-# Published tables have three distinct speeds, not one maximum reused for noise.
-olimpia_pages = json.loads((SOURCE / "olimpia-bi2.pages.json").read_text(encoding="utf8"))
-olimpia_photo = embedded_photo("olimpia-bi2-air", "olimpia-bi2", 12, "Im0.jpg", "Olimpia Splendid Bi2 Air, immagine ufficiale della famiglia")
-for family, page_number, width_start, codes in [("Bi2 Air", 12, 695, ["01851", "01852", "01853", "01854"]),
-                                              ("Bi2 Smart S1", 20, 759, ["02122", "02123", "02124", "02125"])]:
-    text = olimpia_pages[page_number - 1]
-    def original_row(label):
-        line = next(l for l in text.splitlines() if l.startswith(label))
-        values = re.findall(r"(?<!\w)\d+(?:[.,]\d+)?", line.split("kW", 1)[-1] if "kW" in line else line.split("dB(A)", 1)[-1] if "dB(A)" in line else line.split("m3/h", 1)[-1] if "m3/h" in line else line.split("m³/h", 1)[-1])
-        result = [float(v.replace(',', '.')) for v in values]
-        if len(result) != 12:
-            raise ValueError(f"Ambiguous original row {family}: {label}, {result}")
-        return result
-    cooling = original_row("Potenza resa totale in raffreddamento")
-    heating = original_row("Potenza resa totale in riscaldamento a20/15 - w45/40")
-    noise = original_row("Pressione sonora")
-    flow = original_row("Portata d’aria")
-    for i, size in enumerate([200, 400, 600, 800]):
-        products.append({"id": f"olimpia-{codes[i]}", "manufacturer": "Olimpia Splendid", "family": family,
-                         "model": f"SL AIR {size} DC TR" if family == "Bi2 Air" else f"SL SMART S1 {size} B DC", "pipes": "2",
-                         "widthMm": width_start + i * 200, "heightMm": 599 if family == "Bi2 Air" else 579,
-                         "depthMm": 150, "mountings": ["wall", "ceiling"],
-                         "dimensionNote": "La scheda riporta profondità 129/150 mm: rappresentato ingombro cautelativo di 150 mm. Verificare allestimento prima della posa.",
-                         "features": ["Motore DC brushless", "Controllo touch a bordo", "Telecomando di serie", "Multiset Control" if family == "Bi2 Air" else "Design total flat"],
-                         "productPhoto": olimpia_photo if family == "Bi2 Air" else embedded_photo("olimpia-bi2-smart", "olimpia-bi2", 18, "Im0.png", "Olimpia Splendid Bi2 Smart, immagine ufficiale della famiglia"),
-                         "operatingPoints": [{"label": label, "coolingW": cooling[i*3+j]*1000, "heatingW": heating[i*3+j]*1000,
-                             "airflowM3h": flow[i*3+j], "noiseDbA": noise[i*3+j],
-                             "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
-                             "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
-                             "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, 1/4 sfera, distanza 3 m."} for j,label in enumerate(["Bassa", "Media", "Alta"])],
-                         "sourceMetadata": metadata("olimpia-bi2", "Olimpia Splendid", page_number)})
+    # Published tables have three distinct speeds, not one maximum reused for noise.
+    olimpia_pages = json.loads((SOURCE / "olimpia-bi2.pages.json").read_text(encoding="utf8"))
+    olimpia_photo = embedded_photo("olimpia-bi2-air", "olimpia-bi2", 12, "Im0.jpg", "Olimpia Splendid Bi2 Air, immagine ufficiale della famiglia")
+    for family, page_number, width_start, codes in [("Bi2 Air", 12, 695, ["01851", "01852", "01853", "01854"]),
+                                                  ("Bi2 Smart S1", 20, 759, ["02122", "02123", "02124", "02125"])]:
+        text = olimpia_pages[page_number - 1]
+        def original_row(label):
+            line = next(l for l in text.splitlines() if l.startswith(label))
+            values = re.findall(r"(?<!\w)\d+(?:[.,]\d+)?", line.split("kW", 1)[-1] if "kW" in line else line.split("dB(A)", 1)[-1] if "dB(A)" in line else line.split("m3/h", 1)[-1] if "m3/h" in line else line.split("m³/h", 1)[-1])
+            result = [float(v.replace(',', '.')) for v in values]
+            if len(result) != 12:
+                raise ValueError(f"Ambiguous original row {family}: {label}, {result}")
+            return result
+        cooling = original_row("Potenza resa totale in raffreddamento")
+        heating = original_row("Potenza resa totale in riscaldamento a20/15 - w45/40")
+        noise = original_row("Pressione sonora")
+        flow = original_row("Portata d’aria")
+        for i, size in enumerate([200, 400, 600, 800]):
+            products.append({"id": f"olimpia-{codes[i]}", "manufacturer": "Olimpia Splendid", "family": family,
+                             "model": f"SL AIR {size} DC TR" if family == "Bi2 Air" else f"SL SMART S1 {size} B DC", "pipes": "2",
+                             "widthMm": width_start + i * 200, "heightMm": 599 if family == "Bi2 Air" else 579,
+                             "depthMm": 150, "mountings": ["wall", "ceiling"],
+                             "dimensionNote": "La scheda riporta profondità 129/150 mm: rappresentato ingombro cautelativo di 150 mm. Verificare allestimento prima della posa.",
+                             "features": ["Motore DC brushless", "Controllo touch a bordo", "Telecomando di serie", "Multiset Control" if family == "Bi2 Air" else "Design total flat"],
+                             "productPhoto": olimpia_photo if family == "Bi2 Air" else embedded_photo("olimpia-bi2-smart", "olimpia-bi2", 18, "Im0.png", "Olimpia Splendid Bi2 Smart, immagine ufficiale della famiglia"),
+                             "operatingPoints": [{"label": label, "coolingW": cooling[i*3+j]*1000, "heatingW": heating[i*3+j]*1000,
+                                 "airflowM3h": flow[i*3+j], "noiseDbA": noise[i*3+j],
+                                 "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+                                 "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+                                 "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, 1/4 sfera, distanza 3 m."} for j,label in enumerate(["Bassa", "Media", "Alta"])],
+                             "sourceMetadata": metadata("olimpia-bi2", "Olimpia Splendid", page_number)})
 
-aermec = json.loads((SOURCE / "aermec-fcz.pages.json").read_text(encoding="utf8"))[13]
-aermec_photo = embedded_photo("aermec-fcz", "aermec-fcz", 1, "Im0.jp2", "Aermec FCZ, versioni a vista nella scheda ufficiale")
-for block, sizes in [(aermec.split("FCZ600")[0], [100,150,200,250,300,350,400,450,500,550]),
-                     ("FCZ600" + aermec.split("FCZ600",1)[1], [600,650,700,750,800,850,900,950,1000])]:
-    def values(label, occurrence=0):
-        line = [l for l in block.splitlines() if l.startswith(label)][occurrence]
-        unit = "dB(A)" if "sonora" in label else "m³/h" if "Portata aria" in label else "kW"
-        result = [float(v.replace(',', '.')) for v in line.split(unit)[-1].split()]
-        if len(result) != len(sizes)*3: raise ValueError(f"Incomplete Aermec row: {label}")
-        return result
-    cooling = values("Potenza frigorifera kW")
-    heating = values("Potenza termica kW",1)
-    flow = values("Portata aria m³/h")
-    noise = values("Livello di pressione sonora")
-    for i,size in enumerate(sizes):
-        width = 640 if size <=150 else 750 if size <=250 else 980 if size <=350 else 1200 if size <=550 else 1320
-        products.append({"id": f"aermec-fcz{size}", "manufacturer": "Aermec", "family": "FCZ", "model": f"FCZ{size}",
-                         "pipes": "2", "widthMm": width, "heightMm": 591 if size >=900 else 486, "depthMm": 220,
-                         "mountings": ["wall", "ceiling"], "dimensionNote": "Ingombro versione a vista; allestimento, piedini e accessori da specificare.",
-                         "features": ["Ventilatore centrifugo", "Tre velocità distinte", "Compatibile con sistema VMF (accessorio)", "Controllo T-touch opzionale"],
-                         "productPhoto": aermec_photo, "operatingPoints": [{"label": label, "coolingW": cooling[i*3+j]*1000,
-                             "heatingW": heating[i*3+j]*1000, "airflowM3h": flow[i*3+j], "noiseDbA": noise[i*3+j],
-                             "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.", "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
-                             "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."} for j,label in enumerate(["Bassa", "Media", "Alta"])],
-                         "sourceMetadata": metadata("aermec-fcz", "Aermec",14)})
+    aermec = json.loads((SOURCE / "aermec-fcz.pages.json").read_text(encoding="utf8"))[13]
+    aermec_photo = embedded_photo("aermec-fcz", "aermec-fcz", 1, "Im0.jp2", "Aermec FCZ, versioni a vista nella scheda ufficiale")
+    for block, sizes in [(aermec.split("FCZ600")[0], [100,150,200,250,300,350,400,450,500,550]),
+                         ("FCZ600" + aermec.split("FCZ600",1)[1], [600,650,700,750,800,850,900,950,1000])]:
+        def values(label, occurrence=0):
+            line = [l for l in block.splitlines() if l.startswith(label)][occurrence]
+            unit = "dB(A)" if "sonora" in label else "m³/h" if "Portata aria" in label else "kW"
+            result = [float(v.replace(',', '.')) for v in line.split(unit)[-1].split()]
+            if len(result) != len(sizes)*3: raise ValueError(f"Incomplete Aermec row: {label}")
+            return result
+        cooling = values("Potenza frigorifera kW")
+        heating = values("Potenza termica kW",1)
+        flow = values("Portata aria m³/h")
+        noise = values("Livello di pressione sonora")
+        for i,size in enumerate(sizes):
+            width = 640 if size <=150 else 750 if size <=250 else 980 if size <=350 else 1200 if size <=550 else 1320
+            products.append({"id": f"aermec-fcz{size}", "manufacturer": "Aermec", "family": "FCZ", "model": f"FCZ{size}",
+                             "pipes": "2", "widthMm": width, "heightMm": 591 if size >=900 else 486, "depthMm": 220,
+                             "mountings": ["wall", "ceiling"], "dimensionNote": "Ingombro versione a vista; allestimento, piedini e accessori da specificare.",
+                             "features": ["Ventilatore centrifugo", "Tre velocità distinte", "Compatibile con sistema VMF (accessorio)", "Controllo T-touch opzionale"],
+                             "productPhoto": aermec_photo, "operatingPoints": [{"label": label, "coolingW": cooling[i*3+j]*1000,
+                                 "heatingW": heating[i*3+j]*1000, "airflowM3h": flow[i*3+j], "noiseDbA": noise[i*3+j],
+                                 "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.", "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s.",
+                                 "noiseConditions": "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."} for j,label in enumerate(["Bassa", "Media", "Alta"])],
+                             "sourceMetadata": metadata("aermec-fcz", "Aermec",14)})
 
-controls = []
-m7_photo_path = ASSETS / "innova-m7-interface.png"
-m7_source = metadata("innova-m7", "Innova", 13)
-m7_photo = {"localPath": "/catalog-assets/fan-coils/innova-m7-interface.png", "sourceUrl": m7_source["sourceUrl"],
-            "sha256": hashlib.sha256(m7_photo_path.read_bytes()).hexdigest(),
-            "caption": "Interfaccia M7, disegno originale EEB749 nel manuale Innova"} if m7_photo_path.exists() else None
-for code, connection, boards, extra in [("EEB749II", "wired", ["ESE745II", "ESE748II"], []),
-                                       ("EFB749II", "wifi-wired", ["ESE745II", "ESE748II"], ["Wi-Fi integrato e nuova App"]),
-                                       ("EGB749II", "bluetooth", ["ESE746II", "ESE741II"], ["Collegamento Bluetooth"])]:
-    controls.append({"id": f"innova-{code.lower()}", "manufacturer": "Innova", "series": "M7", "model": code,
-                     "widthMm": 117, "heightMm": 80, "depthMm": 5, "connection": connection,
-                     "features": ["Interfaccia tattile LED", "Termostato e sonda temperatura/umidità", "Colore bianco", *extra],
-                     "compatibleFamilies": ["AirLeaf SLI", "AirLeaf RSI", "AirLeaf SLSI"], "requiredBoards": boards,
-                     "productPhoto": m7_photo, "sourceMetadata": metadata("innova-m7", "Innova",6)})
+# P/PO have their own enclosure and performance tables; PO sound power is not sound pressure.
+aermec_p = json.loads((SOURCE / "aermec-fcz-p.pages.json").read_text(encoding="utf8"))
+aermec_p_photo = embedded_photo("aermec-fcz-p", "aermec-fcz-p", 1, "Im0.jp2", "Aermec FCZ P/PO da incasso, scheda ufficiale")
+dimensions = {}
+for page in aermec_p[16:18]:
+    for table in re.split(r"(?=^FCZ\d+P)", page, flags=re.M):
+        models = re.findall(r"FCZ\d+PO?", table.splitlines()[0]) if table.splitlines() else []
+        if not models:
+            continue
+        rows = {}
+        for axis in ["A", "C", "D"]:
+            row = re.search(rf"^{axis} mm (.+)$", table, re.M)
+            if not row:
+                raise ValueError(f"Missing Aermec dimension {axis}")
+            rows[axis] = [int(v) for v in row[1].split()]
+            assert len(rows[axis]) == len(models), "Incomplete Aermec dimensions"
+        for i, model in enumerate(models):
+            dimensions[model] = (rows["D"][i], rows["C"][i], rows["A"][i])
+
+for page_index in [13, 14, 15]:
+    for table in re.split(r"(?=^FCZ\d+P)", aermec_p[page_index], flags=re.M)[1:]:
+        models = re.findall(r"FCZ\d+PO?", table.splitlines()[0])
+        pipes = "4" if all(int(re.search(r"\d+", m)[0]) % 100 == 1 for m in models) else "2"
+        po = models[0].endswith("PO")
+        def row_values(label, occurrence=0):
+            row = [line for line in table.splitlines() if line.startswith(label)][occurrence]
+            values = [None if v == "-" else float(v.replace(",", ".")) for v in row[len(label):].split()]
+            assert len(values) == len(models) * 3, f"Incomplete Aermec row: {label}"
+            return values
+        cooling = row_values("Potenza frigorifera kW ")
+        heating = row_values("Potenza termica kW ", 0 if pipes == "4" else 1)
+        flow = row_values("Portata aria m³/h ")
+        noise = None if po else row_values("Livello di pressione sonora dB(A) ")
+        pressure = row_values("Pressione statica utile Pa ") if po else None
+        for i, model in enumerate(models):
+            width, height, depth = dimensions[model]
+            points = []
+            for j, label in enumerate(["Bassa", "Media", "Alta"]):
+                k = i * 3 + j
+                points.append({"label": f"{label} · {pressure[k]:g} Pa" if po else label,
+                               "coolingW": round(cooling[k] * 1000), "heatingW": round(heating[k] * 1000),
+                               "airflowM3h": flow[k], "noiseDbA": None if po else noise[k],
+                               "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+                               "heatingConditions": f"Acqua {'65/55' if pipes == '4' else '45/40'} °C; aria 20 °C b.s.",
+                               "noiseConditions": "Solo potenza sonora inlet + radiated / outlet pubblicata; pressione sonora non disponibile." if po else
+                                                  "Pressione sonora pubblicata; metodo UNI EN 16583:15, condizioni della scheda."})
+            products.append({"id": f"aermec-{model.lower()}", "manufacturer": "Aermec", "family": "FCZ PO" if po else "FCZ P",
+                             "model": model, "pipes": pipes, "widthMm": width, "heightMm": height, "depthMm": depth,
+                             "mountings": ["wall", "ceiling"], "dimensionNote": "Ingombro unità senza mobile (D × C × A); accessori, plenum e spazio manutenzione esclusi.",
+                             "features": ["Installazione ad incasso senza mobile", "Installazione verticale e orizzontale",
+                                          "Canalizzabile con motore potenziato e prevalenza utile" if po else "Unità senza prevalenza",
+                                          "Ventilatore centrifugo", "Compatibile con sistema VMF (accessorio)"],
+                             "productPhoto": aermec_p_photo, "operatingPoints": points,
+                             "sourceMetadata": metadata("aermec-fcz-p", "Aermec", page_index + 1)})
+assert len([p for p in products if p["family"] == "FCZ P"]) == 26
+assert len([p for p in products if p["family"] == "FCZ PO"]) == 21
+
+if update_aermec_p:
+    controls = existing["controls"]
+else:
+    controls = []
+    m7_photo_path = ASSETS / "innova-m7-interface.png"
+    m7_source = metadata("innova-m7", "Innova", 13)
+    m7_photo = {"localPath": "/catalog-assets/fan-coils/innova-m7-interface.png", "sourceUrl": m7_source["sourceUrl"],
+                "sha256": hashlib.sha256(m7_photo_path.read_bytes()).hexdigest(),
+                "caption": "Interfaccia M7, disegno originale EEB749 nel manuale Innova"} if m7_photo_path.exists() else None
+    for code, connection, boards, extra in [("EEB749II", "wired", ["ESE745II", "ESE748II"], []),
+                                           ("EFB749II", "wifi-wired", ["ESE745II", "ESE748II"], ["Wi-Fi integrato e nuova App"]),
+                                           ("EGB749II", "bluetooth", ["ESE746II", "ESE741II"], ["Collegamento Bluetooth"])]:
+        controls.append({"id": f"innova-{code.lower()}", "manufacturer": "Innova", "series": "M7", "model": code,
+                         "widthMm": 117, "heightMm": 80, "depthMm": 5, "connection": connection,
+                         "features": ["Interfaccia tattile LED", "Termostato e sonda temperatura/umidità", "Colore bianco", *extra],
+                         "compatibleFamilies": ["AirLeaf SLI", "AirLeaf RSI", "AirLeaf SLSI"], "requiredBoards": boards,
+                         "productPhoto": m7_photo, "sourceMetadata": metadata("innova-m7", "Innova",6)})
 
 data = {"products": products, "controls": controls}
 version = "fan-coils-" + hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]

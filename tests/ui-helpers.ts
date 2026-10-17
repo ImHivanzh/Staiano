@@ -21,6 +21,11 @@ export async function pickTerminalLength(
   length: number,
   module = 1,
 ) {
+  const moduleButton = scope.getByRole("button", {
+    name: `Seleziona modulo ${module}`,
+    exact: true,
+  });
+  if (await moduleButton.count()) await moduleButton.click();
   await terminalLengthButton(scope, length, module).click();
 }
 
@@ -65,9 +70,10 @@ export async function addPlanTerminal(
     name: "Scegli bocchetta sul punto",
   });
   await chooseTerminalModel(popup, code);
-  const mounting = popup.getByLabel("Montaggio terminale");
-  if (await mounting.locator('option[value="ceiling"]').count())
-    await mounting.selectOption("ceiling");
+  const ceiling = popup
+    .getByRole("group", { name: "Montaggio terminale" })
+    .getByRole("button", { name: "Soffitto", exact: true });
+  if (await ceiling.count()) await ceiling.click();
   if (lengths.length) {
     await pickTerminalLength(popup, lengths[0]);
     for (let index = 1; index < lengths.length; index++) {
@@ -175,4 +181,28 @@ export async function chooseTerminalModel(scope: Page | Locator, code: string) {
   if (!(await model.first().isVisible()))
     await openDisclosure(scope, "Tutti i modelli Ecoclima");
   await model.first().click();
+}
+
+export async function dragPlanDevice(
+  page: Page,
+  scope: Locator,
+  device: Locator,
+  x: number,
+  y: number,
+) {
+  const start = await device.locator("rect").first().boundingBox();
+  if (!start) throw new Error("Device is not visible");
+  const end = await scope.getByTestId("editor-2d").evaluate(
+    (node, point) => {
+      const at = new DOMPoint(point.x, point.y).matrixTransform(
+        (node as SVGSVGElement).getScreenCTM()!,
+      );
+      return { x: at.x, y: at.y };
+    },
+    { x, y },
+  );
+  await page.mouse.move(start.x + start.width / 2, start.y + start.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(end.x, end.y, { steps: 12 });
+  await page.mouse.up();
 }

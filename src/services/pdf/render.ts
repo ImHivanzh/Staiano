@@ -46,6 +46,26 @@ const ink = rgb(0.12, 0.16, 0.22),
   pale = rgb(0.94, 0.96, 0.98);
 const n = (v: number, decimals = 2) =>
   new Intl.NumberFormat("it-IT", { maximumFractionDigits: decimals }).format(v);
+// Le quantita restano leggibili: unita al singolare e pezzi raggruppati a parte.
+const singular: Record<string, string> = {
+    batterie: "batteria",
+    elementi: "elemento",
+    pezzi: "pezzo",
+    sistemi: "sistema",
+  },
+  unitLabel = (count: number, unit: string) =>
+    count === 1 ? (singular[unit] ?? unit) : unit,
+  quantityText = (row: {
+    quantity: number;
+    unit: string;
+    pieces: number;
+    pieceUnit?: string;
+  }) =>
+    `${n(row.quantity, 0)} ${unitLabel(row.quantity, row.unit)}${
+      row.pieces > 1 && row.pieceUnit
+        ? ` (${n(row.pieces, 0)} ${unitLabel(row.pieces, row.pieceUnit)})`
+        : ""
+    }`;
 // Helvetica is WinAnsi. Keep technical notation readable and user names safe.
 const safe = (s: string) =>
   s
@@ -363,16 +383,19 @@ export async function renderDossierPdf(
       }),
       [0.3, 0.28, 0.25, 0.17],
     );
-    heading("Apparecchi scelti, ventilconvettori e comandi originali");
-    table(
-      ["Codici / quantita", "Modello", "Dati della scelta"],
-      data.materials.map((row) => [
-        `${row.codes.join(", ")}; ${row.quantity} ${row.unit}`,
-        row.description,
-        row.details,
-      ]),
-      [0.22, 0.33, 0.45],
-    );
+    if (data.materials.length || data.accessories.length) {
+      heading("Distinta materiali");
+      table(
+        ["Descrizione / codici", "Quantità", "Dimensioni", "Caratteristiche"],
+        [...data.materials, ...data.accessories].map((row) => [
+          `${row.description}; ${row.codes.join(", ")}`,
+          quantityText(row),
+          row.dimensions ?? "",
+          row.details,
+        ]),
+        [0.28, 0.14, 0.19, 0.39],
+      );
+    }
     for (const system of p.hydronicSystems ?? []) {
       const outdoor = system.outdoorUnit;
       const product = heatPumpProductAtVersion(
@@ -393,38 +416,42 @@ export async function renderDossierPdf(
         muted,
       );
     }
-    newPage("Bilanci e plenum dedicati");
-    heading("Metri richiesti / installati e capacita reale");
-    if (data.linearBalances.length)
-      table(
-        [
-          "Sistema / funzione / modello",
-          "Richiesti / installati m",
-          "Portata richiesta / disponibile",
-          "Esito",
-        ],
-        data.linearBalances.map((balance) => [
-          `${data.codes.get(balance.systemId)} ${balance.use === "supply" ? "mandata" : "ripresa"}; ${balance.familyCode}${balance.mixedModels ? "; modelli misti" : ""}`,
-          `${n(balance.requiredM)} / ${n(balance.installedM)}`,
-          `${n(balance.airflowM3h)} / ${n(balance.availableAirflowM3h)} m³/h`,
-          balance.status === "deficit" ? "DEFICIT" : "sufficiente",
-        ]),
-        [0.32, 0.22, 0.3, 0.16],
-      );
-    else
+    const ductedSystems = p.hvacSystems.filter(
+      (candidate) => candidate.type === "ducted",
+    );
+    // I dati degli impianti assenti non compaiono nel riepilogo.
+    if (ductedSystems.length) {
+      newPage("Bilanci e plenum dedicati");
+      heading("Metri richiesti / installati e capacita reale");
+      if (data.linearBalances.length)
+        table(
+          [
+            "Sistema / funzione / modello",
+            "Richiesti / installati m",
+            "Portata richiesta / disponibile",
+            "Esito",
+          ],
+          data.linearBalances.map((balance) => [
+            `${data.codes.get(balance.systemId)} ${balance.use === "supply" ? "mandata" : "ripresa"}; ${balance.familyCode}${balance.mixedModels ? "; modelli misti" : ""}`,
+            `${n(balance.requiredM)} / ${n(balance.installedM)}`,
+            `${n(balance.airflowM3h)} / ${n(balance.availableAirflowM3h)} m³/h`,
+            balance.status === "deficit" ? "DEFICIT" : "sufficiente",
+          ]),
+          [0.32, 0.22, 0.3, 0.16],
+        );
+      else
+        paragraph(
+          "Nessun bilancio lineare disponibile per i sistemi canalizzati configurati.",
+          9,
+          muted,
+        );
       paragraph(
-        "Nessun bilancio lineare disponibile nella configurazione corrente.",
-        9,
+        "Con modelli misti il riferimento dei metri richiesti non certifica gli altri modelli: verificare la capacita reale riportata. Una lunghezza richiesta non identifica una singola bocchetta. La composizione e la posa sono scelte dell'operatore.",
+        8,
         muted,
       );
-    paragraph(
-      "Con modelli misti il riferimento dei metri richiesti non certifica gli altri modelli: verificare la capacita reale riportata. Una lunghezza richiesta non identifica una singola bocchetta. La composizione e la posa sono scelte dell'operatore.",
-      8,
-      muted,
-    );
-    for (const system of p.hvacSystems.filter(
-      (candidate) => candidate.type === "ducted",
-    )) {
+    }
+    for (const system of ductedSystems) {
       const plenum = calculateSupplyPlenum(p, system.id);
       const placed = p.plenums.find(
         (candidate) => candidate.systemId === system.id,
@@ -540,7 +567,14 @@ export async function renderDossierPdf(
       muted,
     );
     paragraph(
-      "Quote ambienti interne. Diametri stacchi nominali; dimensioni corpo, transizione e collari sono proposte di fabbricazione da verificare. Canalizzazioni e collegamenti idronici non includono una verifica delle perdite di carico.",
+      [
+        "Quote ambienti interne.",
+        ...(ductedSystems.length || p.hydronicSystems?.length
+          ? [
+              "Diametri stacchi nominali; dimensioni corpo, transizione e collari sono proposte di fabbricazione da verificare. Canalizzazioni e collegamenti idronici non includono una verifica delle perdite di carico.",
+            ]
+          : []),
+      ].join(" "),
       8,
       muted,
     );
@@ -1210,7 +1244,8 @@ export async function renderDossierPdf(
         ]),
         [0.2, 0.5, 0.3],
       );
-    newPage("Sistemi HVAC");
+    // Senza sistemi configurati la pagina non viene creata: nessun dato inventato.
+    if (p.hvacSystems.length) newPage("Sistemi HVAC");
     for (const s of p.hvacSystems) {
       const product = hvacProductAtVersion(s.productId, s.catalogVersion),
         combination =
@@ -1291,8 +1326,6 @@ export async function renderDossierPdf(
         );
       }
     }
-    if (!p.hvacSystems.length)
-      paragraph("Nessun sistema split o canalizzato configurato.");
     if (p.hydronicSystems?.length) {
       newPage("Pompe di calore e collegamenti idronici");
       for (const system of p.hydronicSystems) {
@@ -1365,17 +1398,24 @@ export async function renderDossierPdf(
     }
     newPage("Distinta materiali - senza prezzi");
     table(
-      ["Quantità", "Materiale / codici", "Caratteristiche", "Locali"],
-      data.materials.map((m) => [
-        `${m.quantity} ${m.unit}`,
+      [
+        "Descrizione / codici",
+        "Quantità",
+        "Dimensioni",
+        "Caratteristiche",
+        "Locali",
+      ],
+      [...data.materials, ...data.accessories].map((m) => [
         `${m.description}; ${m.codes.join(", ")}`,
+        quantityText(m),
+        m.dimensions ?? "",
         m.details,
         m.locales.join(", "),
       ]),
-      [0.12, 0.32, 0.4, 0.16],
+      [0.26, 0.14, 0.19, 0.27, 0.14],
     );
     paragraph(
-      "La distinta comprende gli apparecchi configurati. Accessori, attacchi, valvole, plenum, tubazioni, canalizzazioni, sostegni e lavorazioni devono essere definiti nel progetto esecutivo. Le unità interne elencate separatamente sono incluse nel rispettivo sistema, senza sommare due volte il kit.",
+      "La distinta comprende gli apparecchi configurati e, per ogni radiatore, staffe di sostegno, valvola, detentore e kit copritubo derivati dalle finiture scelte; per i radiatori la quantità è in elementi e tra parentesi è indicato il numero di batterie. I codici articolo degli accessori non vengono generati dalla selezione grafica: verificarli sul listino del produttore. Attacchi, plenum, tubazioni, canalizzazioni e lavorazioni devono essere definiti nel progetto esecutivo. Le unità interne elencate separatamente sono incluse nel rispettivo sistema, senza sommare due volte il kit.",
       9,
       muted,
     );

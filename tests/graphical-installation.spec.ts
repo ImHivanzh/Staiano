@@ -2,7 +2,7 @@ import { pickTerminalLength, terminalLengthButton } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Locator, Page } from "@playwright/test";
 import { expect, test } from "./browser-test";
-import { openDisclosure } from "./ui-helpers";
+import { dragPlanDevice, openDisclosure } from "./ui-helpers";
 import { projectSchema } from "../src/schemas/project";
 
 async function planPoint(scope: Locator, x: number, y: number, touch = false) {
@@ -138,6 +138,10 @@ for (const width of [1920, 1024]) {
       .getByRole("button", { name: "Bocchetta", exact: true })
       .click();
     await planPoint(graphic, 4, 2);
+    await graphic.getByRole("button", { name: "Collega", exact: true }).click();
+    await graphic.getByTestId("draft-terminal").click();
+    await graphic.getByRole("button", { name: /^Macchina UI/ }).click();
+    await page.keyboard.press("Escape");
     await graphic.getByTestId("draft-terminal").click();
     const picker = page.getByRole("dialog", {
       name: "Scegli bocchetta sul punto",
@@ -150,6 +154,37 @@ for (const width of [1920, 1024]) {
       .getByRole("button", { name: "Aggiungi modulo nello stesso punto" })
       .click();
     await pickTerminalLength(picker, 1000, 2);
+    await expect(
+      picker.getByRole("button", { name: "Seleziona modulo 2", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await picker
+      .getByRole("button", { name: "Seleziona modulo 1", exact: true })
+      .click();
+    await expect(terminalLengthButton(picker, 2000)).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await picker
+      .getByRole("button", { name: "Aggiungi modulo nello stesso punto" })
+      .click();
+    await expect(
+      picker.getByRole("button", { name: "Seleziona modulo 3", exact: true }),
+    ).toContainText("Scegli misura");
+    await picker
+      .getByRole("button", { name: "Rimuovi modulo 3", exact: true })
+      .click();
+    await expect(
+      picker.getByRole("button", { name: "Seleziona modulo 3", exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      picker.getByRole("button", { name: "Seleziona modulo 2", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await picker
+      .locator('[aria-label="Composizione della bocchetta"]')
+      .scrollIntoViewIfNeeded();
+    await picker.screenshot({
+      path: `.cache/terminal-graphic-modules-${width}.png`,
+    });
     await picker
       .getByRole("button", {
         name: "Alluminio anodizzato naturale · colore non specificato",
@@ -186,6 +221,9 @@ for (const width of [1920, 1024]) {
       name: "Configura bocchetta",
       exact: true,
     });
+    await edit
+      .getByRole("button", { name: "Seleziona modulo 2", exact: true })
+      .click();
     await expect(terminalLengthButton(edit, 1000, 2)).toHaveAttribute(
       "aria-pressed",
       "true",
@@ -198,7 +236,13 @@ for (const width of [1920, 1024]) {
     await graphic
       .getByRole("button", { name: "Muovi (M)", exact: true })
       .click();
-    await planPoint(graphic, 5, 2);
+    await dragPlanDevice(
+      page,
+      graphic,
+      graphic.getByTestId("terminal-supply").first(),
+      5,
+      2,
+    );
     await machine.click();
     await page
       .getByRole("dialog", { name: "Scegli macchina canalizzata" })

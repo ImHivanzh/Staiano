@@ -1,6 +1,6 @@
 """Pantum BM4240ADW: API native, senza interfaccia Pantum.
 
-ADF verificato su hardware a 150 DPI. Una pagina A4, grigio, 150/300 DPI.
+ADF verificato su hardware a 150 DPI. Una pagina A4, grigio, 150/300/600 DPI.
 """
 import ctypes as C
 import hashlib
@@ -17,7 +17,7 @@ import time
 SCANNER_HOST = "192.168.178.239"
 DLL_PATH = Path(r"C:\Program Files\Pantum\bm4200\SCANNER\bm4200AMD64\bm4200lldx64.dll")
 DLL_SHA256 = "837dd8dfbe24efd61360d68e4b04e6b5d3bd4afeeb4f8ab1474d99be294ee8d2"
-MAX_IMAGE_BYTES = 32 * 1024 * 1024
+MAX_IMAGE_BYTES = 40 * 1024 * 1024
 
 
 class ScannerError(RuntimeError):
@@ -26,7 +26,7 @@ class ScannerError(RuntimeError):
 
 def scanner_info():
     return {"modello": "BM4240ADW", "sorgenti": ["piano", "adf"],
-            "dpi": [150, 300], "colore": False}
+            "dpi": [150, 300, 600], "colore": False}
 
 
 def _driver():
@@ -91,8 +91,8 @@ def _selected_device(dll):
 
 
 def _parameters(dpi, sorgente="piano"):
-    if type(dpi) is not int or dpi not in (150, 300):
-        raise ScannerError("Risoluzione consentita: 150 oppure 300 DPI.")
+    if type(dpi) is not int or dpi not in (150, 300, 600):
+        raise ScannerError("Risoluzione consentita: 150, 300 oppure 600 DPI.")
     if sorgente not in ("piano", "adf"):
         raise ScannerError("Sorgente consentita: piano oppure adf.")
     params = bytearray(1108)
@@ -110,8 +110,8 @@ def _image_info(header, dpi):
         raise ScannerError("Intestazione immagine incompleta.")
     depth = header[2]
     resolution, stride, width, height = struct.unpack_from("<HIII", header, 18)
-    if (depth != 8 or resolution != dpi or not 0 < width <= 2600
-            or not 0 < height <= 3600 or not width <= stride <= width + 16
+    if (depth != 8 or resolution != dpi or not 0 < width <= 2600 * dpi / 300
+            or not 0 < height <= 3600 * dpi / 300 or not width <= stride <= width + 16
             or stride * height > MAX_IMAGE_BYTES):
         raise ScannerError("Formato immagine inatteso: interrompere e verificare il driver.")
     return width, height, stride

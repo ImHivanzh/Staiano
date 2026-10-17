@@ -47,5 +47,12 @@
     "sourceType": "html",
     "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
     "retrievedAt": "2026-10-07T09:16:41.664554+00:00"
+  },
+  {
+    "name": "aermec-fcz-p",
+    "sourceUrl": "https://www.aermec.com/download?id=22888",
+    "sourceType": "pdf",
+    "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
+    "retrievedAt": "2026-10-15T23:05:31.477345+00:00"
   }
 ]

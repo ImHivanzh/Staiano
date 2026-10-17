@@ -675,7 +675,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     }
                     aria-pressed={planPlacementTool === "connect"}
                     aria-keyshortcuts="C"
-                    title="Collega macchina e bocchetta · C"
+                    title="Collega macchina e bocchetta (C)"
                     onClick={() => {
                       setConfigurationTarget(null);
                       useProjectStore.setState({

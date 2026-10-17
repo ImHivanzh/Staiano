@@ -108,7 +108,9 @@ export function snapPoint(
   anchor: Point | null,
   options: SnapOptions,
 ): { point: Point; kind: string } {
-  if (!options.enabled) return { point: p, kind: "libero" };
+  // Object snap to existing vertices and wall axes is topology, not a drawing
+  // aid: it stays active even with snap disabled, otherwise separately drawn
+  // walls would never share an endpoint and no room could close.
   const endpoints = walls.flatMap((w) => [w.start, w.end]);
   if (anchor) endpoints.push(anchor);
   const closest = endpoints.toSorted(
@@ -121,6 +123,7 @@ export function snapPoint(
     .toSorted((a, b) => distance(a, p) - distance(b, p));
   if (segments[0] && distance(segments[0], p) <= options.toleranceM)
     return { point: segments[0], kind: "segmento" };
+  if (!options.enabled) return { point: p, kind: "libero" };
   if (anchor && (options.orthogonal || options.angle45 || options.parallel)) {
     const r = distance(anchor, p),
       angle = Math.atan2(p.y - anchor.y, p.x - anchor.x);
