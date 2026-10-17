@@ -1,0 +1,17 @@
+name = "licenses"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+# Dominio personalizzato del servizio (la zona deve stare sull'account).
+routes = [
+  { pattern = "licenses.ivanbuonocore.dev", custom_domain = true }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "licenses"
+database_id = "4df77dd3-41da-41a4-8bd9-73bb843accc6"
+
+[observability]
+enabled = true

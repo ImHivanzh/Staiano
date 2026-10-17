@@ -69,6 +69,25 @@ Tema chiaro, navigazione blu, tinta HVAC ciano. Nessun login secondo il brief.
 Nessuna modifica agli altri gestionali, al portale o Caddy durante questa base.
 Un avvio locale su 127.0.0.1:3015; futura pubblicazione separata dal dominio.
 
+## ADR 008 — licenza e attivazione
+
+Licenza legata alla singola macchina: un Worker Cloudflare (D1 per licenze e
+attivazioni) firma token Ed25519 che l'app verifica offline e rinnova ogni
+`LICENSE_CHECK_MINUTES`; il server resta l'unico punto di revoca e spostamento.
+Della chiave di licenza è conservato solo l'hash. Senza licenza valida il
+configuratore non risponde: le pagine vengono portate su `/licenza`, le API
+rispondono 403. Il blocco è attivo solo con `LICENSE_ENFORCE=1`, la chiave
+privata resta nel Worker e il repository conserva solo quella pubblica.
+
+Il servizio è **generale** (un Worker per qualsiasi software: cliente, piano,
+posti e funzionalità per licenza) e vive su **https://licenses.ivanbuonocore.dev**
+(zone `ivanbuonocore.dev`, D1 `licenses`, codice in `license-server/`). Il
+controllo è attivo su questa postazione dalla licenza `lic_5a80f428c3c98655`.
+La tolleranza offline è di **un giorno** (`LICENSE_TOLERANCE_MINUTES=1440`; il
+valore predefinito del codice è 30 minuti): una revoca arriva comunque entro
+pochi minuti, mentre se il server non risponde la postazione resta utilizzabile
+fino a un giorno e poi si blocca.
+
 ## Rischi e verifiche
 
 - Grafo planare e offset in concavità: test su intersezioni, tagli, giunzioni,

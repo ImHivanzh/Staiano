@@ -32,6 +32,7 @@ import {
   Wind,
   Snowflake,
   Users,
+  ShieldCheck,
   ArrowRight,
   SidebarSimple,
   MagicWand,
@@ -83,6 +84,7 @@ import type { Project } from "@/schemas/project";
 import { CatalogAdmin } from "./systems/CatalogAdmin";
 import { EcoclimaBill } from "./systems/EcoclimaBill";
 import { AdminUsers } from "./AdminUsers";
+import { LicensePanel } from "./LicensePanel";
 import { ProjectSettings } from "./ProjectSettings";
 import { LengthInput } from "./LengthInput";
 import { PdfPreview } from "./PdfPreview";
@@ -124,7 +126,13 @@ export function Configurator() {
   const s = useProjectStore(),
     p = s.project;
   const [page, setPage] = useState<
-      "editor" | "projects" | "checks" | "catalogs" | "users" | "settings"
+      | "editor"
+      | "projects"
+      | "checks"
+      | "catalogs"
+      | "users"
+      | "license"
+      | "settings"
     >("editor"),
     [projects, setProjects] = useState<Project[]>([]);
   const [projectSearch, setProjectSearch] = useState("");
@@ -883,6 +891,18 @@ export function Configurator() {
               Gestione utenti
             </button>
           )}
+          {identity?.role === "admin" && (
+            <button
+              className={`voce-nav ${page === "license" ? "attiva" : ""}`}
+              aria-current={page === "license" ? "page" : undefined}
+              aria-label="Licenza"
+              title="Licenza"
+              onClick={() => setPage("license")}
+            >
+              <ShieldCheck />
+              Licenza
+            </button>
+          )}
         </nav>
         {p && (
           <div className="navigazione-piano">
@@ -990,9 +1010,11 @@ export function Configurator() {
                     ? "Controlli progetto"
                     : page === "users"
                       ? "Gestione utenti"
-                      : page === "settings"
-                        ? "Impostazioni progetto"
-                        : (p?.name ?? "Il tuo spazio di progettazione")}
+                      : page === "license"
+                        ? "Licenza"
+                        : page === "settings"
+                          ? "Impostazioni progetto"
+                          : (p?.name ?? "Il tuo spazio di progettazione")}
             </h1>
             <p className="sottotitolo-progetto">
               {page === "editor"
@@ -1337,6 +1359,8 @@ export function Configurator() {
           <ProjectSettings project={p} />
         ) : page === "users" && identity?.role === "admin" ? (
           <AdminUsers username={identity.username} />
+        ) : page === "license" && identity?.role === "admin" ? (
+          <LicensePanel />
         ) : !p && page !== "projects" ? (
           <main className="inizio">
             <h2>Da misure reali a un progetto chiaro.</h2>
