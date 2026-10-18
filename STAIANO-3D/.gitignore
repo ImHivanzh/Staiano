@@ -39,3 +39,8 @@ deploy/caddy/Caddyfile.proposed
 
 # Imported source copies stay local; already tracked extraction inputs are preserved.
 catalog-data/sources/
+
+# Rebuilt by deploy/build-dwg.ps1; versioned sources and lock file are authoritative.
+native/runtime/*.dll
+native/runtime/*.deps.json
+native/runtime/*.runtimeconfig.json
