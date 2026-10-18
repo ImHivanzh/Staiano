@@ -213,3 +213,5 @@ L'importatore dati produce staging/report; `--apply` salva la revisione dopo
 aver controllato la differenza. Fonti riacquisibili in `scripts/catalog-import`.
 Node esegue i calcoli locali e PDF. DWG nativo MIT ACadSharp richiede .NET 8+.
 Ricompilazione del parser: `npm run dwg:build`. ODA commerciale disattivato.
+
+Per compilare il lettore DWG occorre l’SDK .NET 8. È supportata anche l’installazione locale in `.cache/dotnet-sdk/`; lo script la usa senza modificare il PATH di Windows. Il ripristino usa NuGet ufficiale e verifica `packages.lock.json`.
