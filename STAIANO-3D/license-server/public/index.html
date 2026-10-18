@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b111a" />
+    <title>Licenses | Gestione licenze software</title>
+    <link rel="stylesheet" href="/admin.css" />
+    <script src="/admin.js" defer></script>
+    <script src="/webauthn.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Vai al contenuto</a>
+    <header class="app-header">
+      <a class="brand" href="/" aria-label="Licenses, gestione licenze software"
+        ><svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect x="3" y="3" width="26" height="26" rx="7" />
+          <path d="M11 22V10m0 12h11m-5-12v7m0 0h5m-5 0 5-7" /></svg
+        >Licenses<span>Gestione software</span></a
+      >
+      <div id="session-tools" class="session-tools" hidden>
+        <span id="session-method"></span
+        ><button id="logout" class="quiet" hidden>Esci</button>
+      </div>
+    </header>
+    <main id="main" class="app-main">
+      <section id="login" class="login" aria-labelledby="login-title">
+        <div class="login-intro">
+          <svg
+            class="login-symbol"
+            viewBox="0 0 64 64"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M32 7 12 15v17c0 12 9 20 20 25 11-5 20-13 20-25V15L32 7Z"
+            />
+            <circle cx="32" cy="28" r="6" />
+            <path d="M32 34v10" />
+          </svg>
+          <h1 id="login-title">Gestione licenze</h1>
+          <p>
+            Crea chiavi, gestisci i clienti e controlla le postazioni attive.
+          </p>
+          <ul class="login-capabilities">
+            <li><span>Software</span>Applicativi e funzionalità abilitati</li>
+            <li><span>Licenze</span>Clienti, piani e chiavi di accesso</li>
+            <li>
+              <span>Postazioni</span>Attivazioni, versioni e posti disponibili
+            </li>
+          </ul>
+        </div>
+        <div class="login-access">
+          <h2>Accedi al pannello</h2>
+          <p>Usa la passkey già registrata per questo servizio.</p>
+          <button id="passkey-login" class="passkey-button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="8" cy="9" r="5" />
+              <path d="m12 12 8 8m-4-4 3-3m-6 0 3-3" /></svg
+            >Accedi con passkey
+          </button>
+          <p class="hint">
+            Windows Hello, il telefono o una chiave di sicurezza.
+          </p>
+          <details id="token-recovery" hidden>
+            <summary>Primo accesso o recupero con token</summary>
+            <form id="login-form">
+              <label for="admin-token">Token amministratore</label
+              ><input
+                id="admin-token"
+                type="password"
+                autocomplete="off"
+                required
+                spellcheck="false"
+              />
+              <p class="hint">
+                Il token resta solo in questa scheda. Alla chiusura dovrai
+                accedere di nuovo.
+              </p>
+              <button type="submit">Accedi</button>
+            </form>
+          </details>
+          <div class="access-note">
+            Accesso riservato agli amministratori autorizzati.
+          </div>
+        </div>
+      </section>
+      <div id="workspace" hidden>
+        <nav class="app-nav" aria-label="Amministrazione">
+          <div class="nav-links">
+            <a href="#workspace" class="nav-item current" aria-current="page"
+              ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="4" y="3" width="16" height="18" rx="3" />
+                <path d="M8 8h8m-8 4h8m-8 4h5" /></svg
+              ><span>Licenze</span></a
+            >
+            <button
+              id="manage-products"
+              class="nav-item"
+              aria-controls="products-panel"
+              aria-expanded="false"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" /></svg
+              ><span>Gestisci software</span>
+            </button>
+            <a href="#release" class="nav-item"
+              ><svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4" /></svg
+              ><span>Aggiornamenti</span></a
+            >
+            <button id="register-passkey" class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="8" cy="9" r="5" />
+                <path d="m12 12 8 8m-4-4 3-3m-6 0 3-3" /></svg
+              ><span>Registra passkey</span>
+            </button>
+          </div>
+          <p class="nav-note">Licenze, software<br />e postazioni.</p>
+        </nav>
+        <div class="heading">
+          <div>
+            <h1>Licenze</h1>
+            <p id="summary">Caricamento delle licenze…</p>
+          </div>
+          <div class="actions">
+            <button id="new-license">Crea licenza</button>
+          </div>
+        </div>
+        <section
+          id="products-panel"
+          class="editor"
+          hidden
+          aria-labelledby="products-title"
+        >
+          <h2 id="products-title">Software registrati</h2>
+          <p id="products-list"></p>
+          <form id="product-form">
+            <div class="fields product-fields">
+              <label
+                >Nome software<input
+                  name="name"
+                  maxlength="100"
+                  required
+                  placeholder="Il nome del tuo applicativo" /></label
+              ><label
+                >ID software<input
+                  name="id"
+                  pattern="[a-z0-9][a-z0-9-]{1,63}"
+                  minlength="2"
+                  maxlength="64"
+                  required
+                  placeholder="gestionale-clienti"
+              /></label>
+            </div>
+            <p class="hint">
+              Usa l’ID nelle richieste di attivazione del software. Ogni licenza
+              abilita un solo software.
+            </p>
+            <button type="submit">Registra software</button>
+          </form>
+        </section>
+        <section
+          id="key-panel"
+          class="key-panel"
+          hidden
+          aria-labelledby="key-title"
+        >
+          <h2 id="key-title">Chiave pronta</h2>
+          <p>
+            Mostrata una sola volta. Copiala e consegnala al cliente con un
+            canale sicuro.
+          </p>
+          <div class="key-line">
+            <output id="new-key" tabindex="0"></output
+            ><button id="copy-key">Copia chiave</button
+            ><button id="dismiss-key" class="secondary">
+              Ho salvato la chiave
+            </button>
+          </div>
+        </section>
+        <section
+          id="editor"
+          class="editor"
+          hidden
+          aria-labelledby="editor-title"
+        >
+          <h2 id="editor-title">Nuova licenza</h2>
+          <form id="license-form">
+            <label
+              >Software<select
+                name="productId"
+                id="license-product"
+                required
+              ></select
+            ></label>
+            <div class="fields">
+              <label
+                >Cliente<input
+                  name="customer"
+                  maxlength="200"
+                  autocomplete="organization"
+                  required
+              /></label>
+              <label
+                >Piano<input
+                  name="plan"
+                  maxlength="100"
+                  value="standard"
+                  required
+              /></label>
+              <label
+                >Postazioni<input
+                  name="seats"
+                  type="number"
+                  min="1"
+                  max="1000"
+                  step="1"
+                  value="1"
+                  required
+              /></label>
+              <label
+                >Funzionalità<input
+                  name="features"
+                  maxlength="500"
+                  value="configurator"
+                  required
+              /></label>
+            </div>
+            <label
+              >Note<textarea name="notes" maxlength="2000" rows="2"></textarea>
+            </label>
+            <div class="actions">
+              <button type="submit">Salva licenza</button
+              ><button id="cancel-edit" type="button" class="secondary">
+                Annulla
+              </button>
+            </div>
+          </form>
+        </section>
+        <div class="tools" aria-label="Filtra licenze">
+          <label class="search"
+            >Cerca cliente o ID<input
+              id="search"
+              type="search"
+              placeholder="Nome cliente, piano, ID…"
+          /></label>
+          <label
+            >Software<select id="product-filter" aria-label="Software">
+              <option value="all">Tutti i software</option>
+            </select></label
+          >
+          <label
+            >Stato<select id="filter" aria-label="Stato">
+              <option value="all">Tutte le licenze</option>
+              <option value="active">Attive</option>
+              <option value="revoked">Revocate</option>
+            </select></label
+          >
+          <button id="refresh" class="secondary">Aggiorna elenco</button>
+        </div>
+        <div class="list-heading">
+          <h2>Clienti e postazioni</h2>
+          <span id="visible-count"></span>
+        </div>
+        <div class="list-columns" aria-hidden="true">
+          <span>Cliente</span><span>Software</span><span>Postazioni</span
+          ><span>Stato</span><span>Azioni</span>
+        </div>
+        <section
+          id="licenses"
+          aria-label="Elenco licenze"
+          aria-live="polite"
+        ></section>
+        <section id="release" class="release" aria-labelledby="release-title">
+          <h2 id="release-title">Aggiornamenti Staiano HVAC</h2>
+          <p id="release-status">Controllo del pacchetto disponibile…</p>
+          <p class="hint">
+            Le postazioni con licenza attiva verificano ogni 5 minuti la
+            disponibilità di un pacchetto firmato.
+          </p>
+        </section>
+      </div>
+      <p id="message" role="status" aria-live="polite"></p>
+    </main>
+    <footer class="app-footer">
+      Licenses · Licenze, software e postazioni
+    </footer>
+  </body>
+</html>

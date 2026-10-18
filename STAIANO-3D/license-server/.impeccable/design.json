@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-18T19:45:25.393Z",
+  "title": "Design System: Licenses",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Fondo navy",
+        "tonalRamp": [
+          "oklch(15.00% 0.0210 258.31)",
+          "oklch(26.43% 0.0210 258.31)",
+          "oklch(37.86% 0.0210 258.31)",
+          "oklch(49.29% 0.0210 258.31)",
+          "oklch(60.71% 0.0210 258.31)",
+          "oklch(72.14% 0.0210 258.31)",
+          "oklch(83.57% 0.0210 258.31)",
+          "oklch(95.00% 0.0210 258.31)"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Rail navy",
+        "tonalRamp": [
+          "oklch(15.00% 0.0259 253.90)",
+          "oklch(26.43% 0.0259 253.90)",
+          "oklch(37.86% 0.0259 253.90)",
+          "oklch(49.29% 0.0259 253.90)",
+          "oklch(60.71% 0.0259 253.90)",
+          "oklch(72.14% 0.0259 253.90)",
+          "oklch(83.57% 0.0259 253.90)",
+          "oklch(95.00% 0.0259 253.90)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Superficie slate",
+        "tonalRamp": [
+          "oklch(15.00% 0.0323 252.96)",
+          "oklch(26.43% 0.0323 252.96)",
+          "oklch(37.86% 0.0323 252.96)",
+          "oklch(49.29% 0.0323 252.96)",
+          "oklch(60.71% 0.0323 252.96)",
+          "oklch(72.14% 0.0323 252.96)",
+          "oklch(83.57% 0.0323 252.96)",
+          "oklch(95.00% 0.0323 252.96)"
+        ]
+      },
+      "raised": {
+        "role": "neutral",
+        "displayName": "Slate rialzato",
+        "tonalRamp": [
+          "oklch(15.00% 0.0397 253.64)",
+          "oklch(26.43% 0.0397 253.64)",
+          "oklch(37.86% 0.0397 253.64)",
+          "oklch(49.29% 0.0397 253.64)",
+          "oklch(60.71% 0.0397 253.64)",
+          "oklch(72.14% 0.0397 253.64)",
+          "oklch(83.57% 0.0397 253.64)",
+          "oklch(95.00% 0.0397 253.64)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Testo ghiaccio",
+        "tonalRamp": [
+          "oklch(15.00% 0.0131 251.56)",
+          "oklch(26.43% 0.0131 251.56)",
+          "oklch(37.86% 0.0131 251.56)",
+          "oklch(49.29% 0.0131 251.56)",
+          "oklch(60.71% 0.0131 251.56)",
+          "oklch(72.14% 0.0131 251.56)",
+          "oklch(83.57% 0.0131 251.56)",
+          "oklch(95.00% 0.0131 251.56)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Testo secondario freddo",
+        "tonalRamp": [
+          "oklch(15.00% 0.0369 250.94)",
+          "oklch(26.43% 0.0369 250.94)",
+          "oklch(37.86% 0.0369 250.94)",
+          "oklch(49.29% 0.0369 250.94)",
+          "oklch(60.71% 0.0369 250.94)",
+          "oklch(72.14% 0.0369 250.94)",
+          "oklch(83.57% 0.0369 250.94)",
+          "oklch(95.00% 0.0369 250.94)"
+        ]
+      },
+      "blue": {
+        "role": "primary",
+        "displayName": "Azzurro operativo",
+        "tonalRamp": [
+          "oklch(15.00% 0.1121 257.01)",
+          "oklch(26.43% 0.1121 257.01)",
+          "oklch(37.86% 0.1121 257.01)",
+          "oklch(49.29% 0.1121 257.01)",
+          "oklch(60.71% 0.1121 257.01)",
+          "oklch(72.14% 0.1121 257.01)",
+          "oklch(83.57% 0.1121 257.01)",
+          "oklch(95.00% 0.1121 257.01)"
+        ]
+      },
+      "on-blue": {
+        "role": "primary",
+        "displayName": "Inchiostro su azzurro",
+        "tonalRamp": [
+          "oklch(15.00% 0.0485 256.80)",
+          "oklch(26.43% 0.0485 256.80)",
+          "oklch(37.86% 0.0485 256.80)",
+          "oklch(49.29% 0.0485 256.80)",
+          "oklch(60.71% 0.0485 256.80)",
+          "oklch(72.14% 0.0485 256.80)",
+          "oklch(83.57% 0.0485 256.80)",
+          "oklch(95.00% 0.0485 256.80)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Bordo slate",
+        "tonalRamp": [
+          "oklch(15.00% 0.0443 251.58)",
+          "oklch(26.43% 0.0443 251.58)",
+          "oklch(37.86% 0.0443 251.58)",
+          "oklch(49.29% 0.0443 251.58)",
+          "oklch(60.71% 0.0443 251.58)",
+          "oklch(72.14% 0.0443 251.58)",
+          "oklch(83.57% 0.0443 251.58)",
+          "oklch(95.00% 0.0443 251.58)"
+        ]
+      },
+      "green": {
+        "role": "secondary",
+        "displayName": "Verde attivo",
+        "tonalRamp": [
+          "oklch(15.00% 0.0936 163.86)",
+          "oklch(26.43% 0.0936 163.86)",
+          "oklch(37.86% 0.0936 163.86)",
+          "oklch(49.29% 0.0936 163.86)",
+          "oklch(60.71% 0.0936 163.86)",
+          "oklch(72.14% 0.0936 163.86)",
+          "oklch(83.57% 0.0936 163.86)",
+          "oklch(95.00% 0.0936 163.86)"
+        ]
+      },
+      "red": {
+        "role": "secondary",
+        "displayName": "Rosa revoca",
+        "tonalRamp": [
+          "oklch(15.00% 0.0916 13.31)",
+          "oklch(26.43% 0.0916 13.31)",
+          "oklch(37.86% 0.0916 13.31)",
+          "oklch(49.29% 0.0916 13.31)",
+          "oklch(60.71% 0.0916 13.31)",
+          "oklch(72.14% 0.0916 13.31)",
+          "oklch(83.57% 0.0916 13.31)",
+          "oklch(95.00% 0.0916 13.31)"
+        ]
+      },
+      "blue-hover": {
+        "role": "primary",
+        "displayName": "Azzurro hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.0692 255.89)",
+          "oklch(26.43% 0.0692 255.89)",
+          "oklch(37.86% 0.0692 255.89)",
+          "oklch(49.29% 0.0692 255.89)",
+          "oklch(60.71% 0.0692 255.89)",
+          "oklch(72.14% 0.0692 255.89)",
+          "oklch(83.57% 0.0692 255.89)",
+          "oklch(95.00% 0.0692 255.89)"
+        ]
+      },
+      "blue-active": {
+        "role": "primary",
+        "displayName": "Azzurro premuto",
+        "tonalRamp": [
+          "oklch(15.00% 0.1373 256.45)",
+          "oklch(26.43% 0.1373 256.45)",
+          "oklch(37.86% 0.1373 256.45)",
+          "oklch(49.29% 0.1373 256.45)",
+          "oklch(60.71% 0.1373 256.45)",
+          "oklch(72.14% 0.1373 256.45)",
+          "oklch(83.57% 0.1373 256.45)",
+          "oklch(95.00% 0.1373 256.45)"
+        ]
+      },
+      "line-hover": {
+        "role": "neutral",
+        "displayName": "Bordo interattivo",
+        "tonalRamp": [
+          "oklch(15.00% 0.0566 250.77)",
+          "oklch(26.43% 0.0566 250.77)",
+          "oklch(37.86% 0.0566 250.77)",
+          "oklch(49.29% 0.0566 250.77)",
+          "oklch(60.71% 0.0566 250.77)",
+          "oklch(72.14% 0.0566 250.77)",
+          "oklch(83.57% 0.0566 250.77)",
+          "oklch(95.00% 0.0566 250.77)"
+        ]
+      },
+      "placeholder": {
+        "role": "neutral",
+        "displayName": "Segnaposto freddo",
+        "tonalRamp": [
+          "oklch(15.00% 0.0435 252.91)",
+          "oklch(26.43% 0.0435 252.91)",
+          "oklch(37.86% 0.0435 252.91)",
+          "oklch(49.29% 0.0435 252.91)",
+          "oklch(60.71% 0.0435 252.91)",
+          "oklch(72.14% 0.0435 252.91)",
+          "oklch(83.57% 0.0435 252.91)",
+          "oklch(95.00% 0.0435 252.91)"
+        ]
+      },
+      "selected-bg": {
+        "role": "primary",
+        "displayName": "Selezione navy",
+        "tonalRamp": [
+          "oklch(15.00% 0.0634 252.61)",
+          "oklch(26.43% 0.0634 252.61)",
+          "oklch(37.86% 0.0634 252.61)",
+          "oklch(49.29% 0.0634 252.61)",
+          "oklch(60.71% 0.0634 252.61)",
+          "oklch(72.14% 0.0634 252.61)",
+          "oklch(83.57% 0.0634 252.61)",
+          "oklch(95.00% 0.0634 252.61)"
+        ]
+      },
+      "selected-ink": {
+        "role": "primary",
+        "displayName": "Testo selezione",
+        "tonalRamp": [
+          "oklch(15.00% 0.0493 255.90)",
+          "oklch(26.43% 0.0493 255.90)",
+          "oklch(37.86% 0.0493 255.90)",
+          "oklch(49.29% 0.0493 255.90)",
+          "oklch(60.71% 0.0493 255.90)",
+          "oklch(72.14% 0.0493 255.90)",
+          "oklch(83.57% 0.0493 255.90)",
+          "oklch(95.00% 0.0493 255.90)"
+        ]
+      },
+      "active-bg": {
+        "role": "secondary",
+        "displayName": "Fondo attivo",
+        "tonalRamp": [
+          "oklch(15.00% 0.0425 175.75)",
+          "oklch(26.43% 0.0425 175.75)",
+          "oklch(37.86% 0.0425 175.75)",
+          "oklch(49.29% 0.0425 175.75)",
+          "oklch(60.71% 0.0425 175.75)",
+          "oklch(72.14% 0.0425 175.75)",
+          "oklch(83.57% 0.0425 175.75)",
+          "oklch(95.00% 0.0425 175.75)"
+        ]
+      },
+      "revoked-bg": {
+        "role": "secondary",
+        "displayName": "Fondo revoca",
+        "tonalRamp": [
+          "oklch(15.00% 0.0435 358.69)",
+          "oklch(26.43% 0.0435 358.69)",
+          "oklch(37.86% 0.0435 358.69)",
+          "oklch(49.29% 0.0435 358.69)",
+          "oklch(60.71% 0.0435 358.69)",
+          "oklch(72.14% 0.0435 358.69)",
+          "oklch(83.57% 0.0435 358.69)",
+          "oklch(95.00% 0.0435 358.69)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Titolo pagina",
+        "purpose": "Gerarchia operativa; nessun ruolo display separato."
+      },
+      "identifier": {
+        "displayName": "Identificativo tecnico",
+        "purpose": "ID macchina, versioni e chiavi."
+      }
+    },
+    "shadows": [
+      {
+        "name": "message",
+        "value": "0 10px 30px #0005",
+        "purpose": "Solo messaggio flottante."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-feedback",
+        "value": "background 150ms, border-color 150ms",
+        "purpose": "Pulsanti; transition:none con prefers-reduced-motion:reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "record-wrap",
+        "value": "1350px"
+      },
+      {
+        "name": "compact-rail",
+        "value": "1000px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Azione primaria",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Comando principale.",
+      "html": "<button class=\"ds-button\">Crea licenza</button>",
+      "css": ".ds-button{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 14px;border:1px solid transparent;border-radius:6px;background:var(--blue);color:var(--on-blue);font-weight:600;cursor:pointer;transition:background 150ms,border-color 150ms}.ds-button:hover{background:#b4d4ff}.ds-button:active{background:#6aa7fa}.ds-button:disabled{opacity:.55;cursor:wait}.ds-button:focus-visible,.ds-field:focus-visible,.ds-nav-item:focus-visible{outline:2px solid var(--blue);outline-offset:4px;}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}"
+    },
+    {
+      "name": "Azione secondaria",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Comando contestuale con bordo.",
+      "html": "<button class=\"ds-button ds-secondary\">Modifica</button>",
+      "css": ".ds-button{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 14px;border:1px solid transparent;border-radius:6px;background:var(--blue);color:var(--on-blue);font-weight:600;cursor:pointer;transition:background 150ms,border-color 150ms}.ds-button:hover{background:#b4d4ff}.ds-button:active{background:#6aa7fa}.ds-button:disabled{opacity:.55;cursor:wait}.ds-button:focus-visible,.ds-field:focus-visible,.ds-nav-item:focus-visible{outline:2px solid var(--blue);outline-offset:4px;}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}.ds-secondary{background:transparent;color:var(--ink);border-color:var(--line)}.ds-secondary:hover{background:var(--raised);border-color:#4a6582}"
+    },
+    {
+      "name": "Azione distruttiva",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Revoca esplicita con testo semantico.",
+      "html": "<button class=\"ds-button ds-secondary ds-danger\">Revoca</button>",
+      "css": ".ds-button{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:9px 14px;border:1px solid transparent;border-radius:6px;background:var(--blue);color:var(--on-blue);font-weight:600;cursor:pointer;transition:background 150ms,border-color 150ms}.ds-button:hover{background:#b4d4ff}.ds-button:active{background:#6aa7fa}.ds-button:disabled{opacity:.55;cursor:wait}.ds-button:focus-visible,.ds-field:focus-visible,.ds-nav-item:focus-visible{outline:2px solid var(--blue);outline-offset:4px;}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}.ds-secondary{background:transparent;color:var(--ink);border-color:var(--line)}.ds-secondary:hover{background:var(--raised);border-color:#4a6582}.ds-danger{color:var(--red)}"
+    },
+    {
+      "name": "Campo ricerca",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Campo scuro con etichetta e placeholder.",
+      "html": "<label class=\"ds-label\">Cerca licenze<input class=\"ds-field\" placeholder=\"Cliente o riferimento\" /></label>",
+      "css": ".ds-label{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;font-size:12px;font-weight:600;color:var(--muted)}.ds-field{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:block;width:100%;min-height:42px;padding:10px 12px;margin-top:7px;border:1px solid var(--line);border-radius:6px;color:var(--ink);background:var(--ground);caret-color:var(--blue)}.ds-field::placeholder{color:#91a6bf;opacity:1}.ds-field:hover{border-color:#4a6582}.ds-button:focus-visible,.ds-field:focus-visible,.ds-nav-item:focus-visible{outline:2px solid var(--blue);outline-offset:4px;}"
+    },
+    {
+      "name": "Navigazione corrente",
+      "kind": "nav",
+      "refersTo": "nav-current",
+      "description": "Selezione della sezione con testo e SVG inline.",
+      "html": "<nav aria-label=\"Amministrazione\"><a class=\"ds-nav-item\" href=\"#licenses\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"3\"/><path d=\"M8 8h8m-8 4h8m-8 4h5\"/></svg>Licenze</a></nav>",
+      "css": ".ds-nav-item{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:12px;min-height:44px;padding:11px 13px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500;color:var(--muted);background:transparent}.ds-nav-item:hover{background:var(--raised);color:var(--ink)}.ds-nav-item[aria-current=\"page\"]{background:#183351;color:#c9e0ff}.ds-nav-item svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-button:focus-visible,.ds-field:focus-visible,.ds-nav-item:focus-visible{outline:2px solid var(--blue);outline-offset:4px;}"
+    },
+    {
+      "name": "Stato attivo",
+      "kind": "chip",
+      "refersTo": "status-active",
+      "description": "Etichetta testuale di licenza attiva.",
+      "html": "<span class=\"ds-status\">Attiva</span>",
+      "css": ".ds-status{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:6px;width:fit-content;border-radius:4px;padding:3px 7px;font-size:11px;font-weight:600;color:var(--green);background:#15372f}"
+    },
+    {
+      "name": "Stato revocato",
+      "kind": "chip",
+      "refersTo": "status-revoked",
+      "description": "Etichetta testuale di licenza revocata.",
+      "html": "<span class=\"ds-status\">Revocata</span>",
+      "css": ".ds-status{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;display:inline-flex;align-items:center;justify-content:center;gap:6px;width:fit-content;border-radius:4px;padding:3px 7px;font-size:11px;font-weight:600;color:var(--red);background:#3d222b}"
+    },
+    {
+      "name": "Pannello editor",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Contenitore per azioni e campi contestuali.",
+      "html": "<section class=\"ds-panel\"><h2>Nuova licenza</h2><p>Software, cliente e postazioni.</p></section>",
+      "css": ".ds-panel{font-family:\"Segoe UI\",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}.ds-panel h2{margin:0 0 12px;font-size:16px;line-height:1.35;font-weight:600;letter-spacing:-.015em}.ds-panel p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Registro operativo",
+    "overview": "Registro operativo: una console scura e tecnica per leggere e confrontare licenze, software e postazioni. Il fondo navy e le superfici slate organizzano il lavoro; azzurro, verde e rosso comunicano azioni e stati.\n\nLa densità resta funzionale: un sans di sistema per i comandi, cifre tabulari per i confronti e monospace per identificativi e chiavi. Il sistema riguarda il pannello Licenses; il tema HVAC rimane indipendente.",
+    "keyCharacteristics": [
+      "Superfici navy e slate delimitate da bordi sottili.",
+      "Comandi leggibili, cifre tabulari e identificativi monospace.",
+      "Record allineati che si ricompongono su tablet e telefono."
+    ],
+    "rules": [
+      {
+        "name": "The Action and State Rule",
+        "body": "Azzurro per azione primaria, selezione e focus; verde per stato attivo e rosso per revoca o errore. Accompagnare gli stati con testo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Identifier Rule",
+        "body": "Usare monospace per identificativi, versioni e chiavi; mantenere comandi, titoli e dati cliente nel sans operativo.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bordered Surface Rule",
+        "body": "Separare le superfici ordinarie con tono e bordo; riservare l'ombra al messaggio flottante.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do mantenere il tema scuro tecnico e la lingua italiana.",
+      "Do conservare etichette di stato e focus visibile sui controlli.",
+      "Do ricomporre i record mantenendo cliente, software, occupazione, stato e azioni riconoscibili."
+    ],
+    "donts": [
+      "Don't usare il colore come unico segnale di stato.",
+      "Don't estendere il monospace ai testi di interfaccia.",
+      "Don't applicare il tema HVAC al pannello Licenses."
+    ]
+  }
+}

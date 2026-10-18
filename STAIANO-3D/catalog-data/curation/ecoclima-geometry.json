@@ -1,0 +1,126 @@
+{
+  "EDLS": {
+    "mountings": [
+      "ceiling"
+    ],
+    "shape": "rectangle",
+    "faceWidthAdditionMm": 0,
+    "faceHeightAdditionMm": 0,
+    "linearFaceHeightBaseMm": 40,
+    "linearFaceHeightPerSlotMm": 40,
+    "linearFaceHeightExtraFor30MmPerSlot": 10,
+    "bodyDepthMm": 60,
+    "page": 3,
+    "note": "Profilo verticale60mm; E=80/90 per1feritoia,120/140 per2,160/190 per3. LunghezzaL commerciale.",
+    "sourceSha256": "7f043fc11f9904e80f2eb1078893d17f97cf157da2bf70a77d32169f1995c2d9"
+  },
+  "EBLF": {
+    "mountings": [
+      "wall"
+    ],
+    "shape": "rectangle",
+    "faceWidthAdditionMm": -1,
+    "faceHeightAdditionMm": -1,
+    "bodyDepthMm": 40,
+    "page": 2,
+    "note": "Ingombro (L-1)×(H-1), profondità40mm senza serranda. Serranda esclusa.",
+    "sourceSha256": "65bfe317cde324f4c9d6d27f98b6235a3a12c5ec86552200395edb62f6d8909b"
+  },
+  "EGQ": {
+    "mountings": [
+      "wall",
+      "ceiling"
+    ],
+    "shape": "rectangle",
+    "faceWidthAdditionMm": 35,
+    "faceHeightAdditionMm": 35,
+    "bodyDepthMm": 61,
+    "page": 2,
+    "note": "Cornice(L+35)×(H+35), profondità36+25=61mm. Serranda e plenum esclusi.",
+    "sourceSha256": "c87a297cf2b07762665819366f03b42b8b12c20588e3c9a315c628b5f765a315"
+  },
+  "EVVMC": {
+    "mountings": [
+      "ceiling"
+    ],
+    "shape": "circle",
+    "bodyDepthMm": null,
+    "page": 1,
+    "note": "Faccia diametroA verificata. Ingombro assiale complessivo variabile con aperturaS: non normalizzato; dimensioniA..E conservate.",
+    "sourceSha256": "dbb60155c748325de10b263df50d374eade56a7c2992cece5486800913e22cb4"
+  },
+  "EDSC-C": {
+    "sourceSha256": "bfccbd1b62a0e94f2120f6b42a216b3a1164fdde6e7722db1549f39b55d5947e",
+    "mountings": [
+      "ceiling"
+    ],
+    "shape": "circle",
+    "bodyDepthMm": null,
+    "note": "Corpo circolare, copriforo e staffe hanno quote distinte. Le tre immagini originali nella tabella HTML Dimensioni EDSC-C documentano gli ingombri; il diametro nominale indica la connessione.",
+    "variantsByNominalDiameterMm": {
+      "100": {
+        "widthMm": 238,
+        "heightMm": 238,
+        "depthMm": 90.2,
+        "faceWidthMm": 238,
+        "faceHeightMm": 238,
+        "bodyDepthMm": 90.2,
+        "originalDimensionsMm": {
+          "bodyDiameterMm": 238,
+          "coverDiameterMm": 176,
+          "bracketWidthMm": 307.7,
+          "heightMm": 90.2
+        },
+        "dimensionNote": "Disegno originale EDSC-C Ø100: ingombro circolare corpo Ø238 mm, altezza totale 90.2 mm; copriforo Ø176 mm, ingombro con staffe 307.7 mm. Diametro nominale di connessione distinto dalla faccia. Profondità delle staffe non pubblicata.",
+        "dimensionDrawing": {
+          "localPath": "/catalog-assets/edsc-c/edsc-c-100-dimensions.png",
+          "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+          "sha256": "d1de4f804bdc5940a27a3461ad2911c496cfcf19b362b5319c25c8a983bc7e20",
+          "caption": "Disegno dimensionale originale Ecoclima EDSC-C 100"
+        }
+      },
+      "125": {
+        "widthMm": 238,
+        "heightMm": 238,
+        "depthMm": 95.2,
+        "faceWidthMm": 238,
+        "faceHeightMm": 238,
+        "bodyDepthMm": 95.2,
+        "originalDimensionsMm": {
+          "bodyDiameterMm": 238,
+          "coverDiameterMm": 176,
+          "bracketWidthMm": 307.7,
+          "heightMm": 95.2
+        },
+        "dimensionNote": "Disegno originale EDSC-C Ø125: ingombro circolare corpo Ø238 mm, altezza totale 95.2 mm; copriforo Ø176 mm, ingombro con staffe 307.7 mm. Diametro nominale di connessione distinto dalla faccia. Profondità delle staffe non pubblicata.",
+        "dimensionDrawing": {
+          "localPath": "/catalog-assets/edsc-c/edsc-c-125-dimensions.png",
+          "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+          "sha256": "aeb0ad4208326eef946fcfc4ba120eded4632f184d19d56fd8c83f9f13448bc7",
+          "caption": "Disegno dimensionale originale Ecoclima EDSC-C 125"
+        }
+      },
+      "160": {
+        "widthMm": 298,
+        "heightMm": 298,
+        "depthMm": 92.2,
+        "faceWidthMm": 298,
+        "faceHeightMm": 298,
+        "bodyDepthMm": 92.2,
+        "originalDimensionsMm": {
+          "bodyDiameterMm": 298,
+          "coverDiameterMm": 231,
+          "bracketWidthMm": 372,
+          "heightMm": 92.2
+        },
+        "dimensionNote": "Disegno originale EDSC-C Ø160: ingombro circolare corpo Ø298 mm, altezza totale 92.2 mm; copriforo Ø231 mm, ingombro con staffe 372 mm. Diametro nominale di connessione distinto dalla faccia. Profondità delle staffe non pubblicata.",
+        "dimensionDrawing": {
+          "localPath": "/catalog-assets/edsc-c/edsc-c-160-dimensions.png",
+          "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
+          "sha256": "c741b085a5840da475c96861659d2a47fa3fb98c7d6ccc44ea4f295471f79970",
+          "caption": "Disegno dimensionale originale Ecoclima EDSC-C 160"
+        }
+      }
+    }
+  }
+}
