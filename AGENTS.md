@@ -14,6 +14,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Il server è gestito dall’attività Windows «Staiano HVAC». Dopo la build, riavviare l’attività con `schtasks /End /TN "Staiano HVAC"` e `schtasks /Run /TN "Staiano HVAC"`. Verificare `.cache/production-server.json` e la risposta HTTP sulla porta 3015. Compilare nella directory alternativa a quella attiva (`.next` o `.next-update`) per preservare gli asset durante la compilazione.
 - Attendere che l’attività risulti `Ready` dopo l’arresto. Se `/Run` non aggiorna l’ultima esecuzione, usare `Start-ScheduledTask -TaskName 'Staiano HVAC'` e verificare nuovamente PID e build. Non serve registrare nuovamente l’attività.
 
+## Documenti tecnici dei produttori
+
+- `catalog-data/sources` (PDF, HTML, listini: oltre 1 GB) **non è in Git**: serve solo a rigenerare il catalogo e a rispondere alle schede tecniche. In Git c'è l'elenco esatto dei documenti citati, `catalog-data/sources-manifest.json` (produttore, URL di origine, SHA-256), rigenerabile con `npm run catalog:sources:list`; `compila.bat` si ferma se non è allineato ai cataloghi.
+- Recupero su una postazione nuova: `npm run catalog:sources:missing` elenca gli assenti, `npm run catalog:sources:fetch` li riscarica e verifica lo SHA-256 (i documenti modificati vengono rifiutati dall'app). In alternativa si copia la cartella dalla copia di sviluppo.
+- L'EXE, a ogni avvio, confronta la cartella dati con il manifest e scrive `catalog-data\ISTRUZIONI-DOCUMENTI.txt` nelle cartelle dati con i documenti mancanti, l'URL di ciascuno, il comando `robocopy` e il comando di verifica; il file sparisce quando la cartella è completa. Stato in `.cache\catalog-documents.json`. `STAIANO_CATALOG_SOURCE` in `.env.local` (trasferito dall'installer) indica l'origine da copiare.
+
 ## Licenza
 
 - Il Worker `licenses` è universale: le licenze includono `productId`; per questa app usare `staiano-hvac`. Le chiavi `LIC-` e le storiche `STAIANO-` sono compatibili. Protocollo: `license-server/INTEGRATION.md`.

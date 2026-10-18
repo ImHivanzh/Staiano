@@ -44,12 +44,17 @@ function Copy-ApplicationData {
 }
 Copy-ApplicationData
 # The customer installation never receives the administrative or signing credentials.
-$settings = Get-Content -LiteralPath (Join-Path $sourceRoot '.env.local') | Where-Object { $_ -match '^LICENSE_(TOLERANCE|CHECK)_MINUTES=' }
+$settings = Get-Content -LiteralPath (Join-Path $sourceRoot '.env.local') | Where-Object { $_ -match '^(LICENSE_(TOLERANCE|CHECK)_MINUTES|STAIANO_CATALOG_SOURCE)=' }
 [IO.File]::WriteAllLines((Join-Path $dataRoot '.env.local'), [string[]]$settings)
 $catalog = Join-Path $sourceRoot 'catalog-data\sources'
+$catalogRoot = Join-Path $dataRoot 'catalog-data'
+New-Item -ItemType Directory -Path $catalogRoot -Force | Out-Null
+# Manifest dei documenti citati dal catalogo: l'EXE lo usa per dire cosa manca.
+$manifest = Join-Path $sourceRoot 'catalog-data\sources-manifest.json'
+if (Test-Path -LiteralPath $manifest) { Copy-Item -LiteralPath $manifest -Destination (Join-Path $catalogRoot 'sources-manifest.json') -Force }
 if (Test-Path -LiteralPath $catalog) {
-  New-Item -ItemType Directory -Path (Join-Path $dataRoot 'catalog-data\sources') -Force | Out-Null
-  & robocopy.exe $catalog (Join-Path $dataRoot 'catalog-data\sources') '*.pdf' '*.html' '*.xlsx' '*.xls' /S /NFL /NDL /NJH /NJS /NP | Out-Null
+  New-Item -ItemType Directory -Path (Join-Path $catalogRoot 'sources') -Force | Out-Null
+  & robocopy.exe $catalog (Join-Path $catalogRoot 'sources') '*.pdf' '*.html' '*.xlsx' '*.xls' /S /NFL /NDL /NJH /NJS /NP | Out-Null
   if ($LASTEXITCODE -ge 8) { throw 'Copia dei documenti tecnici non riuscita.' }
 }
 

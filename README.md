@@ -70,6 +70,30 @@ Avvio automatico Windows: attività `Staiano HVAC` all'avvio del computer,
 anche senza login, con riavvio su errore. Installazione e gestione:
 `deploy/caddy/README.md`.
 
+### Documenti tecnici dei produttori (PDF, listini, pagine)
+
+Le schede tecniche scaricate dai progetti usano i documenti originali dei
+produttori, che **non stanno in Git**: `catalog-data/sources` resta sul PC che
+li importa (1,1 GB, escluso da `.gitignore`). Quello che sta in Git è l'elenco
+esatto dei documenti citati dal catalogo, `catalog-data/sources-manifest.json`
+(produttore, indirizzo di origine e SHA-256).
+
+```powershell
+npm run catalog:sources:list      # rigenera il manifest dai cataloghi generati
+npm run catalog:sources:missing   # elenca i documenti assenti, con l'indirizzo
+npm run catalog:sources:fetch     # li riscarica e ne verifica lo SHA-256
+```
+
+`compila.bat` verifica che il manifest sia allineato ai cataloghi e si ferma se
+non lo è. Su una postazione senza i documenti l'EXE, a ogni avvio, scrive
+`catalog-data\ISTRUZIONI-DOCUMENTI.txt` nelle sue cartelle dati: elenca i
+documenti mancanti con l'indirizzo di origine, il comando `robocopy` per
+copiarli da un'altra postazione e il comando PowerShell per verificare gli
+SHA-256. Il file sparisce da solo quando la cartella risulta completa; lo stato
+è in `.cache\catalog-documents.json`. Per indicare in modo permanente da dove
+copiarli, si mette `STAIANO_CATALOG_SOURCE=<percorso>` in `.env.local` (viene
+trasferito nell'installazione).
+
 ## Progettazione
 
 Nuovo progetto, stanza manuale con misure reali, oppure importazione DXF/PDF/immagini/DWG.

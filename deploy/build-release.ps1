@@ -69,6 +69,10 @@ if ($dirty.Count -gt 0) {
 }
 Write-Host 'albero pulito'
 
+# 2b. Il manifest dei documenti tecnici deve corrispondere ai cataloghi generati.
+Write-Step 'Manifest dei documenti tecnici'
+Invoke-Native $node @('scripts/catalog-sources.mjs', 'check')
+
 # 3. Il pacchetto deve corrispondere al ramo main pubblicato: allinea e, se serve, pubblica i commit.
 Write-Step 'Allineamento con Codeberg'
 Invoke-Native $git @('fetch', 'origin', 'main')
