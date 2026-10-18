@@ -9,7 +9,7 @@ Push-Location $taskRoot
 try {
     & $taskDotnet restore native/DwgBridge/DwgBridge.csproj --locked-mode --nologo
     if ($LASTEXITCODE -ne 0) { throw 'Restore del lettore DWG non riuscito.' }
-    & $taskDotnet publish native/DwgBridge/DwgBridge.csproj -c Release -o native/runtime --no-restore --nologo
+    & $taskDotnet publish native/DwgBridge/DwgBridge.csproj -c Release -o native/runtime --no-restore --nologo -p:ContinuousIntegrationBuild=true
     if ($LASTEXITCODE -ne 0) { throw 'Build del lettore DWG non riuscita.' }
     Copy-Item -LiteralPath 'native/notices/ACadSharp-MIT.txt' -Destination 'native/runtime/ACadSharp-MIT.txt'
     Write-Output 'Bridge DWG MIT compilato. Nessuna attivazione ODA commerciale.'
