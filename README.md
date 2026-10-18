@@ -27,6 +27,9 @@ Durante installazione e compilazione il servizio viene arrestato, perché Window
 blocca i moduli nativi caricati da Next. La build precedente rimane conservata.
 Se ci sono modifiche locali o rami divergenti, si ferma senza sovrascriverli.
 Per ricompilare senza scaricare: `powershell -File deploy/update-project.ps1 -SkipPull`.
+dalla copia di sviluppo, mai dal pacchetto installato.
+Per produrre il pacchetto EXE e pubblicarlo sul canale aggiornamenti: `compila.bat`
+nella radice del progetto (con `installa` lo installa anche su questa postazione).
 Git e Node.js >=22.13.0 devono essere installati; l’accesso Codeberg deve essere
 già configurato. Senza attività Windows, avvia il server locale in background.
 Autenticazione, progetti locali e configurazione HTTPS non vengono trasferiti

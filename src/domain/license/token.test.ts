@@ -104,7 +104,7 @@ describe("chiavi di licenza", () => {
 
   it("formatta in gruppi leggibili", () => {
     const key = "0123456789ABCDEFGHJK";
-    expect(formatLicenseKey(key)).toBe("STAIANO-01234-56789-ABCDE-FGHJK");
+    expect(formatLicenseKey(key)).toBe("LIC-01234-56789-ABCDE-FGHJK");
     expect(formatLicenseKey("")).toBe("");
   });
 

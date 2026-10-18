@@ -1,7 +1,7 @@
 import { generateKeyPairSync } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { hashLicenseKey, verifyLicenseToken } from "@/domain/license/token";
 import worker from "../../license-server/src/index";
 
@@ -104,6 +104,10 @@ let db: DatabaseSync;
 beforeEach(() => {
   ({ env, db } = makeEnv());
 });
+afterEach(() => {
+  vi.unstubAllGlobals();
+  db.close();
+});
 
 describe("Worker licenze — servizio", () => {
   it("risponde al controllo di salute e respinge tutto il resto", async () => {
@@ -145,7 +149,7 @@ describe("Worker licenze — emissione", () => {
       seats: 2,
       notes: "prima fornitura",
     });
-    expect(created.key).toMatch(/^STAIANO(-[0-9A-Z]{5}){4}$/);
+    expect(created.key).toMatch(/^LIC(-[0-9A-Z]{5}){4}$/);
     expect(created.license).toMatchObject({
       customer: "Cliente Test",
       seats: 2,
@@ -381,5 +385,333 @@ describe("Worker licenze — revoca e amministrazione", () => {
         })
       ).status,
     ).toBe(404);
+  });
+});
+
+describe("Worker licenze — regressioni e pannello", () => {
+  it("accetta pacchetti solo dal publisher e dalla revisione corrente di Codeberg", async () => {
+    env.PUBLISH_TOKEN = "publisher-di-prova";
+    env.CODEBERG_READ_TOKEN = "read-only-di-prova";
+    const commit = "c".repeat(40);
+    const fetchHead = vi
+      .fn()
+      .mockImplementation(
+        async () =>
+          new Response(JSON.stringify({ commit: { id: commit } }), {
+            headers: { "Content-Type": "application/json" },
+          }),
+      );
+    vi.stubGlobal("fetch", fetchHead);
+    const body = {
+      commit,
+      sha256: "d".repeat(64),
+      size: 10,
+      url: "https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-test/StaianoHVAC.exe",
+    };
+    expect((await call(env, "/publish", { method: "POST", body })).status).toBe(
+      401,
+    );
+    expect(
+      (
+        await call(env, "/publish", {
+          method: "POST",
+          token: env.PUBLISH_TOKEN,
+          body: { ...body, commit: "b".repeat(40) },
+        })
+      ).status,
+    ).toBe(409);
+    expect(
+      (
+        await call(env, "/publish", {
+          method: "POST",
+          token: env.PUBLISH_TOKEN,
+          body,
+        })
+      ).status,
+    ).toBe(200);
+    expect(fetchHead).toHaveBeenCalledWith(
+      "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D/branches/main",
+      expect.objectContaining({
+        headers: { Authorization: "token read-only-di-prova" },
+        redirect: "error",
+      }),
+    );
+    const status = await call(env, "/publish/status", {
+      token: env.PUBLISH_TOKEN,
+    });
+    expect(await status.json()).toMatchObject({ commit });
+  });
+  it("protegge registrazione passkey, origine e challenge monouso", async () => {
+    env.PASSKEY_ORIGIN = "https://licenze.test";
+    const send = (
+      path: string,
+      body: unknown,
+      token?: string,
+      origin = "https://licenze.test",
+    ) =>
+      worker.fetch(
+        new Request(`https://licenze.test${path}`, {
+          method: "POST",
+          headers: {
+            Origin: origin,
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify(body),
+        }),
+        env,
+      );
+    expect((await send("/admin/passkeys/register/options", {})).status).toBe(
+      401,
+    );
+    expect(
+      (await send("/auth/login/options", {}, undefined, "https://evil.test"))
+        .status,
+    ).toBe(403);
+    const options = await send("/auth/login/options", {});
+    const body = (await options.json()) as { challengeId: string };
+    expect(options.status).toBe(200);
+    expect(
+      db.prepare("SELECT COUNT(*) AS n FROM passkey_challenges").get()?.n,
+    ).toBe(1);
+    const invalid = {
+      challengeId: body.challengeId,
+      response: { id: "unknown" },
+    };
+    expect((await send("/auth/login/verify", invalid)).status).toBe(401);
+    expect((await send("/auth/login/verify", invalid)).status).toBe(400);
+    expect(
+      db.prepare("SELECT COUNT(*) AS n FROM admin_sessions").get()?.n,
+    ).toBe(0);
+  });
+  it("gestisce più software e impedisce di usare una licenza su un prodotto diverso", async () => {
+    expect((await call(env, "/admin/products")).status).toBe(401);
+    expect(
+      (
+        await call(env, "/admin/products", {
+          method: "POST",
+          token: ADMIN_TOKEN,
+          body: { id: "gestionale-clienti", name: "Gestionale clienti" },
+        })
+      ).status,
+    ).toBe(201);
+    const created = await createLicense(env, {
+      productId: "gestionale-clienti",
+    });
+    const body = { licenseKey: created.key, machineId: MACHINE_A };
+    expect(
+      (await call(env, "/activate", { method: "POST", body })).status,
+    ).toBe(404);
+    const response = await call(env, "/activate", {
+      method: "POST",
+      body: { ...body, productId: "gestionale-clienti" },
+    });
+    expect(response.status).toBe(200);
+    const result = (await response.json()) as { token: string };
+    expect(await verifyLicenseToken(result.token, publicKeyPem)).toMatchObject({
+      productId: "gestionale-clienti",
+    });
+    expect(
+      (
+        await call(env, "/verify", {
+          method: "POST",
+          body: { ...body, productId: "staiano-hvac" },
+        })
+      ).status,
+    ).toBe(404);
+    expect(
+      (
+        await call(env, "/deactivate", {
+          method: "POST",
+          body: { ...body, productId: "staiano-hvac" },
+        })
+      ).status,
+    ).toBe(404);
+  });
+  it("non riattiva un posto liberato quando il nuovo occupa tutta la licenza", async () => {
+    const created = await createLicense(env);
+    for (const [endpoint, machineId] of [
+      ["activate", MACHINE_A],
+      ["deactivate", MACHINE_A],
+      ["activate", MACHINE_B],
+    ] as const)
+      expect(
+        (
+          await call(env, `/${endpoint}`, {
+            method: "POST",
+            body: { licenseKey: created.key, machineId },
+          })
+        ).status,
+      ).toBe(200);
+    expect(
+      (
+        await call(env, "/activate", {
+          method: "POST",
+          body: { licenseKey: created.key, machineId: MACHINE_A },
+        })
+      ).status,
+    ).toBe(409);
+    expect(
+      db
+        .prepare(
+          "SELECT COUNT(*) AS n FROM activations WHERE released_at IS NULL",
+        )
+        .get()?.n,
+    ).toBe(1);
+  });
+  it("rispetta i posti anche per richieste concorrenti", async () => {
+    const created = await createLicense(env);
+    const results = await Promise.all(
+      [MACHINE_A, MACHINE_B].map((machineId) =>
+        call(env, "/activate", {
+          method: "POST",
+          body: { licenseKey: created.key, machineId },
+        }),
+      ),
+    );
+    expect(results.map((x) => x.status).sort()).toEqual([200, 409]);
+  });
+  it("modifica dati e ruota la chiave senza esporre quella precedente", async () => {
+    const created = await createLicense(env);
+    const endpoint = `/admin/licenses/${created.license.id}`;
+    const body = {
+      customer: "Nuovo cliente",
+      seats: 2,
+      plan: "pro",
+      features: "configurator",
+      notes: "nota",
+    };
+    expect(
+      (await call(env, endpoint, { method: "PATCH", token: ADMIN_TOKEN, body }))
+        .status,
+    ).toBe(200);
+    expect(
+      db.prepare("SELECT customer, seats FROM licenses").get(),
+    ).toMatchObject({ customer: "Nuovo cliente", seats: 2 });
+    const response = await call(env, `${endpoint}/rotate`, {
+      method: "POST",
+      token: ADMIN_TOKEN,
+    });
+    const rotated = (await response.json()) as { key: string };
+    expect(rotated.key).not.toBe(created.key);
+    expect(
+      (
+        await call(env, "/activate", {
+          method: "POST",
+          body: { licenseKey: created.key, machineId: MACHINE_A },
+        })
+      ).status,
+    ).toBe(404);
+    expect(
+      (
+        await call(env, "/activate", {
+          method: "POST",
+          body: { licenseKey: rotated.key, machineId: MACHINE_A },
+        })
+      ).status,
+    ).toBe(200);
+  });
+  it("non riduce il numero di posti sotto quelli occupati", async () => {
+    const created = await createLicense(env, { seats: 2 });
+    for (const machineId of [MACHINE_A, MACHINE_B])
+      await call(env, "/activate", {
+        method: "POST",
+        body: { licenseKey: created.key, machineId },
+      });
+    expect(
+      (
+        await call(env, `/admin/licenses/${created.license.id}`, {
+          method: "PATCH",
+          token: ADMIN_TOKEN,
+          body: {
+            customer: "Cliente",
+            seats: 1,
+            plan: "standard",
+            features: "configurator",
+          },
+        })
+      ).status,
+    ).toBe(409);
+  });
+  it("limita corpi, numeri di posti e richieste da origini esterne", async () => {
+    expect(
+      (
+        await call(env, "/admin/licenses", {
+          method: "POST",
+          token: ADMIN_TOKEN,
+          body: { customer: "Test", seats: 1.5 },
+        })
+      ).status,
+    ).toBe(400);
+    expect(
+      (
+        await call(env, "/admin/licenses", {
+          method: "POST",
+          token: ADMIN_TOKEN,
+          raw: "x".repeat(17000),
+        })
+      ).status,
+    ).toBe(413);
+    const response = await worker.fetch(
+      new Request("https://licenze.test/admin/licenses", {
+        headers: {
+          Origin: "https://evil.test",
+          Authorization: `Bearer ${ADMIN_TOKEN}`,
+        },
+      }),
+      env,
+    );
+    expect(response.status).toBe(403);
+    expect(response.headers.get("Content-Security-Policy")).toContain(
+      "frame-ancestors 'none'",
+    );
+    env.API_LIMITER = { limit: async () => ({ success: false }) };
+    expect(
+      (await call(env, "/verify", { method: "POST", body: {} })).status,
+    ).toBe(429);
+  });
+  it("firma l'aggiornamento soltanto per una licenza e una postazione attive", async () => {
+    const created = await createLicense(env);
+    const body = {
+      licenseKey: created.key,
+      machineId: MACHINE_A,
+      nonce: "b".repeat(64),
+    };
+    expect(
+      (await call(env, "/updates/check", { method: "POST", body })).status,
+    ).toBe(403);
+    await call(env, "/activate", { method: "POST", body });
+    expect(
+      await (
+        await call(env, "/updates/check", { method: "POST", body })
+      ).json(),
+    ).toMatchObject({ status: "current" });
+    db.prepare(
+      "INSERT INTO releases (commit_sha, sha256, size, url, created_at) VALUES (?, ?, ?, ?, ?)",
+    ).run(
+      "c".repeat(40),
+      "d".repeat(64),
+      10,
+      "https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/build-test/StaianoHVAC.exe",
+      new Date().toISOString(),
+    );
+    const response = await call(env, "/updates/check", {
+      method: "POST",
+      body,
+    });
+    const result = (await response.json()) as { manifest: string };
+    const { verifyManifest } = (await import("node:module")).createRequire(
+      import.meta.url,
+    )("../../deploy/executable.cjs");
+    expect(
+      verifyManifest(result.manifest, publicKeyPem, MACHINE_A, body.nonce),
+    ).toMatchObject({ commit: "c".repeat(40), sequence: 1 });
+    await call(env, `/admin/licenses/${created.license.id}/revoke`, {
+      method: "POST",
+      token: ADMIN_TOKEN,
+    });
+    expect(
+      (await call(env, "/updates/check", { method: "POST", body })).status,
+    ).toBe(403);
   });
 });

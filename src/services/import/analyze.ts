@@ -10,10 +10,7 @@ async function recognize(
 ) {
   return new Promise<{ vector: PlanAnalysis; raster: PlanAnalysis | null }>(
     (resolve, reject) => {
-      const worker = new Worker(
-        new URL("../../workers/plan.worker.ts", import.meta.url),
-        { type: "module" },
-      );
+      const worker = new Worker("/workers/plan.worker.js", { type: "module" });
       const finish = () => {
         clearTimeout(timeout);
         worker.terminate();

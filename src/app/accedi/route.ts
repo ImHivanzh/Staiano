@@ -117,6 +117,7 @@ button.secondary:hover{background:#edf2f6;color:#183249}
         "default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "same-origin",
+      "X-Staiano-Build": process.env.STAIANO_RELEASE_ID || "development",
     },
   });
 }

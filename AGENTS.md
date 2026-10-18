@@ -16,6 +16,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Licenza
 
-- Il controllo è **attivo** su questa postazione: `LICENSE_ENFORCE=1` in `.env.local` (gitignorato), insieme a `LICENSE_SERVER_URL`, `LICENSE_ADMIN_TOKEN` e `LICENSE_PUBLIC_KEY_FILE`. Senza il flag l’app si comporta come prima e la sezione _Licenza_ resta solo informativa.
+- Il Worker `licenses` è universale: le licenze includono `productId`; per questa app usare `staiano-hvac`. Le chiavi `LIC-` e le storiche `STAIANO-` sono compatibili. Protocollo: `license-server/INTEGRATION.md`.
+- Pubblicazione: `compila.bat` nella radice del progetto compila, collauda e pubblica il pacchetto (fa il push su Codeberg se servono commit; `installa` lo installa anche qui, `nopublish` prova senza pubblicare). Richiede albero pulito, Node 24.14.0 e `CODEBERG_TOKEN` + `LICENSE_PUBLISH_TOKEN` in `.env.local`. Il workflow in `deploy/ci/` resta un'alternativa non usata.
+- Quando è installato, il programma gira come EXE: il record effettivo è `C:\local-software\StaianoHVAC\application\data\.cache\production-server.json`; verificare anche `X-Staiano-Build` sulla porta 3015. Il repository resta una copia di sviluppo, non è necessario al programma installato.
+- Il pannello supporta passkey WebAuthn. La prima registrazione richiede accesso amministratore esistente e conferma dell'autenticatore da parte dell'utente. Non creare passkey amministrative sintetiche in produzione; usare autenticatore virtuale solo nei test locali.
+
+- Il controllo è **attivo** su questa postazione: `LICENSE_ENFORCE=1` in `.env.local` (gitignorato), insieme a `LICENSE_SERVER_URL` e `LICENSE_PUBLIC_KEY_FILE`. Il token amministratore è stato revocato su richiesta dell'utente dopo la registrazione della passkey e rimosso dalla configurazione locale. Il pannello usa ora soltanto passkey; non ripristinare automaticamente `ADMIN_TOKEN`. Senza il flag l’app si comporta come prima e la sezione _Licenza_ resta solo informativa.
 - Il server è il Worker Cloudflare **https://licenses.ivanbuonocore.dev** (codice in `license-server/`, dati in D1 `licenses`); chiavi e token stanno in `.cache/`, la chiave privata vive solo come segreto del Worker.
 - `deploy/start-production.ps1` riavvia il processo solo se la build è più recente del processo in ascolto: dopo una modifica alle sole variabili d’ambiente occorre ricompilare nella directory alternativa (o usare `deploy/update-project.ps1 -SkipPull`, che però esegue anche `npm ci` e richiede privilegi elevati).

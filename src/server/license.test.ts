@@ -346,3 +346,41 @@ describe("attivazione", () => {
     await clearLicenseFile();
   });
 });
+
+it("non estende la tolleranza offline cambiando la data del file locale", async () => {
+  await writeToken(
+    await signLicenseToken(
+      payload({ issuedAt: Math.floor(Date.now() / 1000) - 7200 }),
+      privateKeyPem,
+    ),
+    { lastVerifiedAt: Date.now() + 86400000 },
+  );
+  vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
+  expect(await licenseStatus({ force: true })).toMatchObject({
+    ok: false,
+    state: "unreachable",
+  });
+});
+
+it("conserva la licenza se il server rifiuta la disattivazione", async () => {
+  await writeToken(await signLicenseToken(payload(), privateKeyPem));
+  vi.stubGlobal(
+    "fetch",
+    vi.fn().mockResolvedValue(jsonResponse({ message: "errore" }, 500)),
+  );
+  await expect(deactivateLicense()).rejects.toThrow("non è stata liberata");
+  expect(await readLicenseFile()).not.toBeNull();
+});
+
+it("rifiuta un token firmato valido emesso per un altro software", async () => {
+  await writeToken(
+    await signLicenseToken(
+      payload({ productId: "altro-software" }),
+      privateKeyPem,
+    ),
+  );
+  expect(await licenseStatus({ force: true })).toMatchObject({
+    ok: false,
+    state: "invalid",
+  });
+});

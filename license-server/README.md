@@ -1,5 +1,38 @@
 # Servizio licenze (Cloudflare Worker + D1)
 
+## Pannello universale e passkey
+
+Il pannello su **https://licenses.ivanbuonocore.dev** amministra più software:
+**Gestisci software** registra un prodotto; ogni licenza è associata al relativo
+ID e i token firmati impediscono l'uso su software diversi. Le chiavi nuove
+iniziano con `LIC-`; quelle storiche `STAIANO-` restano valide.
+Protocollo per integrare altri software: [INTEGRATION.md](INTEGRATION.md).
+
+**Accedi con passkey** usa WebAuthn con verifica utente obbligatoria, challenge
+monouso di due minuti e sessione di otto ore con cookie Secure/HttpOnly/Strict.
+Per la prima registrazione, accedere con il token amministratore esistente e
+premere **Registra passkey**, confermando con Windows Hello, telefono o chiave
+FIDO2. La chiave privata della passkey non lascia l'autenticatore. Il token
+amministratore può essere usato per il bootstrap; non inserirlo nel frontend o nei log.
+
+Su questa installazione il token amministratore è stato revocato dopo la
+registrazione della passkey: il Worker non contiene più `ADMIN_TOKEN` e
+`.env.local` non contiene più `LICENSE_ADMIN_TOKEN`. L'accesso amministrativo
+avviene tramite passkey. Gli script `license:issue` che richiedono il vecchio
+token non possono amministrare questo servizio. Un eventuale ripristino del
+bootstrap richiede un'azione esplicita del proprietario su Cloudflare.
+
+Le migrazioni `0002-products.sql` e `0003-passkeys.sql` sono già applicate al
+database esistente. Per database nuovi usare lo schema completo `schema.sql`.
+Non riapplicare `0002` a un database già migrato. Pubblicazione:
+`npm run license:deploy`, che compila anche il client WebAuthn.
+
+Pacchetti EXE e canale di aggiornamento: [deploy/ci/README.md](../deploy/ci/README.md).
+Le release si producono dalla copia di sviluppo con `compila.bat`, che richiede il
+segreto `PUBLISH_TOKEN` sul Worker e i token `CODEBERG_TOKEN` e
+`LICENSE_PUBLISH_TOKEN` in `.env.local`. Il canale diventa operativo con la prima
+release pubblicata e collaudata; il pannello ne mostra lo stato.
+
 Servizio **generale** di licenze: ogni licenza appartiene a un cliente e a una o
 più postazioni, per qualunque software che ne incorpori la chiave pubblica. Il
 Worker è l'unico detentore della chiave privata di firma: emette token

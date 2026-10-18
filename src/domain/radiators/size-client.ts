@@ -27,7 +27,7 @@ export function sizeRadiatorsInWorker(
       ),
     );
   return new Promise((resolve, reject) => {
-    const worker = new Worker(new URL("./size.worker.ts", import.meta.url));
+    const worker = new Worker("/workers/size.worker.js");
     const finish = () => {
       signal?.removeEventListener("abort", abort);
       worker.terminate();

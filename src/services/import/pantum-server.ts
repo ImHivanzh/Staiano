@@ -38,7 +38,11 @@ export async function scanPantum(
         /* turbopackIgnore: true */
         process.env.STAIANO_SCANNER_PYTHON || "python",
         [
-          path.resolve("native/pantum/scansione.py"),
+          path.resolve(
+            process.env.STAIANO_PACKAGED === "1"
+              ? "native/pantum/scansione.pyc"
+              : "native/pantum/scansione.py",
+          ),
           "--worker-scan",
           String(dpi),
           output,

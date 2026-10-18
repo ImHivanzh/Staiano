@@ -6,7 +6,7 @@
 
 export const LICENSE_TOKEN_VERSION = 1;
 export const LICENSE_TOKEN_ALGORITHM = "Ed25519";
-export const LICENSE_KEY_PREFIX = "STAIANO";
+export const LICENSE_KEY_PREFIX = "LIC";
 /** Crockford base32: nessuna I, L, O, U per evitare errori di trascrizione. */
 export const LICENSE_KEY_ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
 export const LICENSE_KEY_LENGTH = 20;
@@ -14,6 +14,7 @@ export const LICENSE_KEY_LENGTH = 20;
 export type LicenseTokenPayload = {
   v: number;
   licenseId: string;
+  productId?: string;
   customer: string;
   plan: string;
   seats: number;
@@ -77,6 +78,9 @@ export function parseLicenseTokenPayload(
   if (
     payload.v !== LICENSE_TOKEN_VERSION ||
     typeof payload.licenseId !== "string" ||
+    (payload.productId !== undefined &&
+      (typeof payload.productId !== "string" ||
+        !/^[a-z0-9][a-z0-9-]{1,63}$/.test(payload.productId))) ||
     typeof payload.customer !== "string" ||
     typeof payload.plan !== "string" ||
     typeof payload.seats !== "number" ||
@@ -94,6 +98,9 @@ export function parseLicenseTokenPayload(
   return {
     v: LICENSE_TOKEN_VERSION,
     licenseId: payload.licenseId,
+    ...(typeof payload.productId === "string"
+      ? { productId: payload.productId }
+      : {}),
     customer: payload.customer,
     plan: payload.plan,
     seats: payload.seats,
@@ -132,8 +139,8 @@ export async function verifyLicenseToken(
   token: string,
   publicKeyPem: string,
 ): Promise<LicenseTokenPayload | null> {
-  const [body, signature] = token.split(".");
-  if (!body || !signature) return null;
+  const [body, signature, extra] = token.split(".");
+  if (!body || !signature || extra !== undefined) return null;
   try {
     const key = await crypto.subtle.importKey(
       "spki",
@@ -160,7 +167,7 @@ export function normalizeLicenseKey(value: string): string {
   const cleaned = value
     .toUpperCase()
     .replace(/[^0-9A-Z]/g, "")
-    .replace(/^STAIANO/, "")
+    .replace(/^(?:STAIANO|LIC)/, "")
     .replaceAll("I", "1")
     .replaceAll("L", "1")
     .replaceAll("O", "0");

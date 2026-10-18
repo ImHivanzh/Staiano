@@ -286,7 +286,7 @@ async function callServer(
       Accept: "application/json",
       "User-Agent": `staiano-hvac/${appVersion()}`,
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ ...payload, productId: "staiano-hvac" }),
     signal: AbortSignal.timeout(timeoutMs),
   });
   const body = (await response.json().catch(() => ({}))) as Record<
@@ -343,7 +343,7 @@ async function refreshLicense(
       hostname: hostname(),
       appVersion: appVersion(),
     });
-    if (response.status === 403) {
+    if ([403, 404, 409].includes(response.status)) {
       const revoked: LicenseStatus = {
         ...status,
         ...info,
@@ -368,7 +368,11 @@ async function refreshLicense(
       typeof response.body.token === "string" ? response.body.token : "";
     const payload =
       publicKey && token ? await verifyLicenseToken(token, publicKey) : null;
-    if (!payload || payload.machineId !== machineId)
+    if (
+      !payload ||
+      payload.machineId !== machineId ||
+      (payload.productId ?? "staiano-hvac") !== "staiano-hvac"
+    )
       throw new LicenseError("Risposta del server licenze non valida.");
     const next: LicenseFileState = {
       ...state,
@@ -438,7 +442,11 @@ async function evaluate(): Promise<LicenseStatus> {
   const payload = publicKey
     ? await verifyLicenseToken(state.token, publicKey)
     : null;
-  if (!payload || payload.machineId !== status.machineId)
+  if (
+    !payload ||
+    payload.machineId !== status.machineId ||
+    (payload.productId ?? "staiano-hvac") !== "staiano-hvac"
+  )
     return {
       ...status,
       ...fileStatus(state, null),
@@ -459,7 +467,17 @@ async function evaluate(): Promise<LicenseStatus> {
       state: "expired",
       message: "Licenza scaduta: contattare l'assistenza.",
     };
-  const age = Date.now() - state.lastVerifiedAt;
+  // Offline freshness comes from the signed timestamp, never from the editable cache.
+  const age =
+    Date.now() - Math.min(state.lastVerifiedAt, payload.issuedAt * 1000);
+  if (payload.issuedAt * 1000 > Date.now() + 60_000)
+    return {
+      ...status,
+      ...fileStatus(state, payload),
+      state: "invalid",
+      message:
+        "Data del token non valida. Verificare l'orologio e riattivare la licenza.",
+    };
   if (age > licenseToleranceMs())
     return refreshLicense(state, { blocking: true });
   if (age > licenseCheckMs() && Date.now() - lastRefreshAttemptAt > 60_000) {
@@ -559,7 +577,11 @@ export async function activateLicense(value: string): Promise<LicenseStatus> {
   const token =
     typeof response.body.token === "string" ? response.body.token : "";
   const payload = token ? await verifyLicenseToken(token, publicKey) : null;
-  if (!payload || payload.machineId !== machineId)
+  if (
+    !payload ||
+    payload.machineId !== machineId ||
+    (payload.productId ?? "staiano-hvac") !== "staiano-hvac"
+  )
     throw new LicenseError("Risposta del server licenze non valida.");
   const now = Date.now();
   await writeLicenseFile({
@@ -582,10 +604,12 @@ export async function deactivateLicense(): Promise<LicenseStatus> {
   const state = await readLicenseFile();
   if (!state) return licenseStatus({ force: true });
   try {
-    await callServer("/deactivate", {
+    const response = await callServer("/deactivate", {
       licenseKey: state.key,
       machineId: state.machineId,
     });
+    if (!response.ok)
+      throw new LicenseError("Disattivazione rifiutata dal server.");
   } catch {
     throw new LicenseError(
       "Server licenze non raggiungibile: la postazione non è stata liberata.",

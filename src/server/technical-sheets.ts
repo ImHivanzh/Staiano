@@ -8,7 +8,10 @@ import { zipFiles } from "./zip";
 let sourceIndex: Promise<Map<string, string>> | undefined;
 async function archivedSources() {
   sourceIndex ??= (async () => {
-    const root = resolve(process.cwd(), "catalog-data/sources");
+    const root = resolve(
+      /* turbopackIgnore: true */ process.env.STAIANO_CATALOG_SOURCES ||
+        resolve(process.cwd(), "catalog-data/sources"),
+    );
     const entries = await readdir(root, { recursive: true });
     const index = new Map<string, string>();
     for (const name of entries) {

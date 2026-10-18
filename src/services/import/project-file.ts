@@ -15,9 +15,7 @@ export async function importProjectFile(file: File): Promise<Project> {
   const text = await file.text();
   if (typeof Worker === "undefined") return decodeProject(text);
   return new Promise<Project>((resolve, reject) => {
-    const worker = new Worker(
-      new URL("../../workers/project.worker.ts", import.meta.url),
-    );
+    const worker = new Worker("/workers/project.worker.js");
     const timeout = setTimeout(() => {
       worker.terminate();
       reject(

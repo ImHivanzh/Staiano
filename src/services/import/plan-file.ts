@@ -127,10 +127,7 @@ async function readDwg(file: File): Promise<ParsedPlan> {
 async function readDxf(file: File): Promise<ParsedPlan> {
   const text = await file.text();
   return new Promise((resolve, reject) => {
-    const worker = new Worker(
-      new URL("../../workers/plan.worker.ts", import.meta.url),
-      { type: "module" },
-    );
+    const worker = new Worker("/workers/plan.worker.js", { type: "module" });
     const timeout = setTimeout(() => {
       worker.terminate();
       reject(new Error("DXF troppo complesso. Ridurre i layer e riprovare."));

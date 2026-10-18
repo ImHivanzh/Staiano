@@ -71,6 +71,7 @@ if (command === "create") {
     method: "POST",
     body: JSON.stringify({
       customer,
+      productId: flag("product", "staiano-hvac"),
       plan: flag("plan", "standard"),
       seats: Number(flag("seats", "1")),
       notes: flag("notes"),

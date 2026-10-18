@@ -7,6 +7,8 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "predev": "node scripts/build-browser-workers.mjs",
+    "prebuild": "node scripts/build-browser-workers.mjs",
     "dev": "next dev --hostname 127.0.0.1 --port 3015",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1 --port 3015",
@@ -25,14 +27,17 @@
     "license:keys": "node scripts/license-keys.mjs",
     "license:issue": "node scripts/license-issue.mjs",
     "license:activate": "tsx scripts/license-activate.ts",
-    "license:db:init": "npx --yes wrangler@latest d1 execute licenses --remote --file license-server/schema.sql -c license-server/wrangler.toml",
-    "license:deploy": "npx --yes wrangler@latest deploy -c license-server/wrangler.toml",
+    "license:db:init": "wrangler d1 execute licenses --remote --file license-server/schema.sql -c license-server/wrangler.toml",
+    "license:deploy": "node scripts/build-license-ui.mjs && wrangler deploy -c license-server/wrangler.toml",
+    "exe:build": "node scripts/build-executable.mjs",
+    "exe:install": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File deploy/install-executable.ps1",
     "dwg:build": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File deploy/build-dwg.ps1"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
     "@react-three/drei": "^10.7.0",
     "@react-three/fiber": "^9.5.0",
+    "@simplewebauthn/server": "14.0.3",
     "dxf-parser": "^1.1.2",
     "next": "16.3.8",
     "pdf-lib": "^1.17.1",
@@ -45,16 +50,21 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.0",
+    "@simplewebauthn/browser": "14.0.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@types/three": "^0.183.0",
+    "bytenode": "1.7.0",
+    "esbuild": "0.28.2",
     "eslint": "^9.39.0",
     "eslint-config-next": "16.3.8",
     "fake-indexeddb": "^6.2.0",
+    "postject": "1.0.0-alpha.6",
     "prettier": "^3.7.0",
     "tsx": "^4.23.15",
     "typescript": "^5.9.0",
-    "vitest": "^4.0.0"
+    "vitest": "^4.0.0",
+    "wrangler": "4.151.1"
   }
 }

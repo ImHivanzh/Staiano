@@ -8,6 +8,12 @@ routes = [
   { pattern = "licenses.ivanbuonocore.dev", custom_domain = true }
 ]
 
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+html_handling = "none"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "licenses"
@@ -15,3 +21,11 @@ database_id = "4df77dd3-41da-41a4-8bd9-73bb843accc6"
 
 [observability]
 enabled = true
+
+[observability.traces]
+enabled = true
+
+[[ratelimits]]
+name = "API_LIMITER"
+namespace_id = "301501"
+simple = { limit = 60, period = 60 }
