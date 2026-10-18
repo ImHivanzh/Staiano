@@ -15,6 +15,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
+# Se le credenziali Git sono scadute, Git Credential Manager deve poterle chiedere.
+$env:GCM_INTERACTIVE = 'always'
 
 $root = Split-Path -Parent $PSScriptRoot
 Set-Location $root
