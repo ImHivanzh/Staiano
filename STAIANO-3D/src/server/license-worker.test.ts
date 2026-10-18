@@ -437,13 +437,54 @@ describe("Worker licenze — regressioni e pannello", () => {
           "User-Agent": "Staiano-licenses",
           Accept: "application/vnd.github+json",
         },
-        redirect: "error",
+        redirect: "manual",
       }),
     );
     const status = await call(env, "/publish/status", {
       token: env.PUBLISH_TOKEN,
     });
     expect(await status.json()).toMatchObject({ commit });
+  });
+  it("rifiuta redirect e revisioni GitHub inaccessibili prima di registrare un pacchetto", async () => {
+    env.PUBLISH_TOKEN = "publisher-di-prova";
+    const commit = "c".repeat(40);
+    const fetchHead = vi.fn().mockImplementation(async (_url, init) => {
+      if (init.redirect !== "manual")
+        throw new TypeError("Cloudflare requires manual redirect handling");
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "https://example.com/" },
+      });
+    });
+    vi.stubGlobal("fetch", fetchHead);
+    const body = {
+      commit,
+      sha256: "d".repeat(64),
+      size: 10,
+      url: `https://github.com/ImHivanzh/Staiano/releases/download/exe-${commit}/StaianoHVAC.exe`,
+    };
+    expect(
+      (
+        await call(env, "/publish", {
+          method: "POST",
+          token: env.PUBLISH_TOKEN,
+          body,
+        })
+      ).status,
+    ).toBe(503);
+    fetchHead.mockResolvedValueOnce(new Response(null, { status: 404 }));
+    expect(
+      (
+        await call(env, "/publish", {
+          method: "POST",
+          token: env.PUBLISH_TOKEN,
+          body,
+        })
+      ).status,
+    ).toBe(503);
+    expect(
+      db.prepare("SELECT COUNT(*) AS count FROM releases").get(),
+    ).toMatchObject({ count: 0 });
   });
   it("scarica da GitHub e dal suo CDN senza inoltrare credenziali, preservando Codeberg", async () => {
     const created = await createLicense(env);
