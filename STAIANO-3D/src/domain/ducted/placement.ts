@@ -1,6 +1,7 @@
 import type { Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "@/domain/project";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
+import { pointInPolygon } from "@/domain/geometry/primitives";
 import { calculateSupplyPlenum } from "./plenum";
 
 export function placeDuctedMachine(
@@ -134,6 +135,12 @@ export function moveSystemObject(
         pl.id === id ? { ...pl, position, status: "manual" } : pl,
       ),
     };
+  const room = project.rooms.find(
+    (r) =>
+      r.floorId === item.floorId &&
+      !r.conditioningExclusion &&
+      pointInPolygon(position, r.polygon),
+  );
   return {
     ...project,
     hvacSystems: project.hvacSystems.map((s) =>
@@ -141,7 +148,9 @@ export function moveSystemObject(
         ? {
             ...s,
             indoorUnits: s.indoorUnits.map((u) =>
-              u.id === id ? { ...u, position } : u,
+              u.id === id
+                ? { ...u, position, roomId: room?.id ?? u.roomId }
+                : u,
             ),
           }
         : s,

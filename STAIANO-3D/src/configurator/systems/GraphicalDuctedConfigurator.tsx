@@ -46,6 +46,7 @@ import {
   placeMachineOnPlan,
   configureMachineOnPlan,
   connectTerminalOnPlan,
+  moveDuctedDraft,
   placeDuctedDraft,
 } from "@/domain/ducted/graphic-installation";
 import { terminalAirflowBalance } from "@/domain/air-terminals/airflow-balance";
@@ -356,39 +357,16 @@ export function GraphicalDuctedConfigurator({
     return { project: next, id };
   }
   function moveDevice(id: string, point: Point) {
-    commit((current) => {
-      const draft = current.ductedDrafts?.find((item) => item.id === id);
-      if (!draft)
-        return movePlacedDevice(
-          current,
-          id,
-          point,
-          useProjectStore.getState().snap,
-        );
-      const targetRoom = current.rooms.find(
-        (item) =>
-          item.floorId === draft.floorId &&
-          (mainPlan || installation.roomIds.includes(item.id)) &&
-          !item.conditioningExclusion &&
-          pointInPolygon(point, item.polygon),
-      );
-      const validated = placeDuctedDraft(
-        current,
-        draft.installationId,
-        targetRoom?.id ?? "",
-        point,
-        draft.kind,
-        draft.use,
-      );
-      return {
-        ...current,
-        ductedDrafts: current.ductedDrafts?.map((item) =>
-          item.id === id
-            ? { ...item, ...validated.ductedDrafts.at(-1)!, id }
-            : item,
-        ),
-      };
-    });
+    commit((current) =>
+      current.ductedDrafts?.some((item) => item.id === id)
+        ? moveDuctedDraft(current, id, point)
+        : movePlacedDevice(
+            current,
+            id,
+            point,
+            useProjectStore.getState().snap,
+          ),
+    );
     setSelectedId(id);
     if (mainPlan) useProjectStore.getState().select({ kind: "device", id });
     if (!useProjectStore.getState().error) {

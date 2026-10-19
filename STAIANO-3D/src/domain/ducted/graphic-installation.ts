@@ -66,6 +66,47 @@ export function placeDuctedDraft(
   };
 }
 
+/**
+ * Move an incomplete machine/terminal to any verified room of its floor,
+ * registering that room in the installation. Replaces the draft in place so a
+ * cancelled or repeated drag can never leave a second copy.
+ */
+export function moveDuctedDraft(
+  project: Project,
+  draftId: string,
+  point: Point,
+): Project {
+  const draft = project.ductedDrafts?.find((item) => item.id === draftId);
+  if (!draft) throw new Error("Bozza non trovata.");
+  const room = project.rooms.find(
+    (item) =>
+      item.floorId === draft.floorId &&
+      !item.conditioningExclusion &&
+      item.geometryStatus === "closed" &&
+      pointInPolygon(point, item.polygon) &&
+      project.floors.find((floor) => floor.id === item.floorId)?.scaleVerified,
+  );
+  if (!room)
+    throw new Error(
+      "Scegli un punto in un ambiente valido dell’impianto con scala verificata.",
+    );
+  const assigned = project.installations.some(
+    (item) => item.id === draft.installationId && item.type === "ducted",
+  )
+    ? assignInstallationRooms(project, draft.installationId, "ducted", [
+        room.id,
+      ])
+    : project;
+  return {
+    ...assigned,
+    ductedDrafts: assigned.ductedDrafts?.map((item) =>
+      item.id === draftId
+        ? { ...item, roomId: room.id, floorId: room.floorId, position: point }
+        : item,
+    ),
+  };
+}
+
 export function placeMachineOnPlan(
   project: Project,
   systemId: string,

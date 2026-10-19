@@ -13,6 +13,7 @@ import {
   connectTerminalOnPlan,
   placeMachineOnPlan,
   saveTerminalOnPlan,
+  moveDuctedDraft,
   placeDuctedDraft,
 } from "./graphic-installation";
 import { terminalAirflowBalance } from "../air-terminals/airflow-balance";
@@ -27,6 +28,7 @@ import { airConnectionRoutes, routeBelowTerminals } from "./routes";
 import { indoorRoute } from "../geometry/indoor-route";
 import { nearestFootprintEdge } from "../geometry/footprint";
 import { translateSelection, removeSelection } from "../geometry/selection";
+import { movePlacedDevice } from "../geometry/move-device";
 import { refreshDuctedBindings } from "./refresh";
 
 function fixture() {
@@ -766,4 +768,65 @@ it("moves a terminal to the independent installation of its new machine", () => 
   expect(
     decodeProject(encodeProject(connected)).airTerminals[0].installationId,
   ).toBe(installationId);
+});
+
+it("moves an incomplete machine to another room, registering the room without duplicating it", () => {
+  let project = ensureInstallations(guidedProjectFixture());
+  project = addRectangle(project, project.floors[0].id, {
+    width: 20,
+    length: 18,
+    height: 4,
+    name: "Sala enorme",
+    origin: { x: 20, y: 0 },
+  });
+  const installationId = project.installations.find(
+    (item) => item.type === "ducted",
+  )!.id;
+  const target = project.rooms[1];
+  project = placeDuctedDraft(
+    { ...project, hvacSystems: [] },
+    installationId,
+    project.rooms[0].id,
+    { x: 4, y: 2 },
+    "machine",
+  );
+  const draftId = project.ductedDrafts![0].id;
+  expect(
+    project.installations.find((item) => item.id === installationId)!.roomIds,
+  ).toEqual([project.rooms[0].id]);
+  const moved = moveDuctedDraft(project, draftId, target.centroid);
+  expect(moved.ductedDrafts).toHaveLength(1);
+  expect(moved.ductedDrafts![0]).toMatchObject({
+    id: draftId,
+    roomId: target.id,
+    floorId: target.floorId,
+    position: target.centroid,
+  });
+  expect(
+    moved.installations.find((item) => item.id === installationId)!.roomIds,
+  ).toEqual([project.rooms[0].id, target.id]);
+  expect(() => projectSchema.parse(moved)).not.toThrow();
+  expect(() => moveDuctedDraft(project, draftId, { x: -5, y: -5 })).toThrow(
+    "Scegli un punto in un ambiente valido",
+  );
+});
+
+it("keeps a placed machine assigned to the room it is moved into", () => {
+  let project = fixture();
+  project = addRectangle(project, project.floors[0].id, {
+    width: 6,
+    length: 5,
+    height: 2.7,
+    name: "Sala enorme",
+    origin: { x: 20, y: 0 },
+  });
+  const unit = project.hvacSystems[0].indoorUnits[0];
+  const target = project.rooms[1];
+  const moved = movePlacedDevice(project, unit.id, target.centroid);
+  expect(moved.hvacSystems[0].indoorUnits[0]).toMatchObject({
+    id: unit.id,
+    roomId: target.id,
+    position: target.centroid,
+  });
+  expect(() => projectSchema.parse(moved)).not.toThrow();
 });
