@@ -554,6 +554,18 @@ export async function licenseSetup(): Promise<{
   };
 }
 
+export function buildInfo(): {
+  buildId: string;
+  commit: string;
+  packaged: boolean;
+} {
+  return {
+    buildId: (process.env.STAIANO_RELEASE_ID ?? "").trim() || "development",
+    commit: (process.env.LICENSE_APP_VERSION ?? "").trim(),
+    packaged: process.env.STAIANO_PACKAGED === "1",
+  };
+}
+
 export async function activateLicense(value: string): Promise<LicenseStatus> {
   const key = normalizeLicenseKey(value);
   if (!key) throw new LicenseError("Chiave di licenza non valida.");

@@ -91,6 +91,30 @@ function atomicJson(file, value) {
   fs.renameSync(temp, file);
 }
 
+/** Rimuove gli exe delle versioni precedenti, tranne quella attiva e quella in esecuzione. */
+function pruneVersions(install, keepSha) {
+  const root = path.join(install, "versions"),
+    running = path.basename(path.dirname(process.execPath));
+  let names = [];
+  try {
+    names = fs.readdirSync(root);
+  } catch {
+    return;
+  }
+  for (const name of names) {
+    if (name === keepSha || name === running) continue;
+    try {
+      fs.rmSync(path.join(root, name), {
+        recursive: true,
+        force: true,
+        maxRetries: 3,
+      });
+    } catch {
+      // Cartella ancora in uso: verra ritentata al prossimo avvio.
+    }
+  }
+}
+
 function safeRuntimePath(root, name) {
   if (
     typeof name !== "string" ||
@@ -534,6 +558,7 @@ async function update(dataRoot, config) {
   const install = path.dirname(dataRoot),
     activeFile = path.join(install, "active.json");
   const current = JSON.parse(fs.readFileSync(activeFile, "utf8"));
+  pruneVersions(install, current.sha256);
   const release = await authorization(dataRoot, config, current.sequence || 0);
   if (!release || release.commit === current.commit) {
     console.log("Nessun aggiornamento disponibile.");
@@ -570,6 +595,7 @@ async function update(dataRoot, config) {
     while ((Get-ScheduledTask -TaskName '${TASK}').State -ne 'Ready') { if ((Get-Date) -gt $deadline) { throw 'Attivita non arrestata.' }; Start-Sleep -Milliseconds 250 }
     $action=New-ScheduledTaskAction -Execute $exe -Argument ('--serve --data-dir "'+$data+'"') -WorkingDirectory (Split-Path $exe)
     Set-ScheduledTask -TaskName '${TASK}' -Action $action | Out-Null
+    try { Set-ScheduledTask -TaskName '${TASK} Update' -Action (New-ScheduledTaskAction -Execute $exe -Argument ('--update --data-dir "'+$data+'"') -WorkingDirectory (Split-Path $exe)) | Out-Null } catch { }
     $last=(Get-ScheduledTaskInfo -TaskName '${TASK}').LastRunTime
     schtasks /Run /TN '${TASK}' | Out-Null
     Start-Sleep -Seconds 2
@@ -659,6 +685,18 @@ async function main() {
   if (!args.includes("--serve"))
     throw new Error("Usare --serve oppure --update.");
   await requireCurrentVersion(dataRoot, config);
+  try {
+    const active = JSON.parse(
+      fs.readFileSync(
+        path.join(path.dirname(dataRoot), "active.json"),
+        "utf8",
+      ),
+    );
+    if (active.sha256)
+      pruneVersions(path.dirname(dataRoot), active.sha256);
+  } catch {
+    // Installazione senza active.json (copia di sviluppo): nulla da pulire.
+  }
   unpack(dataRoot, config);
   const record = {
     pid: process.pid,
@@ -676,6 +714,7 @@ module.exports = {
   safeRuntimePath,
   download,
   fingerprint,
+  pruneVersions,
   catalogDocuments,
   catalogExpected,
   verifyCatalogDocuments,

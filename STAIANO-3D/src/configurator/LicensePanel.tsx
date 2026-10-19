@@ -28,6 +28,12 @@ type LicenseSetupView = {
   checkMinutes: number;
 };
 
+type BuildView = {
+  buildId: string;
+  commit: string;
+  packaged: boolean;
+};
+
 const stateLabels: Record<string, string> = {
   active: "Attiva",
   disabled: "Controllo disattivato",
@@ -47,6 +53,7 @@ const formatDate = (value: number | null) =>
 export function LicensePanel() {
   const [status, setStatus] = useState<LicenseStatusView | null>(null);
   const [setup, setSetup] = useState<LicenseSetupView | null>(null);
+  const [build, setBuild] = useState<BuildView | null>(null);
   const [busy, setBusy] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -63,6 +70,7 @@ export function LicensePanel() {
           throw new Error(result.message ?? "Licenza non disponibile.");
         setStatus(result.status);
         setSetup(result.setup);
+        setBuild(result.build);
       })
       .catch((failure) => {
         if (!controller.signal.aborted)
@@ -93,6 +101,7 @@ export function LicensePanel() {
         throw new Error(result.message ?? "Operazione non riuscita.");
       setStatus(result.status);
       setSetup(result.setup);
+      setBuild(result.build);
       setMessage(
         action === "activate"
           ? "Licenza attivata su questa postazione."
@@ -144,6 +153,11 @@ export function LicensePanel() {
             Licenza: {status?.licenseId ?? "—"}
             <br />
             Postazione: {status?.machineId ?? "—"}
+            <br />
+            Versione installata:{" "}
+            {build
+              ? `${build.buildId}${build.commit ? ` · ${build.commit.slice(0, 12)}` : ""}`
+              : "—"}
             <br />
             Attivata il: {formatDate(status?.activatedAt ?? null)} · Ultima
             verifica: {formatDate(status?.lastVerifiedAt ?? null)}

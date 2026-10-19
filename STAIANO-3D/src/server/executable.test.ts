@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 import { createHash, generateKeyPairSync, sign } from "node:crypto";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -13,6 +13,7 @@ const {
   catalogExpected,
   verifyCatalogDocuments,
   ensureCatalogDocuments,
+  pruneVersions,
   requireCurrentVersion,
 } = createRequire(import.meta.url)("../../deploy/executable.cjs");
 const { publicKey, privateKey } = generateKeyPairSync("ed25519");
@@ -284,5 +285,29 @@ describe("documenti tecnici dell'EXE", () => {
       byExtension: { ".pdf": 2 },
     });
     await expect(readFile(instructions, "utf8")).rejects.toThrow();
+  });
+});
+
+describe("pulizia delle versioni EXE", () => {
+  it("elimina gli EXE precedenti e conserva solo la versione attiva", async () => {
+    const install = await mkdtemp(path.join(tmpdir(), "staiano-versioni-"));
+    try {
+      const keep = "a".repeat(64),
+        old = "b".repeat(64),
+        older = "c".repeat(64);
+      for (const name of [keep, old, older]) {
+        await mkdir(path.join(install, "versions", name), { recursive: true });
+        await writeFile(
+          path.join(install, "versions", name, "StaianoHVAC.exe"),
+          name,
+        );
+      }
+      pruneVersions(install, keep);
+      expect((await readdir(path.join(install, "versions"))).sort()).toEqual([
+        keep,
+      ]);
+    } finally {
+      await rm(install, { recursive: true, force: true });
+    }
   });
 });

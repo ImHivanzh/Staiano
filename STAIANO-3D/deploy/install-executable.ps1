@@ -116,6 +116,10 @@ try {
   if (-not $ready) { throw 'Nuova produzione non verificata: ripristino dell attivita precedente.' }
   $activeJson = @{ executable=$exe; sequence=0; commit=$release.commit; sha256=$release.sha256 } | ConvertTo-Json
   [IO.File]::WriteAllText((Join-Path $InstallRoot 'active.json'), $activeJson, [Text.UTF8Encoding]::new($false))
+  # Rimuove gli EXE delle versioni precedenti; quella attiva e quella in esecuzione restano.
+  Get-ChildItem -LiteralPath (Join-Path $InstallRoot 'versions') -Directory -ErrorAction SilentlyContinue |
+    Where-Object { $_.Name -ne $release.sha256 } |
+    ForEach-Object { Remove-Item -LiteralPath $_.FullName -Recurse -Force -ErrorAction SilentlyContinue }
   # The authoritative record lives with the installed data; the development copy is only a convenience.
   try { Copy-Item -LiteralPath (Join-Path $dataRoot '.cache\production-server.json') -Destination (Join-Path $sourceRoot '.cache\production-server.json') -Force } catch { Write-Warning 'Record della copia sviluppo non aggiornato; usare il record nella cartella application\data.' }
   $updateAction = New-ScheduledTaskAction -Execute $exe -Argument ('--update --data-dir "' + $dataRoot + '"') -WorkingDirectory $versionRoot

@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { licenseSetup, licenseStatus } from "@/server/license";
+import { buildInfo, licenseSetup, licenseStatus } from "@/server/license";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,6 +37,10 @@ const formatDate = (value: number | null) =>
 export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams;
   const [status, setup] = await Promise.all([licenseStatus(), licenseSetup()]);
+  const build = buildInfo();
+  const version = build.commit
+    ? `${build.buildId} · ${build.commit.slice(0, 12)}`
+    : build.buildId;
   const error = query.get("error") ?? "";
   const notice = query.get("ok")
     ? status.ok
@@ -62,6 +66,7 @@ export async function GET(request: NextRequest) {
     ["Licenza", status.licenseId ?? "—"],
     ["Postazione", status.machineId],
     ["Ultima verifica", formatDate(status.lastVerifiedAt)],
+    ["Versione installata", version],
     ["Server licenze", setup.serverUrl || "non configurato"],
     [
       "Controllo",

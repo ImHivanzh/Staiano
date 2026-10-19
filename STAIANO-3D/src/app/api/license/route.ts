@@ -7,6 +7,7 @@ import {
 } from "@/server/auth";
 import {
   activateLicense,
+  buildInfo,
   deactivateLicense,
   LicenseError,
   licenseSetup,
@@ -59,6 +60,7 @@ async function view() {
   return {
     status: await licenseStatus({ force: true }),
     setup: await licenseSetup(),
+    build: buildInfo(),
   };
 }
 
