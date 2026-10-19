@@ -43,7 +43,25 @@ test("la macchina apre la vista plenum con una uscita per stacco delle bocchette
   const picker = page.getByRole("dialog", {
     name: "Scegli macchina canalizzata",
   });
-  if (await picker.count()) await page.keyboard.press("Escape");
+  if (await picker.count()) {
+    // La macchina già configurata espone il plenum nella sua stessa finestra.
+    await picker
+      .getByRole("button", { name: "Vista plenum", exact: true })
+      .click();
+    const machinePlenum = page.getByRole("dialog", {
+      name: "Vista plenum",
+      exact: true,
+    });
+    await expect(
+      machinePlenum.getByRole("region", { name: "Plenum di mandata" }),
+    ).toBeVisible();
+    await expect(
+      machinePlenum.locator('img[alt^="Schema plenum di mandata:"]'),
+    ).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(machinePlenum).toHaveCount(0);
+    await page.keyboard.press("Escape");
+  }
   await page.getByRole("button", { name: "3D", exact: true }).click();
   const viewer = page.getByTestId("viewer-3d");
   await expect(viewer.locator("canvas")).toHaveAttribute(
