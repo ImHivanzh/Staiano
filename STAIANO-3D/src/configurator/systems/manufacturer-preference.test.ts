@@ -16,4 +16,13 @@ describe("project manufacturer preference", () => {
       "Gree",
     );
   });
+  it("uses the requested fallback brand when the project has no matching choice", () => {
+    expect(lastAvailableManufacturer([], ["Gree", "Daikin"], "Daikin")).toBe(
+      "Daikin",
+    );
+    expect(
+      lastAvailableManufacturer(["Gree"], ["Gree", "Daikin"], "Daikin"),
+    ).toBe("Gree");
+    expect(lastAvailableManufacturer([], ["Gree"], "Daikin")).toBe("Gree");
+  });
 });

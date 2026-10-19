@@ -12,6 +12,10 @@ import { ManualMachineForm } from "./ManualMachineForm";
 import { SupplyPlenumPanel } from "./SupplyPlenumPanel";
 import { lastAvailableManufacturer } from "./manufacturer-preference";
 import styles from "./DuctedMachinePicker.module.css";
+
+/** Marca proposta quando l'impianto non ha ancora una macchina canalizzata. */
+const DUCTED_DEFAULT_MANUFACTURER = "Daikin";
+
 export function DuctedMachinePicker({
   project,
   room,
@@ -67,6 +71,7 @@ export function DuctedMachinePicker({
       .filter((system) => system.type === "ducted")
       .map((system) => system.manufacturer),
     brands,
+    DUCTED_DEFAULT_MANUFACTURER,
   );
   const [manufacturer, setManufacturer] = useState(
     savedSystem?.manufacturer && brands.includes(savedSystem.manufacturer)
