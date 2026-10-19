@@ -206,7 +206,7 @@ test("five guided phases persist all confirmations, pause, final review and reop
     .click();
   await expect(wizard).toHaveCount(0);
   await page
-    .getByRole("button", { name: "Riprendi configurazione guidata" })
+    .getByRole("button", { name: "Riprendi wizard", exact: true })
     .click();
   await wizard.getByRole("button", { name: "Concludi configurazione" }).click();
   const project = await exported(page, info, "guided-complete");
@@ -219,7 +219,7 @@ test("five guided phases persist all confirmations, pause, final review and reop
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await expect(
-    page.getByRole("button", { name: "Rivedi configurazione guidata" }),
+    page.getByRole("button", { name: "Apri wizard", exact: true }),
   ).toBeVisible();
 });
 

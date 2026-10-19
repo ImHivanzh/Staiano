@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 6,
+  "id": "b49f765e-4c11-461e-8aa1-4fbd51a5e1e8",
+  "name": "Nuovo progetto",
+  "createdAt": "2026-10-19T11:38:31.558Z",
+  "updatedAt": "2026-10-19T11:38:31.558Z",
+  "floors": [
+    {
+      "id": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "name": "Piano terra",
+      "elevationM": 0,
+      "scaleVerified": true,
+      "background": null,
+      "importAnalysis": null,
+      "configurationWizard": {
+        "step": 8,
+        "status": "active",
+        "confirmedSteps": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    }
+  ],
+  "walls": [
+    {
+      "id": "2870f0fe-0326-4f65-be9d-f9c0783935ca",
+      "floorId": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "start": {
+        "x": 0,
+        "y": 0
+      },
+      "end": {
+        "x": 5.3,
+        "y": 0
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    },
+    {
+      "id": "b3d2ca14-d0ff-4512-85fd-cfb6e624f6f9",
+      "floorId": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "start": {
+        "x": 5.3,
+        "y": 0
+      },
+      "end": {
+        "x": 5.3,
+        "y": 4.3
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    },
+    {
+      "id": "334ba105-0a84-410c-8ec6-e7f726b62bdd",
+      "floorId": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "start": {
+        "x": 5.3,
+        "y": 4.3
+      },
+      "end": {
+        "x": 0,
+        "y": 4.3
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    },
+    {
+      "id": "ff20f4d0-75a6-475d-a74a-7644e46d34e8",
+      "floorId": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "start": {
+        "x": 0,
+        "y": 4.3
+      },
+      "end": {
+        "x": 0,
+        "y": 0
+      },
+      "type": "ESTERNO",
+      "thickness": 0.3,
+      "height": null,
+      "locked": false
+    }
+  ],
+  "rooms": [
+    {
+      "id": "a344c2b8-ee9f-4f26-9d93-56c0f970ef62",
+      "floorId": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "name": "Camera",
+      "geometryStatus": "closed",
+      "polygon": [
+        {
+          "x": 0.15,
+          "y": 0.15000000000000036
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 0.15
+        },
+        {
+          "x": 5.1499999999999995,
+          "y": 4.1499999999999995
+        },
+        {
+          "x": 0.15000000000000036,
+          "y": 4.1499999999999995
+        }
+      ],
+      "wallIds": [
+        "2870f0fe-0326-4f65-be9d-f9c0783935ca",
+        "b3d2ca14-d0ff-4512-85fd-cfb6e624f6f9",
+        "334ba105-0a84-410c-8ec6-e7f726b62bdd",
+        "ff20f4d0-75a6-475d-a74a-7644e46d34e8"
+      ],
+      "netAreaM2": 19.999999999999993,
+      "perimeterM": 17.999999999999996,
+      "centroid": {
+        "x": 2.6499999999999995,
+        "y": 2.15
+      },
+      "heightM": 2.7,
+      "volumeM3": 53.999999999999986,
+      "designLoadW": 1889.9999999999995,
+      "systemType": "radiator",
+      "supplyPoints": 1,
+      "returnPoints": 1,
+      "usage": ""
+    }
+  ],
+  "openings": [],
+  "hvacSystems": [],
+  "installations": [],
+  "plenums": [],
+  "pillars": [],
+  "ducts": [],
+  "ductedDrafts": [],
+  "heatPumpDrafts": [],
+  "equipmentDrafts": [],
+  "fanCoils": [],
+  "hydronicSystems": [],
+  "radiators": [
+    {
+      "id": "7d9b548a-bb4b-4caf-b718-8d33bf03d47f",
+      "roomId": "a344c2b8-ee9f-4f26-9d93-56c0f970ef62",
+      "floorId": "abe7fbcc-6d04-4a03-86ae-ae6a33e21f60",
+      "wallId": "2870f0fe-0326-4f65-be9d-f9c0783935ca",
+      "position": {
+        "x": 0.81,
+        "y": 0.2175000000000003
+      },
+      "rotation": -7.216449660063519e-17,
+      "widthMm": 1120,
+      "heightMm": 690,
+      "depthMm": 95,
+      "productId": "global-vip-600",
+      "catalogVersion": "2026-10-03-global-1c10523537ee",
+      "elements": 14,
+      "outputW": 1988,
+      "deltaTK": 50,
+      "family": "VIP",
+      "manufacturer": "Global",
+      "locked": false
+    }
+  ],
+  "airTerminals": [],
+  "projectSettings": {
+    "radiatorDeltaTK": 50,
+    "defaultHeightM": 2.7,
+    "internalWallThicknessM": 0.1,
+    "externalWallThicknessM": 0.3,
+    "coefficientWm3": 35,
+    "maxNoiseDbA": 37,
+    "dimensionMode": "internal"
+  },
+  "catalogVersions": {
+    "Global": "2026-10-03-global-1c10523537ee"
+  },
+  "sourceFilesMetadata": []
+}
