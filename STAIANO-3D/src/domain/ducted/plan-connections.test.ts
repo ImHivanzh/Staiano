@@ -145,6 +145,41 @@ it("links a heat pump to a ducted indoor draft and retains its served rooms whil
   expect(projectSchema.safeParse(project).success).toBe(true);
 });
 
+it("keeps a terminal that needs reconfiguration reachable before it is connected", () => {
+  let project = ensureInstallations(guidedProjectFixture());
+  const system = project.hvacSystems[0];
+  project = saveTerminalOnPlan(
+    project,
+    {
+      ...guidedTerminalPoint(),
+      color: "RAL9016",
+      roomId: project.rooms[0].id,
+      installationId: system.installationId,
+      systemId: system.id,
+      use: "supply",
+      mounting: "ceiling",
+      lengthMm: 1000,
+    },
+    { x: 4, y: 2 },
+  );
+  const id = project.airTerminals.at(-1)!.id;
+  project = {
+    ...project,
+    airTerminals: project.airTerminals.map((t) =>
+      t.id === id ? { ...t, systemId: null, pendingMachineId: undefined } : t,
+    ),
+  };
+  expect(configurationBlock(project, id)).toMatch(/Collega prima la bocchetta/);
+  // Connecting it fails until it is reconfigured, so it must be configurable.
+  project = {
+    ...project,
+    airTerminals: project.airTerminals.map((t) =>
+      t.id === id ? { ...t, legacyUnverified: true } : t,
+    ),
+  };
+  expect(configurationBlock(project, id)).toBeNull();
+});
+
 it("rejects missing targets and connections across floors", () => {
   const project = fixture();
   const [machine, terminal] = project.ductedDrafts!;

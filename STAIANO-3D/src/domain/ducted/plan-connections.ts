@@ -2,6 +2,7 @@ import type { Project } from "@/schemas/project";
 import { assignInstallationRooms } from "../installations";
 import { indoorRoute } from "../geometry/indoor-route";
 import { linearRunMembers } from "../air-terminals/linear-run";
+import { needsTerminalReconfiguration } from "../air-terminals/legacy";
 
 export function connectedRoomIds(project: Project, machineId: string) {
   return [
@@ -100,6 +101,9 @@ export function configurationBlock(
       : "Collega prima le bocchette alla macchina per determinare gli ambienti serviti.";
   const terminal = project.airTerminals.find((t) => t.id === id);
   if (draft?.kind === "terminal" || terminal) {
+    // Connecting a terminal that needs reconfiguration fails until it is
+    // reconfigured, so it must stay reachable even before it has a machine.
+    if (terminal && needsTerminalReconfiguration(terminal)) return null;
     const owner =
       draft?.machineId ?? terminal?.systemId ?? terminal?.pendingMachineId;
     return owner &&
