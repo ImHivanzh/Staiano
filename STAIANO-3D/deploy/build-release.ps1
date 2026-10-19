@@ -6,7 +6,7 @@
 #   compila.bat nopublish       compila e collauda senza pubblicare
 #
 # Richiede: Node 24.14.0 su Windows x64, albero di lavoro pulito e HEAD uguale a
-# origin/main (lo script fa il push se serve). I segreti GITHUB_TOKEN e
+# origin/main (lo script fa il push se serve). I segreti CODEBERG_TOKEN e
 # LICENSE_PUBLISH_TOKEN si leggono da .env.local (escluso dal repository).
 param(
   [Parameter(ValueFromRemainingArguments = $true)]
@@ -76,7 +76,7 @@ Write-Step 'Manifest dei documenti tecnici'
 Invoke-Native $node @('scripts/catalog-sources.mjs', 'check')
 
 # 3. Il pacchetto deve corrispondere al ramo main pubblicato: allinea e, se serve, pubblica i commit.
-Write-Step 'Allineamento con GitHub'
+Write-Step 'Allineamento con Codeberg'
 Invoke-Native $git @('fetch', 'origin', 'main')
 $head = (& $git rev-parse HEAD).Trim()
 $remote = (& $git rev-parse origin/main).Trim()
@@ -86,7 +86,7 @@ if ($head -ne $remote) {
     Write-Fail 'main locale e origin/main sono divergenti: esegui git pull e riprova.'
   }
   $pending = @(& $git log --oneline "$remote..$head")
-  Write-Host "commit da pubblicare su GitHub: $($pending.Count)"
+  Write-Host "commit da pubblicare su Codeberg: $($pending.Count)"
   Invoke-Native $git @('push', 'origin', 'main')
   $remote = (& $git rev-parse origin/main).Trim()
 }
@@ -138,7 +138,7 @@ if ($reported -ne $release.buildId) {
 }
 Write-Host "build $($release.buildId) verificata"
 
-# 8. Pubblicazione: release immutabile GitHub + registrazione sul Worker.
+# 8. Pubblicazione: release immutabile Codeberg + registrazione sul Worker.
 if ($skipPublish) {
   Write-Step 'Pubblicazione'
   Write-Host 'saltata (nopublish)'

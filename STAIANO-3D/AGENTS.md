@@ -23,7 +23,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Licenza
 
 - Il Worker `licenses` è universale: le licenze includono `productId`; per questa app usare `staiano-hvac`. Le chiavi `LIC-` e le storiche `STAIANO-` sono compatibili. Protocollo: `license-server/INTEGRATION.md`.
-- Pubblicazione: `compila.bat` nella radice del progetto compila, collauda e pubblica il pacchetto (fa il push su GitHub se servono commit; `installa` lo installa anche qui, `nopublish` prova senza pubblicare). Richiede albero pulito, Node 24.14.0 e `GITHUB_TOKEN` + `LICENSE_PUBLISH_TOKEN` in `.env.local`. Il workflow in `deploy/ci/` resta un'alternativa non usata.
+- Pubblicazione: `compila.bat` nella radice del progetto compila, collauda e pubblica il pacchetto (fa il push su Codeberg se servono commit; `installa` lo installa anche qui, `nopublish` prova senza pubblicare). Richiede albero pulito, Node 24.14.0 e `CODEBERG_TOKEN` + `LICENSE_PUBLISH_TOKEN` in `.env.local`. Il workflow in `deploy/ci/` resta un'alternativa non usata.
 - Quando è installato, il programma gira come EXE: il record effettivo è `C:\local-software\StaianoHVAC\application\data\.cache\production-server.json`; verificare anche `X-Staiano-Build` sulla porta 3015. Il repository resta una copia di sviluppo, non è necessario al programma installato.
 - Il pannello supporta passkey WebAuthn. La prima registrazione richiede accesso amministratore esistente e conferma dell'autenticatore da parte dell'utente. Non creare passkey amministrative sintetiche in produzione; usare autenticatore virtuale solo nei test locali.
 
@@ -31,7 +31,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Il server è il Worker Cloudflare **https://licenses.ivanbuonocore.dev** (codice in `license-server/`, dati in D1 `licenses`); chiavi e token stanno in `.cache/`, la chiave privata vive solo come segreto del Worker.
 - `deploy/start-production.ps1` riavvia il processo solo se la build è più recente del processo in ascolto: dopo una modifica alle sole variabili d’ambiente occorre ricompilare nella directory alternativa (o usare `deploy/update-project.ps1 -SkipPull`, che però esegue anche `npm ci` e richiede privilegi elevati).
 
-## Repository GitHub
+## Repository Codeberg
 
-- Repository canonico: https://github.com/ImHivanzh/Staiano, ramo `main`, progetto nella sottocartella `STAIANO-3D/`. Eseguire npm e gli script da questa sottocartella. Codeberg conserva soltanto i vecchi pacchetti.
-- Pubblicazione EXE: `compila.bat`; accesso GitHub tramite Git Credential Manager oppure `GITHUB_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.
+- Repository canonico: https://codeberg.org/AvocadoOra/Staiano-3D, ramo `main`, progetto nella sottocartella `STAIANO-3D/`. Eseguire npm e gli script da questa sottocartella. GitHub resta sospeso e non viene usato per la distribuzione.
+- Pubblicazione EXE: `compila.bat`; accesso Codeberg tramite Git Credential Manager oppure `CODEBERG_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.

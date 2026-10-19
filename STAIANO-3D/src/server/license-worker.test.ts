@@ -389,12 +389,13 @@ describe("Worker licenze — revoca e amministrazione", () => {
 });
 
 describe("Worker licenze — regressioni e pannello", () => {
-  it("accetta pacchetti solo dal publisher e dalla revisione corrente di GitHub", async () => {
+  it("accetta pacchetti solo dal publisher e dalla revisione corrente di Codeberg", async () => {
     env.PUBLISH_TOKEN = "publisher-di-prova";
+    env.CODEBERG_READ_TOKEN = "read-only-di-prova";
     const commit = "c".repeat(40);
     const fetchHead = vi.fn().mockImplementation(
       async () =>
-        new Response(JSON.stringify({ commit: { sha: commit } }), {
+        new Response(JSON.stringify({ commit: { id: commit } }), {
           headers: { "Content-Type": "application/json" },
         }),
     );
@@ -403,7 +404,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       commit,
       sha256: "d".repeat(64),
       size: 10,
-      url: `https://github.com/ImHivanzh/Staiano/releases/download/exe-${commit}/StaianoHVAC.exe`,
+      url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`,
     };
     expect((await call(env, "/publish", { method: "POST", body })).status).toBe(
       401,
@@ -416,7 +417,7 @@ describe("Worker licenze — regressioni e pannello", () => {
           body: {
             ...body,
             commit: "b".repeat(40),
-            url: `https://github.com/ImHivanzh/Staiano/releases/download/exe-${"b".repeat(40)}/StaianoHVAC.exe`,
+            url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${"b".repeat(40)}/StaianoHVAC.exe`,
           },
         })
       ).status,
@@ -431,12 +432,9 @@ describe("Worker licenze — regressioni e pannello", () => {
       ).status,
     ).toBe(200);
     expect(fetchHead).toHaveBeenCalledWith(
-      "https://api.github.com/repos/ImHivanzh/Staiano/branches/main",
+      "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D/branches/main",
       expect.objectContaining({
-        headers: {
-          "User-Agent": "Staiano-licenses",
-          Accept: "application/vnd.github+json",
-        },
+        headers: { Authorization: "token read-only-di-prova" },
         redirect: "manual",
       }),
     );
@@ -445,8 +443,9 @@ describe("Worker licenze — regressioni e pannello", () => {
     });
     expect(await status.json()).toMatchObject({ commit });
   });
-  it("rifiuta redirect e revisioni GitHub inaccessibili prima di registrare un pacchetto", async () => {
+  it("rifiuta redirect e revisioni Codeberg inaccessibili prima di registrare un pacchetto", async () => {
     env.PUBLISH_TOKEN = "publisher-di-prova";
+    env.CODEBERG_READ_TOKEN = "read-only-di-prova";
     const commit = "c".repeat(40);
     const fetchHead = vi.fn().mockImplementation(async (_url, init) => {
       if (init.redirect !== "manual")
@@ -461,7 +460,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       commit,
       sha256: "d".repeat(64),
       size: 10,
-      url: `https://github.com/ImHivanzh/Staiano/releases/download/exe-${commit}/StaianoHVAC.exe`,
+      url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`,
     };
     expect(
       (

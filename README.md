@@ -2,4 +2,4 @@
 
 Progetto HVAC: [STAIANO-3D](STAIANO-3D/README.md).
 
-Eseguire npm e compila.bat dalla cartella STAIANO-3D. I pacchetti Windows sono nelle Releases di questo repository.
+Repository e aggiornamenti: https://codeberg.org/AvocadoOra/Staiano-3D. Eseguire npm e compila.bat dalla cartella STAIANO-3D. I pacchetti Windows sono nelle release Codeberg.

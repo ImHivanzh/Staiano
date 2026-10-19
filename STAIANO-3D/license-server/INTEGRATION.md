@@ -71,7 +71,7 @@ licenza e resta escluso dal vincolo di versione degli EXE. I client precedenti,
 che non inviano il campo, restano soggetti al controllo della revisione.
 
 Distribuzione della prima versione con questo controllo: pubblicare prima il
-pacchetto compatibile su GitHub e registrarlo nel canale aggiornamenti, poi
+pacchetto compatibile su Codeberg e registrarlo nel canale aggiornamenti, poi
 distribuire il Worker che impone la revisione corrente. I client precedenti
 recepiscono il rifiuto al successivo controllo della licenza; non è possibile
 modificare retroattivamente il loro codice di avvio o la cache offline.

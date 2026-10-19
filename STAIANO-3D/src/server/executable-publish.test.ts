@@ -9,8 +9,8 @@ afterEach(() => {
   vi.resetModules();
 });
 
-it("carica il nuovo EXE come allegato binario GitHub e registra il suo hash", async () => {
-  const bytes = Buffer.from("github-exe"),
+it("carica il nuovo EXE come allegato Codeberg e registra il suo hash", async () => {
+  const bytes = Buffer.from("codeberg-exe"),
     commit = "e".repeat(40);
   const sha256 = createHash("sha256").update(bytes).digest("hex");
   read.mockImplementation(async (file: string) =>
@@ -18,7 +18,7 @@ it("carica il nuovo EXE come allegato binario GitHub e registra il suo hash", as
       ? JSON.stringify({ dirty: false, commit, size: bytes.length, sha256 })
       : bytes,
   );
-  vi.stubEnv("GITHUB_TOKEN", "repo-token-di-prova");
+  vi.stubEnv("CODEBERG_TOKEN", "repo-token-di-prova");
   vi.stubEnv("LICENSE_PUBLISH_TOKEN", "publisher-di-prova");
   const json = (value: unknown, status = 200) =>
     new Response(JSON.stringify(value), {
@@ -28,17 +28,12 @@ it("carica il nuovo EXE come allegato binario GitHub e registra il suo hash", as
   const fetchMock = vi.fn().mockImplementation(async (input: string | URL) => {
     const url = String(input);
     if (url.endsWith(`/releases/tags/exe-${commit}`)) return json({}, 404);
-    if (url === "https://api.github.com/repos/ImHivanzh/Staiano/releases")
-      return json(
-        {
-          id: 8,
-          upload_url:
-            "https://uploads.github.com/repos/ImHivanzh/Staiano/releases/8/assets{?name,label}",
-        },
-        201,
-      );
+    if (
+      url === "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D/releases"
+    )
+      return json({ id: 8 }, 201);
     if (url.endsWith("/releases/8/assets")) return json([]);
-    if (url.startsWith("https://uploads.github.com/"))
+    if (url.endsWith("/releases/8/assets?name=StaianoHVAC.exe"))
       return json({ state: "uploaded" }, 201);
     if (url === "https://licenses.ivanbuonocore.dev/publish")
       return json({ status: "published" });
@@ -49,21 +44,24 @@ it("carica il nuovo EXE come allegato binario GitHub e registra il suo hash", as
   // @ts-expect-error JavaScript CLI entry point, isolated filesystem and network.
   await import("../../scripts/publish-executable.mjs");
   const upload = fetchMock.mock.calls.find(([url]) =>
-    String(url).startsWith("https://uploads.github.com/"),
+    String(url).endsWith("/releases/8/assets?name=StaianoHVAC.exe"),
   );
   expect(upload?.[1]).toMatchObject({
     method: "POST",
-    body: bytes,
-    headers: { "Content-Type": "application/octet-stream" },
+    body: expect.any(FormData),
+    headers: { Authorization: "token repo-token-di-prova" },
     redirect: "error",
   });
+  const attachment = (upload?.[1].body as FormData).get("attachment") as File;
+  expect(attachment.name).toBe("StaianoHVAC.exe");
+  expect(Buffer.from(await attachment.arrayBuffer())).toEqual(bytes);
   const registration = fetchMock.mock.calls.find(
     ([url]) => url === "https://licenses.ivanbuonocore.dev/publish",
   );
   expect(JSON.parse(registration?.[1].body)).toMatchObject({
     commit,
     sha256,
-    url: `https://github.com/ImHivanzh/Staiano/releases/download/exe-${commit}/StaianoHVAC.exe`,
+    url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`,
   });
 });
 
@@ -81,7 +79,7 @@ it("un tentativo ripetuto registra l'hash del pacchetto immutabile già caricato
         })
       : local,
   );
-  vi.stubEnv("GITHUB_TOKEN", "repo-token-di-prova");
+  vi.stubEnv("CODEBERG_TOKEN", "repo-token-di-prova");
   vi.stubEnv("LICENSE_PUBLISH_TOKEN", "publisher-di-prova");
   const json = (value: unknown) =>
     new Response(JSON.stringify(value), {
@@ -94,12 +92,12 @@ it("un tentativo ripetuto registra l'hash del pacchetto immutabile già caricato
         {
           name: "StaianoHVAC.exe",
           size: published.length,
-          digest: `sha256:${createHash("sha256").update(published).digest("hex")}`,
+          browser_download_url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`,
         },
       ]);
     if (
       url ===
-      `https://github.com/ImHivanzh/Staiano/releases/download/exe-${commit}/StaianoHVAC.exe`
+      `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`
     )
       return new Response(published);
     if (url === "https://licenses.ivanbuonocore.dev/publish")

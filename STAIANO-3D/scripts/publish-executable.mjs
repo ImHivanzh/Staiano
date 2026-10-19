@@ -21,11 +21,12 @@ const readEnvFile = async () => {
 };
 await readEnvFile();
 
-let token = process.env.GITHUB_TOKEN;
+let token = process.env.CODEBERG_TOKEN;
 if (!token) {
   try {
     const credentials = execFileSync("git", ["credential", "fill"], {
-      input: "protocol=https\nhost=github.com\n\n",
+      input:
+        "protocol=https\nhost=codeberg.org\npath=AvocadoOra/Staiano-3D.git\nusername=AvocadoOra\n\n",
       encoding: "utf8",
       stdio: ["pipe", "pipe", "pipe"],
       env: {
@@ -39,13 +40,13 @@ if (!token) {
       .find((line) => line.startsWith("password="))
       ?.slice(9);
   } catch {
-    /* GitHub authentication is reported below without exposing credentials. */
+    /* Authentication is reported below without exposing credentials. */
   }
 }
 const publisher = process.env.LICENSE_PUBLISH_TOKEN;
 if (!token || !publisher)
   throw new Error(
-    "Servono accesso GitHub tramite Git Credential Manager (oppure GITHUB_TOKEN con Contents:write) e LICENSE_PUBLISH_TOKEN in .env.local.",
+    "Servono accesso Codeberg tramite Git Credential Manager oppure CODEBERG_TOKEN (write:repository), e LICENSE_PUBLISH_TOKEN (valore del segreto PUBLISH_TOKEN del Worker), anche in .env.local.",
   );
 const metadata = JSON.parse(await readFile("dist-exe/release.json", "utf8"));
 if (metadata.dirty)
@@ -58,16 +59,11 @@ if (
   createHash("sha256").update(bytes).digest("hex") !== metadata.sha256
 )
   throw new Error("Il pacchetto differisce dalla build.");
-const base = "https://api.github.com/repos/ImHivanzh/Staiano";
+const base = "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D";
 async function request(path, init = {}) {
   return fetch(`${base}${path}`, {
     ...init,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "User-Agent": "Staiano-release",
-      Accept: "application/vnd.github+json",
-      ...init.headers,
-    },
+    headers: { Authorization: `token ${token}`, ...init.headers },
     redirect: "error",
     signal: AbortSignal.timeout(300000),
   });
@@ -88,7 +84,7 @@ if (response.status === 404)
     }),
   });
 if (!response.ok)
-  throw new Error(`Creazione release GitHub: HTTP ${response.status}.`);
+  throw new Error(`Creazione release Codeberg: HTTP ${response.status}.`);
 const release = await response.json();
 const assetsResponse = await request(`/releases/${release.id}/assets`);
 if (!assetsResponse.ok)
@@ -96,41 +92,22 @@ if (!assetsResponse.ok)
 const assets = await assetsResponse.json();
 const existing = assets.find((asset) => asset.name === "StaianoHVAC.exe");
 if (!existing) {
-  const uploadUrl = new URL(release.upload_url.split("{")[0]);
-  if (
-    uploadUrl.origin !== "https://uploads.github.com" ||
-    !uploadUrl.pathname.startsWith("/repos/ImHivanzh/Staiano/releases/")
-  )
-    throw new Error("Destinazione upload GitHub non valida.");
-  uploadUrl.searchParams.set("name", "StaianoHVAC.exe");
-  const upload = await fetch(uploadUrl, {
-    method: "POST",
-    body: bytes,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/octet-stream",
-      "User-Agent": "Staiano-release",
-    },
-    redirect: "error",
-    signal: AbortSignal.timeout(300000),
-  });
+  const form = new FormData();
+  form.append("attachment", new Blob([bytes]), "StaianoHVAC.exe");
+  const upload = await request(
+    `/releases/${release.id}/assets?name=StaianoHVAC.exe`,
+    { method: "POST", body: form },
+  );
   if (!upload.ok) throw new Error(`Caricamento EXE: HTTP ${upload.status}.`);
 } else {
-  // A retry reuses the immutable published binary, even if the local rebuild differs.
-  let url = `https://github.com/ImHivanzh/Staiano/releases/download/${tag}/StaianoHVAC.exe`;
+  // A retry can produce a different binary for the same commit: publish the immutable asset already uploaded.
+  let url = existing.browser_download_url;
   let downloaded = false;
   for (let attempt = 0; attempt < 4; attempt++) {
-    const target = new URL(url);
-    if (
-      target.protocol !== "https:" ||
-      ![
-        "github.com",
-        "release-assets.githubusercontent.com",
-        "objects.githubusercontent.com",
-      ].includes(target.hostname)
-    )
+    if (new URL(url).origin !== "https://codeberg.org")
       throw new Error("Destinazione allegato non consentita.");
     const artifact = await fetch(url, {
+      headers: { Authorization: `token ${token}` },
       redirect: "manual",
       signal: AbortSignal.timeout(300000),
     });
@@ -146,14 +123,8 @@ if (!existing) {
         `Lettura pacchetto già pubblicato: HTTP ${artifact.status}.`,
       );
     bytes = Buffer.from(await artifact.arrayBuffer());
-    if (
-      bytes.length !== existing.size ||
-      bytes.length > 536870912 ||
-      (existing.digest &&
-        existing.digest !==
-          `sha256:${createHash("sha256").update(bytes).digest("hex")}`)
-    )
-      throw new Error("Pacchetto pubblicato non verificato.");
+    if (bytes.length !== existing.size || bytes.length > 536870912)
+      throw new Error("Dimensione allegato non valida.");
     downloaded = true;
     break;
   }
@@ -170,7 +141,7 @@ response = await fetch("https://licenses.ivanbuonocore.dev/publish", {
     commit: metadata.commit,
     sha256: publishedHash,
     size: bytes.length,
-    url: `https://github.com/ImHivanzh/Staiano/releases/download/${tag}/StaianoHVAC.exe`,
+    url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/${tag}/StaianoHVAC.exe`,
   }),
   redirect: "error",
   signal: AbortSignal.timeout(30000),

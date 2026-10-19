@@ -1,6 +1,6 @@
 # Staiano HVAC
 
-Repository canonico: [ImHivanzh/Staiano](https://github.com/ImHivanzh/Staiano), cartella `STAIANO-3D/`. Eseguire i comandi e gli script da questa cartella. I nuovi pacchetti EXE vengono pubblicati nelle Releases GitHub.
+Repository canonico: [AvocadoOra/Staiano-3D](https://codeberg.org/AvocadoOra/Staiano-3D), cartella `STAIANO-3D/`. Eseguire i comandi e gli script da questa cartella. I nuovi pacchetti EXE vengono pubblicati nelle Releases Codeberg.
 
 Per presentare il progetto sulla TV collegata al PC, usare **Apri vista cliente**
 nella barra della vista. Spostare la nuova finestra sullo schermo TV e premere
@@ -18,7 +18,7 @@ sul dispositivo; non è richiesto un account cloud.
 
 ### Aggiornare il server dopo lo sviluppo su un altro PC
 
-Sul PC di sviluppo eseguire commit e push su GitHub. Sul PC del server
+Sul PC di sviluppo eseguire commit e push su Codeberg. Sul PC del server
 avviare `aggiorna.bat` nella copia del progetto: scarica il ramo corrente con
 `git pull --ff-only`, reinstalla le dipendenze, verifica TypeScript, compila
 nella directory alternativa e riavvia l’attività Windows `Staiano HVAC`.
@@ -32,7 +32,7 @@ Per ricompilare senza scaricare: `powershell -File deploy/update-project.ps1 -Sk
 dalla copia di sviluppo, mai dal pacchetto installato.
 Per produrre il pacchetto EXE e pubblicarlo sul canale aggiornamenti: `compila.bat`
 nella radice del progetto (con `installa` lo installa anche su questa postazione).
-Git e Node.js >=22.13.0 devono essere installati; l’accesso GitHub deve essere
+Git e Node.js >=22.13.0 devono essere installati; l’accesso Codeberg deve essere
 già configurato. Senza attività Windows, avvia il server locale in background.
 Autenticazione, progetti locali e configurazione HTTPS non vengono trasferiti
 da Git. Su un PC nuovo configurare l’accesso come descritto sotto; per il parser

@@ -662,27 +662,26 @@ async function publishRelease(env: Env, request: Request): Promise<Response> {
     !/^[a-f0-9]{40}$/.test(commit) ||
     !/^[a-f0-9]{64}$/.test(sha256) ||
     url !==
-      `https://github.com/ImHivanzh/Staiano/releases/download/exe-${commit}/StaianoHVAC.exe` ||
+      `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe` ||
     typeof body.size !== "number" ||
     !Number.isSafeInteger(body.size) ||
     body.size < 1 ||
     body.size > 536_870_912
   )
     return json({ message: "Pacchetto di aggiornamento non valido." }, 400);
+  if (!env.CODEBERG_READ_TOKEN)
+    return json({ message: "Accesso alle build non configurato." }, 503);
   const head = await fetch(
-    "https://api.github.com/repos/ImHivanzh/Staiano/branches/main",
+    "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D/branches/main",
     {
-      headers: {
-        "User-Agent": "Staiano-licenses",
-        Accept: "application/vnd.github+json",
-      },
+      headers: { Authorization: `token ${env.CODEBERG_READ_TOKEN}` },
       redirect: "manual",
       signal: AbortSignal.timeout(10_000),
     },
   );
-  if (!head.ok) return json({ message: "GitHub non raggiungibile." }, 503);
-  const branch = (await head.json()) as { commit?: { sha?: string } };
-  if (branch.commit?.sha !== commit)
+  if (!head.ok) return json({ message: "Codeberg non raggiungibile." }, 503);
+  const branch = (await head.json()) as { commit?: { id?: string } };
+  if (branch.commit?.id !== commit)
     return json(
       { message: "La build non corrisponde alla revisione corrente di main." },
       409,
