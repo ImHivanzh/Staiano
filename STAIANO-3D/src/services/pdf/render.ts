@@ -38,12 +38,21 @@ export type DossierRenderOptions = {
   renderImages?: readonly ProjectPanorama[];
 };
 
-const blue = rgb(0.212, 0.353, 0.659),
-  cyan = rgb(0, 0.682, 0.937),
-  green = rgb(0.329, 0.729, 0.318);
-const ink = rgb(0.12, 0.16, 0.22),
-  muted = rgb(0.38, 0.43, 0.49),
-  pale = rgb(0.94, 0.96, 0.98);
+const navy = rgb(0.094, 0.196, 0.286),
+  blue = rgb(0.212, 0.353, 0.659),
+  cyan = rgb(0.412, 0.792, 0.98),
+  green = rgb(0.184, 0.49, 0.235),
+  amber = rgb(0.706, 0.325, 0.035),
+  red = rgb(0.776, 0.157, 0.157);
+const ink = navy,
+  muted = rgb(0.318, 0.4, 0.475),
+  faint = rgb(0.478, 0.545, 0.616),
+  line = rgb(0.875, 0.902, 0.929),
+  lineStrong = rgb(0.729, 0.784, 0.839),
+  pale = rgb(0.941, 0.961, 0.98),
+  paper2 = rgb(0.957, 0.969, 0.98),
+  white = rgb(1, 1, 1),
+  navText = rgb(0.733, 0.812, 0.875);
 const n = (v: number, decimals = 2) =>
   new Intl.NumberFormat("it-IT", { maximumFractionDigits: decimals }).format(v);
 // Le quantita restano leggibili: unita al singolare e pezzi raggruppati a parte.
@@ -89,6 +98,8 @@ export async function renderDossierPdf(
     font = await doc.embedFont(StandardFonts.Helvetica),
     bold = await doc.embedFont(StandardFonts.HelveticaBold);
   const date = options.generatedAt ?? new Date();
+  const variantLabel =
+    options.variant === "summary" ? "Dossier sintetico" : "Dossier tecnico";
   doc.setTitle(
     `Dossier ${options.variant === "summary" ? "sintetico" : "tecnico"} - ${p.name}`,
   );
@@ -96,8 +107,10 @@ export async function renderDossierPdf(
   doc.setSubject("Configurazione HVAC e dimensionamento convenzionale");
   doc.setCreationDate(date);
   let page!: PDFPage,
+    coverPage: PDFPage | null = null,
+    sectionTitle = "",
     y = 0;
-  const margin = 42,
+  const margin = 46,
     width = 595.28,
     height = 841.89,
     usable = width - margin * 2;
@@ -136,98 +149,272 @@ export async function renderDossierPdf(
     if (line) lines.push(line);
     return lines.length ? lines : [""];
   };
+  const trackedWidth = (s: string, size: number, f: PDFFont, spacing: number) => {
+    const gap = Math.min(spacing, 0.8);
+    return [...safe(s)].reduce(
+      (sum, ch, index) =>
+        sum + f.widthOfTextAtSize(ch, size) + (index ? gap : 0),
+      0,
+    );
+  };
+  const tracked = (
+    s: string,
+    x: number,
+    yy: number,
+    size: number,
+    f: PDFFont,
+    color: ReturnType<typeof rgb>,
+    spacing = 1.2,
+  ) => {
+    let cursor = x;
+    // Oltre ~0,8pt l'estrazione testo separa le lettere: teniamo la spaziatura leggibile.
+    const gap = Math.min(spacing, 0.8);
+    for (const ch of [...safe(s)]) {
+      txt(ch, cursor, yy, size, f, color);
+      cursor += f.widthOfTextAtSize(ch, size) + gap;
+    }
+  };
+  const statusTone = (value: string) => {
+    const v = value.trim();
+    if (
+      /^(OK|sufficiente|verificata|verificato|documentato|entro criterio|conforme)$/i.test(
+        v,
+      )
+    )
+      return { color: green, strong: true };
+    if (/^(DEFICIT)$/i.test(v)) return { color: red, strong: true };
+    if (/^(AVVISO|WARNING)$/i.test(v)) return { color: amber, strong: true };
+    if (/^(ERRORE|NON VALIDABILE)$/i.test(v))
+      return { color: red, strong: true };
+    if (
+      /^(NON VERIFICATO|NON VERIFICATA|DA VERIFICARE|Da verificare|Da completare|Da quotare|oltre criterio|non pubblicato|n\.d\.|non scelto|non scelta|non collegato|proposto)$/.test(
+        v,
+      )
+    )
+      return { color: amber, strong: false };
+    return null;
+  };
+  const continuationTitle = () =>
+    `${sectionTitle.replace(/ - seguito$/, "") || "Dossier tecnico"} - seguito`;
   const newPage = (title: string) => {
     page = doc.addPage([width, height]);
-    y = height - 46;
-    txt("STAIANO / DOSSIER TECNICO HVAC", margin, y, 9, bold, blue);
-    y -= 29;
-    for (const line of wrap(title, usable, 20, bold)) {
-      txt(line, margin, y, 20, bold);
-      y -= 25;
+    sectionTitle = title;
+    tracked("STAIANO HVAC", margin, height - 37, 6.8, bold, blue, 1.1);
+    tracked(
+      variantLabel.toUpperCase(),
+      width - margin - trackedWidth(variantLabel.toUpperCase(), 6.8, bold, 1.1),
+      height - 37,
+      6.8,
+      bold,
+      muted,
+      1.1,
+    );
+    page.drawLine({
+      start: { x: margin, y: height - 48 },
+      end: { x: width - margin, y: height - 48 },
+      color: line,
+      thickness: 0.6,
+    });
+    y = height - 81;
+    for (const line of wrap(title, usable, 19, bold)) {
+      txt(line, margin, y, 19, bold, navy);
+      y -= 23;
     }
-    y -= 1;
+    y -= 9;
   };
-  const ensure = (needed: number, title = "Dossier tecnico - seguito") => {
-    if (y - needed < 55) newPage(title);
+  const ensure = (needed: number, title = continuationTitle()) => {
+    if (y - needed < 68) newPage(title);
   };
-  const paragraph = (s: string, size = 10, color = ink) => {
+  const paragraph = (s: string, size = 9.5, color = ink) => {
+    const lead = size * 1.5;
     for (const line of wrap(s, usable, size)) {
-      ensure(size + 5);
+      ensure(lead + 2);
       txt(line, margin, y, size, font, color);
-      y -= size + 5;
+      y -= lead;
     }
-    y -= 8;
+    y -= 9;
   };
   const heading = (s: string) => {
-    ensure(45);
-    y -= 8;
-    txt(s, margin, y, 13, bold, blue);
-    y -= 22;
+    ensure(52);
+    y -= 18;
+    const lines = wrap(s, usable, 12.5, bold);
+    lines.forEach((line, index) =>
+      txt(line, margin, y - index * 15.5, 12.5, bold, navy),
+    );
+    y -= (lines.length - 1) * 15.5;
+    const ruleY = y - 7;
+    page.drawLine({
+      start: { x: margin, y: ruleY },
+      end: { x: width - margin, y: ruleY },
+      color: line,
+      thickness: 0.6,
+    });
+    page.drawLine({
+      start: { x: margin, y: ruleY },
+      end: { x: margin + 42, y: ruleY },
+      color: cyan,
+      thickness: 1.8,
+    });
+    y = ruleY - 17;
   };
   const table = (headers: string[], rows: string[][], fractions: number[]) => {
     const col = fractions.map((v) => v * usable),
+      headerSize = 7.8,
+      bodySize = 8.7,
+      lead = 11.4,
+      numeric = headers.map((_, index) => {
+        if (index === 0) return false;
+        const values = rows
+            .map((row) => (row[index] ?? "").trim())
+            .filter(Boolean),
+          unit =
+            "(?:m²|m³|m|mm|cm|kW|W|Pa|dB\\(A\\)|dB|h|%|K|kg|°C|EUR|BTU\\/h|m³\\/h)",
+          token = `[+\\-−]?\\d[\\d.,]*(?:\\s*${unit})?`,
+          pattern = new RegExp(`^${token}(?:\\s*\\/\\s*${token})?$`);
+        return values.length > 0 && values.every((v) => pattern.test(v));
+      }),
       drawHeader = () => {
         const hh =
           Math.max(
-            ...headers.map((h, i) => wrap(h, col[i] - 12, 9, bold).length),
+            ...headers.map(
+              (h, i) => wrap(h, col[i] - 10, headerSize, bold).length,
+            ),
           ) *
-            12 +
-          12;
+            10.5 +
+          11;
         ensure(hh + 30);
-        page.drawRectangle({
-          x: margin,
-          y: y - hh + 6,
-          width: usable,
-          height: hh,
-          color: blue,
-        });
         let x = margin;
         headers.forEach((h, i) => {
-          wrap(h, col[i] - 12, 9, bold).forEach((l, k) =>
-            txt(l, x + 6, y - 9 - k * 12, 9, bold, rgb(1, 1, 1)),
+          wrap(h, col[i] - 10, headerSize, bold).forEach((label, k) =>
+            txt(label, x, y - 8 - k * 10.5, headerSize, bold, blue),
           );
           x += col[i];
         });
-        y -= hh + 2;
+        page.drawLine({
+          start: { x: margin, y: y - hh + 2 },
+          end: { x: margin + usable, y: y - hh + 2 },
+          color: blue,
+          thickness: 0.8,
+        });
+        y -= hh + 1;
       };
     drawHeader();
-    rows.forEach((row, index) => {
-      const lines = row.map((s, i) => wrap(s, col[i] - 12, 9));
+    rows.forEach((row) => {
+      const lines = row.map((s, i) => wrap(s, col[i] - 10, bodySize));
       const count = Math.max(...lines.map((l) => l.length));
       let offset = 0;
       while (offset < count) {
-        let available = Math.floor((y - 67) / 12);
+        let available = Math.floor((y - 70) / lead);
         if (
           available < 1 ||
           (offset === 0 && count <= 40 && count > available)
         ) {
-          newPage("Dossier tecnico - seguito");
+          newPage(continuationTitle());
           drawHeader();
-          available = Math.floor((y - 67) / 12);
+          available = Math.floor((y - 70) / lead);
         }
         const take = Math.min(count - offset, available),
-          hh = take * 12 + 12;
-        if (index % 2 === 0)
-          page.drawRectangle({
-            x: margin,
-            y: y - hh + 6,
-            width: usable,
-            height: hh,
-            color: pale,
-          });
+          hh = take * lead + 11;
         let x = margin;
         lines.forEach((ll, i) => {
-          ll.slice(offset, offset + take).forEach((l, k) =>
-            txt(l, x + 6, y - 9 - k * 12, 9),
-          );
+          ll.slice(offset, offset + take).forEach((text, k) => {
+            const tone = statusTone(text),
+              f = tone?.strong ? bold : font,
+              color = tone?.color ?? ink,
+              drawX = numeric[i]
+                ? x + col[i] - 10 - f.widthOfTextAtSize(safe(text), bodySize)
+                : x;
+            txt(text, drawX, y - 5 - k * lead, bodySize, f, color);
+          });
           x += col[i];
+        });
+        page.drawLine({
+          start: { x: margin, y: y - hh + 3 },
+          end: { x: margin + usable, y: y - hh + 3 },
+          color: line,
+          thickness: 0.4,
         });
         y -= hh;
         offset += take;
       }
     });
-    y -= 14;
+    y -= 16;
   };
+  const notice = (
+    title: string,
+    body: string,
+    tone: "warn" | "error" | "info" = "warn",
+  ) => {
+    const color = tone === "warn" ? amber : tone === "error" ? red : blue,
+      background =
+        tone === "warn"
+          ? rgb(0.996, 0.965, 0.914)
+          : tone === "error"
+            ? rgb(0.996, 0.941, 0.941)
+            : paper2,
+      lines = wrap(body, usable - 30, 9),
+      blockHeight = 36 + lines.length * 13.5;
+    ensure(blockHeight + 14);
+    page.drawRectangle({
+      x: margin,
+      y: y - blockHeight + 8,
+      width: usable,
+      height: blockHeight,
+      color: background,
+    });
+    page.drawLine({
+      start: { x: margin, y: y + 8 },
+      end: { x: width - margin, y: y + 8 },
+      color,
+      thickness: 2,
+    });
+    txt(title, margin + 15, y - 12, 9.5, bold, color);
+    lines.forEach((text, index) =>
+      txt(text, margin + 15, y - 30 - index * 13.5, 9, font, ink),
+    );
+    y -= blockHeight + 14;
+  };
+  const statusStrip = (invalid: number, warnings: number) => {
+    ensure(56);
+    const items: [string, number, ReturnType<typeof rgb>][] = [
+      ["Errori", invalid, invalid ? red : green],
+      ["Avvisi", warnings, warnings ? amber : green],
+      ["Verifiche", data.checks.length, blue],
+    ];
+    const top = y,
+      cell = usable / items.length;
+    items.forEach(([label, value, color], index) => {
+      const x = margin + cell * index;
+      if (index)
+        page.drawLine({
+          start: { x, y: top + 14 },
+          end: { x, y: top - 28 },
+          color: line,
+          thickness: 0.5,
+        });
+      txt(String(value), x + 2, top - 4, 17, bold, color);
+      tracked(label.toUpperCase(), x + 2, top - 21, 6.6, bold, faint, 1);
+    });
+    y = top - 38;
+  };
+  const statRow = (items: [string, string][]) => {
+    ensure(58);
+    const top = y,
+      cell = usable / items.length;
+    page.drawLine({
+      start: { x: margin, y: top + 10 },
+      end: { x: width - margin, y: top + 10 },
+      color: line,
+      thickness: 0.6,
+    });
+    items.forEach(([label, value], index) => {
+      const x = margin + cell * index;
+      txt(value, x, top - 10, 16, bold, navy);
+      tracked(label.toUpperCase(), x, top - 26, 6.2, bold, faint, 0.8);
+    });
+    y = top - 42;
+  };
+
   const drawTechnical = (
     drawing: NonNullable<ReturnType<typeof plenumTechnicalDrawing>>,
     blockHeight: number,
@@ -288,80 +475,211 @@ export async function renderDossierPdf(
     }
     y -= blockHeight + 12;
   };
-  newPage(
-    options.variant === "summary"
-      ? "Dossier sintetico"
-      : "Configurazione impianto",
-  );
-  if (options.logoSvg) {
-    for (const match of options.logoSvg.matchAll(
-      /<path\b[^>]*fill="(#[0-9a-fA-F]{6})"[^>]*d="([^"]+)"/g,
-    )) {
-      const c = match[1];
-      page.drawSvgPath(match[2], {
-        x: margin,
-        y: y - 8,
-        scale: 0.11,
-        color: rgb(
-          parseInt(c.slice(1, 3), 16) / 255,
-          parseInt(c.slice(3, 5), 16) / 255,
-          parseInt(c.slice(5, 7), 16) / 255,
-        ),
-      });
+  const invalid = data.checks.filter((c) => c.status === "invalid").length,
+    warnings = data.checks.filter((c) => c.status === "warning").length;
+  let coverPagesY = 0;
+  const drawCover = () => {
+    coverPage = doc.addPage([width, height]);
+    page = coverPage;
+    page.drawRectangle({
+      x: 0,
+      y: height - 26,
+      width,
+      height: 26,
+      color: navy,
+    });
+    tracked("TERMOIDRAULICA STAIANO", 56, height - 17, 6.8, bold, white, 1.5);
+    const bandRight = "CONFIGURATORE HVAC";
+    tracked(
+      bandRight,
+      width - 56 - trackedWidth(bandRight, 6.8, bold, 1.5),
+      height - 17,
+      6.8,
+      bold,
+      navText,
+      1.5,
+    );
+    if (options.logoSvg) {
+      for (const match of options.logoSvg.matchAll(
+        /<path\b[^>]*fill="(#[0-9a-fA-F]{6})"[^>]*d="([^"]+)"/g,
+      )) {
+        const c = match[1];
+        page.drawSvgPath(match[2], {
+          x: 56,
+          y: height - 104,
+          scale: 0.15,
+          color: rgb(
+            parseInt(c.slice(1, 3), 16) / 255,
+            parseInt(c.slice(3, 5), 16) / 255,
+            parseInt(c.slice(5, 7), 16) / 255,
+          ),
+        });
+      }
     }
-    y -= 97;
-  }
-  paragraph(p.name, 24, blue);
+    let cy = height - 238;
+    txt(variantLabel, 56, cy, 9, bold, blue);
+    cy -= 32;
+    for (const line of wrap(p.name, width - 112, 29, bold)) {
+      txt(line, 56, cy, 29, bold, navy);
+      cy -= 35;
+    }
+    cy -= 4;
+    txt(
+      "Impianti termotecnici · configurazione e dimensionamento preliminare",
+      56,
+      cy,
+      10,
+      font,
+      muted,
+    );
+    cy -= 25;
+    page.drawLine({
+      start: { x: 56, y: cy },
+      end: { x: width - 56, y: cy },
+      color: lineStrong,
+      thickness: 0.8,
+    });
+    const updated = new Date(p.updatedAt),
+      meta: [string, string, string, string][] = [
+        [
+          "ELABORATO IL",
+          date.toLocaleDateString("it-IT"),
+          "CONTROLLI",
+          `${invalid} ${invalid === 1 ? "errore" : "errori"} · ${warnings} ${warnings === 1 ? "avviso" : "avvisi"}`,
+        ],
+        [
+          "PROGETTO AGGIORNATO",
+          updated.toLocaleString("it-IT", {
+            dateStyle: "short",
+            timeStyle: "short",
+          }),
+          "IMPIANTI",
+          `${p.hvacSystems.length} HVAC · ${p.radiators.length} radiatori · ${p.airTerminals.length} terminali`,
+        ],
+        [
+          "SCHEMA PROGETTO",
+          String(p.schemaVersion),
+          "PAGINE",
+          "",
+        ],
+      ],
+      metaTop = cy - 30;
+    meta.forEach(([leftLabel, leftValue, rightLabel, rightValue], index) => {
+      const rowY = metaTop - index * 42;
+      tracked(leftLabel, 56, rowY, 6.6, bold, faint, 1);
+      txt(leftValue, 56, rowY - 14, 9.5, font, ink);
+      tracked(rightLabel, 306, rowY, 6.6, bold, faint, 1);
+      const tone =
+        rightLabel === "CONTROLLI"
+          ? invalid
+            ? red
+            : warnings
+              ? amber
+              : green
+          : ink;
+      if (rightValue)
+        txt(
+          rightValue,
+          306,
+          rowY - 14,
+          9.5,
+          rightLabel === "CONTROLLI" ? bold : font,
+          tone,
+        );
+    });
+    coverPagesY = metaTop - 84 - 14;
+    const stripTop = metaTop - 140;
+    page.drawLine({
+      start: { x: 56, y: stripTop + 16 },
+      end: { x: width - 56, y: stripTop + 16 },
+      color: lineStrong,
+      thickness: 0.8,
+    });
+    const metrics: [string, string][] = [
+      ["AMBIENTI", String(p.rooms.length)],
+      ["SUPERFICIE NETTA · M²", n(data.totals.areaM2)],
+      ["VOLUME NETTO · M³", n(data.totals.volumeM3)],
+      ["FABBISOGNO · KW", n(data.totals.loadW / 1000, 3)],
+    ];
+    metrics.forEach(([label, value], index) => {
+      const x = 56 + index * 121;
+      txt(value, x, stripTop - 6, 20, bold, navy);
+      tracked(label, x, stripTop - 23, 6.4, bold, faint, 1);
+    });
+    const scope =
+      options.variant === "summary"
+        ? "Riepilogo ambienti · apparecchi scelti · distinta materiali · controlli"
+        : "Planimetrie A3 · schede ambiente · impianti e plenum · distinta materiali · controlli · provenienze";
+    tracked("CONTENUTO", 56, stripTop - 80, 6.4, bold, faint, 0.8);
+    txt(scope, 56, stripTop - 96, 8.5, font, muted);
+    page.drawRectangle({
+      x: 56,
+      y: 54,
+      width: width - 112,
+      height: 54,
+      color: paper2,
+    });
+    page.drawLine({
+      start: { x: 56, y: 108 },
+      end: { x: width - 56, y: 108 },
+      color: navy,
+      thickness: 1.4,
+    });
+    tracked("NOTA", 72, 94, 5.8, bold, faint, 0.8);
+    [
+      "Documento preliminare. Il dimensionamento convenzionale (35 W/m³) non sostituisce il calcolo delle",
+      "dispersioni né il progetto esecutivo. Verificare dati, fonti e disponibilità commerciale prima dell'ordine.",
+    ].forEach((line, index) =>
+      txt(line, 72, 80 - index * 12, 8, font, ink),
+    );
+    page.drawRectangle({ x: 0, y: 0, width, height: 30, color: navy });
+    tracked(
+      "GENERATO DAL CONFIGURATORE STAIANO HVAC",
+      56,
+      12,
+      6.4,
+      bold,
+      navText,
+      1.2,
+    );
+  };
+  drawCover();
+  newPage("Sintesi del progetto");
   paragraph(
-    `Elaborato il ${date.toLocaleDateString("it-IT")} - progetto aggiornato ${new Date(p.updatedAt).toLocaleString("it-IT")}`,
+    `Elaborato il ${date.toLocaleDateString("it-IT")}. ${p.floors.length} piani, ${p.walls.length} muri, ${p.rooms.length} ambienti; ${p.hvacSystems.length} sistemi HVAC, ${p.radiators.length} radiatori, ${p.airTerminals.length} terminali aria.`,
     9,
     muted,
   );
-  table(
-    ["Ambienti", "Superficie netta", "Volume netto", "Fabbisogno"],
-    [
-      [
-        String(p.rooms.length),
-        `${n(data.totals.areaM2)} m²`,
-        `${n(data.totals.volumeM3)} m³`,
-        `${n(data.totals.loadW / 1000, 3)} kW`,
-      ],
-    ],
-    [0.18, 0.28, 0.27, 0.27],
-  );
-  paragraph(
-    `${p.floors.length} piani; ${p.walls.length} muri; ${p.hvacSystems.length} sistemi HVAC; ${p.radiators.length} radiatori; ${p.airTerminals.length} terminali aria.`,
-  );
   if (data.provisionalRooms.length)
-    paragraph(
-      `ATTENZIONE: ${data.provisionalRooms.length} ambienti con contorno aperto. Totali sopra riferiti solo agli ambienti chiusi. I dati precedenti degli ambienti aperti sono conservati per il recupero e non sono validabili.`,
-      11,
-      rgb(0.72, 0.22, 0.08),
+    notice(
+      "Contorni aperti",
+      `${data.provisionalRooms.length} ambienti con contorno aperto. I totali considerano solo gli ambienti chiusi; i dati precedenti degli ambienti aperti restano conservati per il recupero e non sono validabili.`,
+      "error",
     );
-  const invalid = data.checks.filter((c) => c.status === "invalid").length,
-    warnings = data.checks.filter((c) => c.status === "warning").length;
+  statusStrip(invalid, warnings);
   heading(
     invalid ? "Elaborato con controlli non superati" : "Stato dei controlli",
   );
   paragraph(
-    `${invalid} errori; ${warnings} avvisi. Il dossier riporta lo stato corrente del progetto, compresi dati mancanti e criticità.`,
+    "Il dossier riporta lo stato corrente del progetto, compresi dati mancanti e criticità.",
   );
   heading("Metodo e limiti");
-  paragraph(TECHNICAL_NOTE, 10);
+  notice("Limiti del calcolo", TECHNICAL_NOTE, "info");
   paragraph(
     "Superfici e volumi riferiti ai contorni netti interni dei muri. I disegni quotati rappresentano le geometrie del progetto; stampare al 100% per rispettare la scala indicata. Le misure numeriche prevalgono sulla misura a righello.",
-    9,
+    8.5,
     muted,
   );
   if (options.variant === "summary") {
-    newPage("Ambienti e apparecchi scelti");
+    heading("Ambienti e apparecchi scelti");
     paragraph(
       "Riepilogo della configurazione salvata. Calcoli convenzionali, suggerimenti automatici e apparecchi scelti restano distinti. Per planimetrie A3, percorsi, schede complete, listini e provenienze scaricare il dossier completo.",
       9,
       muted,
     );
-    table(
-      ["Ambiente", "Misure interne m", "Netta m² / volume m³", "Carico kW"],
+    if (p.rooms.length)
+      table(
+        ["Ambiente", "Misure interne m", "Netta m² / volume m³", "Carico kW"],
       p.rooms.map((room) => {
         const sides = roomMeasuredSides(p, room, "internal");
         return [
@@ -383,6 +701,7 @@ export async function renderDossierPdf(
       }),
       [0.3, 0.28, 0.25, 0.17],
     );
+    else paragraph("Nessun ambiente inserito.", 9, muted);
     if (data.materials.length || data.accessories.length) {
       heading("Distinta materiali");
       table(
@@ -485,7 +804,7 @@ export async function renderDossierPdf(
           );
           break;
         }
-        ensure(170, "Dossier sintetico - plenum");
+        ensure(170);
         heading(
           view === "front"
             ? "Vista frontale - tutti gli attacchi"
@@ -493,6 +812,11 @@ export async function renderDossierPdf(
         );
         drawTechnical(drawing, 110);
       }
+      const issues = [
+        ...plenum.issues.map((item) => item.message),
+        ...(geometry?.issues ?? []),
+      ];
+      ensure(110 + issues.length * 14);
       table(
         [
           "Attacco / bocchette",
@@ -510,11 +834,7 @@ export async function renderDossierPdf(
         ]),
         [0.35, 0.22, 0.23, 0.2],
       );
-      for (const issue of [
-        ...plenum.issues.map((item) => item.message),
-        ...(geometry?.issues ?? []),
-      ])
-        paragraph(issue, 8, muted);
+      for (const issue of issues) paragraph(issue, 8, muted);
     }
     newPage("Anomalie e limiti del riepilogo");
     const detailed = data.checks.filter(
@@ -579,15 +899,16 @@ export async function renderDossierPdf(
       muted,
     );
   } else {
-    newPage("Riepilogo ambienti");
-    table(
-      [
-        "Codice / stanza / piano",
-        "Netta m²",
-        "H m",
-        "Volume m³",
-        "Q kW / BTU/h",
-      ],
+    heading("Riepilogo ambienti");
+    if (p.rooms.length)
+      table(
+        [
+          "Codice / stanza / piano",
+          "Netta m²",
+          "H m",
+          "Volume m³",
+          "Q kW / BTU/h",
+        ],
       p.rooms.map((r, i) => [
         `A${i + 1} - ${r.name || "Senza nome"}\n${p.floors.find((f) => f.id === r.floorId)?.name}`,
         r.geometryStatus === "unresolved" ? "Da ricalcolare" : n(r.netAreaM2),
@@ -601,16 +922,34 @@ export async function renderDossierPdf(
       ]),
       [0.38, 0.13, 0.1, 0.17, 0.22],
     );
+    else paragraph("Nessun ambiente inserito.", 9, muted);
     for (const floor of p.floors) {
       page = doc.addPage([1190.55, 841.89]);
-      y = 793;
-      txt(`Planimetria - ${floor.name}`, 42, y, 21, bold, blue);
-      y -= 22;
+      page.drawRectangle({
+        x: 0,
+        y: 841.89 - 22,
+        width: 1190.55,
+        height: 22,
+        color: navy,
+      });
+      tracked("STAIANO HVAC", 56, 841.89 - 15, 6.6, bold, white, 1.1);
+      const a3Right = "DOSSIER TECNICO · A3";
+      tracked(
+        a3Right,
+        1190.55 - 56 - trackedWidth(a3Right, 6.6, bold, 1.1),
+        841.89 - 15,
+        6.6,
+        bold,
+        navText,
+        1.1,
+      );
+      tracked("PLANIMETRIA", 56, 806, 6.4, bold, blue, 1.2);
+      txt(`Planimetria - ${floor.name}`, 56, 780, 20, bold, navy);
       txt(
         `Quota piano ${n(floor.elevationM)} m; scala ${floor.scaleVerified ? "verificata" : "NON VERIFICATA"}; quote interne utili, superfici stanza al netto`,
-        42,
-        y,
-        9,
+        56,
+        760,
+        8.5,
         font,
         muted,
       );
@@ -624,14 +963,14 @@ export async function renderDossierPdf(
           .map((system) => system.outdoorUnit.position),
       ];
       if (!points.length) {
-        txt("Piano privo di geometrie", 42, 700, 12);
+        doc.removePage(doc.getPageCount() - 1);
         continue;
       }
       const minX = Math.min(...points.map((v) => v.x)),
         maxX = Math.max(...points.map((v) => v.x)),
         minY = Math.min(...points.map((v) => v.y)),
         maxY = Math.max(...points.map((v) => v.y));
-      const box = { x: 62, y: 155, w: 1035, h: 545 },
+      const box = { x: 56, y: 155, w: 1078.55, h: 545 },
         ratio = Math.min(
           box.w / Math.max(maxX - minX + 1, 1),
           box.h / Math.max(maxY - minY + 1, 1),
@@ -800,8 +1139,8 @@ export async function renderDossierPdf(
             radius = 12 + Math.floor(attempt / 8) * 12;
           const candidate = {
             x: Math.min(
-              1115 - tw,
-              Math.max(48, at.x + Math.cos(angle) * radius),
+              1134.55 - tw,
+              Math.max(56, at.x + Math.cos(angle) * radius),
             ),
             y: Math.min(720, Math.max(145, at.y + Math.sin(angle) * radius)),
             w: tw,
@@ -930,36 +1269,93 @@ export async function renderDossierPdf(
       }
       txt(
         `Scala grafica 1:${n(scale, 1)} su A3 - stampa al 100%`,
-        42,
+        56,
         113,
-        9,
+        8.5,
         font,
         muted,
       );
       const bar = Math.min(5, Math.max(1, Math.floor(box.w / ratio / 4)));
       page.drawLine({
-        start: { x: 42, y: 90 },
-        end: { x: 42 + bar * ratio, y: 90 },
+        start: { x: 56, y: 90 },
+        end: { x: 56 + bar * ratio, y: 90 },
         thickness: 2,
         color: ink,
       });
-      txt(`${bar} m`, 42, 73, 9);
-      txt(
-        "A = ambiente; RAD = radiatore; M/R = mandata/ripresa; UI = macchina; FC = ventilconvettore",
-        420,
-        97,
-        10,
-        bold,
-        blue,
-      );
+      txt(`${bar} m`, 56, 73, 8.5);
+      tracked("LEGENDA", 420, 112, 6.2, bold, faint, 1.1);
+      const legend: [
+        string,
+        ReturnType<typeof rgb>,
+        "line" | "square",
+      ][] = [
+        ["Mandata", cyan, "line"],
+        ["Ripresa", green, "line"],
+        ["Radiatore", blue, "square"],
+        ["Macchina", rgb(0.55, 0.32, 0.68), "square"],
+        ["Plenum", rgb(0.3, 0.65, 0.72), "square"],
+        ["Ventilconvettore", rgb(0.79, 0.45, 0.18), "square"],
+      ];
+      legend.forEach(([label, tint, kind], index) => {
+        const lx = 420 + (index % 3) * 118,
+          ly = 96 - Math.floor(index / 3) * 15;
+        if (kind === "line")
+          page.drawLine({
+            start: { x: lx, y: ly + 3 },
+            end: { x: lx + 16, y: ly + 3 },
+            color: tint,
+            thickness: 2,
+          });
+        else
+          page.drawRectangle({
+            x: lx,
+            y: ly,
+            width: 7,
+            height: 7,
+            color: tint,
+          });
+        txt(label, lx + 24, ly, 7.8, font, ink);
+      });
       txt(
         "Codici e quote completi nelle tabelle. Grigio: contorni netti; arancione: geometria precedente da richiudere; nero: muri.",
         420,
-        79,
-        9,
+        62,
+        7.5,
         font,
         muted,
       );
+      const tbX = 1190.55 - 56 - 180,
+        tbY = 756;
+      page.drawRectangle({
+        x: tbX,
+        y: tbY,
+        width: 180,
+        height: 50,
+        color: white,
+        borderColor: lineStrong,
+        borderWidth: 0.7,
+      });
+      [60, 120].forEach((offset) =>
+        page.drawLine({
+          start: { x: tbX + offset, y: tbY },
+          end: { x: tbX + offset, y: tbY + 50 },
+          color: lineStrong,
+          thickness: 0.5,
+        }),
+      );
+      tracked("TAVOLA", tbX + 10, tbY + 34, 5.8, bold, faint, 0.8);
+      txt(
+        `${String(p.floors.indexOf(floor) + 1).padStart(2, "0")} / ${String(p.floors.length).padStart(2, "0")}`,
+        tbX + 10,
+        tbY + 20,
+        9,
+        bold,
+        navy,
+      );
+      tracked("SCALA", tbX + 70, tbY + 34, 5.8, bold, faint, 0.8);
+      txt(`1:${n(scale, 1)}`, tbX + 70, tbY + 20, 9, bold, navy);
+      tracked("FORMATO", tbX + 130, tbY + 34, 5.8, bold, faint, 0.8);
+      txt("A3 · 100%", tbX + 130, tbY + 20, 9, bold, navy);
       newPage(`Legenda e quote - ${floor.name}`);
       table(
         ["Codice", "Ambiente", "Area netta", "Perimetro netto"],
@@ -997,10 +1393,10 @@ export async function renderDossierPdf(
     for (const [index, r] of p.rooms.entries()) {
       newPage(`A${index + 1} - ${r.name || "Senza nome"}`);
       if (r.geometryStatus === "unresolved")
-        paragraph(
-          "CONTORNO APERTO - dimensioni, volume e carico sotto sono quelli dell'ultima configurazione chiusa. Non sono dati attuali validabili. Richiudere il contorno e riconfigurare gli apparecchi prima di usare il dossier.",
-          11,
-          rgb(0.72, 0.22, 0.08),
+        notice(
+          "Contorno aperto",
+          "Dimensioni, volume e carico sotto sono quelli dell'ultima configurazione chiusa. Non sono dati attuali validabili. Richiudere il contorno e riconfigurare gli apparecchi prima di usare il dossier.",
+          "error",
         );
       paragraph(
         `Piano: ${p.floors.find((f) => f.id === r.floorId)?.name}; impianto: ${{ none: "da definire", radiator: "radiatori", ducted: "canalizzato", split: "split", fanCoil: "ventilconvettori" }[r.systemType]}`,
@@ -1010,18 +1406,12 @@ export async function renderDossierPdf(
           `AMBIENTE NON CLIMATIZZATO — ${r.conditioningExclusion.reason}. Escluso dal fabbisogno da dimensionare; geometria e apparecchi conservati.`,
           11,
         );
-      table(
-        ["Superficie netta", "Perimetro", "Altezza", "Volume netto"],
-        [
-          [
-            `${n(r.netAreaM2)} m²`,
-            `${n(r.perimeterM)} m`,
-            `${n(r.heightM)} m`,
-            `${n(r.volumeM3)} m³`,
-          ],
-        ],
-        [0.28, 0.24, 0.2, 0.28],
-      );
+      statRow([
+        ["Superficie netta", `${n(r.netAreaM2)} m²`],
+        ["Perimetro", `${n(r.perimeterM)} m`],
+        ["Altezza", `${n(r.heightM)} m`],
+        ["Volume netto", `${n(r.volumeM3)} m³`],
+      ]);
       heading(
         r.geometryStatus === "unresolved"
           ? "Carico precedente - NON VALIDABILE"
@@ -1074,7 +1464,7 @@ export async function renderDossierPdf(
             `${n(d.requiredAirflowM3h)} / ${n(d.availableAirflowM3h)} m³/h${d.theoreticalLengthM === null ? "" : `; teorica ${n(d.theoreticalLengthM, 3)} m`}`,
             `${d.noiseLabel || (d.noiseDbA === null ? "non pubblicato" : n(d.noiseDbA))} dB(A); ${d.pressureDropPa === null ? "n.d." : n(d.pressureDropPa)} Pa`,
           ]),
-          [0.31, 0.24, 0.28, 0.17],
+          [0.31, 0.28, 0.24, 0.17],
         );
         paragraph(
           "Rumore: riferimento del costruttore e punto operativo selezionato; limite configuratore 37 dB(A) solo per la mandata. La ripresa si dimensiona sulla portata macchina. Il valore non rappresenta una verifica acustica complessiva in ambiente. Le misure commerciali restano distinte dalla lunghezza teorica.",
@@ -1220,20 +1610,22 @@ export async function renderDossierPdf(
       );
     }
     heading("Quote interne utili");
-    table(
-      ["Ambiente", "Larghezza interna", "Lunghezza interna"],
-      p.rooms.map((r) => {
-        const sides = roomMeasuredSides(p, r, "internal");
-        return [
-          r.name,
-          sides ? `${n(sides.width)} m` : "Contorno irregolare",
-          sides
-            ? `${n(sides.length)} m`
-            : `Perimetro netto ${n(r.perimeterM)} m`,
-        ];
-      }),
-      [0.4, 0.3, 0.3],
-    );
+    if (p.rooms.length)
+      table(
+        ["Ambiente", "Larghezza interna", "Lunghezza interna"],
+        p.rooms.map((r) => {
+          const sides = roomMeasuredSides(p, r, "internal");
+          return [
+            r.name,
+            sides ? `${n(sides.width)} m` : "Contorno irregolare",
+            sides
+              ? `${n(sides.length)} m`
+              : `Perimetro netto ${n(r.perimeterM)} m`,
+          ];
+        }),
+        [0.4, 0.3, 0.3],
+      );
+    else paragraph("Nessun ambiente inserito.", 9, muted);
     if (p.walls.length)
       table(
         ["Parete", "Misura interna utile", "Spessore"],
@@ -1784,17 +2176,28 @@ export async function renderDossierPdf(
     const landscapeWidth = 841.89,
       landscapeHeight = 595.28;
     page = doc.addPage([landscapeWidth, landscapeHeight]);
-    txt(
-      "STAIANO / VISUALIZZAZIONE DEL PROGETTO",
-      42,
-      landscapeHeight - 39,
-      9,
+    page.drawRectangle({
+      x: 0,
+      y: landscapeHeight - 22,
+      width: landscapeWidth,
+      height: 22,
+      color: navy,
+    });
+    tracked("STAIANO HVAC", 42, landscapeHeight - 15, 6.6, bold, white, 1.1);
+    const viewRight = "VISUALIZZAZIONE";
+    tracked(
+      viewRight,
+      landscapeWidth - 42 - trackedWidth(viewRight, 6.6, bold, 1.1),
+      landscapeHeight - 15,
+      6.6,
       bold,
-      blue,
+      navText,
+      1.1,
     );
+    tracked("RENDER", 42, landscapeHeight - 50, 6.4, bold, blue, 1.2);
     const titleLines = wrap(panorama.title, landscapeWidth - 84, 18, bold);
     titleLines.forEach((line, index) =>
-      txt(line, 42, landscapeHeight - 67 - index * 22, 18, bold),
+      txt(line, 42, landscapeHeight - 74 - index * 21, 18, bold, navy),
     );
     const imageMaxWidth = landscapeWidth - 84,
       imageMaxHeight = 405 - Math.max(0, titleLines.length - 2) * 22;
@@ -1829,17 +2232,50 @@ export async function renderDossierPdf(
   }
   const pages = doc.getPages();
   pages.forEach((v, i) => {
+    if (v === coverPage) return;
     page = v;
-    const { width: pw } = v.getSize();
+    const { width: pw } = v.getSize(),
+      edge = pw > 700 ? 56 : 46;
     v.drawLine({
-      start: { x: 42, y: 42 },
-      end: { x: pw - 42, y: 42 },
-      color: pale,
-      thickness: 1,
+      start: { x: edge, y: 44 },
+      end: { x: pw - edge, y: 44 },
+      color: line,
+      thickness: 0.6,
     });
-    txt(`${p.name.slice(0, 65)} - STAIANO HVAC`, 42, 27, 8, font, muted);
+    const projectName =
+      p.name.length > 62 ? `${p.name.slice(0, 59)}...` : p.name;
+    txt(projectName, edge, 28, 7, font, muted);
     const label = `${i + 1} / ${pages.length}`;
-    txt(label, pw - 42 - font.widthOfTextAtSize(label, 8), 27, 8, font, muted);
+    txt(
+      label,
+      pw - edge - bold.widthOfTextAtSize(label, 7),
+      28,
+      7,
+      bold,
+      navy,
+    );
+    const center = `${variantLabel} · ${date.toLocaleDateString("it-IT")}`;
+    txt(
+      center,
+      (pw - font.widthOfTextAtSize(center, 7)) / 2,
+      28,
+      7,
+      font,
+      faint,
+    );
   });
+  if (coverPage) {
+    page = coverPage;
+    txt(String(pages.length), 306, coverPagesY, 9.5, bold, navy);
+    const count = `${pages.length} pagine`;
+    txt(
+      count,
+      width - 56 - bold.widthOfTextAtSize(count, 6.4),
+      12,
+      6.4,
+      bold,
+      navText,
+    );
+  }
   return doc.save();
 }
