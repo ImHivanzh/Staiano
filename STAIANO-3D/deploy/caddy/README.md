@@ -7,11 +7,16 @@ certificato Let’s Encrypt per `*.internal.staianopoint.com`, con rinnovo autom
 DNS-01. Non occorre un nuovo certificato separato o installare una CA sui client.
 
 Il Caddyfile principale in `C:/local-software/moduli/https/Caddyfile` importa
-`C:/local-software/staiano-3d/deploy/caddy/hvac.caddy` dentro il blocco wildcard.
-Il frammento aggiunge solo la route HVAC verso127.0.0.1:3015.
+`C:/local-software/moduli/https/staiano-hvac.caddy` dentro il blocco wildcard.
+Il frammento aggiunge solo la route HVAC verso 127.0.0.1:3015.
 
-Backup del file principale:
-`Caddyfile.backup-before-hvac-20261003-130415` nella stessa directory HTTPS.
+Il frammento è stato spostato fuori da questo repository il 18/10/2026: il repo
+è una copia di sviluppo e sulla macchina in esercizio viene eliminato, quindi
+Caddy non deve dipendere da un file al suo interno. `deploy/caddy/hvac.caddy`
+resta qui come originale da ricopiare quando si reinstalla la postazione.
+Backup del Caddyfile principale prima dello spostamento:
+`Caddyfile.backup-before-hvac-import-move-20261018-183807` (più il precedente
+`Caddyfile.backup-before-hvac-20261003-130415`).
 
 La modifica runtime è stata applicata all’API locale Caddy con ETag e inserimento
 di una sola route:9→10. Non sono stati letti né modificati i token Cloudflare
