@@ -13,7 +13,7 @@ function HeatPumpIdentification({
   height,
   depth,
 }: {
-  manufacturer: "Gree" | "Chaffoteaux";
+  manufacturer: "Gree" | "Chaffoteaux" | "Daikin";
   model: string;
   width: number;
   height: number;
@@ -22,7 +22,9 @@ function HeatPumpIdentification({
   const logo = useTexture(
     manufacturer === "Gree"
       ? "/catalog-assets/brands/gree.png"
-      : "/catalog-assets/brands/chaffoteaux.jpg",
+      : manufacturer === "Daikin"
+        ? "/catalog-assets/brands/daikin.png"
+        : "/catalog-assets/brands/chaffoteaux.jpg",
   );
   const label = useMemo(() => {
     const canvas = document.createElement("canvas");

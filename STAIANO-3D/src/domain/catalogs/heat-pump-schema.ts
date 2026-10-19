@@ -4,7 +4,7 @@ import { productPhotoSchema } from "./fan-coil-schema";
 const positive = z.number().finite().positive();
 export const heatPumpProductSchema = z.object({
   id: z.string().min(1),
-  manufacturer: z.enum(["Chaffoteaux", "Gree"]),
+  manufacturer: z.enum(["Chaffoteaux", "Daikin", "Gree"]),
   family: z.string().min(1),
   model: z.string().min(1),
   widthMm: positive,

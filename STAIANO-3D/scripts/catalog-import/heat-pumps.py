@@ -17,18 +17,24 @@ DOCS = {
     "gree-versati-v": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/GREE_Brochure_VersatiV_2025.pdf", "d7d4778eea36e2bd4287db4a42a25ffa0ea67baae978c685bc97d7681b805a2b", "Brochure VERSATI V 2025"),
     "gree-versati-iii": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/Service%20Manual%20for%20VERSATI%20R32%20SPLIT.pdf", "781db69b864400db2204e825486109fd0eb3d02454cc45ce957f28dffb620e75", "Service Manual VERSATI III Split · technical data"),
     "gree-versati-iii-all-in-one": ("https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20versati%20split%20all%20in%20one.pdf", "5451e894bd01085fc7a4a20ccac9110d37ff6e3db698939b3aef802c79135760", "Service Manual VERSATI III All In One · technical data"),
+    "daikin-residential-2025": ("https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf", "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a", "Catalogo Residenziale 2025"),
 }
+# The residential catalogue is archived once under sources/hvac (ducted and split Daikin cite it too).
+DOC_PATHS = {"daikin-residential-2025": ROOT / "catalog-data/sources/hvac/daikin-residential-2025.pdf"}
+
+def doc_file(name):
+    return DOC_PATHS.get(name, SOURCE / f"{name}.pdf")
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 for name, (_, expected, _) in DOCS.items():
-    if sha(SOURCE / f"{name}.pdf") != expected:
+    if sha(doc_file(name)) != expected:
         raise ValueError(f"Source changed: review {name}")
 
 manifest_path = SOURCE / "manifest.json"
 previous_manifest = {m["name"]: m for m in json.loads(manifest_path.read_text(encoding="utf8"))} if manifest_path.exists() else {}
-retrieved = {name: previous_manifest[name]["retrievedAt"] if previous_manifest.get(name, {}).get("timestampBasis") == "file-acquired-at" else datetime.fromtimestamp((SOURCE / f"{name}.pdf").stat().st_mtime, timezone.utc).isoformat() for name in DOCS}
+retrieved = {name: previous_manifest[name]["retrievedAt"] if previous_manifest.get(name, {}).get("timestampBasis") == "file-acquired-at" else datetime.fromtimestamp(doc_file(name).stat().st_mtime, timezone.utc).isoformat() for name in DOCS}
 
 def source(name, manufacturer, page):
     url, digest, revision = DOCS[name]
@@ -75,6 +81,41 @@ for size, phase, code, height, heat35, heat45, heatminus7, cold, cop35, cop45, c
         widthMm=1016, heightMm=height, depthMm=383, dimensionNote="Ingombro unità esterna L×H×P da disegno pag. 3, profondità totale 383 mm; distanze di servizio da verificare nel manuale. Light Box ed Expert HD inclusi nel sistema.",
         features=["Monoblocco inverter R32", supply, f"Codice sistema {code}", "Expert HD e Wi-Fi di serie", "Gestione ChaffoLink", "Light Box IPX5", "Puffer e resistenza integrativa opzionali", "ACS con bollitore e kit opzionali"], productPhoto=lite_photo, sourceMetadata=source("chaffoteaux-arianext-lite", "Chaffoteaux", 4),
         operatingPoints=[point("Caldo A7/W35 · freddo A35/W7", heat35, cold, cop35, eer), point("Caldo A7/W45 · freddo A35/W7", heat45, cold, cop45, eer, 45), point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold, copminus7, eer, 35, -7)]))
+
+daikin_photo_low = photo("daikin-altherma-3m-ebla-e.jpg", "https://www.daikin.it/it_IT/privati/riscaldamento/pompe-di-calore/altherma-3m-ebla-e/_jcr_content/root/main_container/content_container/simple_container/two_column_content_b/column-container-2/image_6605.coreimg.jpeg/1739501570629/e-b-d-la04-08e-3-v3-ip1.jpeg", "Foto ufficiale Daikin Altherma 3 M EBLA 4–8 kW installata all'esterno.")
+daikin_photo_high = photo("daikin-altherma-3m-ebla-d.jpg", "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg", "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW.")
+
+def daikin_point(label, heat, cold, cop, eer, heat_air, cool_water):
+    heating = "aria esterna 7/6 °C BS/BU" if heat_air == 7 else "aria esterna −7 °C BS"
+    return dict(label=label, heatingW=round(heat*1000), coolingW=round(cold*1000), cop=cop, eer=eer,
+                heatingWaterSupplyC=35, coolingWaterSupplyC=cool_water, heatingOutdoorC=heat_air, coolingOutdoorC=35,
+                heatingConditions=f"EN 14511 · {heating} · acqua mandata/ritorno 35/30 °C",
+                coolingConditions=f"EN 14511 · aria esterna 35 °C · acqua mandata/ritorno {cool_water}/{cool_water+5} °C")
+
+# Reviewed technical tables: Catalogo Residenziale 2025 pag. 190 (4–8 kW) and pag. 193 (9–16 kW).
+# Capacities pair (1) heating A7/W35 with cooling A35/W18 and (2) heating A−7/W35 with cooling A35/W7.
+for size, page, photo_ref, (width, height, depth), heat35, heatminus7, cold18, cold7, cop35, copminus7, eer18, eer7 in [
+    (4, 190, daikin_photo_low, (1250, 770, 362), 6.41, 5.38, 5.98, 4.62, 4.92, 2.82, 5.64, 3.72),
+    (6, 190, daikin_photo_low, (1250, 770, 362), 7.74, 6.25, 7.45, 5.57, 4.74, 2.77, 4.84, 3.47),
+    (8, 190, daikin_photo_low, (1250, 770, 362), 9.37, 7.28, 8.57, 6.34, 4.52, 2.67, 4.58, 3.32),
+    (9, 193, daikin_photo_high, (1380, 870, 460), 10.42, 7.89, 16.31, 11.02, 4.80, 2.45, 3.64, 2.98),
+    (11, 193, daikin_photo_high, (1380, 870, 460), 12.31, 9.10, 18.25, 12.68, 4.79, 2.45, 3.42, 2.74),
+    (14, 193, daikin_photo_high, (1380, 870, 460), 13.69, 10.73, 18.79, 13.09, 4.64, 2.47, 3.99, 3.02),
+    (16, 193, daikin_photo_high, (1380, 870, 460), 15.96, 11.15, 18.79, 14.01, 4.53, 2.51, 3.99, 3.03),
+]:
+    for phase, suffix, supply in [("Monofase", "V3", "Monofase 230 V / 50 Hz")] + ([("Trifase", "W1", "Trifase 400 V / 50 Hz")] if size >= 9 else []):
+        model = f"EBLA{size:02d}{'E' if size <= 8 else 'D'}{suffix}"
+        products.append(dict(id=f"daikin-altherma-3m-{model.lower()}", manufacturer="Daikin", family="Altherma 3 M", model=model,
+            widthMm=width, heightMm=height, depthMm=depth,
+            dimensionNote=f"Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. {page}. Distanze di servizio da verificare nel manuale.",
+            features=["Monoblocco inverter R32", "Riscaldamento e raffrescamento", supply, "Riscaldatore di riserva 3 kW opzionale",
+                      "Collegamento WLAN di serie" if size <= 8 else "Cartuccia WLAN opzionale", "ACS con serbatoio opzionale",
+                      "Mandata fino a 60 °C · funzionamento fino a −25 °C"],
+            productPhoto=photo_ref, sourceMetadata=source("daikin-residential-2025", "Daikin", page),
+            operatingPoints=[daikin_point("Caldo A7/W35 · freddo A35/W18", heat35, cold18, cop35, eer18, 7, 18),
+                             daikin_point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold7, copminus7, eer7, -7, 7)]))
+
+assert len([p for p in products if p["manufacturer"] == "Daikin"]) == 11
 
 gree_photo = photo("gree-versati-v.png", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png", "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW.")
 gree_16_photo = photo("gree-versati-v-16.jpg", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Product/VersatiV_16kW_LR.jpg", "Foto ufficiale Gree VERSATI V 16 kW, unità esterna a due ventilatori.")
@@ -147,5 +188,8 @@ if out.exists():
         history[previous["version"]] = previous
 out.write_text(json.dumps(catalog, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
 history_path.write_text(json.dumps(history, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
-manifest_path.write_text(json.dumps([dict(name=name, timestampBasis="file-acquired-at", **source(name, "Chaffoteaux" if name.startswith("chaffoteaux") else "Gree", None)) for name in DOCS], indent=2, ensure_ascii=False)+"\n", encoding="utf8")
+def doc_manufacturer(name):
+    return "Chaffoteaux" if name.startswith("chaffoteaux") else "Daikin" if name.startswith("daikin") else "Gree"
+
+manifest_path.write_text(json.dumps([dict(name=name, timestampBasis="file-acquired-at", **source(name, doc_manufacturer(name), None)) for name in DOCS], indent=2, ensure_ascii=False)+"\n", encoding="utf8")
 print(f"Generated {len(products)} models from pinned official PDFs")

@@ -58,5 +58,17 @@
     "retrievedAt": "2026-10-13T22:14:45.369281+00:00",
     "importedAt": "2026-10-13T22:14:45.369281+00:00",
     "page": null
+  },
+  {
+    "name": "daikin-residential-2025",
+    "timestampBasis": "file-acquired-at",
+    "manufacturer": "Daikin",
+    "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+    "sourceType": "pdf",
+    "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+    "documentRevision": "Catalogo Residenziale 2025",
+    "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+    "importedAt": "2026-10-18T17:37:09.236578+00:00",
+    "page": null
   }
 ]

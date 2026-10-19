@@ -64,7 +64,21 @@ describe("impianto idronico documentato", () => {
     expect(clearProjectSystems(moved).heatPumpDrafts).toEqual([]);
   });
   it("has official capacities at explicit conditions and reproducible sources", () => {
-    expect(heatPumpCatalog.products).toHaveLength(29);
+    expect(heatPumpCatalog.products).toHaveLength(40);
+    const daikin = heatPumpProductAtVersion(
+      "daikin-altherma-3m-ebla09dv3",
+      heatPumpCatalog.version,
+    )!;
+    expect(daikin.operatingPoints[0]).toMatchObject({
+      heatingW: 10420,
+      coolingW: 16310,
+      heatingWaterSupplyC: 35,
+      coolingWaterSupplyC: 18,
+    });
+    expect([daikin.widthMm, daikin.heightMm, daikin.depthMm]).toEqual([
+      1380, 870, 460,
+    ]);
+    expect(daikin.sourceMetadata.page).toBe(193);
     const gree = heatPumpProductAtVersion(
       "gree-versati-v-8-monofase",
       heatPumpCatalog.version,

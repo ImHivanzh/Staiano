@@ -1,5 +1,5 @@
 {
-  "version": "heat-pumps-02e321c6c1440ea8",
+  "version": "heat-pumps-7c78dec889812c6f",
   "products": [
     {
       "id": "chaffoteaux-arianext-plus-35-m-r32",
@@ -832,6 +832,699 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla04ev3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA04EV3",
+      "widthMm": 1250,
+      "heightMm": 770,
+      "depthMm": 362,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 190. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Collegamento WLAN di serie",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-e.jpg",
+        "sourceUrl": "https://www.daikin.it/it_IT/privati/riscaldamento/pompe-di-calore/altherma-3m-ebla-e/_jcr_content/root/main_container/content_container/simple_container/two_column_content_b/column-container-2/image_6605.coreimg.jpeg/1739501570629/e-b-d-la04-08e-3-v3-ip1.jpeg",
+        "sha256": "e6aa69fa038155c81f08454d67e1664afb537e8b1258054dbb6ec593a9cb2cba",
+        "caption": "Foto ufficiale Daikin Altherma 3 M EBLA 4–8 kW installata all'esterno."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 190
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 6410,
+          "coolingW": 5980,
+          "cop": 4.92,
+          "eer": 5.64,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 5380,
+          "coolingW": 4620,
+          "cop": 2.82,
+          "eer": 3.72,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla06ev3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA06EV3",
+      "widthMm": 1250,
+      "heightMm": 770,
+      "depthMm": 362,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 190. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Collegamento WLAN di serie",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-e.jpg",
+        "sourceUrl": "https://www.daikin.it/it_IT/privati/riscaldamento/pompe-di-calore/altherma-3m-ebla-e/_jcr_content/root/main_container/content_container/simple_container/two_column_content_b/column-container-2/image_6605.coreimg.jpeg/1739501570629/e-b-d-la04-08e-3-v3-ip1.jpeg",
+        "sha256": "e6aa69fa038155c81f08454d67e1664afb537e8b1258054dbb6ec593a9cb2cba",
+        "caption": "Foto ufficiale Daikin Altherma 3 M EBLA 4–8 kW installata all'esterno."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 190
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 7740,
+          "coolingW": 7450,
+          "cop": 4.74,
+          "eer": 4.84,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 6250,
+          "coolingW": 5570,
+          "cop": 2.77,
+          "eer": 3.47,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla08ev3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA08EV3",
+      "widthMm": 1250,
+      "heightMm": 770,
+      "depthMm": 362,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 190. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Collegamento WLAN di serie",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-e.jpg",
+        "sourceUrl": "https://www.daikin.it/it_IT/privati/riscaldamento/pompe-di-calore/altherma-3m-ebla-e/_jcr_content/root/main_container/content_container/simple_container/two_column_content_b/column-container-2/image_6605.coreimg.jpeg/1739501570629/e-b-d-la04-08e-3-v3-ip1.jpeg",
+        "sha256": "e6aa69fa038155c81f08454d67e1664afb537e8b1258054dbb6ec593a9cb2cba",
+        "caption": "Foto ufficiale Daikin Altherma 3 M EBLA 4–8 kW installata all'esterno."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 190
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9370,
+          "coolingW": 8570,
+          "cop": 4.52,
+          "eer": 4.58,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7280,
+          "coolingW": 6340,
+          "cop": 2.67,
+          "eer": 3.32,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla09dv3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA09DV3",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 10420,
+          "coolingW": 16310,
+          "cop": 4.8,
+          "eer": 3.64,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7890,
+          "coolingW": 11020,
+          "cop": 2.45,
+          "eer": 2.98,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla09dw1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA09DW1",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 10420,
+          "coolingW": 16310,
+          "cop": 4.8,
+          "eer": 3.64,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7890,
+          "coolingW": 11020,
+          "cop": 2.45,
+          "eer": 2.98,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla11dv3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA11DV3",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 12310,
+          "coolingW": 18250,
+          "cop": 4.79,
+          "eer": 3.42,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9100,
+          "coolingW": 12680,
+          "cop": 2.45,
+          "eer": 2.74,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla11dw1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA11DW1",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 12310,
+          "coolingW": 18250,
+          "cop": 4.79,
+          "eer": 3.42,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9100,
+          "coolingW": 12680,
+          "cop": 2.45,
+          "eer": 2.74,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla14dv3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA14DV3",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 13690,
+          "coolingW": 18790,
+          "cop": 4.64,
+          "eer": 3.99,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10730,
+          "coolingW": 13090,
+          "cop": 2.47,
+          "eer": 3.02,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla14dw1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA14DW1",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 13690,
+          "coolingW": 18790,
+          "cop": 4.64,
+          "eer": 3.99,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10730,
+          "coolingW": 13090,
+          "cop": 2.47,
+          "eer": 3.02,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla16dv3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA16DV3",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 15960,
+          "coolingW": 18790,
+          "cop": 4.53,
+          "eer": 3.99,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 11150,
+          "coolingW": 14010,
+          "cop": 2.51,
+          "eer": 3.03,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3m-ebla16dw1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 M",
+      "model": "EBLA16DW1",
+      "widthMm": 1380,
+      "heightMm": 870,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 193. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Monoblocco inverter R32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Riscaldatore di riserva 3 kW opzionale",
+        "Cartuccia WLAN opzionale",
+        "ACS con serbatoio opzionale",
+        "Mandata fino a 60 °C · funzionamento fino a −25 °C"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3m-ebla-d.jpg",
+        "sourceUrl": "https://www.daikin.it/adobe/dynamicmedia/deliver/dm-aid--3d8167cc-3535-401c-8c3c-2898bd7bd5e5/04-packshot-ebla09-1-1-front.jpg",
+        "sha256": "8e953f7b23a80d7be0e342e2443d92bd960203b0dccbfc764bad7fb030e0087d",
+        "caption": "Packshot ufficiale Daikin Altherma 3 M EBLA 9–16 kW."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 193
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 15960,
+          "coolingW": 18790,
+          "cop": 4.53,
+          "eer": 3.99,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 11150,
+          "coolingW": 14010,
+          "cop": 2.51,
+          "eer": 3.03,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
           "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
         }
       ]
