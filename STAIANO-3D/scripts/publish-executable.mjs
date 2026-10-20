@@ -131,25 +131,43 @@ if (!existing) {
   if (!downloaded) throw new Error("Pacchetto esistente non verificato.");
 }
 const publishedHash = createHash("sha256").update(bytes).digest("hex");
-response = await fetch("https://licenses.ivanbuonocore.dev/publish", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${publisher}`,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    commit: metadata.commit,
-    sha256: publishedHash,
-    size: bytes.length,
-    url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/${tag}/StaianoHVAC.exe`,
-  }),
-  redirect: "error",
-  signal: AbortSignal.timeout(30000),
-});
-if (!response.ok)
+// Il Worker verifica la revisione su Codeberg prima di registrare il pacchetto:
+// un errore 5xx è transitorio e va ritentato, non interpretato come rifiuto.
+let registered = null;
+for (let attempt = 0; attempt < 5; attempt++) {
+  if (attempt) await new Promise((wait) => setTimeout(wait, 2000 * attempt));
+  try {
+    registered = await fetch("https://licenses.ivanbuonocore.dev/publish", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${publisher}`,
+        "Content-Type": "application/json",
+        "User-Agent": "Staiano-release/1",
+      },
+      body: JSON.stringify({
+        commit: metadata.commit,
+        sha256: publishedHash,
+        size: bytes.length,
+        url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/${tag}/StaianoHVAC.exe`,
+      }),
+      redirect: "error",
+      signal: AbortSignal.timeout(30000),
+    });
+  } catch (error) {
+    if (attempt === 4)
+      throw new Error(
+        `Registrazione pacchetto sul servizio licenze non raggiungibile: ${error.message}.`,
+      );
+    continue;
+  }
+  if (registered.ok || registered.status < 500 || attempt === 4) break;
+}
+if (!registered?.ok) {
+  const detail = await registered?.text().catch(() => "");
   throw new Error(
-    `Registrazione pacchetto sul servizio licenze: HTTP ${response.status}.`,
+    `Registrazione pacchetto sul servizio licenze: HTTP ${registered?.status ?? "?"}${detail ? ` (${detail.slice(0, 200)})` : ""}.`,
   );
+}
 console.log(
   `Pacchetto pubblicato per ${metadata.commit}; firma e autorizzazione sono emesse dal Worker.`,
 );
