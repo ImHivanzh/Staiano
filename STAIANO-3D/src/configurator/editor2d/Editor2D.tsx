@@ -48,6 +48,13 @@ type Drag = {
   delta: Point;
   selection?: Selection[];
 };
+/** Testo solidale all'elemento ma mai capovolto: a 180° torna leggibile. */
+function readableLabel(rotation: number, centerY: number) {
+  const degrees = ((((rotation * 180) / Math.PI) % 360) + 360) % 360;
+  return degrees > 90 && degrees <= 270
+    ? `rotate(180 0 ${centerY})`
+    : undefined;
+}
 export function Editor2D({
   placement,
   configuration,
@@ -1086,7 +1093,10 @@ export function Editor2D({
                   transform={
                     configuration
                       ? `rotate(${(-d.rotation * 180) / Math.PI} 0 ${d.depthMm / 2000 + u * 13})`
-                      : undefined
+                      : readableLabel(
+                          d.rotation,
+                          d.depthMm / 2000 + u * 13 - u * 4.5,
+                        )
                   }
                   fontSize={u * 11}
                   className="quota-pianta"
@@ -1150,7 +1160,10 @@ export function Editor2D({
                   transform={
                     configuration
                       ? `rotate(${(-t.rotation * 180) / Math.PI} 0 ${faceDepth / 2000 + u * 14})`
-                      : undefined
+                      : readableLabel(
+                          t.rotation,
+                          faceDepth / 2000 + u * 14 - u * 4.5,
+                        )
                   }
                   textAnchor="middle"
                   fontSize={u * 11}
@@ -1230,6 +1243,10 @@ export function Editor2D({
                     data-system-id={system.id}
                     x={0}
                     y={-airflowFontSize * 1.6}
+                    transform={readableLabel(
+                      d.rotation,
+                      -airflowFontSize * 1.6 + airflowFontSize * 1.45,
+                    )}
                     textAnchor="middle"
                     fontSize={airflowFontSize}
                     fontWeight={600}
@@ -1259,7 +1276,10 @@ export function Editor2D({
                   transform={
                     configuration
                       ? `rotate(${(-d.rotation * 180) / Math.PI} 0 ${d.depthMm / 2000 + u * 13})`
-                      : undefined
+                      : readableLabel(
+                          d.rotation,
+                          d.depthMm / 2000 + u * 13 - u * 4.5,
+                        )
                   }
                   textAnchor="middle"
                   fontSize={u * 11}
@@ -1320,7 +1340,10 @@ export function Editor2D({
                   transform={
                     configuration
                       ? `rotate(${(-unit.rotation * 180) / Math.PI} 0 ${depth / 2000 + u * 13})`
-                      : undefined
+                      : readableLabel(
+                          unit.rotation,
+                          depth / 2000 + u * 13 - u * 4.5,
+                        )
                   }
                 >
                   {codes.get(unit.id)}
@@ -1397,7 +1420,10 @@ export function Editor2D({
                     transform={
                       configuration
                         ? `rotate(${(-unit.rotation * 180) / Math.PI} 0 ${unit.depthMm / 2000 + u * 13})`
-                        : undefined
+                        : readableLabel(
+                            unit.rotation,
+                            unit.depthMm / 2000 + u * 13 - u * 4.5,
+                          )
                     }
                   >
                     {codes.get(unit.id)} · esterna
@@ -1485,7 +1511,10 @@ export function Editor2D({
                     transform={
                       configuration
                         ? `rotate(${(-unit.rotation * 180) / Math.PI} 0 ${unit.depthMm / 2000 + u * 13})`
-                        : undefined
+                        : readableLabel(
+                            unit.rotation,
+                            unit.depthMm / 2000 + u * 13 - u * 4.5,
+                          )
                     }
                   >
                     {codes.get(unit.id)} · esterna
@@ -1536,6 +1565,10 @@ export function Editor2D({
                   fontSize={u * 11}
                   textAnchor="middle"
                   y={o.depthMm / 2000 + u * 13}
+                  transform={readableLabel(
+                    o.rotation,
+                    o.depthMm / 2000 + u * 13 - u * 4.5,
+                  )}
                 >
                   {codes.get(o.id)}
                 </text>

@@ -108,3 +108,25 @@ test("La macchina si ruota anche dalla sua scheda, fuori dal plenum", async ({
     before.plenums[0].rotation + Math.PI / 2,
   );
 });
+
+test("dopo 180 gradi il testo della macchina e quello del plenum restano leggibili", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await importPlenumProject(page);
+  await page.getByTestId("plenum-2d").locator("rect").click();
+  const rotate = page
+    .locator("aside.proprieta")
+    .getByRole("button", { name: "Ruota 90°", exact: true });
+  await rotate.click();
+  await rotate.click();
+  await expect(page.getByTestId("machine-airflow")).toHaveAttribute(
+    "transform",
+    /rotate\(180/,
+  );
+  await expect(page.getByTestId("plenum-2d").locator("text")).toHaveAttribute(
+    "transform",
+    /rotate\(180/,
+  );
+});

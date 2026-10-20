@@ -48,6 +48,12 @@ function NumberLabel({
   );
 }
 
+/** L'etichetta segue il plenum ma non appare mai capovolta. */
+function readableRotation(rotation: number) {
+  const degrees = ((((rotation * 180) / Math.PI) % 360) + 360) % 360;
+  return degrees > 90 && degrees <= 270 ? rotation + Math.PI : rotation;
+}
+
 /** Saved custom body dimensions, real counted and numbered port geometry. */
 export function PlenumBody({
   layout,
@@ -223,7 +229,7 @@ function PlenumMesh({
           layout={layout}
           selected={selected}
           labels={selected}
-          labelRotation={-plenum.rotation}
+          labelRotation={readableRotation(-plenum.rotation)}
         />
       ) : (
         <mesh position={[0, 0, plenum.depthMm / 2000]}>
