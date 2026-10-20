@@ -302,10 +302,17 @@ export function recomputeProject(project: Project): Project {
         ? pl.roomId
         : null,
     }));
-  const plenumIds = new Set(p.plenums.map((pl) => pl.id));
+  const plenumUses = new Map(p.plenums.map((pl) => [pl.id, pl.use] as const)),
+    plenumIds = new Set(p.plenums.map((pl) => pl.id));
   p.airTerminals = p.airTerminals.map((t) => ({
     ...t,
-    plenumId: t.plenumId && plenumIds.has(t.plenumId) ? t.plenumId : null,
+    // Ogni bocchetta sta sul plenum del proprio lato: mandata o ripresa.
+    plenumId:
+      t.plenumId &&
+      plenumIds.has(t.plenumId) &&
+      plenumUses.get(t.plenumId) === t.use
+        ? t.plenumId
+        : null,
   }));
   p.ducts = (p.ducts ?? []).filter(
     (d) =>
@@ -341,11 +348,11 @@ export function recomputeProject(project: Project): Project {
               (s) => s.type === "split" && s.roomIds.includes(room.id),
             )
           ? "split"
-        : p.radiators.some((r) => r.roomId === room.id)
-          ? "radiator"
-          : p.fanCoils?.some((u) => u.roomId === room.id)
-            ? "fanCoil"
-            : room.systemType,
+          : p.radiators.some((r) => r.roomId === room.id)
+            ? "radiator"
+            : p.fanCoils?.some((u) => u.roomId === room.id)
+              ? "fanCoil"
+              : room.systemType,
   }));
   return ensureInstallations(p);
 }

@@ -2,7 +2,7 @@ import type { Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "@/domain/project";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { pointInPolygon } from "@/domain/geometry/primitives";
-import { calculateSupplyPlenum } from "./plenum";
+import { calculatePlenum } from "./plenum";
 import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
 
 export function placeDuctedMachine(
@@ -54,8 +54,13 @@ export function placeDuctedMachine(
 }
 
 /** Create a dedicated saved plenum, never shared with a second autonomous machine. */
-export function placeSupplyPlenum(project: Project, systemId: string): Project {
-  if (project.plenums.some((pl) => pl.systemId === systemId)) return project;
+export function placePlenum(
+  project: Project,
+  systemId: string,
+  use: "supply" | "return" = "supply",
+): Project {
+  if (project.plenums.some((pl) => pl.systemId === systemId && pl.use === use))
+    return project;
   const system = project.hvacSystems.find(
     (s) => s.id === systemId && s.type === "ducted",
   );
@@ -65,7 +70,7 @@ export function placeSupplyPlenum(project: Project, systemId: string): Project {
     : placeDuctedMachine(project, systemId);
   const machine = next.hvacSystems.find((s) => s.id === systemId)!
     .indoorUnits[0];
-  const result = calculateSupplyPlenum(next, systemId);
+  const result = calculatePlenum(next, systemId, use);
   const geometry = result.machineGeometry;
   if (
     !geometry?.bodyWidthMm ||
@@ -73,24 +78,29 @@ export function placeSupplyPlenum(project: Project, systemId: string): Project {
     !geometry.totalDepthMm
   )
     throw new Error(
-      "Attacco macchina e stacchi verificati necessari. Nessuna geometria del plenum inventata.",
+      use === "supply"
+        ? "Attacco macchina e stacchi verificati necessari. Nessuna geometria del plenum inventata."
+        : "Raccordo di ripresa della macchina non dichiarato: inserisci larghezza e altezza dell’attacco prima di creare il plenum.",
     );
-  const forward = {
-    x: -Math.sin(machine.rotation),
-    y: Math.cos(machine.rotation),
-  };
+  // La mandata esce davanti alla macchina; la ripresa sta dietro, con la
+  // transizione rivolta verso l'attacco della macchina.
+  const forward =
+    use === "supply"
+      ? { x: -Math.sin(machine.rotation), y: Math.cos(machine.rotation) }
+      : { x: Math.sin(machine.rotation), y: -Math.cos(machine.rotation) };
   const gap = (machine.depthMm + geometry.totalDepthMm) / 2000;
   const room = next.rooms.find((r) => r.id === machine.roomId)!;
   const plenum: Plenum = {
     id: newId(),
     systemId,
+    use,
     floorId: machine.floorId,
     roomId: machine.roomId,
     position: {
       x: machine.position.x + forward.x * gap,
       y: machine.position.y + forward.y * gap,
     },
-    rotation: machine.rotation,
+    rotation: use === "supply" ? machine.rotation : machine.rotation + Math.PI,
     widthMm: geometry.bodyWidthMm,
     heightMm: geometry.bodyHeightMm,
     depthMm: geometry.totalDepthMm,
@@ -98,7 +108,7 @@ export function placeSupplyPlenum(project: Project, systemId: string): Project {
       roomCeilingHeightM(room) -
       Math.max(machine.heightMm, geometry.bodyHeightMm) / 2000 -
       0.05,
-    model: `Su misura / ${result.machineModel ?? system.productId}`,
+    model: `${use === "supply" ? "Mandata" : "Ripresa"} su misura / ${result.machineModel ?? system.productId}`,
     status: "proposed",
     locked: false,
     designSettings: geometry.settings,
@@ -107,12 +117,16 @@ export function placeSupplyPlenum(project: Project, systemId: string): Project {
     ...next,
     plenums: [...next.plenums, plenum],
     airTerminals: next.airTerminals.map((t) =>
-      t.systemId === systemId && t.floorId === machine.floorId
+      t.systemId === systemId && t.floorId === machine.floorId && t.use === use
         ? { ...t, plenumId: plenum.id }
         : t,
     ),
   };
   return next;
+}
+
+export function placeSupplyPlenum(project: Project, systemId: string) {
+  return placePlenum(project, systemId, "supply");
 }
 
 export function moveSystemObject(
@@ -161,9 +175,10 @@ export function moveSystemObject(
 
 /** The same saved dimensions and real outlet list feed 3D and dossier views. */
 export function placedPlenumGeometry(project: Project, plenum: Plenum) {
-  const calculated = calculateSupplyPlenum(
+  const calculated = calculatePlenum(
     project,
     plenum.systemId,
+    plenum.use,
   ).machineGeometry;
   if (!calculated) return null;
   const transition = Math.min(

@@ -92,7 +92,10 @@ export function acceptTerminalProposal(
             unitIndex: null,
             plenumId:
               next.plenums.find(
-                (pl) => pl.systemId === systemId && pl.floorId === t.floorId,
+                (pl) =>
+                  pl.systemId === systemId &&
+                  pl.floorId === t.floorId &&
+                  pl.use === t.use,
               )?.id ?? null,
           },
     );

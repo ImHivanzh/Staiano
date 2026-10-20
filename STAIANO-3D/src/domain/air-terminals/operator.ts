@@ -213,7 +213,9 @@ export function addOperatorTerminal(
         plenumId:
           project.plenums.find(
             (pl) =>
-              pl.systemId === input.systemId && pl.floorId === added.floorId,
+              pl.systemId === input.systemId &&
+              pl.floorId === added.floorId &&
+              pl.use === input.use,
           )?.id ?? null,
       },
     ],

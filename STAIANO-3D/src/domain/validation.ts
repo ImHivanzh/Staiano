@@ -29,7 +29,7 @@ import {
 } from "./geometry/device-envelope";
 import { deviceCodes } from "@/services/export/device-codes";
 import { systemLinearBalances } from "./air-terminals/linear-meters";
-import { calculateSupplyPlenum } from "./ducted/plenum";
+import { calculatePlenum } from "./ducted/plenum";
 import { placedPlenumGeometry } from "./ducted/placement";
 import { pillarFootprint } from "./geometry/pillars";
 import {
@@ -845,7 +845,7 @@ export function validateProject(p: Project): Check[] {
       });
   }
   for (const plenum of p.plenums) {
-    const result = calculateSupplyPlenum(p, plenum.systemId);
+    const result = calculatePlenum(p, plenum.systemId, plenum.use);
     const geometry = placedPlenumGeometry(p, plenum);
     const footprint = footprintCorners(
       plenum.position,

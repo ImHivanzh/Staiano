@@ -20,7 +20,9 @@ export function plenumTechnicalDrawing(
   view: "isometric" | "top" | "front" = "isometric",
 ): TechnicalDrawing | null {
   const result = calculateSupplyPlenum(project, systemId);
-  const plenum = project.plenums.find((pl) => pl.systemId === systemId);
+  const plenum = project.plenums.find(
+    (pl) => pl.systemId === systemId && pl.use === "supply",
+  );
   const geometry = plenum
     ? placedPlenumGeometry(project, plenum)
     : result.machineGeometry;

@@ -87,9 +87,16 @@ export function machinePlenumGeometry(
   machine: HvacProduct | null,
   override?: Partial<MachinePlenumDesignSettings>,
   manual?: ManualDuctedMachine,
+  use: "supply" | "return" = "supply",
+  returnConnection?: ManualDuctedMachine["returnConnection"],
+  /** Ripresa: scatola sul solo raccordo dichiarato se le griglie non quotano gli stacchi. */
+  allowBareInlet = false,
 ): MachinePlenumGeometry {
   const settings = { ...DEFAULT_MACHINE_PLENUM_DESIGN, ...override };
-  const declared = manual?.dischargeConnection;
+  const declared =
+    use === "supply"
+      ? manual?.dischargeConnection
+      : (manual?.returnConnection ?? returnConnection);
   const inlet: PlenumInlet | null = declared
     ? {
         connectionWidthMm: declared.connectionWidthMm,
@@ -120,7 +127,9 @@ export function machinePlenumGeometry(
         sourceMetadata: null,
         declaredManually: true,
       }
-    : hvacDischargeConnection(machine);
+    : use === "supply"
+      ? hvacDischargeConnection(machine)
+      : null;
   const result: MachinePlenumGeometry = {
     machineModel: manual?.model ?? machine?.indoorModel ?? null,
     status: "unavailable",
@@ -137,7 +146,9 @@ export function machinePlenumGeometry(
   };
   if (!inlet) {
     result.issues.push(
-      "Disegno del raccordo di mandata della macchina non disponibile.",
+      use === "supply"
+        ? "Disegno del raccordo di mandata della macchina non disponibile."
+        : "Raccordo di ripresa della macchina non dichiarato: inserisci larghezza e altezza dell’attacco.",
     );
     return result;
   }
@@ -154,6 +165,21 @@ export function machinePlenumGeometry(
       : [],
   );
   if (!valid.length) {
+    if (allowBareInlet && inlet) {
+      const width = roundUp10(inlet.connectionWidthMm);
+      const height = roundUp10(inlet.connectionHeightMm);
+      result.bodyWidthMm = width;
+      result.bodyHeightMm = height;
+      result.transitionDepthMm = 0;
+      result.boxDepthMm = settings.minimumBoxDepthMm;
+      result.totalDepthMm =
+        settings.minimumBoxDepthMm + settings.collarLengthMm;
+      result.status = "pending";
+      result.issues.push(
+        "Nessuno stacco di ripresa con diametro pubblicato: plenum quotato sul solo raccordo macchina. Diametri degli stacchi da verificare prima della fabbricazione.",
+      );
+      return result;
+    }
     result.issues.push(
       "Configurare stacchi verificati dei terminali prima di quotare il plenum.",
     );

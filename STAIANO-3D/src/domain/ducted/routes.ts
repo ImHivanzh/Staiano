@@ -239,7 +239,9 @@ export function generateDuctRoutes(
   project: Project,
   systemId: string,
 ): Project {
-  const plenum = project.plenums.find((pl) => pl.systemId === systemId);
+  const plenum = project.plenums.find(
+    (pl) => pl.systemId === systemId && pl.use === "supply",
+  );
   if (!plenum)
     throw new Error(
       "Posizionare il plenum dedicato alla macchina prima di generare i canali.",

@@ -5,9 +5,9 @@ import Image from "next/image";
 import { PlenumPreview3D } from "@/configurator/viewer3d/PlenumPreview3D";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
-import { formatNumber } from "@/utils/format";
+import { formatNumber, numberFromForm } from "@/utils/format";
 import {
-  calculateSupplyPlenum,
+  calculatePlenum,
   PLENUM_SOURCES,
   type PlenumSettings,
 } from "@/domain/ducted/plenum";
@@ -15,10 +15,7 @@ import {
   plenumBranchGroups,
   plenumDiagramSvg,
 } from "@/domain/ducted/plenum-diagram";
-import {
-  placeDuctedMachine,
-  placeSupplyPlenum,
-} from "@/domain/ducted/placement";
+import { placeDuctedMachine, placePlenum } from "@/domain/ducted/placement";
 import { LinearSummary } from "./OperatorTerminalControls";
 import styles from "./SupplyPlenumPanel.module.css";
 
@@ -29,13 +26,23 @@ export function SupplyPlenumPanel({
   project: Project;
   systemId: string;
 }) {
-  const result = calculateSupplyPlenum(project, systemId);
+  const [use, setUse] = useState<"supply" | "return">("supply");
+  const result = calculatePlenum(project, systemId, use);
   const [show3D, setShow3D] = useState(false);
   const [grouped, setGrouped] = useState(true);
   const groups = plenumBranchGroups(result.branches);
   const { commit } = useProjectStore();
-  const placed = project.plenums.find((pl) => pl.systemId === systemId);
+  const placed = project.plenums.find(
+    (pl) => pl.systemId === systemId && pl.use === use,
+  );
   const system = project.hvacSystems.find((s) => s.id === systemId);
+  const returnConnection = system?.returnConnection;
+  const supplyPlenum = project.plenums.find(
+    (pl) => pl.systemId === systemId && pl.use === "supply",
+  );
+  const returnPlenum = project.plenums.find(
+    (pl) => pl.systemId === systemId && pl.use === "return",
+  );
   const [machineRoomId, setMachineRoomId] = useState(
     system?.indoorUnits[0]?.roomId ?? system?.roomIds[0] ?? "",
   );
@@ -52,17 +59,23 @@ export function SupplyPlenumPanel({
     .map((group) => `${group.quantity} × Ø ${group.diameterMm} mm`)
     .join(" · ");
   const geometry = result.machineGeometry;
+  const side = use === "supply" ? "mandata" : "ripresa";
   const diagramDescription =
     geometry?.bodyWidthMm != null
-      ? `Plenum ${result.machineModel}: corpo proposto ${geometry.bodyWidthMm} × ${geometry.bodyHeightMm} × ${geometry.totalDepthMm} mm, collegato al raccordo macchina documentato.`
-      : `Plenum ${result.machineModel ?? "macchina"}: quote dell’attacco da inserire o verificare`;
+      ? `Plenum di ${side} ${result.machineModel}: corpo proposto ${geometry.bodyWidthMm} × ${geometry.bodyHeightMm} × ${geometry.totalDepthMm} mm, collegato al raccordo macchina dichiarato.`
+      : `Plenum di ${side} ${result.machineModel ?? "macchina"}: quote dell’attacco da inserire o verificare`;
 
   return (
-    <section className={styles.panel} aria-label="Plenum di mandata">
+    <section
+      className={styles.panel}
+      aria-label={use === "supply" ? "Plenum di mandata" : "Plenum di ripresa"}
+    >
       <header className={styles.heading}>
         <Wind size={22} aria-hidden="true" />
         <div>
-          <h3>Plenum di mandata</h3>
+          <h3>
+            {use === "supply" ? "Plenum di mandata" : "Plenum di ripresa"}
+          </h3>
           <p>{result.systemName}</p>
         </div>
         <span
@@ -71,12 +84,32 @@ export function SupplyPlenumPanel({
           role="status"
         >
           {result.status === "ready"
-            ? "Mandata e ripresa complete"
+            ? use === "supply"
+              ? "Mandata completa"
+              : "Ripresa completa"
             : result.status === "unavailable"
               ? "Calcolo in attesa"
               : "Configurazione da completare"}
         </span>
       </header>
+      <div className={styles.actions} role="group" aria-label="Lato del plenum">
+        <button
+          type="button"
+          className="bottone piccolo tenue"
+          aria-pressed={use === "supply"}
+          onClick={() => setUse("supply")}
+        >
+          Plenum di mandata
+        </button>
+        <button
+          type="button"
+          className="bottone piccolo tenue"
+          aria-pressed={use === "return"}
+          onClick={() => setUse("return")}
+        >
+          Plenum di ripresa
+        </button>
+      </div>
       <dl className={styles.metrics}>
         <div>
           <dt>Attacchi richiesti</dt>
@@ -91,8 +124,16 @@ export function SupplyPlenumPanel({
           </dd>
         </div>
         <div>
-          <dt>Portata mandata</dt>
-          <dd>{formatNumber(result.supplyAirflowM3h, 1)} m³/h</dd>
+          <dt>Portata {use === "supply" ? "mandata" : "ripresa"}</dt>
+          <dd>
+            {formatNumber(
+              use === "supply"
+                ? result.supplyAirflowM3h
+                : result.returnAirflowM3h,
+              1,
+            )}{" "}
+            m³/h
+          </dd>
         </div>
       </dl>
       {result.branches.length > 0 && (
@@ -138,10 +179,10 @@ export function SupplyPlenumPanel({
           {!result.branches.length ? (
             <div className={styles.empty}>
               <Wind size={28} aria-hidden="true" />
-              <h4>Prima aggiungi le bocchette</h4>
+              <h4>Prima aggiungi le bocchette di {side}</h4>
               <p>
                 Il numero e il diametro degli attacchi derivano dalle bocchette
-                di mandata inserite.
+                di {side} inserite.
               </p>
             </div>
           ) : (
@@ -156,20 +197,22 @@ export function SupplyPlenumPanel({
                   width={512}
                   height={312}
                   src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(plenumDiagramSvg(result, grouped))}`}
-                  alt={`Schema plenum di mandata: ${result.branches.length} stacchi. ${summary || "Bocchette da configurare"}. ${diagramDescription}`}
+                  alt={`Schema plenum di ${side}: ${result.branches.length} stacchi. ${summary || "Bocchette da configurare"}. ${diagramDescription}`}
                 />
               )}
             </>
           )}
-          <button
-            className="bottone piccolo"
-            type="button"
-            aria-pressed={show3D}
-            onClick={() => setShow3D(!show3D)}
-          >
-            {show3D ? "Chiudi vista 3D plenum" : "Vista 3D plenum"}
-          </button>
-          {show3D && (
+          {use === "supply" && (
+            <button
+              className="bottone piccolo"
+              type="button"
+              aria-pressed={show3D}
+              onClick={() => setShow3D(!show3D)}
+            >
+              {show3D ? "Chiudi vista 3D plenum" : "Vista 3D plenum"}
+            </button>
+          )}
+          {show3D && use === "supply" && (
             <PlenumPreview3D
               project={project}
               systemId={systemId}
@@ -180,9 +223,31 @@ export function SupplyPlenumPanel({
         <div className={styles.setup}>
           <h4>Posa nel progetto</h4>
           <p className={styles.hint}>
-            Un plenum dedicato a questa macchina. Scegli dove posarla, poi crea
-            il plenum.
+            Un plenum per la mandata e uno per la ripresa, dedicati a questa
+            macchina. La ripresa si colloca dal lato opposto della macchina.
           </p>
+          <div
+            className={styles.actions}
+            role="group"
+            aria-label="Plenums della macchina"
+          >
+            <button
+              type="button"
+              className="bottone piccolo tenue"
+              aria-pressed={!!supplyPlenum}
+              onClick={() => setUse("supply")}
+            >
+              Mandata {supplyPlenum ? "· creata" : "· da creare"}
+            </button>
+            <button
+              type="button"
+              className="bottone piccolo tenue"
+              aria-pressed={!!returnPlenum}
+              onClick={() => setUse("return")}
+            >
+              Ripresa {returnPlenum ? "· creata" : "· da creare"}
+            </button>
+          </div>
           <label className="campo">
             <span>Stanza di posa macchina</span>
             <select
@@ -213,20 +278,88 @@ export function SupplyPlenumPanel({
             <button
               className="bottone piccolo chiara"
               onClick={() => {
-                commit((p) => placeSupplyPlenum(p, systemId));
+                commit((p) => placePlenum(p, systemId, use));
                 const state = useProjectStore.getState();
                 const pl = state.project?.plenums.find(
-                  (item) => item.systemId === systemId,
+                  (item) => item.systemId === systemId && item.use === use,
                 );
                 if (pl && !state.error)
                   state.select({ kind: "device", id: pl.id });
               }}
             >
               {placed
-                ? "Seleziona plenum nel progetto"
-                : "Crea plenum dedicato nel progetto"}
+                ? `Seleziona plenum di ${side} nel progetto`
+                : `Crea plenum di ${side} nel progetto`}
             </button>
           </div>
+          {use === "return" && (
+            <form
+              key={`${systemId}-${returnConnection?.connectionWidthMm ?? ""}-${returnConnection?.connectionHeightMm ?? ""}`}
+              onSubmit={(event) => {
+                event.preventDefault();
+                const data = new FormData(event.currentTarget);
+                const connectionWidthMm = numberFromForm(
+                  data.get("returnWidthMm"),
+                );
+                const connectionHeightMm = numberFromForm(
+                  data.get("returnHeightMm"),
+                );
+                commit((p) => ({
+                  ...p,
+                  hvacSystems: p.hvacSystems.map((s) =>
+                    s.id === systemId
+                      ? {
+                          ...s,
+                          returnConnection: {
+                            connectionWidthMm,
+                            connectionHeightMm,
+                            dimensionBasis: "ductOpening" as const,
+                          },
+                        }
+                      : s,
+                  ),
+                }));
+              }}
+            >
+              <fieldset>
+                <legend>Attacco di ripresa dichiarato</legend>
+                <p className={styles.hint}>
+                  Quote dell’attacco di ripresa della macchina, come pubblicate
+                  o rilevate: servono per quotare il plenum. Nessuna misura è
+                  dedotta dall’ingombro.
+                </p>
+                <label className="campo">
+                  <span>Larghezza attacco ripresa (mm)</span>
+                  <input
+                    type="number"
+                    name="returnWidthMm"
+                    min="1"
+                    step="1"
+                    required
+                    defaultValue={
+                      returnConnection?.connectionWidthMm ?? undefined
+                    }
+                  />
+                </label>
+                <label className="campo">
+                  <span>Altezza attacco ripresa (mm)</span>
+                  <input
+                    type="number"
+                    name="returnHeightMm"
+                    min="1"
+                    step="1"
+                    required
+                    defaultValue={
+                      returnConnection?.connectionHeightMm ?? undefined
+                    }
+                  />
+                </label>
+                <button type="submit" className="bottone piccolo">
+                  Salva attacco di ripresa
+                </button>
+              </fieldset>
+            </form>
+          )}
           <div className={styles.checks} aria-label="Verifiche del plenum">
             <p>
               <strong>Mandata</strong>
@@ -236,10 +369,11 @@ export function SupplyPlenumPanel({
                   ? "—"
                   : formatNumber(result.machineAirflowM3h, 1)}{" "}
                 m³/h
+                {!result.supplyComplete && " · da completare"}
               </span>
             </p>
             <p>
-              <strong>Ripresa separata</strong>
+              <strong>Ripresa</strong>
               <span>
                 {result.returnTerminalCount} bocchette ·{" "}
                 {formatNumber(result.returnAirflowM3h, 1)} m³/h
@@ -247,15 +381,23 @@ export function SupplyPlenumPanel({
               </span>
             </p>
           </div>
-          {result.pendingSupplyPoints.length > 0 && (
+          {result.pendingSupplyPoints.length > 0 && use === "supply" && (
             <p className={styles.notice}>
               Mancano {result.pendingSupplyPoints.length} punti di mandata. Gli
               stacchi mostrati appartengono alle bocchette già inserite.
             </p>
           )}
+          {result.pendingReturnPoints.length > 0 && use === "return" && (
+            <p className={styles.notice}>
+              Mancano {result.pendingReturnPoints.length} punti di ripresa. Gli
+              stacchi mostrati appartengono alle bocchette già inserite.
+            </p>
+          )}
           {result.branches.length > 0 && !geometry?.bodyWidthMm && (
             <p className={styles.notice}>
-              Attacco macchina da specificare prima di quotare il plenum.
+              {use === "supply"
+                ? "Attacco macchina da specificare prima di quotare il plenum."
+                : "Raccordo di ripresa della macchina da dichiarare prima di quotare il plenum."}
             </p>
           )}
           <p className={styles.hint}>

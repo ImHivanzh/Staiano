@@ -11,6 +11,26 @@ export const DECISION_ORIGINS = [
 ] as const;
 const id = z.string().min(1).max(120);
 const finite = z.number().finite();
+/** Quote dell'attacco dichiarate dall'operatore, mai dedotte dall'ingombro. */
+export const connectionDeclarationSchema = z.object({
+  connectionWidthMm: finite.positive(),
+  connectionHeightMm: finite.positive(),
+  dimensionBasis: z.enum(["ductOpening", "flangeMountingSpan"]).optional(),
+  clearOpeningWidthMm: finite.positive().optional(),
+  clearOpeningHeightMm: finite.positive().optional(),
+  collarDepthMm: finite.positive().optional(),
+  flangeOuterWidthMm: finite.positive().optional(),
+  flangeOuterHeightMm: finite.positive().optional(),
+  holePattern: z
+    .object({
+      diameterMm: finite.positive(),
+      horizontalPitchMm: finite.positive(),
+      horizontalCount: z.number().int().positive(),
+      rows: z.number().int().positive(),
+      verticalPitchMm: finite.positive().optional(),
+    })
+    .optional(),
+});
 export const manualDuctedMachineSchema = z.object({
   manufacturer: z.string().trim().min(1).max(100),
   model: z.string().trim().min(1).max(100),
@@ -20,27 +40,8 @@ export const manualDuctedMachineSchema = z.object({
   widthMm: finite.positive().optional(),
   heightMm: finite.positive().optional(),
   depthMm: finite.positive().optional(),
-  dischargeConnection: z
-    .object({
-      connectionWidthMm: finite.positive(),
-      connectionHeightMm: finite.positive(),
-      dimensionBasis: z.enum(["ductOpening", "flangeMountingSpan"]).optional(),
-      clearOpeningWidthMm: finite.positive().optional(),
-      clearOpeningHeightMm: finite.positive().optional(),
-      collarDepthMm: finite.positive().optional(),
-      flangeOuterWidthMm: finite.positive().optional(),
-      flangeOuterHeightMm: finite.positive().optional(),
-      holePattern: z
-        .object({
-          diameterMm: finite.positive(),
-          horizontalPitchMm: finite.positive(),
-          horizontalCount: z.number().int().positive(),
-          rows: z.number().int().positive(),
-          verticalPitchMm: finite.positive().optional(),
-        })
-        .optional(),
-    })
-    .optional(),
+  dischargeConnection: connectionDeclarationSchema.optional(),
+  returnConnection: connectionDeclarationSchema.optional(),
 });
 export type ManualDuctedMachine = z.infer<typeof manualDuctedMachineSchema>;
 export const pointSchema = z.object({
@@ -213,6 +214,8 @@ export type LinearPlan = z.infer<typeof linearPlanSchema>;
 export const plenumSchema = z.object({
   id,
   systemId: id,
+  /** Un plenum di ripresa, uno di mandata: raccolgono bocchette di quel lato. */
+  use: z.enum(["supply", "return"]).default("supply"),
   floorId: id,
   roomId: id.nullable(),
   position: pointSchema,
@@ -333,6 +336,8 @@ export const projectSchema = z
           fanCoilId: id.optional(),
           /** Macchine previste sugli stessi ambienti: il carico si divide. */
           plannedMachines: z.number().int().min(1).max(100).optional(),
+          /** Attacco di ripresa dichiarato: serve al plenum di ripresa. */
+          returnConnection: connectionDeclarationSchema.optional(),
           dataOrigin: z.enum(["catalog", "manual", "fanCoil"]).optional(),
           airflowM3h: finite.positive().nullable(),
           catalogVersion: z.string().max(100),
@@ -740,6 +745,7 @@ export const projectSchema = z
           message:
             "Punto bocchetta in attesa senza macchina di destinazione coerente",
         });
+    const plenumUses = new Set<string>();
     for (const pl of p.plenums) {
       const system = p.hvacSystems.find((s) => s.id === pl.systemId);
       if (!system || system.type !== "ducted")
@@ -747,6 +753,13 @@ export const projectSchema = z
           code: "custom",
           message: "Plenum senza sistema canalizzato coerente",
         });
+      const useKey = `${pl.systemId}:${pl.use}`;
+      if (plenumUses.has(useKey))
+        ctx.addIssue({
+          code: "custom",
+          message: "Due plenums dello stesso lato sulla stessa macchina",
+        });
+      plenumUses.add(useKey);
       if (
         pl.roomId &&
         !system?.roomIds.includes(pl.roomId) &&
@@ -763,7 +776,8 @@ export const projectSchema = z
       if (
         t.plenumId &&
         (plenumIds.get(t.plenumId)?.systemId !== t.systemId ||
-          plenumIds.get(t.plenumId)?.floorId !== t.floorId)
+          plenumIds.get(t.plenumId)?.floorId !== t.floorId ||
+          plenumIds.get(t.plenumId)?.use !== t.use)
       )
         ctx.addIssue({
           code: "custom",

@@ -14,7 +14,11 @@ import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { ductedRoomAllocation } from "@/domain/ducted/apply";
 import { machineLoadDivisor } from "@/domain/ducted/machine";
 import { calculateEcoclimaBom } from "@/domain/air-terminals/commercial-bom";
-import { calculateSupplyPlenum, PLENUM_SOURCES } from "@/domain/ducted/plenum";
+import {
+  calculatePlenum,
+  calculateSupplyPlenum,
+  PLENUM_SOURCES,
+} from "@/domain/ducted/plenum";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
@@ -964,7 +968,8 @@ export async function renderDossierPdf(
       const plenum = calculateSupplyPlenum(p, system.id);
       const machineName = `${data.codes.get(system.id)} · ${system.manufacturer} ${plenum.machineModel ?? system.productId}`;
       const placed = p.plenums.find(
-        (candidate) => candidate.systemId === system.id,
+        (candidate) =>
+          candidate.systemId === system.id && candidate.use === "supply",
       );
       const geometry = placed
         ? placedPlenumGeometry(p, placed)
@@ -1046,6 +1051,18 @@ export async function renderDossierPdf(
         [0.35, 0.22, 0.23, 0.2],
       );
       for (const issue of issues) paragraph(issue, 8, muted);
+      const returnPlenum = p.plenums.find(
+        (candidate) =>
+          candidate.systemId === system.id && candidate.use === "return",
+      );
+      if (returnPlenum) {
+        const returned = calculatePlenum(p, system.id, "return");
+        ensure(48);
+        paragraph(
+          `Plenum di ripresa ${data.codes.get(returnPlenum.id)}: ${returned.branches.length} stacchi, corpo ${n(returnPlenum.widthMm)} × ${n(returnPlenum.heightMm)} × ${n(returnPlenum.depthMm)} mm.${returned.branches.some((branch) => branch.diameterMm === null) ? " Diametri degli stacchi di ripresa da verificare." : ""}`,
+          9,
+        );
+      }
     }
     newPage("Anomalie e limiti del riepilogo");
     const detailed = data.checks.filter(
@@ -2210,7 +2227,9 @@ export async function renderDossierPdf(
       paragraph(
         `Macchina: ${machineName}. ${plenum.branches.length} stacchi di mandata; ripresa separata: ${plenum.returnTerminalCount} bocchette. Stato: ${plenum.status === "ready" ? "dati mandata e ripresa completi" : "configurazione da completare"}.`,
       );
-      const placed = p.plenums.find((pl) => pl.systemId === system.id);
+      const placed = p.plenums.find(
+        (pl) => pl.systemId === system.id && pl.use === "supply",
+      );
       const actualGeometry = placed
         ? placedPlenumGeometry(p, placed)
         : plenum.machineGeometry;

@@ -21,6 +21,7 @@ const branch = (
 });
 const branches = Array.from({ length: 6 }, (_, i) => branch(`port-${i}`, 145));
 const result: SupplyPlenum = {
+  use: "supply",
   systemId: "system",
   systemName: "Mandata",
   machineModel: "Macchina <test>",

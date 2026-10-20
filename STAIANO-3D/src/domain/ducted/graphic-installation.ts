@@ -407,7 +407,9 @@ export function connectTerminalOnPlan(
   const ids = new Set(members.map((member) => member.id));
   const plenum = project.plenums.find(
     (plenum) =>
-      plenum.systemId === systemId && plenum.floorId === terminal.floorId,
+      plenum.systemId === systemId &&
+      plenum.floorId === terminal.floorId &&
+      plenum.use === terminal.use,
   );
   const connected = refreshDuctedBindings({
     ...project,

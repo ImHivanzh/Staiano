@@ -66,6 +66,8 @@ export type PlenumBranch = {
 };
 export type SupplyPlenum = {
   machineGeometry?: MachinePlenumGeometry;
+  /** Lato del plenum calcolato: uno di mandata, uno di ripresa. */
+  use: "supply" | "return";
   systemId: string;
   systemName: string;
   machineModel: string | null;
@@ -167,9 +169,10 @@ function terminalVerified(terminal: Terminal, requireCapacity = true) {
 }
 
 /** Independent result for one autonomous machine. Return terminals never create supply outlets. */
-export function calculateSupplyPlenum(
+export function calculatePlenum(
   project: Project,
   systemId: string,
+  use: "supply" | "return" = "supply",
   override?: PlenumSettings,
 ): SupplyPlenum {
   const system = project.hvacSystems.find(
@@ -181,6 +184,7 @@ export function calculateSupplyPlenum(
     ...override,
   };
   const result: SupplyPlenum = {
+    use,
     systemId,
     systemName: system?.name || system?.manufacturer || "Canalizzato",
     machineModel: null,
@@ -390,15 +394,18 @@ export function calculateSupplyPlenum(
   }
   const connections = terminalSupplyConnections(project, systemId);
   const sourceBranches: PlenumBranch[] = [];
-  for (const terminal of terminals.filter((t) => t.use === "supply")) {
+  for (const terminal of terminals.filter((t) => t.use === use)) {
     const family = airTerminalFamilyAtVersion(
       terminal.family,
       terminal.catalogVersion,
     );
     const variant = family?.variants.find((v) => v.id === terminal.productId);
-    const supplied = connections.connections.filter(
-      (c) => c.terminalId === terminal.id,
-    );
+    // Gli stacchi commerciali del plenum esistono solo per la mandata: la
+    // ripresa usa il diametro pubblicato della griglia.
+    const supplied =
+      use === "supply"
+        ? connections.connections.filter((c) => c.terminalId === terminal.id)
+        : [];
     const direct = variant?.connectionDiametersMm?.length
       ? variant.connectionDiametersMm
       : variant?.connectionDiameterMm
@@ -482,9 +489,12 @@ export function calculateSupplyPlenum(
   result.machineGeometry = machinePlenumGeometry(
     result.branches,
     machine,
-    project.plenums.find((pl) => pl.systemId === systemId)?.designSettings ??
-      undefined,
+    project.plenums.find((pl) => pl.systemId === systemId && pl.use === use)
+      ?.designSettings ?? undefined,
     system.genericMachine,
+    use,
+    system.returnConnection,
+    use === "return",
   );
   const groupedDiameters = new Map<number, number>();
   for (const branch of result.branches)
@@ -497,10 +507,23 @@ export function calculateSupplyPlenum(
     .sort(([a], [b]) => a - b)
     .map(([diameterMm, quantity]) => ({ diameterMm, quantity }));
   result.status =
-    result.supplyComplete &&
-    result.returnComplete &&
+    (use === "supply" ? result.supplyComplete : result.returnComplete) &&
     result.branches.every((b) => b.verified)
       ? "ready"
       : "pending";
   return result;
+}
+
+/** Compatibilità: il plenum di mandata è il caso storico. */
+export function calculateSupplyPlenum(
+  project: Project,
+  systemId: string,
+  override?: PlenumSettings,
+) {
+  const result = calculatePlenum(project, systemId, "supply", override);
+  // Il plenum storico dichiara pronto l'impianto solo con mandata e ripresa
+  // complete: il nuovo pannello, invece, valuta il singolo lato.
+  return result.status === "ready" && !result.returnComplete
+    ? { ...result, status: "pending" as const }
+    : result;
 }

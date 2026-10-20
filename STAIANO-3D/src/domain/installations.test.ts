@@ -235,6 +235,7 @@ it("deletes a ducted installation and its terminals, plenum and ducts, preservin
   const firstPlenum = {
     id: crypto.randomUUID(),
     systemId: firstSystemId,
+    use: "supply" as const,
     floorId: project.floors[0].id,
     roomId: project.rooms[0].id,
     position: { x: 2, y: 2 },

@@ -360,7 +360,9 @@ export function PlenumPreview3D({
   const product = system
     ? hvacProductAtVersion(system.productId, system.catalogVersion)
     : null;
-  const savedPlenum = project.plenums.find((pl) => pl.systemId === systemId);
+  const savedPlenum = project.plenums.find(
+    (pl) => pl.systemId === systemId && pl.use === "supply",
+  );
   const codes = deviceCodes(project);
   const dimensions = system?.genericMachine ?? product;
   const machine: [number, number, number] | null =
