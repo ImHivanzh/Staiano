@@ -5,6 +5,7 @@ import { footprintInsideRoom } from "./footprint";
 import { positionAlongRoomWall, roomWallSpan } from "./placement";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { snapTerminalPose } from "./terminal-snap";
+import { ceilingFrontPose, ceilingHeightAt } from "./ceilings";
 import type { SnapOptions } from "./primitives";
 import { moveSystemObject } from "@/domain/ducted/placement";
 import {
@@ -141,8 +142,10 @@ export function movePlacedDevice(
     throw new Error(
       "Terminale legacy: riconfigurare il montaggio nella stanza prima di spostarlo.",
     );
-  if (terminal && snap) {
-    const pose = snapTerminalPose(project, deviceId, target, snap);
+  if (terminal && (snap || terminal.ceilingBandId)) {
+    const pose = terminal.ceilingBandId
+      ? ceilingFrontPose(project, terminal, target)
+      : snapTerminalPose(project, deviceId, target, snap!);
     return {
       ...project,
       airTerminals: project.airTerminals.map((t) =>
@@ -153,11 +156,19 @@ export function movePlacedDevice(
               roomId: pose.roomId,
               wallId: pose.wallId,
               rotation: pose.rotation,
+              ceilingBandId: pose.ceilingBandId,
+              ceilingEdge: pose.ceilingEdge,
               decisionOrigin: "manual",
               elevationM:
-                t.mounting === "ceiling"
-                  ? project.rooms.find((r) => r.id === pose.roomId)!.heightM
-                  : t.elevationM,
+                "elevationM" in pose
+                  ? pose.elevationM
+                  : t.mounting === "ceiling"
+                    ? ceilingHeightAt(
+                        project,
+                        project.rooms.find((r) => r.id === pose.roomId)!,
+                        pose.position,
+                      )
+                    : t.elevationM,
             }
           : t,
       ),
@@ -187,7 +198,7 @@ export function movePlacedDevice(
               roomId: room.id,
               position: target,
               wallId: null,
-              elevationM: room.heightM,
+              elevationM: ceilingHeightAt(project, room, target),
             }
           : u,
       ),

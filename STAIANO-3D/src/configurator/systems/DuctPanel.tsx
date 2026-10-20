@@ -4,6 +4,7 @@ import {
   ductLength,
   ductRoute,
   generateDuctRoutes,
+  setDuctKind,
 } from "@/domain/ducted/routes";
 import { useProjectStore } from "@/stores/project-store";
 import { deviceCodes } from "@/services/export/device-codes";
@@ -12,9 +13,11 @@ import { formatNumber, numberFromForm } from "@/utils/format";
 export function DuctPanel({
   project,
   systemId,
+  onEdit3D,
 }: {
   project: Project;
   systemId: string;
+  onEdit3D?: () => void;
 }) {
   const { commit } = useProjectStore();
   const ducts = project.ducts?.filter((d) => d.systemId === systemId) ?? [];
@@ -30,7 +33,7 @@ export function DuctPanel({
       <p className="nota">
         Per disegnare il canale a mano: strumento <strong>Canale</strong> (K) in
         pianta, clicca la bocchetta, traccia i punti e premi Invio. Il percorso
-        e la sezione rettangolare compaiono in pianta e in 3D.
+        e il tubo compaiono in pianta e in 3D.
       </p>
       <button
         className="bottone piccolo"
@@ -50,12 +53,104 @@ export function DuctPanel({
           <summary>
             {codes.get(duct.id)} ·{" "}
             {duct.terminalId ? codes.get(duct.terminalId) : "Macchina → plenum"}{" "}
-            ·{" "}
+            · {duct.kind === "flexible" ? "Flessibile" : "Rigido"} ·{" "}
             {duct.shape === "circle"
               ? `Ø ${duct.diameterMm} mm`
               : `${duct.widthMm} × ${duct.heightMm} mm`}
           </summary>
+          <button
+            className="bottone piccolo"
+            disabled={duct.locked}
+            onClick={() => {
+              const route = ductRoute(project, duct);
+              if (!duct.waypoints.length && route.length > 1) {
+                const first = route[0],
+                  last = route.at(-1)!;
+                commit((p) => ({
+                  ...p,
+                  ducts: p.ducts?.map((d) =>
+                    d.id === duct.id
+                      ? {
+                          ...d,
+                          routing: "manual",
+                          waypoints: [
+                            {
+                              x: (first.x + last.x) / 2,
+                              y: (first.y + last.y) / 2,
+                              elevationM:
+                                (first.elevationM + last.elevationM) / 2,
+                            },
+                          ],
+                        }
+                      : d,
+                  ),
+                }));
+              }
+              useProjectStore.setState({
+                view: "3d",
+                selection: [{ kind: "device", id: duct.id }],
+              });
+              onEdit3D?.();
+            }}
+          >
+            Modifica percorso in 3D
+          </button>
+          <button
+            className="bottone piccolo tenue"
+            disabled={duct.locked}
+            onClick={() => {
+              const points = ductRoute(project, duct);
+              if (points.length < 2) return;
+              const first = points.at(-2)!,
+                last = points.at(-1)!;
+              commit((p) => ({
+                ...p,
+                ducts: p.ducts?.map((d) =>
+                  d.id === duct.id
+                    ? {
+                        ...d,
+                        routing: "manual",
+                        waypoints: [
+                          ...d.waypoints,
+                          {
+                            x: (first.x + last.x) / 2,
+                            y: (first.y + last.y) / 2,
+                            elevationM:
+                              (first.elevationM + last.elevationM) / 2,
+                          },
+                        ],
+                      }
+                    : d,
+                ),
+              }));
+            }}
+          >
+            Aggiungi punto percorso
+          </button>
+          <label className="campo">
+            <span>Tipo di canale</span>
+            <select
+              aria-label={`Tipo del canale ${codes.get(duct.id) ?? duct.id}`}
+              value={duct.kind}
+              disabled={duct.locked}
+              onChange={(e) =>
+                commit((p) =>
+                  setDuctKind(
+                    p,
+                    duct.id,
+                    e.target.value as "rigid" | "flexible",
+                  ),
+                )
+              }
+            >
+              <option value="rigid">Rigido · sezione rettangolare</option>
+              <option value="flexible">
+                Flessibile · tubo corrugato tondo
+              </option>
+            </select>
+          </label>
           <form
+            key={JSON.stringify(duct.waypoints)}
             onSubmit={(e) => {
               e.preventDefault();
               const data = new FormData(e.currentTarget);
@@ -123,7 +218,13 @@ export function DuctPanel({
           </label>
           <button
             className="bottone piccolo tenue"
-            disabled={duct.locked}
+            disabled={
+              duct.locked ||
+              project.plenums.some(
+                (p) => p.id === duct.plenumId && !!p.attachmentId,
+              )
+            }
+            title="I flessibili del plenum si rimuovono eliminando il plenum o scollegando la bocchetta dalla macchina."
             onClick={() =>
               commit((p) => ({
                 ...p,

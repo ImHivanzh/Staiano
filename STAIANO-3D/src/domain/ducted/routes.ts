@@ -13,8 +13,42 @@ import {
 } from "../geometry/primitives";
 import { linearRunMembers } from "../air-terminals/linear-run";
 import { needsTerminalReconfiguration } from "../air-terminals/legacy";
+import { attachedPlenumPorts, syncAttachedPlenums } from "./attached-plenums";
 
 export type RoutePoint = Point & { elevationM: number };
+
+/** A flexible duct starts on the machine discharge face, including when its grille has its own plenum. */
+function machineDuctStart(project: Project, duct: Duct): RoutePoint | null {
+  const machine = project.hvacSystems.find((s) => s.id === duct.systemId)
+    ?.indoorUnits[0];
+  if (!machine) return null;
+  const branches = (project.ducts ?? []).filter(
+    (d) => d.systemId === duct.systemId && d.terminalId,
+  );
+  const index = Math.max(
+    0,
+    branches.findIndex((d) => d.id === duct.id),
+  );
+  const along =
+    ((((index + 0.5) / Math.max(1, branches.length) - 0.5) * machine.widthMm) /
+      1000) *
+    0.8;
+  const forward = machine.depthMm / 2000;
+  return {
+    x:
+      machine.position.x +
+      along * Math.cos(machine.rotation) -
+      forward * Math.sin(machine.rotation),
+    y:
+      machine.position.y +
+      along * Math.sin(machine.rotation) +
+      forward * Math.cos(machine.rotation),
+    elevationM:
+      (project.rooms.find((r) => r.id === machine.roomId)?.heightM ?? 2.7) -
+      machine.heightMm / 2000 -
+      0.05,
+  };
+}
 
 /** Sezione rettangolare equivalente allo stacco circolare, con proporzione 2:1. */
 export function rectangularSection(diameterMm: number) {
@@ -106,18 +140,31 @@ export function airConnectionRoutes(project: Project, floorId: string) {
     )?.indoorUnits[0];
     if (!machine || machine.floorId !== floorId || terminal.elevationM === null)
       return [];
+    const returnPlenum =
+      terminal.use === "return"
+        ? project.plenums.find(
+            (p) =>
+              p.systemId === terminal.systemId &&
+              p.use === "return" &&
+              p.attachmentId === machine.id,
+          )
+        : undefined;
+    const machinePoint = returnPlenum
+      ? attachedPlenumPorts(project, returnPlenum)[0]
+      : nearestFootprintEdge(machine, terminal.position);
     const route = indoorRoute(
       project,
       floorId,
-      nearestFootprintEdge(machine, terminal.position),
+      machinePoint,
       terminal.position,
     );
     if (route.length < 2) return [];
-    const startElevation =
-      (project.rooms.find((room) => room.id === machine.roomId)?.heightM ??
-        2.7) -
-      machine.heightMm / 2000 -
-      0.05;
+    const startElevation = returnPlenum
+      ? (returnPlenum.elevationM ?? 2)
+      : (project.rooms.find((room) => room.id === machine.roomId)?.heightM ??
+          2.7) -
+        machine.heightMm / 2000 -
+        0.05;
     const endElevation = terminal.elevationM;
     const points = route.map((point, index) => ({
       ...point,
@@ -166,6 +213,28 @@ export function ductRoute(
 ): RoutePoint[] {
   const plenum = project.plenums.find((pl) => pl.id === duct.plenumId);
   if (!plenum) return [];
+  if (plenum.attachmentId) {
+    const machine = project.hvacSystems.find((s) => s.id === duct.systemId)
+      ?.indoorUnits[0];
+    const terminal = project.airTerminals.find((t) => t.id === duct.terminalId);
+    if (!machine || !terminal) return [];
+    const end = attachedPlenumPorts(project, plenum)[
+      Number(duct.branchId?.split(":").at(-1) ?? 0)
+    ];
+    if (!end) return [];
+    const start = machineDuctStart(project, duct)!;
+    if (duct.routing === "manual") return [start, ...duct.waypoints, end];
+    const automatic = indoorRoute(project, plenum.floorId, start, end);
+    return automatic.length
+      ? [
+          start,
+          ...automatic
+            .slice(1, -1)
+            .map((p) => ({ ...p, elevationM: start.elevationM })),
+          end,
+        ]
+      : [];
+  }
   const geometry =
     suppliedGeometry === undefined
       ? placedPlenumGeometry(project, plenum)
@@ -174,11 +243,15 @@ export function ductRoute(
     const terminal = project.airTerminals.find((t) => t.id === duct.terminalId);
     const port = geometry?.ports.find((p) => p.branch.id === duct.branchId);
     if (!terminal || !port) return [];
-    const start = plenumLocalToPlan(plenum, [
-      port.centerMm[0] / 1000,
-      port.centerMm[1] / 1000,
-      (port.centerMm[2] + port.collarLengthMm) / 1000,
-    ]);
+    const start =
+      duct.kind === "flexible"
+        ? machineDuctStart(project, duct)
+        : plenumLocalToPlan(plenum, [
+            port.centerMm[0] / 1000,
+            port.centerMm[1] / 1000,
+            (port.centerMm[2] + port.collarLengthMm) / 1000,
+          ]);
+    if (!start) return [];
     const end = { ...terminal.position, elevationM: terminal.elevationM ?? 0 };
     const automatic =
       duct.routing === "manual"
@@ -250,6 +323,8 @@ export function generateDuctRoutes(
   project: Project,
   systemId: string,
 ): Project {
+  if (project.plenums.some((p) => p.systemId === systemId && p.attachmentId))
+    return syncAttachedPlenums(project);
   const plenum = project.plenums.find(
     (pl) => pl.systemId === systemId && pl.use === "supply",
   );
@@ -283,6 +358,7 @@ export function generateDuctRoutes(
       plenumId: plenum.id,
       terminalId,
       branchId,
+      kind: "rigid",
       diameterMm,
       shape: "rectangle",
       widthMm: terminalId
@@ -310,16 +386,41 @@ export function generateDuctRoutes(
 
 /**
  * Salva il percorso tracciato in pianta per il canale di una bocchetta.
- * Sezione rettangolare equivalente allo stacco, elevazione del plenum.
+ * Flessibile: tubo corrugato tondo dello stacco; rigido: sezione rettangolare.
  */
 export function setDuctRoute(
   project: Project,
   terminalId: string,
   points: Point[],
+  kind: "rigid" | "flexible" = "rigid",
 ): Project {
   const terminal = project.airTerminals.find((item) => item.id === terminalId);
   if (!terminal || !terminal.systemId)
     throw new Error("Collegare prima la bocchetta alla macchina.");
+  const attached = project.plenums.find((p) => p.attachmentId === terminal.id);
+  if (attached) {
+    const next = syncAttachedPlenums(project);
+    return {
+      ...next,
+      ducts: next.ducts?.map((d) =>
+        d.plenumId === attached.id
+          ? {
+              ...d,
+              kind: "flexible",
+              shape: "circle",
+              widthMm: null,
+              heightMm: null,
+              routing: "manual",
+              waypoints: points.map((p) => ({
+                ...p,
+                elevationM: attached.elevationM ?? 2,
+              })),
+              decisionOrigin: "manual",
+            }
+          : d,
+      ),
+    };
+  }
   const plenum =
     project.plenums.find((pl) => pl.id === terminal.plenumId) ??
     project.plenums.find(
@@ -338,6 +439,7 @@ export function setDuctRoute(
   const elevationM =
     (plenum.elevationM ?? 2) + (port ? port.centerMm[1] / 1000 : 0);
   const section = rectangularSection(port?.diameterMm ?? 100);
+  const flexibleDiameterMm = port?.diameterMm ?? 100;
   const waypoints = points.map((point) => ({ ...point, elevationM }));
   // La bocchetta resta agganciata al plenum del proprio lato.
   const linked: Project =
@@ -360,10 +462,17 @@ export function setDuctRoute(
           ? {
               ...duct,
               branchId: port?.branch.id ?? duct.branchId,
-              diameterMm: port?.diameterMm ?? duct.diameterMm,
-              shape: "rectangle" as const,
-              widthMm: section.widthMm,
-              heightMm: section.heightMm,
+              kind,
+              diameterMm:
+                kind === "flexible"
+                  ? flexibleDiameterMm
+                  : (port?.diameterMm ?? duct.diameterMm),
+              shape:
+                kind === "flexible"
+                  ? ("circle" as const)
+                  : ("rectangle" as const),
+              widthMm: kind === "flexible" ? null : section.widthMm,
+              heightMm: kind === "flexible" ? null : section.heightMm,
               routing: "manual" as const,
               waypoints,
               decisionOrigin: "manual" as const,
@@ -377,16 +486,52 @@ export function setDuctRoute(
     plenumId: plenum.id,
     terminalId: terminal.id,
     branchId: port?.branch.id ?? null,
-    shape: "rectangle",
-    diameterMm: port?.diameterMm ?? null,
-    widthMm: section.widthMm,
-    heightMm: section.heightMm,
+    kind,
+    shape: kind === "flexible" ? "circle" : "rectangle",
+    diameterMm:
+      kind === "flexible" ? flexibleDiameterMm : (port?.diameterMm ?? null),
+    widthMm: kind === "flexible" ? null : section.widthMm,
+    heightMm: kind === "flexible" ? null : section.heightMm,
     routing: "manual",
     waypoints,
     decisionOrigin: "manual",
     locked: false,
   };
   return { ...linked, ducts: [...(linked.ducts ?? []), duct] };
+}
+
+/** Cambia rigido/flessibile mantenendo percorso e diametro dello stacco. */
+export function setDuctKind(
+  project: Project,
+  ductId: string,
+  kind: "rigid" | "flexible",
+): Project {
+  return {
+    ...project,
+    ducts: (project.ducts ?? []).map((duct) => {
+      if (duct.id !== ductId) return duct;
+      if (kind === "flexible")
+        return {
+          ...duct,
+          kind,
+          shape: "circle" as const,
+          diameterMm: duct.diameterMm ?? 100,
+          widthMm: null,
+          heightMm: null,
+        };
+      const section =
+        duct.widthMm && duct.heightMm
+          ? { widthMm: duct.widthMm, heightMm: duct.heightMm }
+          : rectangularSection(duct.diameterMm ?? 100);
+      return {
+        ...duct,
+        kind,
+        shape: "rectangle" as const,
+        widthMm: section.widthMm,
+        heightMm: section.heightMm,
+      };
+    }),
+  };
 }
 
 export const ductLength = (points: RoutePoint[]) =>

@@ -2,8 +2,7 @@ import type { buildDossier } from "./dossier";
 import { encryptDossier } from "./dossier-crypto";
 import publicKey from "../../../dossier-guide/public-key.json";
 
-export const DOSSIER_GUIDE_URL =
-  "https://staiano-dossier.ivanbuonocore7.workers.dev/";
+export const DOSSIER_GUIDE_URL = "https://impianto.staianopoint.com/";
 
 /** Only ciphertext leaves the app; the Worker's private key is never distributed. */
 export async function dossierGuideLink(

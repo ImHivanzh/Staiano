@@ -8,6 +8,7 @@ import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { editOperatorTerminal } from "@/domain/air-terminals/operator";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
+import { moveHvacOutdoorUnit } from "@/domain/air-conditioning/outdoor";
 import { moveHydronicOutdoorUnit } from "@/domain/hydronic/apply";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
 
@@ -45,9 +46,12 @@ export function DeviceTransform({
   );
   const unit = system?.indoorUnits.find((u) => u.id === id);
   const fanCoil = project.fanCoils?.find((u) => u.id === id);
-  const outdoor = project.hydronicSystems?.find(
+  const hydronicOutdoor = project.hydronicSystems?.find(
     (s) => s.outdoorUnit.id === id,
   )?.outdoorUnit;
+  const outdoor =
+    hydronicOutdoor ??
+    project.hvacSystems.find((s) => s.outdoorUnit?.id === id)?.outdoorUnit;
   const item = t ?? plenum ?? pillar ?? fanCoil ?? outdoor ?? unit;
   const validLength = t
     ? airTerminalFamilyAtVersion(t.family, t.catalogVersion)?.isLinearPerMeter
@@ -74,6 +78,15 @@ export function DeviceTransform({
     (p: Project): Project => {
       const object = proxy.current;
       if (!object || !item) return p;
+      if (mode === "translate" && outdoor) {
+        const patch = {
+          position: { x: object.position.x, y: object.position.z },
+          elevationM: object.position.y,
+        };
+        return hydronicOutdoor
+          ? moveHydronicOutdoorUnit(p, id, patch)
+          : moveHvacOutdoorUnit(p, id, patch);
+      }
       if (mode === "translate")
         return movePlacedDevice(
           p,
@@ -83,7 +96,10 @@ export function DeviceTransform({
         );
       const rotation = -object.rotation.y;
       const widthMm = Math.max(1, item.widthMm * object.scale.x);
-      if (outdoor) return moveHydronicOutdoorUnit(p, id, { rotation });
+      if (outdoor)
+        return hydronicOutdoor
+          ? moveHydronicOutdoorUnit(p, id, { rotation })
+          : moveHvacOutdoorUnit(p, id, { rotation });
       if (fanCoil) return updateFanCoil(p, id, { rotation });
       if (t)
         return editOperatorTerminal(
@@ -123,7 +139,18 @@ export function DeviceTransform({
         })),
       };
     },
-    [id, item, mode, plenum, pillar, snap, t, outdoor, fanCoil],
+    [
+      id,
+      item,
+      mode,
+      plenum,
+      pillar,
+      snap,
+      t,
+      outdoor,
+      hydronicOutdoor,
+      fanCoil,
+    ],
   );
   if (!item || item.locked || (mode === "scale" && !validLength)) return null;
   return (
@@ -135,7 +162,7 @@ export function DeviceTransform({
         space={mode === "translate" ? "world" : "local"}
         size={outdoor ? 1.2 : 0.8}
         showX={mode !== "rotate"}
-        showY={mode === "rotate"}
+        showY={mode === "rotate" || (mode === "translate" && !!outdoor)}
         showZ={mode === "translate"}
         rotationSnap={snap.enabled && snap.angle45 ? Math.PI / 4 : undefined}
         translationSnap={snap.enabled && snap.grid ? snap.stepM : undefined}

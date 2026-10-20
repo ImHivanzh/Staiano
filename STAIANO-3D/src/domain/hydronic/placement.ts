@@ -25,10 +25,11 @@ export type OutdoorUnitLike = Pick<
   | "heightMm"
   | "depthMm"
   | "elevationM"
+  | "mounting"
 >;
 export type HydronicPose = Pick<
   HydronicOutdoorUnit,
-  "position" | "rotation" | "elevationM"
+  "position" | "rotation" | "elevationM" | "mounting"
 >;
 export const outdoorUnitFootprint = (unit: OutdoorUnitLike) =>
   footprintCorners(
@@ -138,6 +139,8 @@ export function outdoorUnitValid(
     (other) =>
       other.id !== ignoreDeviceId &&
       other.floorId === unit.floorId &&
+      Math.abs(other.elevationM - unit.elevationM) <
+        (other.heightMm + unit.heightMm) / 2000 &&
       convexFootprintsOverlap(corners, outdoorUnitFootprint(other)),
   );
 }

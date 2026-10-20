@@ -4,6 +4,7 @@ import { indoorRoute } from "../geometry/indoor-route";
 import { linearRunMembers } from "../air-terminals/linear-run";
 import { needsTerminalReconfiguration } from "../air-terminals/legacy";
 import { fanCoilAirSystem } from "../fan-coils/air";
+import { connectionFootprintEdge } from "../geometry/footprint";
 
 export function connectedRoomIds(project: Project, machineId: string) {
   const systemId = fanCoilAirSystem(project, machineId)?.id ?? machineId;
@@ -38,9 +39,7 @@ export function connectDraftOnPlan(
   );
   const unit = machine ?? system?.indoorUnits[0];
   if (!terminal || !unit || terminal.floorId !== unit.floorId)
-    throw new Error(
-      "Collega una bocchetta a una macchina sullo stesso piano.",
-    );
+    throw new Error("Collega una bocchetta a una macchina sullo stesso piano.");
   const installationId = machine?.installationId ?? system?.installationId;
   if (!installationId)
     throw new Error(
@@ -64,7 +63,11 @@ export function connectDraftOnPlan(
             systemId: system?.id ?? null,
             pendingMachineId: machine?.id,
             pendingSystemId: undefined,
-            plenumId: null,
+            plenumId: project.plenums.some(
+              (pl) => pl.id === t.plenumId && pl.attachmentId === t.id,
+            )
+              ? t.plenumId
+              : null,
           }
         : t,
     ),
@@ -145,11 +148,7 @@ export function hydronicRoomIds(project: Project, pumpId: string) {
     ...new Set(
       hydronicTargets(project, pumpId).flatMap((target) => {
         const air = fanCoilAirSystem(project, target.id);
-        if (air)
-          return [
-            target.roomId,
-            ...connectedRoomIds(project, air.id),
-          ];
+        if (air) return [target.roomId, ...connectedRoomIds(project, air.id)];
         const system = project.hvacSystems.find(
           (s) =>
             s.type === "ducted" &&
@@ -259,8 +258,8 @@ export function pendingConnections(project: Project) {
         points: indoorRoute(
           project,
           terminal.floorId,
-          machine.position,
-          terminal.position,
+          connectionFootprintEdge(machine, terminal.position),
+          connectionFootprintEdge(terminal, machine.position),
         ),
       });
   }
@@ -279,7 +278,7 @@ export function pendingConnections(project: Project) {
         lines.push({
           id: `${pump.id}-${target.id}`,
           floorId: pump.floorId,
-          points: [pump.position, target.position],
+          points: [connectionFootprintEdge(pump, target.position), connectionFootprintEdge(target, pump.position)],
         });
   return lines;
 }

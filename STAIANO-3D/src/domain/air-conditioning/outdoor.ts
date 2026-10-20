@@ -137,7 +137,7 @@ export function moveHvacOutdoorUnit(
   project: Project,
   deviceId: string,
   target: Partial<
-    Pick<OutdoorUnitLike, "position" | "rotation" | "elevationM">
+    Pick<OutdoorUnitLike, "position" | "rotation" | "elevationM" | "mounting">
   >,
 ): Project {
   const system = project.hvacSystems.find(

@@ -1,6 +1,6 @@
 # Guida al dossier Staiano
 
-Worker pubblico: https://staiano-dossier.ivanbuonocore7.workers.dev/
+Guida pubblica: https://impianto.staianopoint.com/
 
 Da STAIANO-3D: `npx wrangler deploy -c dossier-guide/wrangler.toml`.
 

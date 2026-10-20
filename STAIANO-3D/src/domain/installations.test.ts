@@ -255,6 +255,7 @@ it("deletes a ducted installation and its terminals, plenum and ducts, preservin
       plenumId: firstPlenum.id,
       terminalId: null,
       branchId: null,
+      kind: "rigid",
       shape: "circle",
       diameterMm: 100,
       widthMm: null,

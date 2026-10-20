@@ -13,7 +13,8 @@ import type {
 type InstalledTerminal = Project["airTerminals"][number] & {
   commercialOptions?: TerminalCommercialOptions;
 };
-type BomProject = Pick<Project, "airTerminals" | "hvacSystems">;
+type BomProject = Pick<Project, "airTerminals" | "hvacSystems"> &
+  Partial<Pick<Project, "plenums">>;
 function customTerminalPlenum(options: TerminalCommercialOptions | undefined) {
   return (
     options?.plenumMaterial === "galvanized" ||
@@ -482,6 +483,9 @@ export function calculateEcoclimaBom(
   project: BomProject,
   catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
 ): EcoclimaBom {
+  const separatePlenums =
+    project.plenums?.filter((p) => p.attachmentId !== undefined) ?? [];
+  const usesSeparatePlenums = separatePlenums.length > 0;
   const lines: EcoclimaBomLine[] = [],
     runs = new Map<string, InstalledTerminal[]>();
   for (const terminal of project.airTerminals as InstalledTerminal[]) {
@@ -491,8 +495,9 @@ export function calculateEcoclimaBom(
       catalog,
     );
     if (
-      terminal.commercialOptions?.insulatedPlenum !== false ||
-      terminal.commercialOptions?.plenumMaterial
+      !usesSeparatePlenums &&
+      (terminal.commercialOptions?.insulatedPlenum !== false ||
+        terminal.commercialOptions?.plenumMaterial)
     )
       lines.push(priceLine(terminal, "insulated-plenum", 1, catalog));
     if (
@@ -582,7 +587,7 @@ export function calculateEcoclimaBom(
     lines.push(line);
   }
   for (const system of project.hvacSystems.filter(
-    (item) => item.type === "ducted",
+    (item) => item.type === "ducted" && !usesSeparatePlenums,
   ))
     lines.push({
       id: `${system.id}:machine-plenum`,
@@ -602,6 +607,29 @@ export function calculateEcoclimaBom(
       sourceMetadata: null,
       quantitySourceMetadata: null,
     });
+  for (const plenum of separatePlenums.filter((p) => p.attachmentId)) {
+    const terminal = project.airTerminals.find(
+      (t) => t.id === plenum.attachmentId,
+    );
+    lines.push({
+      id: `${plenum.id}:plenum`,
+      terminalIds: terminal ? [terminal.id] : [],
+      systemId: plenum.systemId,
+      familyCode: terminal?.family ?? "",
+      kind: terminal ? "insulated-plenum" : "machine-plenum",
+      label: `Plenum ${plenum.use === "supply" ? "mandata" : "ripresa"} ${plenum.model ?? "su misura"} ${plenum.widthMm} x ${plenum.heightMm} x ${plenum.depthMm} mm`,
+      sku: null,
+      quantity: 1,
+      unitPriceCents: null,
+      extendedPriceCents: null,
+      currency: "EUR",
+      status: "unknown",
+      reason:
+        "Plenum configurato separatamente: quotazione da confermare sulle dimensioni e sugli stacchi scelti.",
+      sourceMetadata: null,
+      quantitySourceMetadata: null,
+    });
+  }
   const knownSubtotalCents = lines.reduce(
     (sum, line) => sum + (line.extendedPriceCents ?? 0),
     0,

@@ -195,12 +195,20 @@ export function HydronicProperties({
                 rotation: (numberFromForm(d.get("rotation")) * Math.PI) / 180,
                 elevationM:
                   numberFromForm(d.get("elevation")) + unit.heightMm / 2000,
+                mounting: d.get("mounting") as "ground" | "brackets",
               }),
             );
           }}
         >
           <fieldset disabled={unit.locked}>
             <legend>Posa macchina esterna</legend>
+            <label className="campo">
+              <span>Installazione</span>
+              <select name="mounting" defaultValue={unit.mounting ?? "ground"}>
+                <option value="ground">A pavimento / su basamento</option>
+                <option value="brackets">In alto su staffe a parete</option>
+              </select>
+            </label>
             <LengthInput
               label="Posizione X"
               baseUnit="m"

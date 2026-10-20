@@ -3,8 +3,37 @@ import { addRectangle, createProject } from "@/domain/project";
 import { heatPumpCatalog } from "@/domain/catalogs/heat-pumps";
 import { applyHydronicSystem, moveHydronicOutdoorUnit } from "./apply";
 import { hydronicOutdoorValid, hydronicOutwardRotation } from "./placement";
+import { projectSchema } from "@/schemas/project";
 
 describe("orientamento iniziale della pompa di calore", () => {
+  it("saves a raised outdoor unit on brackets and keeps its elevation on model refresh", () => {
+    const empty = createProject();
+    const room = addRectangle(empty, empty.floors[0].id, {
+      width: 8,
+      length: 6,
+      height: 2.7,
+      name: "Salone",
+    });
+    const input = {
+      productId: heatPumpCatalog.products[0].id,
+      roomIds: [room.rooms[0].id],
+      fanCoilIds: [],
+      operatingPointIndex: 0,
+    };
+    let project = applyHydronicSystem(room, input);
+    const system = project.hydronicSystems![0];
+    const elevationM = 2.2 + system.outdoorUnit.heightMm / 2000;
+    project = moveHydronicOutdoorUnit(project, system.outdoorUnit.id, {
+      elevationM,
+      mounting: "brackets",
+    });
+    project = applyHydronicSystem(project, { ...input, systemId: system.id });
+    expect(project.hydronicSystems![0].outdoorUnit).toMatchObject({
+      elevationM,
+      mounting: "brackets",
+    });
+    expect(projectSchema.safeParse(project).success).toBe(true);
+  });
   it("rivolge il ventilatore verso l’esterno e conserva le rotazioni confermate", () => {
     const empty = createProject();
     const project = addRectangle(empty, empty.floors[0].id, {

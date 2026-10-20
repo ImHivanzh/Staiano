@@ -228,3 +228,79 @@ test("channel setup stays closed until requested and opens in the configuration 
     .click();
   await expect(panel).toHaveCount(0);
 });
+
+test("raising the outdoor unit preserves the operator camera", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  const project = fixture(`
+    import { createProject, addRectangle } from './src/domain/project.ts';
+    import { applyHydronicSystem } from './src/domain/hydronic/apply.ts';
+    import { heatPumpCatalog } from './src/domain/catalogs/heat-pumps.ts';
+    let p=createProject(); p=addRectangle(p,p.floors[0].id,{width:8,length:6,height:2.7,name:'Casa'});
+    console.log(JSON.stringify(applyHydronicSystem(p,{productId:heatPumpCatalog.products[0].id,roomIds:[p.rooms[0].id],fanCoilIds:[],operatingPointIndex:0})));
+  `);
+  const unit = project.hydronicSystems![0].outdoorUnit;
+  await page.goto("/");
+  await page.getByTestId("project-file").setInputFiles({
+    name: "staffe.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(project)),
+  });
+  await openDisclosure(page, "Modifica");
+  await page
+    .getByLabel("Elemento nel progetto", { exact: true })
+    .selectOption(unit.id);
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  const viewer = page.getByTestId("viewer-3d"),
+    canvas = viewer.locator("canvas");
+  await expect(canvas).toHaveAttribute("data-rendered", "true");
+  await viewer
+    .getByRole("button", { name: "Vista ventilatore", exact: true })
+    .click();
+  await page.waitForTimeout(400);
+  const position = await canvas.getAttribute("data-camera-position");
+  const rotation = await canvas.getAttribute("data-camera-quaternion");
+  const box = (await canvas.boundingBox())!;
+  const camera = new PerspectiveCamera(
+    Number(await canvas.getAttribute("data-camera-fov")),
+    box.width / box.height,
+    0.02,
+    2000,
+  );
+  camera.position.fromArray(position!.split(",").map(Number));
+  camera.quaternion.fromArray(rotation!.split(",").map(Number));
+  camera.updateMatrixWorld();
+  const center = new Vector3(unit.position.x, unit.elevationM, unit.position.y);
+  const factor =
+    (center.distanceTo(camera.position) *
+      Math.min(1.9 * Math.tan((Math.PI * camera.fov) / 360), 7) *
+      1.2) /
+    7;
+  const screen = (v: Vector3) => {
+    const p = v.project(camera);
+    return {
+      x: box.x + ((p.x + 1) * box.width) / 2,
+      y: box.y + ((1 - p.y) * box.height) / 2,
+    };
+  };
+  const start = screen(center.clone().add(new Vector3(0, factor * 0.75, 0))),
+    end = screen(center.clone().add(new Vector3(0, factor * 0.75 + 0.6, 0)));
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(end.x, end.y, { steps: 12 });
+  await page.mouse.up();
+  await expect(page.getByTestId("save-status")).toHaveText("Salvato");
+  const download = page.waitForEvent("download");
+  await openDisclosure(page, "File");
+  await page.getByRole("button", { name: "Esporta", exact: true }).click();
+  const moved = JSON.parse(
+    readFileSync((await (await download).path())!, "utf8"),
+  );
+  expect(moved.hydronicSystems[0].outdoorUnit.elevationM).toBeGreaterThan(
+    unit.elevationM + 0.2,
+  );
+  await expect(canvas).toHaveAttribute("data-camera-position", position!);
+  await expect(canvas).toHaveAttribute("data-camera-quaternion", rotation!);
+});

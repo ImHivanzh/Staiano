@@ -234,6 +234,13 @@ export function reconcileRooms(
         centroid: center,
         heightM,
         ceilingHeightM: parent?.ceilingHeightM ?? null,
+        ceilingBands: parent?.ceilingBands?.filter((band) =>
+          face.wallIds.includes(band.wallId),
+        ),
+        roof:
+          parent?.roof && face.wallIds.includes(parent.roof.ridgeWallId)
+            ? parent.roof
+            : undefined,
         ...calculateThermal(netAreaM2, heightM),
         ...(parent?.conditioningExclusion
           ? {

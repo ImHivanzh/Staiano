@@ -6,7 +6,6 @@ import type { Plenum, Project, Selection } from "@/schemas/project";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
-import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
 
 function NumberLabel({
   label,
@@ -152,6 +151,59 @@ function PlenumMesh({
     () => (geometry ? layoutFromMachineGeometry(geometry) : null),
     [geometry],
   );
+  if (plenum.attachmentId !== undefined) {
+    const terminal = project.airTerminals.find(
+      (t) => t.id === plenum.attachmentId,
+    );
+    const ceiling = terminal?.mounting === "ceiling";
+    const count = plenum.portCount ?? 1;
+    const radius = (plenum.portDiameterMm ?? 160) / 2000;
+    return (
+      <group>
+        <mesh>
+          <boxGeometry
+            args={[
+              plenum.widthMm / 1000,
+              plenum.heightMm / 1000,
+              plenum.depthMm / 1000,
+            ]}
+          />
+          <meshStandardMaterial
+            color={
+              selected
+                ? "#67c8de"
+                : plenum.material === "galvanized"
+                  ? "#b1c0c4"
+                  : "#8ba5ae"
+            }
+            metalness={0.6}
+            roughness={0.4}
+            transparent
+            opacity={0.72}
+          />
+        </mesh>
+        {Array.from({ length: count }, (_, i) => (
+          <mesh
+            key={i}
+            position={[
+              (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000,
+              ceiling ? plenum.heightMm / 2000 + 0.03 : 0,
+              ceiling ? 0 : -plenum.depthMm / 2000 - 0.03,
+            ]}
+            rotation={ceiling ? [0, 0, 0] : [Math.PI / 2, 0, 0]}
+          >
+            <cylinderGeometry args={[radius, radius, 0.06, 24, 1, true]} />
+            <meshStandardMaterial
+              color="#d1dde0"
+              metalness={0.7}
+              roughness={0.3}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        ))}
+      </group>
+    );
+  }
   return (
     <group position={[0, 0, -plenum.depthMm / 2000]}>
       {layout ? (
@@ -240,7 +292,7 @@ export function SystemMeshes({
                   (() => {
                     const room = project.rooms.find((r) => r.id === u.roomId);
                     return room
-                      ? roomCeilingHeightM(room)
+                      ? room.heightM
                       : project.projectSettings.defaultHeightM;
                   })() -
                     u.heightMm / 2000 -

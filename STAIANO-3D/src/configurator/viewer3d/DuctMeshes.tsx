@@ -9,6 +9,8 @@ import {
   ductRoute,
   type RoutePoint,
 } from "@/domain/ducted/routes";
+import { FlexibleDuct } from "./FlexibleDuct";
+import { useProjectStore } from "@/stores/project-store";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
 
 function FlowParticles({
@@ -207,17 +209,35 @@ export function DuctMeshes({
             ? "#20a8cd"
             : "#dcad65";
         return (
-          <group key={duct.id}>
-            {points.slice(1).map((end, i) => (
-              <DuctSegment
-                key={i}
-                start={points[i]}
-                end={end}
-                duct={duct}
-                color={color}
+          <group
+            key={duct.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              useProjectStore
+                .getState()
+                .select({ kind: "device", id: duct.id });
+            }}
+          >
+            {duct.kind === "flexible" ? (
+              <FlexibleDuct
+                points={points}
+                diameterMm={duct.diameterMm ?? 160}
+                color="#b2c3c9"
               />
-            ))}
-            {points.length > 1 && (
+            ) : (
+              points
+                .slice(1)
+                .map((end, i) => (
+                  <DuctSegment
+                    key={i}
+                    start={points[i]}
+                    end={end}
+                    duct={duct}
+                    color={color}
+                  />
+                ))
+            )}
+            {duct.kind !== "flexible" && points.length > 1 && (
               <Line
                 points={points.map(
                   (p) => [p.x, p.elevationM, p.y] as [number, number, number],

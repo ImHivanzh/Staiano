@@ -8,6 +8,7 @@ import {
   type SnapOptions,
 } from "./primitives";
 import { positionAlongRoomWall, roomWallSpan } from "./placement";
+import { ceilingFrontPose } from "./ceilings";
 
 export function snapTerminalPose(
   project: Project,
@@ -17,6 +18,7 @@ export function snapTerminalPose(
 ) {
   const item = project.airTerminals.find((t) => t.id === id);
   if (!item) throw new Error("Bocchetta inesistente.");
+  if (item.ceilingBandId) return ceilingFrontPose(project, item, target);
   const room =
     project.rooms.find(
       (r) => r.floorId === item.floorId && pointInPolygon(target, r.polygon),
@@ -25,10 +27,12 @@ export function snapTerminalPose(
     roomId: room.id,
     position: target,
     rotation: item.rotation,
+    ceilingBandId: undefined,
+    ceilingEdge: undefined,
     wallId: item.mounting === "wall" ? item.wallId : null,
     label: "Snap disattivato",
   };
-  if (!options.enabled) return free;
+  if (!options.enabled && item.mounting !== "wall") return free;
   const depth =
     (item.mounting === "ceiling" ? item.heightMm : (item.depthMm ?? 0)) / 1000;
   const candidates = project.walls
@@ -54,8 +58,9 @@ export function snapTerminalPose(
   const chosen = candidates[0];
   if (
     !chosen ||
-    distance(target, chosen.nearest) >
-      Math.max(options.toleranceM, depth / 2 + 0.05)
+    (item.mounting !== "wall" &&
+      distance(target, chosen.nearest) >
+        Math.max(options.toleranceM, depth / 2 + 0.05))
   ) {
     const position = options.grid
       ? {
@@ -114,6 +119,8 @@ export function snapTerminalPose(
   const position = positionAlongRoomWall(chosen.room, wall, offset, depth);
   return {
     roomId: chosen.room.id,
+    ceilingBandId: undefined,
+    ceilingEdge: undefined,
     position,
     wallId: item.mounting === "wall" ? wall.id : null,
     rotation: Math.atan2(tangent.y, tangent.x),

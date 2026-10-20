@@ -1,3 +1,5 @@
+import { airTerminalFamilyAtVersion } from "../catalogs/air-terminals";
+import { terminalBodyDepthMm } from "../air-terminals/geometry";
 import type { Project } from "@/schemas/project";
 import { installationRoom } from "../installations";
 import { hvacCatalogAtVersion } from "@/domain/catalogs/hvac";
@@ -7,7 +9,7 @@ import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { ductedMaximumAirflow, machineLoadDivisor } from "./machine";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { hydronicRoomIds } from "./plan-connections";
-import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
+import { ceilingHeightAt } from "@/domain/geometry/ceilings";
 import { syncFanCoilAirSystems } from "@/domain/fan-coils/air";
 /** Refresh automatic machine selection and demand; installed terminal style stays chosen. */
 export function refreshDuctedBindings(project: Project): Project {
@@ -157,11 +159,17 @@ export function refreshDuctedBindings(project: Project): Project {
         t.use === terminal.use &&
         t.pointIndex === terminal.pointIndex,
     ).length;
+    const family = airTerminalFamilyAtVersion(
+      terminal.family,
+      terminal.catalogVersion,
+    );
+    const variant = family?.variants.find((v) => v.id === terminal.productId);
     return {
       ...terminal,
+      depthMm: terminal.depthMm ?? terminalBodyDepthMm(family, variant),
       elevationM:
         terminal.mounting === "ceiling"
-          ? roomCeilingHeightM(room)
+          ? ceilingHeightAt(project, room, terminal.position)
           : terminal.elevationM,
       requiredAirflowM3h: allocation
         ? allocation.airflowM3h / points / Math.max(1, siblings)

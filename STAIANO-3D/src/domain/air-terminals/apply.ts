@@ -1,3 +1,4 @@
+import { terminalBodyDepthMm } from "./geometry";
 import type { Point, Project } from "@/schemas/project";
 import {
   airTerminalCatalog,
@@ -71,7 +72,7 @@ export function applyAirTerminalSolution(
     throw new Error("Ingombro frontale non disponibile dal catalogo.");
   const depthMm = dimensions
       ? dimensions.depthMm
-      : (variant.bodyDepthMm ?? null),
+      : terminalBodyDepthMm(family, variant),
     existing = project.airTerminals.filter(
       (t) =>
         mode === "append" ||

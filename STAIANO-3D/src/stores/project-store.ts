@@ -1,3 +1,5 @@
+import { syncAttachedPlenums } from "@/domain/ducted/attached-plenums";
+import { syncCeilingTerminals } from "@/domain/geometry/ceilings";
 import { create } from "zustand";
 import type { Project, Selection } from "@/schemas/project";
 import { projectSchema } from "@/schemas/project";
@@ -19,6 +21,7 @@ export type PlanPlacementTool =
   | "point"
   | "connect"
   | "move"
+  | "plenum"
   | "duct"
   | "radiator"
   | "fanCoil"
@@ -141,7 +144,10 @@ export const useProjectStore = create<State>((set, get) => ({
       return;
     }
     try {
-      const changed = fn(structuredClone(state.project));
+      const changed = syncAttachedPlenums(
+        syncCeilingTerminals(fn(structuredClone(state.project))),
+        state.project,
+      );
       checkLockedObjects(state.project, changed);
       const next = refreshVrvBindings(
         refreshSplitBindings(
@@ -149,7 +155,9 @@ export const useProjectStore = create<State>((set, get) => ({
         ),
       );
       next.updatedAt = new Date().toISOString();
-      const valid = projectSchema.parse(next);
+      const valid = projectSchema.parse(
+        syncAttachedPlenums(syncCeilingTerminals(next)),
+      );
       const ids = new Set(
         [
           ...valid.rooms,

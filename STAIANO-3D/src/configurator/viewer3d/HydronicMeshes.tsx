@@ -1,4 +1,5 @@
 "use client";
+import { OutdoorBrackets } from "./OutdoorBrackets";
 import { Line, useTexture } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 import * as THREE from "three";
@@ -109,6 +110,9 @@ export function HydronicMeshes({
                   onSelect?.({ kind: "device", id: u.id });
                 }}
               >
+                {u.mounting === "brackets" && (
+                  <OutdoorBrackets widthM={w} heightM={h} depthM={d} />
+                )}
                 <mesh castShadow receiveShadow>
                   <boxGeometry args={[w, h - 0.06, d]} />
                   <meshStandardMaterial

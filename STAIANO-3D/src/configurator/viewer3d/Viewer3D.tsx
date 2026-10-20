@@ -1,5 +1,10 @@
 "use client";
 import {
+  connectPlenum,
+  insertPlenum,
+  syncAttachedPlenums,
+} from "@/domain/ducted/attached-plenums";
+import {
   Component,
   useCallback,
   useEffect,
@@ -10,7 +15,13 @@ import {
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
 import * as THREE from "three";
-import { Camera, SlidersHorizontal, LinkSimple } from "@phosphor-icons/react";
+import {
+  ArrowClockwise,
+  Camera,
+  SlidersHorizontal,
+  LinkSimple,
+} from "@phosphor-icons/react";
+import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { useProjectStore } from "@/stores/project-store";
 import { EquipmentIcon } from "../EquipmentIcon";
 import { bounds } from "@/domain/geometry/primitives";
@@ -24,11 +35,11 @@ import { CameraRig } from "./CameraRig";
 import { SceneLighting } from "./SceneLighting";
 import { SceneEffects } from "./SceneEffects";
 import { RoomLabelProjection } from "./RoomLabels";
-import { CeilingReference, SuspendedCeiling } from "./CeilingReference";
+import { RoomCeiling3D } from "./RoomCeiling3D";
+import { CeilingReference } from "./CeilingReference";
 import { ProductTools } from "./ProductTools";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { installationLabels } from "@/domain/installations";
-import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
 import { sceneFrame, type SceneFrame } from "./scene-layout";
 import styles from "./Viewer3D.module.css";
 import type { Project, Selection } from "@/schemas/project";
@@ -44,6 +55,7 @@ import {
   connectHydronicOnPlan,
 } from "@/domain/ducted/plan-connections";
 import { DeviceTransform, type TransformMode } from "./DeviceTransform";
+import { DuctRouteControls } from "./DuctRouteControls";
 import { DuctMeshes } from "./DuctMeshes";
 import { DuctPanel } from "@/configurator/systems/DuctPanel";
 import { LoadMap } from "./LoadMap";
@@ -119,7 +131,9 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [cutaway, setCutaway] = useState(true);
   const [labels, setLabels] = useState(true);
   const [ceilingGuide, setCeilingGuide] = useState(true);
+  const [interior, setInterior] = useState(false);
   const [suspendedCeiling, setSuspendedCeiling] = useState(true);
+  const [ceilingTransparent, setCeilingTransparent] = useState(true);
   const labelElements = useRef(new Map<string, HTMLButtonElement>());
   const [floorFinish, setFloorFinish] = useState<"oak" | "stone">("oak");
   const [cutWallIds, setCutWallIds] = useState<Set<string>>(new Set());
@@ -136,8 +150,6 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [wallOpen, setWallOpen] = useState(false);
   const [propertiesOpen, setPropertiesOpen] = useState(false);
   const [renderBusy, setRenderBusy] = useState(false);
-  const [plenumOpen, setPlenumOpen] = useState(false);
-  const [plenumSystemId, setPlenumSystemId] = useState("");
   // I canali fanno parte del risultato: visibili subito, disattivabili.
   const [channelView, setChannelView] = useState(true);
   const [channelPanel, setChannelPanel] = useState(false);
@@ -155,15 +167,12 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [preview, setPreview] = useState<Project | null>(null);
   const [dragGuide, setDragGuide] = useState("");
   const onPreview = useCallback((next: Project | null) => setPreview(next), []);
-  const sceneProject = preview ?? p;
+  const sceneProject = preview
+    ? syncAttachedPlenums(preview, p ?? undefined)
+    : p;
   const container = useRef<HTMLDivElement>(null);
   const selectedId = selection[0]?.id;
   const selectedWall = p?.walls.find((wall) => wall.id === selectedId);
-  const selectedMachineSystem = p?.hvacSystems.find(
-    (system) =>
-      system.type === "ducted" &&
-      system.indoorUnits.some((unit) => unit.id === selectedId),
-  );
   const configurationRoom = p?.rooms.find(
     (room) => room.floorId === activeFloorId,
   );
@@ -175,31 +184,39 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
         useProjectStore
           .getState()
           .commit((project) =>
-            pair.fanCoilId
-              ? connectFanCoilAirOnPlan(
-                  project,
-                  pair.terminalId,
-                  pair.fanCoilId,
-                )
-              : pair.hydronic
-                ? connectHydronicOnPlan(
+            pair.plenumId
+              ? connectPlenum(project, pair.plenumId, pair.machineId)
+              : pair.fanCoilId
+                ? connectFanCoilAirOnPlan(
                     project,
                     pair.terminalId,
-                    pair.machineId,
+                    pair.fanCoilId,
                   )
-                : project.ductedDrafts?.some(
-                      (t) => t.id === pair.terminalId || t.id === pair.systemId,
-                    )
-                  ? connectDraftOnPlan(project, pair.terminalId, pair.systemId)
-                  : connectTerminalOnPlan(
+                : pair.hydronic
+                  ? connectHydronicOnPlan(
                       project,
                       pair.terminalId,
-                      pair.systemId,
-                    ),
+                      pair.machineId,
+                    )
+                  : project.ductedDrafts?.some(
+                        (t) =>
+                          t.id === pair.terminalId || t.id === pair.systemId,
+                      )
+                    ? connectDraftOnPlan(
+                        project,
+                        pair.terminalId,
+                        pair.systemId,
+                      )
+                    : connectTerminalOnPlan(
+                        project,
+                        pair.terminalId,
+                        pair.systemId,
+                      ),
           );
         if (!useProjectStore.getState().error)
           select({ kind: "device", id: pair.machineId });
       } else if (
+        p.plenums.some((item) => item.id === target.id) ||
         p.ductedDrafts?.some((item) => item.id === target.id) ||
         p.heatPumpDrafts?.some((item) => item.id === target.id) ||
         p.hydronicSystems?.some((item) => item.outdoorUnit.id === target.id) ||
@@ -318,7 +335,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
         maxX: box.maxX + margin,
         minZ: box.minY - margin,
         maxZ: box.maxY + margin,
-        height: rooms[0].heightM,
+        height: rooms[0].roof?.ridgeHeightM ?? rooms[0].heightM,
       };
     }
     return sceneFrame(
@@ -331,15 +348,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
           )
         : [],
     );
-  }, [
-    walls,
-    rooms,
-    isolatedRoomId,
-    p?.projectSettings.defaultHeightM,
-    p?.hydronicSystems,
-    p?.hvacSystems,
-    activeFloorId,
-  ]);
+  }, [walls, rooms, isolatedRoomId, p, activeFloorId]);
   const codes = useMemo(
     () => (p ? deviceCodes(p) : new Map<string, string>()),
     [p],
@@ -540,7 +549,6 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                           presentation: !presentation,
                         });
                         setProductTool(null);
-                        setPlenumOpen(false);
                         setChannelPanel(false);
                         setHydronicPanel(false);
                         setFanCoilPanel(false);
@@ -605,12 +613,27 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   >
                     <button
                       className={top ? styles.active : undefined}
-                      onClick={() => setTop(!top)}
+                      onClick={() => {
+                        setInterior(false);
+                        setTop(!top);
+                      }}
                     >
                       {top ? "Vista prospettica" : "Vista dall'alto"}
                     </button>
                     <button
                       onClick={() => {
+                        setInterior(true);
+                        setTop(false);
+                        setCutaway(false);
+                        setCeilingTransparent(false);
+                        setFitNonce((n) => n + 1);
+                      }}
+                    >
+                      Vista interna
+                    </button>
+                    <button
+                      onClick={() => {
+                        setInterior(false);
                         setFocused(false);
                         setFitNonce((n) => n + 1);
                       }}
@@ -689,6 +712,14 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     />
                     Controsoffitto
                   </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={ceilingTransparent}
+                      onChange={(e) => setCeilingTransparent(e.target.checked)}
+                    />{" "}
+                    Tetto e controsoffitto trasparenti
+                  </label>
                   <select
                     aria-label="Finitura pavimento"
                     value={floorFinish}
@@ -733,17 +764,6 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                       Porte e finestre
                     </button>
                   )}
-                  {!readOnly && selectedMachineSystem && (
-                    <button
-                      className="bottone piccolo"
-                      onClick={() => {
-                        setPlenumSystemId(selectedMachineSystem.id);
-                        setPlenumOpen(true);
-                      }}
-                    >
-                      Vista plenum
-                    </button>
-                  )}
                   <details className={styles.settings} name="viewer-menus">
                     <summary>Aggiungi apparecchio</summary>
                     <div
@@ -786,25 +806,22 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         Macchina manuale
                       </button>
                       <button
-                        disabled={
-                          !p?.hvacSystems.some(
-                            (system) => system.type === "ducted",
-                          )
-                        }
                         onClick={() => {
-                          setPlenumSystemId(
-                            p?.hvacSystems.find(
-                              (system) =>
-                                system.type === "ducted" &&
-                                system.roomIds.includes(selectedRoom?.id ?? ""),
-                            )?.id ??
-                              p?.hvacSystems.find(
-                                (system) => system.type === "ducted",
-                              )?.id ??
-                              "",
-                          );
-                          setProductTool(null);
-                          setPlenumOpen(true);
+                          if (!p || !configurationRoom) return;
+                          const room = selectedRoom ?? configurationRoom;
+                          useProjectStore
+                            .getState()
+                            .commit((project) =>
+                              insertPlenum(project, room.id, room.centroid),
+                            );
+                          const saved = useProjectStore.getState();
+                          if (!saved.error) {
+                            saved.select({
+                              kind: "device",
+                              id: saved.project!.plenums.at(-1)!.id,
+                            });
+                            setPropertiesOpen(true);
+                          }
                         }}
                       >
                         <EquipmentIcon type="plenum" />
@@ -869,6 +886,18 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   }
                 </button>
               ))}
+              <button
+                aria-label="Ruota 90°"
+                title="Ruota elemento di 90°"
+                disabled={chosenDevice.locked}
+                onClick={() =>
+                  useProjectStore
+                    .getState()
+                    .commit((p) => rotateDevice90(p, chosenDevice.id))
+                }
+              >
+                <ArrowClockwise size={18} aria-hidden="true" /> Ruota 90°
+              </button>
               {selectedOutdoor && (
                 <button
                   onClick={() => {
@@ -914,7 +943,14 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         ).length ?? 0}{" "}
                         rami
                       </summary>
-                      <DuctPanel project={p} systemId={s.id} />
+                      <DuctPanel
+                        project={p}
+                        systemId={s.id}
+                        onEdit3D={() => {
+                          setChannelPanel(false);
+                          setChannelView(true);
+                        }}
+                      />
                     </details>
                   ))}
               </div>
@@ -1045,69 +1081,6 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               <Properties />
             </FullscreenDialog>
           )}
-          {plenumOpen && p && (
-            <FullscreenDialog
-              open={plenumOpen}
-              title="Plenum degli impianti autonomi"
-              closeLabel="Chiudi plenum"
-              onClose={() => setPlenumOpen(false)}
-            >
-              <div>
-                <label className="campo">
-                  <span>Impianto autonomo</span>
-                  <select
-                    aria-label="Impianto plenum"
-                    value={plenumSystemId}
-                    onChange={(e) => setPlenumSystemId(e.target.value)}
-                  >
-                    {p.hvacSystems
-                      .filter((system) => system.type === "ducted")
-                      .map((system) => (
-                        <option key={system.id} value={system.id}>
-                          {system.name ||
-                            p.rooms
-                              .filter((room) =>
-                                system.roomIds.includes(room.id),
-                              )
-                              .map((room) => room.name)
-                              .join(", ")}
-                        </option>
-                      ))}
-                  </select>
-                </label>
-                {p.rooms
-                  .filter((room) =>
-                    p.hvacSystems
-                      .find((system) => system.id === plenumSystemId)
-                      ?.roomIds.includes(room.id),
-                  )
-                  .slice(0, 1)
-                  .map((room) => (
-                    <button
-                      key={room.id}
-                      className="bottone chiara"
-                      onClick={() => {
-                        const installationId = p.hvacSystems.find(
-                          (item) => item.id === plenumSystemId,
-                        )?.installationId;
-                        if (installationId)
-                          useProjectStore
-                            .getState()
-                            .openInstallationPlan(installationId);
-                        setPlenumOpen(false);
-                      }}
-                    >
-                      Configura sulla planimetria 2D
-                    </button>
-                  ))}
-                <SupplyPlenumPanel
-                  project={p}
-                  systemId={plenumSystemId}
-                  onPlaced={() => setPlenumOpen(false)}
-                />
-              </div>
-            </FullscreenDialog>
-          )}
           <div className={styles.scene}>
             <WebGLError>
               <Canvas
@@ -1182,6 +1155,17 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     flowMode={comfortMode === "heat" ? "heat" : "cool"}
                   />
                 )}
+                {p &&
+                  channelView &&
+                  !readOnly &&
+                  !presentation &&
+                  selectedId && (
+                    <DuctRouteControls
+                      project={p}
+                      id={selectedId}
+                      onPreview={onPreview}
+                    />
+                  )}
                 {loadMap && <LoadMap rooms={rooms} />}
                 {(presentation || readOnly) &&
                   sceneProject &&
@@ -1203,12 +1187,18 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   />
                 )}
                 <RoomLabelProjection rooms={rooms} elements={labelElements} />
-                {suspendedCeiling &&
-                  rooms
-                    .filter((room) => room.ceilingHeightM !== null)
-                    .map((room) => (
-                      <SuspendedCeiling key={room.id} room={room} />
-                    ))}
+                {p &&
+                  rooms.map((room) => (
+                    <RoomCeiling3D
+                      key={room.id}
+                      project={sceneProject ?? p}
+                      room={room}
+                      transparent={
+                        ceilingTransparent && !presentation && !readOnly
+                      }
+                      showCeiling={suspendedCeiling}
+                    />
+                  ))}
                 {ceilingGuide &&
                   rooms
                     .filter((room) =>
@@ -1257,9 +1247,12 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         }
                       : undefined
                   }
+                  interiorRoom={
+                    interior ? (selectedRoom ?? rooms[0]) : undefined
+                  }
                   frame={focusFrame}
                   top={top}
-                  fitKey={`${activeFloorId}|${isolatedRoomId ?? ""}|${fitNonce}`}
+                  fitKey={`${activeFloorId}|${isolatedRoomId ?? ""}|${focused ? (selectedId ?? "") : ""}|${fitNonce}`}
                   walls={walls}
                   rooms={rooms}
                   cutaway={cutaway}
@@ -1327,7 +1320,8 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   <p>
                     {sceneProject &&
                       `${sceneProject.ducts?.filter((d) => d.plenumId === selectedPlenum.id && d.terminalId).length ?? 0} rami collegati`}{" "}
-                    · plenum esclusivo di {codes.get(selectedPlenum.systemId)}
+                    · plenum esclusivo di{" "}
+                    {codes.get(selectedPlenum.systemId ?? "")}
                   </p>
                 ) : (
                   <p>

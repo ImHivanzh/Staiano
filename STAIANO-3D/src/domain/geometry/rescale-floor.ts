@@ -87,6 +87,12 @@ export function rescaleFloor(
             ...room,
             polygon: room.polygon.map(transform),
             centroid: transform(room.centroid),
+            ceilingBands: room.ceilingBands?.map((band) => ({
+              ...band,
+              offsetM: band.offsetM * factor,
+              lengthM: band.lengthM * factor,
+              depthM: band.depthM * factor,
+            })),
           }
         : room,
     ),

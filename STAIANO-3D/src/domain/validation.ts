@@ -8,6 +8,7 @@ import {
 } from "./geometry/primitives";
 import { overlappingPolygons } from "./geometry/rooms";
 import { roomWallSpan } from "./geometry/placement";
+import { validateCeilingBand } from "./geometry/ceilings";
 import { radiatorProductAtVersion } from "./catalogs/radiators";
 import { elementOutputAtDeltaT, radiatorWidth } from "./radiators/size";
 import { airTerminalFamilyAtVersion } from "./catalogs/air-terminals";
@@ -118,6 +119,19 @@ export function filterProjectChecks(
 export function validateProject(p: Project): Check[] {
   const checks: Check[] = [];
   const codes = deviceCodes(p);
+  for (const room of p.rooms)
+    for (const band of room.ceilingBands ?? []) {
+      try {
+        validateCeilingBand(p, room, band);
+      } catch (e) {
+        checks.push({
+          code: "ceilingBand",
+          status: "invalid",
+          entityId: room.id,
+          message: `${band.name}: ${e instanceof Error ? e.message : "geometria da verificare"}`,
+        });
+      }
+    }
   for (const draft of p.equipmentDrafts ?? [])
     checks.push({
       code: "equipment-incomplete",
@@ -430,7 +444,7 @@ export function validateProject(p: Project): Check[] {
     checks.push({
       code: "deviceEnvelope",
       status:
-        room && deviceEnvelopeInsideRoom(envelope, room, ceiling)
+        room && deviceEnvelopeInsideRoom(envelope, room, ceiling, p)
           ? "valid"
           : "invalid",
       entityId: envelope.deviceId,
@@ -845,6 +859,7 @@ export function validateProject(p: Project): Check[] {
       });
   }
   for (const plenum of p.plenums) {
+    if (!plenum.systemId || plenum.attachmentId !== undefined) continue;
     const result = calculatePlenum(p, plenum.systemId, plenum.use);
     const geometry = placedPlenumGeometry(p, plenum);
     const footprint = footprintCorners(

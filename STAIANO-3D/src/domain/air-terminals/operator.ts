@@ -1,3 +1,4 @@
+import { terminalBodyDepthMm } from "./geometry";
 import type { Project } from "@/schemas/project";
 import {
   airTerminalCatalog,
@@ -215,7 +216,8 @@ export function addOperatorTerminal(
             (pl) =>
               pl.systemId === input.systemId &&
               pl.floorId === added.floorId &&
-              pl.use === input.use,
+              pl.use === input.use &&
+              pl.attachmentId === undefined,
           )?.id ?? null,
       },
     ],
@@ -259,6 +261,8 @@ export function editOperatorTerminal(
       | "finish"
       | "productCode"
       | "plenumId"
+      | "ceilingBandId"
+      | "ceilingEdge"
     >
   > & { familyCode?: string; variantId?: string; operatingPointIndex?: number },
 ) {
@@ -335,7 +339,7 @@ export function editOperatorTerminal(
             productId: variant.id,
             family: family.familyCode,
             shape: family.shape ?? t.shape,
-            depthMm: variant.bodyDepthMm ?? null,
+            depthMm: terminalBodyDepthMm(family, variant),
             availableAirflowM3h: family.isLinearPerMeter
               ? (widthMm / 1000) * (op.airflowPerMeterM3h ?? 0)
               : op.airflowM3h,

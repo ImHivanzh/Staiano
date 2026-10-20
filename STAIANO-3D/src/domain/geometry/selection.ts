@@ -220,7 +220,7 @@ export function removeSelection(
       (pl) =>
         !deviceIds.has(pl.id) &&
         !roomIds.has(pl.roomId ?? "") &&
-        systemIds.has(pl.systemId),
+        (!pl.systemId || systemIds.has(pl.systemId)),
     ),
     pillars: project.pillars?.filter((c) => !deviceIds.has(c.id)),
     ducts: project.ducts?.filter((d) => !deviceIds.has(d.id)),
@@ -273,6 +273,11 @@ export function duplicateSelection(
   const offset = delta;
   const roomMap = new Map(rooms.map((room) => [room.id, newId()]));
   const wallMap = new Map(selectedWalls.map((wall) => [wall.id, newId()]));
+  const bandMap = new Map(
+    rooms.flatMap((r) =>
+      (r.ceilingBands ?? []).map((b) => [b.id, newId()] as const),
+    ),
+  );
   const copiedRooms = rooms.map((room) => ({
     ...room,
     id: roomMap.get(room.id)!,
@@ -280,6 +285,14 @@ export function duplicateSelection(
     polygon: room.polygon.map((point) => add(point, offset)),
     centroid: add(room.centroid, offset),
     wallIds: room.wallIds.map((id) => wallMap.get(id)!),
+    ceilingBands: room.ceilingBands?.map((b) => ({
+      ...b,
+      id: bandMap.get(b.id)!,
+      wallId: wallMap.get(b.wallId)!,
+    })),
+    roof: room.roof
+      ? { ...room.roof, ridgeWallId: wallMap.get(room.roof.ridgeWallId)! }
+      : undefined,
   }));
   if (
     copiedRooms.some((copy) =>
@@ -367,6 +380,9 @@ export function duplicateSelection(
     .filter(selectedDevice)
     .map((device) => ({
       ...copiedRoomDevice(device),
+      ceilingBandId: device.ceilingBandId
+        ? (bandMap.get(device.ceilingBandId) ?? device.ceilingBandId)
+        : undefined,
       pendingMachineId: undefined,
       systemId:
         device.systemId && roomIds.has(device.roomId)
@@ -394,11 +410,16 @@ export function duplicateSelection(
     };
   }
   const copiedPlenums = project.plenums
-    .filter((pl) => systemMap.has(pl.systemId) && roomMap.has(pl.roomId ?? ""))
+    .filter(
+      (pl) => systemMap.has(pl.systemId ?? "") && roomMap.has(pl.roomId ?? ""),
+    )
     .map((pl) => ({
       ...pl,
       id: newId(),
-      systemId: systemMap.get(pl.systemId)!,
+      systemId: systemMap.get(pl.systemId ?? "")!,
+      attachmentId: pl.attachmentId
+        ? deviceMap.get(pl.attachmentId)
+        : pl.attachmentId,
       roomId: roomMap.get(pl.roomId!)!,
       position: add(pl.position, offset),
       locked: false,
@@ -406,7 +427,8 @@ export function duplicateSelection(
   const plenumMap = new Map(
     project.plenums
       .filter(
-        (pl) => systemMap.has(pl.systemId) && roomMap.has(pl.roomId ?? ""),
+        (pl) =>
+          systemMap.has(pl.systemId ?? "") && roomMap.has(pl.roomId ?? ""),
       )
       .map((pl, i) => [pl.id, copiedPlenums[i].id]),
   );

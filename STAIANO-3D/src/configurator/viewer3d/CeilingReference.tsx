@@ -5,7 +5,7 @@ import * as THREE from "three";
 import type { Room } from "@/schemas/project";
 
 /** Toggleable suspended-ceiling layer; visible only where the operator measured one. */
-export function SuspendedCeiling({ room }: { room: Room }) {
+export function SuspendedCeiling({ room, transparent = true }: { room: Room; transparent?: boolean }) {
   const height = room.ceilingHeightM;
   const geometry = useMemo(() => {
     if (height === null) return null;
@@ -32,10 +32,10 @@ export function SuspendedCeiling({ room }: { room: Room }) {
       >
         <meshStandardMaterial
           color="#eef4f5"
-          transparent
-          opacity={0.22}
+          transparent={transparent}
+          opacity={transparent ? 0.1 : 1}
           side={THREE.DoubleSide}
-          depthWrite={false}
+          depthWrite={!transparent}
         />
       </mesh>
       <Line

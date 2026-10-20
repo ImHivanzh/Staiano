@@ -269,6 +269,12 @@ export function saveTerminalOnPlan(
       ...terminal,
       id: before?.id ?? terminal.id,
       productCode: sameModel ? before.productCode : terminal.productCode,
+      ceilingBandId:
+        before?.mounting === terminal.mounting
+          ? before.ceilingBandId
+          : undefined,
+      ceilingEdge:
+        before?.mounting === terminal.mounting ? before.ceilingEdge : undefined,
       elevationM:
         before?.mounting === terminal.mounting
           ? before.elevationM
@@ -409,7 +415,8 @@ export function connectTerminalOnPlan(
     (plenum) =>
       plenum.systemId === systemId &&
       plenum.floorId === terminal.floorId &&
-      plenum.use === terminal.use,
+      plenum.use === terminal.use &&
+      plenum.attachmentId === undefined,
   );
   const connected = refreshDuctedBindings({
     ...project,
@@ -423,7 +430,9 @@ export function connectTerminalOnPlan(
             pendingSystemId: systemId
               ? undefined
               : (member.systemId ?? member.pendingSystemId),
-            plenumId: member.use === "supply" ? (plenum?.id ?? null) : null,
+            plenumId:
+              project.plenums.find((p) => p.attachmentId === member.id)?.id ??
+              (member.use === "supply" ? (plenum?.id ?? null) : null),
           }
         : member,
     ),

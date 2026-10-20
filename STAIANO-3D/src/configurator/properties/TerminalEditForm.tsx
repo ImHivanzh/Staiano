@@ -1,4 +1,5 @@
 "use client";
+import { TerminalCeilingFront } from "./TerminalCeilingFront";
 import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { editOperatorTerminal } from "@/domain/air-terminals/operator";
@@ -37,6 +38,7 @@ export function TerminalEditForm({
             : "calcolata"}
         . La metratura richiesta resta distinta dai pezzi installati.
       </p>
+      <TerminalCeilingFront project={project} id={id} />
       <form
         key={`${id}-${t.widthMm}-${t.heightMm}-${t.position.x}-${t.position.y}-${t.rotation}-${t.elevationM}`}
         onSubmit={(e) => {
@@ -68,7 +70,7 @@ export function TerminalEditForm({
               current = {
                 ...p,
                 airTerminals: p.airTerminals.map((v) =>
-                  v.id === id ? { ...v, wallId } : v,
+                  v.id === id ? { ...v, wallId, ceilingBandId: undefined, ceilingEdge: undefined } : v,
                 ),
               };
             } else if (target.x !== t.position.x || target.y !== t.position.y) {
@@ -84,7 +86,6 @@ export function TerminalEditForm({
               rotation,
               elevationM: numberFromForm(data.get("elevation")),
               productCode: String(data.get("productCode")),
-              plenumId: String(data.get("plenum")) || null,
             });
           });
         }}
@@ -163,24 +164,7 @@ export function TerminalEditForm({
               defaultValue={t.productCode}
             />
           </label>
-          <label className="campo">
-            <span>Plenum associato</span>
-            <select name="plenum" defaultValue={t.plenumId ?? ""}>
-              <option value="">Non collegata</option>
-              {project.plenums
-                .filter(
-                  (pl) =>
-                    t.use === "supply" &&
-                    pl.systemId === t.systemId &&
-                    pl.floorId === t.floorId,
-                )
-                .map((pl) => (
-                  <option value={pl.id} key={pl.id}>
-                    {pl.model || pl.id}
-                  </option>
-                ))}
-            </select>
-          </label>
+
           <p className="nota">
             Modello, lunghezza, colore e finitura si configurano cliccando la
             bocchetta nella pianta principale.

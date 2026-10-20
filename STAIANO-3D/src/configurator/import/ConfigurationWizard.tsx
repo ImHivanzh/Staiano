@@ -1,12 +1,10 @@
 "use client";
-import { FullscreenSection } from "../FullscreenDialog";
 import { useRef } from "react";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
 import { useProjectStore } from "@/stores/project-store";
 import { validateProject } from "@/domain/validation";
 import { updateRoom } from "@/domain/project";
 import { InstallationWizard } from "@/configurator/systems/InstallationWizard";
-import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
 import { WallOpenings } from "@/configurator/properties/WallOpenings";
 import { wallMeasuredLength } from "@/domain/geometry/dimensions";
 import { formatNumber } from "@/utils/format";
@@ -323,22 +321,6 @@ export function ConfigurationWizard({
                   strumenti 3D. Scegli lunghezze e posizioni, poi configura il
                   plenum.
                 </p>
-                {ductedSystems.map((system) => (
-                  <details key={system.id}>
-                    <summary>
-                      {system.name ||
-                        system.genericMachine?.model ||
-                        system.productId}
-                      : plenum dedicato
-                    </summary>
-                    <FullscreenSection title="Configura plenum">
-                      <SupplyPlenumPanel
-                        project={project}
-                        systemId={system.id}
-                      />
-                    </FullscreenSection>
-                  </details>
-                ))}
               </details>
             )}
           </>

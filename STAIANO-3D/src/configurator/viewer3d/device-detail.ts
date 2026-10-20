@@ -1,11 +1,30 @@
 import type { Project } from "@/schemas/project";
 import type { RadiatorVariant } from "@/domain/catalogs/radiator-schema";
+import type { AirTerminalVariant } from "@/domain/catalogs/air-terminal-schema";
 
 export type DetailPart = {
   position: [number, number, number];
   scale: [number, number, number];
   rotation?: [number, number, number];
 };
+export function linearTerminalSlots(
+  variant: Pick<AirTerminalVariant, "slotCount" | "slotWidthMm">,
+  widthM: number,
+  heightM: number,
+  z: number,
+): DetailPart[] {
+  if (!variant.slotCount) return [];
+  const frame = Math.min(0.012, heightM * 0.1, widthM * 0.1);
+  const spacing = (heightM - frame * 2) / variant.slotCount;
+  const slotHeight = Math.min(
+    (variant.slotWidthMm ?? 20) / 1000,
+    spacing * 0.8,
+  );
+  return Array.from({ length: variant.slotCount }, (_, i) => ({
+    position: [0, -heightM / 2 + frame + spacing * (i + 0.5), z],
+    scale: [widthM - 2 * frame, slotHeight, 1],
+  }));
+}
 export type RadiatorDetail = {
   tubes: DetailPart[];
   caps: DetailPart[];

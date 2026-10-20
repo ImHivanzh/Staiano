@@ -7,6 +7,7 @@ import * as THREE from "three";
 import type { Room, Wall } from "@/schemas/project";
 import { cameraCutWalls, type SceneFrame } from "./scene-layout";
 import { useCustomerCamera } from "./customer-camera";
+import { bounds, pointInPolygon } from "@/domain/geometry/primitives";
 
 export function CameraRig({
   frame,
@@ -20,6 +21,7 @@ export function CameraRig({
   underside,
   animate = false,
   sync,
+  interiorRoom,
 }: {
   frame: SceneFrame;
   top: boolean;
@@ -32,6 +34,7 @@ export function CameraRig({
   underside?: boolean;
   animate?: boolean;
   sync?: { projectId: string; floorId: string; follow: boolean };
+  interiorRoom?: Room;
 }) {
   const { camera, size, invalidate } = useThree();
   const controls = useRef<OrbitControlsImpl>(null);
@@ -41,18 +44,19 @@ export function CameraRig({
   useEffect(() => {
     if (!follow) return;
     const apply = () => {
+      const activeCamera = controls.current?.object;
       const { camera: remote } = useCustomerCamera.getState();
       if (
         !remote ||
         remote.projectId !== sync?.projectId ||
         remote.floorId !== sync?.floorId ||
         !controls.current ||
-        !(camera instanceof THREE.PerspectiveCamera)
+        !(activeCamera instanceof THREE.PerspectiveCamera)
       )
         return;
-      camera.position.fromArray(remote.position);
-      camera.fov = remote.fov;
-      camera.updateProjectionMatrix();
+      activeCamera.position.fromArray(remote.position);
+      activeCamera.fov = remote.fov;
+      activeCamera.updateProjectionMatrix();
       controls.current.target.fromArray(remote.target);
       controls.current.update();
       invalidate();
@@ -66,6 +70,7 @@ export function CameraRig({
     invalidate();
   }, [walls, rooms, top, cutaway, invalidate]);
   const initialized = useRef(false);
+  const lastFitRequest = useRef("");
   const motion = useRef<{
     from: THREE.Vector3;
     to: THREE.Vector3;
@@ -82,6 +87,9 @@ export function CameraRig({
       remote?.floorId === sync?.floorId
     )
       return;
+    const fitRequest = `${sync?.projectId ?? ""}|${fitKey}|${top}|${viewRotation ?? ""}|${underside ?? false}|${interiorRoom?.id ?? ""}|${size.width}|${size.height}`;
+    if (initialized.current && lastFitRequest.current === fitRequest) return;
+    lastFitRequest.current = fitRequest;
     const base = frame.base ?? 0;
     const target = new THREE.Vector3(
       (frame.minX + frame.maxX) / 2,
@@ -119,6 +127,29 @@ export function CameraRig({
           );
         }
     const destination = target.clone().addScaledVector(direction, distance);
+    if (interiorRoom) {
+      const box = bounds(interiorRoom.polygon);
+      const alongX = box.maxX - box.minX > box.maxY - box.minY;
+      const point = alongX
+        ? { x: box.minX + 0.4, y: (box.minY + box.maxY) / 2 }
+        : { x: (box.minX + box.maxX) / 2, y: box.minY + 0.4 };
+      const inside = pointInPolygon(point, interiorRoom.polygon)
+        ? point
+        : interiorRoom.centroid;
+      const eye = Math.min(
+        1.6,
+        (interiorRoom.ceilingHeightM ?? interiorRoom.heightM) - 0.3,
+      );
+      destination.set(inside.x, eye, inside.y);
+      target.set(
+        alongX ? box.maxX - 0.4 : inside.x,
+        Math.max(
+          eye,
+          (interiorRoom.ceilingHeightM ?? interiorRoom.heightM) - 0.5,
+        ),
+        alongX ? inside.y : box.maxY - 0.4,
+      );
+    }
     if (
       animate &&
       initialized.current &&
@@ -164,6 +195,7 @@ export function CameraRig({
     follow,
     sync?.projectId,
     sync?.floorId,
+    interiorRoom,
   ]);
   useFrame(() => {
     if (motion.current && controls.current) {
@@ -246,7 +278,9 @@ export function CameraRig({
       dampingFactor={0.12}
       minDistance={0.2}
       maxDistance={2000}
-      maxPolarAngle={underside ? Math.PI * 0.85 : Math.PI / 2 - 0.03}
+      maxPolarAngle={
+        interiorRoom || underside ? Math.PI * 0.85 : Math.PI / 2 - 0.03
+      }
       screenSpacePanning
     />
   );

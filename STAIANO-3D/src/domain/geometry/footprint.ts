@@ -9,6 +9,31 @@ import {
   projection,
   distance,
 } from "./primitives";
+/** Pending symbols use the same 800/500 × 240 mm footprint as the plan glyph. */
+export function connectionFootprintEdge(
+  device: {
+    position: Point;
+    widthMm?: number;
+    heightMm?: number;
+    depthMm?: number | null;
+    rotation?: number;
+    mounting?: string;
+    kind?: string;
+  },
+  target: Point,
+) {
+  return nearestFootprintEdge(
+    {
+      position: device.position,
+      widthMm: device.widthMm ?? (device.kind === "terminal" ? 500 : 800),
+      depthMm:
+        (device.mounting === "ceiling" ? device.heightMm : device.depthMm) ??
+        240,
+      rotation: device.rotation ?? 0,
+    },
+    target,
+  );
+}
 export function nearestFootprintEdge(
   device: {
     position: Point;

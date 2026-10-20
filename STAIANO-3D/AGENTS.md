@@ -31,7 +31,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Il server è il Worker Cloudflare **https://licenses.ivanbuonocore.dev** (codice in `license-server/`, dati in D1 `licenses`); chiavi e token stanno in `.cache/`, la chiave privata vive solo come segreto del Worker.
 - `deploy/start-production.ps1` riavvia il processo solo se la build è più recente del processo in ascolto: dopo una modifica alle sole variabili d’ambiente occorre ricompilare nella directory alternativa (o usare `deploy/update-project.ps1 -SkipPull`, che però esegue anche `npm ci` e richiede privilegi elevati).
 
-## Repository Codeberg
+## Repository GitLab e distribuzione
 
-- Repository canonico: https://codeberg.org/AvocadoOra/Staiano-3D, ramo `main`, progetto nella sottocartella `STAIANO-3D/`. Eseguire npm e gli script da questa sottocartella. GitHub resta sospeso e non viene usato per la distribuzione.
-- Pubblicazione EXE: `compila.bat`; accesso Codeberg tramite Git Credential Manager oppure `CODEBERG_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.
+- Repository sorgente canonico: https://gitlab.com/imhivanzh/Staiano3D, ramo `main`, progetto nella sottocartella `STAIANO-3D/`. Eseguire npm e gli script da questa sottocartella. GitHub resta sospeso e non viene usato per la distribuzione.
+- `origin` punta a GitLab. `codeberg` conserva la copia precedente e ospita ancora il canale EXE; la migrazione dei segreti di aggiornamento richiede autorizzazione separata.
+- Pubblicazione EXE: `compila.bat`; accesso Codeberg per il canale EXE tramite Git Credential Manager oppure `CODEBERG_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.

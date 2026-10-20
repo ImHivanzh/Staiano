@@ -1,14 +1,8 @@
 "use client";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
-import {
-  commercialChoicesForTerminal,
-  commercialPlenumChoicesForTerminal,
-} from "@/domain/air-terminals/commercial-bom";
-import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
+import { commercialChoicesForTerminal } from "@/domain/air-terminals/commercial-bom";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
-import { TerminalPlenumFields } from "./TerminalPlenumFields";
-import styles from "./RoomAirTerminals.module.css";
 import {
   terminalFinishLabel,
   terminalFinishSpecification,
@@ -24,15 +18,7 @@ export function TerminalCommercialOptions({
   const terminal = project.airTerminals.find((t) => t.id === terminalId);
   const { commit } = useProjectStore();
   if (!terminal) return null;
-  const family = airTerminalFamilyAtVersion(
-    terminal.family,
-    terminal.catalogVersion,
-  );
-  const variant = family?.variants.find(
-    (item) => item.id === terminal.productId,
-  );
   const choices = commercialChoicesForTerminal(terminal);
-  const plenums = commercialPlenumChoicesForTerminal(terminal);
   const selected = choices.find(
     (p) =>
       p.modelCode === terminal.commercialOptions?.profileCode &&
@@ -103,77 +89,6 @@ export function TerminalCommercialOptions({
           ))}
         </select>
       </label>
-      <fieldset disabled={terminal.locked} className={styles.plenumOptions}>
-        <TerminalPlenumFields
-          familyCode={terminal.family}
-          variant={variant}
-          lengthMm={family?.isLinearPerMeter ? terminal.widthMm : null}
-          options={{ insulatedPlenum: true, ...terminal.commercialOptions }}
-          onChange={(patch) =>
-            update({ ...patch, plenumModelCode: undefined }, true)
-          }
-        />
-        <label className="campo">
-          <span>Plenum isolato di listino</span>
-          <select
-            aria-label="Plenum isolato Ecoclima"
-            value={
-              terminal.commercialOptions?.plenumModelCode
-                ? `${terminal.commercialOptions.plenumModelCode}|${terminal.commercialOptions.connectionPosition ?? ""}`
-                : ""
-            }
-            onChange={(e) => {
-              const choice = plenums.find(
-                (p) =>
-                  `${p.modelCode}|${p.connectionPosition ?? ""}` ===
-                  e.target.value,
-              );
-              update(
-                {
-                  plenumModelCode: choice?.modelCode,
-                  ...(choice
-                    ? {
-                        insulatedPlenum: true,
-                        plenumMaterial: "insulated",
-                        plenumShape: "rectangular",
-                      }
-                    : {}),
-                  ...(choice?.connectionPosition
-                    ? { connectionPosition: choice.connectionPosition }
-                    : {}),
-                },
-                true,
-              );
-            }}
-          >
-            <option value="">
-              {plenums.length === 1 ? plenums[0].modelCode : "Scegli il plenum"}
-            </option>
-            {[
-              ...new Map(
-                plenums.map((p) => [
-                  `${p.modelCode}:${p.connectionPosition}`,
-                  p,
-                ]),
-              ).values(),
-            ].map((choice) => (
-              <option
-                key={choice.id}
-                value={`${choice.modelCode}|${choice.connectionPosition ?? ""}`}
-              >
-                {choice.modelCode} ·{" "}
-                {choice.connectionPosition === "upper"
-                  ? "stacco superiore"
-                  : "stacco laterale"}
-              </option>
-            ))}
-          </select>
-        </label>
-      </fieldset>
-      <p className="nota">
-        Il plenum si configura per questa bocchetta. Modello e finitura si
-        applicano ai moduli uniti. Ponti e kit richiesti restano nella distinta.
-      </p>
       {!choices.length && (
         <p className="nota">
           Prezzo o corrispondenza esatta da verificare sulla scheda originale.

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useId, useRef, useState, type Ref } from "react";
+import { useEffect, useRef, useState, type Ref } from "react";
 import type { Point, Project, Room } from "@/schemas/project";
 import { ductedRoomAllocation } from "@/domain/ducted/apply";
 import {
@@ -67,8 +67,6 @@ export function RoomAirTerminals({
     existingVariant?.slotWidthMm ?? null,
   );
   const [choice, setChoice] = useState<number | null>(null);
-  const [tab, setTab] = useState<"terminal" | "plenum">("terminal");
-  const tabId = useId();
   const [mounting, setMounting] = useState<"wall" | "ceiling">(
     existing?.mounting === "wall" ? "wall" : "ceiling",
   );
@@ -141,7 +139,7 @@ export function RoomAirTerminals({
         .filter((count) => count !== null),
     ),
   ].sort((a, b) => a - b);
-  const recommendedSolution = requiredForSizing ? allSolutions[0] : undefined;
+  const overallRecommendation = requiredForSizing ? allSolutions[0] : undefined;
   const countSolutions = allSolutions.filter(
     (item) => slotCount === null || item.variant.slotCount === slotCount,
   );
@@ -154,12 +152,13 @@ export function RoomAirTerminals({
   ].sort((a, b) => a - b);
   const selectedWidth =
     slotWidth ??
-    recommendedSolution?.variant.slotWidthMm ??
+    countSolutions[0]?.variant.slotWidthMm ??
     (slotWidths.includes(30) ? 30 : (slotWidths[0] ?? null));
   const solutions = countSolutions.filter(
     (item) =>
       selectedWidth === null || item.variant.slotWidthMm === selectedWidth,
   );
+  const recommendedSolution = requiredForSizing ? solutions[0] : undefined;
   const solution =
     (choice === null && existing
       ? solutions.find(
@@ -170,7 +169,6 @@ export function RoomAirTerminals({
         )
       : solutions[choice ?? 0]) ?? solutions[0];
   function reset() {
-    setTab("terminal");
     setFamilyCode(null);
     setSlotCount(null);
     setSlotWidth(null);
@@ -296,52 +294,8 @@ export function RoomAirTerminals({
                 Cambia modello bocchetta
               </button>
             </div>
-            <div
-              className={styles.tabs}
-              role="tablist"
-              aria-label="Scheda bocchetta"
-            >
-              {(["terminal", "plenum"] as const).map((value, index) => (
-                <button
-                  key={value}
-                  type="button"
-                  role="tab"
-                  id={`${tabId}-${value}`}
-                  aria-controls={`${tabId}-panel`}
-                  aria-selected={tab === value}
-                  tabIndex={tab === value ? 0 : -1}
-                  onClick={() => setTab(value)}
-                  onKeyDown={(event) => {
-                    if (
-                      !["ArrowLeft", "ArrowRight", "Home", "End"].includes(
-                        event.key,
-                      )
-                    )
-                      return;
-                    event.preventDefault();
-                    const next =
-                      event.key === "Home"
-                        ? 0
-                        : event.key === "End"
-                          ? 1
-                          : 1 - index;
-                    setTab(next === 0 ? "terminal" : "plenum");
-                    event.currentTarget.parentElement
-                      ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
-                      [next]?.focus();
-                  }}
-                >
-                  {value === "terminal" ? "Bocchetta" : "Plenum"}
-                </button>
-              ))}
-            </div>
-            <div
-              role="tabpanel"
-              id={`${tabId}-panel`}
-              aria-labelledby={`${tabId}-${tab}`}
-              tabIndex={0}
-            >
-              <div hidden={tab === "plenum"}>
+            <div>
+              <div>
                 {systemId &&
                   family.isLinearPerMeter &&
                   solution.operatingPoint.airflowPerMeterM3h && (
@@ -417,7 +371,7 @@ export function RoomAirTerminals({
                       values={slots}
                       value={slotCount}
                       unit="feritoie"
-                      recommended={recommendedSolution?.variant.slotCount}
+                      recommended={overallRecommendation?.variant.slotCount}
                       onChange={(count) => {
                         setSlotCount(count);
                         setSlotWidth(null);
@@ -530,7 +484,6 @@ export function RoomAirTerminals({
                 className={`${styles.selection} ${styles.operatorSelection}`}
               >
                 <OperatorTerminalControls
-                  plenumOnly={tab === "plenum"}
                   installationId={installationId}
                   draftId={draftId}
                   saveButtonRef={saveButtonRef}

@@ -1,4 +1,5 @@
 "use client";
+import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { useProjectStore } from "@/stores/project-store";
 import type { Project, Selection } from "@/schemas/project";
 import {
@@ -24,6 +25,7 @@ import {
 } from "@phosphor-icons/react";
 import "./inspector.css";
 import { LengthInput } from "../LengthInput";
+import { CeilingDesign } from "./CeilingDesign";
 import { RoomConditioning } from "./RoomConditioning";
 import {
   wallMeasuredLength,
@@ -117,6 +119,14 @@ export function Properties() {
                 : "Il tuo progetto"}
         </p>
       </div>
+      {deviceId && (
+        <button
+          className="bottone piccolo"
+          onClick={() => commit((p) => rotateDevice90(p, deviceId))}
+        >
+          Ruota 90°
+        </button>
+      )}
       {deviceId && <DeviceProperties project={p} id={deviceId} />}
       {selectedObject && (
         <label className="campo">
@@ -313,12 +323,15 @@ export function Properties() {
                 min={0.1}
                 max={30}
                 step={0.01}
-                defaultValue={r.ceilingHeightM ?? Math.max(0.1, r.heightM - 0.3)}
+                defaultValue={
+                  r.ceilingHeightM ?? Math.max(0.1, r.heightM - 0.3)
+                }
               />
               <button className="bottone chiara" type="submit">
                 Applica proprietà
               </button>
             </form>
+            <CeilingDesign project={p} room={r} />
             <RoomConditioning
               key={`${r.id}-${r.conditioningExclusion?.reason ?? "active"}`}
               room={r}

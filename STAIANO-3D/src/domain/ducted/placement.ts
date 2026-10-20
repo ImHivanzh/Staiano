@@ -143,6 +143,10 @@ export function moveSystemObject(
   const item = plenum ?? system?.indoorUnits.find((u) => u.id === id);
   if (!item) return project;
   if (item.locked) throw new Error("Sbloccare l’elemento prima di spostarlo.");
+  if (plenum?.attachmentId)
+    throw new Error(
+      "Il plenum segue l’elemento collegato: sposta la bocchetta o la macchina.",
+    );
   if (plenum)
     return {
       ...project,
@@ -175,6 +179,7 @@ export function moveSystemObject(
 
 /** The same saved dimensions and real outlet list feed 3D and dossier views. */
 export function placedPlenumGeometry(project: Project, plenum: Plenum) {
+  if (!plenum.systemId || plenum.attachmentId !== undefined) return null;
   const calculated = calculatePlenum(
     project,
     plenum.systemId,

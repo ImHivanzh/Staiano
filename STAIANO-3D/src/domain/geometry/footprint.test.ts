@@ -1,7 +1,33 @@
 import { describe, expect, it } from "vitest";
-import { nearestFootprintEdge } from "./footprint";
+import { connectionFootprintEdge, nearestFootprintEdge } from "./footprint";
 
 describe("origine collegamento sul bordo macchina", () => {
+  it("uses the nearest edge for pending rectangular glyphs and ceiling terminals", () => {
+    expect(
+      connectionFootprintEdge(
+        { position: { x: 2, y: 3 }, kind: "machine" },
+        { x: 5, y: 3 },
+      ),
+    ).toEqual({ x: 2.4, y: 3 });
+    expect(
+      connectionFootprintEdge(
+        { position: { x: 2, y: 3 }, kind: "terminal" },
+        { x: 5, y: 3 },
+      ),
+    ).toEqual({ x: 2.25, y: 3 });
+    expect(
+      connectionFootprintEdge(
+        {
+          position: { x: 2, y: 3 },
+          mounting: "ceiling",
+          widthMm: 1000,
+          heightMm: 600,
+          depthMm: 100,
+        },
+        { x: 2, y: 5 },
+      ).y,
+    ).toBeCloseTo(3.3);
+  });
   const machine = {
     position: { x: 3, y: 4 },
     widthMm: 1000,

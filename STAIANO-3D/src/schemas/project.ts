@@ -134,6 +134,16 @@ export const floorSchema = z.object({
     .nullable()
     .optional(),
 });
+export const ceilingBandSchema = z.object({
+  id,
+  name: z.string().trim().min(1).max(100),
+  wallId: id,
+  offsetM: finite.nonnegative().max(1000),
+  lengthM: finite.positive().max(1000),
+  depthM: finite.positive().max(100),
+  elevationM: finite.positive().max(30),
+});
+export type CeilingBand = z.infer<typeof ceilingBandSchema>;
 export const roomSchema = z.object({
   id,
   floorId: id,
@@ -146,6 +156,10 @@ export const roomSchema = z.object({
   centroid: pointSchema,
   heightM: finite.positive().max(30),
   ceilingHeightM: finite.positive().max(30).nullable().default(null),
+  ceilingBands: z.array(ceilingBandSchema).max(100).optional(),
+  roof: z
+    .object({ ridgeWallId: id, ridgeHeightM: finite.positive().max(30) })
+    .optional(),
   volumeM3: finite.nonnegative(),
   designLoadW: finite.nonnegative(),
   systemType: z.enum(["none", "split", "vrv", "ducted", "radiator", "fanCoil"]),
@@ -180,6 +194,7 @@ export const outdoorUnitSchema = z.object({
   heightMm: finite.positive(),
   depthMm: finite.positive(),
   elevationM: finite.nonnegative().max(100),
+  mounting: z.enum(["ground", "brackets"]).optional(),
   locked: z.boolean().default(false),
 });
 export const linearPlanSchema = z.object({
@@ -213,7 +228,12 @@ export const linearPlanSchema = z.object({
 export type LinearPlan = z.infer<typeof linearPlanSchema>;
 export const plenumSchema = z.object({
   id,
-  systemId: id,
+  systemId: id.nullable(),
+  /** undefined: plenum macchina storico; null: elemento ancora da collegare. */
+  attachmentId: id.nullable().optional(),
+  portCount: z.number().int().min(1).max(24).optional(),
+  portDiameterMm: finite.positive().max(2000).optional(),
+  material: z.enum(["insulated", "galvanized"]).optional(),
   /** Un plenum di ripresa, uno di mandata: raccolgono bocchette di quel lato. */
   use: z.enum(["supply", "return"]).default("supply"),
   floorId: id,
@@ -257,6 +277,8 @@ export const ductSchema = z.object({
   plenumId: id,
   terminalId: id.nullable(),
   branchId: z.string().max(250).nullable(),
+  /** Flessibile = tubo corrugato verso il terminale, non condotto rigido. */
+  kind: z.enum(["rigid", "flexible"]).default("rigid"),
   shape: z.enum(["circle", "rectangle"]),
   diameterMm: finite.positive().nullable(),
   widthMm: finite.positive().nullable(),
@@ -461,6 +483,8 @@ export const projectSchema = z
           pendingSystemId: id.optional(),
           pendingMachineId: id.optional(),
           mounting: z.enum(["wall", "ceiling", "unknown"]),
+          ceilingBandId: id.optional(),
+          ceilingEdge: z.number().int().min(0).max(3).optional(),
           shape: z.enum(["rectangle", "circle", "unknown"]),
           elevationM: finite.positive().max(30).nullable(),
           operatingPointIndex: z
@@ -645,6 +669,49 @@ export const projectSchema = z
     for (const r of p.rooms)
       if (r.wallIds.some((wid) => walls.get(wid)?.floorId !== r.floorId))
         ctx.addIssue({ code: "custom", message: "Muri stanza incoerenti" });
+    for (const room of p.rooms) {
+      if (
+        room.roof &&
+        (!room.wallIds.includes(room.roof.ridgeWallId) ||
+          room.roof.ridgeHeightM <= room.heightM)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message:
+            "Tetto: colmo superiore alla gronda e parete di riferimento necessari",
+        });
+      if (
+        new Set(room.ceilingBands?.map((b) => b.id)).size !==
+        (room.ceilingBands?.length ?? 0)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Fasce del controsoffitto duplicate",
+        });
+      for (const band of room.ceilingBands ?? [])
+        if (
+          !room.wallIds.includes(band.wallId) ||
+          band.elevationM >= (room.ceilingHeightM ?? room.heightM)
+        )
+          ctx.addIssue({
+            code: "custom",
+            message: "Fascia del controsoffitto senza parete o quota coerente",
+          });
+    }
+    for (const terminal of p.airTerminals)
+      if (
+        terminal.ceilingBandId &&
+        (terminal.mounting !== "wall" ||
+          terminal.wallId ||
+          terminal.ceilingEdge === undefined ||
+          !rooms
+            .get(terminal.roomId)
+            ?.ceilingBands?.some((b) => b.id === terminal.ceilingBandId))
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Bocchetta senza fronte del controsoffitto coerente",
+        });
     for (const o of p.openings)
       if (walls.get(o.wallId)?.floorId !== o.floorId)
         ctx.addIssue({ code: "custom", message: "Apertura senza muro" });
@@ -748,20 +815,45 @@ export const projectSchema = z
     const plenumUses = new Set<string>();
     for (const pl of p.plenums) {
       const system = p.hvacSystems.find((s) => s.id === pl.systemId);
-      if (!system || system.type !== "ducted")
+      if (pl.systemId && (!system || system.type !== "ducted"))
         ctx.addIssue({
           code: "custom",
           message: "Plenum senza sistema canalizzato coerente",
         });
-      const useKey = `${pl.systemId}:${pl.use}`;
-      if (plenumUses.has(useKey))
+      const useKey = `${pl.attachmentId ?? pl.systemId}:${pl.use}`;
+      if (
+        (pl.attachmentId || pl.attachmentId === undefined) &&
+        plenumUses.has(useKey)
+      )
         ctx.addIssue({
           code: "custom",
           message: "Due plenums dello stesso lato sulla stessa macchina",
         });
       plenumUses.add(useKey);
+      if (pl.attachmentId) {
+        const owner =
+          p.airTerminals.find((t) => t.id === pl.attachmentId) ??
+          p.hvacSystems
+            .flatMap((s) => s.indoorUnits)
+            .find((u) => u.id === pl.attachmentId);
+        if (
+          !owner ||
+          owner.floorId !== pl.floorId ||
+          ("use" in owner
+            ? owner.use !== "supply" ||
+              pl.use !== "supply" ||
+              owner.systemId !== pl.systemId
+            : pl.use !== "return" ||
+              !system?.indoorUnits.some((u) => u.id === owner.id))
+        )
+          ctx.addIssue({
+            code: "custom",
+            message: "Collegamento plenum non coerente",
+          });
+      }
       if (
         pl.roomId &&
+        pl.systemId &&
         !system?.roomIds.includes(pl.roomId) &&
         !system?.indoorUnits.some((unit) => unit.roomId === pl.roomId)
       )
@@ -777,7 +869,9 @@ export const projectSchema = z
         t.plenumId &&
         (plenumIds.get(t.plenumId)?.systemId !== t.systemId ||
           plenumIds.get(t.plenumId)?.floorId !== t.floorId ||
-          plenumIds.get(t.plenumId)?.use !== t.use)
+          plenumIds.get(t.plenumId)?.use !== t.use ||
+          (plenumIds.get(t.plenumId)?.attachmentId != null &&
+            plenumIds.get(t.plenumId)?.attachmentId !== t.id))
       )
         ctx.addIssue({
           code: "custom",

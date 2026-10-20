@@ -1,4 +1,5 @@
 "use client";
+import { OutdoorBrackets } from "./OutdoorBrackets";
 import { Line } from "@react-three/drei";
 import type { Project, Selection } from "@/schemas/project";
 import { refrigerantRoute } from "@/domain/air-conditioning/outdoor";
@@ -41,6 +42,9 @@ export function AirOutdoorMeshes({
                   onSelect?.({ kind: "device", id: unit.id });
                 }}
               >
+                {unit.mounting === "brackets" && (
+                  <OutdoorBrackets widthM={w} heightM={h} depthM={d} />
+                )}
                 <mesh castShadow receiveShadow>
                   <boxGeometry args={[w, h - 0.06, d]} />
                   <meshStandardMaterial

@@ -8,7 +8,11 @@ export const pillarFootprint = (p: Pillar) =>
 
 /** Clip the room to a convex pillar, retaining physical net usable area. */
 export function pillarAreaInRoom(pillar: Pillar, polygon: Point[]) {
-  const clip = pillarFootprint(pillar);
+  const polygonInRoom = clipToConvex(polygon, pillarFootprint(pillar));
+  return polygonInRoom.length >= 3 ? area(polygonInRoom) : 0;
+}
+
+export function clipToConvex(polygon: Point[], clip: Point[]) {
   const orientation =
     clip.reduce((sum, p, i) => sum + cross(p, clip[(i + 1) % clip.length]), 0) >
     0
@@ -33,7 +37,7 @@ export function pillarAreaInRoom(pillar: Pillar, polygon: Point[]) {
       previous = current;
     }
   }
-  return output.length >= 3 ? area(output) : 0;
+  return output;
 }
 
 export function addPillar(

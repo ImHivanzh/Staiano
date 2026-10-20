@@ -26,7 +26,7 @@ export function sceneFrame(
     maxZ: box.maxY + padding,
     height: Math.max(
       defaultHeight,
-      ...rooms.map((room) => room.heightM),
+      ...rooms.map((room) => room.roof?.ridgeHeightM ?? room.heightM),
       ...walls.map((wall) => wall.height ?? 0),
     ),
   };

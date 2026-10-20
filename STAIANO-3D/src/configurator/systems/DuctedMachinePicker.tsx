@@ -8,9 +8,8 @@ import { machinesServingSameRooms } from "@/domain/ducted/machine";
 import { applyDuctedSystem } from "@/domain/ducted/apply";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
-import { FullscreenDialog, FullscreenSection } from "../FullscreenDialog";
+import { FullscreenDialog } from "../FullscreenDialog";
 import { ManualMachineForm } from "./ManualMachineForm";
-import { SupplyPlenumPanel } from "./SupplyPlenumPanel";
 import { lastAvailableManufacturer } from "./manufacturer-preference";
 import styles from "./DuctedMachinePicker.module.css";
 
@@ -233,15 +232,6 @@ export function DuctedMachinePicker({
                   </p>
                 )}
               </section>
-              {savedSystem && (
-                <FullscreenSection title="Vista plenum">
-                  <SupplyPlenumPanel
-                    project={project}
-                    systemId={savedSystem.id}
-                    onPlaced={close}
-                  />
-                </FullscreenSection>
-              )}
               {!manual && (
                 <>
                   <h3>Macchina e marca</h3>

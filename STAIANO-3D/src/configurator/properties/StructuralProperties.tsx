@@ -2,11 +2,10 @@
 import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
-import { numberFromForm, formatNumber } from "@/utils/format";
+import { numberFromForm } from "@/utils/format";
 import { removeSelection } from "@/domain/geometry/selection";
-import { calculateSupplyPlenum } from "@/domain/ducted/plenum";
-import { SupplyPlenumPanel } from "@/configurator/systems/SupplyPlenumPanel";
-import { FullscreenSection } from "../FullscreenDialog";
+
+import { PlenumProperties } from "./PlenumProperties";
 
 export function StructuralProperties({
   project,
@@ -24,9 +23,7 @@ export function StructuralProperties({
   const machine = system?.indoorUnits.find((u) => u.id === id);
   const item = plenum ?? pillar ?? machine;
   if (!item) return null;
-  const result = plenum
-    ? calculateSupplyPlenum(project, plenum.systemId)
-    : null;
+  if (plenum) return <PlenumProperties project={project} id={id} />;
   return (
     <div className="corpo-proprieta">
       <h3>
@@ -48,25 +45,6 @@ export function StructuralProperties({
         >
           Configura sulla planimetria 2D
         </button>
-      )}
-      {plenum && (
-        <>
-          <p>
-            {plenum.model} · {result?.branches.length} attacchi richiesti ·{" "}
-            {result?.machineGeometry?.ports.length ?? 0} con diametro verificato
-          </p>
-          <ol>
-            {result?.branches.map((b, i) => (
-              <li key={b.id}>
-                Attacco {i + 1}:{" "}
-                {b.diameterMm === null
-                  ? "diametro da verificare"
-                  : `Ø ${b.diameterMm} mm`}{" "}
-                · {b.roomName} · {formatNumber(b.airflowM3h)} m³/h
-              </li>
-            ))}
-          </ol>
-        </>
       )}
       <form
         key={`${id}-${item.position.x}-${item.position.y}-${item.rotation}-${item.widthMm}-${item.heightMm}-${item.depthMm}`}
@@ -93,20 +71,6 @@ export function StructuralProperties({
             ...p,
             pillars: p.pillars?.map((c) =>
               c.id === id ? { ...c, ...patch } : c,
-            ),
-            plenums: p.plenums.map((pl) =>
-              pl.id === id
-                ? {
-                    ...pl,
-                    ...patch,
-                    status: "manual",
-                    elevationM: numberFromForm(data.get("elevation")),
-                    model: String(data.get("model")),
-                    designSettings: pl.designSettings
-                      ? { ...pl.designSettings, faceWidthMm: patch.widthMm }
-                      : null,
-                  }
-                : pl,
             ),
             hvacSystems: p.hvacSystems.map((s) => ({
               ...s,
@@ -169,26 +133,6 @@ export function StructuralProperties({
               </label>
             ),
           )}
-          {plenum && (
-            <>
-              <LengthInput
-                label="Quota centro plenum"
-                baseUnit="m"
-                name="elevation"
-                step="0.01"
-                defaultValue={plenum.elevationM}
-                required
-              />
-              <label className="campo">
-                <span>Identificativo / modello plenum</span>
-                <input
-                  name="model"
-                  maxLength={100}
-                  defaultValue={plenum.model}
-                />
-              </label>
-            </>
-          )}
           <button className="bottone chiara" type="submit">
             Applica oggetto
           </button>
@@ -203,17 +147,6 @@ export function StructuralProperties({
       >
         Elimina oggetto
       </button>
-      {plenum && (
-        <FullscreenSection title="Collegamenti e scheda plenum">
-          <SupplyPlenumPanel project={project} systemId={plenum.systemId} />
-        </FullscreenSection>
-      )}
-      {/* `system` è valorizzato solo per la macchina selezionata. */}
-      {system && (
-        <FullscreenSection title="Vista plenum">
-          <SupplyPlenumPanel project={project} systemId={system.id} />
-        </FullscreenSection>
-      )}
     </div>
   );
 }

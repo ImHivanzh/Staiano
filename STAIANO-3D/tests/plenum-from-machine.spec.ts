@@ -1,105 +1,46 @@
-import { readFileSync } from "node:fs";
 import { expect, test } from "./browser-test";
+import { importPlenumFixture, exportPlenumFixture } from "./plenum-ui-fixture";
 
-/** Macchina canalizzata con tre bocchette di mandata reali e il plenum posato. */
-function networkProject() {
-  return JSON.parse(readFileSync(".cache/guided-ui-fixtures.json", "utf8"))
-    .network as {
-    hvacSystems: { id: string; indoorUnits: { id: string }[] }[];
-    airTerminals: { id: string; use: string; systemId: string }[];
-  };
-}
-
-test("la macchina apre la vista plenum con una uscita per stacco delle bocchette", async ({
+test("Collega associa il plenum separato alla bocchetta e salva i flessibili", async ({
   page,
 }) => {
-  test.setTimeout(90000);
-  await page.setViewportSize({ width: 1680, height: 1050 });
-  const project = networkProject();
-  const system = project.hvacSystems[0];
-  const vents = project.airTerminals.filter(
-    (terminal) => terminal.use === "supply" && terminal.systemId === system.id,
-  );
-  expect(system.indoorUnits).toHaveLength(1);
-  expect(vents).toHaveLength(3);
-
-  await page.goto("/");
-  await page.getByTestId("project-file").setInputFiles({
-    name: "plenum-macchina.hvacproj",
-    mimeType: "application/json",
-    buffer: Buffer.from(JSON.stringify(project)),
-  });
-  const free = page.getByRole("button", {
-    name: "Continua liberamente nell’editor",
-  });
-  if (await free.count()) await free.click();
-  const backToEditor = page.getByRole("button", {
-    name: "Torna all’editor",
-    exact: true,
-  });
-  if (await backToEditor.count()) await backToEditor.click();
-  // Si clicca la macchina sulla pianta, come farebbe l'operatore.
-  await page.getByTestId("split-2d").first().click();
-  const picker = page.getByRole("dialog", {
-    name: "Scegli macchina canalizzata",
-  });
-  if (await picker.count()) {
-    // La macchina già configurata espone il plenum nella sua stessa finestra.
-    await picker
-      .getByRole("button", { name: "Vista plenum", exact: true })
-      .click();
-    const machinePlenum = page.getByRole("dialog", {
-      name: "Vista plenum",
-      exact: true,
-    });
-    await expect(
-      machinePlenum.getByRole("region", { name: "Plenum di mandata" }),
-    ).toBeVisible();
-    await expect(
-      machinePlenum.locator('img[alt^="Schema plenum di mandata:"]'),
-    ).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(machinePlenum).toHaveCount(0);
-    await page.keyboard.press("Escape");
-  }
+  test.setTimeout(120000);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  const before = await importPlenumFixture(page);
+  await page.getByRole("button", { name: "Collega", exact: true }).click();
+  await page.getByTestId("plenum-2d").locator("rect").click();
+  await page.getByTestId("terminal-supply").first().click();
+  await expect(page.getByText(/Collegamento salvato/)).toBeVisible();
+  const result = await exportPlenumFixture(page);
+  expect(result.plenums[0].attachmentId).toBe(before.airTerminals[0].id);
+  expect(result.ducts).toHaveLength(result.plenums[0].portCount!);
+  expect(result.ducts!.every((d) => d.kind === "flexible")).toBe(true);
   await page.getByRole("button", { name: "3D", exact: true }).click();
-  const viewer = page.getByTestId("viewer-3d");
-  await expect(viewer.locator("canvas")).toHaveAttribute(
-    "data-rendered",
-    "true",
+  await expect(page.getByTestId("viewer-3d").locator("canvas")).toHaveAttribute(
+    "data-duct-count",
+    String(result.ducts!.length),
     { timeout: 30000 },
   );
-
-  await viewer
-    .getByRole("button", { name: "Vista plenum", exact: true })
-    .click({ timeout: 15000 });
-  const plenum = page.getByRole("dialog", {
-    name: "Plenum degli impianti autonomi",
+  await page.screenshot({ path: ".cache/plenum-collegato-3d.png" });
+  await page
+    .getByRole("button", { name: "Configura percorsi", exact: true })
+    .click();
+  const dialog = page.getByRole("dialog", {
+    name: "Canalizzazione collegata",
+    exact: true,
   });
-  // Il plenum mostrato è quello della macchina cliccata, non un impianto a caso.
-  await expect(plenum.getByLabel("Impianto plenum")).toHaveValue(system.id);
-  const panel = plenum.getByRole("region", { name: "Plenum di mandata" });
-  const diagram = panel.locator('img[alt^="Schema plenum di mandata:"]');
-  await expect(diagram).toBeVisible();
-  const branches = Number(
-    (await diagram.getAttribute("alt"))?.match(/: (\d+) stacchi/)?.[1],
-  );
-  // Almeno un attacco per bocchetta collegata.
-  expect(branches).toBeGreaterThanOrEqual(vents.length);
-  await expect(
-    panel.getByRole("strong").filter({ hasText: `${branches} stacchi` }),
-  ).toBeVisible();
-  await expect(
-    panel.getByRole("button", { name: "Vista raggruppata", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
-  await panel
-    .getByRole("button", { name: "Dettaglio singoli stacchi", exact: true })
+  await dialog.locator("details").first().locator("summary").first().click();
+  const ducts = dialog.getByRole("region", {
+    name: "Canalizzazione collegata",
+  });
+  await ducts.locator("details").first().locator("summary").click();
+  await ducts
+    .getByRole("button", { name: "Modifica percorso in 3D" })
+    .first()
     .click();
-  await expect(panel.locator("table tbody tr")).toHaveCount(branches);
-  await panel
-    .getByRole("button", { name: "Vista 3D plenum", exact: true })
-    .click();
-  await expect(
-    panel.getByTestId("plenum-preview-3d").locator("canvas"),
-  ).toHaveAttribute("data-plenum-ports", String(branches));
+  await expect(dialog).toHaveCount(0);
+  await page.screenshot({ path: ".cache/flessibile-percorso-3d.png" });
+  const edited = await exportPlenumFixture(page);
+  expect(edited.ducts![0].routing).toBe("manual");
+  expect(edited.ducts![0].waypoints).toHaveLength(1);
 });

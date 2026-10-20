@@ -1,4 +1,5 @@
 "use client";
+import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
 import {
   useEffect,
   useRef,
@@ -805,6 +806,27 @@ export function Editor2D({
             </text>
           </g>
         ))}
+        {project &&
+          rooms.flatMap((room) =>
+            (room.ceilingBands ?? []).map((band) => (
+              <g
+                key={band.id}
+                pointerEvents="none"
+                data-testid="ceiling-band-2d"
+              >
+                <polygon
+                  points={ceilingBandPolygon(project, room, band)
+                    .map((p) => `${p.x},${p.y}`)
+                    .join(" ")}
+                  fill="#c9d9df"
+                  fillOpacity={0.3}
+                  stroke="#527987"
+                  strokeWidth={u}
+                  strokeDasharray={`${u * 5} ${u * 3}`}
+                />
+              </g>
+            )),
+          )}
         {walls.map((w) => {
           const a = previewPoint(w.start),
             b = previewPoint(w.end),
@@ -1486,6 +1508,16 @@ export function Editor2D({
               <g
                 key={o.id}
                 data-testid={plenum ? "plenum-2d" : "pillar-2d"}
+                data-device-id={o.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`${plenum ? "Plenum" : "Pilastro"} ${codes.get(o.id) ?? ""}`}
+                onKeyDown={(e) => {
+                  if (configuration && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    configuration.onPick(o.position, o.id);
+                  }
+                }}
                 transform={`translate(${pos.x} ${pos.y}) rotate(${(o.rotation * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, o.id)}
               >

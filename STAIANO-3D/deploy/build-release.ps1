@@ -6,7 +6,7 @@
 #   compila.bat nopublish       compila e collauda senza pubblicare
 #
 # Richiede: Node 24.14.0 su Windows x64, albero di lavoro pulito e HEAD uguale a
-# origin/main (lo script fa il push se serve). I segreti CODEBERG_TOKEN e
+# codeberg/main per il canale EXE esistente (il sorgente canonico resta su GitLab). I segreti CODEBERG_TOKEN e
 # LICENSE_PUBLISH_TOKEN si leggono da .env.local (escluso dal repository).
 param(
   [Parameter(ValueFromRemainingArguments = $true)]
@@ -76,19 +76,23 @@ Write-Step 'Manifest dei documenti tecnici'
 Invoke-Native $node @('scripts/catalog-sources.mjs', 'check')
 
 # 3. Il pacchetto deve corrispondere al ramo main pubblicato: allinea e, se serve, pubblica i commit.
-Write-Step 'Allineamento con Codeberg'
-Invoke-Native $git @('fetch', 'origin', 'main')
+Write-Step 'Allineamento sorgente GitLab e canale EXE esistente'
+if (-not (@(& $git remote) -contains 'codeberg')) {
+  Invoke-Native $git @('remote', 'add', 'codeberg', 'https://codeberg.org/AvocadoOra/Staiano-3D.git')
+}
 $head = (& $git rev-parse HEAD).Trim()
-$remote = (& $git rev-parse origin/main).Trim()
-if ($head -ne $remote) {
-  & $git merge-base --is-ancestor origin/main HEAD
-  if ($LASTEXITCODE -ne 0) {
-    Write-Fail 'main locale e origin/main sono divergenti: esegui git pull e riprova.'
+foreach ($releaseRemote in @('origin', 'codeberg')) {
+  Invoke-Native $git @('fetch', $releaseRemote, 'main')
+  $remote = (& $git rev-parse "$releaseRemote/main").Trim()
+  if ($head -ne $remote) {
+    & $git merge-base --is-ancestor "$releaseRemote/main" HEAD
+    if ($LASTEXITCODE -ne 0) {
+      Write-Fail "main locale e $releaseRemote/main sono divergenti: allinea il ramo e riprova."
+    }
+    $pending = @(& $git log --oneline "$remote..$head")
+    Write-Host "commit da pubblicare su $($releaseRemote): $($pending.Count)"
+    Invoke-Native $git @('push', $releaseRemote, 'main')
   }
-  $pending = @(& $git log --oneline "$remote..$head")
-  Write-Host "commit da pubblicare su Codeberg: $($pending.Count)"
-  Invoke-Native $git @('push', 'origin', 'main')
-  $remote = (& $git rev-parse origin/main).Trim()
 }
 Write-Host "revisione $($head.Substring(0, 12)) allineata"
 

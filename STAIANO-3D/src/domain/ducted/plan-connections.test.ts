@@ -18,6 +18,7 @@ import {
   connectHydronicOnPlan,
   hydronicRoomIds,
   hydronicTargets,
+  pendingConnections,
 } from "./plan-connections";
 import { connectionSelection } from "@/configurator/viewer3d/connection-selection";
 import { projectSchema, type Project } from "@/schemas/project";
@@ -252,4 +253,16 @@ it("reuses an existing configured vent when linking a new unconfigured machine",
   expect(project.airTerminals.at(-1)!.systemId).toBe(id);
   expect(project.airTerminals.at(-1)!.pendingMachineId).toBeUndefined();
   expect(projectSchema.safeParse(project).success).toBe(true);
+});
+
+
+it("draws pending links from the visible glyph edges rather than their centers", () => {
+  const project=fixture();
+  const [machine, terminal]=project.ductedDrafts!;
+  const linked=connectDraftOnPlan(project,terminal.id,machine.id);
+  const points=pendingConnections(linked)[0].points;
+  expect(points.length).toBeGreaterThanOrEqual(2);
+  expect(points[0]).not.toEqual(machine.position);
+  expect(points.at(-1)).not.toEqual(terminal.position);
+  expect(Math.abs(points[0].x-machine.position.x)).toBeCloseTo(0.4);
 });

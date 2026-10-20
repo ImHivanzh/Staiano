@@ -1,5 +1,6 @@
 import type { Point, Project, Room } from "@/schemas/project";
 import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
+import { roofHeightAt } from "./ceilings";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { footprintCorners, convexFootprintsOverlap } from "./footprint";
 import {
@@ -143,14 +144,21 @@ export function deviceEnvelopeInsideRoom(
   envelope: DeviceEnvelope,
   room: Room,
   allowAboveCeiling = false,
+  project?: Project,
 ): boolean {
+  const ceiling =
+    project && room.roof
+      ? Math.min(
+          ...envelope.cornersXY.map((p) => roofHeightAt(project, room, p)),
+        )
+      : room.heightM;
   if (
     envelope.roomId !== room.id ||
     envelope.floorId !== room.floorId ||
     envelope.minZ < -1e-7 ||
     (allowAboveCeiling
-      ? envelope.minZ > room.heightM + 1e-7
-      : envelope.maxZ > room.heightM + 1e-7) ||
+      ? envelope.minZ > ceiling + 1e-7
+      : envelope.maxZ > ceiling + 1e-7) ||
     !envelope.cornersXY.every((corner) => pointInPolygon(corner, room.polygon))
   )
     return false;

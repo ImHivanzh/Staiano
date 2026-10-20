@@ -40,6 +40,14 @@ export function checkLockedObjects(before: Project, after: Project) {
       "roomId",
       "waypoints",
       "routing",
+      "kind",
+      "shape",
+      "diameterMm",
+      "portCount",
+      "portDiameterMm",
+      "attachmentId",
+      "ceilingBandId",
+      "ceilingEdge",
     ])
       if (
         JSON.stringify((old as unknown as Record<string, unknown>)[key]) !==

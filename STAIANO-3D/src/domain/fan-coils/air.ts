@@ -187,8 +187,7 @@ export function removeFanCoilAirSystem(
  * fisico, portata e potenze del punto scelto, stessa posizione in pianta.
  */
 export function syncFanCoilAirSystems(project: Project): Project {
-  if (!project.hvacSystems.some((system) => system.fanCoilId))
-    return project;
+  if (!project.hvacSystems.some((system) => system.fanCoilId)) return project;
   const fanCoils = new Map((project.fanCoils ?? []).map((u) => [u.id, u]));
   const removed = new Set<string>();
   const systems = project.hvacSystems.map((system) => {
@@ -260,7 +259,7 @@ export function syncFanCoilAirSystems(project: Project): Project {
     ...project,
     hvacSystems: kept,
     plenums: project.plenums.filter(
-      (plenum) => !removed.has(plenum.systemId),
+      (plenum) => !plenum.systemId || !removed.has(plenum.systemId),
     ),
     ducts: project.ducts?.filter((duct) => !removed.has(duct.systemId)),
     airTerminals: project.airTerminals.map((terminal) =>

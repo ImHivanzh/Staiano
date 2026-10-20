@@ -1,4 +1,5 @@
 "use client";
+import { RoomCeiling3D } from "@/configurator/viewer3d/RoomCeiling3D";
 
 import {
   Component,
@@ -17,10 +18,7 @@ import { DeviceMeshes } from "@/configurator/viewer3d/DeviceMeshes";
 import { SceneLighting } from "@/configurator/viewer3d/SceneLighting";
 import { SceneEffects } from "@/configurator/viewer3d/SceneEffects";
 import { CameraRig } from "@/configurator/viewer3d/CameraRig";
-import {
-  CeilingReference,
-  SuspendedCeiling,
-} from "@/configurator/viewer3d/CeilingReference";
+import { CeilingReference } from "@/configurator/viewer3d/CeilingReference";
 import { sceneFrame } from "@/configurator/viewer3d/scene-layout";
 import { projectOutdoorUnits } from "@/domain/hydronic/placement";
 
@@ -212,11 +210,9 @@ function PanoramaScene({
           isolatedRoomId={room?.id}
           onSelect={noSelection}
         />
-        {rooms
-          .filter((r) => r.ceilingHeightM !== null)
-          .map((r) => (
-            <SuspendedCeiling key={r.id} room={r} />
-          ))}
+        {rooms.map((r) => (
+          <RoomCeiling3D key={r.id} project={project} room={r} transparent />
+        ))}
         {rooms
           .filter((r) =>
             project.airTerminals.some(

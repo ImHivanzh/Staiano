@@ -15,7 +15,6 @@ import {
   removeFanCoilAirSystem,
   setFanCoilAirDischarge,
 } from "@/domain/fan-coils/air";
-import { SupplyPlenumPanel } from "../systems/SupplyPlenumPanel";
 import { DuctPanel } from "../systems/DuctPanel";
 import {
   positionAlongRoomWall,
@@ -250,9 +249,8 @@ export function FanCoilProperties({
             <p className="nota">
               Questo ventilconvettore è canalizzabile: può alimentare plenum,
               canali e bocchette. La portata è quella del punto scelto (
-              {formatNumber(point.airflowM3h)} m³/h); prevalenza utile, motore
-              e accessori di canalizzazione vanno verificati sulla scheda
-              Aermec.
+              {formatNumber(point.airflowM3h)} m³/h); prevalenza utile, motore e
+              accessori di canalizzazione vanno verificati sulla scheda Aermec.
             </p>
             <button
               type="button"
@@ -268,11 +266,13 @@ export function FanCoilProperties({
           <>
             <p className="nota">
               {airVents.length}{" "}
-              {airVents.length === 1 ? "bocchetta collegata" : "bocchette collegate"}
+              {airVents.length === 1
+                ? "bocchetta collegata"
+                : "bocchette collegate"}
               {" · "}
               portata {formatNumber(airSystem.airflowM3h ?? 0)} m³/h ·{" "}
-              {formatNumber((airSystem.capacityW ?? 0) / 1000)} kW freddo.
-              Usa Collega per associare altre bocchette.
+              {formatNumber((airSystem.capacityW ?? 0) / 1000)} kW freddo. Usa
+              Collega per associare altre bocchette.
             </p>
             <form
               key={`${airSystem.id}-${discharge?.connectionWidthMm ?? ""}-${discharge?.connectionHeightMm ?? ""}`}
@@ -315,7 +315,6 @@ export function FanCoilProperties({
                 </button>
               </fieldset>
             </form>
-            <SupplyPlenumPanel project={project} systemId={airSystem.id} />
             <DuctPanel project={project} systemId={airSystem.id} />
             <button
               type="button"

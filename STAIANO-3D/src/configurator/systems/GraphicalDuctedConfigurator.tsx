@@ -1,4 +1,5 @@
 "use client";
+import { connectPlenum, insertPlenum } from "@/domain/ducted/attached-plenums";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Cursor,
@@ -22,7 +23,6 @@ import { EquipmentIcon } from "../EquipmentIcon";
 import { RoomAirTerminals } from "./RoomAirTerminals";
 import { NotificationToast } from "../NotificationToast";
 import { DuctedMachinePicker } from "./DuctedMachinePicker";
-import { SupplyPlenumPanel } from "./SupplyPlenumPanel";
 import { DuctPanel } from "./DuctPanel";
 import { RadiatorPanel } from "./RadiatorPanel";
 import { FanCoilPanel } from "./FanCoilPanel";
@@ -43,6 +43,7 @@ import {
 import { pointInPolygon } from "@/domain/geometry/primitives";
 import { indoorRoute } from "@/domain/geometry/indoor-route";
 import { nearestFootprintEdge } from "@/domain/geometry/footprint";
+import { connectionFootprintEdge } from "@/domain/geometry/footprint";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import { ductRoute, setDuctRoute } from "@/domain/ducted/routes";
 import {
@@ -64,9 +65,9 @@ import {
 import { connectionSelection } from "../viewer3d/connection-selection";
 import { connectFanCoilAirOnPlan } from "@/domain/fan-coils/connect";
 import { removeSelection } from "@/domain/geometry/selection";
+import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { placeEquipmentDraft } from "@/domain/geometry/equipment-draft";
-import { editOperatorTerminal } from "@/domain/air-terminals/operator";
 import { formatNumber } from "@/utils/format";
 import styles from "./GraphicalDuctedConfigurator.module.css";
 
@@ -476,6 +477,27 @@ export function GraphicalDuctedConfigurator({
     );
     const clickedTerminal = terminals.find((item) => item.id === deviceId);
     const clickedDraft = drafts.find((item) => item.id === draftId);
+    if (mode === "plenum") {
+      const targetRoom = project.rooms.find(
+        (r) => r.floorId === room.floorId && pointInPolygon(point, r.polygon),
+      );
+      if (!targetRoom) {
+        setNotice("Inserisci il plenum in una stanza.");
+        return;
+      }
+      commit((p) => insertPlenum(p, targetRoom.id, point));
+      const saved = useProjectStore.getState();
+      if (!saved.error) {
+        const id = saved.project!.plenums.at(-1)!.id;
+        saved.select({ kind: "device", id });
+        setSelectedId(id);
+        setMode("select");
+        setNotice(
+          "Plenum inserito. Usa Collega con una bocchetta di mandata o una macchina di ripresa.",
+        );
+      }
+      return;
+    }
     if (mode === "duct") {
       if (!ductTarget) {
         const target = terminals.find((item) => item.id === deviceId);
@@ -501,19 +523,29 @@ export function GraphicalDuctedConfigurator({
       );
       if (pair) {
         commit((current) =>
-          pair.fanCoilId
-            ? connectFanCoilAirOnPlan(current, pair.terminalId, pair.fanCoilId)
-            : pair.hydronic
-              ? connectHydronicOnPlan(current, pair.terminalId, pair.machineId)
-              : current.ductedDrafts?.some(
-                    (t) => t.id === pair.terminalId || t.id === pair.systemId,
-                  )
-                ? connectDraftOnPlan(current, pair.terminalId, pair.systemId)
-                : connectTerminalOnPlan(
+          pair.plenumId
+            ? connectPlenum(current, pair.plenumId, pair.machineId)
+            : pair.fanCoilId
+              ? connectFanCoilAirOnPlan(
+                  current,
+                  pair.terminalId,
+                  pair.fanCoilId,
+                )
+              : pair.hydronic
+                ? connectHydronicOnPlan(
                     current,
                     pair.terminalId,
-                    pair.systemId,
-                  ),
+                    pair.machineId,
+                  )
+                : current.ductedDrafts?.some(
+                      (t) => t.id === pair.terminalId || t.id === pair.systemId,
+                    )
+                  ? connectDraftOnPlan(current, pair.terminalId, pair.systemId)
+                  : connectTerminalOnPlan(
+                      current,
+                      pair.terminalId,
+                      pair.systemId,
+                    ),
         );
         if (!useProjectStore.getState().error) {
           setSelectedId(pair.machineId);
@@ -874,12 +906,16 @@ export function GraphicalDuctedConfigurator({
     if (mainPlan && !useProjectStore.getState().error)
       useProjectStore.getState().select(null);
   }
+  const previewDevice =
+    selectedTerminal ??
+    selectedMachine ??
+    selectedEquipment ??
+    selectedDraft ??
+    selectedHeatPumpDraft ??
+    selectedHydronic?.outdoorUnit;
   const previewOrigin =
-    mode === "connect"
-      ? (selectedTerminal?.position ??
-        (selectedMachine && cursor
-          ? nearestFootprintEdge(selectedMachine, cursor)
-          : selectedMachine?.position))
+    mode === "connect" && previewDevice && cursor
+      ? connectionFootprintEdge(previewDevice, cursor)
       : null;
   const initialConfiguration = useRef(() => {
     if (!configurationOnly || !initialId) return;
@@ -997,6 +1033,15 @@ export function GraphicalDuctedConfigurator({
                 <EquipmentIcon type="heatPump" />
               </button>
             )}
+            <button
+              className={`bottone chiara ${styles.iconButton}`}
+              aria-label="Plenum"
+              title="Inserisci plenum"
+              aria-pressed={mode === "plenum"}
+              onClick={() => start("plenum")}
+            >
+              <EquipmentIcon type="plenum" />
+            </button>
             <span className={styles.toolSeparator} aria-hidden="true" />
             <button
               className={`bottone chiara ${styles.iconButton}`}
@@ -1054,22 +1099,12 @@ export function GraphicalDuctedConfigurator({
             >
               <PathIcon size={20} aria-hidden="true" />
             </button>
-            {selectedTerminal?.mounting === "ceiling" && (
+            {selectedId && (
               <button
                 className={`bottone ${styles.iconButton}`}
                 aria-label="Ruota 90°"
-                title="Ruota bocchetta di 90°"
-                disabled={
-                  selectedTerminal.locked ||
-                  needsTerminalReconfiguration(selectedTerminal)
-                }
-                onClick={() =>
-                  commit((current) =>
-                    editOperatorTerminal(current, selectedTerminal.id, {
-                      rotation: selectedTerminal.rotation + Math.PI / 2,
-                    }),
-                  )
-                }
+                title="Ruota elemento di 90°"
+                onClick={() => commit((p) => rotateDevice90(p, selectedId))}
               >
                 <ArrowClockwise size={22} aria-hidden="true" />
               </button>
@@ -1229,6 +1264,7 @@ export function GraphicalDuctedConfigurator({
                 dragDevices: mode === "move",
                 onMoveDevice: moveDevice,
                 deviceIds: [
+                  ...project.plenums.map((item) => item.id),
                   ...project.radiators.map((item) => item.id),
                   ...(project.fanCoils ?? []).map((item) => item.id),
                   ...project.hvacSystems
@@ -1337,7 +1373,7 @@ export function GraphicalDuctedConfigurator({
                           project,
                           room.floorId,
                           nearestFootprintEdge(machine, terminal.position),
-                          terminal.position,
+                          connectionFootprintEdge(terminal, machine.position),
                         );
                         return (
                           <g
@@ -1856,13 +1892,7 @@ export function GraphicalDuctedConfigurator({
       )}
       {!configurationOnly && selectedMachineSystem && !machineOpen && (
         <details>
-          <summary>
-            Dettagli tecnici della macchina selezionata · plenum e canali
-          </summary>
-          <SupplyPlenumPanel
-            project={project}
-            systemId={selectedMachineSystem.id}
-          />
+          <summary>Canali della macchina selezionata</summary>
           <DuctPanel project={project} systemId={selectedMachineSystem.id} />
         </details>
       )}

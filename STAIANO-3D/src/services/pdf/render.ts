@@ -964,7 +964,22 @@ export async function renderDossierPdf(
         muted,
       );
     }
-    for (const system of ductedSystems) {
+    const separate = p.plenums.filter((pl) => pl.attachmentId !== undefined);
+    if (separate.length) {
+      heading("Plenum collegati");
+      table(
+        ["Plenum / elemento", "Dimensioni L x H x P", "Stacchi / quota"],
+        separate.map((pl) => [
+          `${data.codes.get(pl.id)} - ${pl.use === "supply" ? "mandata" : "ripresa"}; ${pl.attachmentId ? (data.codes.get(pl.attachmentId) ?? "elemento") : "da collegare"}`,
+          `${n(pl.widthMm)} x ${n(pl.heightMm)} x ${n(pl.depthMm)} mm`,
+          `${pl.portCount ?? 1} x diam. ${pl.portDiameterMm ?? 160} mm; ${n(pl.elevationM ?? 0)} m`,
+        ]),
+        [0.38, 0.34, 0.28],
+      );
+    }
+    for (const system of ductedSystems.filter(
+      (s) => !separate.some((pl) => pl.systemId === s.id),
+    )) {
       const plenum = calculateSupplyPlenum(p, system.id);
       const machineName = `${data.codes.get(system.id)} · ${system.manufacturer} ${plenum.machineModel ?? system.productId}`;
       const placed = p.plenums.find(
@@ -1637,9 +1652,19 @@ export async function renderDossierPdf(
       statRow([
         ["Superficie netta", `${n(r.netAreaM2)} m²`],
         ["Perimetro", `${n(r.perimeterM)} m`],
-        ["Altezza", `${n(r.heightM)} m`],
+        [r.roof ? "Gronda" : "Altezza", `${n(r.heightM)} m`],
         ["Volume netto", `${n(r.volumeM3)} m³`],
       ]);
+      if (r.roof)
+        paragraph(
+          `Tetto a due falde: gronda ${n(r.heightM)} m, colmo ${n(r.roof.ridgeHeightM)} m.`,
+          9,
+        );
+      if (r.ceilingBands?.length)
+        paragraph(
+          `Controsoffitto a livelli: ${r.ceilingBands.map((b) => `${b.name}, quota ${n(b.elevationM)} m, larghezza ${n(b.depthM)} m, lunghezza ${n(b.lengthM)} m`).join("; ")}.`,
+          9,
+        );
       heading(
         r.geometryStatus === "unresolved"
           ? "Carico precedente - NON VALIDABILE"
@@ -1648,7 +1673,7 @@ export async function renderDossierPdf(
       paragraph(
         r.conditioningExclusion
           ? "Carico da dimensionare: 0 W per esclusione esplicita dell’operatore."
-          : `${n(r.netAreaM2, 4)} m² x ${n(r.heightM, 4)} m x 35 W/m³ = ${n(r.designLoadW, 2)} W = ${n(r.designLoadW / 1000, 3)} kW = ${n(wattsToBtuh(r.designLoadW), 0)} BTU/h. Calcolo senza arrotondamenti intermedi; valori stampati arrotondati.`,
+          : `${r.roof || r.ceilingBands?.length ? `${n(r.volumeM3, 4)} m³ (tetto e ribassamenti)` : `${n(r.netAreaM2, 4)} m² x ${n(r.heightM, 4)} m`} x 35 W/m³ = ${n(r.designLoadW, 2)} W = ${n(r.designLoadW / 1000, 3)} kW = ${n(wattsToBtuh(r.designLoadW), 0)} BTU/h. Calcolo senza arrotondamenti intermedi; valori stampati arrotondati.`,
       );
       const rad = p.radiators.filter((d) => d.roomId === r.id);
       if (rad.length) {
@@ -2212,7 +2237,27 @@ export async function renderDossierPdf(
         [0.42, 0.28, 0.3],
       );
     }
-    for (const system of p.hvacSystems.filter((s) => s.type === "ducted")) {
+    const separatePlenums = p.plenums.filter(
+      (pl) => pl.attachmentId !== undefined,
+    );
+    if (separatePlenums.length) {
+      newPage("Plenum collegati");
+      table(
+        ["Elemento", "Collegato a", "Dimensioni (mm)", "Stacchi / quota"],
+        separatePlenums.map((pl) => [
+          `${data.codes.get(pl.id)} - ${pl.model ?? "Plenum"}`,
+          `${pl.use === "supply" ? "Mandata" : "Ripresa"}; ${pl.attachmentId ? (data.codes.get(pl.attachmentId) ?? "elemento") : "da collegare"}`,
+          `${n(pl.widthMm)} x ${n(pl.heightMm)} x ${n(pl.depthMm)}`,
+          `${pl.portCount ?? 1} x diam. ${pl.portDiameterMm ?? 160} mm; quota ${n(pl.elevationM ?? 0)} m`,
+        ]),
+        [0.25, 0.25, 0.25, 0.25],
+      );
+    }
+    for (const system of p.hvacSystems.filter(
+      (s) =>
+        s.type === "ducted" &&
+        !separatePlenums.some((pl) => pl.systemId === s.id),
+    )) {
       const plenum = calculateSupplyPlenum(p, system.id);
       const machineName = `${data.codes.get(system.id)} · ${system.manufacturer} ${plenum.machineModel ?? system.productId}`;
       newPage(

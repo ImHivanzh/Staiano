@@ -19,7 +19,6 @@ import {
 } from "@/domain/air-terminals/commercial-bom";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { RoomMeterDistribution } from "./TerminalDistribution";
-import { TerminalPlenumFields } from "./TerminalPlenumFields";
 import type { TerminalPlenumOptions } from "@/domain/catalogs/ecoclima-price-schema";
 import {
   terminalFinishChoices,
@@ -129,21 +128,24 @@ export function OperatorTerminalControls({
     (item) => item.id === existingTerminalId,
   );
   const members = existing ? linearRunMembers(project, existing) : [];
+  const originalSize =
+    existing?.productId === solution.variant.id && existing.use === use;
   const [customLength, setCustomLength] = useState(
-    members.length === 1 &&
+    originalSize &&
+      members.length === 1 &&
       !solution.variant.commercialLengthsMm.includes(members[0].widthMm),
   );
   const recommendedLength = recommendedSolution?.commercialLengthM
     ? recommendedSolution.commercialLengthM * 1000
     : null;
   const [length, setLength] = useState(
-    members[0]?.widthMm.toString() ??
+    (originalSize ? members[0]?.widthMm.toString() : undefined) ??
       recommendedLength?.toString() ??
       solution.variant.commercialLengthsMm[0]?.toString() ??
       "",
   );
   const [moduleLengths, setModuleLengths] = useState<string[]>(
-    members.slice(1).map((item) => item.widthMm.toString()),
+    originalSize ? members.slice(1).map((item) => item.widthMm.toString()) : [],
   );
   const [activeModule, setActiveModule] = useState(0);
   const [style, setStyle] = useState(
@@ -153,7 +155,7 @@ export function OperatorTerminalControls({
   const [color, setColor] = useState(existing?.color ?? "");
   const [finish, setFinish] = useState(existing?.finish ?? "");
   const publishedConnections = terminalPlenumConnections(family.familyCode);
-  const [plenumOptions, setPlenumOptions] = useState<TerminalPlenumOptions>({
+  const [plenumOptions] = useState<TerminalPlenumOptions>({
     insulatedPlenum: existing?.commercialOptions?.insulatedPlenum ?? true,
     plenumModelCode: existing?.commercialOptions?.plenumModelCode,
     plenumMaterial: existing?.commercialOptions?.plenumMaterial,
@@ -188,6 +190,22 @@ export function OperatorTerminalControls({
   const [faceVariant, setFaceVariant] = useState(solution.variant.id);
   if (faceVariant !== solution.variant.id) {
     setFaceVariant(solution.variant.id);
+    if (family.isLinearPerMeter) {
+      const nextLength =
+        recommendedLength ?? solution.variant.commercialLengthsMm[0];
+      setLength(nextLength?.toString() ?? "");
+      setCustomLength(false);
+      setModuleLengths(
+        recommendedSolution &&
+          continuityModuleLengths(family.familyCode, solution.variant).length
+          ? Array.from(
+              { length: recommendedSolution.quantityPerPoint - 1 },
+              () => String(nextLength),
+            )
+          : [],
+      );
+      setActiveModule(0);
+    }
     if (!family.isLinearPerMeter && missingFace) {
       // Le misure dichiarate appartengono alla taglia, non all’intera famiglia.
       const original =
@@ -617,22 +635,6 @@ export function OperatorTerminalControls({
             />
           </label>
         </details>
-      </div>
-      <div hidden={!plenumOnly} className={styles.plenumPanel}>
-        <TerminalPlenumFields
-          familyCode={family.familyCode}
-          variant={solution.variant}
-          lengthMm={family.isLinearPerMeter ? lengthsMm[0] : null}
-          moduleLengthsMm={family.isLinearPerMeter ? lengthsMm : undefined}
-          options={plenumOptions}
-          onChange={(patch) =>
-            setPlenumOptions((current) => ({
-              ...current,
-              ...patch,
-              plenumModelCode: undefined,
-            }))
-          }
-        />
       </div>
       {placementError &&
         placementError !== useProjectStore.getState().error && (

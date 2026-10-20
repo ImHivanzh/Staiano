@@ -163,10 +163,10 @@ describe("operator-led configuration acceptance", () => {
     }
     expect(new Set(p.plenums.map((pl) => pl.id)).size).toBe(2);
     for (const pl of p.plenums) {
-      const domain = calculateSupplyPlenum(p, pl.systemId);
+      const domain = calculateSupplyPlenum(p, pl.systemId!);
       const geometry = placedPlenumGeometry(p, pl)!;
       const layout = layoutFromMachineGeometry(geometry);
-      const drawing = plenumTechnicalDrawing(p, pl.systemId)!;
+      const drawing = plenumTechnicalDrawing(p, pl.systemId!)!;
       expect(domain.branches.length).toBeGreaterThan(0);
       expect(layout.ports).toHaveLength(domain.branches.length);
       expect(drawing.portCount).toBe(domain.branches.length);

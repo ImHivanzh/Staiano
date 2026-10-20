@@ -47,7 +47,7 @@ export function fanCoilPlacementValid(
   );
   if (!room) return false;
   const envelope = fanCoilEnvelope(unit);
-  if (!deviceEnvelopeInsideRoom(envelope, room, unit.mounting === "ceiling"))
+  if (!deviceEnvelopeInsideRoom(envelope, room, unit.mounting === "ceiling", project))
     return false;
   if (unit.mounting === "wall" && !room.wallIds.includes(unit.wallId ?? ""))
     return false;

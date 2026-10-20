@@ -12,7 +12,12 @@ import {
   roomCeilingHeightM,
 } from "@/domain/air-conditioning/elevation";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
-import { radiatorDetail, type DetailPart } from "./device-detail";
+import {
+  linearTerminalSlots,
+  radiatorDetail,
+  type DetailPart,
+} from "./device-detail";
+import { terminalBodyDepthMm } from "@/domain/air-terminals/geometry";
 import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
 import { RadiatorHardware } from "./RadiatorHardware";
 import { SystemMeshes } from "./SystemMeshes";
@@ -391,9 +396,10 @@ function TerminalMesh({
   selected: boolean;
 }) {
   const w = item.widthMm / 1000,
-    h = item.heightMm / 1000,
-    d = (item.depthMm ?? 0) / 1000;
+    h = item.heightMm / 1000;
   const family = airTerminalFamilyAtVersion(item.family, item.catalogVersion);
+  const variant = family?.variants.find((v) => v.id === item.productId);
+  const d = (item.depthMm ?? terminalBodyDepthMm(family, variant) ?? 0) / 1000;
   const faceMaterial = useMemo(() => {
     const material = whiteFace.clone();
     if (/^#[0-9a-f]{6}$/i.test(item.color)) material.color.set(item.color);
@@ -402,24 +408,13 @@ function TerminalMesh({
     return material;
   }, [item.color, item.finish]);
   useEffect(() => () => faceMaterial.dispose(), [faceMaterial]);
-  const variant = family?.variants.find((v) => v.id === item.productId);
-  const front = item.mounting === "ceiling" ? -1 : 1;
-  const z = (front * d) / 2;
+  const z = d / 2;
   const detail = useMemo(() => {
     const frame = Math.min(0.012, h * 0.1, w * 0.1);
     const white = rectangularFrame(w, h, frame, z);
     const dark: DetailPart[] = [];
-    if (variant?.slotCount && variant.slotWidthMm) {
-      const slotHeight = Math.min(
-        variant.slotWidthMm / 1000,
-        (h - frame * 2) / variant.slotCount,
-      );
-      const spacing = (h - frame * 2) / variant.slotCount;
-      for (let i = 0; i < variant.slotCount; i++)
-        dark.push({
-          position: [0, -h / 2 + frame + spacing * (i + 0.5), z],
-          scale: [w - 2 * frame, slotHeight, 1],
-        });
+    if (variant?.slotCount) {
+      dark.push(...linearTerminalSlots(variant, w, h, z));
     } else if (family?.familyCode === "EADD") {
       dark.push({
         position: [0, 0, z],

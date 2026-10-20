@@ -15,6 +15,7 @@ import {
 } from "@/domain/geometry/primitives";
 import { reconcileRooms, overlappingPolygons } from "@/domain/geometry/rooms";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
+import { calculateRoomThermal } from "./geometry/ceilings";
 import { calculateThermal } from "@/domain/thermal/calculate";
 import { pillarAreaInRoom } from "@/domain/geometry/pillars";
 import { ensureInstallations } from "./installations";
@@ -160,7 +161,7 @@ export function recomputeProject(project: Project): Project {
     return {
       ...room,
       netAreaM2,
-      ...calculateThermal(netAreaM2, room.heightM),
+      ...calculateRoomThermal(p, { ...room, netAreaM2 }),
       ...(room.conditioningExclusion ? { designLoadW: 0 } : {}),
     };
   });
@@ -290,7 +291,7 @@ export function recomputeProject(project: Project): Project {
         : undefined,
   }));
   p.plenums = p.plenums
-    .filter((pl) => systemIds.has(pl.systemId))
+    .filter((pl) => !pl.systemId || systemIds.has(pl.systemId))
     .map((pl) => ({
       ...pl,
       roomId: p.hvacSystems.some(
@@ -586,6 +587,8 @@ export function updateRoom(
       | "name"
       | "heightM"
       | "ceilingHeightM"
+      | "ceilingBands"
+      | "roof"
       | "systemType"
       | "supplyPoints"
       | "returnPoints"
@@ -601,7 +604,7 @@ export function updateRoom(
       const updated = { ...r, ...patch };
       return {
         ...updated,
-        ...calculateThermal(updated.netAreaM2, updated.heightM),
+        ...calculateRoomThermal(p, updated),
         ...(updated.conditioningExclusion ? { designLoadW: 0 } : {}),
       };
     }),
@@ -610,7 +613,10 @@ export function updateRoom(
   if (
     !before ||
     !after ||
-    (patch.heightM === undefined && patch.ceilingHeightM === undefined)
+    (patch.heightM === undefined &&
+      patch.ceilingHeightM === undefined &&
+      patch.ceilingBands === undefined &&
+      patch.roof === undefined)
   )
     return next;
   // Keep plenums at the same relative depth under the new ceiling.
@@ -676,7 +682,7 @@ export function mergeRooms(
   if (!merged)
     throw new Error("L’unione non genera un contorno chiuso valido.");
   merged.heightM = heightM;
-  Object.assign(merged, calculateThermal(merged.netAreaM2, heightM));
+  Object.assign(merged, calculateRoomThermal(result, merged));
   if (merged.conditioningExclusion) merged.designLoadW = 0;
   return result;
 }

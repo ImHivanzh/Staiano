@@ -140,13 +140,17 @@ export function removeInstallation(
     airTerminals: project.airTerminals.filter(
       (device) =>
         device.installationId !== installationId &&
-        (!device.systemId || !systemIds.has(device.systemId)) &&
+        (!device.systemId ||
+          !device.systemId ||
+          !systemIds.has(device.systemId)) &&
         (!device.pendingSystemId || !systemIds.has(device.pendingSystemId)),
     ),
     plenums: project.plenums.filter(
-      (device) => !systemIds.has(device.systemId),
+      (device) => !device.systemId || !systemIds.has(device.systemId),
     ),
-    ducts: project.ducts?.filter((device) => !systemIds.has(device.systemId)),
+    ducts: project.ducts?.filter(
+      (device) => !device.systemId || !systemIds.has(device.systemId),
+    ),
   };
   return {
     ...next,
