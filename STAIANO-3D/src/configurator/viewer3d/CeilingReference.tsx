@@ -23,7 +23,7 @@ export function SuspendedCeiling({ room }: { room: Room }) {
   );
   points.push(points[0]);
   return (
-    <group>
+    <group name={`Controsoffitto ${room.name}`}>
       <mesh
         geometry={geometry}
         rotation={[-Math.PI / 2, 0, 0]}

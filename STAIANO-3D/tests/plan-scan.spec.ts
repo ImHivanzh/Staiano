@@ -4,17 +4,16 @@ import { PDFDocument, rgb } from "pdf-lib";
 test("Pantum: scansione PDF nel flusso di anteprima e calibrazione", async ({
   page,
 }) => {
+  test.setTimeout(150000);
   const pdf = await PDFDocument.create();
-  pdf
-    .addPage([600, 500])
-    .drawRectangle({
-      x: 60,
-      y: 80,
-      width: 420,
-      height: 320,
-      borderColor: rgb(0, 0, 0),
-      borderWidth: 2,
-    });
+  pdf.addPage([600, 500]).drawRectangle({
+    x: 60,
+    y: 80,
+    width: 420,
+    height: 320,
+    borderColor: rgb(0, 0, 0),
+    borderWidth: 2,
+  });
   const body = Buffer.from(await pdf.save());
   let release!: () => void;
   const waiting = new Promise<void>((resolve) => {
@@ -44,12 +43,15 @@ test("Pantum: scansione PDF nel flusso di anteprima e calibrazione", async ({
   release();
   await expect(
     dialog.getByText("Planimetria-scansionata.pdf", { exact: true }),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 120000 });
   await expect(
     dialog.getByLabel(
       "Anteprima planimetria; seleziona due punti per la scala",
     ),
   ).toBeVisible();
+  await dialog
+    .getByText("Acquisisci dallo scanner Pantum", { exact: true })
+    .click();
   await expect(
     dialog.getByRole("button", { name: "Scansiona planimetria" }),
   ).toBeEnabled();

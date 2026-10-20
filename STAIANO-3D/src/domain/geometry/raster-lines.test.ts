@@ -7,6 +7,73 @@ import { recognizeRaster } from "./raster-lines";
 import { distance, projection } from "./primitives";
 import type { WallCandidate } from "./plan-analysis";
 
+describe("fusione delle evidenze AI e dei tratti originali", () => {
+  it("non riempie il vano porta fra due tratti collineari", () => {
+    const width = 512,
+      height = 512;
+    const pixels = new Uint8ClampedArray(width * height * 4).fill(255);
+    const mask = new Uint8Array(width * height);
+    for (let y = 100; y < 109; y++)
+      for (let x = 50; x < 350; x++)
+        if (x < 180 || x >= 195) {
+          const i = y * width + x;
+          mask[i] = 1;
+          pixels[i * 4] = pixels[i * 4 + 1] = pixels[i * 4 + 2] = 0;
+        }
+    const walls = recognizeRaster(pixels, width, height, true, mask).walls;
+    expect(walls).toHaveLength(2);
+    expect(
+      walls.some(
+        (wall) =>
+          Math.min(wall.start.x, wall.end.x) < 180 &&
+          Math.max(wall.start.x, wall.end.x) >= 195,
+      ),
+    ).toBe(false);
+  });
+  it.each([7, 8])(
+    "recupera un muro corto di %i pixel vicino all’evidenza AI",
+    (thickness) => {
+      const width = 256,
+        height = 256;
+      const pixels = new Uint8ClampedArray(width * height * 4).fill(255);
+      const mask = new Uint8Array(width * height);
+      for (let y = 60; y < 60 + thickness; y++)
+        for (let x = 50; x < 95; x++) {
+          const i = y * width + x;
+          pixels[i * 4] = pixels[i * 4 + 1] = pixels[i * 4 + 2] = 0;
+        }
+      for (let y = 53; y < 56; y++)
+        for (let x = 50; x < 95; x++) mask[y * width + x] = 1;
+      const walls = recognizeRaster(pixels, width, height, true, mask).walls;
+      expect(
+        walls.some(
+          (wall) =>
+            wall.thicknessUnits === thickness &&
+            Math.abs(wall.start.y - (60 + (thickness - 1) / 2)) < 1,
+        ),
+      ).toBe(true);
+    },
+  );
+  it("esclude una linea spessa estranea che tocca la maschera soltanto a un estremo", () => {
+    const width = 256,
+      height = 256;
+    const pixels = new Uint8ClampedArray(width * height * 4).fill(255);
+    const mask = new Uint8Array(width * height);
+    for (let y = 120; y < 127; y++)
+      for (let x = 40; x < 220; x++) {
+        const i = (y * width + x) * 4;
+        pixels[i] = pixels[i + 1] = pixels[i + 2] = 0;
+      }
+    for (let y = 40; y < 140; y++)
+      for (let x = 35; x < 40; x++) mask[y * width + x] = 1;
+    expect(
+      recognizeRaster(pixels, width, height, true, mask).walls.some(
+        (wall) => Math.abs(wall.end.x - wall.start.x) > 150,
+      ),
+    ).toBe(false);
+  });
+});
+
 function coverage(probe: number[], walls: WallCandidate[], tolerance: number) {
   const [x, y, x2, y2] = probe,
     length = Math.hypot(x2 - x, y2 - y);

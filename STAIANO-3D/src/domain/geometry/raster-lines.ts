@@ -17,8 +17,13 @@ function nearSemanticMask(
   width: number,
   height: number,
 ) {
-  const radius = Math.max(8, (wall.thicknessUnits ?? 0) * 1.5);
-  for (let step = 0; step <= 20; step++) {
+  const radius = Math.ceil(
+    Math.min(24, Math.max(8, (wall.thicknessUnits ?? 0) * 1.5)),
+  );
+  let hits = 0;
+  let first = false,
+    last = false;
+  samples: for (let step = 0; step <= 20; step++) {
     const x = Math.round(
         wall.start.x + ((wall.end.x - wall.start.x) * step) / 20,
       ),
@@ -33,11 +38,16 @@ function nearSemanticMask(
           py >= 0 &&
           py < height &&
           mask[py * width + px]
-        )
-          return true;
+        ) {
+          hits++;
+          if (step <= 2) first = true;
+          if (step >= 18) last = true;
+          continue samples;
+        }
       }
   }
-  return false;
+  // A single contact with a wall does not make a dimension line structural.
+  return hits >= 9 || (first && last);
 }
 
 /** Merge collinear segments and the two faces of thick walls into one axis. */
@@ -88,7 +98,8 @@ function clusterWalls(walls: WallCandidate[]) {
               Math.max(other.start.y, other.end.y),
             ),
         );
-        return gap < 20;
+        // Separate collinear runs can be the two sides of a doorway.
+        return gap <= 1;
       }),
     );
     if (group) group.push(wall);
@@ -841,32 +852,55 @@ export function recognizeRaster(
     deduplicated.push(candidate);
   }
   let finalWalls = deduplicated;
+  let imageWalls: WallCandidate[] | undefined;
   if (semantic && semanticMask) {
     // The model misses some thick, hatched walls. Keep those only when they sit
     // beside its evidence, then merge parallel faces into a single axis.
     const heuristic = recognizeRaster(pixels, width, height);
-    const kept = heuristic.walls
-      .filter(
-        (wall) =>
-          wall.thicknessUnits !== null &&
-          (nearSemanticMask(wall, semanticMask, width, height) ||
-            (wall.thicknessUnits >= 5 &&
-              distance(wall.start, wall.end) >=
-                Math.min(width, height) * 0.25)),
-      )
-      .map((wall) => ({
-        ...wall,
-        confidence: Math.min(0.7, wall.confidence),
-        reason: `${wall.reason} Tratto spesso coerente con la segmentazione AI.`,
-      }));
+    imageWalls = heuristic.walls;
+    const filledWall = (wall: WallCandidate) => {
+      let filled = 0;
+      for (let step = 1; step < 20; step++) {
+        const x = Math.round(
+          wall.start.x + ((wall.end.x - wall.start.x) * step) / 20,
+        );
+        const y = Math.round(
+          wall.start.y + ((wall.end.y - wall.start.y) * step) / 20,
+        );
+        const value = gray[y * width + x];
+        if (value >= 110 && value < 230) filled++;
+      }
+      return filled >= 15;
+    };
+    const kept = heuristic.walls.flatMap((wall) => {
+      if (wall.thicknessUnits === null) return [];
+      const supported = nearSemanticMask(wall, semanticMask, width, height);
+      const physical =
+        (wall.confidence >= 0.9 || filledWall(wall)) &&
+        wall.thicknessUnits >= 5 &&
+        distance(wall.start, wall.end) >= Math.min(width, height) * 0.25;
+      if (!supported && !physical) return [];
+      return [
+        {
+          ...wall,
+          layer: supported ? wall.layer : "Contorni da verificare",
+          confidence: Math.min(supported ? 0.7 : 0.6, wall.confidence),
+          reason: supported
+            ? wall.reason + " Tratto coerente con la segmentazione AI."
+            : wall.reason +
+              " Tratto conservato dall’immagine originale, non confermato dall’AI: verificare.",
+        },
+      ];
+    });
     finalWalls = clusterWalls([...deduplicated, ...kept]);
   }
   return {
     walls: finalWalls,
+    ...(imageWalls ? { imageWalls } : {}),
     openings: [],
     notes: [
       semantic
-        ? "Muri vettorizzati dalla segmentazione semantica AI locale; i tratti spessi coerenti con la maschera vengono conservati e unificati. Arredi e testo sottili restano esclusi."
+        ? "Muri vettorizzati dalla segmentazione semantica AI locale con controllo dei tratti originali. I tratti non confermati dall’AI restano da verificare."
         : "Riconoscimento locale di tratti pieni, facce parallele e linee sottili, anche oblique. I punteggi indicano evidenza euristica.",
       "I muri arancioni richiedono verifica: quote, arredi e cartigli possono avere la stessa geometria. Selezionare una sola pianta nell’area da riconoscere.",
       "Scala, spessori, aperture e altezze vanno verificati su misure reali; le interruzioni non vengono chiuse automaticamente.",

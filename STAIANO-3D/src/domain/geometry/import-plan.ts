@@ -2,6 +2,8 @@ import type { Point, Project } from "@/schemas/project";
 import type { ImportedPlan, ParsedPlan } from "@/services/import/plan-types";
 import { newId, recomputeProject } from "@/domain/project";
 import { PLAN_ANALYSIS_VERSION } from "./plan-analysis";
+import { distance, projection } from "./primitives";
+import { saveOpening } from "./openings";
 
 export function calibrationScale(
   a: Point,
@@ -126,6 +128,32 @@ export function preparePlanImport(
     : null;
   return {
     walls,
+    openings: (plan.analysis?.openings ?? []).flatMap((opening) => {
+      if (!opening.type || !opening.wallCandidateId) return [];
+      const candidate = selected.find(
+        (wall) => wall.id === opening.wallCandidateId,
+      );
+      if (!candidate) return [];
+      const start = map(candidate.start),
+        end = map(candidate.end);
+      const wallIndex = walls.findIndex(
+        (wall) =>
+          distance(wall.start, start) < 1e-5 && distance(wall.end, end) < 1e-5,
+      );
+      if (wallIndex < 0) return [];
+      const a = distance(start, projection(map(opening.start), start, end));
+      const b = distance(start, projection(map(opening.end), start, end));
+      return Math.abs(b - a) >= 0.05
+        ? [
+            {
+              wallIndex,
+              type: opening.type,
+              offsetM: Math.min(a, b),
+              widthM: Math.abs(b - a),
+            },
+          ]
+        : [];
+    }),
     background,
     thicknessM,
     scaleVerified: true,
@@ -139,7 +167,9 @@ export function preparePlanImport(
         : {}),
     },
     analysis: {
-      algorithmVersion: PLAN_ANALYSIS_VERSION,
+      algorithmVersion: plan.analysis?.reconstructed
+        ? `${PLAN_ANALYSIS_VERSION}+raster2seq`
+        : PLAN_ANALYSIS_VERSION,
       analyzedAt: new Date().toISOString(),
       sourceType: plan.sourceType,
       scaleConfidence: "high",
@@ -191,6 +221,15 @@ export function applyPlanImport(
     throw new Error(
       "Limite di 100 file sorgente raggiunto. Usare un nuovo progetto.",
     );
+  const importedWalls = plan.walls.map((w) => ({
+    ...w,
+    id: newId(),
+    floorId,
+    thickness: w.thickness ?? plan.thicknessM,
+    type: "INTERNO" as const,
+    height: null,
+    locked: false,
+  }));
   const next = {
     ...project,
     floors: project.floors.map((f) =>
@@ -208,18 +247,7 @@ export function applyPlanImport(
           }
         : f,
     ),
-    walls: [
-      ...project.walls,
-      ...plan.walls.map((w) => ({
-        ...w,
-        id: newId(),
-        floorId,
-        thickness: w.thickness ?? plan.thicknessM,
-        type: "INTERNO" as const,
-        height: null,
-        locked: false,
-      })),
-    ],
+    walls: [...project.walls, ...importedWalls],
     sourceFilesMetadata: [
       ...project.sourceFilesMetadata,
       {
@@ -230,7 +258,32 @@ export function applyPlanImport(
       },
     ],
   };
-  const computed = recomputeProject(next);
+  let computed = recomputeProject(next);
+  for (const opening of plan.openings ?? []) {
+    const wall = importedWalls[opening.wallIndex];
+    if (!wall) continue;
+    const height = computed.projectSettings.defaultHeightM;
+    const sillHeightM =
+      opening.type === "window" ? Math.min(0.9, height / 3) : 0;
+    try {
+      computed = saveOpening(computed, wall.id, {
+        type: opening.type,
+        offsetM: opening.offsetM,
+        widthM: opening.widthM,
+        heightM: Math.min(
+          opening.type === "door" ? 2.1 : 1.2,
+          height - sillHeightM,
+        ),
+        sillHeightM,
+      });
+    } catch {
+      computed.floors
+        .find((floor) => floor.id === floorId)
+        ?.importAnalysis?.notes.push(
+          "Una proposta di apertura non compatibile con la parete è stata esclusa; verificarla nell’editor 2D.",
+        );
+    }
+  }
   const floor = computed.floors.find((f) => f.id === floorId)!;
   if (floor.importAnalysis)
     floor.importAnalysis.roomsDetected = computed.rooms.filter(

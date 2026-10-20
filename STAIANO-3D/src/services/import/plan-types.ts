@@ -33,6 +33,12 @@ export type ParsedPlan = {
   originalDataUrl?: string;
 };
 export type ImportedPlan = {
+  openings?: {
+    wallIndex: number;
+    type: "door" | "window";
+    offsetM: number;
+    widthM: number;
+  }[];
   walls: {
     start: Point;
     end: Point;

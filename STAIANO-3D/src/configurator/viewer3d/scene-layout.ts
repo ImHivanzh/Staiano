@@ -1,5 +1,6 @@
 import type { Room, Wall } from "@/schemas/project";
 import { bounds } from "@/domain/geometry/primitives";
+import type { OutdoorUnitLike } from "@/domain/hydronic/placement";
 
 export type SceneFrame = {
   minX: number;
@@ -14,10 +15,11 @@ export function sceneFrame(
   walls: Wall[],
   rooms: Room[],
   defaultHeight: number,
+  outdoorUnits: OutdoorUnitLike[] = [],
 ): SceneFrame {
   const box = bounds(walls.flatMap((wall) => [wall.start, wall.end]));
   const padding = Math.max(0.1, ...walls.map((wall) => wall.thickness / 2));
-  return {
+  const frame: SceneFrame = {
     minX: box.minX - padding,
     maxX: box.maxX + padding,
     minZ: box.minY - padding,
@@ -28,6 +30,18 @@ export function sceneFrame(
       ...walls.map((wall) => wall.height ?? 0),
     ),
   };
+  for (const unit of outdoorUnits) {
+    const radius = Math.hypot(unit.widthMm, unit.depthMm) / 2000 + 0.3;
+    frame.minX = Math.min(frame.minX, unit.position.x - radius);
+    frame.maxX = Math.max(frame.maxX, unit.position.x + radius);
+    frame.minZ = Math.min(frame.minZ, unit.position.y - radius);
+    frame.maxZ = Math.max(frame.maxZ, unit.position.y + radius);
+    frame.height = Math.max(
+      frame.height,
+      unit.elevationM + unit.heightMm / 2000,
+    );
+  }
+  return frame;
 }
 
 /** Cut the near envelope, while retaining the far walls that communicate real height. */

@@ -46,3 +46,4 @@ catalog-data/sources/
 native/runtime/*.dll
 native/runtime/*.deps.json
 native/runtime/*.runtimeconfig.json
+native/runtime/plan-ai.json

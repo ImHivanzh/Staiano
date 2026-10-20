@@ -1,6 +1,8 @@
 import type { ParsedPlan } from "./plan-types";
 import type { Point } from "@/schemas/project";
 import type { PlanAnalysis } from "@/domain/geometry/plan-analysis";
+import { reconstructionSchema } from "./reconstruction-schema";
+import { reconstructPlan2D } from "@/domain/geometry/automatic-plan";
 
 async function recognize(
   plan: ParsedPlan,
@@ -66,7 +68,9 @@ async function recognize(
 export async function analyzePlan(
   plan: ParsedPlan,
   region?: { start: Point; end: Point },
+  signal?: AbortSignal,
 ): Promise<PlanAnalysis> {
+  signal?.throwIfAborted();
   const source = {
     ...plan,
     segments: plan.segments.filter(
@@ -122,7 +126,42 @@ export async function analyzePlan(
     canvas.width,
     canvas.height,
   );
-  const result = raster!;
+  let result = raster!;
+  try {
+    const status = await fetch("/api/import/reconstruct", {
+      signal: signal
+        ? AbortSignal.any([signal, AbortSignal.timeout(5000)])
+        : AbortSignal.timeout(5000),
+    });
+    if (status.ok && (await status.json()).available) {
+      const body = await new Promise<Blob>((resolve, reject) =>
+        canvas.toBlob(
+          (blob) =>
+            blob
+              ? resolve(blob)
+              : reject(Error("Immagine della planimetria non disponibile.")),
+          "image/png",
+        ),
+      );
+      const response = await fetch("/api/import/reconstruct", {
+        method: "POST",
+        headers: { "Content-Type": "image/png" },
+        body,
+        signal: signal
+          ? AbortSignal.any([signal, AbortSignal.timeout(150000)])
+          : AbortSignal.timeout(150000),
+      });
+      const output = await response.json();
+      if (!response.ok)
+        throw Error(output.message ?? "Ricostruzione 2D non riuscita.");
+      result = reconstructPlan2D(reconstructionSchema.parse(output), result);
+    }
+  } catch {
+    signal?.throwIfAborted();
+    result.notes.unshift(
+      "Ricostruzione delle stanze non disponibile: sono conservati i muri riconosciuti localmente. Puoi riprovare selezionando un’area più piccola.",
+    );
+  }
   const map = (p: { x: number; y: number }) => ({
     x: left + (p.x * sourceWidth) / canvas.width,
     y: top + (p.y * sourceHeight) / canvas.height,
@@ -131,6 +170,7 @@ export async function analyzePlan(
   // Raster evidence handles scans, filled-only paths and mixed PDFs instead of
   // letting a decorative vector line suppress recognition of the entire image.
   if (
+    !result.reconstructed &&
     !region &&
     vector.walls.filter((w) => w.kind === "paired-faces").length >= 3 &&
     vector.walls.filter((w) => w.kind === "paired-faces").length /
@@ -140,8 +180,10 @@ export async function analyzePlan(
   )
     return vector;
   if (!region && !result.walls.length && vector.walls.length) return vector;
+  const analysis = { ...result };
+  delete analysis.imageWalls;
   return {
-    ...result,
+    ...analysis,
     walls: result.walls.map((w) => ({
       ...w,
       start: map(w.start),

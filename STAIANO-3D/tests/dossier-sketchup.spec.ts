@@ -5,7 +5,7 @@ import type { Project } from "../src/schemas/project";
 import { PDFDocument, PDFName, PDFDict } from "pdf-lib";
 import { mkdir, readFile } from "node:fs/promises";
 function pdfQaFixture(): Project {
-  return JSON.parse(
+  const project: Project = JSON.parse(
     execFileSync(
       process.execPath,
       [
@@ -18,6 +18,8 @@ function pdfQaFixture(): Project {
       { encoding: "utf8" },
     ),
   );
+  project.rooms[0].ceilingHeightM = project.rooms[0].heightM - 0.3;
+  return project;
 }
 
 test("complete and summary dossiers always include the real 3D render and identify plenum machines", async ({
@@ -114,10 +116,27 @@ test("operator downloads a native SKP with the imported plan, architecture and d
   await expect(page.locator(".nome-stanza")).toHaveCount(4);
   await openDisclosure(page, "File");
   const downloaded = page.waitForEvent("download", { timeout: 120000 });
+  const request = page.waitForRequest(
+    (request) =>
+      request.url().endsWith("/api/export/sketchup") &&
+      request.method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Scarica modello SKP", exact: true })
     .click();
   const download = await downloaded;
+  const payload = (await request).postDataJSON();
+  const ceilings = payload.meshes.filter((mesh: { name: string }) =>
+    mesh.name.startsWith("Controsoffitto "),
+  );
+  expect(ceilings.length).toBeGreaterThan(0);
+  expect(
+    ceilings[0].vertices
+      .filter((_: number, i: number) => i % 3 === 2)
+      .every(
+        (z: number) => Math.abs(z - project.rooms[0].ceilingHeightM!) < 1e-5,
+      ),
+  ).toBe(true);
   expect(download.suggestedFilename()).toMatch(/\.skp$/);
   const bytes = await readFile((await download.path())!);
   expect(bytes.length).toBeGreaterThan(5000);

@@ -26,6 +26,7 @@ export function PlanImportWizard({
   const previewRef = useRef<SVGSVGElement>(null),
     fileRef = useRef<HTMLInputElement>(null),
     generation = useRef(0);
+  const analysisController = useRef<AbortController | null>(null);
   const [view, setView] = useState<{ zoom: number; center: Point | null }>({
     zoom: 1,
     center: null,
@@ -112,16 +113,28 @@ export function PlanImportWizard({
       if (count) parsed.layers.push({ name, count, visible: true });
     }
     setLayers(
-      recognized.some((w) => w.layer === "Muri riconosciuti")
-        ? ["Muri riconosciuti"]
-        : recognized.length
-          ? ["Contorni da verificare"]
-          : [],
+      parsed.analysis?.reconstructed
+        ? [...new Set(recognized.map((wall) => wall.layer))]
+        : recognized.some((w) => w.layer === "Muri riconosciuti")
+          ? ["Muri riconosciuti"]
+          : recognized.length
+            ? ["Contorni da verificare"]
+            : [],
     );
-    setExcluded(recognized.filter((w) => w.confidence < 0.9).map((w) => w.id));
-    setAxisConfirmed(recognized.some((w) => w.confidence >= 0.9));
+    setExcluded(
+      parsed.analysis?.reconstructed
+        ? []
+        : recognized.filter((w) => w.confidence < 0.9).map((w) => w.id),
+    );
+    setAxisConfirmed(
+      Boolean(parsed.analysis?.reconstructed) ||
+        recognized.some((w) => w.confidence >= 0.9),
+    );
   }
   async function load(next: File, page = 1) {
+    analysisController.current?.abort();
+    const controller = new AbortController();
+    analysisController.current = controller;
     const token = ++generation.current;
     setFile(next);
     setLoading(true);
@@ -140,7 +153,11 @@ export function PlanImportWizard({
       const parsed = await readPlanFile(next, page);
       if (token !== generation.current) return;
       try {
-        parsed.analysis = await analyzePlan(parsed);
+        parsed.analysis = await analyzePlan(
+          parsed,
+          undefined,
+          controller.signal,
+        );
         applyAnalysis(parsed);
       } catch (error) {
         parsed.warnings.push(
@@ -177,6 +194,9 @@ export function PlanImportWizard({
   }
   async function recognizeArea(reset = false) {
     if (!plan || (!reset && areaPoints.length !== 2)) return;
+    analysisController.current?.abort();
+    const controller = new AbortController();
+    analysisController.current = controller;
     const token = ++generation.current;
     setLoading(true);
     setError("");
@@ -192,6 +212,7 @@ export function PlanImportWizard({
       next.analysis = await analyzePlan(
         next,
         reset ? undefined : { start: areaPoints[0], end: areaPoints[1] },
+        controller.signal,
       );
       if (token !== generation.current) return;
       applyAnalysis(next);
@@ -229,8 +250,10 @@ export function PlanImportWizard({
   }
   useEffect(() => {
     const counter = generation;
+    const controller = analysisController;
     return () => {
       counter.current++;
+      controller.current?.abort();
     };
   }, []);
   useEffect(() => {
@@ -378,43 +401,46 @@ export function PlanImportWizard({
             e.target.value = "";
           }}
         />
-        <fieldset disabled={scanning || loading}>
-          <legend>Acquisisci dalla Pantum BM4240ADW</legend>
-          <div className={styles.fields}>
-            <label>
-              Sorgente scansione
-              <select
-                value={scanSource}
-                onChange={(event) => setScanSource(event.target.value)}
-              >
-                <option value="adf">Vassoio (ADF)</option>
-                <option value="piano">Piano scanner</option>
-              </select>
-            </label>
-            <label>
-              Risoluzione scansione
-              <select
-                value={scanDpi}
-                onChange={(event) => setScanDpi(Number(event.target.value))}
-              >
-                <option value={150}>150 DPI</option>
-                <option value={300}>300 DPI</option>
-                <option value={600}>600 DPI</option>
-              </select>
-            </label>
-          </div>
-          <p className={styles.notice}>
-            Una pagina A4 in grigio. Inserisci il foglio nel vassoio o
-            posizionalo sul piano scanner.
-          </p>
-          <button
-            type="button"
-            className="bottone tenue"
-            onClick={() => void scan()}
-          >
-            {scanning ? "Scansione in corso…" : "Scansiona planimetria"}
-          </button>
-        </fieldset>
+        <details open={!plan} className={styles.scanOptions}>
+          <summary>Acquisisci dallo scanner Pantum</summary>
+          <fieldset disabled={scanning || loading}>
+            <legend>Acquisisci dalla Pantum BM4240ADW</legend>
+            <div className={styles.fields}>
+              <label>
+                Sorgente scansione
+                <select
+                  value={scanSource}
+                  onChange={(event) => setScanSource(event.target.value)}
+                >
+                  <option value="adf">Vassoio (ADF)</option>
+                  <option value="piano">Piano scanner</option>
+                </select>
+              </label>
+              <label>
+                Risoluzione scansione
+                <select
+                  value={scanDpi}
+                  onChange={(event) => setScanDpi(Number(event.target.value))}
+                >
+                  <option value={150}>150 DPI</option>
+                  <option value={300}>300 DPI</option>
+                  <option value={600}>600 DPI</option>
+                </select>
+              </label>
+            </div>
+            <p className={styles.notice}>
+              Una pagina A4 in grigio. Inserisci il foglio nel vassoio o
+              posizionalo sul piano scanner.
+            </p>
+            <button
+              type="button"
+              className="bottone tenue"
+              onClick={() => void scan()}
+            >
+              {scanning ? "Scansione in corso…" : "Scansiona planimetria"}
+            </button>
+          </fieldset>
+        </details>
         {scanning && (
           <p role="status">
             Acquisizione dalla Pantum in corso. Attendi il caricamento
@@ -426,53 +452,66 @@ export function PlanImportWizard({
           Verificare sempre scala, muri e aperture. Limite 32 MB; immagini 15
           MB.
         </p>
-        {loading && <p role="status">Lettura e anteprima della planimetria…</p>}
+        {loading && (
+          <p role="status">Lettura e ricostruzione 2D della planimetria…</p>
+        )}
         {error && <NotificationToast message={error} />}
         {plan && (
           <>
             {plan.analysis && (
               <section aria-label="Analisi automatica planimetria">
                 <strong>
-                  {plan.analysis.walls.length} muri candidati ·{" "}
-                  {
-                    plan.analysis.walls.filter((w) => w.confidence >= 0.9)
-                      .length
-                  }{" "}
-                  ad alta affidabilità · {plan.analysis.openings.length}{" "}
-                  aperture possibili
+                  {plan.analysis.reconstructed
+                    ? `${plan.analysis.roomsDetected} ${plan.analysis.roomsDetected === 1 ? "stanza ricostruita" : "stanze ricostruite"} · ${plan.analysis.walls.length} muri · ${plan.analysis.openings.length} aperture proposte`
+                    : `${plan.analysis.walls.length} muri candidati · ${plan.analysis.walls.filter((wall) => wall.confidence >= 0.9).length} ad alta affidabilità · ${plan.analysis.openings.length} aperture possibili`}
                 </strong>
-                {plan.analysis.notes.map((note) => (
-                  <p className={styles.notice} key={note}>
-                    {note}
+                {plan.analysis.reconstructed && (
+                  <p className={styles.notice}>
+                    Conferma una misura reale, poi importa la planimetria 2D.
+                    Muri, stanze e aperture restano modificabili.
                   </p>
-                ))}
-                {plan.analysis.walls.some((w) => w.confidence < 0.9) && (
-                  <label className={styles.row}>
-                    <input
-                      type="checkbox"
-                      checked={plan.analysis.walls
-                        .filter(
-                          (w) => w.confidence >= 0.5 && w.confidence < 0.9,
-                        )
-                        .every((w) => !excluded.includes(w.id))}
-                      onChange={(e) => {
-                        const ids = plan
-                          .analysis!.walls.filter(
+                )}
+                <details
+                  open={!plan.analysis.reconstructed}
+                  className={styles.analysisOptions}
+                >
+                  <summary>
+                    Dettagli del riconoscimento e selezione muri
+                  </summary>
+                  {plan.analysis.notes.map((note) => (
+                    <p className={styles.notice} key={note}>
+                      {note}
+                    </p>
+                  ))}
+                  {plan.analysis.walls.some((w) => w.confidence < 0.9) && (
+                    <label className={styles.row}>
+                      <input
+                        type="checkbox"
+                        checked={plan.analysis.walls
+                          .filter(
                             (w) => w.confidence >= 0.5 && w.confidence < 0.9,
                           )
-                          .map((w) => w.id);
-                        setExcluded((old) =>
-                          e.target.checked
-                            ? old.filter((id) => !ids.includes(id))
-                            : [...new Set([...old, ...ids])],
-                        );
-                        setAxisConfirmed(e.target.checked);
-                      }}
-                    />
-                    Ho verificato e confermo i muri proposti in arancione
-                    (affidabilità media)
-                  </label>
-                )}
+                          .every((w) => !excluded.includes(w.id))}
+                        onChange={(e) => {
+                          const ids = plan
+                            .analysis!.walls.filter(
+                              (w) => w.confidence >= 0.5 && w.confidence < 0.9,
+                            )
+                            .map((w) => w.id);
+                          setExcluded((old) =>
+                            e.target.checked
+                              ? old.filter((id) => !ids.includes(id))
+                              : [...new Set([...old, ...ids])],
+                          );
+                          setAxisConfirmed(e.target.checked);
+                        }}
+                      />
+                      {plan.analysis.reconstructed
+                        ? "Includi i muri ricostruiti, modificabili dopo l’importazione"
+                        : "Ho verificato e confermo i muri proposti in arancione (affidabilità media)"}
+                    </label>
+                  )}
+                </details>
               </section>
             )}
             <div className={styles.body}>
@@ -953,7 +992,9 @@ export function PlanImportWizard({
                 onClick={finish}
               >
                 {convert
-                  ? "Importa muri selezionati"
+                  ? plan.analysis?.reconstructed
+                    ? "Importa planimetria 2D"
+                    : "Importa muri selezionati"
                   : "Importa sfondo calibrato"}
               </button>
             </div>

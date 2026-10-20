@@ -28,12 +28,18 @@ export type RefrigerantRoutePoint = Point & { elevationM: number };
 function splitOutdoorDimensions(
   coolingCapacityW: number,
 ): Pick<HvacOutdoorDimensions, "widthMm" | "heightMm" | "depthMm"> {
-  if (coolingCapacityW <= 2500) return { widthMm: 780, heightMm: 550, depthMm: 290 };
-  if (coolingCapacityW <= 3500) return { widthMm: 870, heightMm: 600, depthMm: 350 };
-  if (coolingCapacityW <= 5000) return { widthMm: 950, heightMm: 700, depthMm: 350 };
-  if (coolingCapacityW <= 6000) return { widthMm: 1000, heightMm: 750, depthMm: 400 };
-  if (coolingCapacityW <= 8000) return { widthMm: 1050, heightMm: 800, depthMm: 450 };
-  if (coolingCapacityW <= 10000) return { widthMm: 1100, heightMm: 900, depthMm: 500 };
+  if (coolingCapacityW <= 2500)
+    return { widthMm: 780, heightMm: 550, depthMm: 290 };
+  if (coolingCapacityW <= 3500)
+    return { widthMm: 870, heightMm: 600, depthMm: 350 };
+  if (coolingCapacityW <= 5000)
+    return { widthMm: 950, heightMm: 700, depthMm: 350 };
+  if (coolingCapacityW <= 6000)
+    return { widthMm: 1000, heightMm: 750, depthMm: 400 };
+  if (coolingCapacityW <= 8000)
+    return { widthMm: 1050, heightMm: 800, depthMm: 450 };
+  if (coolingCapacityW <= 10000)
+    return { widthMm: 1100, heightMm: 900, depthMm: 500 };
   return { widthMm: 1200, heightMm: 1000, depthMm: 500 };
 }
 
@@ -79,8 +85,32 @@ export function withHvacOutdoorUnit(
   project: Project,
   system: Project["hvacSystems"][number],
 ): Project["hvacSystems"][number] {
-  if (system.outdoorUnit) return system;
   const dimensions = hvacOutdoorDimensions(system);
+  if (system.outdoorUnit) {
+    if (!dimensions) return system;
+    const old = system.outdoorUnit;
+    if (
+      old.widthMm === dimensions.widthMm &&
+      old.heightMm === dimensions.heightMm &&
+      old.depthMm === dimensions.depthMm
+    )
+      return system;
+    const outdoorUnit = {
+      ...old,
+      widthMm: dimensions.widthMm,
+      heightMm: dimensions.heightMm,
+      depthMm: dimensions.depthMm,
+      // Preserve the clearance underneath the unit when its height changes.
+      elevationM:
+        Math.max(0, old.elevationM - old.heightMm / 2000) +
+        dimensions.heightMm / 2000,
+    };
+    if (!outdoorUnitValid(project, outdoorUnit, old.id))
+      throw new Error(
+        "Il nuovo modello non entra nella posizione dell’unità esterna. Spostarla in un’area libera prima di cambiare macchina.",
+      );
+    return { ...system, outdoorUnit };
+  }
   const floorId = project.rooms.find((room) =>
     system.roomIds.includes(room.id),
   )?.floorId;

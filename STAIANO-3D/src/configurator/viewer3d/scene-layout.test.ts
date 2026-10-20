@@ -1,8 +1,28 @@
 import { describe, expect, it } from "vitest";
 import { addRectangle, createProject } from "@/domain/project";
 import { cameraCutWalls, sceneFrame } from "./scene-layout";
+import { applySplitSystem } from "@/domain/air-conditioning/apply";
+import { projectOutdoorUnits } from "@/domain/hydronic/placement";
 
 describe("realistic scene framing and directional section", () => {
+  it("include le esterne split lontane e rialzate nell’inquadratura condivisa col PDF", () => {
+    const empty = createProject();
+    let p = addRectangle(empty, empty.floors[0].id, {
+      width: 4,
+      length: 3,
+      height: 3,
+      name: "Stanza",
+    });
+    p = applySplitSystem(p, [p.rooms[0].id], "Daikin", null);
+    const unit = p.hvacSystems[0].outdoorUnit!;
+    unit.position = { x: 28, y: -12 };
+    unit.elevationM = 7;
+    unit.rotation = Math.PI / 4;
+    const frame = sceneFrame(p.walls, p.rooms, 3, projectOutdoorUnits(p));
+    expect(frame.maxX).toBeGreaterThan(28 + unit.widthMm / 2000);
+    expect(frame.minZ).toBeLessThan(-12 - unit.depthMm / 2000);
+    expect(frame.height).toBe(7 + unit.heightMm / 2000);
+  });
   it("preserves rear height and changes the foreground after orbiting to the opposite side", () => {
     const empty = createProject();
     const p = addRectangle(empty, empty.floors[0].id, {

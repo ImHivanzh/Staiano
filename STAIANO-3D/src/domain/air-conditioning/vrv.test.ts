@@ -8,6 +8,7 @@ import { validateVrvSystem } from "./vrv-validate";
 import { refreshVrvBindings } from "./vrv-refresh";
 import { encodeProject, decodeProject } from "@/services/project/format";
 import { refrigerantRoute } from "./outdoor";
+import { moveHvacOutdoorUnit } from "./outdoor";
 
 function fixture() {
   let p = createProject();
@@ -27,15 +28,74 @@ function fixture() {
 }
 
 describe("VRV/VRF con dati ufficiali Daikin", () => {
+  it("aggiorna l’ingombro al cambio modello conservando identità, posa e distanza dal terreno", () => {
+    let p = fixture();
+    const ids = p.rooms.map((room) => room.id);
+    const solutions = sizeVrvSystems(p, ids, vrvCatalog);
+    const first = solutions[0],
+      next = solutions.find(
+        (s) => s.outdoor.widthMm !== first.outdoor.widthMm,
+      )!;
+    p = applyVrvSystem(p, ids, null, first.outdoor.id);
+    const system = p.hvacSystems[0],
+      saved = structuredClone(system.outdoorUnit!);
+    p = moveHvacOutdoorUnit(p, saved.id, {
+      elevationM: saved.elevationM + 0.5,
+    });
+    p = applyVrvSystem(p, ids, system.id, next.outdoor.id);
+    expect(p.hvacSystems[0].outdoorUnit).toMatchObject({
+      id: saved.id,
+      position: saved.position,
+      rotation: saved.rotation,
+      widthMm: next.outdoor.widthMm,
+      heightMm: next.outdoor.heightMm,
+      depthMm: next.outdoor.depthMm,
+      elevationM: 0.5 + next.outdoor.heightMm / 2000,
+    });
+    expect(projectSchema.safeParse(p).success).toBe(true);
+  });
+  it("rifiuta un ingombro nuovo che collide senza perdere il sistema salvato", () => {
+    let p = fixture();
+    const ids = p.rooms.map((room) => room.id),
+      solutions = sizeVrvSystems(p, ids, vrvCatalog);
+    const small = solutions.find((s) => s.outdoor.model === "RXYSCQ4TV1")!;
+    const large = solutions.find((s) => s.outdoor.model === "RXYSQ4TV9")!;
+    p = applyVrvSystem(p, ids, null, small.outdoor.id);
+    const system = p.hvacSystems[0],
+      unit = system.outdoorUnit!;
+    p.pillars = [
+      {
+        id: crypto.randomUUID(),
+        floorId: unit.floorId,
+        position: { x: unit.position.x + 0.58, y: unit.position.y },
+        rotation: 0,
+        widthMm: 100,
+        depthMm: 100,
+        heightMm: 3000,
+        locked: false,
+      },
+    ];
+    const saved = structuredClone(p);
+    expect(() => applyVrvSystem(p, ids, system.id, large.outdoor.id)).toThrow(
+      /nuovo modello non entra/,
+    );
+    expect(p).toEqual(saved);
+  });
   it("salva l'unità esterna del sistema e i tubi verso le interne", () => {
     let p = fixture();
-    p = applyVrvSystem(p, p.rooms.map((room) => room.id), null);
+    p = applyVrvSystem(
+      p,
+      p.rooms.map((room) => room.id),
+      null,
+    );
     const system = p.hvacSystems[0],
       outdoor = system.outdoorUnit;
     expect(outdoor).not.toBeNull();
     expect(outdoor!.widthMm).toBeGreaterThan(0);
     for (const indoor of system.indoorUnits)
-      expect(refrigerantRoute(p, system, indoor.id).length).toBeGreaterThanOrEqual(2);
+      expect(
+        refrigerantRoute(p, system, indoor.id).length,
+      ).toBeGreaterThanOrEqual(2);
   });
   it("seleziona una unità interna pubblicata per ambiente e un'esterna entro il rapporto di connessione", () => {
     const p = fixture(),
@@ -51,8 +111,7 @@ describe("VRV/VRF con dati ufficiali Daikin", () => {
             p.rooms.find((room) => room.id === assignment.roomId)!
               .designLoadW &&
           assignment.indoor.nominalHeatingW >=
-            p.rooms.find((room) => room.id === assignment.roomId)!
-              .designLoadW,
+            p.rooms.find((room) => room.id === assignment.roomId)!.designLoadW,
       ),
     ).toBe(true);
     expect(solution.connectionRatio).toBeGreaterThanOrEqual(
@@ -82,9 +141,9 @@ describe("VRV/VRF con dati ufficiali Daikin", () => {
       ),
     ).toEqual([]);
     const restored = decodeProject(encodeProject(p));
-    expect(
-      restored.hvacSystems[0].indoorUnits.map((unit) => unit.id),
-    ).toEqual(p.hvacSystems[0].indoorUnits.map((unit) => unit.id));
+    expect(restored.hvacSystems[0].indoorUnits.map((unit) => unit.id)).toEqual(
+      p.hvacSystems[0].indoorUnits.map((unit) => unit.id),
+    );
     expect(restored.hvacSystems[0].catalogVersion).toBe(
       p.hvacSystems[0].catalogVersion,
     );
@@ -111,7 +170,11 @@ describe("VRV/VRF con dati ufficiali Daikin", () => {
     const p = fixture();
     p.rooms[0].designLoadW = 20000;
     expect(
-      sizeVrvSystems(p, p.rooms.map((room) => room.id), vrvCatalog),
+      sizeVrvSystems(
+        p,
+        p.rooms.map((room) => room.id),
+        vrvCatalog,
+      ),
     ).toEqual([]);
     expect(() =>
       applyVrvSystem(

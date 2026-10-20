@@ -123,7 +123,21 @@ try {
   await cp(
     path.join(root, "native/runtime"),
     path.join(runtime, "native/runtime"),
-    { recursive: true, filter: (source) => !source.endsWith(".pdb") },
+    {
+      recursive: true,
+      filter: (source) =>
+        !source.endsWith(".pdb") && path.basename(source) !== "plan-ai.json",
+    },
+  );
+  await cp(
+    path.join(root, "native/PlanRecognizer"),
+    path.join(runtime, "native/PlanRecognizer"),
+    { recursive: true },
+  );
+  await mkdir(path.join(runtime, "deploy"), { recursive: true });
+  await cp(
+    path.join(root, "deploy/setup-plan-recognizer.ps1"),
+    path.join(runtime, "deploy/setup-plan-recognizer.ps1"),
   );
   const scanner = path.join(runtime, "native/pantum/scansione.pyc");
   await mkdir(path.dirname(scanner), { recursive: true });

@@ -76,6 +76,17 @@
 .filename {
   overflow-wrap: anywhere;
 }
+.scanOptions,
+.analysisOptions {
+  margin-block: 12px;
+}
+.scanOptions > summary,
+.analysisOptions > summary {
+  cursor: pointer;
+  color: var(--testo-tenue, #425a69);
+  font-size: 12px;
+  padding-block: 6px;
+}
 @media (max-width: 760px) {
   .body {
     grid-template-columns: 1fr;

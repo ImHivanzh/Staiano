@@ -8,6 +8,7 @@ import type { SketchupModel } from "@/services/export/sketchup-schema";
 import { ArchitectureMeshes } from "@/configurator/viewer3d/ArchitectureMeshes";
 import { DeviceMeshes } from "@/configurator/viewer3d/DeviceMeshes";
 import { DuctMeshes } from "@/configurator/viewer3d/DuctMeshes";
+import { SuspendedCeiling } from "@/configurator/viewer3d/CeilingReference";
 import { sketchupMeshes } from "./sketchup-geometry";
 import { RenderBoundary } from "./export";
 import { downloadFile } from "@/services/project/format";
@@ -75,6 +76,11 @@ function ModelScene({
               onSelect={noSelection}
               onReady={onReady}
             />
+            {project.rooms
+              .filter((r) => r.floorId === floorId && r.ceilingHeightM !== null)
+              .map((r) => (
+                <SuspendedCeiling key={r.id} room={r} />
+              ))}
           </group>
           <group name="Apparecchi">
             <DeviceMeshes

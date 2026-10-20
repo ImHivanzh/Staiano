@@ -2,15 +2,25 @@ import type { Point } from "@/schemas/project";
 import type { ParsedPlan, PlanSegment } from "@/services/import/plan-types";
 import { distance, projection, lineIntersection } from "./primitives";
 
-export const PLAN_ANALYSIS_VERSION = "local-lines-5";
+export const PLAN_ANALYSIS_VERSION = "local-lines-6";
 export type WallCandidate = PlanSegment & {
   thicknessUnits: number | null;
   confidence: number;
   reason: string;
 };
 export type PlanAnalysis = {
+  reconstructed?: boolean;
+  roomsDetected?: number;
+  imageWalls?: WallCandidate[];
   walls: WallCandidate[];
-  openings: { start: Point; end: Point; confidence: number; reason: string }[];
+  openings: {
+    start: Point;
+    end: Point;
+    confidence: number;
+    reason: string;
+    type?: "door" | "window";
+    wallCandidateId?: string;
+  }[];
   notes: string[];
 };
 

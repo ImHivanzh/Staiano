@@ -15,6 +15,7 @@ import { useProjectStore } from "@/stores/project-store";
 import { EquipmentIcon } from "../EquipmentIcon";
 import { bounds } from "@/domain/geometry/primitives";
 import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
+import { projectOutdoorUnits } from "@/domain/hydronic/placement";
 import { formatNumber } from "@/utils/format";
 import { deviceCodes } from "@/services/export/device-codes";
 import { ArchitectureMeshes } from "./ArchitectureMeshes";
@@ -117,7 +118,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [cutaway, setCutaway] = useState(true);
   const [labels, setLabels] = useState(true);
   const [ceilingGuide, setCeilingGuide] = useState(true);
-const [suspendedCeiling, setSuspendedCeiling] = useState(true);
+  const [suspendedCeiling, setSuspendedCeiling] = useState(true);
   const labelElements = useRef(new Map<string, HTMLButtonElement>());
   const [floorFinish, setFloorFinish] = useState<"oak" | "stone">("oak");
   const [cutWallIds, setCutWallIds] = useState<Set<string>>(new Set());
@@ -262,9 +263,8 @@ const [suspendedCeiling, setSuspendedCeiling] = useState(true);
       ...p.hvacSystems.flatMap((s) => s.indoorUnits),
     ].find((d) => d.id === selectedId);
   const selectedOutdoor =
-    p?.hydronicSystems?.find(
-      (s) => s.outdoorUnit.id === selectedId,
-    )?.outdoorUnit ??
+    p?.hydronicSystems?.find((s) => s.outdoorUnit.id === selectedId)
+      ?.outdoorUnit ??
     p?.hvacSystems.find((s) => s.outdoorUnit?.id === selectedId)?.outdoorUnit;
   const outdoorEditable = !!selectedOutdoor && !selectedOutdoor.locked;
   const transformMode =
@@ -309,27 +309,23 @@ const [suspendedCeiling, setSuspendedCeiling] = useState(true);
         height: rooms[0].heightM,
       };
     }
-    const frame = sceneFrame(
+    return sceneFrame(
       walls,
       rooms,
       p?.projectSettings.defaultHeightM ?? 2.7,
+      p
+        ? projectOutdoorUnits(p).filter(
+            (unit) => unit.floorId === activeFloorId,
+          )
+        : [],
     );
-    for (const unit of p?.hydronicSystems
-      ?.filter((s) => s.outdoorUnit.floorId === activeFloorId)
-      .map((s) => s.outdoorUnit) ?? []) {
-      const radius = Math.hypot(unit.widthMm, unit.depthMm) / 2000 + 0.3;
-      frame.minX = Math.min(frame.minX, unit.position.x - radius);
-      frame.maxX = Math.max(frame.maxX, unit.position.x + radius);
-      frame.minZ = Math.min(frame.minZ, unit.position.y - radius);
-      frame.maxZ = Math.max(frame.maxZ, unit.position.y + radius);
-    }
-    return frame;
   }, [
     walls,
     rooms,
     isolatedRoomId,
     p?.projectSettings.defaultHeightM,
     p?.hydronicSystems,
+    p?.hvacSystems,
     activeFloorId,
   ]);
   const codes = useMemo(
@@ -1236,7 +1232,15 @@ const [suspendedCeiling, setSuspendedCeiling] = useState(true);
                     />
                   )}
                 <CameraRig
-                  sync={p ? { projectId: p.id, floorId: activeFloorId, follow: readOnly } : undefined}
+                  sync={
+                    p
+                      ? {
+                          projectId: p.id,
+                          floorId: activeFloorId,
+                          follow: readOnly,
+                        }
+                      : undefined
+                  }
                   frame={focusFrame}
                   top={top}
                   fitKey={`${activeFloorId}|${isolatedRoomId ?? ""}|${fitNonce}`}

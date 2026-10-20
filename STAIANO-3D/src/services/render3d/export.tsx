@@ -17,8 +17,12 @@ import { DeviceMeshes } from "@/configurator/viewer3d/DeviceMeshes";
 import { SceneLighting } from "@/configurator/viewer3d/SceneLighting";
 import { SceneEffects } from "@/configurator/viewer3d/SceneEffects";
 import { CameraRig } from "@/configurator/viewer3d/CameraRig";
-import { CeilingReference } from "@/configurator/viewer3d/CeilingReference";
+import {
+  CeilingReference,
+  SuspendedCeiling,
+} from "@/configurator/viewer3d/CeilingReference";
 import { sceneFrame } from "@/configurator/viewer3d/scene-layout";
+import { projectOutdoorUnits } from "@/domain/hydronic/placement";
 
 export type ProjectPanorama = {
   title: string;
@@ -152,18 +156,10 @@ function PanoramaScene({
     walls,
     rooms,
     project.projectSettings.defaultHeightM,
+    room
+      ? []
+      : projectOutdoorUnits(project).filter((unit) => unit.floorId === floorId),
   );
-  if (!room)
-    for (const system of project.hydronicSystems?.filter(
-      (s) => s.outdoorUnit.floorId === floorId,
-    ) ?? []) {
-      const unit = system.outdoorUnit,
-        radius = Math.hypot(unit.widthMm, unit.depthMm) / 2000 + 0.3;
-      fullFrame.minX = Math.min(fullFrame.minX, unit.position.x - radius);
-      fullFrame.maxX = Math.max(fullFrame.maxX, unit.position.x + radius);
-      fullFrame.minZ = Math.min(fullFrame.minZ, unit.position.y - radius);
-      fullFrame.maxZ = Math.max(fullFrame.maxZ, unit.position.y + radius);
-    }
   const roomPadding = Math.max(0.1, ...walls.map((wall) => wall.thickness));
   const frame = room
     ? {
@@ -216,6 +212,11 @@ function PanoramaScene({
           isolatedRoomId={room?.id}
           onSelect={noSelection}
         />
+        {rooms
+          .filter((r) => r.ceilingHeightM !== null)
+          .map((r) => (
+            <SuspendedCeiling key={r.id} room={r} />
+          ))}
         {rooms
           .filter((r) =>
             project.airTerminals.some(

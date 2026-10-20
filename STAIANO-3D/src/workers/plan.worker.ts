@@ -4,6 +4,12 @@ import {
   analyzeRasterPixels,
   analyzeVectorPlan,
 } from "@/domain/geometry/plan-analysis";
+import {
+  normalizePlanImage,
+  rotatePlanTensor,
+  semanticWallMask,
+  suppressPlanAnnotations,
+} from "@/domain/geometry/plan-segmentation";
 import type { ParsedPlan } from "@/services/import/plan-types";
 
 type AnalysisRequest = {
@@ -16,8 +22,6 @@ type AnalysisRequest = {
 
 const MODEL_SIZE = 512;
 const MODEL_URL = "/models/floorplan-unet.onnx";
-const MEAN = [0.485, 0.456, 0.406];
-const STD = [0.229, 0.224, 0.225];
 
 ort.env.logLevel = "error";
 ort.env.wasm.wasmPaths = "/workers/";
@@ -94,79 +98,44 @@ async function segmentWalls(
   context.fillRect(0, 0, MODEL_SIZE, MODEL_SIZE);
   context.imageSmoothingEnabled = true;
   context.imageSmoothingQuality = "high";
+  context.fillStyle = "white";
+  context.fillRect(left, top, drawWidth, drawHeight);
   context.drawImage(bitmap, left, top, drawWidth, drawHeight);
   bitmap.close();
   const data = context.getImageData(0, 0, MODEL_SIZE, MODEL_SIZE).data;
-  const plane = MODEL_SIZE * MODEL_SIZE;
-  // Faded scans can make walls look like windows. Stretch the drawn area back
-  // to black/white before inference; flat images keep their original values.
-  const histogram = new Uint32Array(256);
-  for (let y = top; y < top + drawHeight; y++)
-    for (let x = left; x < left + drawWidth; x++) {
-      const i = (y * MODEL_SIZE + x) * 4;
-      histogram[
-        Math.round(
-          data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722,
-        )
-      ]++;
-    }
-  const drawn = drawWidth * drawHeight;
-  const percentile = (fraction: number) => {
-    let seen = 0;
-    for (let value = 0; value < 256; value++) {
-      seen += histogram[value];
-      if (seen >= drawn * fraction) return value;
-    }
-    return 255;
-  };
-  const low = percentile(0.005),
-    high = percentile(0.995);
-  const stretch = low > 24 && high - low > 48 ? 255 / (high - low) : 1;
-  const input = new Float32Array(3 * plane);
-  for (let y = 0; y < MODEL_SIZE; y++)
-    for (let x = 0; x < MODEL_SIZE; x++) {
-      const i = y * MODEL_SIZE + x;
-      const inside =
-        x >= left && x < left + drawWidth && y >= top && y < top + drawHeight;
-      for (let channel = 0; channel < 3; channel++)
-        input[channel * plane + i] =
-          ((inside
-            ? Math.max(
-                0,
-                Math.min(255, (data[i * 4 + channel] - low) * stretch),
-              )
-            : data[i * 4 + channel]) /
-            255 -
-            MEAN[channel]) /
-          STD[channel];
-    }
-  const output = await session.run({
-    image: new ort.Tensor("float32", input, [1, 3, MODEL_SIZE, MODEL_SIZE]),
+  const input = normalizePlanImage(data, MODEL_SIZE, MODEL_SIZE, {
+    left,
+    top,
+    width: drawWidth,
+    height: drawHeight,
   });
-  const logits = output.logits.data as Float32Array;
-  if (logits.length !== 4 * plane)
-    throw new Error("Risposta del modello AI non valida.");
-  const wall = new Uint8Array(plane);
-  for (let i = 0; i < plane; i++) {
-    let best = 0;
-    for (let channel = 1; channel < 4; channel++)
-      if (logits[channel * plane + i] > logits[best * plane + i])
-        best = channel;
-    // Windows sit on exterior walls; keeping them closes the envelope. Doors
-    // stay openings because their arcs and leaves are not structural.
-    wall[i] = best === 1 || best === 3 ? 1 : 0;
+  // Read all four orthogonal orientations with the same local weights.
+  const logits = new Float32Array(4 * MODEL_SIZE * MODEL_SIZE);
+  for (let turn = 0; turn < 4; turn++) {
+    const output = await session.run({
+      image: new ort.Tensor(
+        "float32",
+        rotatePlanTensor(input, 3, MODEL_SIZE, turn),
+        [1, 3, MODEL_SIZE, MODEL_SIZE],
+      ),
+    });
+    const aligned = rotatePlanTensor(
+      output.logits.data as Float32Array,
+      4,
+      MODEL_SIZE,
+      (4 - turn) % 4,
+    );
+    if (aligned.length !== logits.length)
+      throw new Error("Risposta del modello AI non valida.");
+    for (let i = 0; i < logits.length; i++) logits[i] += aligned[i] / 4;
+    output.logits.dispose();
   }
-  // A single downscaled cell missing from a wall would split its vector line.
-  for (let y = 1; y < MODEL_SIZE - 1; y++)
-    for (let x = 1; x < MODEL_SIZE - 1; x++) {
-      const i = y * MODEL_SIZE + x;
-      if (
-        !wall[i] &&
-        ((wall[i - 1] && wall[i + 1]) ||
-          (wall[i - MODEL_SIZE] && wall[i + MODEL_SIZE]))
-      )
-        wall[i] = 1;
-    }
+  const wall = suppressPlanAnnotations(
+    semanticWallMask(logits, MODEL_SIZE, MODEL_SIZE),
+    input,
+    MODEL_SIZE,
+    MODEL_SIZE,
+  );
   const mask = new Uint8Array(width * height);
   for (let y = 0; y < height; y++) {
     const my = Math.floor(top + ((y + 0.5) * drawHeight) / height);
