@@ -54,21 +54,16 @@ test("dalla macchina si crea anche il plenum di ripresa", async ({ page }) => {
   await returned
     .getByRole("button", { name: "Salva attacco di ripresa", exact: true })
     .click();
+  await page.screenshot({ path: ".cache/plenum-ripresa.png" });
   await returned
     .getByRole("button", {
       name: "Crea plenum di ripresa nel progetto",
       exact: true,
     })
     .click();
-  await expect(
-    returned.getByRole("button", {
-      name: "Seleziona plenum di ripresa nel progetto",
-      exact: true,
-    }),
-  ).toBeVisible();
-  await page.screenshot({ path: ".cache/plenum-ripresa.png" });
-  await page.keyboard.press("Escape");
-  await page.keyboard.press("Escape");
+  // Dopo la creazione i pannelli si chiudono e si vede il plenum in pianta.
+  await expect(dialog).toHaveCount(0);
+  await expect(picker).toHaveCount(0);
 
   const result = await saved(page);
   const uses = result.plenums.map((plenum) => plenum.use).sort();

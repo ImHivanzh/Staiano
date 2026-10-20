@@ -238,6 +238,7 @@ export function DuctedMachinePicker({
                   <SupplyPlenumPanel
                     project={project}
                     systemId={savedSystem.id}
+                    onPlaced={close}
                   />
                 </FullscreenSection>
               )}

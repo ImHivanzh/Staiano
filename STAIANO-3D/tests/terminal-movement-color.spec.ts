@@ -154,6 +154,7 @@ test("terminal requires color, drags without opening a popup, rotates, and wizar
   await expect(popup).toHaveCount(0);
   const terminal = plan.getByTestId("terminal-supply");
   const before = await terminal.getAttribute("transform");
+  await plan.getByRole("button", { name: "Muovi (M)", exact: true }).click();
   const canvas = plan.getByTestId("editor-2d");
   await canvas.scrollIntoViewIfNeeded();
   const points = await canvas.evaluate((node) => {

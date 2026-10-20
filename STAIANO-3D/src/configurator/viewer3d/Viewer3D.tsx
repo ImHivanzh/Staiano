@@ -187,8 +187,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     pair.machineId,
                   )
                 : project.ductedDrafts?.some(
-                      (t) =>
-                        t.id === pair.terminalId || t.id === pair.systemId,
+                      (t) => t.id === pair.terminalId || t.id === pair.systemId,
                     )
                   ? connectDraftOnPlan(project, pair.terminalId, pair.systemId)
                   : connectTerminalOnPlan(
@@ -1100,7 +1099,11 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                       Configura sulla planimetria 2D
                     </button>
                   ))}
-                <SupplyPlenumPanel project={p} systemId={plenumSystemId} />
+                <SupplyPlenumPanel
+                  project={p}
+                  systemId={plenumSystemId}
+                  onPlaced={() => setPlenumOpen(false)}
+                />
               </div>
             </FullscreenDialog>
           )}

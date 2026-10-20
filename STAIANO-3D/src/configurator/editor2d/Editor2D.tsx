@@ -93,6 +93,9 @@ export function Editor2D({
     placement || (configuration && !configuration.allowDrawing)
       ? "select"
       : savedTool;
+  // Spostare stanze, muri e apparecchi richiede lo strumento Muovi. Nell'editor
+  // strutturale, che non ha quel pulsante, resta il trascinamento diretto.
+  const canMove = !configuration || !!configuration.dragDevices;
   const selection: Selection[] = placement
     ? [{ kind: "device", id: placement.terminalId }]
     : configuration?.selectedDeviceIds
@@ -113,7 +116,10 @@ export function Editor2D({
   const placing = useRef(false);
   const draggedClick = useRef(false);
   function captures(target: EventTarget) {
-    if (!configuration?.allowDrawing || configuration.captureAll) return true;
+    if (!configuration?.allowDrawing) return true;
+    // Nello strumento Muovi valgono le regole della selezione: il trascinamento
+    // di stanze e muri deve arrivare ai loro gestori, non essere catturato.
+    if (configuration.captureAll && !configuration.dragDevices) return true;
     if (tool !== "select") return false;
     const hit = (target as Element).closest("[data-device-id],[data-point-id]");
     return (
@@ -169,7 +175,9 @@ export function Editor2D({
     const b = bounds(walls.flatMap((w) => [w.start, w.end]));
     for (const unit of [
       ...(project?.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
-      ...(project?.hvacSystems.flatMap((s) => s.outdoorUnit ? [s.outdoorUnit] : []) ?? []),
+      ...(project?.hvacSystems.flatMap((s) =>
+        s.outdoorUnit ? [s.outdoorUnit] : [],
+      ) ?? []),
       ...(project?.heatPumpDrafts ?? []).map((draft) => ({
         ...draft,
         widthMm: 800,
@@ -475,7 +483,9 @@ export function Editor2D({
         ...(project?.radiators ?? []),
         ...(project?.fanCoils ?? []),
         ...(project?.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
-        ...(project?.hvacSystems.flatMap((s) => s.outdoorUnit ? [s.outdoorUnit] : []) ?? []),
+        ...(project?.hvacSystems.flatMap((s) =>
+          s.outdoorUnit ? [s.outdoorUnit] : [],
+        ) ?? []),
         ...(project?.airTerminals ?? []),
         ...(project?.plenums ?? []),
         ...(project?.pillars ?? []),
@@ -615,11 +625,7 @@ export function Editor2D({
                     const id =
                       hit?.getAttribute("data-device-id") ??
                       hit?.getAttribute("data-point-id");
-                    if (
-                      (!configuration.captureAll ||
-                        configuration.dragDevices) &&
-                      id
-                    )
+                    if (configuration.dragDevices && id)
                       beginDeviceDrag(event, id);
                   }
                 }
@@ -747,7 +753,7 @@ export function Editor2D({
                 const prior = useProjectStore.getState().selection;
                 const group = !e.shiftKey && prior.some((s) => s.id === r.id);
                 if (!group) select({ kind: "room", id: r.id }, e.shiftKey);
-                if (!e.shiftKey) {
+                if (!e.shiftKey && canMove) {
                   svg.current?.setPointerCapture(e.pointerId);
                   drag.current = {
                     type: "group",
@@ -820,6 +826,7 @@ export function Editor2D({
                   }));
                   useProjectStore.setState({ selection: selected });
                   if (members.some((w) => w.locked)) return;
+                  if (!canMove) return;
                   svg.current?.setPointerCapture(e.pointerId);
                   drag.current = {
                     type: "group",
@@ -839,7 +846,7 @@ export function Editor2D({
                   prior.some((s) => s.id === w.id);
                 if (!group) select({ kind: "wall", id: w.id }, e.shiftKey);
                 if (w.locked) return;
-                if (!e.shiftKey) {
+                if (!e.shiftKey && canMove) {
                   svg.current?.setPointerCapture(e.pointerId);
                   drag.current = {
                     type: group ? "group" : "wall",
@@ -1440,7 +1447,15 @@ export function Editor2D({
                     }
                     strokeWidth={u * 1.5}
                   />
-                  <circle cx={-unit.widthMm / 5000} cy={0} r={unit.depthMm / 3500} fill="none" stroke="#374047" strokeWidth={u * 1.5} pointerEvents="none" />
+                  <circle
+                    cx={-unit.widthMm / 5000}
+                    cy={0}
+                    r={unit.depthMm / 3500}
+                    fill="none"
+                    stroke="#374047"
+                    strokeWidth={u * 1.5}
+                    pointerEvents="none"
+                  />
                   <text
                     textAnchor="middle"
                     fontSize={u * 11}

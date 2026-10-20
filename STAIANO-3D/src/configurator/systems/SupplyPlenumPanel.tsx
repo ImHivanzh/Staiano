@@ -22,9 +22,12 @@ import styles from "./SupplyPlenumPanel.module.css";
 export function SupplyPlenumPanel({
   project,
   systemId,
+  onPlaced,
 }: {
   project: Project;
   systemId: string;
+  /** Dopo aver creato o selezionato il plenum: chiudi i pannelli e mostra la pianta. */
+  onPlaced?: () => void;
 }) {
   const [use, setUse] = useState<"supply" | "return">("supply");
   const result = calculatePlenum(project, systemId, use);
@@ -283,8 +286,10 @@ export function SupplyPlenumPanel({
                 const pl = state.project?.plenums.find(
                   (item) => item.systemId === systemId && item.use === use,
                 );
-                if (pl && !state.error)
+                if (pl && !state.error) {
                   state.select({ kind: "device", id: pl.id });
+                  onPlaced?.();
+                }
               }}
             >
               {placed
