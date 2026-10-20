@@ -53,3 +53,45 @@ export function resolveDuctedMachine(system: DuctedSystem) {
 export function ductedMaximumAirflow(system: DuctedSystem) {
   return resolveDuctedMachine(system)?.maxAirflowM3h ?? null;
 }
+
+/** Chiave stabile dell'insieme di ambienti serviti, indipendente dall'ordine. */
+export function servedRoomsKey(roomIds: readonly string[]) {
+  return [...new Set(roomIds)].sort().join("|");
+}
+
+/**
+ * Conta le macchine che serviranno gli stessi ambienti: quella in esame più le
+ * altre. Passare l'id della macchina in esame quando è già nel progetto, per
+ * non contarla due volte. Il carico si divide fra loro: ripeterlo per ogni
+ * macchina consiglierebbe una taglia enorme per ciascuna.
+ */
+export function machinesServingSameRooms(
+  project: Project,
+  roomIds: readonly string[],
+  excludeSystemId?: string,
+) {
+  if (!roomIds.length) return 1;
+  const key = servedRoomsKey(roomIds);
+  return (
+    1 +
+    project.hvacSystems.filter(
+      (system) =>
+        system.type === "ducted" &&
+        system.id !== excludeSystemId &&
+        system.roomIds.length > 0 &&
+        servedRoomsKey(system.roomIds) === key,
+    ).length
+  );
+}
+
+/** Divisore del carico: macchine dichiarate sul sistema, altrimenti quelle presenti. */
+export function machineLoadDivisor(
+  project: Project,
+  roomIds: readonly string[],
+  declared?: number,
+  excludeSystemId?: string,
+) {
+  return (
+    declared ?? machinesServingSameRooms(project, roomIds, excludeSystemId)
+  );
+}

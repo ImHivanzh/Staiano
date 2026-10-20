@@ -14,7 +14,7 @@ import { airTerminalFamilyAtVersion } from "./catalogs/air-terminals";
 import { hvacProductAtVersion } from "./catalogs/hvac";
 import { maximumAirflowOption } from "./catalogs/hvac-airflow";
 import { ductedRoomAllocation } from "./ducted/apply";
-import { ductedMaximumAirflow } from "./ducted/machine";
+import { ductedMaximumAirflow, machineLoadDivisor } from "./ducted/machine";
 import { footprintInsideRoom } from "./geometry/footprint";
 import {
   legacyTerminalCheck,
@@ -484,7 +484,16 @@ export function validateProject(p: Project): Check[] {
       ),
       load = p.rooms
         .filter((r) => system.roomIds.includes(r.id))
-        .reduce((n, r) => n + r.designLoadW, 0);
+        .reduce((n, r) => n + r.designLoadW, 0),
+      // Più macchine sugli stessi ambienti si dividono il carico.
+      machineLoad =
+        load /
+        machineLoadDivisor(
+          p,
+          system.roomIds,
+          system.plannedMachines,
+          system.id,
+        );
     if (system.fanCoilId) {
       const machine = system.genericMachine;
       checks.push({
@@ -500,11 +509,11 @@ export function validateProject(p: Project): Check[] {
           machine?.coolingCapacityW === undefined ||
           machine?.heatingCapacityW === undefined
             ? "warning"
-            : machine.coolingCapacityW < load ||
-                machine.heatingCapacityW < load
+            : machine.coolingCapacityW < machineLoad ||
+                machine.heatingCapacityW < machineLoad
               ? "warning"
               : "valid",
-        message: `${machine?.model ?? system.productId}: potenze del punto di funzionamento; carico servito ${Math.round(load)} W da verificare alle condizioni dell’acqua.`,
+        message: `${machine?.model ?? system.productId}: potenze del punto di funzionamento; carico per macchina ${Math.round(machineLoad)} W da verificare alle condizioni dell’acqua.`,
       });
       checks.push({
         code: "machineAirflow",
@@ -532,14 +541,15 @@ export function validateProject(p: Project): Check[] {
           manual.coolingCapacityW === undefined ||
           manual.heatingCapacityW === undefined
             ? "warning"
-            : manual.coolingCapacityW >= load && manual.heatingCapacityW >= load
+            : manual.coolingCapacityW >= machineLoad &&
+                manual.heatingCapacityW >= machineLoad
               ? "warning"
               : "invalid",
         message:
           manual.coolingCapacityW === undefined ||
           manual.heatingCapacityW === undefined
             ? "Macchina inserita manualmente; potenza non dichiarata. Verificare copertura del carico termico."
-            : `${manual.model}: potenze dichiarate dall’operatore, copertura del carico ${Math.round(load)} W da verificare.`,
+            : `${manual.model}: potenze dichiarate dall’operatore, copertura del carico per macchina ${Math.round(machineLoad)} W da verificare.`,
       });
       checks.push({
         code: "machineAirflow",
@@ -561,11 +571,11 @@ export function validateProject(p: Project): Check[] {
         code: "machinePower",
         status:
           product &&
-          product.coolingCapacityW >= load &&
-          (product.heatingCapacityW ?? 0) >= load
+          product.coolingCapacityW >= machineLoad &&
+          (product.heatingCapacityW ?? 0) >= machineLoad
             ? "valid"
             : "invalid",
-        message: `${product?.indoorModel ?? system.productId}: capacità per carico ${Math.round(load)}W`,
+        message: `${product?.indoorModel ?? system.productId}: capacità per carico ${Math.round(machineLoad)}W`,
         entityId: system.id,
       });
       checks.push({

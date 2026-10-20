@@ -4,7 +4,7 @@ import { hvacCatalogAtVersion } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine, distributeAirflow } from "./calculate";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
-import { ductedMaximumAirflow } from "./machine";
+import { ductedMaximumAirflow, machineLoadDivisor } from "./machine";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { hydronicRoomIds } from "./plan-connections";
 import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
@@ -82,9 +82,22 @@ export function refreshDuctedBindings(project: Project): Project {
           (r) => system.roomIds.includes(r.id) && !r.conditioningExclusion,
         )
         .reduce((sum, r) => sum + r.designLoadW, 0),
+      // Macchine sugli stessi ambienti: il carico si divide, non si ripete.
+      machineLoad =
+        load /
+        machineLoadDivisor(
+          project,
+          system.roomIds,
+          system.plannedMachines,
+          system.id,
+        ),
       machine =
-        load > 0
-          ? selectDuctedMachine(load, system.manufacturer, catalog.products)[0]
+        machineLoad > 0
+          ? selectDuctedMachine(
+              machineLoad,
+              system.manufacturer,
+              catalog.products,
+            )[0]
           : null;
     return machine
       ? {
@@ -269,8 +282,7 @@ export function refreshDuctedBindings(project: Project): Project {
         return { ...room, systemType: "ducted" as const };
       // Solo distribuzioni aerauliche di ventilconvettori: l'emissione resta
       // del ventilconvettore, non del canalizzato a espansione diretta.
-      if (served.length)
-        return { ...room, systemType: "fanCoil" as const };
+      if (served.length) return { ...room, systemType: "fanCoil" as const };
       return room.systemType === "ducted" || room.systemType === "fanCoil"
         ? {
             ...room,

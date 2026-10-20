@@ -4,6 +4,7 @@ import type { Project, Room } from "@/schemas/project";
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine } from "@/domain/ducted/calculate";
+import { machinesServingSameRooms } from "@/domain/ducted/machine";
 import { applyDuctedSystem } from "@/domain/ducted/apply";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
@@ -21,6 +22,7 @@ export function DuctedMachinePicker({
   room,
   installationId,
   systemId,
+  draftId,
   initialOpen = false,
   onClosed,
   onPlace,
@@ -31,6 +33,8 @@ export function DuctedMachinePicker({
   room: Room;
   installationId?: string;
   systemId?: string | null;
+  /** Bozza della macchina in configurazione: non conta come seconda macchina. */
+  draftId?: string;
   initialOpen?: boolean;
   onClosed?: () => void;
   onPlace?: (change: (project: Project) => Project) => void;
@@ -94,9 +98,25 @@ export function DuctedMachinePicker({
   );
   const servedRooms = project.rooms.filter((r) => servedIds.includes(r.id));
   const load = servedRooms.reduce((total, r) => total + r.designLoadW, 0);
+  // Più macchine sugli stessi ambienti dividono il carico: la taglia proposta
+  // è quella della singola macchina, non dell'intero ambiente. Contano le
+  // macchine già configurate e quelle inserite come bozze in pianta.
+  const [plannedMachines, setPlannedMachines] = useState(
+    () =>
+      savedSystem?.plannedMachines ??
+      machinesServingSameRooms(project, servedIds, savedSystem?.id) +
+        (project.ductedDrafts ?? []).filter(
+          (draft) =>
+            draft.kind === "machine" &&
+            draft.id !== draftId &&
+            servedIds.includes(draft.roomId),
+        ).length,
+  );
+  const machines = Math.max(1, Math.round(plannedMachines));
+  const machineLoad = load / machines;
   const candidates =
-    load > 0
-      ? selectDuctedMachine(load, manufacturer, hvacCatalog.products)
+    machineLoad > 0
+      ? selectDuctedMachine(machineLoad, manufacturer, hvacCatalog.products)
       : [];
   const selected = candidates.find((p) => p.id === productId) ?? candidates[0];
   return (
@@ -154,7 +174,10 @@ export function DuctedMachinePicker({
         <div className={`${styles.picker} ${styles.compactPicker}`}>
           <p className="nota">
             Scegli marca e modello per la macchina. I modelli proposti coprono
-            il fabbisogno di {formatNumber(load / 1000)} kW.
+            il fabbisogno di {formatNumber(machineLoad / 1000)} kW.
+            {machines > 1
+              ? ` Gli ambienti sono serviti da ${machines} macchine: il carico di ${formatNumber(load / 1000)} kW è diviso fra loro.`
+              : ""}
           </p>
           <div className="azioni" role="group" aria-label="Origine macchina">
             <button
@@ -245,6 +268,27 @@ export function DuctedMachinePicker({
                       ))}
                     </select>
                   </label>
+                  <label className="campo">
+                    <span>Macchine sugli stessi ambienti</span>
+                    <input
+                      type="number"
+                      min="1"
+                      max="100"
+                      step="1"
+                      aria-label="Macchine previste sugli stessi ambienti"
+                      value={plannedMachines}
+                      onChange={(e) =>
+                        setPlannedMachines(
+                          Math.max(1, Number(e.target.value) || 1),
+                        )
+                      }
+                    />
+                  </label>
+                  <p className="nota">
+                    Il carico di {formatNumber(load / 1000)} kW è diviso fra{" "}
+                    {machines} {machines === 1 ? "macchina" : "macchine"}:{" "}
+                    {formatNumber(machineLoad / 1000)} kW per macchina.
+                  </p>
                   {selected && (
                     <div
                       className={styles.selection}
@@ -284,6 +328,7 @@ export function DuctedMachinePicker({
                           savedSystem?.id ?? null,
                           selected?.id ?? null,
                           installationId,
+                          machines,
                         );
                         const configured = updated.hvacSystems.find(
                           (s) =>
@@ -349,8 +394,9 @@ export function DuctedMachinePicker({
                 <div className={styles.catalogHeading}>
                   <h3>Modelli compatibili</h3>
                   <span>
-                    {candidates.length} modelli · fabbisogno{" "}
-                    {formatNumber(load / 1000)} kW
+                    {candidates.length} modelli · fabbisogno per macchina{" "}
+                    {formatNumber(machineLoad / 1000)} kW
+                    {machines > 1 ? ` su ${machines}` : ""}
                   </span>
                 </div>
                 <p className="nota">

@@ -365,12 +365,7 @@ export function GraphicalDuctedConfigurator({
     commit((current) =>
       current.ductedDrafts?.some((item) => item.id === id)
         ? moveDuctedDraft(current, id, point)
-        : movePlacedDevice(
-            current,
-            id,
-            point,
-            useProjectStore.getState().snap,
-          ),
+        : movePlacedDevice(current, id, point, useProjectStore.getState().snap),
     );
     setSelectedId(id);
     if (mainPlan) useProjectStore.getState().select({ kind: "device", id });
@@ -396,11 +391,7 @@ export function GraphicalDuctedConfigurator({
       if (pair) {
         commit((current) =>
           pair.fanCoilId
-            ? connectFanCoilAirOnPlan(
-                current,
-                pair.terminalId,
-                pair.fanCoilId,
-              )
+            ? connectFanCoilAirOnPlan(current, pair.terminalId, pair.fanCoilId)
             : pair.hydronic
               ? connectHydronicOnPlan(current, pair.terminalId, pair.machineId)
               : current.ductedDrafts?.some(
@@ -1637,6 +1628,9 @@ export function GraphicalDuctedConfigurator({
             installation.id
           }
           systemId={selectedMachineSystem?.id ?? null}
+          draftId={
+            selectedDraft?.kind === "machine" ? selectedDraft.id : undefined
+          }
           initialOpen
           onClosed={() => setMachineOpen(false)}
           onPlace={(change) => {

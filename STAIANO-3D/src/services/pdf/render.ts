@@ -12,6 +12,7 @@ import type { Project, Point } from "@/schemas/project";
 import { buildDossier, TECHNICAL_NOTE } from "./dossier";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { ductedRoomAllocation } from "@/domain/ducted/apply";
+import { machineLoadDivisor } from "@/domain/ducted/machine";
 import { calculateEcoclimaBom } from "@/domain/air-terminals/commercial-bom";
 import { calculateSupplyPlenum, PLENUM_SOURCES } from "@/domain/ducted/plenum";
 import {
@@ -1888,9 +1889,15 @@ export async function renderDossierPdf(
           vrvOutdoor?.model ??
           combination?.outdoorModel ??
           "non verificabile",
-        load = p.rooms
+        rawLoad = p.rooms
           .filter((r) => s.roomIds.includes(r.id))
-          .reduce((sum, r) => sum + r.designLoadW, 0);
+          .reduce((sum, r) => sum + r.designLoadW, 0),
+        // Più macchine sugli stessi ambienti: in scheda il carico per macchina.
+        load =
+          s.type === "ducted"
+            ? rawLoad /
+              machineLoadDivisor(p, s.roomIds, s.plannedMachines, s.id)
+            : rawLoad;
       heading(
         `${data.codes.get(s.id)} - ${s.manufacturer} ${
           s.type === "ducted"

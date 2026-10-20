@@ -6,7 +6,7 @@ import {
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine, distributeAirflow } from "./calculate";
-import { ductedMaximumAirflow } from "./machine";
+import { ductedMaximumAirflow, machineLoadDivisor } from "./machine";
 import { refreshDuctedBindings } from "./refresh";
 import { assignInstallationRooms, installationRoom } from "../installations";
 export function applyDuctedSystem(
@@ -16,6 +16,7 @@ export function applyDuctedSystem(
   existingId: string | null,
   productId: string | null = null,
   installationId?: string,
+  plannedMachines?: number,
 ): Project {
   project = assignInstallationRooms(project, installationId, "ducted", roomIds);
   const rooms = project.rooms.filter((r) => roomIds.includes(r.id));
@@ -41,7 +42,20 @@ export function applyDuctedSystem(
       "Una stanza è già servita da un altro sistema. Modificare prima quella zona.",
     );
   const load = rooms.reduce((sum, r) => sum + r.designLoadW, 0),
-    candidates = selectDuctedMachine(load, manufacturer, hvacCatalog.products),
+    // Una stanza con più macchine divide il carico fra loro.
+    machineLoad =
+      load /
+      machineLoadDivisor(
+        project,
+        roomIds,
+        plannedMachines,
+        existingId ?? undefined,
+      ),
+    candidates = selectDuctedMachine(
+      machineLoad,
+      manufacturer,
+      hvacCatalog.products,
+    ),
     machine = productId
       ? candidates.find((product) => product.id === productId)
       : candidates[0];
@@ -74,6 +88,11 @@ export function applyDuctedSystem(
     ...(previous?.plenumSettings
       ? { plenumSettings: previous.plenumSettings }
       : {}),
+    ...(plannedMachines !== undefined
+      ? { plannedMachines }
+      : previous?.plannedMachines !== undefined
+        ? { plannedMachines: previous.plannedMachines }
+        : {}),
     manufacturer,
     productId: machine.id,
     roomIds,

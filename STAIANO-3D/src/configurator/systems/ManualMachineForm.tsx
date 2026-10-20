@@ -3,7 +3,8 @@ import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { applyManualDuctedSystem } from "@/domain/ducted/apply";
-import { numberFromForm } from "@/utils/format";
+import { machinesServingSameRooms } from "@/domain/ducted/machine";
+import { numberFromForm, formatNumber } from "@/utils/format";
 import type { Ref } from "react";
 
 export function ManualMachineForm({
@@ -34,6 +35,10 @@ export function ManualMachineForm({
   );
   const input = existing?.genericMachine;
   const { commit } = useProjectStore();
+  const rooms = project.rooms.filter((room) => roomIds.includes(room.id));
+  const totalLoadW = rooms.reduce((sum, room) => sum + room.designLoadW, 0);
+  const machines = machinesServingSameRooms(project, roomIds, existing?.id);
+  const machineLoadW = totalLoadW / machines;
   return (
     <form
       key={existing?.id ?? roomIds.join("|")}
@@ -83,6 +88,15 @@ export function ManualMachineForm({
         Inserisci i dati della tua macchina. La distribuzione usa sempre la
         portata massima.
       </p>
+      {totalLoadW > 0 && (
+        <p className="nota">
+          Fabbisogno per questa macchina: {formatNumber(machineLoadW / 1000)} kW
+          {machines > 1
+            ? ` (${formatNumber(totalLoadW / 1000)} kW divisi fra ${machines} macchine sugli stessi ambienti)`
+            : ""}
+          . Verifica portata e potenze sulla scheda del modello.
+        </p>
+      )}
       <label className="campo">
         <span>Marca</span>
         <input

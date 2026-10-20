@@ -147,14 +147,7 @@ export const roomSchema = z.object({
   ceilingHeightM: finite.positive().max(30).nullable().default(null),
   volumeM3: finite.nonnegative(),
   designLoadW: finite.nonnegative(),
-  systemType: z.enum([
-    "none",
-    "split",
-    "vrv",
-    "ducted",
-    "radiator",
-    "fanCoil",
-  ]),
+  systemType: z.enum(["none", "split", "vrv", "ducted", "radiator", "fanCoil"]),
   supplyPoints: z.number().int().min(1).max(100),
   returnPoints: z.number().int().min(1).max(100),
   usage: z.string().max(100).default(""),
@@ -338,6 +331,8 @@ export const projectSchema = z
           genericMachine: manualDuctedMachineSchema.optional(),
           /** Ventilconvettore catalogo che alimenta questa distribuzione aeraulica. */
           fanCoilId: id.optional(),
+          /** Macchine previste sugli stessi ambienti: il carico si divide. */
+          plannedMachines: z.number().int().min(1).max(100).optional(),
           dataOrigin: z.enum(["catalog", "manual", "fanCoil"]).optional(),
           airflowM3h: finite.positive().nullable(),
           catalogVersion: z.string().max(100),
@@ -536,9 +531,7 @@ export const projectSchema = z
       p.hydronicSystems ?? [],
       p.hydronicSystems?.map((s) => s.outdoorUnit) ?? [],
       p.hvacSystems.flatMap((s) => s.indoorUnits),
-      p.hvacSystems
-        .map((s) => s.outdoorUnit)
-        .filter((unit) => unit !== null),
+      p.hvacSystems.map((s) => s.outdoorUnit).filter((unit) => unit !== null),
       p.ductedDrafts ?? [],
       p.heatPumpDrafts ?? [],
       p.equipmentDrafts ?? [],
@@ -662,10 +655,7 @@ export const projectSchema = z
         ctx.addIssue({ code: "custom", message: "Apparecchio senza muro" });
     }
     for (const s of p.hvacSystems) {
-      if (
-        (s.type === "split" || s.type === "vrv") &&
-        !s.roomIds.length
-      )
+      if ((s.type === "split" || s.type === "vrv") && !s.roomIds.length)
         ctx.addIssue({
           code: "custom",
           message:
