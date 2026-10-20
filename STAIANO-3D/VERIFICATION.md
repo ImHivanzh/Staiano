@@ -117,6 +117,11 @@ Revocare tutte le sessioni: `node scripts/configure-access.mjs --rotate-session-
 - Cambio parete: aggancio e rotazione ricalcolati anche con snap fine disattivato.
 - Guida pubblica su `https://impianto.staianopoint.com/`, senza riferimenti
   tecnici al Worker; sorgente canonico su GitLab.
+- EXE `63buggbHCJ0E13KB23Wy_` (258,8 MB, SHA-256
+  `827d2220b59037d981ffdfb96c131f8f1f0739f1e5798029c21f8fdc9a71aeb0`)
+  compilato dalla revisione `52ec177`, collaudato con `--version` e pubblicato
+  sul canale Codeberg con registrazione sul Worker. Non installato su questa
+  postazione: `compila.bat installa` per installarlo.
 
 ## Limiti
 
@@ -124,5 +129,4 @@ Il plenum macchina è un progetto di fabbricazione: verificare flange, tenuta,
 rumore e perdite prima di costruire. Il raccordo reale può avere area libera
 diversa dal nominale. Scarico termico/calcoli di potenza restano limiti
 convenzionali dichiarati. Prestazioni assenti ed errori sorgente non vengono
-sostituiti da valori stimati. I plenum su misura restano da quotare; l'EXE non
-è stato rigenerato in questo aggiornamento.
+sostituiti da valori stimati. I plenum su misura restano da quotare.
