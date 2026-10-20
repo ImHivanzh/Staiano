@@ -78,6 +78,7 @@ import type { ImportedPlan } from "@/services/import/plan-types";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { Editor2D } from "./editor2d/Editor2D";
 import { GraphicalDuctedConfigurator } from "./systems/GraphicalDuctedConfigurator";
+import { FlexibleDuctPanel } from "./systems/FlexibleDuctPanel";
 import { Properties, selectionWithProperties } from "./properties/Properties";
 import { ConfigurationWizard } from "./import/ConfigurationWizard";
 import { PillarDialog } from "./PillarDialog";
@@ -166,6 +167,7 @@ export function Configurator() {
     "complete",
   );
   const [billOpen, setBillOpen] = useState(false);
+  const [flexibleOpen, setFlexibleOpen] = useState(false);
   const [inspectorOpen, setInspectorOpen] = useState(true);
   const [navigationOpen, setNavigationOpen] = useState(true);
   const revealedCheck = useRef<Check | null>(null);
@@ -1987,6 +1989,14 @@ export function Configurator() {
                       </div>
                     </details>
                   )}
+                  <button
+                    type="button"
+                    className="bottone piccolo chiara"
+                    aria-haspopup="dialog"
+                    onClick={() => setFlexibleOpen(true)}
+                  >
+                    Flessibili
+                  </button>
                   <div className="selettore-vista">
                     <button
                       aria-pressed={s.view === "2d"}
@@ -2246,6 +2256,24 @@ export function Configurator() {
           }}
           onImport={acceptPlan}
         />
+      )}
+      {flexibleOpen && p && (
+        <FullscreenDialog
+          open
+          title="Configura flessibili"
+          closeLabel="Chiudi flessibili"
+          onClose={() => setFlexibleOpen(false)}
+        >
+          <FlexibleDuctPanel
+            project={p}
+            floorId={s.activeFloorId}
+            onEdit3D={(ductId) => {
+              s.select({ kind: "device", id: ductId });
+              s.setView("3d");
+              setFlexibleOpen(false);
+            }}
+          />
+        </FullscreenDialog>
       )}
       {s.view === "2d" && <PillarDialog />}
       {newDialog && (

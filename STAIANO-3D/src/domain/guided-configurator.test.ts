@@ -19,9 +19,11 @@ import {
   moveSystemObject,
 } from "./ducted/placement";
 import {
+  addDuctWaypoint,
   ductRoute,
   generateDuctRoutes,
   plenumLocalToPlan,
+  removeDuctWaypoint,
   setDuctKind,
 } from "./ducted/routes";
 import { plenumTechnicalDrawing } from "./ducted/technical-view";
@@ -259,6 +261,47 @@ describe("operator-led configuration acceptance", () => {
     expect(start.x).toBeCloseTo(opening.x);
     expect(start.y).toBeCloseTo(opening.y);
     expect(start.elevationM).toBeCloseTo(opening.elevationM);
+  });
+
+  it("adds and removes flexible bending points on the saved route", () => {
+    let p = guidedProjectFixture();
+    p = addGuidedTerminal(p, 2000);
+    const systemId = p.hvacSystems[0].id;
+    p = generateDuctRoutes(placeSupplyPlenum(p, systemId), systemId);
+    const generated = p.ducts!.find((d) => d.terminalId)!;
+    p = setDuctKind(p, generated.id, "flexible");
+    const added = addDuctWaypoint(p, generated.id);
+    expect(added.index).toBeGreaterThanOrEqual(0);
+    p = added.project;
+    const duct = p.ducts!.find((d) => d.id === generated.id)!;
+    expect(duct.routing).toBe("manual");
+    const insertionCount = duct.waypoints.length;
+    expect(insertionCount).toBeGreaterThan(0);
+    const route = ductRoute(p, duct);
+    expect(route[added.index + 1]).toMatchObject(duct.waypoints[added.index]);
+    const requested = addDuctWaypoint(p, generated.id, {
+      x: duct.waypoints[0].x + 0.1,
+      y: duct.waypoints[0].y + 0.1,
+      elevationM: duct.waypoints[0].elevationM,
+    });
+    p = requested.project;
+    const flexible = p.ducts!.find((d) => d.id === generated.id)!;
+    expect(flexible.waypoints).toHaveLength(insertionCount + 1);
+    p = removeDuctWaypoint(p, generated.id, 0);
+    expect(p.ducts!.find((d) => d.id === generated.id)!.waypoints).toHaveLength(
+      insertionCount,
+    );
+    expect(() =>
+      addDuctWaypoint(
+        {
+          ...p,
+          ducts: p.ducts!.map((d) =>
+            d.id === generated.id ? { ...d, locked: true } : d,
+          ),
+        },
+        generated.id,
+      ),
+    ).toThrow(/Sblocca il canale/);
   });
 
   it("a rotated pillar reduces usable area and thermal load once through command, undo and reload", () => {

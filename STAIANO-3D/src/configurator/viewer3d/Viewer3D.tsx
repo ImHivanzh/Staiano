@@ -58,6 +58,12 @@ import { DeviceTransform, type TransformMode } from "./DeviceTransform";
 import { DuctRouteControls } from "./DuctRouteControls";
 import { DuctMeshes } from "./DuctMeshes";
 import { DuctPanel } from "@/configurator/systems/DuctPanel";
+import {
+  addDuctWaypoint,
+  removeDuctWaypoint,
+  setDuctKind,
+  type RoutePoint,
+} from "@/domain/ducted/routes";
 import { LoadMap } from "./LoadMap";
 import { PillarDialog } from "@/configurator/PillarDialog";
 import { roomMeasuredSides } from "@/domain/geometry/dimensions";
@@ -163,6 +169,10 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [transformChoice, setTransformChoice] = useState<{
     id?: string;
     mode: TransformMode | null;
+  } | null>(null);
+  const [ductWaypoint, setDuctWaypoint] = useState<{
+    ductId: string;
+    index: number;
   } | null>(null);
   const [preview, setPreview] = useState<Project | null>(null);
   const [dragGuide, setDragGuide] = useState("");
@@ -308,6 +318,46 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
     (r) => r.id === selectedId || r.id === chosenDevice?.roomId,
   );
   const isolatedRoomId = isolated ? selectedRoom?.id : undefined;
+  const selectedDuct = p?.ducts?.find((duct) => duct.id === selectedId);
+  const selectedDuctWaypoint =
+    ductWaypoint && ductWaypoint.ductId === selectedId
+      ? ductWaypoint.index
+      : null;
+  const addDuctBend = useCallback((ductId: string, point?: RoutePoint) => {
+    let inserted = -1;
+    useProjectStore.getState().commit((current) => {
+      const result = addDuctWaypoint(current, ductId, point);
+      inserted = result.index;
+      return result.project;
+    });
+    if (inserted >= 0 && !useProjectStore.getState().error)
+      setDuctWaypoint({ ductId, index: inserted });
+  }, []);
+  const removeDuctBend = useCallback(() => {
+    if (!selectedDuct || selectedDuctWaypoint === null) return;
+    useProjectStore
+      .getState()
+      .commit((current) =>
+        removeDuctWaypoint(current, selectedDuct.id, selectedDuctWaypoint),
+      );
+    setDuctWaypoint(
+      selectedDuctWaypoint > 0
+        ? { ductId: selectedDuct.id, index: selectedDuctWaypoint - 1 }
+        : null,
+    );
+  }, [selectedDuct, selectedDuctWaypoint]);
+  const toggleDuctKind = useCallback(() => {
+    if (!selectedDuct) return;
+    useProjectStore
+      .getState()
+      .commit((current) =>
+        setDuctKind(
+          current,
+          selectedDuct.id,
+          selectedDuct.kind === "flexible" ? "rigid" : "flexible",
+        ),
+      );
+  }, [selectedDuct]);
   const rooms = useMemo(
     () =>
       p?.rooms.filter(
@@ -924,6 +974,42 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               </label>
             </div>
           )}
+          {!readOnly && !presentation && selectedDuct && (
+            <div className={styles.transformBar}>
+              <strong>{codes.get(selectedDuct.id) ?? "Canale"}</strong>
+              <span>
+                {selectedDuct.kind === "flexible" ? "Flessibile" : "Rigido"} ·{" "}
+                {selectedDuct.waypoints.length}{" "}
+                {selectedDuct.waypoints.length === 1 ? "curva" : "curve"}
+              </span>
+              <button
+                type="button"
+                disabled={selectedDuct.locked}
+                onClick={() => addDuctBend(selectedDuct.id)}
+              >
+                Aggiungi curva
+              </button>
+              <button
+                type="button"
+                disabled={selectedDuct.locked || selectedDuctWaypoint === null}
+                onClick={removeDuctBend}
+              >
+                Rimuovi curva
+              </button>
+              <button
+                type="button"
+                disabled={selectedDuct.locked}
+                onClick={toggleDuctKind}
+              >
+                {selectedDuct.kind === "flexible"
+                  ? "Rendi rigido"
+                  : "Rendi flessibile"}
+              </button>
+              <label>
+                Doppio clic sul tubo per una curva · trascina i punti
+              </label>
+            </div>
+          )}
           {channelPanel && p && !presentation && (
             <FullscreenDialog
               open
@@ -1147,22 +1233,31 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     showHydronicPipes={channelView}
                   />
                 )}
-                {sceneProject && channelView && (
+                {sceneProject && (channelView || !!selectedDuct) && (
                   <DuctMeshes
                     project={sceneProject}
                     activeFloorId={activeFloorId}
                     animated={presentation || readOnly}
                     flowMode={comfortMode === "heat" ? "heat" : "cool"}
+                    onAddWaypoint={addDuctBend}
                   />
                 )}
                 {p &&
-                  channelView &&
+                  (channelView || !!selectedDuct) &&
                   !readOnly &&
                   !presentation &&
                   selectedId && (
                     <DuctRouteControls
                       project={p}
                       id={selectedId}
+                      index={selectedDuctWaypoint}
+                      onSelect={(index) =>
+                        setDuctWaypoint(
+                          index === null || !selectedId
+                            ? null
+                            : { ductId: selectedId, index },
+                        )
+                      }
                       onPreview={onPreview}
                     />
                   )}

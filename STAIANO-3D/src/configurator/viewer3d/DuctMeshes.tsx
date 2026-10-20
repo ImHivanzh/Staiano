@@ -138,11 +138,14 @@ export function DuctMeshes({
   activeFloorId,
   animated = false,
   flowMode = "cool",
+  onAddWaypoint,
 }: {
   project: Project;
   activeFloorId: string;
   animated?: boolean;
   flowMode?: "cool" | "heat";
+  /** Doppio clic sul tubo: inserisce una curva nel punto indicato. */
+  onAddWaypoint?: (ductId: string, point: RoutePoint) => void;
 }) {
   const { gl } = useThree();
   const connections = useMemo(
@@ -217,12 +220,23 @@ export function DuctMeshes({
                 .getState()
                 .select({ kind: "device", id: duct.id });
             }}
+            onDoubleClick={(e) => {
+              e.stopPropagation();
+              useProjectStore
+                .getState()
+                .select({ kind: "device", id: duct.id });
+              onAddWaypoint?.(duct.id, {
+                x: e.point.x,
+                y: e.point.z,
+                elevationM: e.point.y,
+              });
+            }}
           >
             {duct.kind === "flexible" ? (
               <FlexibleDuct
                 points={points}
                 diameterMm={duct.diameterMm ?? 160}
-                color="#b2c3c9"
+                color="#ffffff"
               />
             ) : (
               points

@@ -543,3 +543,136 @@ export const ductLength = (points: RoutePoint[]) =>
         ),
       0,
     );
+
+/** Save an operator bend point, keeping the existing route shape when it was automatic. */
+function nearestRouteSegment(nodes: RoutePoint[], target: RoutePoint) {
+  let segment = 0;
+  let point: RoutePoint = nodes[0];
+  let distance = Number.POSITIVE_INFINITY;
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const a = nodes[i],
+      b = nodes[i + 1];
+    const vx = b.x - a.x,
+      vy = b.y - a.y,
+      vz = b.elevationM - a.elevationM;
+    const lengthSquared = vx * vx + vy * vy + vz * vz;
+    const t =
+      lengthSquared < 1e-12
+        ? 0
+        : Math.max(
+            0,
+            Math.min(
+              1,
+              ((target.x - a.x) * vx +
+                (target.y - a.y) * vy +
+                (target.elevationM - a.elevationM) * vz) /
+                lengthSquared,
+            ),
+          );
+    const candidate = {
+      x: a.x + vx * t,
+      y: a.y + vy * t,
+      elevationM: a.elevationM + vz * t,
+    };
+    const candidateDistance = Math.hypot(
+      target.x - candidate.x,
+      target.y - candidate.y,
+      target.elevationM - candidate.elevationM,
+    );
+    if (candidateDistance < distance) {
+      distance = candidateDistance;
+      segment = i;
+      point = candidate;
+    }
+  }
+  return { segment, point };
+}
+
+function longestRouteSegment(nodes: RoutePoint[]) {
+  let segment = 0;
+  let length = -1;
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const a = nodes[i],
+      b = nodes[i + 1];
+    const candidate = Math.hypot(
+      a.x - b.x,
+      a.y - b.y,
+      a.elevationM - b.elevationM,
+    );
+    if (candidate > length) {
+      length = candidate;
+      segment = i;
+    }
+  }
+  const a = nodes[segment],
+    b = nodes[segment + 1];
+  return {
+    segment,
+    point: {
+      x: (a.x + b.x) / 2,
+      y: (a.y + b.y) / 2,
+      elevationM: (a.elevationM + b.elevationM) / 2,
+    },
+  };
+}
+
+/** Add one bending point; a requested 3D point snaps to the tube centreline. */
+export function addDuctWaypoint(
+  project: Project,
+  ductId: string,
+  requested?: RoutePoint,
+): { project: Project; index: number } {
+  const duct = project.ducts?.find((d) => d.id === ductId);
+  if (!duct) return { project, index: -1 };
+  if (duct.locked) throw new Error("Sblocca il canale prima di modificarlo.");
+  const route = ductRoute(project, duct);
+  if (route.length < 2) return { project, index: -1 };
+  // Il primo punto manuale sostituisce il percorso proposto: un solo punto da
+  // trascinare, non tutte le curve automatiche.
+  const interior = duct.routing === "manual" ? duct.waypoints : [];
+  const nodes: RoutePoint[] = [route[0], ...interior, route.at(-1)!];
+  const { segment, point } = requested
+    ? nearestRouteSegment(nodes, requested)
+    : longestRouteSegment(nodes);
+  const waypoints = [
+    ...interior.slice(0, segment),
+    point,
+    ...interior.slice(segment),
+  ];
+  return {
+    project: {
+      ...project,
+      ducts: project.ducts?.map((d) =>
+        d.id === ductId
+          ? {
+              ...d,
+              routing: "manual",
+              decisionOrigin: "manual",
+              waypoints,
+            }
+          : d,
+      ),
+    },
+    index: segment,
+  };
+}
+
+export function removeDuctWaypoint(
+  project: Project,
+  ductId: string,
+  index: number,
+): Project {
+  return {
+    ...project,
+    ducts: project.ducts?.map((d) =>
+      d.id === ductId && index >= 0 && index < d.waypoints.length && !d.locked
+        ? {
+            ...d,
+            routing: "manual",
+            decisionOrigin: "manual",
+            waypoints: d.waypoints.filter((_, i) => i !== index),
+          }
+        : d,
+    ),
+  };
+}

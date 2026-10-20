@@ -60,8 +60,8 @@ export function FlexibleDuct({
     <mesh geometry={shape.geometry}>
       <meshStandardMaterial
         color={color}
-        metalness={0.65}
-        roughness={0.42}
+        metalness={0.2}
+        roughness={0.55}
         bumpMap={shape.texture}
         bumpScale={0.012}
         side={THREE.DoubleSide}
