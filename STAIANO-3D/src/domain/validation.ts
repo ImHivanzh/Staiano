@@ -21,6 +21,7 @@ import {
   needsTerminalReconfiguration,
 } from "./air-terminals/legacy";
 import { validateSplitSystem } from "./air-conditioning/validate";
+import { validateVrvSystem } from "./air-conditioning/vrv-validate";
 import {
   projectDeviceEnvelopes,
   deviceEnvelopeInsideRoom,
@@ -459,6 +460,8 @@ export function validateProject(p: Project): Check[] {
     });
   for (const system of p.hvacSystems.filter((s) => s.type === "split"))
     checks.push(...validateSplitSystem(p, system));
+  for (const system of p.hvacSystems.filter((s) => s.type === "vrv"))
+    checks.push(...validateVrvSystem(p, system));
   for (const system of p.hvacSystems.filter((s) => s.type === "ducted")) {
     for (const balance of systemLinearBalances(p, system.id))
       checks.push({

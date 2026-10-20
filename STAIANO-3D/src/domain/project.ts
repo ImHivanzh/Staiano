@@ -255,7 +255,7 @@ export function recomputeProject(project: Project): Project {
       ...s,
       indoorUnits: reassociate(s.indoorUnits),
       roomIds:
-        s.type === "split" && s.indoorUnits.length
+        (s.type === "split" || s.type === "vrv") && s.indoorUnits.length
           ? [...new Set(reassociate(s.indoorUnits).map((u) => u.roomId))]
           : p.rooms
               .filter(
@@ -332,9 +332,13 @@ export function recomputeProject(project: Project): Project {
     )
       ? "ducted"
       : p.hvacSystems.some(
-            (s) => s.type === "split" && s.roomIds.includes(room.id),
+            (s) => s.type === "vrv" && s.roomIds.includes(room.id),
           )
-        ? "split"
+        ? "vrv"
+        : p.hvacSystems.some(
+              (s) => s.type === "split" && s.roomIds.includes(room.id),
+            )
+          ? "split"
         : p.radiators.some((r) => r.roomId === room.id)
           ? "radiator"
           : p.fanCoils?.some((u) => u.roomId === room.id)

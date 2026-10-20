@@ -23,6 +23,10 @@ import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
 } from "@/domain/catalogs/splits";
+import {
+  vrvIndoorAtVersion,
+  vrvOutdoorAtVersion,
+} from "@/domain/catalogs/vrv";
 
 export const TECHNICAL_NOTE =
   "Dimensionamento convenzionale preliminare: Q = volume netto x 35 W/m³. Non sostituisce un calcolo delle dispersioni dell'edificio o un progetto esecutivo. Il fabbisogno indicato deriva dal criterio convenzionale Volume × 35 W/m³ e deve essere verificato da un tecnico qualificato prima dell’esecuzione dell’impianto. Il coefficiente fisso non considera clima, involucro, ricambi d'aria, apporti solari e condizioni di esercizio. Potenze e portate provengono dai cataloghi indicati; verificare condizioni nominali, installazione e disponibilità commerciale prima dell'ordine. I prezzi di listino Ecoclima, quando riportati, sono separati dal dimensionamento tecnico.";
@@ -188,8 +192,14 @@ export function buildDossier(project: Project) {
       s.type === "split"
         ? splitCombinationAtVersion(s.productId, s.catalogVersion)
         : null;
+    const vrvOutdoor =
+      s.type === "vrv"
+        ? vrvOutdoorAtVersion(s.productId, s.catalogVersion)
+        : null;
     addSource(
-      product?.sourceMetadata ?? combination?.sourceMetadata,
+      product?.sourceMetadata ??
+        vrvOutdoor?.sourceMetadata ??
+        combination?.sourceMetadata,
       `${codes.get(s.id)}: catalogo HVAC ${s.catalogVersion} non disponibile`,
     );
     const inletSource =
@@ -203,23 +213,26 @@ export function buildDossier(project: Project) {
     material(
       `hvac:${s.productId}`,
       {
-        description: `${s.manufacturer} ${s.genericMachine?.model ?? (combination ? combination.outdoorModel : (product?.indoorModel ?? s.productId))}`,
+        description: `${s.manufacturer} ${s.genericMachine?.model ?? (vrvOutdoor ? vrvOutdoor.model : combination ? combination.outdoorModel : (product?.indoorModel ?? s.productId))}`,
         unit: "sistemi",
-        details: `Unità esterna: ${product?.outdoorModel ?? combination?.outdoorModel ?? "non dichiarata"}; ${s.type === "ducted" ? "canalizzato" : (combination?.mode ?? "split")}; ${s.capacityW === null ? "potenza non dichiarata" : `${s.capacityW} W`}${s.airflowM3h !== null ? `; ${s.airflowM3h} m³/h massimi` : ""}${s.genericMachine ? "; dati inseriti dall’operatore" : ""}`,
+        details: `Unità esterna: ${product?.outdoorModel ?? vrvOutdoor?.model ?? combination?.outdoorModel ?? "non dichiarata"}; ${s.type === "ducted" ? "canalizzato" : s.type === "vrv" ? "VRV/VRF" : (combination?.mode ?? "split")}; ${s.capacityW === null ? "potenza non dichiarata" : `${s.capacityW} W`}${s.airflowM3h !== null ? `; ${s.airflowM3h} m³/h massimi` : ""}${s.genericMachine ? "; dati inseriti dall’operatore" : ""}`,
       },
       codes.get(s.id)!,
     );
     for (const d of s.indoorUnits) {
       const indoor = hvacProductAtVersion(d.productId, d.catalogVersion);
       const splitIndoor = splitIndoorAtVersion(d.productId, d.catalogVersion);
+      const vrvIndoor = vrvIndoorAtVersion(d.productId, d.catalogVersion);
       addSource(
-        indoor?.sourceMetadata ?? splitIndoor?.sourceMetadata,
+        indoor?.sourceMetadata ??
+          vrvIndoor?.sourceMetadata ??
+          splitIndoor?.sourceMetadata,
         `${codes.get(d.id)}: fonte unità interna non disponibile`,
       );
       material(
         `indoor:${d.productId}`,
         {
-          description: `${s.manufacturer} ${indoor?.indoorModel ?? splitIndoor?.model ?? d.productId} - unità interna`,
+          description: `${s.manufacturer} ${indoor?.indoorModel ?? vrvIndoor?.model ?? splitIndoor?.model ?? d.productId} - unità interna`,
           unit: "pezzi",
           dimensions: `${d.widthMm} x ${d.heightMm} x ${d.depthMm} mm`,
           details: `Inclusa nel sistema ${codes.get(s.id)}`,

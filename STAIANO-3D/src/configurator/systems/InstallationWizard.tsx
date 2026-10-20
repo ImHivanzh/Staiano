@@ -62,7 +62,13 @@ export function InstallationWizard({
         <div className="formula" key={machine.id}>
           <strong>
             {machine.name ||
-              `${machine.manufacturer} · ${machine.type === "ducted" ? "Canalizzato" : "Split"}`}
+              `${machine.manufacturer} · ${
+                machine.type === "ducted"
+                  ? "Canalizzato"
+                  : machine.type === "vrv"
+                    ? "VRV/VRF"
+                    : "Split"
+              }`}
           </strong>
           <p className="nota">
             {project.rooms

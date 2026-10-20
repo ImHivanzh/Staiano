@@ -1072,7 +1072,7 @@ export function Editor2D({
             return (
               <g
                 key={d.id}
-                data-testid="split-2d"
+                data-testid={system.type === "vrv" ? "vrv-2d" : "split-2d"}
                 data-device-id={d.id}
                 role={configuration ? "button" : undefined}
                 aria-label={
@@ -1445,7 +1445,9 @@ export function Editor2D({
                     ? `Ventilconvettore da configurare ${index + 1}`
                     : item.kind === "split"
                       ? `Split da configurare ${index + 1}`
-                      : item.kind === "heatPump"
+                      : item.kind === "vrv"
+                        ? `VRV/VRF da configurare ${index + 1}`
+                        : item.kind === "heatPump"
                         ? `Pompa di calore da configurare ${index + 1}`
                         : item.kind === "machine"
                           ? `Macchina da configurare ${index + 1}`
@@ -1509,7 +1511,9 @@ export function Editor2D({
                     ? "Ventilconvettore"
                     : item.kind === "split"
                       ? "Split"
-                      : item.kind === "heatPump"
+                      : item.kind === "vrv"
+                        ? "VRV/VRF"
+                        : item.kind === "heatPump"
                         ? "Pompa di calore"
                         : item.kind === "machine"
                           ? "Macchina"

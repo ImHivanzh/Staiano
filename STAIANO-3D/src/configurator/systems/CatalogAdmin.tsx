@@ -8,6 +8,8 @@ import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { splitCatalog } from "@/domain/catalogs/splits";
 import { splitSeriesPresentations } from "@/domain/catalogs/split-presentation";
 import { fanCoilCatalog } from "@/domain/catalogs/fan-coils";
+import { heatPumpCatalog } from "@/domain/catalogs/heat-pumps";
+import { vrvCatalog } from "@/domain/catalogs/vrv";
 import { CommercialCatalog } from "./CommercialCatalog";
 import { StoveCatalog } from "./StoveCatalog";
 export function CatalogAdmin() {
@@ -176,6 +178,183 @@ export function CatalogAdmin() {
           diverse: una serie di design non garantisce prestazioni superiori in
           ogni voce.
         </p>
+      </section>
+      <section className="catalogo-scheda">
+        <h3>Pompe di calore · {heatPumpCatalog.version}</h3>
+        <p className="nota">
+          {heatPumpCatalog.products.length} modelli idronici e monoblocco ·{" "}
+          {[...new Set(heatPumpCatalog.products.map((p) => p.manufacturer))]
+            .join(", ")}
+          . Capacità e COP/EER alle condizioni dichiarate dal produttore.
+        </p>
+        {[
+          ...new Set(
+            heatPumpCatalog.products.map(
+              (product) => `${product.manufacturer}|${product.family}`,
+            ),
+          ),
+        ].map((key) => {
+          const products = heatPumpCatalog.products.filter(
+              (product) => `${product.manufacturer}|${product.family}` === key,
+            ),
+            representative = products[0];
+          return (
+            <article className="catalogo-serie" key={key}>
+              <Image
+                src={representative.productPhoto.localPath}
+                alt={representative.productPhoto.caption}
+                width={300}
+                height={150}
+                unoptimized
+                style={{ objectFit: "contain", background: "white" }}
+              />
+              <h4>
+                {representative.manufacturer} · {representative.family}
+              </h4>
+              <p>{representative.features.join(" · ")}</p>
+              <details>
+                <summary>
+                  {products.length} modelli · capacità, COP/EER e ingombro
+                </summary>
+                <table className="tabella">
+                  <thead>
+                    <tr>
+                      <th>Modello</th>
+                      <th>Condizione</th>
+                      <th>Freddo / caldo</th>
+                      <th>COP / EER</th>
+                      <th>Ingombro L × H × P</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {products.flatMap((product) =>
+                      product.operatingPoints.map((point) => (
+                        <tr key={`${product.id}-${point.label}`}>
+                          <td>{product.model}</td>
+                          <td>{point.label}</td>
+                          <td>
+                            {point.coolingW} / {point.heatingW} W
+                          </td>
+                          <td>
+                            {point.cop ?? "n.d."} / {point.eer ?? "n.d."}
+                          </td>
+                          <td>
+                            {product.widthMm} × {product.heightMm} ×{" "}
+                            {product.depthMm} mm
+                          </td>
+                        </tr>
+                      )),
+                    )}
+                  </tbody>
+                </table>
+                <p className="nota">
+                  <a
+                    href={representative.sourceMetadata.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Fonte ufficiale · pagina{" "}
+                    {representative.sourceMetadata.page}
+                  </a>
+                </p>
+              </details>
+            </article>
+          );
+        })}
+      </section>
+      <section className="catalogo-scheda">
+        <h3>VRV/VRF Daikin · {vrvCatalog.version}</h3>
+        <p className="nota">
+          {vrvCatalog.outdoorUnits.length} unità esterne VRV IV S, mini VRV e
+          VRV 5 S · {vrvCatalog.indoorUnits.length} unità interne a parete
+          FXAA-A. Rapporto di connessione ammesso 50–130%.
+        </p>
+        <article className="catalogo-serie">
+          <Image
+            src={vrvCatalog.outdoorUnits[0].productPhoto.localPath}
+            alt={vrvCatalog.outdoorUnits[0].productPhoto.caption}
+            width={300}
+            height={150}
+            unoptimized
+            style={{ objectFit: "contain", background: "white" }}
+          />
+          <h4>Unità esterne</h4>
+          <table className="tabella">
+            <thead>
+              <tr>
+                <th>Modello</th>
+                <th>Serie</th>
+                <th>Freddo / caldo</th>
+                <th>Rapporto</th>
+                <th>Ingombro L × H × P</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vrvCatalog.outdoorUnits.map((outdoor) => (
+                <tr key={outdoor.id}>
+                  <td>
+                    <a
+                      href={outdoor.sourceMetadata.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {outdoor.model}
+                    </a>
+                  </td>
+                  <td>{outdoor.family}</td>
+                  <td>
+                    {outdoor.coolingW} / {outdoor.heatingW} W
+                  </td>
+                  <td>
+                    {outdoor.minConnectionRatio}–{outdoor.maxConnectionRatio}%
+                  </td>
+                  <td>
+                    {outdoor.widthMm} × {outdoor.heightMm} × {outdoor.depthMm}{" "}
+                    mm
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </article>
+        <article className="catalogo-serie">
+          <Image
+            src={vrvCatalog.indoorUnits[0].productPhoto.localPath}
+            alt={vrvCatalog.indoorUnits[0].productPhoto.caption}
+            width={300}
+            height={150}
+            unoptimized
+            style={{ objectFit: "contain", background: "white" }}
+          />
+          <h4>Unità interne a parete FXAA-A</h4>
+          <table className="tabella">
+            <thead>
+              <tr>
+                <th>Modello</th>
+                <th>Freddo / caldo nominale</th>
+                <th>Ingombro L × H × P</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vrvCatalog.indoorUnits.map((indoor) => (
+                <tr key={indoor.id}>
+                  <td>{indoor.model}</td>
+                  <td>
+                    {indoor.nominalCoolingW} / {indoor.nominalHeatingW} W
+                  </td>
+                  <td>
+                    {indoor.widthMm} × {indoor.heightMm} × {indoor.depthMm} mm
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="nota">
+            Cassette e unità canalizzate VRV non sono ancora selezionabili nel
+            configuratore: il catalogo riporta solo le unità a parete FXAA-A
+            compatibili con la posa a parete.
+          </p>
+        </article>
       </section>
       <section className="catalogo-scheda">
         <h3>Ventilconvettori · Innova, Olimpia Splendid, Aermec</h3>

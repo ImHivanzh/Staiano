@@ -27,7 +27,9 @@ export function connectionSelection(
   const waterTerminal = [
     ...project.radiators,
     ...(project.fanCoils ?? []),
-    ...(project.equipmentDrafts ?? []).filter((item) => item.type !== "split"),
+    ...(project.equipmentDrafts ?? []).filter(
+      (item) => item.type !== "split" && item.type !== "vrv",
+    ),
     ...(project.ductedDrafts ?? []).filter((item) => item.kind === "machine"),
     ...project.hvacSystems
       .filter((s) => s.type === "ducted")

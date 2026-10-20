@@ -1,0 +1,929 @@
+{
+  "version": "vrv-e18b651c518843e2",
+  "outdoorUnits": [
+    {
+      "id": "daikin-rxyscq4tv1",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S Compact",
+      "model": "RXYSCQ4TV1",
+      "coolingW": 12100,
+      "heatingW": 12100,
+      "maxHeatingW": 14200,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 823,
+      "heightMm": 940,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 107. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Mini VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 107
+      }
+    },
+    {
+      "id": "daikin-rxyscq5tv1",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S Compact",
+      "model": "RXYSCQ5TV1",
+      "coolingW": 14000,
+      "heatingW": 14000,
+      "maxHeatingW": 16000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 823,
+      "heightMm": 940,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 107. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Mini VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 107
+      }
+    },
+    {
+      "id": "daikin-rxyscq6tv1",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S Compact",
+      "model": "RXYSCQ6TV1",
+      "coolingW": 15500,
+      "heatingW": 15500,
+      "maxHeatingW": 18000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 823,
+      "heightMm": 940,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 107. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Mini VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 107
+      }
+    },
+    {
+      "id": "daikin-rxysq4tv9",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ4TV9",
+      "coolingW": 12100,
+      "heatingW": 12100,
+      "maxHeatingW": 14200,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1345,
+      "heightMm": 900,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq5tv9",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ5TV9",
+      "coolingW": 14000,
+      "heatingW": 14000,
+      "maxHeatingW": 16000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1345,
+      "heightMm": 900,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq6tv9",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ6TV9",
+      "coolingW": 15500,
+      "heatingW": 15500,
+      "maxHeatingW": 18000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1345,
+      "heightMm": 900,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq4ty9",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ4TY9",
+      "coolingW": 12100,
+      "heatingW": 12100,
+      "maxHeatingW": 14200,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1345,
+      "heightMm": 900,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq5ty9",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ5TY9",
+      "coolingW": 14000,
+      "heatingW": 14000,
+      "maxHeatingW": 16000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1345,
+      "heightMm": 900,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq6ty9",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ6TY9",
+      "coolingW": 15500,
+      "heatingW": 15500,
+      "maxHeatingW": 18000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1345,
+      "heightMm": 900,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq8ty1",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ8TY1",
+      "coolingW": 22400,
+      "heatingW": 22400,
+      "maxHeatingW": 25000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1430,
+      "heightMm": 940,
+      "depthMm": 320,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq10ty1",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ10TY1",
+      "coolingW": 28000,
+      "heatingW": 28000,
+      "maxHeatingW": 31500,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1615,
+      "heightMm": 940,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysq12ty1",
+      "manufacturer": "Daikin",
+      "family": "VRV IV S",
+      "model": "RXYSQ12TY1",
+      "coolingW": 33500,
+      "heatingW": 33500,
+      "maxHeatingW": 37500,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 1615,
+      "heightMm": 940,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 108. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-410A",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-iv-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=108",
+        "sha256": "e6cd435bf99b7f32ecc29850d124c3e636624b8b0e4f49bf92e199ee58deb28d",
+        "caption": "Foto di unità esterna VRV IV S dal Catalogo Residenziale 2025, pag. 108; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 108
+      }
+    },
+    {
+      "id": "daikin-rxysa4av1",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 S",
+      "model": "RXYSA4AV1",
+      "coolingW": 12100,
+      "heatingW": 12100,
+      "maxHeatingW": 14200,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 869,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 111. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-5-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=111",
+        "sha256": "da8e233da45f1a6a3487f706b4513cdb3f47aa633f44c7ffd8aea868bf975f60",
+        "caption": "Foto di unità esterna VRV 5 S dal Catalogo Residenziale 2025, pag. 111; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 111
+      }
+    },
+    {
+      "id": "daikin-rxysa5av1",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 S",
+      "model": "RXYSA5AV1",
+      "coolingW": 14000,
+      "heatingW": 14000,
+      "maxHeatingW": 16000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 869,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 111. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-5-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=111",
+        "sha256": "da8e233da45f1a6a3487f706b4513cdb3f47aa633f44c7ffd8aea868bf975f60",
+        "caption": "Foto di unità esterna VRV 5 S dal Catalogo Residenziale 2025, pag. 111; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 111
+      }
+    },
+    {
+      "id": "daikin-rxysa6av1",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 S",
+      "model": "RXYSA6AV1",
+      "coolingW": 15500,
+      "heatingW": 15500,
+      "maxHeatingW": 18000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 869,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 111. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-32",
+        "Riscaldamento e raffrescamento",
+        "Monofase 230 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-5-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=111",
+        "sha256": "da8e233da45f1a6a3487f706b4513cdb3f47aa633f44c7ffd8aea868bf975f60",
+        "caption": "Foto di unità esterna VRV 5 S dal Catalogo Residenziale 2025, pag. 111; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 111
+      }
+    },
+    {
+      "id": "daikin-rxysa4ay1",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 S",
+      "model": "RXYSA4AY1",
+      "coolingW": 12100,
+      "heatingW": 12100,
+      "maxHeatingW": 14200,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 869,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 111. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-5-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=111",
+        "sha256": "da8e233da45f1a6a3487f706b4513cdb3f47aa633f44c7ffd8aea868bf975f60",
+        "caption": "Foto di unità esterna VRV 5 S dal Catalogo Residenziale 2025, pag. 111; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 111
+      }
+    },
+    {
+      "id": "daikin-rxysa5ay1",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 S",
+      "model": "RXYSA5AY1",
+      "coolingW": 14000,
+      "heatingW": 14000,
+      "maxHeatingW": 16000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 869,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 111. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-5-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=111",
+        "sha256": "da8e233da45f1a6a3487f706b4513cdb3f47aa633f44c7ffd8aea868bf975f60",
+        "caption": "Foto di unità esterna VRV 5 S dal Catalogo Residenziale 2025, pag. 111; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 111
+      }
+    },
+    {
+      "id": "daikin-rxysa6ay1",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 S",
+      "model": "RXYSA6AY1",
+      "coolingW": 15500,
+      "heatingW": 15500,
+      "maxHeatingW": 18000,
+      "minConnectionRatio": 50,
+      "maxConnectionRatio": 130,
+      "widthMm": 869,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 111. Rapporto di connessione ammesso 50–130% (nota del catalogo). Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Pompa di calore VRV/VRF",
+        "R-32",
+        "Riscaldamento e raffrescamento",
+        "Trifase 400 V / 50 Hz",
+        "Unità interne VRV o a parete da abbinare"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-vrv-5-s.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=111",
+        "sha256": "da8e233da45f1a6a3487f706b4513cdb3f47aa633f44c7ffd8aea868bf975f60",
+        "caption": "Foto di unità esterna VRV 5 S dal Catalogo Residenziale 2025, pag. 111; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 111
+      }
+    }
+  ],
+  "indoorUnits": [
+    {
+      "id": "daikin-fxaa15a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA15A",
+      "sizeClass": "15",
+      "nominalCoolingW": 1700,
+      "nominalHeatingW": 1900,
+      "widthMm": 795,
+      "heightMm": 290,
+      "depthMm": 266,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    },
+    {
+      "id": "daikin-fxaa20a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA20A",
+      "sizeClass": "20",
+      "nominalCoolingW": 2200,
+      "nominalHeatingW": 2500,
+      "widthMm": 795,
+      "heightMm": 290,
+      "depthMm": 266,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    },
+    {
+      "id": "daikin-fxaa25a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA25A",
+      "sizeClass": "25",
+      "nominalCoolingW": 2800,
+      "nominalHeatingW": 3200,
+      "widthMm": 795,
+      "heightMm": 290,
+      "depthMm": 266,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    },
+    {
+      "id": "daikin-fxaa32a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA32A",
+      "sizeClass": "32",
+      "nominalCoolingW": 3600,
+      "nominalHeatingW": 4000,
+      "widthMm": 795,
+      "heightMm": 290,
+      "depthMm": 266,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    },
+    {
+      "id": "daikin-fxaa40a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA40A",
+      "sizeClass": "40",
+      "nominalCoolingW": 4500,
+      "nominalHeatingW": 5000,
+      "widthMm": 1050,
+      "heightMm": 290,
+      "depthMm": 269,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    },
+    {
+      "id": "daikin-fxaa50a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA50A",
+      "sizeClass": "50",
+      "nominalCoolingW": 5600,
+      "nominalHeatingW": 6300,
+      "widthMm": 1050,
+      "heightMm": 290,
+      "depthMm": 269,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    },
+    {
+      "id": "daikin-fxaa63a",
+      "manufacturer": "Daikin",
+      "family": "VRV 5 FXAA-A",
+      "model": "FXAA63A",
+      "sizeClass": "63",
+      "nominalCoolingW": 7100,
+      "nominalHeatingW": 8000,
+      "widthMm": 1050,
+      "heightMm": 290,
+      "depthMm": 269,
+      "features": [
+        "Unità interna a parete VRV 5",
+        "R-32",
+        "Mandata a 5 angolazioni",
+        "Filtro estraibile e lavabile"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/vrv/daikin-fxaa-a.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=117",
+        "sha256": "aa10d3dc131cecebfd2f6051097f3645521f14c71ed71cb5991e2223be6e90ed",
+        "caption": "Foto di unità interna a parete FXAA-A dal Catalogo Residenziale 2025, pag. 117."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-03T02:41:21.764272+00:00",
+        "page": 117
+      }
+    }
+  ]
+}

@@ -145,7 +145,14 @@ export const roomSchema = z.object({
   heightM: finite.positive().max(30),
   volumeM3: finite.nonnegative(),
   designLoadW: finite.nonnegative(),
-  systemType: z.enum(["none", "split", "ducted", "radiator", "fanCoil"]),
+  systemType: z.enum([
+    "none",
+    "split",
+    "vrv",
+    "ducted",
+    "radiator",
+    "fanCoil",
+  ]),
   supplyPoints: z.number().int().min(1).max(100),
   returnPoints: z.number().int().min(1).max(100),
   usage: z.string().max(100).default(""),
@@ -268,7 +275,7 @@ export const projectSchema = z
         z.object({
           id,
           name: z.string().trim().min(1).max(100),
-          type: z.enum(["radiator", "ducted", "split", "fanCoil"]),
+          type: z.enum(["radiator", "ducted", "split", "vrv", "fanCoil"]),
           radiatorDeltaTK: finite.min(1).max(100).optional(),
           roomAirPoints: z
             .record(
@@ -302,7 +309,7 @@ export const projectSchema = z
       .array(
         z.object({
           id,
-          type: z.enum(["split", "ducted"]),
+          type: z.enum(["split", "vrv", "ducted"]),
           installationId: id.optional(),
           name: z.string().trim().max(100).optional(),
           plenumSettings: z
@@ -333,7 +340,7 @@ export const projectSchema = z
           roomId: id,
           floorId: id,
           position: pointSchema,
-          type: z.enum(["radiator", "fanCoil", "split"]),
+          type: z.enum(["radiator", "fanCoil", "split", "vrv"]),
         }),
       )
       .max(2000)
@@ -597,6 +604,7 @@ export const projectSchema = z
       ["fanCoil", p.fanCoils ?? []],
       ["ducted", p.hvacSystems.filter((s) => s.type === "ducted")],
       ["split", p.hvacSystems.filter((s) => s.type === "split")],
+      ["vrv", p.hvacSystems.filter((s) => s.type === "vrv")],
     ] as const) {
       for (const device of devices) {
         if (!device.installationId) continue;
@@ -645,8 +653,17 @@ export const projectSchema = z
         ctx.addIssue({ code: "custom", message: "Apparecchio senza muro" });
     }
     for (const s of p.hvacSystems) {
-      if (s.type === "split" && !s.roomIds.length)
-        ctx.addIssue({ code: "custom", message: "Sistema split senza stanza" });
+      if (
+        (s.type === "split" || s.type === "vrv") &&
+        !s.roomIds.length
+      )
+        ctx.addIssue({
+          code: "custom",
+          message:
+            s.type === "vrv"
+              ? "Sistema VRV senza stanza"
+              : "Sistema split senza stanza",
+        });
       if (
         (s.genericMachine || s.dataOrigin === "manual") &&
         s.type !== "ducted"

@@ -1,5 +1,5 @@
 {
-  "version": "heat-pumps-7c78dec889812c6f",
+  "version": "heat-pumps-9e3730348d934831",
   "products": [
     {
       "id": "chaffoteaux-arianext-plus-35-m-r32",
@@ -1520,6 +1520,1308 @@
           "coolingW": 14010,
           "cop": 2.51,
           "eer": 3.03,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erga04ev",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERGA04EV",
+      "widthMm": 740,
+      "heightMm": 884,
+      "depthMm": 387,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 137. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 137
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 6410,
+          "coolingW": 5980,
+          "cop": 4.93,
+          "eer": 5.64,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 5380,
+          "coolingW": 4620,
+          "cop": 2.82,
+          "eer": 3.73,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erga06evh",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERGA06EVH",
+      "widthMm": 740,
+      "heightMm": 884,
+      "depthMm": 387,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 137. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 137
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 7740,
+          "coolingW": 7450,
+          "cop": 4.75,
+          "eer": 4.84,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 6250,
+          "coolingW": 5570,
+          "cop": 2.78,
+          "eer": 3.48,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erga08evh7",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERGA08EVH7",
+      "widthMm": 740,
+      "heightMm": 884,
+      "depthMm": 387,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 137. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 137
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9370,
+          "coolingW": 8570,
+          "cop": 4.5,
+          "eer": 4.58,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7280,
+          "coolingW": 6340,
+          "cop": 2.67,
+          "eer": 3.32,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erla11dv3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERLA11DV3",
+      "widthMm": 870,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 160. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 160
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 12440,
+          "coolingW": 17440,
+          "cop": 4.83,
+          "eer": 3.68,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9020,
+          "coolingW": 13150,
+          "cop": 2.98,
+          "eer": 2.67,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erla11dw1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERLA11DW1",
+      "widthMm": 870,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 160. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 160
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 12440,
+          "coolingW": 17440,
+          "cop": 4.83,
+          "eer": 3.68,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9020,
+          "coolingW": 13150,
+          "cop": 2.98,
+          "eer": 2.67,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erla14dv3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERLA14DV3",
+      "widthMm": 870,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 160. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 160
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 13380,
+          "coolingW": 17950,
+          "cop": 4.72,
+          "eer": 3.91,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9290,
+          "coolingW": 13530,
+          "cop": 2.92,
+          "eer": 2.84,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erla14dw1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERLA14DW1",
+      "widthMm": 870,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 160. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 160
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 13380,
+          "coolingW": 17950,
+          "cop": 4.72,
+          "eer": 3.91,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 9290,
+          "coolingW": 13530,
+          "cop": 2.92,
+          "eer": 2.84,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erla16dv37",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERLA16DV37",
+      "widthMm": 870,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 160. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 160
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 15960,
+          "coolingW": 17950,
+          "cop": 4.62,
+          "eer": 3.91,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10840,
+          "coolingW": 13530,
+          "cop": 2.67,
+          "eer": 2.84,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-erla16dw17",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R",
+      "model": "ERLA16DW17",
+      "widthMm": 870,
+      "heightMm": 1100,
+      "depthMm": 460,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 160. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 160
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 15960,
+          "coolingW": 17950,
+          "cop": 4.62,
+          "eer": 3.91,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10840,
+          "coolingW": 13530,
+          "cop": 2.67,
+          "eer": 2.84,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-mt-erra08ev3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R MT",
+      "model": "ERRA08EV3",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 166. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica ELSX/ELVX/ELBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r-mt.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 166
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 7950,
+          "coolingW": 10890,
+          "cop": 4.7,
+          "eer": 4.35,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7490,
+          "coolingW": 7330,
+          "cop": 3.04,
+          "eer": 3.09,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-mt-erra08ew1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R MT",
+      "model": "ERRA08EW1",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 166. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica ELSX/ELVX/ELBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r-mt.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 166
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 7950,
+          "coolingW": 10890,
+          "cop": 4.89,
+          "eer": 4.52,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 7490,
+          "coolingW": 7330,
+          "cop": 3.14,
+          "eer": 3.2,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-mt-erra10ev3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R MT",
+      "model": "ERRA10EV3",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 166. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica ELSX/ELVX/ELBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r-mt.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 166
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9250,
+          "coolingW": 11770,
+          "cop": 4.52,
+          "eer": 4.11,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 8840,
+          "coolingW": 7970,
+          "cop": 2.94,
+          "eer": 3.0,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-mt-erra10ew1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R MT",
+      "model": "ERRA10EW1",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 166. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica ELSX/ELVX/ELBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r-mt.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 166
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9250,
+          "coolingW": 11770,
+          "cop": 4.69,
+          "eer": 4.26,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 8840,
+          "coolingW": 7970,
+          "cop": 3.06,
+          "eer": 3.1,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-mt-erra12ev3",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R MT",
+      "model": "ERRA12EV3",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 166. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica ELSX/ELVX/ELBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r-mt.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 166
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9970,
+          "coolingW": 12660,
+          "cop": 4.37,
+          "eer": 3.87,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10280,
+          "coolingW": 8620,
+          "cop": 2.91,
+          "eer": 2.91,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-r-mt-erra12ew1",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 R MT",
+      "model": "ERRA12EW1",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 166. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Splittata a gas R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 65 °C",
+        "Funzionamento fino a −25 °C",
+        "Unità interna idronica ELSX/ELVX/ELBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3r-mt.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=161",
+        "sha256": "891213f2785d12f4160ca3ef71ec30b4767082480c3dcdc3fb5a8f22c087534d",
+        "caption": "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 166
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9970,
+          "coolingW": 12660,
+          "cop": 4.51,
+          "eer": 4.02,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10280,
+          "coolingW": 8620,
+          "cop": 3.01,
+          "eer": 3.0,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-h-ht-epra14dv37",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 H HT",
+      "model": "EPRA14DV37",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 174. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Idrosplit R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 70 °C",
+        "Funzionamento fino a −28 °C",
+        "Unità interna idronica ETSX/ETVX/ETBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3h-ht.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=173",
+        "sha256": "7addfa33a51ccd985e77648d7984ba9dd8e8c6833ef31b9fd2675391feb03663",
+        "caption": "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 174
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 10180,
+          "coolingW": 10550,
+          "cop": 4.87,
+          "eer": 4.13,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10470,
+          "coolingW": 6900,
+          "cop": 2.22,
+          "eer": 2.69,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-h-ht-epra14dw17",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 H HT",
+      "model": "EPRA14DW17",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 174. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Idrosplit R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 70 °C",
+        "Funzionamento fino a −28 °C",
+        "Unità interna idronica ETSX/ETVX/ETBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3h-ht.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=173",
+        "sha256": "7addfa33a51ccd985e77648d7984ba9dd8e8c6833ef31b9fd2675391feb03663",
+        "caption": "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 174
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 9750,
+          "coolingW": 10550,
+          "cop": 4.49,
+          "eer": 4.13,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 10990,
+          "coolingW": 6900,
+          "cop": 2.29,
+          "eer": 2.69,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-h-ht-epra16dv37",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 H HT",
+      "model": "EPRA16DV37",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 174. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Idrosplit R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 70 °C",
+        "Funzionamento fino a −28 °C",
+        "Unità interna idronica ETSX/ETVX/ETBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3h-ht.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=173",
+        "sha256": "7addfa33a51ccd985e77648d7984ba9dd8e8c6833ef31b9fd2675391feb03663",
+        "caption": "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 174
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 10910,
+          "coolingW": 11510,
+          "cop": 4.87,
+          "eer": 4.11,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 11910,
+          "coolingW": 7880,
+          "cop": 2.22,
+          "eer": 2.69,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-h-ht-epra16dw17",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 H HT",
+      "model": "EPRA16DW17",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 174. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Idrosplit R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 70 °C",
+        "Funzionamento fino a −28 °C",
+        "Unità interna idronica ETSX/ETVX/ETBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3h-ht.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=173",
+        "sha256": "7addfa33a51ccd985e77648d7984ba9dd8e8c6833ef31b9fd2675391feb03663",
+        "caption": "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 174
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 10440,
+          "coolingW": 11510,
+          "cop": 4.5,
+          "eer": 4.11,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 12500,
+          "coolingW": 7880,
+          "cop": 2.29,
+          "eer": 2.69,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-h-ht-epra18dv37",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 H HT",
+      "model": "EPRA18DV37",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 174. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Idrosplit R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 70 °C",
+        "Funzionamento fino a −28 °C",
+        "Unità interna idronica ETSX/ETVX/ETBX da abbinare",
+        "Monofase 230 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3h-ht.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=173",
+        "sha256": "7addfa33a51ccd985e77648d7984ba9dd8e8c6833ef31b9fd2675391feb03663",
+        "caption": "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 174
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 12120,
+          "coolingW": 12700,
+          "cop": 4.87,
+          "eer": 4.08,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 12470,
+          "coolingW": 8860,
+          "cop": 2.22,
+          "eer": 2.69,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 7,
+          "heatingOutdoorC": -7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna −7 °C BS · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+        }
+      ]
+    },
+    {
+      "id": "daikin-altherma-3-h-ht-epra18dw17",
+      "manufacturer": "Daikin",
+      "family": "Altherma 3 H HT",
+      "model": "EPRA18DW17",
+      "widthMm": 1003,
+      "heightMm": 1270,
+      "depthMm": 533,
+      "dimensionNote": "Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. 174. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+      "features": [
+        "Idrosplit R32",
+        "Riscaldamento e raffrescamento",
+        "Mandata fino a 70 °C",
+        "Funzionamento fino a −28 °C",
+        "Unità interna idronica ETSX/ETVX/ETBX da abbinare",
+        "Trifase 400 V / 50 Hz"
+      ],
+      "productPhoto": {
+        "localPath": "/catalog-assets/heat-pumps/daikin-altherma-3h-ht.jpg",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf#page=173",
+        "sha256": "7addfa33a51ccd985e77648d7984ba9dd8e8c6833ef31b9fd2675391feb03663",
+        "caption": "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna."
+      },
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-18T17:37:09.236578+00:00",
+        "importedAt": "2026-10-18T17:37:09.236578+00:00",
+        "page": 174
+      },
+      "operatingPoints": [
+        {
+          "label": "Caldo A7/W35 · freddo A35/W18",
+          "heatingW": 11600,
+          "coolingW": 12700,
+          "cop": 4.5,
+          "eer": 4.08,
+          "heatingWaterSupplyC": 35,
+          "coolingWaterSupplyC": 18,
+          "heatingOutdoorC": 7,
+          "coolingOutdoorC": 35,
+          "heatingConditions": "EN 14511 · aria esterna 7/6 °C BS/BU · acqua mandata/ritorno 35/30 °C",
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 18/23 °C"
+        },
+        {
+          "label": "Caldo A−7/W35 · freddo A35/W7",
+          "heatingW": 13080,
+          "coolingW": 8860,
+          "cop": 2.29,
+          "eer": 2.69,
           "heatingWaterSupplyC": 35,
           "coolingWaterSupplyC": 7,
           "heatingOutdoorC": -7,

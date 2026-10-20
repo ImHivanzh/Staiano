@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-18T16:24:03.988Z",
+  "generatedAt": "2026-10-20T06:08:42.828Z",
   "documents": [
     {
       "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
@@ -114,7 +114,7 @@
       "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
       "manufacturer": "Daikin",
       "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
-      "page": 55
+      "page": 117
     },
     {
       "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",

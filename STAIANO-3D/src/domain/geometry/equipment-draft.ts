@@ -5,7 +5,7 @@ export function placeEquipmentDraft(
   project: Project,
   roomId: string,
   position: Point,
-  type: "radiator" | "fanCoil" | "split",
+  type: "radiator" | "fanCoil" | "split" | "vrv",
   draftId?: string,
 ): Project {
   const room = project.rooms.find((item) => item.id === roomId);

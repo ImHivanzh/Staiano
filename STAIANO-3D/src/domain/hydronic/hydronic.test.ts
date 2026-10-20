@@ -64,7 +64,7 @@ describe("impianto idronico documentato", () => {
     expect(clearProjectSystems(moved).heatPumpDrafts).toEqual([]);
   });
   it("has official capacities at explicit conditions and reproducible sources", () => {
-    expect(heatPumpCatalog.products).toHaveLength(40);
+    expect(heatPumpCatalog.products).toHaveLength(61);
     const daikin = heatPumpProductAtVersion(
       "daikin-altherma-3m-ebla09dv3",
       heatPumpCatalog.version,
@@ -79,6 +79,47 @@ describe("impianto idronico documentato", () => {
       1380, 870, 460,
     ]);
     expect(daikin.sourceMetadata.page).toBe(193);
+    const erla = heatPumpProductAtVersion(
+      "daikin-altherma-3-r-erla16dw17",
+      heatPumpCatalog.version,
+    )!;
+    expect(erla.operatingPoints[1]).toMatchObject({
+      heatingW: 10840,
+      coolingW: 13530,
+      cop: 2.67,
+      eer: 2.84,
+      heatingWaterSupplyC: 35,
+      coolingWaterSupplyC: 7,
+    });
+    expect([erla.widthMm, erla.heightMm, erla.depthMm]).toEqual([
+      870, 1100, 460,
+    ]);
+    expect(erla.sourceMetadata.page).toBe(160);
+    const erra = heatPumpProductAtVersion(
+      "daikin-altherma-3-r-mt-erra08ew1",
+      heatPumpCatalog.version,
+    )!;
+    expect(erra.operatingPoints[0]).toMatchObject({
+      heatingW: 7950,
+      coolingW: 10890,
+      cop: 4.89,
+      eer: 4.52,
+    });
+    expect(erra.sourceMetadata.page).toBe(166);
+    const epra = heatPumpProductAtVersion(
+      "daikin-altherma-3-h-ht-epra18dv37",
+      heatPumpCatalog.version,
+    )!;
+    expect(epra.operatingPoints[1]).toMatchObject({
+      heatingW: 12470,
+      coolingW: 8860,
+      cop: 2.22,
+      eer: 2.69,
+    });
+    expect([epra.widthMm, epra.heightMm, epra.depthMm]).toEqual([
+      1003, 1270, 533,
+    ]);
+    expect(epra.sourceMetadata.page).toBe(174);
     const gree = heatPumpProductAtVersion(
       "gree-versati-v-8-monofase",
       heatPumpCatalog.version,

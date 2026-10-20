@@ -1330,7 +1330,21 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
             <div className={styles.caption}>
               <strong>
                 {chosenDevice
-                  ? `${codes.get(chosenDevice.id) ?? ""} · ${selectedOutdoor ? "Pompa di calore" : "family" in chosenDevice ? chosenDevice.family : "Split"}`
+                  ? `${codes.get(chosenDevice.id) ?? ""} · ${
+                      selectedOutdoor
+                        ? "Pompa di calore"
+                        : "family" in chosenDevice
+                          ? chosenDevice.family
+                          : (p?.hvacSystems ?? []).some(
+                                (system) =>
+                                  system.type === "vrv" &&
+                                  system.indoorUnits.some(
+                                    (unit) => unit.id === chosenDevice.id,
+                                  ),
+                              )
+                            ? "VRV/VRF"
+                            : "Split"
+                    }`
                   : `${floorName} · ${rooms.length} ${rooms.length === 1 ? "ambiente" : "ambienti"}`}
               </strong>
               {chosenDevice

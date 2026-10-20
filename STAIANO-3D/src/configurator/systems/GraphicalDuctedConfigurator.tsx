@@ -26,6 +26,7 @@ import { DuctPanel } from "./DuctPanel";
 import { RadiatorPanel } from "./RadiatorPanel";
 import { FanCoilPanel } from "./FanCoilPanel";
 import { SplitPanel } from "./SplitPanel";
+import { VrvPanel } from "./VrvPanel";
 import { HydronicPanel } from "./HydronicPanel";
 import {
   placeHeatPumpDraft,
@@ -209,7 +210,7 @@ export function GraphicalDuctedConfigurator({
   );
   const selectedSplitSystem = project.hvacSystems.find(
     (item) =>
-      item.type === "split" &&
+      (item.type === "split" || item.type === "vrv") &&
       item.indoorUnits.some((unit) => unit.id === selectedId),
   );
   const selectedEquipment =
@@ -274,7 +275,10 @@ export function GraphicalDuctedConfigurator({
   const instruction =
     mode === "heatPump"
       ? "Clicca per inserire la pompa all’esterno. Escape annulla."
-      : mode === "radiator" || mode === "fanCoil" || mode === "split"
+      : mode === "radiator" ||
+          mode === "fanCoil" ||
+          mode === "split" ||
+          mode === "vrv"
         ? "Clicca per inserire l’apparecchio. Escape annulla."
         : mode === "machine"
           ? "Clicca per inserire la macchina. Escape annulla."
@@ -445,7 +449,7 @@ export function GraphicalDuctedConfigurator({
       const fanCoil = project.fanCoils?.find((item) => item.id === deviceId);
       const splitSystem = project.hvacSystems.find(
         (item) =>
-          item.type === "split" &&
+          (item.type === "split" || item.type === "vrv") &&
           item.indoorUnits.some((unit) => unit.id === deviceId),
       );
       const device =
@@ -455,7 +459,13 @@ export function GraphicalDuctedConfigurator({
       if (equipmentDraft || device) {
         const type =
           equipmentDraft?.type ??
-          (radiator ? "radiator" : fanCoil ? "fanCoil" : "split");
+          (radiator
+            ? "radiator"
+            : fanCoil
+              ? "fanCoil"
+              : splitSystem?.type === "vrv"
+                ? "vrv"
+                : "split");
         const roomId = equipmentDraft?.roomId ?? device!.roomId;
         const existingInstallationId =
           radiator?.installationId ??
@@ -572,7 +582,12 @@ export function GraphicalDuctedConfigurator({
       setNotice("Scegli un punto dentro un ambiente di questo impianto.");
       return;
     }
-    if (mode === "radiator" || mode === "fanCoil" || mode === "split") {
+    if (
+      mode === "radiator" ||
+      mode === "fanCoil" ||
+      mode === "split" ||
+      mode === "vrv"
+    ) {
       if (
         targetRoom.geometryStatus !== "closed" ||
         !project.floors.find((item) => item.id === targetRoom.floorId)
@@ -848,6 +863,18 @@ export function GraphicalDuctedConfigurator({
             {mainPlan && (
               <button
                 className={`bottone chiara ${styles.iconButton}`}
+                aria-label="VRV/VRF"
+                title="Inserisci VRV/VRF (N)"
+                aria-keyshortcuts="N"
+                aria-pressed={mode === "vrv"}
+                onClick={() => start("vrv")}
+              >
+                <EquipmentIcon type="vrv" />
+              </button>
+            )}
+            {mainPlan && (
+              <button
+                className={`bottone chiara ${styles.iconButton}`}
                 aria-label="Pompa di calore"
                 title="Inserisci pompa di calore (P)"
                 aria-keyshortcuts="P"
@@ -1082,7 +1109,9 @@ export function GraphicalDuctedConfigurator({
                   ...project.radiators.map((item) => item.id),
                   ...(project.fanCoils ?? []).map((item) => item.id),
                   ...project.hvacSystems
-                    .filter((item) => item.type === "split")
+                    .filter(
+                      (item) => item.type === "split" || item.type === "vrv",
+                    )
                     .flatMap((item) => item.indoorUnits.map((unit) => unit.id)),
                   ...(project.hydronicSystems ?? []).map(
                     (item) => item.outdoorUnit.id,
@@ -1147,6 +1176,7 @@ export function GraphicalDuctedConfigurator({
                         "radiator",
                         "fanCoil",
                         "split",
+                        "vrv",
                         "heatPump",
                       ].includes(mode) && (
                         <g
@@ -1327,7 +1357,9 @@ export function GraphicalDuctedConfigurator({
                 ? RadiatorPanel
                 : equipmentTarget.installation.type === "fanCoil"
                   ? FanCoilPanel
-                  : SplitPanel;
+                  : equipmentTarget.installation.type === "vrv"
+                    ? VrvPanel
+                    : SplitPanel;
             return (
               <Panel
                 project={equipmentProject}

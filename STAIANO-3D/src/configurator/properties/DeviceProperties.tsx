@@ -11,6 +11,7 @@ import {
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { TerminalProperties } from "./TerminalProperties";
 import { SplitProperties } from "./SplitProperties";
+import { VrvProperties } from "./VrvProperties";
 import { ArrowsOutCardinal, Info } from "@phosphor-icons/react";
 import { RadiatorFinishes } from "./RadiatorFinishes";
 import { StructuralProperties } from "./StructuralProperties";
@@ -46,9 +47,13 @@ export function DeviceProperties({
   )
     return <StructuralProperties project={project} id={id} />;
   if (!device)
-    return project.hvacSystems.some((s) =>
-      s.indoorUnits.some((u) => u.id === id),
+    return project.hvacSystems.some(
+      (s) => s.type === "vrv" && s.indoorUnits.some((u) => u.id === id),
     ) ? (
+      <VrvProperties project={project} id={id} />
+    ) : project.hvacSystems.some((s) =>
+        s.indoorUnits.some((u) => u.id === id),
+      ) ? (
       <SplitProperties project={project} id={id} />
     ) : (
       <TerminalProperties project={project} id={id} />

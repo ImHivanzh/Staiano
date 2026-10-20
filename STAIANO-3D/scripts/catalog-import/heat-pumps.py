@@ -115,7 +115,64 @@ for size, page, photo_ref, (width, height, depth), heat35, heatminus7, cold18, c
             operatingPoints=[daikin_point("Caldo A7/W35 · freddo A35/W18", heat35, cold18, cop35, eer18, 7, 18),
                              daikin_point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold7, copminus7, eer7, -7, 7)]))
 
-assert len([p for p in products if p["manufacturer"] == "Daikin"]) == 11
+daikin_catalog_url = DOCS["daikin-residential-2025"][0]
+daikin_3r_photo = photo("daikin-altherma-3r.jpg", f"{daikin_catalog_url}#page=161", "Foto di unità esterna Altherma 3 R dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna.")
+daikin_3r_mt_photo = photo("daikin-altherma-3r-mt.jpg", f"{daikin_catalog_url}#page=161", "Foto di unità esterna Altherma 3 R MT dal Catalogo Residenziale 2025, pag. 161; il 3D rappresenta l'unità esterna.")
+daikin_3h_ht_photo = photo("daikin-altherma-3h-ht.jpg", f"{daikin_catalog_url}#page=173", "Vista tecnica dell'unità esterna Altherma 3 H HT dal Catalogo Residenziale 2025, pag. 173; il 3D rappresenta l'unità esterna.")
+
+# Reviewed outdoor-unit tables: 3 R pag. 137 e 160, 3 R MT pag. 166, 3 H HT pag. 174.
+# Column (1): riscaldamento A7/W35 e raffrescamento A35/W18; colonna (2): A-7/W35 e A35/W7.
+def daikin_outdoor(family, model, phase, page, dims, features, row, photo_ref):
+    heat35, heatminus7, cold18, cold7, cop35, copminus7, eer18, eer7 = row
+    return dict(id=f"daikin-{family.lower().replace(' ', '-')}-{model.lower()}", manufacturer="Daikin", family=family, model=model,
+        widthMm=dims[0], heightMm=dims[1], depthMm=dims[2],
+        dimensionNote=f"Ingombro unità esterna L×H×P da Catalogo Residenziale 2025 pag. {page}. Unità interna idronica prevista dal sistema, da progettare separatamente. Distanze di servizio da verificare nel manuale.",
+        features=features + [phase], productPhoto=photo_ref, sourceMetadata=source("daikin-residential-2025", "Daikin", page),
+        operatingPoints=[daikin_point("Caldo A7/W35 · freddo A35/W18", heat35, cold18, cop35, eer18, 7, 18),
+                         daikin_point("Caldo A−7/W35 · freddo A35/W7", heatminus7, cold7, copminus7, eer7, -7, 7)])
+
+for model, phase, row in [
+    ("ERGA04EV", "Monofase 230 V / 50 Hz", (6.41, 5.38, 5.98, 4.62, 4.93, 2.82, 5.64, 3.73)),
+    ("ERGA06EVH", "Monofase 230 V / 50 Hz", (7.74, 6.25, 7.45, 5.57, 4.75, 2.78, 4.84, 3.48)),
+    ("ERGA08EVH7", "Monofase 230 V / 50 Hz", (9.37, 7.28, 8.57, 6.34, 4.50, 2.67, 4.58, 3.32)),
+]:
+    products.append(daikin_outdoor("Altherma 3 R", model, phase, 137, (740, 884, 387),
+        ["Splittata a gas R32", "Riscaldamento e raffrescamento", "Mandata fino a 65 °C", "Funzionamento fino a −25 °C", "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare"], row, daikin_3r_photo))
+
+for model, phase, row in [
+    ("ERLA11DV3", "Monofase 230 V / 50 Hz", (12.44, 9.02, 17.44, 13.15, 4.83, 2.98, 3.68, 2.67)),
+    ("ERLA11DW1", "Trifase 400 V / 50 Hz", (12.44, 9.02, 17.44, 13.15, 4.83, 2.98, 3.68, 2.67)),
+    ("ERLA14DV3", "Monofase 230 V / 50 Hz", (13.38, 9.29, 17.95, 13.53, 4.72, 2.92, 3.91, 2.84)),
+    ("ERLA14DW1", "Trifase 400 V / 50 Hz", (13.38, 9.29, 17.95, 13.53, 4.72, 2.92, 3.91, 2.84)),
+    ("ERLA16DV37", "Monofase 230 V / 50 Hz", (15.96, 10.84, 17.95, 13.53, 4.62, 2.67, 3.91, 2.84)),
+    ("ERLA16DW17", "Trifase 400 V / 50 Hz", (15.96, 10.84, 17.95, 13.53, 4.62, 2.67, 3.91, 2.84)),
+]:
+    products.append(daikin_outdoor("Altherma 3 R", model, phase, 160, (870, 1100, 460),
+        ["Splittata a gas R32", "Riscaldamento e raffrescamento", "Mandata fino a 65 °C", "Funzionamento fino a −25 °C", "Unità interna idronica EHSX/EBSX/EHVX/EBVX/EBBX da abbinare"], row, daikin_3r_photo))
+
+for model, phase, row in [
+    ("ERRA08EV3", "Monofase 230 V / 50 Hz", (7.95, 7.49, 10.89, 7.33, 4.70, 3.04, 4.35, 3.09)),
+    ("ERRA08EW1", "Trifase 400 V / 50 Hz", (7.95, 7.49, 10.89, 7.33, 4.89, 3.14, 4.52, 3.20)),
+    ("ERRA10EV3", "Monofase 230 V / 50 Hz", (9.25, 8.84, 11.77, 7.97, 4.52, 2.94, 4.11, 3.00)),
+    ("ERRA10EW1", "Trifase 400 V / 50 Hz", (9.25, 8.84, 11.77, 7.97, 4.69, 3.06, 4.26, 3.10)),
+    ("ERRA12EV3", "Monofase 230 V / 50 Hz", (9.97, 10.28, 12.66, 8.62, 4.37, 2.91, 3.87, 2.91)),
+    ("ERRA12EW1", "Trifase 400 V / 50 Hz", (9.97, 10.28, 12.66, 8.62, 4.51, 3.01, 4.02, 3.00)),
+]:
+    products.append(daikin_outdoor("Altherma 3 R MT", model, phase, 166, (1003, 1270, 533),
+        ["Splittata a gas R32", "Riscaldamento e raffrescamento", "Mandata fino a 65 °C", "Funzionamento fino a −25 °C", "Unità interna idronica ELSX/ELVX/ELBX da abbinare"], row, daikin_3r_mt_photo))
+
+for model, phase, row in [
+    ("EPRA14DV37", "Monofase 230 V / 50 Hz", (10.18, 10.47, 10.55, 6.90, 4.87, 2.22, 4.13, 2.69)),
+    ("EPRA14DW17", "Trifase 400 V / 50 Hz", (9.75, 10.99, 10.55, 6.90, 4.49, 2.29, 4.13, 2.69)),
+    ("EPRA16DV37", "Monofase 230 V / 50 Hz", (10.91, 11.91, 11.51, 7.88, 4.87, 2.22, 4.11, 2.69)),
+    ("EPRA16DW17", "Trifase 400 V / 50 Hz", (10.44, 12.50, 11.51, 7.88, 4.50, 2.29, 4.11, 2.69)),
+    ("EPRA18DV37", "Monofase 230 V / 50 Hz", (12.12, 12.47, 12.70, 8.86, 4.87, 2.22, 4.08, 2.69)),
+    ("EPRA18DW17", "Trifase 400 V / 50 Hz", (11.60, 13.08, 12.70, 8.86, 4.50, 2.29, 4.08, 2.69)),
+]:
+    products.append(daikin_outdoor("Altherma 3 H HT", model, phase, 174, (1003, 1270, 533),
+        ["Idrosplit R32", "Riscaldamento e raffrescamento", "Mandata fino a 70 °C", "Funzionamento fino a −28 °C", "Unità interna idronica ETSX/ETVX/ETBX da abbinare"], row, daikin_3h_ht_photo))
+
+assert len([p for p in products if p["manufacturer"] == "Daikin"]) == 32
 
 gree_photo = photo("gree-versati-v.png", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Famiglie/gree/VERSATIV_monoblocco_linea.png", "Foto ufficiale Gree VERSATI V monoblocco, gamma 6–14 kW.")
 gree_16_photo = photo("gree-versati-v-16.jpg", "https://service.argoonline.it/area_riservata/WebDocTec/Images/Product/VersatiV_16kW_LR.jpg", "Foto ufficiale Gree VERSATI V 16 kW, unità esterna a due ventilatori.")

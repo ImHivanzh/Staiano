@@ -4,6 +4,7 @@ import { projectSchema } from "@/schemas/project";
 import { recomputeProject } from "@/domain/project";
 import { refreshDuctedBindings } from "@/domain/ducted/refresh";
 import { refreshSplitBindings } from "@/domain/air-conditioning/refresh";
+import { refreshVrvBindings } from "@/domain/air-conditioning/vrv-refresh";
 import type { SnapOptions } from "@/domain/geometry/primitives";
 import {
   checkLockedObjects,
@@ -20,7 +21,8 @@ export type PlanPlacementTool =
   | "radiator"
   | "fanCoil"
   | "heatPump"
-  | "split";
+  | "split"
+  | "vrv";
 type State = {
   planPlacementTool: PlanPlacementTool;
   project: Project | null;
@@ -108,7 +110,9 @@ export const useProjectStore = create<State>((set, get) => ({
   load(p) {
     set({
       project: projectSchema.parse(
-        refreshSplitBindings(refreshDuctedBindings(recomputeProject(p))),
+        refreshVrvBindings(
+          refreshSplitBindings(refreshDuctedBindings(recomputeProject(p))),
+        ),
       ),
       activeFloorId: p.floors[0].id,
       selection: [],
@@ -134,8 +138,10 @@ export const useProjectStore = create<State>((set, get) => ({
     try {
       const changed = fn(structuredClone(state.project));
       checkLockedObjects(state.project, changed);
-      const next = refreshSplitBindings(
-        refreshDuctedBindings(recordOperatorChanges(state.project, changed)),
+      const next = refreshVrvBindings(
+        refreshSplitBindings(
+          refreshDuctedBindings(recordOperatorChanges(state.project, changed)),
+        ),
       );
       next.updatedAt = new Date().toISOString();
       const valid = projectSchema.parse(next);

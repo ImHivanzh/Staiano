@@ -4,6 +4,7 @@ export const installationLabels: Record<Installation["type"], string> = {
   radiator: "Radiatori",
   ducted: "Canalizzato",
   split: "Split",
+  vrv: "VRV/VRF",
   fanCoil: "Ventilconvettori",
 };
 

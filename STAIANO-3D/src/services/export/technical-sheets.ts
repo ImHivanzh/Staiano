@@ -8,6 +8,10 @@ import {
   splitIndoorAtVersion,
 } from "@/domain/catalogs/splits";
 import {
+  vrvIndoorAtVersion,
+  vrvOutdoorAtVersion,
+} from "@/domain/catalogs/vrv";
+import {
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
 } from "@/domain/catalogs/fan-coils";
@@ -80,6 +84,27 @@ export function installedTechnicalSheets(project: Project) {
           "Disegno attacco macchina",
           product.dischargeConnection.sourceMetadata,
         );
+    } else if (system.type === "vrv") {
+      const outdoor = vrvOutdoorAtVersion(
+        system.productId,
+        system.catalogVersion,
+      );
+      add(
+        system.id,
+        `${system.manufacturer} ${outdoor?.model ?? system.productId}`,
+        outdoor?.sourceMetadata,
+      );
+      for (const unit of system.indoorUnits) {
+        const indoor = vrvIndoorAtVersion(
+          unit.productId,
+          system.catalogVersion,
+        );
+        add(
+          unit.id,
+          `${system.manufacturer} ${indoor?.model ?? unit.productId}`,
+          indoor?.sourceMetadata,
+        );
+      }
     } else {
       const product = splitCombinationAtVersion(
         system.productId,

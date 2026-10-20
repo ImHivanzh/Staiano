@@ -82,7 +82,9 @@ export function comfortFields(
         terminal.use === "return",
       );
   }
-  for (const system of project.hvacSystems.filter((s) => s.type === "split"))
+  for (const system of project.hvacSystems.filter(
+    (s) => s.type === "split" || s.type === "vrv",
+  ))
     for (const unit of system.indoorUnits.filter(visible)) {
       const room = project.rooms.find((r) => r.id === unit.roomId);
       if (room)

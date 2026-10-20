@@ -77,6 +77,25 @@ anche per API, worker, foto, modelli e JavaScript. Hashconfig non va copiato
 tra server. Cambio password: `node scripts/configure-access.mjs --stdin --rotate`.
 Revocare tutte le sessioni: `node scripts/configure-access.mjs --rotate-session-only`.
 
+## Aggiornamento 20 ottobre 2026 — Daikin e VRV/VRF
+
+- Pompe di calore: 61 modelli idronici e monoblocco (Chaffoteaux, Daikin
+  Altherma 3 M / 3 R / 3 R MT / 3 H HT, Gree). Capacità, COP/EER, ingombri,
+  foto e pagine di fonte dal Catalogo Residenziale 2025 con SHA-256 bloccato.
+- VRV/VRF: 18 unità esterne Daikin VRV IV S, mini VRV e VRV 5 S e 7 unità
+  interne a parete FXAA-A. Capacità nominali pubblicate, rapporto di
+  connessione 50–130%, selezione automatica per ambiente, posa a parete,
+  proprietà, 3D, dossier PDF e schede tecniche.
+- Limite dichiarato: nel configuratore sono selezionabili solo le unità
+  interne VRV a parete FXAA-A; cassette e canalizzate VRV non sono ancora
+  offerte. Non viene dichiarata una capacità simultanea VRV a carico parziale:
+  la verifica usa le capacità nominali e il rapporto di connessione.
+- Gate: 534 test unitari su 91 file superati; TypeScript strict; ESLint senza
+  errori sui file modificati; build di produzione completata. E2E VRV/VRF
+  superato; `equipment-plan-flow` 6/6 (radiatore, ventilconvettore e split a
+  1920 e 1024). Build `RXY3c191kMbBHHl0K82el` verificata su
+  `http://127.0.0.1:3015` con header `X-Staiano-Build`.
+
 ## Limiti
 
 Il plenum macchina è un progetto di fabbricazione: verificare flange, tenuta,

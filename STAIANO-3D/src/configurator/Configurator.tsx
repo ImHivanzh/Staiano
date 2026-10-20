@@ -129,6 +129,7 @@ const equipmentShortcuts: Record<string, PlanPlacementTool> = {
   c: "connect",
   p: "heatPump",
   s: "split",
+  n: "vrv",
   b: "point",
   v: "fanCoil",
 };
@@ -975,7 +976,8 @@ export function Configurator() {
                       <Columns size={17} aria-hidden="true" />
                     ) : r.systemType === "ducted" ? (
                       <Wind size={17} aria-hidden="true" />
-                    ) : r.systemType === "split" ? (
+                    ) : r.systemType === "split" ||
+                      r.systemType === "vrv" ? (
                       <Snowflake size={17} aria-hidden="true" />
                     ) : (
                       <HouseLine size={17} aria-hidden="true" />

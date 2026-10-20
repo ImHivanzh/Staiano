@@ -15,6 +15,10 @@ import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
 } from "@/domain/catalogs/splits";
+import {
+  vrvIndoorAtVersion,
+  vrvOutdoorAtVersion,
+} from "@/domain/catalogs/vrv";
 import type { ProjectPanorama } from "@/services/render3d/export";
 import { plenumTechnicalDrawing } from "@/domain/ducted/technical-view";
 import {
@@ -1399,7 +1403,7 @@ export async function renderDossierPdf(
           "error",
         );
       paragraph(
-        `Piano: ${p.floors.find((f) => f.id === r.floorId)?.name}; impianto: ${{ none: "da definire", radiator: "radiatori", ducted: "canalizzato", split: "split", fanCoil: "ventilconvettori" }[r.systemType]}`,
+        `Piano: ${p.floors.find((f) => f.id === r.floorId)?.name}; impianto: ${{ none: "da definire", radiator: "radiatori", ducted: "canalizzato", split: "split", vrv: "VRV/VRF", fanCoil: "ventilconvettori" }[r.systemType]}`,
       );
       if (r.conditioningExclusion)
         paragraph(
@@ -1644,14 +1648,47 @@ export async function renderDossierPdf(
           s.type === "split"
             ? splitCombinationAtVersion(s.productId, s.catalogVersion)
             : null,
+        vrvOutdoor =
+          s.type === "vrv"
+            ? vrvOutdoorAtVersion(s.productId, s.catalogVersion)
+            : null,
+        indoorModels =
+          s.type === "vrv"
+            ? s.indoorUnits
+                .map(
+                  (d) =>
+                    vrvIndoorAtVersion(d.productId, d.catalogVersion)?.model ??
+                    d.productId,
+                )
+                .join(" + ")
+            : combination
+              ? s.indoorUnits
+                  .map(
+                    (d) =>
+                      splitIndoorAtVersion(d.productId, d.catalogVersion)
+                        ?.model ?? d.productId,
+                  )
+                  .join(" + ")
+              : (product?.indoorModel ?? s.productId),
+        outdoorModel =
+          product?.outdoorModel ??
+          vrvOutdoor?.model ??
+          combination?.outdoorModel ??
+          "non verificabile",
         load = p.rooms
           .filter((r) => s.roomIds.includes(r.id))
           .reduce((sum, r) => sum + r.designLoadW, 0);
       heading(
-        `${data.codes.get(s.id)} - ${s.manufacturer} ${s.type === "ducted" ? "canalizzato" : "split"}`,
+        `${data.codes.get(s.id)} - ${s.manufacturer} ${
+          s.type === "ducted"
+            ? "canalizzato"
+            : s.type === "vrv"
+              ? "VRV/VRF"
+              : "split"
+        }`,
       );
       paragraph(
-        `Unità interna: ${combination ? s.indoorUnits.map((d) => splitIndoorAtVersion(d.productId, d.catalogVersion)?.model ?? d.productId).join(" + ") : (product?.indoorModel ?? s.productId)}; unità esterna: ${product?.outdoorModel ?? combination?.outdoorModel ?? "non verificabile"}. Stanze servite: ${p.rooms
+        `Unità interna: ${indoorModels}; unità esterna: ${outdoorModel}. Stanze servite: ${p.rooms
           .filter((r) => s.roomIds.includes(r.id))
           .map((r) => r.name || r.id)
           .join(", ")}.`,
@@ -1668,9 +1705,14 @@ export async function renderDossierPdf(
           [
             n(load / 1000, 3),
             s.capacityW === null ? "Non dichiarata" : n(s.capacityW / 1000, 3),
-            (product?.heatingCapacityW ?? combination?.heatingCapacityW)
+            (
+              vrvOutdoor?.heatingW ??
+              product?.heatingCapacityW ??
+              combination?.heatingCapacityW
+            )
               ? n(
-                  (product?.heatingCapacityW ??
+                  (vrvOutdoor?.heatingW ??
+                    product?.heatingCapacityW ??
                     combination?.heatingCapacityW)! / 1000,
                   3,
                 )
@@ -1685,10 +1727,51 @@ export async function renderDossierPdf(
         [0.2, 0.18, 0.18, 0.21, 0.23],
       );
       paragraph(
-        `Abbinamento: ${s.compatibilityStatus === "verified" ? "verificato su dati di catalogo" : "NON VERIFICATO"}. Versione ${s.catalogVersion}. ${product?.technicalNotes ?? combination?.notes ?? "Dati storici di catalogo non disponibili: verificare il sistema prima dell'ordine."}`,
+        `Abbinamento: ${s.compatibilityStatus === "verified" ? "verificato su dati di catalogo" : "NON VERIFICATO"}. Versione ${s.catalogVersion}. ${
+          vrvOutdoor
+            ? `Unità esterna ${vrvOutdoor.model}: ${vrvOutdoor.dimensionNote}`
+            : (product?.technicalNotes ??
+              combination?.notes ??
+              "Dati storici di catalogo non disponibili: verificare il sistema prima dell'ordine.")
+        }`,
         9,
       );
-      if (combination) {
+      if (vrvOutdoor) {
+        const connected = s.indoorUnits.reduce(
+          (sum, d) =>
+            sum +
+            (vrvIndoorAtVersion(d.productId, d.catalogVersion)
+              ?.nominalCoolingW ?? 0),
+          0,
+        );
+        paragraph(
+          `VRV/VRF: rapporto di connessione ${((connected / vrvOutdoor.coolingW) * 100).toFixed(0)}% entro ${vrvOutdoor.minConnectionRatio}–${vrvOutdoor.maxConnectionRatio}%. Capacità nominale collegata ${(connected / 1000).toFixed(2)} kW. Le capacità per ambiente sono nominali; non si dichiara una capacità simultanea a carico parziale.`,
+          9,
+          muted,
+        );
+        table(
+          [
+            "Unità / ambiente",
+            "Carico stanza kW",
+            "Freddo nominale kW",
+            "Caldo nominale kW",
+          ],
+          s.indoorUnits.map((d) => {
+            const indoor = vrvIndoorAtVersion(d.productId, d.catalogVersion);
+            return [
+              `${data.codes.get(d.id)} - ${p.rooms.find((r) => r.id === d.roomId)?.name ?? d.roomId}`,
+              n(
+                (p.rooms.find((r) => r.id === d.roomId)?.designLoadW ?? 0) /
+                  1000,
+                3,
+              ),
+              indoor ? n(indoor.nominalCoolingW / 1000, 3) : "n.d.",
+              indoor ? n(indoor.nominalHeatingW / 1000, 3) : "n.d.",
+            ];
+          }),
+          [0.4, 0.2, 0.2, 0.2],
+        );
+      } else if (combination) {
         paragraph(
           `Combinazione ${combination.mode}; mercato fonte ${combination.region}. I codici e suffissi originali devono essere verificati per il mercato italiano prima dell'ordine.`,
           9,

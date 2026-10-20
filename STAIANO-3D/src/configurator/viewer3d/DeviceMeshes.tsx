@@ -581,7 +581,7 @@ export function DeviceMeshes({
         </group>
       ))}
       {project.hvacSystems
-        .filter((s) => s.type === "split")
+        .filter((s) => s.type === "split" || s.type === "vrv")
         .flatMap((system) =>
           system.indoorUnits.filter(visible).map((item) => {
             const room = project.rooms.find((r) => r.id === item.roomId);

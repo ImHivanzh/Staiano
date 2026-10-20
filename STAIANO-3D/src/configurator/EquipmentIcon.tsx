@@ -38,6 +38,14 @@ const shapes = {
       <path d="M5 11h14m-13 4v4m6-4v5m6-5v4" />
     </>
   ),
+  vrv: (
+    <>
+      <rect x="2" y="4" width="20" height="12" rx="2" />
+      <path d="M5 8h9m-9 3h13m-13 3h7" />
+      <circle cx="19" cy="8" r="1.4" />
+      <path d="M5 19v2m7-3v3m7-2v2" />
+    </>
+  ),
   heatPump: (
     <>
       <rect x="3" y="3" width="18" height="17" rx="2" />
