@@ -1,11 +1,13 @@
 "use client";
 import { useRef, useState } from "react";
+import { ArrowClockwise } from "@phosphor-icons/react";
 import type { Project, Room } from "@/schemas/project";
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { selectDuctedMachine } from "@/domain/ducted/calculate";
 import { machinesServingSameRooms } from "@/domain/ducted/machine";
 import { applyDuctedSystem } from "@/domain/ducted/apply";
+import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import { FullscreenDialog } from "../FullscreenDialog";
@@ -50,6 +52,7 @@ export function DuctedMachinePicker({
       (!installationId || s.installationId === installationId),
   );
   const { commit } = useProjectStore();
+  const placedMachine = savedSystem?.indoorUnits[0];
   const installation = project.installations.find(
     (item) => item.id === installationId,
   );
@@ -197,6 +200,34 @@ export function DuctedMachinePicker({
               Dati manuali
             </button>
           </div>
+          {placedMachine && (
+            <div
+              className="azioni"
+              role="group"
+              aria-label="Orientamento macchina"
+            >
+              <button
+                type="button"
+                className="bottone piccolo"
+                disabled={placedMachine.locked}
+                title={
+                  placedMachine.locked
+                    ? "Sblocca la macchina prima di ruotarla."
+                    : "Ruota la macchina di 90°; i plenum collegati seguono."
+                }
+                onClick={() =>
+                  commit((p) => rotateDevice90(p, placedMachine.id))
+                }
+              >
+                <ArrowClockwise size={18} aria-hidden="true" /> Ruota macchina
+                90°
+              </button>
+              <span className="nota">
+                Orientamento attuale{" "}
+                {formatNumber((placedMachine.rotation * 180) / Math.PI, 0)}°
+              </span>
+            </div>
+          )}
           {hydronic && (
             <p role="status" className="nota">
               Unità canalizzata ad acqua collegata alla PdC. Inserisci portata e

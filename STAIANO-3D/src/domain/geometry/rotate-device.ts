@@ -10,6 +10,19 @@ export function rotateDevice90(project: Project, id: string): Project {
   const linked = project.plenums.find((p) => p.id === id && p.attachmentId);
   if (linked?.locked) throw new Error("Sblocca il plenum prima di ruotarlo.");
   if (linked) return rotateDevice90(project, linked.attachmentId!);
+  // Un plenum della macchina non ha un proprietario diretto: ruotarlo significa
+  // ruotare la macchina stessa, così corpo, etichette e stacchi restano solidali.
+  const machinePlenum = project.plenums.find(
+    (p) => p.id === id && p.attachmentId === undefined && p.systemId,
+  );
+  if (machinePlenum) {
+    if (machinePlenum.locked)
+      throw new Error("Sblocca il plenum prima di ruotarlo.");
+    const owner = project.hvacSystems.find(
+      (s) => s.id === machinePlenum.systemId && s.type === "ducted",
+    )?.indoorUnits[0];
+    if (owner) return rotateDevice90(project, owner.id);
+  }
   const pump = project.hydronicSystems?.find((s) => s.outdoorUnit.id === id);
   if (pump)
     return moveHydronicOutdoorUnit(project, id, {
@@ -38,20 +51,23 @@ export function rotateDevice90(project: Project, id: string): Project {
     if (item.locked) throw new Error("Sblocca l’elemento prima di ruotarlo.");
     return { ...item, rotation: (item.rotation + Math.PI / 2) % (2 * Math.PI) };
   };
-  return syncAttachedPlenums({
-    ...project,
-    radiators: project.radiators.map(rotate),
-    fanCoils: project.fanCoils?.map(rotate),
-    plenums: project.plenums.map(rotate),
-    pillars: project.pillars?.map(rotate),
-    hvacSystems: project.hvacSystems.map((s) => ({
-      ...s,
-      indoorUnits: s.indoorUnits.map(rotate),
-      outdoorUnit: s.outdoorUnit ? rotate(s.outdoorUnit) : s.outdoorUnit,
-    })),
-    hydronicSystems: project.hydronicSystems?.map((s) => ({
-      ...s,
-      outdoorUnit: rotate(s.outdoorUnit),
-    })),
-  });
+  return syncAttachedPlenums(
+    {
+      ...project,
+      radiators: project.radiators.map(rotate),
+      fanCoils: project.fanCoils?.map(rotate),
+      plenums: project.plenums.map(rotate),
+      pillars: project.pillars?.map(rotate),
+      hvacSystems: project.hvacSystems.map((s) => ({
+        ...s,
+        indoorUnits: s.indoorUnits.map(rotate),
+        outdoorUnit: s.outdoorUnit ? rotate(s.outdoorUnit) : s.outdoorUnit,
+      })),
+      hydronicSystems: project.hydronicSystems?.map((s) => ({
+        ...s,
+        outdoorUnit: rotate(s.outdoorUnit),
+      })),
+    },
+    project,
+  );
 }

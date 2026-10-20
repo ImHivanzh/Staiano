@@ -11,10 +11,13 @@ function NumberLabel({
   label,
   position,
   width,
+  rotation = 0,
 }: {
   label: string;
   position: [number, number, number];
   width: number;
+  /** Gira l'etichetta con il plenum: gli stacchi numerati restano allineati. */
+  rotation?: number;
 }) {
   const map = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -35,7 +38,12 @@ function NumberLabel({
   useEffect(() => () => map.dispose(), [map]);
   return (
     <sprite position={position} scale={[width, width / 3, 1]} renderOrder={5}>
-      <spriteMaterial map={map} depthTest={false} depthWrite={false} />
+      <spriteMaterial
+        map={map}
+        depthTest={false}
+        depthWrite={false}
+        rotation={rotation}
+      />
     </sprite>
   );
 }
@@ -45,10 +53,13 @@ export function PlenumBody({
   layout,
   labels = true,
   selected = false,
+  labelRotation = 0,
 }: {
   layout: PlenumLayout;
   labels?: boolean;
   selected?: boolean;
+  /** Rotazione del plenum: le etichette degli stacchi girano con il corpo. */
+  labelRotation?: number;
 }) {
   const [width, height] = layout.body;
   const transition = useMemo(
@@ -126,6 +137,7 @@ export function PlenumBody({
               label={`${port.number} · Ø${port.branch.diameterMm}`}
               position={[0, port.diameterM / 2 + 0.065, port.collarLengthM]}
               width={Math.max(port.diameterM * 1.4, 0.23)}
+              rotation={labelRotation}
             />
           )}
         </group>
@@ -207,7 +219,12 @@ function PlenumMesh({
   return (
     <group position={[0, 0, -plenum.depthMm / 2000]}>
       {layout ? (
-        <PlenumBody layout={layout} selected={selected} labels={selected} />
+        <PlenumBody
+          layout={layout}
+          selected={selected}
+          labels={selected}
+          labelRotation={-plenum.rotation}
+        />
       ) : (
         <mesh position={[0, 0, plenum.depthMm / 2000]}>
           <boxGeometry
