@@ -994,6 +994,9 @@ export function resolveCheckTarget(
     ...project.plenums,
     ...(project.pillars ?? []),
     ...project.hvacSystems.flatMap((item) => item.indoorUnits),
+    ...project.hvacSystems.flatMap((item) =>
+      item.outdoorUnit ? [item.outdoorUnit] : [],
+    ),
     ...(project.hydronicSystems ?? []).map((item) => item.outdoorUnit),
   ].find((item) => item.id === deviceId);
   if (device)

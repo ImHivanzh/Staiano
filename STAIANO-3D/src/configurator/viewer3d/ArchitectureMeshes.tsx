@@ -33,14 +33,24 @@ export type ArchitectureMeshesProps = {
   onReady?: () => void;
 };
 
-function boxesGeometry(panels: readonly WallPanel[], depth: number, z = 0) {
+type WallExtension = { startM: number; endM: number; lengthM: number };
+
+function boxesGeometry(
+  panels: readonly WallPanel[],
+  depth: number,
+  z = 0,
+  extension?: WallExtension,
+) {
   const boxes = panels.map((p) => {
-    const box = new THREE.BoxGeometry(
-      p.right - p.left,
-      p.top - p.bottom,
-      depth,
-    );
-    box.translate((p.left + p.right) / 2, (p.bottom + p.top) / 2, z);
+    // Fill the half-thickness notch where two wall boxes meet at a corner.
+    const left =
+        extension && p.left <= 1e-9 ? p.left - extension.startM : p.left,
+      right =
+        extension && p.right >= extension.lengthM - 1e-9
+          ? p.right + extension.endM
+          : p.right;
+    const box = new THREE.BoxGeometry(right - left, p.top - p.bottom, depth);
+    box.translate((left + right) / 2, (p.bottom + p.top) / 2, z);
     // Box top uses section material. All other faces remain plaster.
     box.groups.forEach((group) => {
       group.materialIndex = group.materialIndex === 2 ? 1 : 0;
@@ -242,6 +252,7 @@ function OpeningFrame({
 
 function ArchitecturalWall({
   wall,
+  walls,
   rooms,
   openings,
   defaultHeightM,
@@ -253,6 +264,7 @@ function ArchitecturalWall({
   onSelect,
 }: {
   wall: Wall;
+  walls: readonly Wall[];
   rooms: readonly Room[];
   openings: readonly ArchitecturalOpening[];
   defaultHeightM: number;
@@ -267,6 +279,19 @@ function ArchitecturalWall({
   const height = cut ? Math.min(cutHeightM, trueHeight) : trueHeight;
   const length = distance(wall.start, wall.end);
   const span = roomWallSpan(wall, isolatedRoom);
+  const joined = (point: { x: number; y: number }) =>
+    walls.some(
+      (other) =>
+        other.id !== wall.id &&
+        other.floorId === wall.floorId &&
+        (distance(other.start, point) < 1e-6 ||
+          distance(other.end, point) < 1e-6),
+    );
+  const extension = {
+    startM: joined(wall.start) ? wall.thickness / 2 : 0,
+    endM: joined(wall.end) ? wall.thickness / 2 : 0,
+    lengthM: length,
+  };
   const apertures = useMemo(
     () =>
       measuredOpenings(wall, openings, height).flatMap((o) => {
@@ -285,8 +310,19 @@ function ArchitecturalWall({
           return right > left ? [{ ...p, left, right }] : [];
         }),
         wall.thickness,
+        0,
+        extension,
       ),
-    [length, height, apertures, wall.thickness, span.start, span.end],
+    [
+      length,
+      height,
+      apertures,
+      wall.thickness,
+      span.start,
+      span.end,
+      extension.startM,
+      extension.endM,
+    ],
   );
   const baseboard = useMemo(() => {
     const strips = wallPanels(
@@ -298,13 +334,32 @@ function ArchitecturalWall({
       const right = Math.min(span.end, p.right);
       return right > left ? [{ ...p, left, right }] : [];
     });
-    const first = boxesGeometry(strips, 0.012, wall.thickness / 2 + 0.007);
-    const second = boxesGeometry(strips, 0.012, -wall.thickness / 2 - 0.007);
+    const first = boxesGeometry(
+      strips,
+      0.012,
+      wall.thickness / 2 + 0.007,
+      extension,
+    );
+    const second = boxesGeometry(
+      strips,
+      0.012,
+      -wall.thickness / 2 - 0.007,
+      extension,
+    );
     const merged = mergeGeometries([first, second])!;
     first.dispose();
     second.dispose();
     return merged;
-  }, [length, height, apertures, span.start, span.end, wall.thickness]);
+  }, [
+    length,
+    height,
+    apertures,
+    span.start,
+    span.end,
+    wall.thickness,
+    extension.startM,
+    extension.endM,
+  ]);
   useEffect(
     () => () => {
       geometry.dispose();
@@ -438,6 +493,7 @@ export function ArchitectureMeshes({
         <ArchitecturalWall
           key={wall.id}
           wall={wall}
+          walls={walls}
           rooms={rooms}
           openings={openings}
           defaultHeightM={defaultHeightM}

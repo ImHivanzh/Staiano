@@ -144,6 +144,7 @@ export const roomSchema = z.object({
   perimeterM: finite.nonnegative(),
   centroid: pointSchema,
   heightM: finite.positive().max(30),
+  ceilingHeightM: finite.positive().max(30).nullable().default(null),
   volumeM3: finite.nonnegative(),
   designLoadW: finite.nonnegative(),
   systemType: z.enum([
@@ -174,6 +175,17 @@ const placement = z.object({
   depthMm: finite.positive(),
   productId: id,
   catalogVersion: z.string().max(100),
+  locked: z.boolean().default(false),
+});
+export const outdoorUnitSchema = z.object({
+  id,
+  floorId: id,
+  position: pointSchema,
+  rotation: finite,
+  widthMm: finite.positive(),
+  heightMm: finite.positive(),
+  depthMm: finite.positive(),
+  elevationM: finite.nonnegative().max(100),
   locked: z.boolean().default(false),
 });
 export const linearPlanSchema = z.object({
@@ -328,6 +340,7 @@ export const projectSchema = z
           airflowM3h: finite.positive().nullable(),
           catalogVersion: z.string().max(100),
           indoorUnits: z.array(placement),
+          outdoorUnit: outdoorUnitSchema.nullable().default(null),
           compatibilityStatus: z.enum(["verified", "unverifiable", "invalid"]),
           linearPlan: linearPlanSchema.nullable().default(null),
           decisionOrigin: z.enum(DECISION_ORIGINS).optional(),
@@ -386,17 +399,7 @@ export const projectSchema = z
           fanCoilIds: z.array(id).max(2000),
           terminalIds: z.array(id).max(2000).optional(),
           operatingPointIndex: z.number().int().nonnegative().max(100),
-          outdoorUnit: z.object({
-            id,
-            floorId: id,
-            position: pointSchema,
-            rotation: finite,
-            widthMm: finite.positive(),
-            heightMm: finite.positive(),
-            depthMm: finite.positive(),
-            elevationM: finite.nonnegative().max(100),
-            locked: z.boolean().default(false),
-          }),
+          outdoorUnit: outdoorUnitSchema,
           pipeWaypoints: z
             .array(
               z.object({
@@ -531,6 +534,9 @@ export const projectSchema = z
       p.hydronicSystems ?? [],
       p.hydronicSystems?.map((s) => s.outdoorUnit) ?? [],
       p.hvacSystems.flatMap((s) => s.indoorUnits),
+      p.hvacSystems
+        .map((s) => s.outdoorUnit)
+        .filter((unit) => unit !== null),
       p.ductedDrafts ?? [],
       p.heatPumpDrafts ?? [],
       p.equipmentDrafts ?? [],
@@ -769,6 +775,18 @@ export const projectSchema = z
           message: "Canale con collegamenti incoerenti",
         });
     }
+    for (const room of p.rooms)
+      if (room.ceilingHeightM !== null && room.ceilingHeightM >= room.heightM)
+        ctx.addIssue({
+          code: "custom",
+          message: "Controsoffitto non inferiore all'altezza della stanza",
+        });
+    for (const system of p.hvacSystems)
+      if (system.outdoorUnit && !floors.has(system.outdoorUnit.floorId))
+        ctx.addIssue({
+          code: "custom",
+          message: "Unità esterna split/VRV senza piano coerente",
+        });
     for (const system of p.hydronicSystems ?? []) {
       if (
         !floors.has(system.outdoorUnit.floorId) ||

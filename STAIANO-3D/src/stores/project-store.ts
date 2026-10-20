@@ -158,6 +158,9 @@ export const useProjectStore = create<State>((set, get) => ({
           ...valid.plenums,
           ...(valid.fanCoils ?? []),
           ...(valid.hydronicSystems ?? []).map((s) => s.outdoorUnit),
+          ...valid.hvacSystems.flatMap((system) =>
+            system.outdoorUnit ? [system.outdoorUnit] : [],
+          ),
           ...(valid.pillars ?? []),
           ...(valid.ducts ?? []),
           ...valid.hvacSystems.flatMap((system) => system.indoorUnits),

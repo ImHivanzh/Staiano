@@ -7,6 +7,7 @@ import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { ductedMaximumAirflow } from "./machine";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { hydronicRoomIds } from "./plan-connections";
+import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
 /** Refresh automatic machine selection and demand; installed terminal style stays chosen. */
 export function refreshDuctedBindings(project: Project): Project {
   project = {
@@ -143,7 +144,9 @@ export function refreshDuctedBindings(project: Project): Project {
     return {
       ...terminal,
       elevationM:
-        terminal.mounting === "ceiling" ? room.heightM : terminal.elevationM,
+        terminal.mounting === "ceiling"
+          ? roomCeilingHeightM(room)
+          : terminal.elevationM,
       requiredAirflowM3h: allocation
         ? allocation.airflowM3h / points / Math.max(1, siblings)
         : terminal.requiredAirflowM3h,

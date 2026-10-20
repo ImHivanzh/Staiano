@@ -49,7 +49,6 @@ export function recommendedHeatPump(
         heightMm: product.heightMm,
         depthMm: product.depthMm,
         elevationM: Math.max(pose.elevationM, product.heightMm / 2000),
-        locked: false,
       })
     );
   });

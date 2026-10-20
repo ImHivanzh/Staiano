@@ -51,6 +51,11 @@
 .toolbar > button {
   pointer-events: auto;
 }
+.toolbar > .bottone {
+  height: 32px;
+  padding: 0 10px;
+  font-size: 12px;
+}
 .group {
   display: flex;
   flex-wrap: nowrap;

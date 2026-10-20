@@ -23,7 +23,7 @@ import { CameraRig } from "./CameraRig";
 import { SceneLighting } from "./SceneLighting";
 import { SceneEffects } from "./SceneEffects";
 import { RoomLabelProjection } from "./RoomLabels";
-import { CeilingReference } from "./CeilingReference";
+import { CeilingReference, SuspendedCeiling } from "./CeilingReference";
 import { ProductTools } from "./ProductTools";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { installationLabels } from "@/domain/installations";
@@ -117,6 +117,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [cutaway, setCutaway] = useState(true);
   const [labels, setLabels] = useState(true);
   const [ceilingGuide, setCeilingGuide] = useState(true);
+const [suspendedCeiling, setSuspendedCeiling] = useState(true);
   const labelElements = useRef(new Map<string, HTMLButtonElement>());
   const [floorFinish, setFloorFinish] = useState<"oak" | "stone">("oak");
   const [cutWallIds, setCutWallIds] = useState<Set<string>>(new Set());
@@ -235,6 +236,18 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
         wallId: null,
         kind: "heatPump",
       })),
+      ...p.hvacSystems.flatMap((s) =>
+        s.outdoorUnit
+          ? [
+              {
+                ...s.outdoorUnit,
+                roomId: "",
+                wallId: null,
+                kind: "heatPump",
+              },
+            ]
+          : [],
+      ),
       ...p.plenums.map((pl) => ({
         ...pl,
         wallId: null,
@@ -248,9 +261,11 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
       })),
       ...p.hvacSystems.flatMap((s) => s.indoorUnits),
     ].find((d) => d.id === selectedId);
-  const selectedOutdoor = p?.hydronicSystems?.find(
-    (s) => s.outdoorUnit.id === selectedId,
-  )?.outdoorUnit;
+  const selectedOutdoor =
+    p?.hydronicSystems?.find(
+      (s) => s.outdoorUnit.id === selectedId,
+    )?.outdoorUnit ??
+    p?.hvacSystems.find((s) => s.outdoorUnit?.id === selectedId)?.outdoorUnit;
   const outdoorEditable = !!selectedOutdoor && !selectedOutdoor.locked;
   const transformMode =
     transformChoice && transformChoice.id === selectedId
@@ -658,6 +673,14 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     />
                     Quota soffitto
                   </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={suspendedCeiling}
+                      onChange={(e) => setSuspendedCeiling(e.target.checked)}
+                    />
+                    Controsoffitto
+                  </label>
                   <select
                     aria-label="Finitura pavimento"
                     value={floorFinish}
@@ -675,8 +698,8 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   <button
                     className={
                       planPlacementTool === "connect"
-                        ? `bottone piccolo ${styles.active}`
-                        : "bottone piccolo"
+                        ? `bottone ${styles.active}`
+                        : "bottone"
                     }
                     aria-pressed={planPlacementTool === "connect"}
                     aria-keyshortcuts="C"
@@ -1168,6 +1191,12 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   />
                 )}
                 <RoomLabelProjection rooms={rooms} elements={labelElements} />
+                {suspendedCeiling &&
+                  rooms
+                    .filter((room) => room.ceilingHeightM !== null)
+                    .map((room) => (
+                      <SuspendedCeiling key={room.id} room={room} />
+                    ))}
                 {ceilingGuide &&
                   rooms
                     .filter((room) =>

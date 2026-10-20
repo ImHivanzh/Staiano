@@ -15,17 +15,36 @@ import {
 
 export type HydronicSystem = NonNullable<Project["hydronicSystems"]>[number];
 export type HydronicOutdoorUnit = HydronicSystem["outdoorUnit"];
+export type OutdoorUnitLike = Pick<
+  HydronicOutdoorUnit,
+  | "id"
+  | "floorId"
+  | "position"
+  | "rotation"
+  | "widthMm"
+  | "heightMm"
+  | "depthMm"
+  | "elevationM"
+>;
 export type HydronicPose = Pick<
   HydronicOutdoorUnit,
   "position" | "rotation" | "elevationM"
 >;
-export const hydronicOutdoorFootprint = (unit: HydronicOutdoorUnit) =>
+export const outdoorUnitFootprint = (unit: OutdoorUnitLike) =>
   footprintCorners(
     unit.position,
     unit.widthMm / 1000,
     unit.depthMm / 1000,
     unit.rotation,
   );
+export const hydronicOutdoorFootprint = outdoorUnitFootprint;
+
+export const projectOutdoorUnits = (project: Project): OutdoorUnitLike[] => [
+  ...(project.hydronicSystems ?? []).map((system) => system.outdoorUnit),
+  ...project.hvacSystems.flatMap((system) =>
+    system.outdoorUnit ? [system.outdoorUnit] : [],
+  ),
+];
 
 export function hydronicOutwardRotation(
   project: Project,
@@ -54,9 +73,9 @@ function overlapsPolygon(a: Point[], b: Point[]) {
     }),
   );
 }
-export function hydronicOutdoorValid(
+export function outdoorUnitValid(
   project: Project,
-  unit: HydronicOutdoorUnit,
+  unit: OutdoorUnitLike,
   ignoreDeviceId = unit.id,
 ): boolean {
   if (
@@ -83,7 +102,7 @@ export function hydronicOutdoorValid(
     walls = project.walls.filter((w) => w.floorId === unit.floorId);
   if (!rooms.length || rooms.some((r) => r.geometryStatus !== "closed"))
     return false;
-  const corners = hydronicOutdoorFootprint(unit);
+  const corners = outdoorUnitFootprint(unit);
   if (rooms.some((r) => overlapsPolygon(corners, r.polygon))) return false;
   if (
     walls.some((w) =>
@@ -115,17 +134,18 @@ export function hydronicOutdoorValid(
     )
   )
     return false;
-  return !(project.hydronicSystems ?? []).some(
-    (s) =>
-      s.outdoorUnit.id !== ignoreDeviceId &&
-      s.outdoorUnit.floorId === unit.floorId &&
-      convexFootprintsOverlap(corners, hydronicOutdoorFootprint(s.outdoorUnit)),
+  return !projectOutdoorUnits(project).some(
+    (other) =>
+      other.id !== ignoreDeviceId &&
+      other.floorId === unit.floorId &&
+      convexFootprintsOverlap(corners, outdoorUnitFootprint(other)),
   );
 }
-export function initialHydronicOutdoorPose(
+export const hydronicOutdoorValid = outdoorUnitValid;
+export function initialOutdoorPose(
   project: Project,
   floorId: string,
-  product: HeatPumpProduct,
+  dimensions: Pick<OutdoorUnitLike, "widthMm" | "heightMm" | "depthMm">,
 ): HydronicPose | null {
   const walls = project.walls.filter((w) => w.floorId === floorId);
   const b = bounds([
@@ -136,8 +156,8 @@ export function initialHydronicOutdoorPose(
   ]);
   const wallMargin = Math.max(0, ...walls.map((w) => w.thickness / 2));
   // ponytail: a finite exterior strip search; use a site boundary polygon when surveying property limits.
-  const width = product.widthMm / 1000,
-    depth = product.depthMm / 1000;
+  const width = dimensions.widthMm / 1000,
+    depth = dimensions.depthMm / 1000;
   for (let step = 0; step < 100; step++) {
     const pose = {
       position: {
@@ -146,20 +166,24 @@ export function initialHydronicOutdoorPose(
       },
       // Placement is beyond minY; face the fan away from the building.
       rotation: Math.PI,
-      elevationM: product.heightMm / 2000,
+      elevationM: dimensions.heightMm / 2000,
     };
     if (
-      hydronicOutdoorValid(project, {
+      outdoorUnitValid(project, {
         id: "candidate",
         floorId,
         ...pose,
-        widthMm: product.widthMm,
-        heightMm: product.heightMm,
-        depthMm: product.depthMm,
-        locked: false,
+        ...dimensions,
       })
     )
       return pose;
   }
   return null;
+}
+export function initialHydronicOutdoorPose(
+  project: Project,
+  floorId: string,
+  product: HeatPumpProduct,
+): HydronicPose | null {
+  return initialOutdoorPose(project, floorId, product);
 }

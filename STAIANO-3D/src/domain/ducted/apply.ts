@@ -64,6 +64,7 @@ export function applyDuctedSystem(
   const system: Project["hvacSystems"][number] = {
     id,
     type: "ducted",
+    outdoorUnit: null,
     ...(installationId
       ? { installationId }
       : previous?.installationId
@@ -200,6 +201,7 @@ export function applyManualDuctedSystem(
   const system: Project["hvacSystems"][number] = {
     id,
     type: "ducted",
+    outdoorUnit: null,
     ...(installationId
       ? { installationId }
       : previous?.installationId

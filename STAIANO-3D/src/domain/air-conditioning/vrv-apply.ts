@@ -4,6 +4,7 @@ import { vrvCatalog, type VrvCatalog } from "@/domain/catalogs/vrv";
 import { positionAlongRoomWall } from "@/domain/geometry/placement";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import { sizeVrvSystems, usableVrvWall, type VrvSolution } from "./vrv-size";
+import { withHvacOutdoorUnit } from "./outdoor";
 
 export function vrvSystemFromSolution(
   project: Project,
@@ -63,7 +64,7 @@ export function vrvSystemFromSolution(
         locked: old?.locked ?? false,
       };
     });
-  return {
+  return withHvacOutdoorUnit(project, {
     id: existingId ?? crypto.randomUUID(),
     type: "vrv",
     manufacturer: solution.outdoor.manufacturer,
@@ -76,7 +77,8 @@ export function vrvSystemFromSolution(
     compatibilityStatus: "verified",
     decisionOrigin: "confirmed",
     linearPlan: null,
-  };
+    outdoorUnit: previous?.outdoorUnit ?? null,
+  });
 }
 
 export function applyVrvSystem(

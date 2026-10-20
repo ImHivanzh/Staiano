@@ -17,6 +17,7 @@ import { RadiatorFinishes } from "./RadiatorFinishes";
 import { StructuralProperties } from "./StructuralProperties";
 import { FanCoilProperties } from "./FanCoilProperties";
 import { HydronicProperties } from "./HydronicProperties";
+import { AirOutdoorProperties } from "./AirOutdoorProperties";
 import { configurationBlock } from "@/domain/ducted/plan-connections";
 export function DeviceProperties({
   project,
@@ -38,6 +39,8 @@ export function DeviceProperties({
     return <FanCoilProperties project={project} id={id} />;
   if (project.hydronicSystems?.some((s) => s.outdoorUnit.id === id))
     return <HydronicProperties project={project} id={id} />;
+  if (project.hvacSystems.some((s) => s.outdoorUnit?.id === id))
+    return <AirOutdoorProperties project={project} id={id} />;
   if (
     project.plenums.some((pl) => pl.id === id) ||
     project.pillars?.some((c) => c.id === id) ||

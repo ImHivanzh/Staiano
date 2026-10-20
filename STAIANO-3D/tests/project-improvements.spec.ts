@@ -69,7 +69,7 @@ test("units, project defaults and floor management preserve existing geometry th
     "Ingresso",
   ]);
   expect(saved.rooms[0].floorId).toBe(before.rooms[0].floorId);
-  expect(saved.rooms[0].heightM).toBe(2.7);
+  expect(saved.rooms[0].heightM).toBe(3);
   expect(
     saved.walls.every((wall: { thickness: number }) => wall.thickness === 0.3),
   ).toBe(true);

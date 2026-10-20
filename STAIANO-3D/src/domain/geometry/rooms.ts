@@ -233,6 +233,7 @@ export function reconcileRooms(
         perimeterM: perimeter(face.polygon),
         centroid: center,
         heightM,
+        ceilingHeightM: parent?.ceilingHeightM ?? null,
         ...calculateThermal(netAreaM2, heightM),
         ...(parent?.conditioningExclusion
           ? {

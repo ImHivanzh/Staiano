@@ -5,6 +5,7 @@ import type { SplitCatalog } from "@/domain/catalogs/split-schema";
 import { positionAlongRoomWall } from "@/domain/geometry/placement";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import { sizeSplitSystems, usableSplitWall, type SplitSolution } from "./size";
+import { withHvacOutdoorUnit } from "./outdoor";
 export function splitSystemFromSolution(
   project: Project,
   solution: SplitSolution,
@@ -61,7 +62,7 @@ export function splitSystemFromSolution(
           locked: old?.locked ?? false,
         };
       });
-  return {
+  return withHvacOutdoorUnit(project, {
     id: existingId ?? crypto.randomUUID(),
     type: "split",
     manufacturer: solution.combination.manufacturer,
@@ -74,7 +75,8 @@ export function splitSystemFromSolution(
     compatibilityStatus: "verified",
     decisionOrigin: "confirmed",
     linearPlan: null,
-  };
+    outdoorUnit: previous?.outdoorUnit ?? null,
+  });
 }
 export function applySplitSystem(
   project: Project,

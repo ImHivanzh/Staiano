@@ -301,6 +301,7 @@ describe("official Ecoclima list-price BOM", () => {
           airflowM3h: 840,
           catalogVersion: "machine-version",
           indoorUnits: [],
+          outdoorUnit: null,
           compatibilityStatus: "verified",
           linearPlan: null,
         },

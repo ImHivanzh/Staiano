@@ -6,6 +6,7 @@ import type { Plenum, Project, Selection } from "@/schemas/project";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
+import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
 
 function NumberLabel({
   label,
@@ -236,8 +237,12 @@ export function SystemMeshes({
                 key={u.id}
                 position={[
                   u.position.x,
-                  (project.rooms.find((r) => r.id === u.roomId)?.heightM ??
-                    2.7) -
+                  (() => {
+                    const room = project.rooms.find((r) => r.id === u.roomId);
+                    return room
+                      ? roomCeilingHeightM(room)
+                      : project.projectSettings.defaultHeightM;
+                  })() -
                     u.heightMm / 2000 -
                     0.05,
                   u.position.y,

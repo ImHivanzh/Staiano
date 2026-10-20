@@ -32,6 +32,7 @@ import { ductRoute } from "@/domain/ducted/routes";
 import { ductedMaximumAirflow } from "@/domain/ducted/machine";
 import { terminalAirflowBalance } from "@/domain/air-terminals/airflow-balance";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
+import { refrigerantRoute } from "@/domain/air-conditioning/outdoor";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { pendingConnections } from "@/domain/ducted/plan-connections";
 
@@ -168,6 +169,7 @@ export function Editor2D({
     const b = bounds(walls.flatMap((w) => [w.start, w.end]));
     for (const unit of [
       ...(project?.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
+      ...(project?.hvacSystems.flatMap((s) => s.outdoorUnit ? [s.outdoorUnit] : []) ?? []),
       ...(project?.heatPumpDrafts ?? []).map((draft) => ({
         ...draft,
         widthMm: 800,
@@ -420,7 +422,10 @@ export function Editor2D({
         ...project.plenums,
         ...(project.pillars ?? []),
         ...(project.hydronicSystems ?? []).map((s) => s.outdoorUnit),
-        ...project.hvacSystems.flatMap((system) => system.indoorUnits),
+        ...project.hvacSystems.flatMap((system) => [
+          ...system.indoorUnits,
+          ...(system.outdoorUnit ? [system.outdoorUnit] : []),
+        ]),
       ].find((r) => r.id === d.deviceId);
       if (item && distance(d.delta, { x: 0, y: 0 }) > 0.001) {
         const target = add(item.position, d.delta);
@@ -470,6 +475,7 @@ export function Editor2D({
         ...(project?.radiators ?? []),
         ...(project?.fanCoils ?? []),
         ...(project?.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
+        ...(project?.hvacSystems.flatMap((s) => s.outdoorUnit ? [s.outdoorUnit] : []) ?? []),
         ...(project?.airTerminals ?? []),
         ...(project?.plenums ?? []),
         ...(project?.pillars ?? []),
@@ -1354,6 +1360,86 @@ export function Editor2D({
                     strokeWidth={u * 4}
                     pointerEvents="none"
                   />
+                  <text
+                    textAnchor="middle"
+                    fontSize={u * 11}
+                    y={unit.depthMm / 2000 + u * 13}
+                    transform={
+                      configuration
+                        ? `rotate(${(-unit.rotation * 180) / Math.PI} 0 ${unit.depthMm / 2000 + u * 13})`
+                        : undefined
+                    }
+                  >
+                    {codes.get(unit.id)} · esterna
+                  </text>
+                </g>
+              </g>
+            );
+          })}
+        {project?.hvacSystems
+          .filter(
+            (system) =>
+              system.outdoorUnit?.floorId === activeFloorId &&
+              (system.type === "split" || system.type === "vrv"),
+          )
+          .map((system) => {
+            const unit = system.outdoorUnit!;
+            const pos = previewDevice({ ...unit, roomId: "", wallId: null });
+            return (
+              <g key={system.id}>
+                {system.indoorUnits.map((indoor) => {
+                  const route = refrigerantRoute(project, system, indoor.id);
+                  return route.length > 1 ? (
+                    <polyline
+                      key={indoor.id}
+                      points={route
+                        .map((point) => `${point.x},${point.y}`)
+                        .join(" ")}
+                      fill="none"
+                      stroke="#7f9da0"
+                      strokeWidth={u * 1.5}
+                      strokeDasharray={`${u * 5} ${u * 3}`}
+                      opacity={0.55}
+                      pointerEvents="none"
+                    />
+                  ) : null;
+                })}
+                <g
+                  data-testid="air-outdoor-2d"
+                  data-device-id={unit.id}
+                  role={configuration ? "button" : undefined}
+                  tabIndex={configuration ? 0 : undefined}
+                  aria-label={
+                    configuration
+                      ? `Unità esterna ${codes.get(unit.id)}`
+                      : undefined
+                  }
+                  onKeyDown={(event) => {
+                    if (
+                      configuration &&
+                      (event.key === "Enter" || event.key === " ")
+                    ) {
+                      event.preventDefault();
+                      configuration.onPick(unit.position, unit.id);
+                    }
+                  }}
+                  transform={`translate(${pos.x} ${pos.y}) rotate(${(unit.rotation * 180) / Math.PI})`}
+                  onPointerDown={(e) => beginDeviceDrag(e, unit.id)}
+                >
+                  <rect
+                    x={-unit.widthMm / 2000}
+                    y={-unit.depthMm / 2000}
+                    width={unit.widthMm / 1000}
+                    height={unit.depthMm / 1000}
+                    fill="#eef4f2"
+                    stroke={
+                      selection.some((s) => s.id === unit.id)
+                        ? "#00aeef"
+                        : "#4f7f83"
+                    }
+                    strokeWidth={u * 1.5}
+                  />
+                  <circle cx={-unit.widthMm / 5000} cy={0} r={unit.depthMm / 3500} fill="none" stroke="#374047" strokeWidth={u * 1.5} pointerEvents="none" />
                   <text
                     textAnchor="middle"
                     fontSize={u * 11}

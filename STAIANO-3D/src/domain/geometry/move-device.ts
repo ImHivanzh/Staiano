@@ -11,6 +11,7 @@ import {
   moveHydronicOutdoorUnit,
   placeHeatPumpDraft,
 } from "@/domain/hydronic/apply";
+import { moveHvacOutdoorUnit } from "@/domain/air-conditioning/outdoor";
 import {
   layoutLinearRun,
   linearRunMembers,
@@ -46,6 +47,8 @@ export function movePlacedDevice(
     return placeHeatPumpDraft(project, heatPumpDraft.floorId, target, deviceId);
   if (project.hydronicSystems?.some((s) => s.outdoorUnit.id === deviceId))
     return moveHydronicOutdoorUnit(project, deviceId, { position: target });
+  if (project.hvacSystems.some((s) => s.outdoorUnit?.id === deviceId))
+    return moveHvacOutdoorUnit(project, deviceId, { position: target });
   const pillar = project.pillars?.find((c) => c.id === deviceId);
   if (pillar) {
     if (pillar.locked)

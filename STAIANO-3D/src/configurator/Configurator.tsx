@@ -1450,7 +1450,7 @@ export function Configurator() {
               </li>
             </ol>
             <p className="nota">
-              Altezza suggerita 2,70 m. Modificabile per ogni stanza.
+              Altezza suggerita 3,00 m. Modificabile per ogni stanza.
             </p>
           </main>
         ) : page === "projects" ? (
@@ -1849,6 +1849,9 @@ export function Configurator() {
                           ...(p.pillars ?? []),
                           ...p.hvacSystems.flatMap(
                             (system) => system.indoorUnits,
+                          ),
+                          ...p.hvacSystems.flatMap((system) =>
+                            system.outdoorUnit ? [system.outdoorUnit] : [],
                           ),
                           ...(p.hydronicSystems?.map(
                             (system) => system.outdoorUnit,

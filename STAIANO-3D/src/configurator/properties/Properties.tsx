@@ -43,6 +43,9 @@ export function selectionWithProperties(
     ...project.radiators,
     ...(project.fanCoils ?? []),
     ...(project.hydronicSystems?.map((system) => system.outdoorUnit) ?? []),
+    ...project.hvacSystems.flatMap((system) =>
+      system.outdoorUnit ? [system.outdoorUnit] : [],
+    ),
     ...project.airTerminals,
     ...project.plenums,
     ...(project.pillars ?? []),
@@ -84,6 +87,7 @@ export function Properties() {
     ...p.radiators,
     ...(p.fanCoils ?? []),
     ...(p.hydronicSystems?.map((s) => s.outdoorUnit) ?? []),
+    ...p.hvacSystems.flatMap((s) => (s.outdoorUnit ? [s.outdoorUnit] : [])),
     ...p.airTerminals,
     ...p.plenums,
     ...(p.pillars ?? []),
@@ -151,6 +155,10 @@ export function Properties() {
                   ),
                   hvacSystems: p.hvacSystems.map((s) => ({
                     ...s,
+                    outdoorUnit:
+                      s.outdoorUnit?.id === selectedObject.id
+                        ? { ...s.outdoorUnit, locked }
+                        : s.outdoorUnit,
                     indoorUnits: s.indoorUnits.map((o) =>
                       o.id === selectedObject.id ? { ...o, locked } : o,
                     ),
@@ -251,11 +259,22 @@ export function Properties() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                const data = new FormData(e.currentTarget);
+                const data = new FormData(e.currentTarget),
+                  heightM = numberFromForm(data.get("height")),
+                  ceilingHeightM = data.get("ceiling")
+                    ? numberFromForm(data.get("ceilingHeight"))
+                    : null;
+                if (ceilingHeightM !== null && ceilingHeightM >= heightM) {
+                  setError(
+                    "La quota del controsoffitto deve essere inferiore all'altezza della stanza.",
+                  );
+                  return;
+                }
                 commit((p) =>
                   updateRoom(p, r.id, {
                     name: String(data.get("name")),
-                    heightM: numberFromForm(data.get("height")),
+                    heightM,
+                    ceilingHeightM,
                   }),
                 );
               }}
@@ -278,6 +297,23 @@ export function Properties() {
                 step={0.01}
                 defaultValue={r.heightM}
                 required
+              />
+              <label className="campo">
+                <span>Controsoffitto</span>
+                <input
+                  type="checkbox"
+                  name="ceiling"
+                  defaultChecked={r.ceilingHeightM !== null}
+                />
+              </label>
+              <LengthInput
+                label="Quota controsoffitto"
+                aria-label="Quota controsoffitto"
+                name="ceilingHeight"
+                min={0.1}
+                max={30}
+                step={0.01}
+                defaultValue={r.ceilingHeightM ?? Math.max(0.1, r.heightM - 0.3)}
               />
               <button className="bottone chiara" type="submit">
                 Applica proprietà

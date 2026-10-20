@@ -136,6 +136,9 @@ export function translateSelection(
       ...project.plenums,
       ...(project.pillars ?? []),
       ...(project.hydronicSystems ?? []).map((s) => s.outdoorUnit),
+      ...project.hvacSystems.flatMap((system) =>
+        system.outdoorUnit ? [system.outdoorUnit] : [],
+      ),
       ...project.hvacSystems.flatMap((system) => system.indoorUnits),
     ].find((device) => device.id === id);
     if (before) next = movePlacedDevice(next, id, add(before.position, delta));
@@ -172,6 +175,10 @@ export function removeSelection(
       ...system,
       roomIds: system.roomIds.filter((id) => !roomIds.has(id)),
       indoorUnits: system.indoorUnits.filter(keepDevice),
+      outdoorUnit:
+        system.outdoorUnit && deviceIds.has(system.outdoorUnit.id)
+          ? null
+          : system.outdoorUnit,
     }))
     .filter(
       (system) =>

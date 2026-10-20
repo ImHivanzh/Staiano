@@ -13,7 +13,9 @@ import { sizeSplitSystems } from "./size";
 import { validateSplitSystem } from "./validate";
 import { refreshSplitBindings } from "./refresh";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
+import { pointInPolygon } from "@/domain/geometry/primitives";
 import { encodeProject, decodeProject } from "@/services/project/format";
+import { refrigerantRoute } from "./outdoor";
 function fixture() {
   let p = createProject();
   p = addRectangle(p, p.floors[0].id, {
@@ -25,6 +27,22 @@ function fixture() {
   return p;
 }
 describe("split con combinazioni originali", () => {
+  it("salva l'unità esterna fuori dagli ambienti e traccia il refrigerante", () => {
+    let p = fixture();
+    p = applySplitSystem(p, [p.rooms[0].id], "Daikin", null);
+    const system = p.hvacSystems[0],
+      outdoor = system.outdoorUnit;
+    expect(outdoor).not.toBeNull();
+    expect(outdoor!.widthMm).toBeGreaterThan(0);
+    expect(
+      p.rooms.some((room) =>
+        pointInPolygon(outdoor!.position, room.polygon),
+      ),
+    ).toBe(false);
+    expect(
+      refrigerantRoute(p, system, system.indoorUnits[0].id).length,
+    ).toBeGreaterThanOrEqual(2);
+  });
   it("scala non verificata blocca selezione split senza perdere la configurazione salvata", () => {
     let p = fixture();
     p = applySplitSystem(p, [p.rooms[0].id], "Daikin", null);

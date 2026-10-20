@@ -7,6 +7,7 @@ import { sizeVrvSystems } from "./vrv-size";
 import { validateVrvSystem } from "./vrv-validate";
 import { refreshVrvBindings } from "./vrv-refresh";
 import { encodeProject, decodeProject } from "@/services/project/format";
+import { refrigerantRoute } from "./outdoor";
 
 function fixture() {
   let p = createProject();
@@ -26,6 +27,16 @@ function fixture() {
 }
 
 describe("VRV/VRF con dati ufficiali Daikin", () => {
+  it("salva l'unità esterna del sistema e i tubi verso le interne", () => {
+    let p = fixture();
+    p = applyVrvSystem(p, p.rooms.map((room) => room.id), null);
+    const system = p.hvacSystems[0],
+      outdoor = system.outdoorUnit;
+    expect(outdoor).not.toBeNull();
+    expect(outdoor!.widthMm).toBeGreaterThan(0);
+    for (const indoor of system.indoorUnits)
+      expect(refrigerantRoute(p, system, indoor.id).length).toBeGreaterThanOrEqual(2);
+  });
   it("seleziona una unità interna pubblicata per ambiente e un'esterna entro il rapporto di connessione", () => {
     const p = fixture(),
       roomIds = p.rooms.map((room) => room.id),

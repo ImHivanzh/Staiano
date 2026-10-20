@@ -9,6 +9,9 @@ function objects(project: Project) {
     ...project.plenums,
     ...(project.fanCoils ?? []),
     ...(project.hydronicSystems ?? []).map((s) => s.outdoorUnit),
+    ...project.hvacSystems.flatMap((s) =>
+      s.outdoorUnit ? [s.outdoorUnit] : [],
+    ),
     ...(project.pillars ?? []),
     ...(project.ducts ?? []),
     ...project.hvacSystems.flatMap((s) => s.indoorUnits),

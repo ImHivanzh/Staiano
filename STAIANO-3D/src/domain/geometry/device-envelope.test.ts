@@ -149,6 +149,7 @@ describe("ingombri dispositivi con quota verticale", () => {
       airflowM3h: null,
       catalogVersion: "fixture",
       indoorUnits: [unit],
+      outdoorUnit: null,
       compatibilityStatus: "unverifiable",
       linearPlan: null,
     });

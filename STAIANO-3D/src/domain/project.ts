@@ -18,6 +18,8 @@ import { followWallTransforms } from "@/domain/geometry/follow-walls";
 import { calculateThermal } from "@/domain/thermal/calculate";
 import { pillarAreaInRoom } from "@/domain/geometry/pillars";
 import { ensureInstallations } from "./installations";
+import { roomCeilingHeightM } from "./air-conditioning/elevation";
+import { refreshDuctedBindings } from "./ducted/refresh";
 
 export const newId = () => crypto.randomUUID();
 export function createProject(name = "Nuovo progetto"): Project {
@@ -55,7 +57,7 @@ export function createProject(name = "Nuovo progetto"): Project {
     airTerminals: [],
     projectSettings: {
       radiatorDeltaTK: 50,
-      defaultHeightM: 2.7,
+      defaultHeightM: 3,
       internalWallThicknessM: 0.1,
       externalWallThicknessM: 0.3,
       coefficientWm3: 35,
@@ -576,6 +578,7 @@ export function updateRoom(
       Room,
       | "name"
       | "heightM"
+      | "ceilingHeightM"
       | "systemType"
       | "supplyPoints"
       | "returnPoints"
@@ -583,7 +586,8 @@ export function updateRoom(
     >
   >,
 ): Project {
-  return {
+  const before = p.rooms.find((r) => r.id === roomId);
+  const next: Project = {
     ...p,
     rooms: p.rooms.map((r) => {
       if (r.id !== roomId) return r;
@@ -594,6 +598,33 @@ export function updateRoom(
         ...(updated.conditioningExclusion ? { designLoadW: 0 } : {}),
       };
     }),
+  };
+  const after = next.rooms.find((r) => r.id === roomId);
+  if (
+    !before ||
+    !after ||
+    (patch.heightM === undefined && patch.ceilingHeightM === undefined)
+  )
+    return next;
+  // Keep plenums at the same relative depth under the new ceiling.
+  const delta = roomCeilingHeightM(after) - roomCeilingHeightM(before);
+  const shifted =
+    delta === 0
+      ? next
+      : {
+          ...next,
+          plenums: next.plenums.map((pl) =>
+            pl.roomId === roomId && pl.elevationM !== undefined
+              ? { ...pl, elevationM: Math.max(0.1, pl.elevationM + delta) }
+              : pl,
+          ),
+        };
+  const refreshed = refreshDuctedBindings(shifted);
+  return {
+    ...refreshed,
+    rooms: refreshed.rooms.map((room) =>
+      room.id === roomId ? { ...room, systemType: after.systemType } : room,
+    ),
   };
 }
 export function mergeRooms(

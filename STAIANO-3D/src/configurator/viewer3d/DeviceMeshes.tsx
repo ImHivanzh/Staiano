@@ -7,7 +7,10 @@ import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeom
 import type { Project, Selection } from "@/schemas/project";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
-import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
+import {
+  splitCenterElevationM,
+  roomCeilingHeightM,
+} from "@/domain/air-conditioning/elevation";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { radiatorDetail, type DetailPart } from "./device-detail";
 import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
@@ -15,6 +18,7 @@ import { RadiatorHardware } from "./RadiatorHardware";
 import { SystemMeshes } from "./SystemMeshes";
 import { FanCoilMeshes } from "./FanCoilMeshes";
 import { HydronicMeshes } from "./HydronicMeshes";
+import { AirOutdoorMeshes } from "./AirOutdoorMeshes";
 import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
 import { Html, Line } from "@react-three/drei";
 import { pendingConnections } from "@/domain/ducted/plan-connections";
@@ -566,6 +570,13 @@ export function DeviceMeshes({
           onSelect={onSelect}
         />
       )}
+      <AirOutdoorMeshes
+        project={project}
+        floorId={activeFloorId}
+        showPipes={showHydronicPipes && !isolatedRoomId}
+        selection={selection}
+        onSelect={onSelect}
+      />
       {project.radiators.filter(visible).map((item) => (
         <group
           key={item.id}
@@ -641,8 +652,16 @@ export function DeviceMeshes({
             item.position.x,
             item.kind === "heatPump"
               ? 0.5
-              : (project.rooms.find((room) => room.id === item.roomId)
-                  ?.heightM ?? 2.7) - 0.2,
+              : (() => {
+                  const room = project.rooms.find(
+                    (room) => room.id === item.roomId,
+                  );
+                  return (
+                    (room
+                      ? roomCeilingHeightM(room)
+                      : project.projectSettings.defaultHeightM) - 0.2
+                  );
+                })(),
             item.position.y,
           ]}
           onClick={choose(item.id)}

@@ -3,6 +3,7 @@ import { newId } from "@/domain/project";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { pointInPolygon } from "@/domain/geometry/primitives";
 import { calculateSupplyPlenum } from "./plenum";
+import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
 
 export function placeDuctedMachine(
   project: Project,
@@ -94,7 +95,7 @@ export function placeSupplyPlenum(project: Project, systemId: string): Project {
     heightMm: geometry.bodyHeightMm,
     depthMm: geometry.totalDepthMm,
     elevationM:
-      room.heightM -
+      roomCeilingHeightM(room) -
       Math.max(machine.heightMm, geometry.bodyHeightMm) / 2000 -
       0.05,
     model: `Su misura / ${result.machineModel ?? system.productId}`,
