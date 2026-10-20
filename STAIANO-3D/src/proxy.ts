@@ -121,7 +121,14 @@ export async function proxy(request: NextRequest) {
       );
     }
     const response = NextResponse.next();
-    response.headers.set("Cache-Control", "private, no-store");
+    // The 98 MB model and ORT runtime change only with a release: cache them
+    // for an hour instead of downloading them again for every scan.
+    response.headers.set(
+      "Cache-Control",
+      pathname.startsWith("/models/") || pathname.startsWith("/workers/ort-")
+        ? "private, max-age=3600"
+        : "private, no-store",
+    );
     return response;
   }
   if (

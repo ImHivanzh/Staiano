@@ -26,6 +26,7 @@ dist-exe/
 public/workers/plan.worker.js
 public/workers/project.worker.js
 public/workers/size.worker.js
+public/workers/ort-wasm-simd-threaded.asyncify.*
 license-server/.wrangler/
 dossier-guide/.wrangler/
 license-server/.dev.vars

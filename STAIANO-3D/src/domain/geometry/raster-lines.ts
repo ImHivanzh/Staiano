@@ -10,6 +10,144 @@ type Stroke = {
   oblique?: boolean;
 };
 
+/** Keep thick heuristic strokes only beside the semantic wall evidence. */
+function nearSemanticMask(
+  wall: WallCandidate,
+  mask: Uint8Array,
+  width: number,
+  height: number,
+) {
+  const radius = Math.max(8, (wall.thicknessUnits ?? 0) * 1.5);
+  for (let step = 0; step <= 20; step++) {
+    const x = Math.round(
+        wall.start.x + ((wall.end.x - wall.start.x) * step) / 20,
+      ),
+      y = Math.round(wall.start.y + ((wall.end.y - wall.start.y) * step) / 20);
+    for (let dy = -radius; dy <= radius; dy++)
+      for (let dx = -radius; dx <= radius; dx++) {
+        const px = x + dx,
+          py = y + dy;
+        if (
+          px >= 0 &&
+          px < width &&
+          py >= 0 &&
+          py < height &&
+          mask[py * width + px]
+        )
+          return true;
+      }
+  }
+  return false;
+}
+
+/** Merge collinear segments and the two faces of thick walls into one axis. */
+function clusterWalls(walls: WallCandidate[]) {
+  const tolerance = 6;
+  const groups: WallCandidate[][] = [];
+  for (const wall of [...walls].sort(
+    (a, b) => distance(b.start, b.end) - distance(a.start, a.end),
+  )) {
+    const dx = wall.end.x - wall.start.x,
+      dy = wall.end.y - wall.start.y,
+      length = Math.hypot(dx, dy);
+    if (length < 1e-6) continue;
+    const group = groups.find((items) =>
+      items.some((other) => {
+        const ox = other.end.x - other.start.x,
+          oy = other.end.y - other.start.y,
+          olen = Math.hypot(ox, oy);
+        if (olen < 1e-6) return false;
+        if (Math.abs((dx * ox + dy * oy) / (length * olen)) < 0.995)
+          return false;
+        const nx = -oy / olen,
+          ny = ox / olen;
+        if (
+          Math.abs(
+            wall.start.x * nx +
+              wall.start.y * ny -
+              (other.start.x * nx + other.start.y * ny),
+          ) > tolerance
+        )
+          return false;
+        const gap = Math.max(
+          0,
+          Math.max(
+            Math.min(wall.start.x, wall.end.x),
+            Math.min(other.start.x, other.end.x),
+          ) -
+            Math.min(
+              Math.max(wall.start.x, wall.end.x),
+              Math.max(other.start.x, other.end.x),
+            ),
+          Math.max(
+            Math.min(wall.start.y, wall.end.y),
+            Math.min(other.start.y, other.end.y),
+          ) -
+            Math.min(
+              Math.max(wall.start.y, wall.end.y),
+              Math.max(other.start.y, other.end.y),
+            ),
+        );
+        return gap < 20;
+      }),
+    );
+    if (group) group.push(wall);
+    else groups.push([wall]);
+  }
+  const result: WallCandidate[] = [];
+  for (const items of groups) {
+    const base = items[0],
+      dx = base.end.x - base.start.x,
+      dy = base.end.y - base.start.y,
+      length = Math.hypot(dx, dy),
+      ux = dx / length,
+      uy = dy / length,
+      nx = -uy,
+      ny = ux;
+    let minimum = Infinity,
+      maximum = -Infinity,
+      offset = 0,
+      thickness = 0,
+      thicknessCount = 0,
+      confidence = 0;
+    for (const wall of items) {
+      for (const point of [wall.start, wall.end]) {
+        minimum = Math.min(
+          minimum,
+          (point.x - base.start.x) * ux + (point.y - base.start.y) * uy,
+        );
+        maximum = Math.max(
+          maximum,
+          (point.x - base.start.x) * ux + (point.y - base.start.y) * uy,
+        );
+        offset += (point.x - base.start.x) * nx + (point.y - base.start.y) * ny;
+      }
+      if (wall.thicknessUnits !== null) {
+        thickness += wall.thicknessUnits;
+        thicknessCount++;
+      }
+      confidence = Math.max(confidence, wall.confidence);
+    }
+    const measured = thicknessCount ? thickness / thicknessCount : null;
+    offset /= items.length * 2;
+    result.push({
+      ...base,
+      start: {
+        x: base.start.x + ux * minimum + nx * offset,
+        y: base.start.y + uy * minimum + ny * offset,
+      },
+      end: {
+        x: base.start.x + ux * maximum + nx * offset,
+        y: base.start.y + uy * maximum + ny * offset,
+      },
+      layer: measured === null ? "Contorni da verificare" : "Muri riconosciuti",
+      thicknessUnits: measured,
+      confidence,
+    });
+  }
+  return result.map((wall, index) => ({ ...wall, id: `raster-${index}` }));
+}
+
 /** Local line evidence, not semantic segmentation. Thin outlines stay reviewable.
  * ponytail: straight walls only; curved walls need a dedicated segmenter.
  */
@@ -18,6 +156,7 @@ export function recognizeRaster(
   width: number,
   height: number,
   grayFills = true,
+  semanticMask?: Uint8Array,
 ): PlanAnalysis {
   if (
     !Number.isInteger(width) ||
@@ -27,9 +166,11 @@ export function recognizeRaster(
     width > 2200 ||
     height > 2200 ||
     width * height > 5_000_000 ||
-    pixels.length !== width * height * 4
+    pixels.length !== width * height * 4 ||
+    (semanticMask !== undefined && semanticMask.length !== width * height)
   )
     throw new Error("Raster di analisi non valido o troppo grande.");
+  const semantic = semanticMask !== undefined;
   const size = width * height;
   const gray = new Uint8Array(size);
   for (let i = 0; i < size; i++) {
@@ -45,45 +186,48 @@ export function recognizeRaster(
   const mask = new Uint8Array(size);
   const fillRadius = Math.max(6, Math.round(Math.min(width, height) * 0.08));
   let fillsAdded = false;
-  for (let y = 0; y < height; y++)
-    for (let x = 0; x < width; x++) {
-      const i = y * width + x,
-        value = gray[i];
-      // Keep dark fills, and light ink with local contrast. Flat gray room fills
-      // are not walls. Composite transparency onto white before thresholding.
-      const local = Math.max(
-        gray[y * width + Math.max(0, x - 3)],
-        gray[y * width + Math.min(width - 1, x + 3)],
-        gray[Math.max(0, y - 3) * width + x],
-        gray[Math.min(height - 1, y + 3) * width + x],
-      );
-      const neutral =
-        Math.max(pixels[i * 4], pixels[i * 4 + 1], pixels[i * 4 + 2]) -
-          Math.min(pixels[i * 4], pixels[i * 4 + 1], pixels[i * 4 + 2]) <
-        24;
-      const narrowFill =
-        grayFills &&
-        value < 230 &&
-        neutral &&
-        (Math.min(
-          gray[y * width + Math.max(0, x - fillRadius)],
-          gray[y * width + Math.min(width - 1, x + fillRadius)],
-        ) -
-          value >=
-          20 ||
-          Math.min(
-            gray[Math.max(0, y - fillRadius) * width + x],
-            gray[Math.min(height - 1, y + fillRadius) * width + x],
+  if (semanticMask) {
+    for (let i = 0; i < size; i++) mask[i] = semanticMask[i] ? 1 : 0;
+  } else
+    for (let y = 0; y < height; y++)
+      for (let x = 0; x < width; x++) {
+        const i = y * width + x,
+          value = gray[i];
+        // Keep dark fills, and light ink with local contrast. Flat gray room fills
+        // are not walls. Composite transparency onto white before thresholding.
+        const local = Math.max(
+          gray[y * width + Math.max(0, x - 3)],
+          gray[y * width + Math.min(width - 1, x + 3)],
+          gray[Math.max(0, y - 3) * width + x],
+          gray[Math.min(height - 1, y + 3) * width + x],
+        );
+        const neutral =
+          Math.max(pixels[i * 4], pixels[i * 4 + 1], pixels[i * 4 + 2]) -
+            Math.min(pixels[i * 4], pixels[i * 4 + 1], pixels[i * 4 + 2]) <
+          24;
+        const narrowFill =
+          grayFills &&
+          value < 230 &&
+          neutral &&
+          (Math.min(
+            gray[y * width + Math.max(0, x - fillRadius)],
+            gray[y * width + Math.min(width - 1, x + fillRadius)],
           ) -
             value >=
-            20);
-      if (narrowFill && value >= 110 && !(value < 247 && local - value >= 8))
-        fillsAdded = true;
-      mask[i] =
-        value < 110 || narrowFill || (value < 247 && local - value >= 8)
-          ? 1
-          : 0;
-    }
+            20 ||
+            Math.min(
+              gray[Math.max(0, y - fillRadius) * width + x],
+              gray[Math.min(height - 1, y + fillRadius) * width + x],
+            ) -
+              value >=
+              20);
+        if (narrowFill && value >= 110 && !(value < 247 && local - value >= 8))
+          fillsAdded = true;
+        mask[i] =
+          value < 110 || narrowFill || (value < 247 && local - value >= 8)
+            ? 1
+            : 0;
+      }
   const minimum = Math.max(18, Math.min(width, height) * 0.025);
   const at = (x: number, y: number) => {
     x = Math.round(x);
@@ -622,6 +766,7 @@ export function recognizeRaster(
     // Strong automatic evidence requires an actual dark, thick stroke. Two
     // outline faces (also used by furniture/dimensions) never suffice alone.
     if (
+      !semantic &&
       both &&
       w.confidence >= 0.7 &&
       w.kind === "raster-axis" &&
@@ -695,14 +840,37 @@ export function recognizeRaster(
       continue;
     deduplicated.push(candidate);
   }
+  let finalWalls = deduplicated;
+  if (semantic && semanticMask) {
+    // The model misses some thick, hatched walls. Keep those only when they sit
+    // beside its evidence, then merge parallel faces into a single axis.
+    const heuristic = recognizeRaster(pixels, width, height);
+    const kept = heuristic.walls
+      .filter(
+        (wall) =>
+          wall.thicknessUnits !== null &&
+          (nearSemanticMask(wall, semanticMask, width, height) ||
+            (wall.thicknessUnits >= 5 &&
+              distance(wall.start, wall.end) >=
+                Math.min(width, height) * 0.25)),
+      )
+      .map((wall) => ({
+        ...wall,
+        confidence: Math.min(0.7, wall.confidence),
+        reason: `${wall.reason} Tratto spesso coerente con la segmentazione AI.`,
+      }));
+    finalWalls = clusterWalls([...deduplicated, ...kept]);
+  }
   return {
-    walls: deduplicated,
+    walls: finalWalls,
     openings: [],
     notes: [
-      "Riconoscimento locale di tratti pieni, facce parallele e linee sottili, anche oblique. I punteggi indicano evidenza euristica.",
+      semantic
+        ? "Muri vettorizzati dalla segmentazione semantica AI locale; i tratti spessi coerenti con la maschera vengono conservati e unificati. Arredi e testo sottili restano esclusi."
+        : "Riconoscimento locale di tratti pieni, facce parallele e linee sottili, anche oblique. I punteggi indicano evidenza euristica.",
       "I muri arancioni richiedono verifica: quote, arredi e cartigli possono avere la stessa geometria. Selezionare una sola pianta nell’area da riconoscere.",
       "Scala, spessori, aperture e altezze vanno verificati su misure reali; le interruzioni non vengono chiuse automaticamente.",
-      ...(result.length
+      ...(finalWalls.length
         ? []
         : [
             "Nessun muro affidabile riconosciuto: utilizzare l’editor manuale.",

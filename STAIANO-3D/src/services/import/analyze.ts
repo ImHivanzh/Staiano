@@ -22,7 +22,7 @@ async function recognize(
             "Analisi troppo complessa: selezionare una sola planimetria.",
           ),
         );
-      }, 30000);
+      }, 120000);
       worker.onmessage = (
         event: MessageEvent<{
           ok: boolean;

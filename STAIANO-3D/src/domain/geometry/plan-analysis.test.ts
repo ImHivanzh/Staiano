@@ -75,6 +75,47 @@ describe("riconoscimento locale della planimetria", () => {
       result.notes.some((note) => note.includes("Nessun muro affidabile")),
     ).toBe(true);
   });
+  it("la maschera semantica esclude quote e arredi prima della vettorizzazione", () => {
+    const width = 120,
+      height = 80;
+    const pixels = new Uint8ClampedArray(width * height * 4).fill(255);
+    const paint = (x0: number, y0: number, x1: number, y1: number) => {
+      for (let y = y0; y <= y1; y++)
+        for (let x = x0; x <= x1; x++) {
+          const i = (y * width + x) * 4;
+          pixels[i] = pixels[i + 1] = pixels[i + 2] = 0;
+        }
+    };
+    paint(10, 30, 110, 37);
+    paint(60, 30, 67, 75);
+    paint(10, 8, 100, 10);
+    paint(10, 65, 50, 67);
+    const mask = new Uint8Array(width * height);
+    for (let y = 30; y <= 75; y++)
+      for (let x = 10; x <= 110; x++)
+        if ((y <= 37 && x <= 110) || (x >= 60 && x <= 67 && y >= 30))
+          mask[y * width + x] = 1;
+    const heuristic = analyzeRasterPixels(pixels, width, height);
+    const semantic = analyzeRasterPixels(pixels, width, height, true, mask);
+    expect(heuristic.walls.some((w) => w.start.y < 20 || w.end.y < 20)).toBe(
+      true,
+    );
+    expect(semantic.walls.length).toBeGreaterThan(0);
+    expect(
+      semantic.walls.every((w) => Math.min(w.start.y, w.end.y) >= 25),
+    ).toBe(true);
+    expect(semantic.walls.some((w) => Math.min(w.start.y, w.end.y) < 20)).toBe(
+      false,
+    );
+    expect(
+      semantic.walls.some(
+        (w) =>
+          Math.abs(w.start.y - w.end.y) < 2 &&
+          Math.min(w.start.y, w.end.y) > 60,
+      ),
+    ).toBe(false);
+    expect(semantic.notes[0]).toContain("segmentazione semantica AI");
+  });
   it("facce CAD parziali conservano gli assi esatti e il varco senza duplicare la faccia lunga", () => {
     const plan = {
       segments: [
