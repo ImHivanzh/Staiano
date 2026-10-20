@@ -44,7 +44,7 @@ function Copy-ApplicationData {
 }
 Copy-ApplicationData
 # The customer installation never receives the administrative or signing credentials.
-$settings = Get-Content -LiteralPath (Join-Path $sourceRoot '.env.local') | Where-Object { $_ -match '^(LICENSE_(TOLERANCE|CHECK)_MINUTES|STAIANO_CATALOG_SOURCE)=' }
+$settings = @(Get-Content -LiteralPath (Join-Path $sourceRoot '.env.local') | Where-Object { $_ -match '^(LICENSE_(TOLERANCE|CHECK)_MINUTES|STAIANO_CATALOG_SOURCE)=' })
 [IO.File]::WriteAllLines((Join-Path $dataRoot '.env.local'), [string[]]$settings)
 $catalog = Join-Path $sourceRoot 'catalog-data\sources'
 $catalogRoot = Join-Path $dataRoot 'catalog-data'
