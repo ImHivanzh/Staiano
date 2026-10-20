@@ -86,6 +86,35 @@ if (response.status === 404)
 if (!response.ok)
   throw new Error(`Creazione release Codeberg: HTTP ${response.status}.`);
 const release = await response.json();
+// Lo spazio su Codeberg è limitato: si tengono le release più recenti
+// (l'aggiornamento serve solo l'ultima) e si eliminano le più vecchie.
+const KEEP_RELEASES = 3;
+try {
+  const releases = await request("/releases?limit=50");
+  if (releases.ok) {
+    const list = await releases.json();
+    const keep = new Set([
+      release.id,
+      ...list
+        .filter((item) => item.id !== release.id)
+        .slice(0, KEEP_RELEASES - 1)
+        .map((item) => item.id),
+    ]);
+    for (const item of list)
+      if (!keep.has(item.id)) {
+        const removed = await request(`/releases/${item.id}`, {
+          method: "DELETE",
+        });
+        console.log(
+          removed.ok
+            ? `Release precedente eliminata: ${item.tag_name}`
+            : `Release ${item.tag_name} non eliminata: HTTP ${removed.status}`,
+        );
+      }
+  }
+} catch (error) {
+  console.warn(`Pulizia release precedenti non riuscita: ${error.message}`);
+}
 const assetsResponse = await request(`/releases/${release.id}/assets`);
 if (!assetsResponse.ok)
   throw new Error(`Elenco allegati: HTTP ${assetsResponse.status}.`);
