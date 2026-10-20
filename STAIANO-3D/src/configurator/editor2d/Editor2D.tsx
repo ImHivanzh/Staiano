@@ -9,6 +9,7 @@ import {
 import type { Point, Project, Selection } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { addWall, moveWall } from "@/domain/project";
+import { addCurvedWall, curvedWallPoints } from "@/domain/geometry/curved-wall";
 import { RecalibrationDialog } from "../RecalibrationDialog";
 import {
   add,
@@ -127,6 +128,7 @@ export function Editor2D({
   const [view, setView] = useState<View>({ x: -2, y: -2, w: 14, h: 10 });
   const [anchor, setAnchor] = useState<Point | null>(null),
     [chainStart, setChainStart] = useState<Point | null>(null);
+  const [curveEnd, setCurveEnd] = useState<Point | null>(null);
   const [cursor, setCursor] = useState<{ point: Point; kind: string } | null>(
       null,
     ),
@@ -209,6 +211,7 @@ export function Editor2D({
     const reset = () => {
       setAnchor(null);
       setChainStart(null);
+      setCurveEnd(null);
       setMeasure(null);
     };
     reset();
@@ -246,6 +249,9 @@ export function Editor2D({
       return { point: raw, kind: "libero" };
     const snapped = snapPoint(raw, walls, anchor, {
       ...snap,
+      ...(tool === "wall-curve" && curveEnd
+        ? { orthogonal: false, angle45: false, parallel: false }
+        : {}),
       toleranceM: view.w / 100,
     });
     const length = Number(exact.replace(",", "."));
@@ -293,7 +299,23 @@ export function Editor2D({
       setMeasure(null);
       return;
     }
-    if (tool === "wall") {
+    if (tool === "wall-curve") {
+      if (!curveEnd) {
+        const end =
+          chainStart && distance(hit, chainStart) <= view.w / 100
+            ? chainStart
+            : hit;
+        if (distance(anchor, end) >= 0.05) setCurveEnd(end);
+        return;
+      }
+      commit((p) => addCurvedWall(p, activeFloorId, anchor, curveEnd, hit));
+      if (useProjectStore.getState().error) return;
+      if (chainStart && samePoint(curveEnd, chainStart)) {
+        setAnchor(null);
+        setChainStart(null);
+      } else setAnchor(curveEnd);
+      setCurveEnd(null);
+    } else if (tool === "wall") {
       const end =
         chainStart && !exact.trim() && distance(hit, chainStart) <= view.w / 100
           ? chainStart
@@ -506,13 +528,34 @@ export function Editor2D({
     configuration?.instruction ??
     (placement
       ? "Clicca nell’ambiente e trascina la bocchetta. Conferma posizione per aggiornare il totale."
-      : tool === "wall"
-        ? "Clic per iniziare. Chiudi sul punto iniziale. Esc termina il tratto."
-        : tool === "measure"
-          ? "Seleziona due punti per misurare."
-          : tool === "calibrate"
-            ? "Seleziona due punti noti della planimetria."
-            : "Seleziona una stanza o trascina una parete. Rotella per zoom.");
+      : tool === "wall-curve"
+        ? !anchor
+          ? "Muro curvo: scegli il punto iniziale."
+          : !curveEnd
+            ? "Muro curvo: scegli il punto finale."
+            : "Scegli un punto attraversato dalla curva. Esc annulla."
+        : tool === "wall"
+          ? "Clic per iniziare. Chiudi sul punto iniziale. Esc termina il tratto."
+          : tool === "measure"
+            ? "Seleziona due punti per misurare."
+            : tool === "calibrate"
+              ? "Seleziona due punti noti della planimetria."
+              : "Seleziona una stanza o trascina una parete. Rotella per zoom.");
+  let curvePreview: Point[] = [];
+  if (tool === "wall-curve" && anchor && curveEnd && cursor) {
+    try {
+      curvePreview = curvedWallPoints(anchor, curveEnd, cursor.point);
+    } catch {
+      curvePreview = [anchor, curveEnd];
+    }
+  }
+  const curveGroups = new Map<string, typeof walls>();
+  for (const wall of walls)
+    if (wall.curveId) {
+      const group = curveGroups.get(wall.curveId) ?? [];
+      group.push(wall);
+      curveGroups.set(wall.curveId, group);
+    }
   return (
     <div className="area-editor">
       <svg
@@ -763,6 +806,26 @@ export function Editor2D({
               onPointerDown={(e) => {
                 if (tool !== "select") return;
                 e.stopPropagation();
+                if (w.curveId && !e.shiftKey) {
+                  const members = curveGroups.get(w.curveId)!;
+                  const selected = members.map((w) => ({
+                    kind: "wall" as const,
+                    id: w.id,
+                  }));
+                  useProjectStore.setState({ selection: selected });
+                  if (members.some((w) => w.locked)) return;
+                  svg.current?.setPointerCapture(e.pointerId);
+                  drag.current = {
+                    type: "group",
+                    selection: selected,
+                    wallId: w.id,
+                    pointerId: e.pointerId,
+                    anchor: world(e.clientX, e.clientY),
+                    view,
+                    delta: { x: 0, y: 0 },
+                  };
+                  return;
+                }
                 const prior = useProjectStore.getState().selection;
                 const group =
                   !e.shiftKey &&
@@ -811,20 +874,34 @@ export function Editor2D({
                     strokeWidth={u}
                   />
                 ))}
-              {showDimensions && (
-                <text
-                  x={x}
-                  y={y - w.thickness / 2 - u * 10}
-                  textAnchor="middle"
-                  fontSize={u * 11}
-                  className="quota-pianta"
-                >
-                  {formatNumber(
-                    project ? wallMeasuredLength(project, w, "internal") : 0,
-                  )}{" "}
-                  m
-                </text>
-              )}
+              {showDimensions &&
+                (!w.curveId ||
+                  curveGroups.get(w.curveId)?.[
+                    Math.floor(curveGroups.get(w.curveId)!.length / 2)
+                  ].id === w.id) && (
+                  <text
+                    x={x}
+                    y={y - w.thickness / 2 - u * (w.curveId ? 30 : 10)}
+                    textAnchor="middle"
+                    fontSize={u * 11}
+                    className="quota-pianta"
+                  >
+                    {formatNumber(
+                      w.curveId
+                        ? curveGroups
+                            .get(w.curveId)!
+                            .reduce(
+                              (sum, wall) =>
+                                sum + distance(wall.start, wall.end),
+                              0,
+                            )
+                        : project
+                          ? wallMeasuredLength(project, w, "internal")
+                          : 0,
+                    )}{" "}
+                    m
+                  </text>
+                )}
             </g>
           );
         })}
@@ -1331,7 +1408,18 @@ export function Editor2D({
               </g>
             );
           })}
-        {anchor && cursor && (
+        {curvePreview.length > 0 && (
+          <polyline
+            data-testid="curve-preview"
+            points={curvePreview.map((p) => `${p.x},${p.y}`).join(" ")}
+            fill="none"
+            className="tratto-provvisorio"
+            strokeWidth={u * 2}
+            strokeDasharray={`${u * 5} ${u * 4}`}
+            pointerEvents="none"
+          />
+        )}
+        {anchor && cursor && !curveEnd && (
           <>
             <line
               x1={anchor.x}
@@ -1448,10 +1536,10 @@ export function Editor2D({
                       : item.kind === "vrv"
                         ? `VRV/VRF da configurare ${index + 1}`
                         : item.kind === "heatPump"
-                        ? `Pompa di calore da configurare ${index + 1}`
-                        : item.kind === "machine"
-                          ? `Macchina da configurare ${index + 1}`
-                          : `Bocchetta da configurare ${index + 1}`
+                          ? `Pompa di calore da configurare ${index + 1}`
+                          : item.kind === "machine"
+                            ? `Macchina da configurare ${index + 1}`
+                            : `Bocchetta da configurare ${index + 1}`
               }
               onClick={
                 configuration
@@ -1514,12 +1602,12 @@ export function Editor2D({
                       : item.kind === "vrv"
                         ? "VRV/VRF"
                         : item.kind === "heatPump"
-                        ? "Pompa di calore"
-                        : item.kind === "machine"
-                          ? "Macchina"
-                          : item.use === "supply"
-                            ? "Mandata"
-                            : "Ripresa"}{" "}
+                          ? "Pompa di calore"
+                          : item.kind === "machine"
+                            ? "Macchina"
+                            : item.use === "supply"
+                              ? "Mandata"
+                              : "Ripresa"}{" "}
                 · Da configurare
               </text>
             </g>

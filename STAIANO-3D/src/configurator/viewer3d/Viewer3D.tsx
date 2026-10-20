@@ -1107,6 +1107,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               >
                 <SceneLighting
                   frame={frame}
+                  rooms={rooms}
                   revision={revision + (cutaway ? 100000 : 0)}
                 />
                 <ArchitectureMeshes
@@ -1206,6 +1207,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     />
                   )}
                 <CameraRig
+                  sync={p ? { projectId: p.id, floorId: activeFloorId, follow: readOnly } : undefined}
                   frame={focusFrame}
                   top={top}
                   fitKey={`${activeFloorId}|${isolatedRoomId ?? ""}|${fitNonce}`}

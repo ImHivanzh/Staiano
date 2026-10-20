@@ -192,7 +192,6 @@ for (const viewport of [
     await page.keyboard.press("Escape");
     await expect(bill).toHaveCount(0);
     await openDisclosure(page, "File");
-    await page.getByRole("checkbox", { name: "Includi render 3D" }).uncheck();
     await page
       .getByRole("button", { name: "Anteprima PDF", exact: true })
       .click();

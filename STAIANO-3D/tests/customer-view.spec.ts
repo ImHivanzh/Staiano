@@ -142,6 +142,59 @@ test("separate customer window receives edits and undo without exposing editor c
   await expect(client.getByRole("heading", { level: 1 })).not.toHaveText(
     "Progetto TV live",
   );
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  const operatorCanvas = page.getByTestId("viewer-3d").locator("canvas");
+  await expect(operatorCanvas).toHaveAttribute("data-rendered", "true");
+  const before = await operatorCanvas.getAttribute("data-camera-position");
+  const box = (await operatorCanvas.boundingBox())!;
+  await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
+  await page.mouse.down();
+  await page.mouse.move(box.x + box.width * 0.7, box.y + box.height * 0.6, {
+    steps: 12,
+  });
+  await page.mouse.up();
+  await expect(operatorCanvas).not.toHaveAttribute(
+    "data-camera-position",
+    before!,
+  );
+  const synchronized = async () => {
+    await expect
+      .poll(
+        async () =>
+          (await client
+            .locator("canvas")
+            .getAttribute("data-camera-position")) ===
+          (await operatorCanvas.getAttribute("data-camera-position")),
+      )
+      .toBe(true);
+    await expect
+      .poll(async () => {
+        const operator = (await operatorCanvas.getAttribute(
+          "data-camera-quaternion",
+        ))!
+          .split(",")
+          .map(Number);
+        const customer = (await client
+          .locator("canvas")
+          .getAttribute("data-camera-quaternion"))!
+          .split(",")
+          .map(Number);
+        return operator.every(
+          (value, index) => Math.abs(value - customer[index]) < 1e-6,
+        );
+      })
+      .toBe(true);
+  };
+  await synchronized();
+  await page.mouse.wheel(0, -350);
+  await synchronized();
+  await page.mouse.down({ button: "right" });
+  await page.mouse.move(box.x + box.width * 0.6, box.y + box.height * 0.5, {
+    steps: 8,
+  });
+  await page.mouse.up({ button: "right" });
+  await synchronized();
   await client
     .getByRole("button", { name: "Schermo intero", exact: true })
     .click();

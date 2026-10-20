@@ -200,7 +200,6 @@ test("Innova M7 and Gree outdoor heat pump are real editable objects with summar
   await page
     .getByRole("combobox", { name: "Tipo dossier" })
     .selectOption("summary");
-  await page.getByLabel("Includi render 3D").uncheck();
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: "Dossier PDF", exact: true }).click();
   expect((await download).suggestedFilename()).toContain("sintetico");

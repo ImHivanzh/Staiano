@@ -13,6 +13,7 @@ import { createRequire } from "node:module";
 import path from "node:path";
 import { gzipSync } from "node:zlib";
 import bytenode from "bytenode";
+import { executableIcon } from "./executable-icon.mjs";
 
 if (
   process.platform !== "win32" ||
@@ -223,6 +224,7 @@ try {
   });
   const exe = path.join(output, "StaianoHVAC.exe");
   await cp(process.execPath, exe);
+  await executableIcon(exe, path.join(root, "deploy", "staiano.ico"));
   execFileSync(
     process.execPath,
     [

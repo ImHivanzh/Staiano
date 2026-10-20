@@ -118,6 +118,20 @@ it("connects a terminal in a new room without selecting served rooms beforehand"
   expect(() => decodeProject(encodeProject(connected))).not.toThrow();
 });
 
+it("connects configured devices across an undrawn gap while retaining floor checks and save compatibility", () => {
+  let p = fixture();
+  p = addRectangle(p, p.floors[0].id, { width: 6, length: 5, height: 2.7, name: "Stanza separata", origin: { x: 20, y: 0 } });
+  const room = p.rooms.find(r => r.centroid.x > 20)!;
+  p = saveTerminalOnPlan(p, { ...input(p), roomId: room.id }, room.centroid);
+  const terminalId = p.airTerminals.at(-1)!.id;
+  const connected = connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id);
+  expect(connected.airTerminals.find(t => t.id === terminalId)?.systemId).toBe(p.hvacSystems[0].id);
+  expect(airConnectionRoutes(connected, p.floors[0].id)[0].points.length).toBeGreaterThan(1);
+  expect(() => decodeProject(encodeProject(connected))).not.toThrow();
+  p.airTerminals.at(-1)!.floorId = "another-floor";
+  expect(() => connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id)).toThrow(/stesso piano/);
+});
+
 it("shows graphical connections in 3D along the same plan route without changing project data", () => {
   const base = fixture();
   const saved = saveTerminalOnPlan(base, input(base), { x: 4, y: 2 });

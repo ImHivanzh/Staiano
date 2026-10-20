@@ -6,6 +6,7 @@ import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import * as THREE from "three";
 import type { Room, Wall } from "@/schemas/project";
 import { cameraCutWalls, type SceneFrame } from "./scene-layout";
+import { useCustomerCamera } from "./customer-camera";
 
 export function CameraRig({
   frame,
@@ -18,6 +19,7 @@ export function CameraRig({
   viewRotation,
   underside,
   animate = false,
+  sync,
 }: {
   frame: SceneFrame;
   top: boolean;
@@ -29,10 +31,35 @@ export function CameraRig({
   viewRotation?: number;
   underside?: boolean;
   animate?: boolean;
+  sync?: { projectId: string; floorId: string; follow: boolean };
 }) {
   const { camera, size, invalidate } = useThree();
   const controls = useRef<OrbitControlsImpl>(null);
   const previous = useRef("");
+  const lastBroadcast = useRef({ time: 0, value: "" });
+  const follow = sync?.follow ?? false;
+  useEffect(() => {
+    if (!follow) return;
+    const apply = () => {
+      const { camera: remote } = useCustomerCamera.getState();
+      if (
+        !remote ||
+        remote.projectId !== sync?.projectId ||
+        remote.floorId !== sync?.floorId ||
+        !controls.current ||
+        !(camera instanceof THREE.PerspectiveCamera)
+      )
+        return;
+      camera.position.fromArray(remote.position);
+      camera.fov = remote.fov;
+      camera.updateProjectionMatrix();
+      controls.current.target.fromArray(remote.target);
+      controls.current.update();
+      invalidate();
+    };
+    apply();
+    return useCustomerCamera.subscribe(apply);
+  }, [follow, sync?.projectId, sync?.floorId, camera, invalidate]);
   const lastCutPosition = useRef(new THREE.Vector2(NaN, NaN));
   useEffect(() => {
     lastCutPosition.current.set(NaN, NaN);
@@ -48,6 +75,13 @@ export function CameraRig({
   } | null>(null);
   useEffect(() => {
     if (!(camera instanceof THREE.PerspectiveCamera)) return;
+    const remote = useCustomerCamera.getState().camera;
+    if (
+      follow &&
+      remote?.projectId === sync?.projectId &&
+      remote?.floorId === sync?.floorId
+    )
+      return;
     const base = frame.base ?? 0;
     const target = new THREE.Vector3(
       (frame.minX + frame.maxX) / 2,
@@ -62,7 +96,7 @@ export function CameraRig({
             underside ? -0.65 : 0.38,
             0.45 * Math.sin(viewRotation) + Math.cos(viewRotation),
           )
-        : new THREE.Vector3(1, 0.92, 1.2);
+        : new THREE.Vector3(1, 0.72, 1.2);
     direction.normalize();
     const right = new THREE.Vector3()
       .crossVectors(new THREE.Vector3(0, 1, 0), direction)
@@ -127,6 +161,9 @@ export function CameraRig({
     fitKey,
     invalidate,
     animate,
+    follow,
+    sync?.projectId,
+    sync?.floorId,
   ]);
   useFrame(() => {
     if (motion.current && controls.current) {
@@ -144,13 +181,55 @@ export function CameraRig({
       }
     }
     if (
+      sync &&
+      !follow &&
+      controls.current &&
+      camera instanceof THREE.PerspectiveCamera
+    ) {
+      const now = performance.now();
+      const position = camera.position.toArray();
+      const target = controls.current.target.toArray();
+      const value = [
+        sync.projectId,
+        sync.floorId,
+        ...position.map((n) => n.toFixed(5)),
+        ...target.map((n) => n.toFixed(5)),
+        camera.fov,
+        top,
+      ].join("|");
+      if (
+        now - lastBroadcast.current.time >= 33 &&
+        value !== lastBroadcast.current.value
+      ) {
+        lastBroadcast.current = { time: now, value };
+        useCustomerCamera.setState({
+          camera: {
+            projectId: sync.projectId,
+            floorId: sync.floorId,
+            position,
+            target,
+            fov: camera.fov,
+            top,
+          },
+        });
+      } else if (value !== lastBroadcast.current.value) {
+        // Demand rendering must flush the final camera position after throttling.
+        invalidate();
+      }
+    }
+    if (
       lastCutPosition.current.x === camera.position.x &&
       lastCutPosition.current.y === camera.position.z
     )
       return;
     lastCutPosition.current.set(camera.position.x, camera.position.z);
     const ids = cutaway
-      ? cameraCutWalls(walls, rooms, camera.position, top)
+      ? cameraCutWalls(
+          walls,
+          rooms,
+          camera.position,
+          follow ? (useCustomerCamera.getState().camera?.top ?? top) : top,
+        )
       : new Set<string>();
     const key = [...ids].join("|");
     if (previous.current !== key) {
@@ -162,6 +241,7 @@ export function CameraRig({
     <OrbitControls
       ref={controls}
       makeDefault
+      enabled={!follow}
       enableDamping
       dampingFactor={0.12}
       minDistance={0.2}

@@ -3,14 +3,18 @@ import { useMemo } from "react";
 import { Environment, Lightformer, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import type { SceneFrame } from "./scene-layout";
+import type { Room } from "@/schemas/project";
+import { SiteContext } from "./SiteContext";
 
 /** A local studio environment: no remote HDRI or runtime network dependency. */
 export function SceneLighting({
   frame,
   revision,
+  rooms,
 }: {
   frame: SceneFrame;
   revision: number;
+  rooms: readonly Room[];
 }) {
   const x = (frame.minX + frame.maxX) / 2,
     z = (frame.minZ + frame.maxZ) / 2;
@@ -22,14 +26,15 @@ export function SceneLighting({
   }, [x, z]);
   return (
     <>
-      <color attach="background" args={["#e8e5df"]} />
-      <hemisphereLight color="#e4edff" groundColor="#c1ad92" intensity={1.1} />
-      <ambientLight intensity={0.15} />
+      <color attach="background" args={["#dce5e8"]} />
+      <fog attach="fog" args={["#dce5e8", span * 3, span * 16]} />
+      <hemisphereLight color="#daeaff" groundColor="#9b9471" intensity={1.25} />
+      <ambientLight intensity={0.12} />
       <primitive object={target} />
       <directionalLight
         target={target}
-        position={[x - span * 0.65, span + frame.height * 2, z - span * 0.45]}
-        intensity={2.4}
+        position={[x - span * 0.8, span * 0.9 + frame.height, z - span * 0.6]}
+        intensity={2.8}
         color="#fff2dc"
         castShadow
         shadow-mapSize={[2048, 2048]}
@@ -43,7 +48,7 @@ export function SceneLighting({
         shadow-bias={-0.0001}
         shadow-radius={3}
       />
-      <Environment resolution={128} frames={1} environmentIntensity={0.45}>
+      <Environment resolution={128} frames={1} environmentIntensity={0.65}>
         <color attach="background" args={["#b8b3aa"]} />
         <Lightformer
           form="rect"
@@ -70,22 +75,15 @@ export function SceneLighting({
           scale={[10, 10, 1]}
         />
       </Environment>
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[x, -0.065, z]}
-        receiveShadow
-      >
-        <planeGeometry args={[span * 30, span * 30]} />
-        <meshStandardMaterial color="#e8e5df" roughness={1} />
-      </mesh>
+      <SiteContext rooms={rooms} x={x} z={z} span={span} />
       <ContactShadows
         key={revision}
-        position={[x, -0.063, z]}
+        position={[x, -0.338, z]}
         scale={span * 1.7}
         far={frame.height + 0.5}
-        opacity={0.38}
-        blur={2.2}
-        resolution={512}
+        opacity={0.45}
+        blur={2.8}
+        resolution={1024}
         frames={1}
         color="#554c40"
       />

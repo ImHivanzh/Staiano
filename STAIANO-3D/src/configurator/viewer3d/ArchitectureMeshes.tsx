@@ -133,15 +133,17 @@ function RoomFloor({
           onSelect({ kind: "room", id: room.id });
         }}
       >
-        <meshStandardMaterial
+        <meshPhysicalMaterial
           attach="material-0"
           map={tiled ? textures.stone : textures.wood}
           normalMap={tiled ? textures.stoneNormal : textures.woodNormal}
-          normalScale={new THREE.Vector2(0.12, 0.12)}
+          normalScale={new THREE.Vector2(0.2, 0.2)}
           roughnessMap={
             tiled ? textures.stoneRoughness : textures.woodRoughness
           }
-          roughness={0.9}
+          roughness={tiled ? 0.82 : 0.65}
+          clearcoat={tiled ? 0 : 0.12}
+          clearcoatRoughness={0.5}
           color="#ffffff"
         />
         <meshStandardMaterial

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Una guida al tuo dossier Staiano: ambienti, impianti, materiali e verifiche da leggere prima di procedere."
+    />
+    <meta name="robots" content="noindex" />
+    <title>Il tuo dossier · Staiano</title>
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/guide.css" />
+    <script type="module" src="/guide.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#contenuto">Vai al contenuto</a>
+    <header class="masthead">
+      <a class="brand" href="/" aria-label="Staiano, guida al dossier"
+        ><img
+          src="/logo.svg"
+          alt="Termoidraulica Staiano"
+          width="64"
+          height="56"
+        /><span><strong>STAIANO</strong><small>TERMOIDRAULICA</small></span></a
+      ><span>Guida al dossier</span>
+    </header>
+    <main id="contenuto" tabindex="-1">
+      <section class="intro" aria-labelledby="titolo">
+        <h1 id="titolo">
+          Il tuo dossier,<br />
+          spiegato bene.
+        </h1>
+        <p class="lead">
+          Il dossier raccoglie le scelte del progetto e i dati che le
+          accompagnano. Qui trovi una chiave di lettura per discuterli con il
+          tuo installatore.
+        </p>
+        <a class="jump" href="#come-leggerlo"
+          >Scopri come leggerlo
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v16m-6-6 6 6 6-6" /></svg
+        ></a>
+      </section>
+      <section class="project" aria-labelledby="progetto-titolo">
+        <div class="project-heading">
+          <h2 id="progetto-titolo">Il progetto nel documento</h2>
+          <p id="snapshot-status" role="status">
+            Apri il QR della copertina per vedere il riepilogo del tuo progetto.
+          </p>
+        </div>
+        <div id="snapshot" hidden>
+          <h3 id="project-name"></h3>
+          <p id="project-date"></p>
+          <dl class="measures" id="measures"></dl>
+          <p class="checks" id="checks"></p>
+          <div class="project-detail">
+            <div>
+              <h4>Ambienti rappresentati</h4>
+              <p id="rooms"></p>
+            </div>
+            <div>
+              <h4>Apparecchi inseriti</h4>
+              <p id="systems"></p>
+            </div>
+          </div>
+          <p class="caption">
+            Fotografia dei dati al momento dell’esportazione. Per i dettagli e
+            gli aggiornamenti fa fede il documento ricevuto.
+          </p>
+        </div>
+      </section>
+      <section
+        class="reading"
+        id="come-leggerlo"
+        aria-labelledby="leggere-titolo"
+      >
+        <div class="reading-heading">
+          <h2 id="leggere-titolo">Cosa trovi<br />nel dossier</h2>
+          <p>
+            Parti dal quadro generale, poi entra nei singoli ambienti. La
+            numerazione delle pagine e l’indice del PDF ti guidano ai dettagli.
+          </p>
+          <p id="variant-note">
+            Il dossier sintetico riassume le scelte. Quello completo aggiunge
+            tavole, percorsi, schede e provenienze.
+          </p>
+        </div>
+        <div class="chapters">
+          <article>
+            <h3>Planimetrie e ambienti</h3>
+            <p>
+              La disposizione degli apparecchi, le misure, le superfici e i
+              volumi degli ambienti rappresentati. La pianta può essere
+              parziale: gli spazi non disegnati non sono misurati.
+            </p>
+          </article>
+          <article>
+            <h3>Fabbisogno e scelte impiantistiche</h3>
+            <p>
+              La stima convenzionale del calore necessario e le macchine
+              inserite. Il fabbisogno calcolato e la potenza dell’apparecchio
+              sono due dati distinti.
+            </p>
+          </article>
+          <article>
+            <h3>Apparecchi, plenum e collegamenti</h3>
+            <p>
+              Modelli, dimensioni, portate e collegamenti configurati. Le sigle
+              sulle tavole richiamano gli stessi apparecchi nelle schede e nella
+              distinta.
+            </p>
+            <p>
+              Le linee di associazione indicano quale macchina serve una
+              bocchetta; i canali tecnici descrivono un percorso. Un tratto su
+              una zona non disegnata richiede verifica sul posto.
+            </p>
+          </article>
+          <article>
+            <h3>Materiali e accessori</h3>
+            <p>
+              Le quantità raggruppate per articolo e le voci accessorie
+              configurate. Controlla le unità: pezzi, metri, elementi e kit non
+              sono intercambiabili.
+            </p>
+          </article>
+          <article>
+            <h3>Controlli e provenienze</h3>
+            <p>
+              Gli errori, gli avvisi e i dati ancora da verificare, con i
+              riferimenti ai cataloghi disponibili. Un dato assente resta da
+              confermare prima di ordinare o installare.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="interpretation" aria-labelledby="simboli-titolo">
+        <h2 id="simboli-titolo">Tre indicazioni da riconoscere</h2>
+        <dl class="states">
+          <div>
+            <dt>Valido</dt>
+            <dd>
+              Il controllo automatico è superato sui dati disponibili. Non è una
+              certificazione dell’impianto.
+            </dd>
+          </div>
+          <div>
+            <dt>Avviso</dt>
+            <dd>
+              Una scelta o un dato richiede attenzione. Leggi il messaggio
+              associato prima di procedere.
+            </dd>
+          </div>
+          <div>
+            <dt>Errore</dt>
+            <dd>
+              Un’incompatibilità o un dato mancante deve essere risolto nel
+              progetto.
+            </dd>
+          </div>
+        </dl>
+      </section>
+      <aside class="note">
+        <h2>Prima di procedere</h2>
+        <p>
+          Il dossier è preliminare. Il criterio di 35 W/m³ stima il fabbisogno
+          dal volume netto; non sostituisce il calcolo delle dispersioni né un
+          progetto esecutivo. Finiture e ambientazione 3D sono illustrative.
+          Misure, posa, condizioni nominali e disponibilità commerciale vanno
+          verificati da un tecnico prima dell’ordine e dell’esecuzione.
+        </p>
+      </aside>
+    </main>
+    <footer>
+      <img src="/logo.svg" alt="Staiano" width="110" height="38" />
+      <p>Una guida da tenere accanto al documento.</p>
+      <details>
+        <summary>Come vengono letti i dati del QR</summary>
+        <p>
+          Il QR contiene un riepilogo cifrato con AES-256-GCM. Il servizio
+          Staiano lo decifra nel Worker Cloudflare usando una chiave privata
+          segreta. La richiesta viaggia su HTTPS e il
+          riepilogo non viene archiviato dal servizio. Chi riceve il PDF o il
+          collegamento può aprirlo. Nessun allegato o disegno viene caricato.
+        </p>
+      </details>
+    </footer>
+  </body>
+</html>

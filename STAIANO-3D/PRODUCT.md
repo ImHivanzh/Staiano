@@ -27,7 +27,7 @@ Per la ripresa la scelta principale è EGA6 con chiusura Push a richiesta. Il li
 di 37 dB(A) vale soltanto per la mandata. La ripresa complessiva si confronta con
 la portata totale della macchina; dimensioni e distribuzione sono scelte dall’operatore.
 La vista cliente si apre in una finestra separata sullo stesso computer e browser,
-da spostare sulla TV collegata. Mostra il modello live senza i controlli del configuratore.
+da spostare sulla TV collegata. Mostra il modello live senza i controlli del configuratore; rotazione, zoom e spostamento seguono la camera dell’operatore.
 
 ## Capabilities and Constraints
 
@@ -35,9 +35,19 @@ Next.js 16, React, CSS condiviso Staiano e CSS specifico dell'applicativo. Edito
 
 I progetti condivisi passano all’archivio server con accesso assegnato agli utenti registrati, blocco esclusivo per scheda, controllo delle revisioni e registro delle modifiche. Gli ambienti del canalizzato vengono ricavati dalle bocchette collegate; non richiedono selezione preventiva. In 3D il clic apre la configurazione dell’apparecchio, Collega associa macchina e bocchetta e una parete selezionata permette di inserire una porta. I cataloghi radiatori e stufe espongono modelli e finiture a pulsanti con immagini ufficiali; il catalogo stufe è disponibile anche nella vista cliente.
 
+Il disegno distingue Muro dritto (L) e Muro curvo (U). Per una curva si scelgono inizio, fine e un punto di passaggio, con anteprima prima della conferma. Escape annulla il disegno; Annulla rimuove la curva in una sola operazione. I tratti condividono un identificativo di curva per la selezione complessiva e conservano la compatibilità con salvataggio, modello 3D, PDF e SKP; la geometria è un’approssimazione a corde, non un arco analitico.
+
+File > Scarica modello SKP esporta il piano attivo: sfondo importato calibrato, architettura e geometrie effettive di apparecchi, plenum e canali. Conserva i colori geometrici, senza texture PBR. Richiede SketchUp installato sul server Windows e il bridge locale compilato; non esporta tutti i piani insieme.
+
+I dossier completo e sintetico generati dal browser includono sempre render 3D effettivi; se il render manca, l’esportazione si interrompe con un messaggio esplicito. Viewer ed esportazione condividono terreno, fondazioni, illuminazione naturale e finiture illustrative. Il PDF allinea logo originale a sinistra e QR a destra, centra misure e valori numerici, separa le righe con spazio e campiture leggere e identifica la macchina di ogni plenum con codice, marca e modello.
+
+Il QR apre la guida pubblica https://staiano-dossier.ivanbuonocore7.workers.dev/ con il riepilogo del progetto al momento dell’esportazione. Ogni riepilogo usa una chiave AES-256-GCM e un nonce casuali; RSA-OAEP protegge la chiave AES e la chiave privata resta un segreto del Worker. Il QR contiene solo la busta cifrata, senza disegni o file progetto completi. Link assenti o non validi lasciano accessibile la guida generale; i dati del riepilogo non si aggiornano in tempo reale.
+
 ## Brand Commitments
 
 Nome e logo Staiano esistenti. Interfaccia in italiano. Colori del logo blu, ciano e verde. Il foglio condiviso `public/sistema.css` si distribuisce da un altro progetto: personalizzare qui solo i fogli dell'applicativo.
+
+La guida mostra il simbolo originale e il nome STAIANO. L’icona Windows `deploy/staiano.ico` deriva da `public/logo.svg`, in sette dimensioni da 16 a 256 px; non introduce asset generativi o una nuova identità.
 
 ## Evidence on Hand
 

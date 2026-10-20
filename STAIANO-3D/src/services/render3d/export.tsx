@@ -43,7 +43,7 @@ const noSelection = () => undefined;
 const abortError = () =>
   new DOMException("Esportazione render annullata.", "AbortError");
 
-class RenderBoundary extends Component<
+export class RenderBoundary extends Component<
   { children: React.ReactNode; onError: (error: Error) => void },
   { failed: boolean }
 > {
@@ -196,7 +196,7 @@ function PanoramaScene({
       fallback={<span>WebGL non disponibile per il render 3D.</span>}
     >
       <Suspense fallback={null}>
-        <SceneLighting frame={frame} revision={cutWallIds.size} />
+        <SceneLighting frame={frame} rooms={rooms} revision={cutWallIds.size} />
         <ArchitectureMeshes
           walls={walls}
           rooms={rooms}
@@ -295,7 +295,7 @@ async function renderView(
         () =>
           fail(
             new Error(
-              "Generazione render troppo lenta o WebGL non disponibile. Esportare il dossier senza render e riprovare la vista 3D.",
+              "Render 3D non disponibile o troppo lento. Verifica la vista 3D e riprova: il dossier richiede il render.",
             ),
           ),
         30000,

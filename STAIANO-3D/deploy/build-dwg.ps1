@@ -12,6 +12,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Restore del lettore DWG non riuscito.' }
     & $taskDotnet publish native/DwgBridge/DwgBridge.csproj -c Release -o native/runtime --no-restore --nologo -p:ContinuousIntegrationBuild=true
     if ($LASTEXITCODE -ne 0) { throw 'Build del lettore DWG non riuscita.' }
+    & $taskDotnet publish native/SketchUpBridge/SketchUpBridge.csproj -c Release -o native/runtime --nologo -p:ContinuousIntegrationBuild=true
+    if ($LASTEXITCODE -ne 0) { throw 'Build del bridge SketchUp non riuscita.' }
     Copy-Item -LiteralPath 'native/notices/ACadSharp-MIT.txt' -Destination 'native/runtime/ACadSharp-MIT.txt'
     Write-Output 'Bridge DWG MIT compilato. Nessuna attivazione ODA commerciale.'
 } finally { Pop-Location }

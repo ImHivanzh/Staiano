@@ -13,6 +13,7 @@ import {
   Cursor,
   Hand,
   LineSegment,
+  BezierCurve,
   Ruler,
   Square,
   Trash,
@@ -121,6 +122,7 @@ const tools: {
 }[] = [
   { id: "select", label: "Seleziona", shortcut: "Spazio", icon: Cursor },
   { id: "wall", label: "Disegna muro", shortcut: "L", icon: LineSegment },
+  { id: "wall-curve", label: "Muro curvo", shortcut: "U", icon: BezierCurve },
   { id: "measure", label: "Misura", shortcut: "T", icon: Ruler },
   { id: "pan", label: "Sposta vista", shortcut: "H", icon: Hand },
 ];
@@ -157,9 +159,9 @@ export function Configurator() {
     [ready, setReady] = useState(false),
     [newDialog, setNewDialog] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [skpBusy, setSkpBusy] = useState(false);
   const [sheetsBusy, setSheetsBusy] = useState(false);
   const [sheetsNotice, setSheetsNotice] = useState("");
-  const [includeRenders, setIncludeRenders] = useState(true);
   const [dossierVariant, setDossierVariant] = useState<"complete" | "summary">(
     "complete",
   );
@@ -606,6 +608,23 @@ export function Configurator() {
       );
     }
   }
+  async function downloadSkp() {
+    if (!p) return;
+    setSkpBusy(true);
+    try {
+      await (
+        await import("@/services/render3d/sketchup")
+      ).downloadSketchup(p, s.activeFloorId);
+    } catch (error) {
+      s.setError(
+        error instanceof Error
+          ? error.message
+          : "Esportazione SKP non riuscita.",
+      );
+    } finally {
+      setSkpBusy(false);
+    }
+  }
   async function createPdf(
     preview: boolean,
     variant: "complete" | "summary" = dossierVariant,
@@ -619,7 +638,6 @@ export function Configurator() {
       const { generateDossier, downloadDossier } =
         await import("@/services/pdf/download");
       const options = {
-        includeRenders,
         variant,
         floorId: s.activeFloorId,
         roomId: s.selection.find((item) => item.kind === "room")?.id,
@@ -784,7 +802,7 @@ export function Configurator() {
             }}
           >
             <t.icon aria-hidden="true" />
-            <span>{t.label}</span>
+            <span>{t.id === "wall" ? "Muro dritto" : t.label}</span>
             <kbd>{t.shortcut}</kbd>
           </button>
         ))}
@@ -976,8 +994,7 @@ export function Configurator() {
                       <Columns size={17} aria-hidden="true" />
                     ) : r.systemType === "ducted" ? (
                       <Wind size={17} aria-hidden="true" />
-                    ) : r.systemType === "split" ||
-                      r.systemType === "vrv" ? (
+                    ) : r.systemType === "split" || r.systemType === "vrv" ? (
                       <Snowflake size={17} aria-hidden="true" />
                     ) : (
                       <HouseLine size={17} aria-hidden="true" />
@@ -1205,6 +1222,21 @@ export function Configurator() {
                       <DownloadSimple />
                       Esporta
                     </button>
+                    <button
+                      className="bottone"
+                      disabled={skpBusy}
+                      aria-busy={skpBusy}
+                      title="Piano attivo: planimetria importata, muri, apparecchi e canali. Geometrie e colori di base in formato SketchUp."
+                      onClick={(event) => {
+                        event.currentTarget
+                          .closest("details")
+                          ?.removeAttribute("open");
+                        void downloadSkp();
+                      }}
+                    >
+                      <DownloadSimple />
+                      {skpBusy ? "Preparazione SKP…" : "Scarica modello SKP"}
+                    </button>
                   </>
                 )}
                 <button
@@ -1266,15 +1298,9 @@ export function Configurator() {
                     {sheetsNotice && (
                       <NotificationToast message={sheetsNotice} tone="info" />
                     )}
-                    <label className="opzione-render-pdf">
-                      <input
-                        type="checkbox"
-                        checked={includeRenders}
-                        disabled={pdfBusy}
-                        onChange={(e) => setIncludeRenders(e.target.checked)}
-                      />
-                      Includi render 3D
-                    </label>
+                    <p className="nota">
+                      Il dossier include sempre il render 3D.
+                    </p>
                     <button
                       className="bottone tenue piccolo"
                       onClick={() => setBillOpen(true)}

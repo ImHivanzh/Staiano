@@ -155,7 +155,6 @@ test("unconditioned room remains explicit after reopening and PDF preview downlo
     "Escluso dalla climatizzazione",
   );
   await openDisclosure(page, "File");
-  await page.getByRole("checkbox", { name: "Includi render 3D" }).uncheck();
   let pdfDownloads = 0;
   page.on("download", (download) => {
     if (download.suggestedFilename().endsWith(".pdf")) pdfDownloads++;

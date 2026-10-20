@@ -27,6 +27,7 @@ public/workers/plan.worker.js
 public/workers/project.worker.js
 public/workers/size.worker.js
 license-server/.wrangler/
+dossier-guide/.wrangler/
 license-server/.dev.vars
 license-server/public/webauthn.js
 istruzioni apiduck.txt

@@ -50,7 +50,7 @@ it("routes around a courtyard when both automatic elbows would leave the house",
   ).toBe(true);
 });
 
-it("refuses disconnected buildings and keeps the exterior connection at the nearest entry", () => {
+it("connects through undrawn areas when part of the plan is missing", () => {
   const p = fixture(),
     floorId = p.floors[0].id;
   p.rooms.push({
@@ -63,7 +63,9 @@ it("refuses disconnected buildings and keeps the exterior connection at the near
       { x: 10, y: 2 },
     ],
   });
-  expect(indoorRoute(p, floorId, { x: 1, y: 1 }, { x: 11, y: 1 })).toEqual([]);
+  const start = { x: 1, y: 1 },
+    end = { x: 11, y: 1 };
+  expect(indoorRoute(p, floorId, start, end)).toEqual([start, end]);
   expect(nearestIndoorPoint(p, floorId, { x: 1, y: -1 })).toEqual({
     x: 1,
     y: 0,
@@ -76,6 +78,14 @@ it("refuses disconnected buildings and keeps the exterior connection at the near
       floorRoutingPolygons(p, floorId),
     ),
   ).toBe(false);
+});
+
+it("connects devices when no plan geometry is drawn at all", () => {
+  const p = createProject(),
+    floorId = p.floors[0].id;
+  const start = { x: 0, y: 0 },
+    end = { x: 3, y: 2 };
+  expect(indoorRoute(p, floorId, start, end)).toEqual([start, end]);
 });
 
 it("keeps generated ducts and the interior part of hydronic pipes inside the actual floor", () => {

@@ -56,6 +56,7 @@ export const wallSchema = z.object({
   type: z.enum(["INTERNO", "ESTERNO"]),
   height: finite.positive().max(30).nullable(),
   locked: z.boolean().default(false),
+  curveId: id.optional(),
   recognition: z
     .object({
       confidence: finite.min(0).max(1),

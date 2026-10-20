@@ -8,7 +8,6 @@ import {
 } from "../air-terminals/operator";
 import { linearRunMembers, layoutLinearRun } from "../air-terminals/linear-run";
 import { pointInPolygon } from "../geometry/primitives";
-import { indoorRoute } from "../geometry/indoor-route";
 import { needsTerminalReconfiguration } from "../air-terminals/legacy";
 import { ductedRoomAllocation } from "./apply";
 import { refreshDuctedBindings } from "./refresh";
@@ -405,21 +404,6 @@ export function connectTerminalOnPlan(
       ))
   )
     throw new Error("Collega a una macchina posizionata sullo stesso piano.");
-  if (
-    systemId &&
-    members.some(
-      (member) =>
-        !indoorRoute(
-          project,
-          member.floorId,
-          system!.indoorUnits[0].position,
-          member.position,
-        ).length,
-    )
-  )
-    throw new Error(
-      "Collegamento non valido: verifica geometria, dati macchina e percorso interno.",
-    );
   const ids = new Set(members.map((member) => member.id));
   const plenum = project.plenums.find(
     (plenum) =>

@@ -9,6 +9,10 @@ import { useProjectStore } from "@/stores/project-store";
 import { installationLabels } from "@/domain/installations";
 import styles from "./CustomerView.module.css";
 import { StoveCatalog } from "./systems/StoveCatalog";
+import {
+  customerCameraSchema,
+  useCustomerCamera,
+} from "./viewer3d/customer-camera";
 
 const Viewer3D = dynamic(() => import("./viewer3d/Viewer3D"), { ssr: false });
 export function CustomerView() {
@@ -25,6 +29,11 @@ export function CustomerView() {
     let lastRevision: number | undefined;
     let lastFloor: string | undefined;
     channel.onmessage = (event) => {
+      if (event.data?.type === "camera") {
+        const parsed = customerCameraSchema.safeParse(event.data.camera);
+        if (parsed.success) useCustomerCamera.setState({ camera: parsed.data });
+        return;
+      }
       if (event.data?.type === "closed") {
         setStatus("Configuratore scollegato · ultima vista ricevuta");
         return;

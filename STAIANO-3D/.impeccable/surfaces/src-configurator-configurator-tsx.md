@@ -40,3 +40,11 @@ Shell, pagina iniziale, accesso, comandi 2D/3D, pannelli prodotti, proprietà e 
 ## Simplificazione richiesta dall’utente
 
 Feedback: troppi pulsanti in alto e in basso, percorso poco chiaro, pulsante di avvio wizard assente. La configurazione guidata ora si avvia anche senza importare, apre le proprietà e conserva il passaggio già salvato. File raccoglie salvataggio, esportazione e documenti; Modifica raccoglie operazioni sugli oggetti. Menu alternativi si chiudono all’apertura del successivo, con Escape o clic esterno. Palette e dati restano invariati.
+
+## Estensioni consegnate: disegno ed esportazione
+
+Disegno mantiene Muro dritto (L, nome accessibile preesistente “Disegna muro”) e aggiunge Muro curvo (U). Tre clic definiscono inizio, fine e punto di passaggio; l’anteprima accompagna il terzo punto. Escape annulla e Annulla rimuove la curva con una sola operazione. I segmenti condividono curveId per la selezione complessiva e riusano la geometria a corde compatibile con modello, salvataggio, PDF e SKP. Non sono archi analitici per fabbricazione.
+
+File > Scarica modello SKP esporta soltanto il piano attivo e lo sfondo importato calibrato, usando le mesh effettive di architettura, apparecchi, plenum e canali. Il comando mostra lo stato “Preparazione SKP…”; colori geometrici conservati, texture PBR escluse. Il server Windows richiede SketchUp installato e il bridge locale compilato. Il viewer e i render PDF condividono terreno, fondazioni e affinamenti di luce e materiali; la vista cliente segue orbita, zoom e spostamento dell’operatore.
+
+Verifica riferita dal passaggio d’implementazione: 58 test unitari mirati, test browser combinato PDF/SKP/3D/camera e prova disegno/salvataggio/annullamento curva superati. Evidenze visive: `.impeccable/review/curved-walls.png`, `.impeccable/review/customer-view/desktop.png`, `.impeccable/review/customer-view/ipad.png` e `.impeccable/review/scene/house-oak-cutaway.png`. Nessun cambiamento a cataloghi, dati sorgente o calcoli. L’icona Windows deriva dal logo SVG esistente, senza raster generativi.

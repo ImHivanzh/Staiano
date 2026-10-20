@@ -11,7 +11,8 @@ import {
   recordOperatorChanges,
 } from "@/domain/project-commands";
 
-export type Tool = "select" | "wall" | "measure" | "pan" | "calibrate";
+export type Tool =
+  "select" | "wall" | "wall-curve" | "measure" | "pan" | "calibrate";
 export type PlanPlacementTool =
   | "select"
   | "machine"
@@ -132,7 +133,10 @@ export const useProjectStore = create<State>((set, get) => ({
     const state = get();
     if (!state.project) return;
     if (state.readOnly) {
-      set({ error: "Progetto condiviso in sola lettura. Acquisisci la modifica dal pannello Condividi progetto." });
+      set({
+        error:
+          "Progetto condiviso in sola lettura. Acquisisci la modifica dal pannello Condividi progetto.",
+      });
       return;
     }
     try {

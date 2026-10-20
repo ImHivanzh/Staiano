@@ -35,15 +35,9 @@ export function connectDraftOnPlan(
     (s) => s.id === machineId && s.type === "ducted",
   );
   const unit = machine ?? system?.indoorUnits[0];
-  if (
-    !terminal ||
-    !unit ||
-    terminal.floorId !== unit.floorId ||
-    !indoorRoute(project, terminal.floorId, terminal.position, unit.position)
-      .length
-  )
+  if (!terminal || !unit || terminal.floorId !== unit.floorId)
     throw new Error(
-      "Collega una bocchetta a una macchina sullo stesso piano con percorso interno valido.",
+      "Collega una bocchetta a una macchina sullo stesso piano.",
     );
   const installationId = machine?.installationId ?? system?.installationId;
   if (!installationId)

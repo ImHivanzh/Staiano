@@ -242,7 +242,7 @@ Le bocchette principali sono EDLS, EDFL ed EGA6 Push, con fotografie; “Tutti i
 
 ### Vista cliente
 
-“Apri vista cliente” e “Schermo intero” riusano il pulsante tenue con icona e testo. La finestra mostra il modello aggiornato dal configuratore, con camera indipendente; menu di modifica, cataloghi e proprietà non occupano il canvas. Lo stato live è testo accessibile nell’intestazione; in attesa del progetto compare un messaggio centrale, mentre lo scollegamento mantiene l’ultima vista ricevuta con indicazione esplicita. Il piè di pagina distingue piano e impianti e conserva la nota sulle finiture illustrative.
+“Apri vista cliente” e “Schermo intero” riusano il pulsante tenue con icona e testo. La finestra mostra il modello aggiornato dal configuratore; rotazione, zoom e spostamento seguono la camera dell’operatore. Menu di modifica, cataloghi e proprietà non occupano il canvas. Lo stato live è testo accessibile nell’intestazione; in attesa del progetto compare un messaggio centrale, mentre lo scollegamento mantiene l’ultima vista ricevuta con indicazione esplicita. Il piè di pagina distingue piano e impianti e conserva la nota sulle finiture illustrative.
 
 ### Menu e wizard
 

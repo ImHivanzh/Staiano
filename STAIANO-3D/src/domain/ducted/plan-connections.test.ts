@@ -49,6 +49,15 @@ function fixture(): Project {
   );
 }
 
+it("connects drafts without a path in the drawn plan", () => {
+  const project = fixture();
+  const [machine, terminal] = project.ductedDrafts!;
+  terminal.position = { x: 40, y: 2 };
+  const connected = connectDraftOnPlan(project, terminal.id, machine.id);
+  expect(configurationBlock(connected, machine.id)).toBeNull();
+  expect(connectedRoomIds(connected, machine.id)).toEqual([terminal.roomId]);
+});
+
 it("blocks configuration until connected and preserves links through machine and vent configuration", () => {
   let project = fixture();
   const [machine, terminal] = project.ductedDrafts!;

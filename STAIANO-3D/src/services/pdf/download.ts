@@ -4,7 +4,6 @@ import type { PanoramaOptions } from "@/services/render3d/export";
 import { downloadFile } from "@/services/project/format";
 
 export type DossierDownloadOptions = PanoramaOptions & {
-  includeRenders?: boolean;
   variant?: "complete" | "summary";
 };
 
@@ -18,11 +17,13 @@ export async function generateDossier(
   if (!response.ok)
     throw new Error("Logo Staiano non disponibile: riprovare l'esportazione.");
   const logoSvg = await response.text();
-  const renderImages = options.includeRenders
-    ? await (
-        await import("@/services/render3d/export")
-      ).renderProjectPanoramas(snapshot, options)
-    : undefined;
+  const renderImages = await (
+    await import("@/services/render3d/export")
+  ).renderProjectPanoramas(snapshot, options);
+  if (!renderImages.length)
+    throw new Error(
+      "Il dossier richiede un render 3D. Inserisci la geometria del progetto prima di esportare.",
+    );
   options.signal?.throwIfAborted();
   options.onProgress?.("Composizione dossier PDF");
   const bytes = await renderDossierPdf(snapshot, {
