@@ -18,7 +18,12 @@ import {
   placedPlenumGeometry,
   moveSystemObject,
 } from "./ducted/placement";
-import { ductRoute, generateDuctRoutes } from "./ducted/routes";
+import {
+  ductRoute,
+  generateDuctRoutes,
+  plenumLocalToPlan,
+  setDuctKind,
+} from "./ducted/routes";
 import { plenumTechnicalDrawing } from "./ducted/technical-view";
 import { layoutFromMachineGeometry } from "../configurator/viewer3d/plenum-layout";
 import { addPillar, pillarFootprint } from "./geometry/pillars";
@@ -230,6 +235,30 @@ describe("operator-led configuration acceptance", () => {
       ),
     ).toHaveLength(1);
     expect(decodeProject(encodeProject(p)).ducts).toEqual(p.ducts);
+  });
+
+  it("a flexible duct starts from the plenum collar opening, not from an arbitrary machine face point", () => {
+    let p = guidedProjectFixture();
+    p = addGuidedTerminal(p, 2000);
+    const systemId = p.hvacSystems[0].id;
+    p = generateDuctRoutes(placeSupplyPlenum(p, systemId), systemId);
+    const generated = p.ducts!.find((d) => d.terminalId)!;
+    p = setDuctKind(p, generated.id, "flexible");
+    const flexible = p.ducts!.find((d) => d.id === generated.id)!;
+    const plenum = p.plenums.find((pl) => pl.id === flexible.plenumId)!;
+    const geometry = placedPlenumGeometry(p, plenum)!;
+    const port = geometry.ports.find(
+      (item) => item.branch.id === flexible.branchId,
+    )!;
+    const opening = plenumLocalToPlan(plenum, [
+      port.centerMm[0] / 1000,
+      port.centerMm[1] / 1000,
+      (port.centerMm[2] + port.collarLengthMm) / 1000,
+    ]);
+    const start = ductRoute(p, flexible)[0];
+    expect(start.x).toBeCloseTo(opening.x);
+    expect(start.y).toBeCloseTo(opening.y);
+    expect(start.elevationM).toBeCloseTo(opening.elevationM);
   });
 
   it("a rotated pillar reduces usable area and thermal load once through command, undo and reload", () => {

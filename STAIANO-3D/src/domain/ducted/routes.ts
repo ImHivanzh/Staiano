@@ -243,15 +243,11 @@ export function ductRoute(
     const terminal = project.airTerminals.find((t) => t.id === duct.terminalId);
     const port = geometry?.ports.find((p) => p.branch.id === duct.branchId);
     if (!terminal || !port) return [];
-    const start =
-      duct.kind === "flexible"
-        ? machineDuctStart(project, duct)
-        : plenumLocalToPlan(plenum, [
-            port.centerMm[0] / 1000,
-            port.centerMm[1] / 1000,
-            (port.centerMm[2] + port.collarLengthMm) / 1000,
-          ]);
-    if (!start) return [];
+    const start = plenumLocalToPlan(plenum, [
+      port.centerMm[0] / 1000,
+      port.centerMm[1] / 1000,
+      (port.centerMm[2] + port.collarLengthMm) / 1000,
+    ]);
     const end = { ...terminal.position, elevationM: terminal.elevationM ?? 0 };
     const automatic =
       duct.routing === "manual"
