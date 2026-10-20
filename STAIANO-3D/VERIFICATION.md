@@ -96,10 +96,33 @@ Revocare tutte le sessioni: `node scripts/configure-access.mjs --rotate-session-
   1920 e 1024). Build `RXY3c191kMbBHHl0K82el` verificata su
   `http://127.0.0.1:3015` con header `X-Staiano-Build`.
 
+## Aggiornamento 20 ottobre 2026 — Plenum, flessibili e controsoffitti
+
+- Build `wUi5a7GS5PzpP2GrV3L3x` attiva su `http://127.0.0.1:3015`
+  (`.next-update`) e verificata con header `X-Staiano-Build`.
+- Gate: 601 test unitari su 104 file; TypeScript strict, ESLint, Prettier e
+  build di produzione senza errori.
+- Test Edge superati: plenum verso bocchetta e verso macchina di ripresa,
+  rotazione solidale di 90°, layout a 1920 e 1024 px, tetto a due falde con due
+  fasce ribassate a 1920 e 1024 px, quota dell'unità esterna senza spostare la
+  camera, consigliato aggiornato al cambio di feritoie.
+- Plenum separato, collegabile a una bocchetta di mandata o a una macchina di
+  ripresa, solidale all'elemento collegato e dimensionato sulla macchina.
+- Flessibili 3D con percorso modificabile che parte dalla faccia della macchina;
+  il plenum della bocchetta resta l'estremità di arrivo.
+- Feritoie EDFL contate dal catalogo (tre reali) e profilo da 52 mm con spessore
+  visibile in 3D; il consigliato sostituisce la misura manuale al cambio taglio.
+- Tetto a due falde, controsoffitti a fasce con quote diverse, unità esterna su
+  staffe e vista interna.
+- Cambio parete: aggancio e rotazione ricalcolati anche con snap fine disattivato.
+- Guida pubblica su `https://impianto.staianopoint.com/`, senza riferimenti
+  tecnici al Worker; sorgente canonico su GitLab.
+
 ## Limiti
 
 Il plenum macchina è un progetto di fabbricazione: verificare flange, tenuta,
 rumore e perdite prima di costruire. Il raccordo reale può avere area libera
 diversa dal nominale. Scarico termico/calcoli di potenza restano limiti
 convenzionali dichiarati. Prestazioni assenti ed errori sorgente non vengono
-sostituiti da valori stimati.
+sostituiti da valori stimati. I plenum su misura restano da quotare; l'EXE non
+è stato rigenerato in questo aggiornamento.
