@@ -19,6 +19,7 @@ export type PlanPlacementTool =
   | "point"
   | "connect"
   | "move"
+  | "duct"
   | "radiator"
   | "fanCoil"
   | "heatPump"

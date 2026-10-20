@@ -138,7 +138,8 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   const [renderBusy, setRenderBusy] = useState(false);
   const [plenumOpen, setPlenumOpen] = useState(false);
   const [plenumSystemId, setPlenumSystemId] = useState("");
-  const [channelView, setChannelView] = useState(readOnly);
+  // I canali fanno parte del risultato: visibili subito, disattivabili.
+  const [channelView, setChannelView] = useState(true);
   const [channelPanel, setChannelPanel] = useState(false);
   const [hydronicPanel, setHydronicPanel] = useState(false);
   const [fanCoilPanel, setFanCoilPanel] = useState(false);

@@ -27,6 +27,11 @@ export function DuctPanel({
         esecutiva richiedono verifica. Il flusso animato illustra i
         collegamenti.
       </p>
+      <p className="nota">
+        Per disegnare il canale a mano: strumento <strong>Canale</strong> (K) in
+        pianta, clicca la bocchetta, traccia i punti e premi Invio. Il percorso
+        e la sezione rettangolare compaiono in pianta e in 3D.
+      </p>
       <button
         className="bottone piccolo"
         onClick={() => commit((p) => generateDuctRoutes(p, systemId))}

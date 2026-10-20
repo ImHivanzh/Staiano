@@ -8,6 +8,7 @@ import {
   ArrowUp,
   DotsThree,
   ArrowClockwise,
+  Path as PathIcon,
 } from "@phosphor-icons/react";
 import type { Point, Project, Room } from "@/schemas/project";
 import type { Installation } from "@/domain/installations";
@@ -43,6 +44,7 @@ import { pointInPolygon } from "@/domain/geometry/primitives";
 import { indoorRoute } from "@/domain/geometry/indoor-route";
 import { nearestFootprintEdge } from "@/domain/geometry/footprint";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
+import { ductRoute, setDuctRoute } from "@/domain/ducted/routes";
 import {
   placeMachineOnPlan,
   configureMachineOnPlan,
@@ -67,6 +69,23 @@ import { placeEquipmentDraft } from "@/domain/geometry/equipment-draft";
 import { editOperatorTerminal } from "@/domain/air-terminals/operator";
 import { formatNumber } from "@/utils/format";
 import styles from "./GraphicalDuctedConfigurator.module.css";
+
+/** Contorno del tratto di canale, largo quanto il canale in pianta. */
+function ductSegmentPolygon(start: Point, end: Point, widthM: number) {
+  const dx = end.x - start.x,
+    dy = end.y - start.y,
+    length = Math.hypot(dx, dy);
+  if (length < 1e-6) return null;
+  const half = widthM / 2,
+    nx = (-dy / length) * half,
+    ny = (dx / length) * half;
+  return [
+    `${start.x + nx},${start.y + ny}`,
+    `${end.x + nx},${end.y + ny}`,
+    `${end.x - nx},${end.y - ny}`,
+    `${start.x - nx},${start.y - ny}`,
+  ].join(" ");
+}
 
 export function GraphicalDuctedConfigurator({
   project,
@@ -190,6 +209,9 @@ export function GraphicalDuctedConfigurator({
   const [machineOpen, setMachineOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [cursor, setCursor] = useState<Point | null>(null);
+  // Disegno grafico del canale: bocchetta scelta e punti tracciati in pianta.
+  const [ductTarget, setDuctTarget] = useState<string | null>(null);
+  const [ductPoints, setDuctPoints] = useState<Point[]>([]);
   const saveTerminalButton = useRef<HTMLButtonElement>(null);
   const saveEquipmentButton = useRef<HTMLButtonElement>(null);
   const selectedDraft = drafts.find((item) => item.id === selectedId);
@@ -273,31 +295,49 @@ export function GraphicalDuctedConfigurator({
         hydronicSystems: [],
         equipmentDrafts: [],
       };
+  // Canali sul piano, disegnati a doppia linea come in officina.
+  const planDucts = (project.ducts ?? []).flatMap((duct) => {
+    const plenum = project.plenums.find((pl) => pl.id === duct.plenumId);
+    if (!plenum || plenum.floorId !== room.floorId) return [];
+    const points = ductRoute(project, duct);
+    if (points.length < 2) return [];
+    return [
+      {
+        duct,
+        points,
+        widthM: (duct.widthMm ?? duct.diameterMm ?? 100) / 1000,
+      },
+    ];
+  });
   const instruction =
-    mode === "heatPump"
-      ? "Clicca per inserire la pompa all’esterno. Escape annulla."
-      : mode === "radiator" ||
-          mode === "fanCoil" ||
-          mode === "split" ||
-          mode === "vrv"
-        ? "Clicca per inserire l’apparecchio. Escape annulla."
-        : mode === "machine"
-          ? "Clicca per inserire la macchina. Escape annulla."
-          : mode === "point"
-            ? "Clicca per inserire la bocchetta. Escape annulla."
-            : mode === "connect"
-              ? selectedTerminal
-                ? "Bocchetta selezionata: clicca la macchina. Escape annulla."
-                : selectedMachine
-                  ? "Macchina selezionata: clicca la bocchetta. Escape annulla."
-                  : "Seleziona macchina e bocchetta, in qualsiasi ordine. Escape annulla."
-              : mode === "move"
-                ? "Trascina l’oggetto nella nuova posizione e rilascia per confermare. Escape termina."
-                : selectedTerminal
-                  ? `Bocchetta ${selectedTerminal.family} selezionata. Trascina per spostarla; usa Ruota 90° a soffitto. A parete si orienta spostandola su un’altra parete.`
+    mode === "duct"
+      ? ductTarget
+        ? `Traccia il canale: ${ductPoints.length} punti. Invio salva, Escape annulla.`
+        : "Canale: clicca la bocchetta da servire, poi traccia il percorso in pianta."
+      : mode === "heatPump"
+        ? "Clicca per inserire la pompa all’esterno. Escape annulla."
+        : mode === "radiator" ||
+            mode === "fanCoil" ||
+            mode === "split" ||
+            mode === "vrv"
+          ? "Clicca per inserire l’apparecchio. Escape annulla."
+          : mode === "machine"
+            ? "Clicca per inserire la macchina. Escape annulla."
+            : mode === "point"
+              ? "Clicca per inserire la bocchetta. Escape annulla."
+              : mode === "connect"
+                ? selectedTerminal
+                  ? "Bocchetta selezionata: clicca la macchina. Escape annulla."
                   : selectedMachine
-                    ? "Macchina selezionata. Clicca per modificarla."
-                    : "Seleziona un elemento oppure usa gli strumenti Inserisci e Collega.";
+                    ? "Macchina selezionata: clicca la bocchetta. Escape annulla."
+                    : "Seleziona macchina e bocchetta, in qualsiasi ordine. Escape annulla."
+                : mode === "move"
+                  ? "Trascina l’oggetto nella nuova posizione e rilascia per confermare. Escape termina."
+                  : selectedTerminal
+                    ? `Bocchetta ${selectedTerminal.family} selezionata. Trascina per spostarla; usa Ruota 90° a soffitto. A parete si orienta spostandola su un’altra parete.`
+                    : selectedMachine
+                      ? "Macchina selezionata. Clicca per modificarla."
+                      : "Seleziona un elemento oppure usa gli strumenti Inserisci e Collega.";
   useEffect(() => {
     const cancel = (event: KeyboardEvent) => {
       if (
@@ -322,17 +362,69 @@ export function GraphicalDuctedConfigurator({
         useProjectStore.getState().setError(null);
         return;
       }
+      if (
+        event.key.toLowerCase() === "k" &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey &&
+        !document.querySelector(
+          'dialog[open],[role="dialog"][aria-modal="true"]',
+        ) &&
+        !(
+          event.target instanceof HTMLElement &&
+          (event.target.matches("input,select,textarea") ||
+            event.target.isContentEditable)
+        )
+      ) {
+        event.preventDefault();
+        useProjectStore.getState().setTool("select");
+        setMode("duct");
+        setDuctTarget(null);
+        setDuctPoints([]);
+        setCursor(null);
+        setNotice("");
+        useProjectStore.getState().setError(null);
+        return;
+      }
       if (event.key !== "Escape" || document.querySelector("dialog[open]"))
         return;
       setMode("select");
       setSelectedId(null);
       setCursor(null);
+      setDuctTarget(null);
+      setDuctPoints([]);
       setNotice("Operazione annullata.");
       useProjectStore.getState().setError(null);
     };
     window.addEventListener("keydown", cancel);
     return () => window.removeEventListener("keydown", cancel);
   }, []);
+  // Invio chiude il disegno del canale e salva il percorso tracciato.
+  useEffect(() => {
+    if (mode !== "duct") return;
+    const save = (event: KeyboardEvent) => {
+      if (event.key !== "Enter") return;
+      if (
+        document.querySelector(
+          'dialog[open],[role="dialog"][aria-modal="true"]',
+        )
+      )
+        return;
+      if (!ductTarget || !ductPoints.length) return;
+      event.preventDefault();
+      commit((current) => setDuctRoute(current, ductTarget, ductPoints));
+      if (useProjectStore.getState().error) return;
+      setNotice(
+        "Canale salvato: percorso e sezione compaiono in pianta e in 3D.",
+      );
+      setMode("select");
+      setDuctTarget(null);
+      setDuctPoints([]);
+      setCursor(null);
+    };
+    window.addEventListener("keydown", save);
+    return () => window.removeEventListener("keydown", save);
+  }, [mode, ductTarget, ductPoints, commit]);
   useEffect(
     () =>
       useProjectStore.subscribe((state, previous) => {
@@ -351,6 +443,8 @@ export function GraphicalDuctedConfigurator({
     setMode(next !== "select" && next === mode ? "select" : next);
     setNotice("");
     setCursor(null);
+    setDuctTarget(null);
+    setDuctPoints([]);
     useProjectStore.getState().setError(null);
     if (next !== "move" && next !== "connect") setSelectedId(null);
   }
@@ -382,6 +476,23 @@ export function GraphicalDuctedConfigurator({
     );
     const clickedTerminal = terminals.find((item) => item.id === deviceId);
     const clickedDraft = drafts.find((item) => item.id === draftId);
+    if (mode === "duct") {
+      if (!ductTarget) {
+        const target = terminals.find((item) => item.id === deviceId);
+        if (!target) {
+          setNotice("Clicca la bocchetta da servire, poi traccia il canale.");
+          return;
+        }
+        setDuctTarget(target.id);
+        setDuctPoints([]);
+        setNotice(
+          "Traccia il percorso del canale in pianta. Invio salva, Escape annulla.",
+        );
+        return;
+      }
+      setDuctPoints((points) => [...points, point]);
+      return;
+    }
     if (mode === "connect") {
       const pair = connectionSelection(
         project,
@@ -933,6 +1044,16 @@ export function GraphicalDuctedConfigurator({
             >
               <LinkSimple size={20} aria-hidden="true" />
             </button>
+            <button
+              className={`bottone chiara ${styles.iconButton}`}
+              aria-label="Canale"
+              title="Disegna il canale della bocchetta (K)"
+              aria-keyshortcuts="K"
+              aria-pressed={mode === "duct"}
+              onClick={() => start("duct")}
+            >
+              <PathIcon size={20} aria-hidden="true" />
+            </button>
             {selectedTerminal?.mounting === "ceiling" && (
               <button
                 className={`bottone ${styles.iconButton}`}
@@ -1136,6 +1257,75 @@ export function GraphicalDuctedConfigurator({
                 },
                 backgroundOverlay: (
                   <>
+                    {planDucts.map(({ duct, points, widthM }) => (
+                      <g
+                        key={duct.id}
+                        data-testid="duct-2d"
+                        pointerEvents="none"
+                        aria-hidden="true"
+                      >
+                        {points.slice(1).map((end, index) => {
+                          const polygon = ductSegmentPolygon(
+                            points[index],
+                            end,
+                            widthM,
+                          );
+                          return polygon ? (
+                            <polygon
+                              key={index}
+                              points={polygon}
+                              fill="#eef3f6"
+                              stroke="#243238"
+                              strokeWidth={0.02}
+                              strokeLinejoin="round"
+                            />
+                          ) : null;
+                        })}
+                        {points.slice(1).map((end, index) => (
+                          <circle
+                            key={`joint-${index}`}
+                            cx={end.x}
+                            cy={end.y}
+                            r={widthM / 2}
+                            fill="#eef3f6"
+                            stroke="#243238"
+                            strokeWidth={0.02}
+                          />
+                        ))}
+                        {duct.diameterMm ? (
+                          <circle
+                            cx={points.at(-1)!.x}
+                            cy={points.at(-1)!.y}
+                            r={duct.diameterMm / 2000}
+                            fill="#ffffff"
+                            stroke="#243238"
+                            strokeWidth={0.02}
+                          />
+                        ) : null}
+                      </g>
+                    ))}
+                    {mode === "duct" && ductTarget && (
+                      <g data-testid="duct-preview" pointerEvents="none">
+                        <polyline
+                          points={[...ductPoints, ...(cursor ? [cursor] : [])]
+                            .map((point) => `${point.x},${point.y}`)
+                            .join(" ")}
+                          fill="none"
+                          stroke="var(--tinta)"
+                          strokeWidth={0.03}
+                          strokeDasharray="0.08 0.06"
+                        />
+                        {ductPoints.map((point, index) => (
+                          <circle
+                            key={index}
+                            cx={point.x}
+                            cy={point.y}
+                            r={0.05}
+                            fill="var(--tinta)"
+                          />
+                        ))}
+                      </g>
+                    )}
                     {pointTerminals
                       .filter((item) => item.systemId)
                       .map((terminal) => {

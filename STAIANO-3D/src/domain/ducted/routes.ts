@@ -16,6 +16,17 @@ import { needsTerminalReconfiguration } from "../air-terminals/legacy";
 
 export type RoutePoint = Point & { elevationM: number };
 
+/** Sezione rettangolare equivalente allo stacco circolare, con proporzione 2:1. */
+export function rectangularSection(diameterMm: number) {
+  const heightMm = Math.max(
+    60,
+    Math.ceil(
+      (Math.sqrt((Math.PI * (diameterMm / 1000) ** 2) / 4 / 2) * 1000) / 10,
+    ) * 10,
+  );
+  return { widthMm: Math.max(100, heightMm * 2), heightMm };
+}
+
 export function routeBelowTerminals(
   project: Project,
   floorId: string,
@@ -273,9 +284,13 @@ export function generateDuctRoutes(
       terminalId,
       branchId,
       diameterMm,
-      shape: terminalId ? "circle" : "rectangle",
-      widthMm: terminalId ? null : geometry.inlet!.connectionWidthMm,
-      heightMm: terminalId ? null : geometry.inlet!.connectionHeightMm,
+      shape: "rectangle",
+      widthMm: terminalId
+        ? rectangularSection(diameterMm ?? 100).widthMm
+        : geometry.inlet!.connectionWidthMm,
+      heightMm: terminalId
+        ? rectangularSection(diameterMm ?? 100).heightMm
+        : geometry.inlet!.connectionHeightMm,
       routing: "orthogonal",
       waypoints: [],
       decisionOrigin: "suggested",
@@ -291,6 +306,87 @@ export function generateDuctRoutes(
       if (terminal) add(port.branch.id, terminalId, port.diameterMm);
     }
   return { ...project, ducts: [...preserved, ...ducts] };
+}
+
+/**
+ * Salva il percorso tracciato in pianta per il canale di una bocchetta.
+ * Sezione rettangolare equivalente allo stacco, elevazione del plenum.
+ */
+export function setDuctRoute(
+  project: Project,
+  terminalId: string,
+  points: Point[],
+): Project {
+  const terminal = project.airTerminals.find((item) => item.id === terminalId);
+  if (!terminal || !terminal.systemId)
+    throw new Error("Collegare prima la bocchetta alla macchina.");
+  const plenum =
+    project.plenums.find((pl) => pl.id === terminal.plenumId) ??
+    project.plenums.find(
+      (pl) => pl.systemId === terminal.systemId && pl.use === terminal.use,
+    );
+  if (!plenum)
+    throw new Error(
+      "Creare il plenum di questo lato prima di disegnare il canale.",
+    );
+  if (!points.length)
+    throw new Error("Traccia almeno un punto del canale in pianta.");
+  const geometry = placedPlenumGeometry(project, plenum);
+  const port = geometry?.ports.find((item) =>
+    item.branch.terminalIds.includes(terminal.id),
+  );
+  const elevationM =
+    (plenum.elevationM ?? 2) + (port ? port.centerMm[1] / 1000 : 0);
+  const section = rectangularSection(port?.diameterMm ?? 100);
+  const waypoints = points.map((point) => ({ ...point, elevationM }));
+  // La bocchetta resta agganciata al plenum del proprio lato.
+  const linked: Project =
+    terminal.plenumId === plenum.id
+      ? project
+      : {
+          ...project,
+          airTerminals: project.airTerminals.map((item) =>
+            item.id === terminal.id ? { ...item, plenumId: plenum.id } : item,
+          ),
+        };
+  const existing = (linked.ducts ?? []).find(
+    (duct) => duct.terminalId === terminal.id && duct.plenumId === plenum.id,
+  );
+  if (existing)
+    return {
+      ...linked,
+      ducts: (linked.ducts ?? []).map((duct) =>
+        duct.id === existing.id
+          ? {
+              ...duct,
+              branchId: port?.branch.id ?? duct.branchId,
+              diameterMm: port?.diameterMm ?? duct.diameterMm,
+              shape: "rectangle" as const,
+              widthMm: section.widthMm,
+              heightMm: section.heightMm,
+              routing: "manual" as const,
+              waypoints,
+              decisionOrigin: "manual" as const,
+            }
+          : duct,
+      ),
+    };
+  const duct: Duct = {
+    id: newId(),
+    systemId: terminal.systemId,
+    plenumId: plenum.id,
+    terminalId: terminal.id,
+    branchId: port?.branch.id ?? null,
+    shape: "rectangle",
+    diameterMm: port?.diameterMm ?? null,
+    widthMm: section.widthMm,
+    heightMm: section.heightMm,
+    routing: "manual",
+    waypoints,
+    decisionOrigin: "manual",
+    locked: false,
+  };
+  return { ...linked, ducts: [...(linked.ducts ?? []), duct] };
 }
 
 export const ductLength = (points: RoutePoint[]) =>
