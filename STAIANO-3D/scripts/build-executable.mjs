@@ -170,9 +170,12 @@ try {
     compiled++;
   }
   // Production dependencies are required for Next; no project TS/TSX, maps, credentials or repository metadata may ship.
+  // Il bridge del riconoscitore di planimetrie parte come sorgente con il Python 3.12 del server.
+  const shippedPython = /^native\/PlanRecognizer\/[^/]+\.py$/i;
   const names = await files(runtime);
   for (const name of names) {
     if (
+      !shippedPython.test(name) &&
       /(^|\/)(\.env[^/]*|\.git)(\/|$)|\.map$|\.tsx?$|\.py$|license-private|license\.json|app-auth\.json/i.test(
         name,
       )
