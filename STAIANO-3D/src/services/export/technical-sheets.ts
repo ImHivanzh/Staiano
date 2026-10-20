@@ -61,6 +61,9 @@ export function installedTechnicalSheets(project: Project) {
     );
   }
   for (const system of project.hvacSystems) {
+    // La distribuzione aeraulica del ventilconvettore non è un secondo
+    // apparecchio: scheda, distinta e sorgenti restano quelle dell'unità.
+    if (system.fanCoilId) continue;
     if (system.genericMachine) {
       add(
         system.id,

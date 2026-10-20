@@ -8,6 +8,20 @@ type DuctedSystem = Project["hvacSystems"][number];
 export function resolveDuctedMachine(system: DuctedSystem) {
   if (system.type !== "ducted" || system.compatibilityStatus === "invalid")
     return null;
+  // Il ventilconvettore canalizzabile presta la propria portata alla
+  // distribuzione aeraulica: non è una macchina a espansione diretta.
+  if (system.fanCoilId) {
+    const manual = system.genericMachine;
+    return manual
+      ? {
+          manufacturer: manual.manufacturer,
+          model: manual.model,
+          maxAirflowM3h: manual.maxAirflowM3h,
+          dataOrigin: "fanCoil" as const,
+          product: null,
+        }
+      : null;
+  }
   if (system.genericMachine) {
     const manual = system.genericMachine;
     return {

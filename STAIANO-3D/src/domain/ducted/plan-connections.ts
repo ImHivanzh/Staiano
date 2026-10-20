@@ -3,17 +3,19 @@ import { assignInstallationRooms } from "../installations";
 import { indoorRoute } from "../geometry/indoor-route";
 import { linearRunMembers } from "../air-terminals/linear-run";
 import { needsTerminalReconfiguration } from "../air-terminals/legacy";
+import { fanCoilAirSystem } from "../fan-coils/air";
 
 export function connectedRoomIds(project: Project, machineId: string) {
+  const systemId = fanCoilAirSystem(project, machineId)?.id ?? machineId;
   return [
     ...new Set([
       ...project.airTerminals
         .filter(
-          (t) => t.systemId === machineId || t.pendingMachineId === machineId,
+          (t) => t.systemId === systemId || t.pendingMachineId === systemId,
         )
         .map((t) => t.roomId),
       ...(project.ductedDrafts ?? [])
-        .filter((t) => t.kind === "terminal" && t.machineId === machineId)
+        .filter((t) => t.kind === "terminal" && t.machineId === systemId)
         .map((t) => t.roomId),
     ]),
   ];
@@ -142,6 +144,12 @@ export function hydronicRoomIds(project: Project, pumpId: string) {
   return [
     ...new Set(
       hydronicTargets(project, pumpId).flatMap((target) => {
+        const air = fanCoilAirSystem(project, target.id);
+        if (air)
+          return [
+            target.roomId,
+            ...connectedRoomIds(project, air.id),
+          ];
         const system = project.hvacSystems.find(
           (s) =>
             s.type === "ducted" &&

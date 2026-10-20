@@ -1,11 +1,22 @@
 import type { Project } from "@/schemas/project";
+import { fanCoilAirSystem } from "@/domain/fan-coils/air";
+
+export type PlanConnection = {
+  systemId: string;
+  machineId: string;
+  terminalId: string;
+  /** Collegamento idronico: pompa di calore e terminale ad acqua. */
+  hydronic?: true;
+  /** Collegamento aeraulico: ventilconvettore canalizzabile e bocchetta. */
+  fanCoilId?: string;
+} | null;
 
 /** Same machine/terminal pair regardless of click order. */
 export function connectionSelection(
   project: Project,
   firstId: string | undefined,
   secondId: string,
-) {
+): PlanConnection {
   const ids = [firstId, secondId];
   const system = project.hvacSystems.find(
     (item) =>
@@ -24,6 +35,7 @@ export function connectionSelection(
     project.hydronicSystems
       ?.map((item) => item.outdoorUnit)
       .find((item) => ids.includes(item.id));
+  const fanCoil = project.fanCoils?.find((item) => ids.includes(item.id));
   const waterTerminal = [
     ...project.radiators,
     ...(project.fanCoils ?? []),
@@ -42,6 +54,17 @@ export function connectionSelection(
       terminalId: waterTerminal.id,
       hydronic: true,
     };
+  // Il ventilconvettore canalizzabile è già un terminale idronico: qui si
+  // collega il suo lato aria, non la pompa.
+  if (fanCoil && (terminal || terminalDraft)) {
+    const air = fanCoilAirSystem(project, fanCoil.id);
+    return {
+      systemId: air?.id ?? "",
+      machineId: fanCoil.id,
+      terminalId: (terminal ?? terminalDraft)!.id,
+      fanCoilId: fanCoil.id,
+    };
+  }
   if ((system || machineDraft) && terminalDraft)
     return {
       systemId: system?.id ?? machineDraft!.id,

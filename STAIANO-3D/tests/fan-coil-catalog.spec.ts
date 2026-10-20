@@ -37,6 +37,12 @@ test("FCZ P e PO sono selezionabili con prestazioni e prevalenza distinte", asyn
     exact: true,
   });
   await expect(models.locator("option")).toHaveCount(66);
+  await expect(
+    models.locator('optgroup[label="Ventilconvettori canalizzabili"] option'),
+  ).toHaveCount(66);
+  await expect(
+    models.locator('optgroup[label="Ventilconvettori a parete e a soffitto"]'),
+  ).toHaveCount(0);
   await models.selectOption("aermec-fcz200p");
   await expect(
     popup

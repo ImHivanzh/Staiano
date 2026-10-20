@@ -34,6 +34,34 @@ export function fanCoilControlAtVersion(id: string, version: string) {
   );
 }
 
+export type FanCoilCategory = "ducted" | "ambient";
+
+/**
+ * Serie pubblicate come canalizzabili: Aermec FCZ, FCZ P e FCZ PO (scheda
+ * FCZ-P_I_UN50_16, «canalizzabile con motore potenziato e prevalenza utile»).
+ * Restano ventilconvettori: la categoria separa solo la distribuzione d'aria.
+ */
+const DUCTED_SERIES: Readonly<Record<string, readonly string[]>> = {
+  Aermec: ["FCZ", "FCZ P", "FCZ PO"],
+};
+
+export const fanCoilCategoryLabels: Record<FanCoilCategory, string> = {
+  ducted: "Ventilconvettori canalizzabili",
+  ambient: "Ventilconvettori a parete e a soffitto",
+};
+
+export function fanCoilCategory(product: FanCoilProduct): FanCoilCategory {
+  return DUCTED_SERIES[product.manufacturer]?.includes(product.family)
+    ? "ducted"
+    : "ambient";
+}
+
+/** Ordine di presentazione: prima i canalizzabili, poi gli altri. */
+export const fanCoilCategories: readonly FanCoilCategory[] = [
+  "ducted",
+  "ambient",
+];
+
 /** Only the documented M7 families and board/pipe pairings can be associated. */
 export function controllerBoardFor(
   product: FanCoilProduct,

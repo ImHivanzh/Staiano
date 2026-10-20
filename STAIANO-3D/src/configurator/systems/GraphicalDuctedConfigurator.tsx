@@ -60,6 +60,7 @@ import {
   hydronicRoomIds,
 } from "@/domain/ducted/plan-connections";
 import { connectionSelection } from "../viewer3d/connection-selection";
+import { connectFanCoilAirOnPlan } from "@/domain/fan-coils/connect";
 import { removeSelection } from "@/domain/geometry/selection";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { placeEquipmentDraft } from "@/domain/geometry/equipment-draft";
@@ -394,13 +395,23 @@ export function GraphicalDuctedConfigurator({
       );
       if (pair) {
         commit((current) =>
-          pair.hydronic
-            ? connectHydronicOnPlan(current, pair.terminalId, pair.machineId)
-            : current.ductedDrafts?.some(
-                  (t) => t.id === pair.terminalId || t.id === pair.systemId,
-                )
-              ? connectDraftOnPlan(current, pair.terminalId, pair.systemId)
-              : connectTerminalOnPlan(current, pair.terminalId, pair.systemId),
+          pair.fanCoilId
+            ? connectFanCoilAirOnPlan(
+                current,
+                pair.terminalId,
+                pair.fanCoilId,
+              )
+            : pair.hydronic
+              ? connectHydronicOnPlan(current, pair.terminalId, pair.machineId)
+              : current.ductedDrafts?.some(
+                    (t) => t.id === pair.terminalId || t.id === pair.systemId,
+                  )
+                ? connectDraftOnPlan(current, pair.terminalId, pair.systemId)
+                : connectTerminalOnPlan(
+                    current,
+                    pair.terminalId,
+                    pair.systemId,
+                  ),
         );
         if (!useProjectStore.getState().error) {
           setSelectedId(pair.machineId);

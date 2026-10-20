@@ -485,7 +485,39 @@ export function validateProject(p: Project): Check[] {
       load = p.rooms
         .filter((r) => system.roomIds.includes(r.id))
         .reduce((n, r) => n + r.designLoadW, 0);
-    if (system.genericMachine) {
+    if (system.fanCoilId) {
+      const machine = system.genericMachine;
+      checks.push({
+        code: "machineCatalog",
+        status: machine ? "warning" : "invalid",
+        entityId: system.id,
+        message: `${system.manufacturer} ${machine?.model ?? system.productId}: ventilconvettore canalizzabile, portata e potenza del punto di funzionamento scelto; prevalenza utile, motore e accessori di canalizzazione da verificare sul catalogo del costruttore.`,
+      });
+      checks.push({
+        code: "machinePower",
+        entityId: system.id,
+        status:
+          machine?.coolingCapacityW === undefined ||
+          machine?.heatingCapacityW === undefined
+            ? "warning"
+            : machine.coolingCapacityW < load ||
+                machine.heatingCapacityW < load
+              ? "warning"
+              : "valid",
+        message: `${machine?.model ?? system.productId}: potenze del punto di funzionamento; carico servito ${Math.round(load)} W da verificare alle condizioni dell’acqua.`,
+      });
+      checks.push({
+        code: "machineAirflow",
+        entityId: system.id,
+        status:
+          machine &&
+          machine.maxAirflowM3h === system.airflowM3h &&
+          ductedMaximumAirflow(system) === system.airflowM3h
+            ? "warning"
+            : "invalid",
+        message: `${machine?.model ?? system.productId}: portata del punto di funzionamento ${machine?.maxAirflowM3h ?? "non dichiarata"} m³/h.`,
+      });
+    } else if (system.genericMachine) {
       const manual = system.genericMachine;
       checks.push({
         code: "machineCatalog",

@@ -187,6 +187,9 @@ export function buildDossier(project: Project) {
     );
   }
   for (const s of p.hvacSystems) {
+    // Plenum, canali e bocchette della distribuzione aeraulica sono documentati
+    // dal ventilconvettore: la riga dell'unità esiste già e non va duplicata.
+    if (s.fanCoilId) continue;
     const product = hvacProductAtVersion(s.productId, s.catalogVersion);
     const combination =
       s.type === "split"

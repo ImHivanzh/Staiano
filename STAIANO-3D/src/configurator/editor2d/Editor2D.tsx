@@ -1138,6 +1138,7 @@ export function Editor2D({
             );
           })}
         {project?.hvacSystems
+          .filter((system) => !system.fanCoilId)
           .flatMap((system) => system.indoorUnits.map((d) => ({ d, system })))
           .filter(({ d }) => d.floorId === activeFloorId)
           .map(({ d, system }) => {

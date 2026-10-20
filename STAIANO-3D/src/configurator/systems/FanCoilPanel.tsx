@@ -7,8 +7,15 @@ import {
   fanCoilProductAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
+  fanCoilCategories,
+  fanCoilCategory,
+  fanCoilCategoryLabels,
 } from "@/domain/catalogs/fan-coils";
 import { applyFanCoil, removeFanCoil } from "@/domain/fan-coils/apply";
+import {
+  ensureFanCoilAirSystem,
+  fanCoilAirSystem,
+} from "@/domain/fan-coils/air";
 import {
   installedFanCoilCapacity,
   sizeFanCoils,
@@ -72,6 +79,15 @@ export function FanCoilPanel({
       (!installationId || u.installationId === installationId),
   );
   const totals = installedFanCoilCapacity(project, room.id, installationId);
+  const existingPoint = existingDevice
+    ? existingProduct?.operatingPoints[existingDevice.operatingPointIndex]
+    : undefined;
+  const airSystem = existingDevice
+    ? fanCoilAirSystem(project, existingDevice.id)
+    : undefined;
+  const airVents = project.airTerminals.filter(
+    (terminal) => terminal.systemId === airSystem?.id,
+  );
   const remainingCoolingW = Math.max(0, room.designLoadW - totals.coolingW);
   const remainingHeatingW = Math.max(0, room.designLoadW - totals.heatingW);
   const sizingProject = existingDevice
@@ -113,6 +129,45 @@ export function FanCoilPanel({
           ambiente.
         </p>
       </header>
+      {existingDevice && (
+        <div className="formula" aria-label="Distribuzione aeraulica">
+          <strong>Distribuzione aeraulica</strong>
+          {!existingPoint?.airflowM3h ? (
+            <p className="nota">
+              Il punto di funzionamento scelto non dichiara la portata d’aria:
+              scegli un’altra velocità per alimentare canali e bocchette.
+            </p>
+          ) : airSystem ? (
+            <p className="nota">
+              {airVents.length}{" "}
+              {airVents.length === 1
+                ? "bocchetta collegata"
+                : "bocchette collegate"}{" "}
+              · portata {formatNumber(airSystem.airflowM3h ?? 0)} m³/h. Usa
+              Collega in pianta per associarne altre; plenum, canali e attacco
+              di mandata sono nella scheda dell’apparecchio (Proprietà).
+            </p>
+          ) : (
+            <>
+              <p className="nota">
+                La FCZ è canalizzabile: alimenta plenum, canali e bocchette con
+                la portata del punto scelto.
+              </p>
+              <button
+                type="button"
+                className="bottone piccolo"
+                onClick={() =>
+                  commit(
+                    (p) => ensureFanCoilAirSystem(p, existingDevice.id).project,
+                  )
+                }
+              >
+                Aggiungi distribuzione aeraulica
+              </button>
+            </>
+          )}
+        </div>
+      )}
       <dl className={styles.facts}>
         <div>
           <dt>Fabbisogno ambiente</dt>
@@ -181,11 +236,24 @@ export function FanCoilPanel({
                 setControllerId("");
               }}
             >
-              {products.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.family} · {p.model} · {p.pipes} tubi
-                </option>
-              ))}
+              {fanCoilCategories.map((category) => {
+                const options = products.filter(
+                  (p) => fanCoilCategory(p) === category,
+                );
+                if (!options.length) return null;
+                return (
+                  <optgroup
+                    key={category}
+                    label={fanCoilCategoryLabels[category]}
+                  >
+                    {options.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.family} · {p.model} · {p.pipes} tubi
+                      </option>
+                    ))}
+                  </optgroup>
+                );
+              })}
             </select>
           </label>
           <label className="campo">
@@ -334,6 +402,9 @@ export function FanCoilPanel({
               <h4>{product.model}</h4>
               <p>
                 {product.manufacturer} · {product.family}
+              </p>
+              <p className="nota">
+                {fanCoilCategoryLabels[fanCoilCategory(product)]}
               </p>
               <p>
                 {point.label} · {mounting === "wall" ? "Parete" : "Soffitto"} ·{" "}

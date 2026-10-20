@@ -225,6 +225,12 @@ export function calculateSupplyPlenum(
       message:
         "Macchina inserita manualmente; portata massima dichiarata dall’operatore. Potenza e attacchi da verificare.",
     });
+  else if (resolved?.dataOrigin === "fanCoil")
+    result.issues.push({
+      code: "machineFanCoil",
+      message:
+        "Ventilconvettore canalizzabile: portata e potenza del punto di funzionamento scelto. Prevalenza utile, motore e accessori di canalizzazione da verificare sul catalogo del costruttore.",
+    });
   if (
     !resolved ||
     !system.airflowM3h ||

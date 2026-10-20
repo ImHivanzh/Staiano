@@ -336,7 +336,9 @@ export const projectSchema = z
           roomIds: z.array(id),
           capacityW: finite.positive().nullable(),
           genericMachine: manualDuctedMachineSchema.optional(),
-          dataOrigin: z.enum(["catalog", "manual"]).optional(),
+          /** Ventilconvettore catalogo che alimenta questa distribuzione aeraulica. */
+          fanCoilId: id.optional(),
+          dataOrigin: z.enum(["catalog", "manual", "fanCoil"]).optional(),
           airflowM3h: finite.positive().nullable(),
           catalogVersion: z.string().max(100),
           indoorUnits: z.array(placement),
@@ -694,6 +696,25 @@ export const projectSchema = z
           code: "custom",
           message: "Sistema con stanza inesistente",
         });
+    }
+    const airOwners = new Set<string>();
+    for (const s of p.hvacSystems) {
+      if (!s.fanCoilId) continue;
+      if (
+        s.type !== "ducted" ||
+        !(p.fanCoils ?? []).some((unit) => unit.id === s.fanCoilId)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message:
+            "Distribuzione aeraulica senza ventilconvettore o tipo sistema coerenti",
+        });
+      if (airOwners.has(s.fanCoilId))
+        ctx.addIssue({
+          code: "custom",
+          message: "Ventilconvettore collegato a più distribuzioni aerauliche",
+        });
+      airOwners.add(s.fanCoilId);
     }
     for (const t of p.airTerminals)
       if (

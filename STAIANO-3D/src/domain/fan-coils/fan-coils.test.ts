@@ -7,6 +7,9 @@ import {
   fanCoilCatalogAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
+  fanCoilCategory,
+  fanCoilCategories,
+  fanCoilCategoryLabels,
   type FanCoilCatalog,
 } from "@/domain/catalogs/fan-coils";
 import { applyFanCoil, updateFanCoil, removeFanCoil } from "./apply";
@@ -25,6 +28,22 @@ function fixture() {
 }
 
 describe("ventilconvettori originali", () => {
+  it("tiene i canalizzabili in una categoria a parte, dentro i ventilconvettori", () => {
+    const ducted = fanCoilCatalog.products.filter(
+      (p) => fanCoilCategory(p) === "ducted",
+    );
+    expect(new Set(ducted.map((p) => `${p.manufacturer} ${p.family}`))).toEqual(
+      new Set(["Aermec FCZ", "Aermec FCZ P", "Aermec FCZ PO"]),
+    );
+    expect(ducted).toHaveLength(66);
+    for (const product of fanCoilCatalog.products.filter(
+      (p) => p.manufacturer !== "Aermec",
+    ))
+      expect(fanCoilCategory(product)).toBe("ambient");
+    expect(fanCoilCategories).toEqual(["ducted", "ambient"]);
+    expect(fanCoilCategoryLabels.ducted).toBe("Ventilconvettori canalizzabili");
+  });
+
   it("importa solo taglie P/PO documentate con ingombro senza mobile e condizioni distinte", () => {
     const concealed = fanCoilCatalog.products.filter((p) =>
       ["FCZ P", "FCZ PO"].includes(p.family),

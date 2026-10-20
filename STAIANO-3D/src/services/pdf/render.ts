@@ -1270,7 +1270,12 @@ export async function renderDossierPdf(
           tint: d.use === "supply" ? cyan : green,
         })),
         ...p.hvacSystems.flatMap((s) =>
-          s.indoorUnits.map((d) => ({ ...d, tint: rgb(0.55, 0.32, 0.68) })),
+          s.fanCoilId
+            ? []
+            : s.indoorUnits.map((d) => ({
+                ...d,
+                tint: rgb(0.55, 0.32, 0.68),
+              })),
         ),
         ...p.plenums.map((d) => ({ ...d, tint: rgb(0.3, 0.65, 0.72) })),
         ...(p.fanCoils ?? []).map((d) => ({
@@ -1678,7 +1683,11 @@ export async function renderDossierPdf(
         );
       }
       const units = p.hvacSystems.flatMap((s) =>
-        s.indoorUnits.filter((d) => d.roomId === r.id).map((d) => ({ s, d })),
+        s.fanCoilId
+          ? []
+          : s.indoorUnits
+              .filter((d) => d.roomId === r.id)
+              .map((d) => ({ s, d })),
       );
       if (units.length) {
         heading("Unità interne split e macchine canalizzate");
@@ -1842,8 +1851,11 @@ export async function renderDossierPdf(
         [0.2, 0.5, 0.3],
       );
     // Senza sistemi configurati la pagina non viene creata: nessun dato inventato.
-    if (p.hvacSystems.length) newPage("Sistemi HVAC");
-    for (const s of p.hvacSystems) {
+    // Le distribuzioni aerauliche dei ventilconvettori sono documentate nella
+    // scheda dell'unità e nelle pagine plenum: nessun doppio conteggio.
+    const scheduledSystems = p.hvacSystems.filter((s) => !s.fanCoilId);
+    if (scheduledSystems.length) newPage("Sistemi HVAC");
+    for (const s of scheduledSystems) {
       const product = hvacProductAtVersion(s.productId, s.catalogVersion),
         combination =
           s.type === "split"

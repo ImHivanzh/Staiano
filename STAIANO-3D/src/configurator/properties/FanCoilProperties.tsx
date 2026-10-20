@@ -10,6 +10,14 @@ import {
 } from "@/domain/catalogs/fan-coils";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
 import {
+  ensureFanCoilAirSystem,
+  fanCoilAirSystem,
+  removeFanCoilAirSystem,
+  setFanCoilAirDischarge,
+} from "@/domain/fan-coils/air";
+import { SupplyPlenumPanel } from "../systems/SupplyPlenumPanel";
+import { DuctPanel } from "../systems/DuctPanel";
+import {
   positionAlongRoomWall,
   roomWallSpan,
 } from "@/domain/geometry/placement";
@@ -32,6 +40,11 @@ export function FanCoilProperties({
   const catalog = fanCoilCatalogAtVersion(unit.catalogVersion);
   if (!room) return null;
   const point = model?.operatingPoints[unit.operatingPointIndex];
+  const airSystem = fanCoilAirSystem(project, id);
+  const airVents = project.airTerminals.filter(
+    (terminal) => terminal.systemId === airSystem?.id,
+  );
+  const discharge = airSystem?.genericMachine?.dischargeConnection;
   const controls =
     model && catalog ? compatibleFanCoilControls(model, catalog) : [];
   const controller = controls.find((c) => c.id === unit.controllerId);
@@ -224,6 +237,103 @@ export function FanCoilProperties({
             </button>
           </fieldset>
         </form>
+      </details>
+      <details className="azione-inspector">
+        <summary>Distribuzione aeraulica · plenum e canali</summary>
+        {!point?.airflowM3h ? (
+          <p role="status" className="nota">
+            Il punto di funzionamento scelto non dichiara la portata d’aria:
+            scegli un’altra velocità per alimentare canali e bocchette.
+          </p>
+        ) : !airSystem ? (
+          <>
+            <p className="nota">
+              Questo ventilconvettore è canalizzabile: può alimentare plenum,
+              canali e bocchette. La portata è quella del punto scelto (
+              {formatNumber(point.airflowM3h)} m³/h); prevalenza utile, motore
+              e accessori di canalizzazione vanno verificati sulla scheda
+              Aermec.
+            </p>
+            <button
+              type="button"
+              className="bottone chiara"
+              onClick={() =>
+                commit((p) => ensureFanCoilAirSystem(p, id).project)
+              }
+            >
+              Aggiungi distribuzione aeraulica
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="nota">
+              {airVents.length}{" "}
+              {airVents.length === 1 ? "bocchetta collegata" : "bocchette collegate"}
+              {" · "}
+              portata {formatNumber(airSystem.airflowM3h ?? 0)} m³/h ·{" "}
+              {formatNumber((airSystem.capacityW ?? 0) / 1000)} kW freddo.
+              Usa Collega per associare altre bocchette.
+            </p>
+            <form
+              key={`${airSystem.id}-${discharge?.connectionWidthMm ?? ""}-${discharge?.connectionHeightMm ?? ""}`}
+              onSubmit={(event) => {
+                event.preventDefault();
+                const data = new FormData(event.currentTarget);
+                commit((p) =>
+                  setFanCoilAirDischarge(p, id, {
+                    connectionWidthMm: numberFromForm(data.get("widthMm")),
+                    connectionHeightMm: numberFromForm(data.get("heightMm")),
+                  }),
+                );
+              }}
+            >
+              <fieldset disabled={unit.locked}>
+                <legend>Attacco di mandata dichiarato</legend>
+                <p className="nota">
+                  Quote dell’attacco di mandata della macchina, come pubblicate
+                  nella scheda del costruttore: servono per quotare il plenum.
+                  Nessuna misura viene dedotta dal solo ingombro.
+                </p>
+                <LengthInput
+                  label="Larghezza attacco"
+                  baseUnit="mm"
+                  name="widthMm"
+                  min="1"
+                  defaultValue={discharge?.connectionWidthMm ?? ""}
+                  required
+                />
+                <LengthInput
+                  label="Altezza attacco"
+                  baseUnit="mm"
+                  name="heightMm"
+                  min="1"
+                  defaultValue={discharge?.connectionHeightMm ?? ""}
+                  required
+                />
+                <button type="submit" className="bottone piccolo">
+                  Salva attacco di mandata
+                </button>
+              </fieldset>
+            </form>
+            <SupplyPlenumPanel project={project} systemId={airSystem.id} />
+            <DuctPanel project={project} systemId={airSystem.id} />
+            <button
+              type="button"
+              className="bottone piccolo pericolo"
+              onClick={() => {
+                if (
+                  !window.confirm(
+                    "Rimuovere la distribuzione aeraulica? Plenum e canali vengono eliminati; le bocchette restano in pianta da collegare.",
+                  )
+                )
+                  return;
+                commit((p) => removeFanCoilAirSystem(p, id));
+              }}
+            >
+              Rimuovi distribuzione aeraulica
+            </button>
+          </>
+        )}
       </details>
       {controls.length > 0 && (
         <details className="azione-inspector">

@@ -37,6 +37,7 @@ import { Properties } from "../properties/Properties";
 import { WallOpenings } from "../properties/WallOpenings";
 import { connectTerminalOnPlan } from "@/domain/ducted/graphic-installation";
 import { connectionSelection } from "./connection-selection";
+import { connectFanCoilAirOnPlan } from "@/domain/fan-coils/connect";
 import {
   configurationBlock,
   connectDraftOnPlan,
@@ -173,17 +174,28 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
         useProjectStore
           .getState()
           .commit((project) =>
-            pair.hydronic
-              ? connectHydronicOnPlan(project, pair.terminalId, pair.machineId)
-              : project.ductedDrafts?.some(
-                    (t) => t.id === pair.terminalId || t.id === pair.systemId,
-                  )
-                ? connectDraftOnPlan(project, pair.terminalId, pair.systemId)
-                : connectTerminalOnPlan(
+            pair.fanCoilId
+              ? connectFanCoilAirOnPlan(
+                  project,
+                  pair.terminalId,
+                  pair.fanCoilId,
+                )
+              : pair.hydronic
+                ? connectHydronicOnPlan(
                     project,
                     pair.terminalId,
-                    pair.systemId,
-                  ),
+                    pair.machineId,
+                  )
+                : project.ductedDrafts?.some(
+                      (t) =>
+                        t.id === pair.terminalId || t.id === pair.systemId,
+                    )
+                  ? connectDraftOnPlan(project, pair.terminalId, pair.systemId)
+                  : connectTerminalOnPlan(
+                      project,
+                      pair.terminalId,
+                      pair.systemId,
+                    ),
           );
         if (!useProjectStore.getState().error)
           select({ kind: "device", id: pair.machineId });

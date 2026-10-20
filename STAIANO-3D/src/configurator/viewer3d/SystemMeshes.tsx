@@ -224,7 +224,7 @@ export function SystemMeshes({
           </mesh>
         ))}
       {project.hvacSystems
-        .filter((s) => s.type === "ducted")
+        .filter((s) => s.type === "ducted" && !s.fanCoilId)
         .flatMap((s) =>
           s.indoorUnits
             .filter(

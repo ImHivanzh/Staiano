@@ -8,8 +8,10 @@ import { ductedMaximumAirflow } from "./machine";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { hydronicRoomIds } from "./plan-connections";
 import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
+import { syncFanCoilAirSystems } from "@/domain/fan-coils/air";
 /** Refresh automatic machine selection and demand; installed terminal style stays chosen. */
 export function refreshDuctedBindings(project: Project): Project {
+  project = syncFanCoilAirSystems(project);
   project = {
     ...project,
     hvacSystems: project.hvacSystems.map((system) =>
@@ -43,6 +45,7 @@ export function refreshDuctedBindings(project: Project): Project {
       )
     )
       return { ...system, compatibilityStatus: "invalid" as const };
+    if (system.fanCoilId) return system;
     if (system.genericMachine)
       return {
         ...system,
@@ -258,27 +261,33 @@ export function refreshDuctedBindings(project: Project): Project {
       return roomIds.length ? { ...pump, roomIds } : pump;
     }),
     rooms: project.rooms.map((room) => {
-      const ducted = systems.some(
+      const served = systems.filter(
         (system) =>
           system.type === "ducted" && system.roomIds.includes(room.id),
       );
-      return ducted
-        ? { ...room, systemType: "ducted" as const }
-        : room.systemType === "ducted"
-          ? {
-              ...room,
-              systemType: systems.some(
-                (system) =>
-                  system.type === "split" && system.roomIds.includes(room.id),
-              )
-                ? ("split" as const)
-                : project.radiators.some(
-                      (radiator) => radiator.roomId === room.id,
-                    )
-                  ? ("radiator" as const)
+      if (served.some((system) => !system.fanCoilId))
+        return { ...room, systemType: "ducted" as const };
+      // Solo distribuzioni aerauliche di ventilconvettori: l'emissione resta
+      // del ventilconvettore, non del canalizzato a espansione diretta.
+      if (served.length)
+        return { ...room, systemType: "fanCoil" as const };
+      return room.systemType === "ducted" || room.systemType === "fanCoil"
+        ? {
+            ...room,
+            systemType: systems.some(
+              (system) =>
+                system.type === "split" && system.roomIds.includes(room.id),
+            )
+              ? ("split" as const)
+              : project.radiators.some(
+                    (radiator) => radiator.roomId === room.id,
+                  )
+                ? ("radiator" as const)
+                : project.fanCoils?.some((unit) => unit.roomId === room.id)
+                  ? ("fanCoil" as const)
                   : ("none" as const),
-            }
-          : room;
+          }
+        : room;
     }),
   };
 }
