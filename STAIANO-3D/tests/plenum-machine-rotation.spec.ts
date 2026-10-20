@@ -125,8 +125,8 @@ test("dopo 180 gradi il testo della macchina e quello del plenum restano leggibi
     "transform",
     /rotate\(180/,
   );
-  await expect(page.getByTestId("plenum-2d").locator("text")).toHaveAttribute(
-    "transform",
-    /rotate\(180/,
-  );
+  // Il codice del plenum resta orizzontale e centrato nel corpo, mai sopra la macchina.
+  const plenumLabel = page.getByTestId("plenum-2d").locator("text");
+  await expect(plenumLabel).toHaveAttribute("transform", /rotate\(-?180/);
+  await expect(plenumLabel).toHaveAttribute("y", "0");
 });

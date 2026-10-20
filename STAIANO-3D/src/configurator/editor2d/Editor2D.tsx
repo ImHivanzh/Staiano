@@ -1564,11 +1564,9 @@ export function Editor2D({
                 <text
                   fontSize={u * 11}
                   textAnchor="middle"
-                  y={o.depthMm / 2000 + u * 13}
-                  transform={readableLabel(
-                    o.rotation,
-                    o.depthMm / 2000 + u * 13 - u * 4.5,
-                  )}
+                  dominantBaseline="central"
+                  y={0}
+                  transform={`rotate(${(-o.rotation * 180) / Math.PI} 0 0)`}
                 >
                   {codes.get(o.id)}
                 </text>
