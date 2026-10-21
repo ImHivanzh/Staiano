@@ -94,7 +94,7 @@ describe("plenum di mandata e plenum di ripresa", () => {
     expect(returned.supplyAirflowM3h).toBe(supply.supplyAirflowM3h);
   });
 
-  it("crea un plenum per lato e collega le bocchette del lato giusto", () => {
+  it("crea un plenum per lato senza associare le bocchette", () => {
     let p = withReturnConnection(fixture());
     const system = p.hvacSystems[0];
     p = placeSupplyPlenum(p, system.id);
@@ -103,12 +103,9 @@ describe("plenum di mandata e plenum di ripresa", () => {
     p = placePlenum(p, system.id, "return");
     expect(p.plenums).toHaveLength(2);
     expect(p.plenums.map((pl) => pl.use).sort()).toEqual(["return", "supply"]);
-    const supply = p.plenums.find((pl) => pl.use === "supply")!;
     const returned = p.plenums.find((pl) => pl.use === "return")!;
-    for (const terminal of p.airTerminals)
-      expect(terminal.plenumId).toBe(
-        terminal.use === "supply" ? supply.id : returned.id,
-      );
+    // Il plenum macchina è un corpo a sé: la bocchetta si collega al proprio.
+    for (const terminal of p.airTerminals) expect(terminal.plenumId).toBeNull();
     expect(returned.widthMm).toBeGreaterThan(0);
     expect(returned.depthMm).toBeGreaterThan(0);
     expect(projectSchema.safeParse(p).success).toBe(true);

@@ -120,7 +120,8 @@ describe("composable terminal points", () => {
         calculateEcoclimaBom(project).lines.filter(
           (line) => line.kind === "insulated-plenum",
         ),
-      ).toHaveLength(lengths.length);
+        // Nessun plenum implicito: i moduli non generano corpi né righe.
+      ).toHaveLength(0);
       expect(original.airTerminals).toEqual([]);
     },
   );

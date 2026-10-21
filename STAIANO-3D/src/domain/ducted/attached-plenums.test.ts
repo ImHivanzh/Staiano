@@ -54,6 +54,10 @@ it("salva il percorso tracciato in pianta come tubi flessibili fra i due plenum"
     { x: 3.6, y: 3 },
     { x: 4.4, y: 3.8 },
   ];
+  expect(() => setDuctRoute(p, terminal.id, points)).toThrow(
+    /strumento Plenum/,
+  );
+  p = addTerminalPlenum(p, terminal.id);
   p = setDuctRoute(p, terminal.id, points);
   expect(projectSchema.safeParse(p).success).toBe(true);
   const plenum = p.plenums.find((pl) => pl.attachmentId === terminal.id)!;
@@ -116,7 +120,9 @@ it("follows the terminal while proposed, then moves and rotates independently an
   const id = p.airTerminals[0].id;
   const plenumId = p.plenums[0].id;
   expect(p.plenums[0].status).toBe("proposed");
-  const following = syncAttachedPlenums(movePlacedDevice(p, id, { x: 4, y: 3 }));
+  const following = syncAttachedPlenums(
+    movePlacedDevice(p, id, { x: 4, y: 3 }),
+  );
   expect(following.plenums[0].position).toEqual(
     following.airTerminals[0].position,
   );
@@ -271,9 +277,9 @@ it("pairs plenum connections in both orders, blocks locked plenum motion and cou
     plenum.id,
   );
   const locked = { ...p, plenums: [{ ...plenum, locked: true }] };
-  expect(() =>
-    movePlacedDevice(locked, plenum.id, { x: 4, y: 3 }),
-  ).toThrow(/Sbloccare l’elemento/);
+  expect(() => movePlacedDevice(locked, plenum.id, { x: 4, y: 3 })).toThrow(
+    /Sbloccare l’elemento/,
+  );
   expect(() =>
     checkLockedObjects(locked, {
       ...locked,
@@ -281,13 +287,15 @@ it("pairs plenum connections in both orders, blocks locked plenum motion and cou
     }),
   ).toThrow(/bloccato/);
   const bom = calculateEcoclimaBom(p);
-  // Un plenum con le quote di catalogo resta una sola riga, quotata dal listino.
-  expect(
-    bom.lines.filter((line) => line.kind === "insulated-plenum"),
-  ).toHaveLength(1);
-  expect(bom.lines.some((line) => line.id === `${plenum.id}:plenum`)).toBe(
-    false,
+  // Corpo separato con misure libere: una sola riga, da quotare.
+  const plenumLines = bom.lines.filter(
+    (line) => line.kind === "insulated-plenum",
   );
+  expect(plenumLines).toHaveLength(1);
+  expect(plenumLines[0]).toMatchObject({
+    id: `${plenum.id}:plenum`,
+    status: "unknown",
+  });
 });
 
 it.each([0, Math.PI / 2, Math.PI])(
@@ -299,6 +307,9 @@ it.each([0, Math.PI / 2, Math.PI])(
       y: 3,
     });
     p = addGuidedTerminal(p, 1000);
+    p = addTerminalPlenum(p, p.airTerminals[0].id);
+    // Qui si provano i percorsi proposti: i flessibili salvati non contano.
+    p = { ...p, ducts: [] };
     p.hvacSystems[0].indoorUnits[0].rotation = rotation;
     const before = JSON.stringify(p);
     const terminal = p.airTerminals[0];
@@ -340,20 +351,31 @@ it.each([0, Math.PI / 2, Math.PI])(
   },
 );
 
-it("does not invent a terminal plenum when it was excluded or its catalogue dimensions are unknown", () => {
+it("does not invent a terminal plenum: only the saved connected body exists", () => {
   const p = fixture();
   p.plenums = [];
   p.ducts = [];
   const terminal = p.airTerminals[0];
-  terminal.commercialOptions = {
-    ...terminal.commercialOptions!,
-    insulatedPlenum: false,
-  };
+  terminal.plenumId = null;
   expect(terminalPlenum(p, terminal)).toBeNull();
   expect(airConnectionRoutes(p, p.floors[0].id)).toEqual([]);
-  terminal.commercialOptions.insulatedPlenum = true;
   terminal.catalogVersion = "missing";
   expect(terminalPlenum(p, terminal)).toBeNull();
+  expect(() => addTerminalPlenum(p, terminal.id)).toThrow(/catalogo/);
+});
+
+it("keeps the plenum inlet direction when the body is unconnected", () => {
+  const p = fixture();
+  const plenum = {
+    ...p.plenums[0],
+    attachmentId: null,
+    connectionPosition: "upper" as const,
+  };
+  for (const port of attachedPlenumPorts(p, plenum)) {
+    expect(port.elevationM).toBeCloseTo(
+      (plenum.elevationM ?? 2) + plenum.heightMm / 2000 + 0.06,
+    );
+  }
 });
 
 it("places the machine plenum beside an existing terminal plenum and aligns it with the machine above a suspended ceiling", () => {

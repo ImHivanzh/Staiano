@@ -29,6 +29,7 @@ import {
 import { plenumTechnicalDrawing } from "./ducted/technical-view";
 import { layoutFromMachineGeometry } from "../configurator/viewer3d/plenum-layout";
 import { addPillar, pillarFootprint } from "./geometry/pillars";
+import { addTerminalPlenum } from "./ducted/attached-plenums";
 import { validateProject } from "./validation";
 import { useProjectStore } from "../stores/project-store";
 import {
@@ -168,8 +169,21 @@ describe("operator-led configuration acceptance", () => {
       );
       p = placeSupplyPlenum(p, p.hvacSystems[i].id);
     }
-    expect(new Set(p.plenums.map((pl) => pl.id)).size).toBe(2);
-    for (const pl of p.plenums) {
+    for (const terminal of p.airTerminals)
+      p = addTerminalPlenum(p, terminal.id);
+    expect(new Set(p.plenums.map((pl) => pl.id)).size).toBe(
+      2 + p.airTerminals.length,
+    );
+    // Ogni bocchetta ha il proprio corpo, separato dal plenum macchina.
+    expect(
+      p.airTerminals.every((terminal) =>
+        p.plenums.some(
+          (pl) =>
+            pl.id === terminal.plenumId && pl.attachmentId === terminal.id,
+        ),
+      ),
+    ).toBe(true);
+    for (const pl of p.plenums.filter((pl) => pl.attachmentId === undefined)) {
       const domain = calculateSupplyPlenum(p, pl.systemId!);
       const geometry = placedPlenumGeometry(p, pl)!;
       const layout = layoutFromMachineGeometry(geometry);
@@ -188,9 +202,17 @@ describe("operator-led configuration acceptance", () => {
       expect(
         layout.ports
           .flatMap((port) => port.branch.terminalIds)
-          .every(
-            (id) => p.airTerminals.find((t) => t.id === id)?.plenumId === pl.id,
-          ),
+          .every((id) => {
+            const terminal = p.airTerminals.find((t) => t.id === id);
+            return (
+              !!terminal?.plenumId &&
+              p.plenums.some(
+                (item) =>
+                  item.id === terminal.plenumId &&
+                  item.attachmentId === terminal.id,
+              )
+            );
+          }),
       ).toBe(true);
     }
   });
@@ -198,6 +220,8 @@ describe("operator-led configuration acceptance", () => {
   it("ducts follow moved endpoints, preserve operator waypoints and do not duplicate on regeneration", () => {
     let p = guidedProjectFixture();
     for (const length of [2000, 2000, 2000]) p = addGuidedTerminal(p, length);
+    for (const terminal of p.airTerminals)
+      p = addTerminalPlenum(p, terminal.id);
     const systemId = p.hvacSystems[0].id;
     p = generateDuctRoutes(placeSupplyPlenum(p, systemId), systemId);
     const duct = p.ducts!.find((d) => d.terminalId)!;
@@ -219,7 +243,7 @@ describe("operator-led configuration acceptance", () => {
       p,
       p.ducts!.find((d) => d.id === duct.id)!,
     )[0];
-    const plenum = p.plenums[0];
+    const plenum = p.plenums.find((pl) => pl.attachmentId === undefined)!;
     p = moveSystemObject(p, plenum.id, {
       x: plenum.position.x + 0.5,
       y: plenum.position.y,
@@ -248,17 +272,22 @@ describe("operator-led configuration acceptance", () => {
   it("a flexible duct starts from the plenum collar opening, not from an arbitrary machine face point", () => {
     let p = guidedProjectFixture();
     p = addGuidedTerminal(p, 2000);
+    p = addTerminalPlenum(p, p.airTerminals[0].id);
     const systemId = p.hvacSystems[0].id;
     p = generateDuctRoutes(placeSupplyPlenum(p, systemId), systemId);
     const generated = p.ducts!.find((d) => d.terminalId)!;
     p = setDuctKind(p, generated.id, "flexible");
     const flexible = p.ducts!.find((d) => d.id === generated.id)!;
-    const plenum = p.plenums.find((pl) => pl.id === flexible.plenumId)!;
-    const geometry = placedPlenumGeometry(p, plenum)!;
-    const port = geometry.ports.find(
-      (item) => item.branch.id === flexible.branchId,
+    // Il tubo parte dallo stacco del plenum macchina, non dalla faccia.
+    const machineBody = p.plenums.find(
+      (pl) => pl.attachmentId === undefined && pl.use === "supply",
     )!;
-    const opening = plenumLocalToPlan(plenum, [
+    const geometry = placedPlenumGeometry(p, machineBody)!;
+    const index = Number(flexible.branchId?.split(":").at(-1) ?? 0);
+    const port = geometry.ports.filter((item) =>
+      item.branch.terminalIds.includes(p.airTerminals[0].id),
+    )[index];
+    const opening = plenumLocalToPlan(machineBody, [
       port.centerMm[0] / 1000,
       port.centerMm[1] / 1000,
       (port.centerMm[2] + port.collarLengthMm) / 1000,
@@ -272,6 +301,7 @@ describe("operator-led configuration acceptance", () => {
   it("adds and removes flexible bending points on the saved route", () => {
     let p = guidedProjectFixture();
     p = addGuidedTerminal(p, 2000);
+    p = addTerminalPlenum(p, p.airTerminals[0].id);
     const systemId = p.hvacSystems[0].id;
     p = generateDuctRoutes(placeSupplyPlenum(p, systemId), systemId);
     const generated = p.ducts!.find((d) => d.terminalId)!;

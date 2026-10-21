@@ -243,6 +243,12 @@ export const plenumSchema = z.object({
   portCount: z.number().int().min(1).max(24).optional(),
   portDiameterMm: finite.positive().max(2000).optional(),
   material: z.enum(["insulated", "galvanized"]).optional(),
+  /** Direzione degli stacchi reali: dato del corpo, mai della bocchetta. */
+  connectionPosition: z
+    .enum(["lateral", "upper", "lower", "rear", "custom"])
+    .optional(),
+  connectionNote: z.string().max(200).optional(),
+  shape: z.enum(["rectangular", "trapezoidal"]).optional(),
   /** Un plenum di ripresa, uno di mandata: raccolgono bocchette di quel lato. */
   use: z.enum(["supply", "return"]).default("supply"),
   floorId: id,

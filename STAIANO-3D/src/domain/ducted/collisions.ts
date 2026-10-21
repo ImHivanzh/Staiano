@@ -251,14 +251,10 @@ function bodies(
       unit.elevationM + unit.heightMm / 1000,
       `unità esterna ${labels.get(unit.id) ?? ""}`,
     );
-  const plenums = new Map(project.plenums.map((p) => [p.id, p]));
-  // Solo i plenum salvati hanno un corpo fisico: quelli macchina proposti non
-  // vengono disegnati e quindi non possono nemmeno essere attraversati.
-  for (const terminal of project.airTerminals) {
-    const plenum = terminalPlenum(project, terminal);
-    if (plenum) plenums.set(plenum.id, plenum);
-  }
-  for (const p of plenums.values())
+  // Solo i plenum salvati hanno un corpo fisico: quelli proposti (macchina o
+  // catalogo della bocchetta) non vengono disegnati e quindi non possono
+  // nemmeno essere attraversati.
+  for (const p of project.plenums)
     add(
       p.id,
       p.floorId,

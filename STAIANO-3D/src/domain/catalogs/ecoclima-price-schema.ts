@@ -5,34 +5,15 @@ import { sourceMetadataSchema } from "./radiator-schema";
 export const terminalCommercialOptionsSchema = z.object({
   profileCode: z.string().min(1).max(100).optional(),
   colorCode: z.string().min(1).max(50).optional(),
-  plenumModelCode: z.string().min(1).max(100).optional(),
   mountingDuctDiameterMm: z.number().int().positive().max(4000).optional(),
-  insulatedPlenum: z.boolean().default(true),
   fixingBridges: z.boolean().default(true),
   continuityKit: z.boolean().default(true),
-  plenumMaterial: z.enum(["insulated", "galvanized"]).optional(),
-  plenumShape: z.enum(["rectangular", "trapezoidal"]).optional(),
-  connectionPosition: z
-    .enum(["lateral", "upper", "lower", "rear", "custom"])
-    .optional(),
-  connectionNote: z.string().max(200).optional(),
   linearRunId: z.string().min(1).max(120).optional(),
   linearRunOrder: z.number().int().nonnegative().max(2000).optional(),
 });
 export type TerminalCommercialOptions = z.infer<
   typeof terminalCommercialOptionsSchema
 >;
-export const terminalPlenumOptionsSchema = terminalCommercialOptionsSchema.pick(
-  {
-    insulatedPlenum: true,
-    plenumModelCode: true,
-    plenumMaterial: true,
-    plenumShape: true,
-    connectionPosition: true,
-    connectionNote: true,
-  },
-);
-export type TerminalPlenumOptions = z.infer<typeof terminalPlenumOptionsSchema>;
 
 const mm = z.number().int().positive().nullable();
 export const commercialDimensionsSchema = z.object({

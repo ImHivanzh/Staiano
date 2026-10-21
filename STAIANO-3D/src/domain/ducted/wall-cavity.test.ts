@@ -4,10 +4,7 @@ import {
   addGuidedTerminal,
 } from "../../../tests/guided-fixture";
 import { placeMachineOnPlan } from "./graphic-installation";
-import {
-  addTerminalPlenum,
-  attachedPlenumPorts,
-} from "./attached-plenums";
+import { addTerminalPlenum, attachedPlenumPorts } from "./attached-plenums";
 import { movePlacedDevice } from "../geometry/move-device";
 import { ductRoute } from "./routes";
 import { flexibleDuctCurve } from "./flexible-curve";
@@ -35,12 +32,6 @@ function fixture() {
     },
   );
   p = addTerminalPlenum(p, p.airTerminals[0].id);
-  p.airTerminals[0].commercialOptions = {
-    insulatedPlenum: true,
-    fixingBridges: true,
-    continuityKit: true,
-    ...p.airTerminals[0].commercialOptions,
-  };
   return p;
 }
 
@@ -84,10 +75,7 @@ it("supports actual upper collars on a wall plenum in a shallower cavity", () =>
     roomId: p.rooms[0].id,
     offsetM: -0.3,
   });
-  p.airTerminals[0].commercialOptions = {
-    ...p.airTerminals[0].commercialOptions!,
-    connectionPosition: "upper",
-  };
+  p.plenums[0].connectionPosition = "upper";
   const ends = attachedPlenumPorts(p, p.plenums[0]);
   expect(ends[0].elevationM).toBeGreaterThan(p.plenums[0].elevationM!);
   for (const duct of p.ducts!)

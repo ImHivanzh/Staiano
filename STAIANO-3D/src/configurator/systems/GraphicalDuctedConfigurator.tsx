@@ -514,9 +514,7 @@ export function GraphicalDuctedConfigurator({
       }
       const existing = project.plenums.find((item) => item.id === deviceId);
       if (existing) {
-        useProjectStore
-          .getState()
-          .select({ kind: "device", id: existing.id });
+        useProjectStore.getState().select({ kind: "device", id: existing.id });
         setSelectedId(existing.id);
         setMode("select");
         setNotice("Plenum selezionato.");
@@ -572,7 +570,7 @@ export function GraphicalDuctedConfigurator({
           const terminal = terminals.find((item) => item.id === endpoint.id);
           if (!terminal || !terminalPlenum(project, terminal)) {
             setNotice(
-              "La bocchetta non ha un plenum: dichiara gli accessori o inseriscilo in pianta.",
+              "La bocchetta non ha un plenum collegato: crealo con lo strumento Plenum (nasce già collegato) e poi disegna il canale.",
             );
             return;
           }

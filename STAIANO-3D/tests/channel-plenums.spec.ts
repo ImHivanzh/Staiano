@@ -6,20 +6,13 @@ for (const viewport of [
   { width: 1920, height: 1080 },
   { width: 1024, height: 768 },
 ]) {
-  test(`Vista canali: flessibili e due plenum visibili a ${viewport.width}px`, async ({
+  test(`Vista canali: due corpi plenum e flessibili visibili a ${viewport.width}px`, async ({
     page,
   }) => {
     test.setTimeout(120000);
     await page.setViewportSize(viewport);
-    const project = plenumFixture(true);
-    // Existing projects with no separately inserted terminal body still show
-    // the catalogue plenum; a machine plenum appears only once created.
-    project.plenums = [];
-    project.ducts = [];
-    project.airTerminals.forEach((t) => {
-      t.plenumId = null;
-      t.position = { x: 6, y: 4 };
-    });
+    // Plenum della bocchetta e plenum macchina restano due corpi separati.
+    const project = plenumFixture(true, "supply", true);
     await page.goto("/");
     await page.getByTestId("project-file").setInputFiles({
       name: "canali.hvacproj",
@@ -35,8 +28,8 @@ for (const viewport of [
     await expect(canvas).toHaveAttribute("data-rendered", "true", {
       timeout: 30000,
     });
-    await expect(canvas).toHaveAttribute("data-plenum-count", "1");
-    await expect(canvas).toHaveAttribute("data-air-connections", /[1-9]/);
+    await expect(canvas).toHaveAttribute("data-plenum-count", "2");
+    await expect(canvas).toHaveAttribute("data-duct-count", /[1-9]/);
     await expect(
       page.getByText("Percorso non realizzabile: sposta curve o plenum"),
     ).toHaveCount(0);

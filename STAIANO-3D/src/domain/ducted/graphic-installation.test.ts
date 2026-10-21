@@ -28,6 +28,7 @@ import { airConnectionRoutes, routeBelowTerminals } from "./routes";
 import { translateSelection, removeSelection } from "../geometry/selection";
 import { movePlacedDevice } from "../geometry/move-device";
 import { refreshDuctedBindings } from "./refresh";
+import { addTerminalPlenum } from "./attached-plenums";
 
 function fixture() {
   let project = ensureInstallations(guidedProjectFixture());
@@ -126,18 +127,19 @@ it("connects configured devices across an undrawn gap while retaining floor chec
     origin: { x: 20, y: 0 },
   });
   const room = p.rooms.find((r) => r.centroid.x > 20)!;
-  p = saveTerminalOnPlan(
-    p,
-    { ...input(p), roomId: room.id, plenumOptions: { insulatedPlenum: true } },
-    room.centroid,
-  );
+  p = saveTerminalOnPlan(p, { ...input(p), roomId: room.id }, room.centroid);
   const terminalId = p.airTerminals.at(-1)!.id;
-  const connected = connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id);
+  let connected = connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id);
   expect(
     connected.airTerminals.find((t) => t.id === terminalId)?.systemId,
   ).toBe(p.hvacSystems[0].id);
+  // Nessun plenum implicito: prima del corpo separato non esiste un tubo.
+  expect(airConnectionRoutes(connected, p.floors[0].id)).toEqual([]);
   // Association and saving work across an undrawn gap; a physical hose must not cross outdoors.
-  expect(airConnectionRoutes(connected, p.floors[0].id)[0].points).toEqual([]);
+  connected = addTerminalPlenum(connected, terminalId);
+  expect(
+    airConnectionRoutes({ ...connected, ducts: [] }, p.floors[0].id)[0].points,
+  ).toEqual([]);
   expect(() => decodeProject(encodeProject(connected))).not.toThrow();
   p.airTerminals.at(-1)!.floorId = "another-floor";
   expect(() =>
@@ -147,19 +149,18 @@ it("connects configured devices across an undrawn gap while retaining floor chec
 
 it("shows graphical connections in 3D along the same plan route without changing project data", () => {
   const base = fixture();
-  const saved = saveTerminalOnPlan(
-    base,
-    { ...input(base), plenumOptions: { insulatedPlenum: true } },
-    { x: 4, y: 2 },
-  );
+  const saved = saveTerminalOnPlan(base, input(base), { x: 4, y: 2 });
   const terminalId = saved.airTerminals[0].id;
-  const connected = connectTerminalOnPlan(
+  let connected = connectTerminalOnPlan(
     saved,
     terminalId,
     saved.hvacSystems[0].id,
   );
-  const before = JSON.stringify(connected);
-  const [connection] = airConnectionRoutes(connected, connected.floors[0].id);
+  connected = addTerminalPlenum(connected, terminalId);
+  // Il corpo separato genera i flessibili salvati: qui si prova il percorso proposto.
+  const proposal = { ...connected, ducts: [] };
+  const before = JSON.stringify(proposal);
+  const [connection] = airConnectionRoutes(proposal, proposal.floors[0].id);
   const terminal = connected.airTerminals[0];
   const machine = connected.hvacSystems[0].indoorUnits[0];
   const start = connection.points[0];
@@ -174,14 +175,14 @@ it("shows graphical connections in 3D along the same plan route without changing
   expect(
     connection.points.every((point) => Number.isFinite(point.elevationM)),
   ).toBe(true);
-  expect(airConnectionRoutes(connected, "other-floor")).toEqual([]);
+  expect(airConnectionRoutes(proposal, "other-floor")).toEqual([]);
   expect(
     airConnectionRoutes(
-      connectTerminalOnPlan(connected, terminalId, null),
-      connected.floors[0].id,
+      connectTerminalOnPlan(proposal, terminalId, null),
+      proposal.floors[0].id,
     ),
   ).toEqual([]);
-  expect(JSON.stringify(connected)).toBe(before);
+  expect(JSON.stringify(proposal)).toBe(before);
 });
 
 it.each([0, Math.PI / 4, Math.PI / 2])(
@@ -245,67 +246,79 @@ it.each([0, Math.PI / 4, Math.PI / 2])(
   },
 );
 
-it("saves wall terminals and independent plenum choices through edits and export", () => {
+it("saves wall terminals without any plenum data through edits and export", () => {
   const base = fixture();
-  const plenumOptions = {
-    insulatedPlenum: false,
-    plenumMaterial: "galvanized" as const,
-    plenumShape: "trapezoidal" as const,
-    connectionPosition: "custom" as const,
-    connectionNote: "Due stacchi sul lato destro",
-  };
   const saved = saveTerminalOnPlan(
     base,
-    {
-      ...input(base),
-      mounting: "wall",
-      plenumOptions,
-    },
+    { ...input(base), mounting: "wall" },
     { x: 4, y: 0 },
   );
   const first = saved.airTerminals[0];
   expect(first.mounting).toBe("wall");
   expect(first.wallId).not.toBeNull();
   expect(first.elevationM).toBeLessThan(base.rooms[0].heightM);
+  expect(first.plenumId).toBeNull();
+  expect(saved.plenums).toEqual([]);
   const two = saveTerminalOnPlan(
     saved,
-    {
-      ...input(saved),
-      plenumOptions: { insulatedPlenum: true, connectionPosition: "upper" },
-    },
+    { ...input(saved), mounting: "wall" },
     { x: 4, y: 2 },
   );
   const edited = saveTerminalOnPlan(
     two,
-    {
-      ...input(two, [2000]),
-      mounting: "wall",
-      plenumOptions,
-    },
+    { ...input(two, [2000]), mounting: "wall" },
     first.position,
     first.id,
   );
   const restored = decodeProject(encodeProject(edited));
-  expect(restored.airTerminals[0].commercialOptions).toMatchObject(
-    plenumOptions,
+  // La bocchetta non porta dati del plenum: i corpi restano separati.
+  expect(restored.plenums).toEqual([]);
+  expect(restored.airTerminals.every((item) => item.plenumId === null)).toBe(
+    true,
   );
-  expect(restored.airTerminals[1].commercialOptions).toMatchObject({
-    insulatedPlenum: true,
-    connectionPosition: "upper",
-  });
-  expect(restored.airTerminals[1].commercialOptions?.plenumMaterial).not.toBe(
-    "galvanized",
-  );
-  expect(() =>
-    saveTerminalOnPlan(
-      base,
-      {
-        ...input(base),
-        plenumOptions: { ...plenumOptions, connectionNote: "x".repeat(201) },
-      },
-      { x: 4, y: 2 },
+  expect(
+    restored.airTerminals.some((item) =>
+      Object.keys(item.commercialOptions ?? {}).some((key) =>
+        /plenum|connection/i.test(key),
+      ),
     ),
-  ).toThrow();
+  ).toBe(false);
+});
+
+it("moves legacy terminal plenum options to the separate body without changing its dimensions", () => {
+  const base = fixture();
+  let p = saveTerminalOnPlan(base, input(base), { x: 4, y: 2 });
+  const terminalId = p.airTerminals[0].id;
+  p = connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id);
+  p = addTerminalPlenum(p, terminalId);
+  const raw = JSON.parse(encodeProject(p));
+  delete raw.plenums[0].connectionPosition;
+  delete raw.plenums[0].shape;
+  raw.airTerminals[0].commercialOptions = {
+    ...raw.airTerminals[0].commercialOptions,
+    insulatedPlenum: true,
+    plenumMaterial: "galvanized",
+    plenumShape: "trapezoidal",
+    connectionPosition: "custom",
+    connectionNote: "legacy",
+  };
+  const restored = decodeProject(JSON.stringify(raw));
+  const options = restored.airTerminals[0].commercialOptions ?? {};
+  expect(Object.keys(options)).not.toContain("insulatedPlenum");
+  expect(Object.keys(options)).not.toContain("plenumMaterial");
+  expect(Object.keys(options)).not.toContain("connectionPosition");
+  expect(restored.plenums).toHaveLength(1);
+  expect(restored.plenums[0].attachmentId).toBe(terminalId);
+  expect(restored.plenums[0].material).toBe("insulated");
+  expect(restored.plenums[0]).toMatchObject({
+    widthMm: p.plenums[0].widthMm,
+    heightMm: p.plenums[0].heightMm,
+    depthMm: p.plenums[0].depthMm,
+    connectionPosition: "custom",
+    connectionNote: "legacy",
+    shape: "trapezoidal",
+  });
+  expect(decodeProject(encodeProject(restored))).toEqual(restored);
 });
 
 it("requires an explicit terminal color before saving", () => {
@@ -479,7 +492,6 @@ it("keeps terminal identity, elevation and accessories when editing catalog leng
     productCode: "Codice storico",
     elevationM: base.rooms[0].heightM,
     commercialOptions: {
-      insulatedPlenum: false,
       fixingBridges: false,
       continuityKit: false,
     },
@@ -496,7 +508,6 @@ it("keeps terminal identity, elevation and accessories when editing catalog leng
     productCode: "Codice storico",
     widthMm: 2000,
     commercialOptions: {
-      insulatedPlenum: false,
       fixingBridges: false,
       continuityKit: false,
     },

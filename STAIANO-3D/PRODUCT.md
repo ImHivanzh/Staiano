@@ -64,13 +64,11 @@ README.md, ARCHITECTURE.md, cataloghi e asset locali, fixture `.hvacproj`, test 
 - Le proprietà restano contestuali alla selezione e richiudibili.
 - Tastiera, stati di salvataggio, errori e controlli tecnici restano visibili e accessibili.
 
-
 ## Flessibili fra plenum
 
-La vista Canale mostra tubi corrugati dagli stacchi del plenum macchina agli stacchi del plenum bocchetta. Se non sono stati inseriti corpi separati, mostra le geometrie proposte con quote e stacchi disponibili nel catalogo; non salva nuovi oggetti nel progetto. Le quote mancanti non vengono inventate. Il plenum terminale e le connessioni rispettano montaggio, rotazione e lato dello stacco. La macchina e il proprio raccordo hanno lo stesso asse verticale, anche con controsoffitto.
+La vista Canale mostra tubi corrugati dagli stacchi del plenum macchina agli stacchi del plenum bocchetta. I due plenum sono sempre corpi separati, creati con lo strumento Plenum e associati con Collega: senza i corpi non viene disegnato alcun plenum né un tubo verso la bocchetta. Le quote mancanti non vengono inventate. Materiale, stacco e forma appartengono al plenum, non alla bocchetta. Il plenum terminale e le connessioni rispettano montaggio, rotazione e lato dello stacco. La macchina e il proprio raccordo hanno lo stesso asse verticale, anche con controsoffitto.
 
 I flessibili hanno rettilinei e archi circolari tangenti, con raggio preferito pari a due diametri e minimo geometrico pari a un diametro. I percorsi automatici cercano lo spazio per le curve mantenendo gli imbocchi assiali; non usano spline libere. I punti manuali restano salvati. Se non entra una curva o il tubo si sovrappone a se stesso, la mesh non viene inventata: appare “Percorso non realizzabile: sposta curve o plenum”; per i canali salvati compare anche un controllo del progetto. Le indicazioni del produttore del tubo e la verifica esecutiva restano necessarie.
-
 
 ## Cartongesso per muro e volume tecnico vuoto
 

@@ -84,7 +84,7 @@ export function placePlenum(
     (s) => s.id === systemId && s.type === "ducted",
   );
   if (!system) throw new Error("Macchina inesistente.");
-  let next = system.indoorUnits.length
+  const next = system.indoorUnits.length
     ? project
     : placeDuctedMachine(project, systemId);
   const proposed = machinePlenum(next, systemId, use);
@@ -95,23 +95,11 @@ export function placePlenum(
         : "Raccordo di ripresa della macchina non dichiarato: inserisci larghezza e altezza dell’attacco prima di creare il plenum.",
     );
   const plenum = { ...proposed, id: newId() };
-  const machine = next.hvacSystems.find((s) => s.id === systemId)!
-    .indoorUnits[0];
-  next = {
+  // Il plenum macchina è un corpo a sé: non riassegna la bocchetta.
+  return {
     ...next,
     plenums: [...next.plenums, plenum],
-    airTerminals: next.airTerminals.map((t) =>
-      t.systemId === systemId && t.floorId === machine.floorId && t.use === use
-        ? {
-            ...t,
-            plenumId:
-              next.plenums.find((p) => p.attachmentId === t.id)?.id ??
-              plenum.id,
-          }
-        : t,
-    ),
   };
-  return next;
 }
 
 export function placeSupplyPlenum(project: Project, systemId: string) {

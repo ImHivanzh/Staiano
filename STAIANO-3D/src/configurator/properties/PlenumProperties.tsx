@@ -4,6 +4,7 @@ import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm } from "@/utils/format";
 import { removeSelection } from "@/domain/geometry/selection";
 import { deviceCodes } from "@/services/export/device-codes";
+import { resolveTerminalAccessorySpecification } from "@/domain/air-terminals/commercial-bom";
 
 export function PlenumProperties({
   project,
@@ -23,6 +24,14 @@ export function PlenumProperties({
     project.hvacSystems.some((s) =>
       s.indoorUnits.some((u) => u.id === plenum.attachmentId),
     );
+  // Lo stacco è un dato del corpo: se manca, si parte dalla scheda di catalogo.
+  const connectionPosition =
+    plenum.connectionPosition ??
+    (terminal
+      ? resolveTerminalAccessorySpecification(terminal)?.plenum
+          ?.connectionPosition
+      : undefined) ??
+    "lateral";
   return (
     <div className="corpo-proprieta">
       <h3>Plenum {plenum.use === "return" ? "di ripresa" : "di mandata"}</h3>
@@ -67,21 +76,6 @@ export function PlenumProperties({
           }
           commit((p) => ({
             ...p,
-            airTerminals: p.airTerminals.map((t) =>
-              t.id === terminal?.id
-                ? {
-                    ...t,
-                    commercialOptions: {
-                      insulatedPlenum: true,
-                      fixingBridges: true,
-                      continuityKit: true,
-                      ...t.commercialOptions,
-                      connectionPosition: String(data.get("port-position")) as
-                        "lateral" | "upper",
-                    },
-                  }
-                : t,
-            ),
             plenums: p.plenums.map((pl) =>
               pl.id === id
                 ? {
@@ -95,6 +89,19 @@ export function PlenumProperties({
                     portDiameterMm: numberFromForm(data.get("diameter")),
                     material: data.get("material") as
                       "insulated" | "galvanized",
+                    shape: String(data.get("shape")) as
+                      "rectangular" | "trapezoidal",
+                    connectionNote: String(
+                      data.get("connection-note") ?? pl.connectionNote ?? "",
+                    ),
+                    ...(data.get("port-position")
+                      ? {
+                          connectionPosition: String(
+                            data.get("port-position"),
+                          ) as
+                            "lateral" | "upper" | "lower" | "rear" | "custom",
+                        }
+                      : {}),
                     status: "manual",
                   }
                 : pl,
@@ -103,33 +110,31 @@ export function PlenumProperties({
         }}
       >
         <fieldset disabled={plenum.locked}>
-          {terminal && (
-            <label className="campo">
-              <span>Direzione stacchi reali</span>
-              <select
-                name="port-position"
-                defaultValue={
-                  terminal.commercialOptions?.connectionPosition ?? "lateral"
-                }
-              >
-                <option value="lateral">Orizzontali dietro il plenum</option>
-                <option value="upper">Superiori, verso l’alto</option>
-                {terminal.commercialOptions?.connectionPosition &&
-                  !["lateral", "upper"].includes(
-                    terminal.commercialOptions.connectionPosition,
-                  ) && (
-                    <option
-                      value={terminal.commercialOptions.connectionPosition}
-                    >
-                      Posizione personalizzata salvata
-                    </option>
-                  )}
-              </select>
-              <small>
-                Indica gli attacchi effettivi del plenum; non modifica le quote
-                dichiarate.
-              </small>
-            </label>
+          {!machineAttached && plenum.attachmentId !== undefined && (
+            <>
+              <label className="campo">
+                <span>Direzione stacchi reali</span>
+                <select name="port-position" defaultValue={connectionPosition}>
+                  <option value="lateral">Orizzontali dietro il plenum</option>
+                  <option value="upper">Superiori, verso l’alto</option>
+                  <option value="lower">Inferiori · su richiesta</option>
+                  <option value="rear">Posteriori · su richiesta</option>
+                  <option value="custom">Personalizzati · su richiesta</option>
+                </select>
+                <small>
+                  Dato del plenum, non della bocchetta: non modifica le quote
+                  dichiarate.
+                </small>
+              </label>
+              <label className="campo">
+                <span>Nota stacchi</span>
+                <input
+                  name="connection-note"
+                  maxLength={200}
+                  defaultValue={plenum.connectionNote ?? ""}
+                />
+              </label>
+            </>
           )}
           {!terminal && (
             <label className="campo">
@@ -185,6 +190,13 @@ export function PlenumProperties({
             >
               <option value="insulated">Isolato</option>
               <option value="galvanized">Lamiera zincata</option>
+            </select>
+          </label>
+          <label className="campo">
+            <span>Forma</span>
+            <select name="shape" defaultValue={plenum.shape ?? "rectangular"}>
+              <option value="rectangular">Rettangolare</option>
+              <option value="trapezoidal">Trapezoidale</option>
             </select>
           </label>
           <button className="bottone chiara">Applica plenum</button>

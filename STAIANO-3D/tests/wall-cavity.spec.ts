@@ -16,11 +16,13 @@ function fixture() {
  import {guidedProjectFixture,addGuidedTerminal} from './tests/guided-fixture.ts';
  import {placeMachineOnPlan} from './src/domain/ducted/graphic-installation.ts';
  import {movePlacedDevice} from './src/domain/geometry/move-device.ts';
- import {insertPlenum,connectPlenum} from './src/domain/ducted/attached-plenums.ts';
+ import {addTerminalPlenum} from './src/domain/ducted/attached-plenums.ts';
  let p=guidedProjectFixture();p.floors[0].configurationWizard=undefined;
  p=placeMachineOnPlan(p,p.hvacSystems[0].id,p.rooms[0].id,{x:3,y:3});p=addGuidedTerminal(p,2000,'EDLS','wall');
  p=movePlacedDevice(p,p.airTerminals[0].id,{x:.2,y:3},{enabled:true,grid:false,stepM:.1,toleranceM:.12,orthogonal:false,angle45:false,parallel:false});
- p=insertPlenum(p,p.rooms[0].id,{x:1,y:1});p=connectPlenum(p,p.plenums[0].id,p.airTerminals[0].id);
+ p=addTerminalPlenum(p,p.airTerminals[0].id);
+ // Corpo separato posizionato dietro la controparete, non solidale alla faccia.
+ p={...p,plenums:p.plenums.map(pl=>({...pl,position:{x:1,y:1},status:'manual',connectionPosition:'upper'}))};
  console.log(JSON.stringify(p));
  `,
       ],
@@ -39,12 +41,6 @@ for (const offset of [30, -30])
       height: offset > 0 ? 900 : 768,
     });
     const project = fixture();
-    project.airTerminals[0].commercialOptions = {
-      insulatedPlenum: true,
-      fixingBridges: true,
-      continuityKit: true,
-      connectionPosition: "upper",
-    };
     await page.goto("/");
     await page.getByTestId("project-file").setInputFiles({
       name: "controparete.hvacproj",

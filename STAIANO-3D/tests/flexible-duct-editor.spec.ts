@@ -19,6 +19,7 @@ function flexibleProject(withClearance = false, withCollision = false) {
           `
     import { guidedProjectFixture, addGuidedTerminal } from './tests/guided-fixture.ts';
     import { placeMachineOnPlan } from './src/domain/ducted/graphic-installation.ts';
+    import { addTerminalPlenum } from './src/domain/ducted/attached-plenums.ts';
     import { placeSupplyPlenum } from './src/domain/ducted/placement.ts';
     import { generateDuctRoutes, setDuctKind, ductRoute } from './src/domain/ducted/routes.ts';
     import { flexibleDuctCurve } from './src/domain/ducted/flexible-curve.ts';
@@ -27,6 +28,7 @@ function flexibleProject(withClearance = false, withCollision = false) {
     if (${withClearance}) { p.rooms[0].heightM = 4; p.rooms[0].ceilingHeightM = 2.4; }
     p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
     p = addGuidedTerminal(p, 1000);
+    p = addTerminalPlenum(p, p.airTerminals[0].id);
     p = placeSupplyPlenum(p, p.hvacSystems[0].id);
     p = generateDuctRoutes(p, p.hvacSystems[0].id);
     const duct = p.ducts.find((d) => d.terminalId);
@@ -56,7 +58,8 @@ async function importProject(page: Page) {
     name: "Continua liberamente nell’editor",
   });
   if (await free.count()) await free.click();
-  await expect(page.getByTestId("plenum-2d")).toHaveCount(1);
+  // Plenum della bocchetta e plenum macchina restano due corpi separati.
+  await expect(page.getByTestId("plenum-2d")).toHaveCount(2);
   return project;
 }
 
@@ -275,16 +278,21 @@ test("la modifica flessibili conserva zoom e orientamento tra selezioni e aggiun
   await expect(canvas).not.toHaveAttribute("data-camera-position", position!);
 });
 
-test("il 3D esclude i tubi salvati se la bocchetta è senza plenum", async ({
+test("il 3D esclude i tubi salvati se la bocchetta perde il suo plenum", async ({
   page,
 }) => {
   test.setTimeout(120000);
   const project = flexibleProject();
-  project.airTerminals[0].commercialOptions = {
-    ...project.airTerminals[0].commercialOptions!,
-    insulatedPlenum: false,
-    plenumMaterial: undefined,
-  };
+  const terminalId = project.airTerminals[0].id;
+  // Corpo separato eliminato: il tubo non ha più un'estremità reale.
+  const removed = new Set(
+    project.plenums
+      .filter((pl) => pl.attachmentId === terminalId)
+      .map((pl) => pl.id),
+  );
+  project.plenums = project.plenums.filter((pl) => !removed.has(pl.id));
+  project.ducts = project.ducts?.filter((d) => !removed.has(d.plenumId));
+  project.airTerminals[0].plenumId = null;
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
     name: "bocchetta-senza-plenum.hvacproj",
@@ -297,8 +305,8 @@ test("il 3D esclude i tubi salvati se la bocchetta è senza plenum", async ({
     timeout: 30000,
   });
   await expect(canvas).toHaveAttribute("data-air-connections", "0");
-  // Resta solo l’eventuale raccordo rigido macchina-plenum.
-  await expect(canvas).toHaveAttribute("data-duct-count", "1");
+  // Nessun tubo superstite: senza il corpo del plenum l'estremità non esiste.
+  await expect(canvas).toHaveAttribute("data-duct-count", "0");
 });
 
 test("un flessibile che attraversa un pilastro è rosso e segnalato in 2D e 3D", async ({

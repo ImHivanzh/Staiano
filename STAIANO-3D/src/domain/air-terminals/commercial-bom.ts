@@ -15,14 +15,6 @@ type InstalledTerminal = Project["airTerminals"][number] & {
 };
 type BomProject = Pick<Project, "airTerminals" | "hvacSystems"> &
   Partial<Pick<Project, "plenums">>;
-function customTerminalPlenum(options: TerminalCommercialOptions | undefined) {
-  return (
-    options?.plenumMaterial === "galvanized" ||
-    options?.plenumShape === "trapezoidal" ||
-    (!!options?.connectionPosition &&
-      !["lateral", "upper"].includes(options.connectionPosition))
-  );
-}
 /**
  * Un plenum salvato resta l'accessorio di catalogo finché coincide con la
  * scheda; appena l'operatore ne cambia quota o modello diventa una quotazione
@@ -41,7 +33,8 @@ function savedPlenumIsCatalogue(
     plenum.depthMm === spec.widthMm &&
     (plenum.portCount ?? 1) === spec.portCount &&
     (plenum.portDiameterMm ?? 160) === spec.portDiameterMm &&
-    (plenum.material ?? "insulated") === "insulated"
+    (plenum.material ?? "insulated") === "insulated" &&
+    (!plenum.shape || plenum.shape === "rectangular")
   );
 }
 export type EcoclimaBomLine = {
@@ -290,15 +283,9 @@ function matchingPrices(
   terminal: InstalledTerminal,
   kind: EcoclimaPrice["kind"],
   catalog: EcoclimaPriceCatalog,
-  filterOptions = true,
+  plenum?: Project["plenums"][number],
 ) {
   const options = terminal.commercialOptions;
-  if (
-    kind === "insulated-plenum" &&
-    filterOptions &&
-    customTerminalPlenum(options)
-  )
-    return [];
   const dimensions = terminalCommercialDimensions(terminal);
   const specification =
     kind === "insulated-plenum"
@@ -330,7 +317,6 @@ function matchingPrices(
                   plenumDimensions as NonNullable<typeof dimensions>,
                 ))),
         );
-  if (!filterOptions) return candidates;
   return candidates.filter(
     (price) =>
       (kind !== "terminal" ||
@@ -344,18 +330,13 @@ function matchingPrices(
         !/^RAL\d{4}$/.test(terminal.color) ||
         price.colorCode === terminal.color) &&
       (kind !== "insulated-plenum" ||
-        !options?.plenumModelCode ||
-        price.modelCode === options.plenumModelCode) &&
-      (!price.connectionPosition ||
-        (!!options?.connectionPosition &&
-          price.connectionPosition === options.connectionPosition)),
+        !plenum?.model ||
+        price.modelCode === plenum.model) &&
+      (kind !== "insulated-plenum" ||
+        !price.connectionPosition ||
+        !plenum?.connectionPosition ||
+        price.connectionPosition === plenum.connectionPosition),
   );
-}
-export function commercialPlenumChoicesForTerminal(
-  terminal: InstalledTerminal,
-  catalog: EcoclimaPriceCatalog = ecoclimaPriceCatalog,
-) {
-  return matchingPrices(terminal, "insulated-plenum", catalog, false);
 }
 function uniquePrice(candidates: EcoclimaPrice[]) {
   const keys = new Set(
@@ -391,11 +372,7 @@ export function resolveTerminalAccessorySpecification(
     (item) =>
       familyMatches(item.familyCode, terminal.family) &&
       (dimensionsMatch(item.dimensions, dimensions) ||
-        (alternate && dimensionsMatch(item.dimensions, alternate))) &&
-      (!item.plenum ||
-        !terminal.commercialOptions?.connectionPosition ||
-        item.plenum.connectionPosition ===
-          terminal.commercialOptions.connectionPosition),
+        (alternate && dimensionsMatch(item.dimensions, alternate))),
   );
   return matches.length === 1 ? matches[0] : null;
 }
@@ -405,12 +382,10 @@ function priceLine(
   quantity: number | null,
   catalog: EcoclimaPriceCatalog,
   quantitySource: EcoclimaPrice["sourceMetadata"] | null = null,
+  plenum?: Project["plenums"][number],
 ): EcoclimaBomLine {
-  const candidates = matchingPrices(terminal, kind, catalog);
+  const candidates = matchingPrices(terminal, kind, catalog, plenum);
   const price = uniquePrice(candidates);
-  const plenumOptions = terminal.commercialOptions;
-  const customPlenum =
-    kind === "insulated-plenum" && customTerminalPlenum(plenumOptions);
   const connectionLabels = {
     lateral: "laterale",
     upper: "superiore",
@@ -442,11 +417,9 @@ function priceLine(
     familyCode: terminal.family,
     kind,
     label:
-      (customPlenum
-        ? `Plenum terminale ${plenumOptions?.plenumMaterial === "galvanized" ? "zincato non isolato" : "isolato"} ${terminal.family}`
-        : (price?.label ?? `${labels[kind]} ${terminal.family}`)) +
-      (kind === "insulated-plenum"
-        ? ` · ${plenumOptions?.plenumShape === "trapezoidal" ? "trapezoidale" : "rettangolare"}${plenumOptions?.connectionPosition ? ` · stacco ${connectionLabels[plenumOptions.connectionPosition]}${plenumOptions.connectionPosition === "custom" && plenumOptions.connectionNote ? `: ${plenumOptions.connectionNote}` : ""}` : ""}`
+      (price?.label ?? `${labels[kind]} ${terminal.family}`) +
+      (kind === "insulated-plenum" && plenum
+        ? ` · stacco ${connectionLabels[plenum.connectionPosition ?? "lateral"]}`
         : "") +
       (kind === "terminal" && terminal.color
         ? ` · ${terminalFinishLabel(terminal.color)}`
@@ -457,9 +430,8 @@ function priceLine(
     extendedPriceCents: extended,
     currency: "EUR",
     status: extended === null ? "unknown" : "known",
-    reason: customPlenum
-      ? "Plenum su richiesta: prezzo e dimensioni degli stacchi da confermare con il fornitore."
-      : quantity === null
+    reason:
+      quantity === null
         ? "Quantità richiesta non verificata nelle istruzioni del costruttore."
         : price && unitPrice === null
           ? "Verniciatura del colore scelto: prezzo da quotare a Ecoclima."
@@ -525,15 +497,13 @@ export function calculateEcoclimaBom(
       catalog,
     );
     const separate = terminalPlenums.get(terminal.id);
-    if (
-      (terminal.commercialOptions?.insulatedPlenum !== false ||
-        terminal.commercialOptions?.plenumMaterial) &&
-      (!separate ||
-        (savedPlenumIsCatalogue(separate, specification) &&
-          !customTerminalPlenum(terminal.commercialOptions)))
-    ) {
-      lines.push(priceLine(terminal, "insulated-plenum", 1, catalog));
-      if (separate) pricedTerminalPlenums.add(terminal.id);
+    // Nessun plenum è implicito nella bocchetta: si quota solo il corpo
+    // separato realmente collegato e coerente con la scheda di catalogo.
+    if (separate && savedPlenumIsCatalogue(separate, specification)) {
+      lines.push(
+        priceLine(terminal, "insulated-plenum", 1, catalog, null, separate),
+      );
+      pricedTerminalPlenums.add(terminal.id);
     }
     if (
       specification?.fixingBridgeQuantity ||
@@ -722,17 +692,11 @@ export function terminalSupplyConnections(
       catalog,
     );
     const plenum = specification?.plenum;
-    if (
-      !plenum ||
-      customTerminalPlenum(terminal.commercialOptions) ||
-      (terminal.commercialOptions?.insulatedPlenum === false &&
-        !terminal.commercialOptions.plenumMaterial)
-    ) {
+    if (!plenum) {
       issues.push({
         terminalId: terminal.id,
-        reason: customTerminalPlenum(terminal.commercialOptions)
-          ? "Plenum su richiesta: dimensioni e numero degli stacchi da confermare."
-          : "Plenum e stacchi originali mancanti o posizione dello stacco non registrata.",
+        reason:
+          "Plenum e stacchi originali mancanti: scheda di catalogo da verificare.",
       });
       continue;
     }

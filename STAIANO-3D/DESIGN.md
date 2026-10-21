@@ -279,20 +279,17 @@ Il logo Staiano originale occupa un supporto bianco di 52px su desktop e 44px ne
 
 Su PC con puntatore preciso (larghezza da 1100 px), gli strumenti della pianta principale sono in una toolbar verticale a sinistra. La testata compatta contiene Salva, Annulla e Ripristina con tooltip; 2D/3D e opzioni restano sopra il canvas. Il comando Pannello ambienti richiude la navigazione in una colonna di icone e restituisce spazio alla pianta. Le proprietà restano contestuali e richiudibili; la configurazione canalizzata resta nei popup sulla stessa pianta. Il layout tablet mantiene i controlli precedenti e sarà trattato separatamente.
 
-
 ## Feedback e dimensionamento macchina
 
 Le notifiche di esito ed errore usano toast chiudibili, visibili per 8 secondi e accessibili anche sopra i popup. I conflitti di salvataggio restano persistenti con le azioni di recupero. Istruzioni operative e dati tecnici rimangono nel loro contesto. Il popup macchina elenca gli ambienti effettivamente considerati e il carico di ciascuno, con l’invito a collegare tutte le bocchette prima del dimensionamento. I tooltip dei comandi con scorciatoia mostrano il tasto tra parentesi.
 
 Il comando Muovi (M) trascina direttamente gli oggetti, anche se ancora da configurare. La posizione si salva al rilascio; un clic sulla pianta non sposta l’oggetto selezionato.
 
-
 ## Flessibili fra plenum
 
-La vista Canale mostra tubi corrugati dagli stacchi del plenum macchina agli stacchi del plenum bocchetta. Se non sono stati inseriti corpi separati, mostra le geometrie proposte con quote e stacchi disponibili nel catalogo; non salva nuovi oggetti nel progetto. Le quote mancanti non vengono inventate. Il plenum terminale e le connessioni rispettano montaggio, rotazione e lato dello stacco. La macchina e il proprio raccordo hanno lo stesso asse verticale, anche con controsoffitto.
+La vista Canale mostra tubi corrugati dagli stacchi del plenum macchina agli stacchi del plenum bocchetta. I due plenum sono sempre corpi separati, creati con lo strumento Plenum e associati con Collega: senza i corpi non viene disegnato alcun plenum né un tubo verso la bocchetta. Le quote mancanti non vengono inventate. Materiale, stacco e forma appartengono al plenum, non alla bocchetta. Il plenum terminale e le connessioni rispettano montaggio, rotazione e lato dello stacco. La macchina e il proprio raccordo hanno lo stesso asse verticale, anche con controsoffitto.
 
 I flessibili hanno rettilinei e archi circolari tangenti, con raggio preferito pari a due diametri e minimo geometrico pari a un diametro. I percorsi automatici cercano lo spazio per le curve mantenendo gli imbocchi assiali; non usano spline libere. I punti manuali restano salvati. Se non entra una curva o il tubo si sovrappone a se stesso, la mesh non viene inventata: appare “Percorso non realizzabile: sposta curve o plenum”; per i canali salvati compare anche un controllo del progetto. Le indicazioni del produttore del tubo e la verifica esecutiva restano necessarie.
-
 
 ## Cartongesso per muro e volume tecnico vuoto
 

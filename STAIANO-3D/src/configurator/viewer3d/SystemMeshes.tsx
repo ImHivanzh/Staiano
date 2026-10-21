@@ -4,10 +4,7 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Plenum, Project, Selection } from "@/schemas/project";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
-import {
-  plenumPortsUpper,
-  terminalPlenum,
-} from "@/domain/ducted/attached-plenums";
+import { plenumPortsUpper } from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 
@@ -261,20 +258,10 @@ export function SystemMeshes({
 }) {
   const chosen = (id: string) => selection.some((s) => s.id === id);
   const { gl } = useThree();
-  const plenums = useMemo(
-    () => [
-      // Solo i plenum salvati sono oggetti fisici: la macchina non ne mostra
-      // uno finché l'operatore non lo crea con lo strumento Plenum.
-      ...project.plenums,
-      ...project.airTerminals.flatMap((terminal) => {
-        if (project.plenums.some((p) => p.attachmentId === terminal.id))
-          return [];
-        const plenum = terminalPlenum(project, terminal);
-        return plenum ? [plenum] : [];
-      }),
-    ],
-    [project],
-  );
+  // Solo i plenum salvati sono oggetti fisici: né la macchina né la bocchetta
+  // ne mostrano uno finché l'operatore non lo crea con lo strumento Plenum.
+  // Il plenum di catalogo resta nella distinta, senza corpo nel modello 3D.
+  const plenums = project.plenums;
   const plenumCount = plenums.filter(
     (plenum) =>
       plenum.floorId === activeFloorId &&

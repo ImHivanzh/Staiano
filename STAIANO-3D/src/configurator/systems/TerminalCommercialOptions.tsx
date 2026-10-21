@@ -38,7 +38,6 @@ export function TerminalCommercialOptions({
           ? {
               ...t,
               commercialOptions: {
-                insulatedPlenum: true,
                 fixingBridges: true,
                 continuityKit: true,
                 ...t.commercialOptions,

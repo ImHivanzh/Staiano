@@ -78,14 +78,49 @@ function terminal(lengthMm = 1000, slots = 1, width = 20): Terminal {
     commercialOptions: {
       profileCode: "EDLS20-FA",
       colorCode: "RAL9005",
-      insulatedPlenum: true,
       fixingBridges: true,
       continuityKit: true,
     },
   };
 }
-const quote = (terminals: Terminal[]) =>
-  calculateEcoclimaBom({ airTerminals: terminals, hvacSystems: [] });
+/** Corpo separato di catalogo: il plenum non è mai implicito nella bocchetta. */
+function cataloguePlenumFor(item: Terminal): Project["plenums"][number] | null {
+  const spec = resolveTerminalAccessorySpecification(item)?.plenum;
+  if (!spec?.lengthMm || !spec.widthMm || !spec.heightMm) return null;
+  return {
+    id: `pl-${item.id}`,
+    systemId: item.systemId,
+    attachmentId: item.id,
+    floorId: item.floorId,
+    roomId: item.roomId,
+    use: item.use,
+    position: item.position,
+    rotation: item.rotation,
+    widthMm: spec.lengthMm!,
+    heightMm: spec.heightMm!,
+    depthMm: spec.widthMm!,
+    portCount: spec.portCount,
+    portDiameterMm: spec.portDiameterMm,
+    model: spec.modelCode,
+    material: "insulated",
+    connectionPosition: spec.connectionPosition,
+    status: "proposed",
+    locked: false,
+    designSettings: null,
+  };
+}
+const quote = (
+  terminals: Terminal[],
+  plenums: Project["plenums"] = terminals.flatMap((item) => {
+    const plenum = cataloguePlenumFor(item);
+    return plenum ? [plenum] : [];
+  }),
+) =>
+  calculateEcoclimaBom({
+    airTerminals: terminals,
+    hvacSystems: [],
+    plenums,
+  });
 function installedFamily(
   familyCode: string,
   predicate: (
@@ -107,45 +142,57 @@ function installedFamily(
       variant.faceHeightMm ?? variant.heightMm ?? variant.nominalDiameterMm!,
     depthMm: variant.bodyDepthMm ?? variant.depthMm ?? null,
     commercialOptions: {
-      insulatedPlenum: true,
       fixingBridges: true,
       continuityKit: true,
-      connectionPosition: "lateral",
     },
   };
 }
 
 describe("official Ecoclima list-price BOM", () => {
-  it("keeps customized plenums unpriced and never invents their supply ports", () => {
-    for (const patch of [
-      { plenumMaterial: "galvanized" as const, insulatedPlenum: false },
-      { plenumShape: "trapezoidal" as const },
-      { connectionPosition: "lower" as const },
-      { connectionPosition: "rear" as const },
-      {
-        connectionPosition: "custom" as const,
-        connectionNote: "Doppio laterale",
-      },
-    ]) {
-      const item = terminal();
-      item.commercialOptions = {
-        ...item.commercialOptions!,
-        connectionPosition: "lateral",
-        ...patch,
-      };
-      const line = quote([item]).lines.find(
-        (entry) => entry.kind === "insulated-plenum",
-      )!;
-      expect(line.status).toBe("unknown");
-      expect(line.unitPriceCents).toBeNull();
-      expect(line.reason).toContain("fornitore");
-      const connections = terminalSupplyConnections(
-        { airTerminals: [item] },
-        "system",
-      );
-      expect(connections.connections).toEqual([]);
-      expect(connections.issues).toHaveLength(1);
-    }
+  it("quotes the separate plenum only when its body is connected and catalogue-sized", () => {
+    const item = terminal();
+    const withoutBody = calculateEcoclimaBom({
+      airTerminals: [item],
+      hvacSystems: [],
+    });
+    expect(withoutBody.lines.map((line) => line.kind)).toEqual([
+      "terminal",
+      "fixing-bridge",
+    ]);
+    expect(
+      withoutBody.lines.some((line) => line.kind === "insulated-plenum"),
+    ).toBe(false);
+
+    const catalogue = quote([item]);
+    expect(
+      catalogue.lines.map((line) => [line.kind, line.unitPriceCents]),
+    ).toEqual([
+      ["terminal", 6365],
+      ["insulated-plenum", 8687],
+      ["fixing-bridge", 1272],
+    ]);
+
+    const custom = cataloguePlenumFor(item)!;
+    Object.assign(custom, {
+      material: "galvanized",
+      connectionPosition: "lower",
+      model: "Plenum su misura",
+    });
+    const plenumLine = quote([item], [custom]).lines.find(
+      (line) => line.kind === "insulated-plenum",
+    )!;
+    expect(plenumLine).toMatchObject({
+      status: "unknown",
+      unitPriceCents: null,
+    });
+    expect(plenumLine.reason).toContain("configurato separatamente");
+    // Gli stacchi di progetto restano quelli di catalogo del terminale.
+    const connections = terminalSupplyConnections(
+      { airTerminals: [item] },
+      "system",
+    );
+    expect(connections.issues).toEqual([]);
+    expect(connections.connections.length).toBeGreaterThan(0);
   });
   it("includes the white paint supplement and does not quote other RAL colours at the anodized price", () => {
     const base = installedFamily("EGA6", () => true);
@@ -253,7 +300,7 @@ describe("official Ecoclima list-price BOM", () => {
   it("never interpolates lengths or repairs malformed manufacturer price cells", () => {
     const custom = terminal(1100);
     expect(commercialChoicesForTerminal(custom)).toEqual([]);
-    expect(quote([custom]).totalCents).toBeNull();
+    expect(quote([custom], []).totalCents).toBeNull();
     const malformed = terminal(1200, 2);
     malformed.use = "return";
     malformed.commercialOptions!.profileCode = "EDLS30-FA";
@@ -288,8 +335,10 @@ describe("official Ecoclima list-price BOM", () => {
     });
   });
   it("distinguishes machine plenum fabrication from the Ecoclima terminal plenum list price", () => {
+    const item = terminal();
     const result = calculateEcoclimaBom({
-      airTerminals: [terminal()],
+      airTerminals: [item],
+      plenums: [cataloguePlenumFor(item)!],
       hvacSystems: [
         {
           id: "system",
@@ -343,8 +392,7 @@ describe("official Ecoclima list-price BOM", () => {
       (variant) => variant.widthMm === 400 && variant.heightMm === 75,
     );
     item.commercialOptions!.profileCode = "EBLF-20/0°";
-    item.commercialOptions!.insulatedPlenum = false;
-    const result = quote([item]);
+    const result = quote([item], []);
     expect(
       result.lines.find((line) => line.kind === "fixing-kit"),
     ).toMatchObject({
@@ -387,7 +435,6 @@ describe("official Ecoclima list-price BOM", () => {
       widthMm: variant.faceWidthMm!,
       heightMm: variant.faceHeightMm!,
       commercialOptions: {
-        insulatedPlenum: true,
         fixingBridges: false,
         continuityKit: false,
       },

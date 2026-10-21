@@ -13,13 +13,9 @@ import styles from "./RoomAirTerminals.module.css";
 import visual from "./OperatorTerminalControls.module.css";
 import { SizeButtons } from "./TerminalSizeChoices";
 import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
-import {
-  continuityModuleLengths,
-  terminalPlenumConnections,
-} from "@/domain/air-terminals/commercial-bom";
+import { continuityModuleLengths } from "@/domain/air-terminals/commercial-bom";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { RoomMeterDistribution } from "./TerminalDistribution";
-import type { TerminalPlenumOptions } from "@/domain/catalogs/ecoclima-price-schema";
 import {
   terminalFinishChoices,
   terminalFinishLabel,
@@ -98,7 +94,6 @@ export function OperatorTerminalControls({
   use,
   mounting,
   compact = false,
-  plenumOnly = false,
   onPlaced,
   point,
   existingTerminalId,
@@ -118,7 +113,6 @@ export function OperatorTerminalControls({
   use: "supply" | "return";
   mounting: "wall" | "ceiling";
   compact?: boolean;
-  plenumOnly?: boolean;
   onPlaced?: () => void;
   point: Point;
   existingTerminalId?: string;
@@ -154,19 +148,6 @@ export function OperatorTerminalControls({
   );
   const [color, setColor] = useState(existing?.color ?? "");
   const [finish, setFinish] = useState(existing?.finish ?? "");
-  const publishedConnections = terminalPlenumConnections(family.familyCode);
-  const [plenumOptions] = useState<TerminalPlenumOptions>({
-    insulatedPlenum: existing?.commercialOptions?.insulatedPlenum ?? true,
-    plenumModelCode: existing?.commercialOptions?.plenumModelCode,
-    plenumMaterial: existing?.commercialOptions?.plenumMaterial,
-    plenumShape: existing?.commercialOptions?.plenumShape,
-    connectionPosition:
-      existing?.commercialOptions?.connectionPosition ??
-      (!existing && publishedConnections.length === 1
-        ? publishedConnections[0].position
-        : undefined),
-    connectionNote: existing?.commercialOptions?.connectionNote,
-  });
   const finishChoices = terminalFinishChoices(family);
   const finishSpecification = terminalFinishSpecification(family.familyCode);
   const [customRal, setCustomRal] = useState(
@@ -235,7 +216,7 @@ export function OperatorTerminalControls({
     : solution.operatingPoint.airflowM3h;
   return (
     <section aria-label="Scelta singola bocchetta">
-      <div hidden={plenumOnly} className={styles.operatorSettings}>
+      <div className={styles.operatorSettings}>
         {family.isLinearPerMeter && (
           <div className={visual.builder}>
             <div className={visual.builderHeading}>
@@ -668,7 +649,6 @@ export function OperatorTerminalControls({
               style,
               color: color.trim(),
               finish,
-              plenumOptions,
               ...(missingFace
                 ? {
                     manualDimensions: {

@@ -5,10 +5,6 @@ import {
   airTerminalFamilyAtVersion,
   airTerminalMountings,
 } from "@/domain/catalogs/air-terminals";
-import {
-  terminalPlenumOptionsSchema,
-  type TerminalPlenumOptions,
-} from "@/domain/catalogs/ecoclima-price-schema";
 import { ductedRoomAllocation } from "@/domain/ducted/apply";
 import { applyAirTerminalSolution } from "./apply";
 import { acousticUpperBound } from "./size";
@@ -37,7 +33,6 @@ export type OperatorTerminalInput = {
   style?: string;
   color?: string;
   finish?: string;
-  plenumOptions?: TerminalPlenumOptions;
   manualDimensions?: {
     widthMm: number;
     heightMm: number;
@@ -85,7 +80,6 @@ export function addOperatorTerminal(
           (whole.requiredAirflowM3h * widthMm) / whole.widthMm,
         commercialOptions: {
           ...whole.commercialOptions,
-          insulatedPlenum: whole.commercialOptions?.insulatedPlenum ?? true,
           fixingBridges: true,
           continuityKit: true,
           linearRunId: runId,
@@ -201,24 +195,12 @@ export function addOperatorTerminal(
         style: input.style ?? "",
         color: input.color ?? "",
         finish: input.finish ?? "",
-        commercialOptions: input.plenumOptions
-          ? {
-              fixingBridges: true,
-              continuityKit: true,
-              ...added.commercialOptions,
-              ...terminalPlenumOptionsSchema.parse(input.plenumOptions),
-            }
-          : added.commercialOptions,
+        commercialOptions: added.commercialOptions,
         pointIndex: null,
         unitIndex: null,
-        plenumId:
-          project.plenums.find(
-            (pl) =>
-              pl.systemId === input.systemId &&
-              pl.floorId === added.floorId &&
-              pl.use === input.use &&
-              pl.attachmentId === undefined,
-          )?.id ?? null,
+        // Nessun plenum implicito: il corpo separato nasce con lo strumento
+        // Plenum e l'associazione avviene col collegamento.
+        plenumId: null,
       },
     ],
   };

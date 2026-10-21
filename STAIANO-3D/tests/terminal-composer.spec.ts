@@ -52,6 +52,11 @@ for (const width of [1920, 1024]) {
         name: "Configura bocchetta",
         exact: true,
       });
+      await expect(
+        dialog.getByRole("tab", { name: "Plenum", exact: true }),
+      ).toHaveCount(0);
+      await expect(dialog.getByLabel("Stacco plenum")).toHaveCount(0);
+      await expect(plan.getByTestId("plenum-2d")).toHaveCount(0);
       const composition = dialog.getByRole("group", {
         name: "Composizione della bocchetta",
         exact: true,
@@ -151,6 +156,7 @@ for (const width of [1920, 1024]) {
         .click();
       await expect(dialog).toHaveCount(0);
       await expect(plan.getByTestId("terminal-supply")).toHaveCount(2);
+      await expect(plan.getByTestId("plenum-2d")).toHaveCount(0);
       await expect(page.getByTestId("save-status")).toHaveText("Salvato");
       await page.reload();
       await plan.getByTestId("terminal-supply").first().click();

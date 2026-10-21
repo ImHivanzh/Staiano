@@ -1,6 +1,10 @@
 import type { Duct, Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "@/domain/project";
-import { machinePlenum, machinePlenums, placedPlenumGeometry } from "./placement";
+import {
+  machinePlenum,
+  machinePlenums,
+  placedPlenumGeometry,
+} from "./placement";
 import {
   floorRoutingPolygons,
   indoorRoute,
@@ -597,12 +601,12 @@ export function setDuctRoute(
     throw new Error("Collegare prima la bocchetta alla macchina.");
   if (!points.length)
     throw new Error("Traccia almeno un punto del canale in pianta.");
-  // Il tubo unisce plenum macchina e plenum bocchetta: se il corpo della
-  // bocchetta non è salvato, si salva con le quote del catalogo.
+  // Il tubo unisce plenum macchina e plenum bocchetta: il corpo della
+  // bocchetta deve esistere come elemento separato e collegato.
   const body = terminalPlenum(project, terminal);
   if (!body)
     throw new Error(
-      "La bocchetta non ha un plenum: dichiara gli accessori o inseriscilo in pianta.",
+      "La bocchetta non ha un plenum collegato: crealo con lo strumento Plenum e collegalo, poi traccia il canale.",
     );
   const linked: Project = project.plenums.some((p) => p.id === body.id)
     ? project
@@ -781,9 +785,13 @@ export function createDuctFromEndpoints(
   const body = terminalPlenum(next, current);
   if (!body)
     throw new Error(
-      "La bocchetta non ha un plenum: dichiara gli accessori o inseriscilo in pianta.",
+      "La bocchetta non ha un plenum collegato: crealo con lo strumento Plenum e collegalo, poi traccia il canale.",
     );
-  if (!machinePlenums(next, system.id).some((plenum) => plenum.use === current.use))
+  if (
+    !machinePlenums(next, system.id).some(
+      (plenum) => plenum.use === current.use,
+    )
+  )
     throw new Error(
       `La macchina non ha ancora il plenum di ${current.use === "return" ? "ripresa" : "mandata"}: crealo con lo strumento Plenum, poi traccia il canale.`,
     );

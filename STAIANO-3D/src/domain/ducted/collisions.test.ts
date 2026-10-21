@@ -6,7 +6,7 @@ import {
   type DuctScenePath,
 } from "./collisions";
 import type { Project } from "@/schemas/project";
-import { insertPlenum } from "./attached-plenums";
+import { addTerminalPlenum, insertPlenum } from "./attached-plenums";
 import { validateProject } from "../validation";
 import { placeMachineOnPlan } from "./graphic-installation";
 import {
@@ -225,6 +225,7 @@ it("reports the same saved-duct collision in the project checks and the scene", 
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
   p = addGuidedTerminal(p, 1000);
   p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
   p = createDuctFromEndpoints(
     p,
     p.airTerminals[0].id,

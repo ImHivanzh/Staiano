@@ -289,7 +289,6 @@ export function saveTerminalOnPlan(
                 : {}),
               linearRunId: terminal.commercialOptions?.linearRunId,
               linearRunOrder: terminal.commercialOptions?.linearRunOrder,
-              ...input.plenumOptions,
             }
           : terminal.commercialOptions,
     };

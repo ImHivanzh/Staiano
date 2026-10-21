@@ -8,6 +8,7 @@ import { openDisclosure } from "./ui-helpers";
 export function plenumFixture(
   attached = false,
   use: "supply" | "return" = "supply",
+  machineBody = false,
 ) {
   return projectSchema.parse(
     JSON.parse(
@@ -22,6 +23,7 @@ export function plenumFixture(
     import { guidedProjectFixture, addGuidedTerminal } from './tests/guided-fixture.ts';
     import { placeMachineOnPlan } from './src/domain/ducted/graphic-installation.ts';
     import { insertPlenum, connectPlenum } from './src/domain/ducted/attached-plenums.ts';
+    import { placeSupplyPlenum } from './src/domain/ducted/placement.ts';
     let p = guidedProjectFixture();
     p.floors[0].configurationWizard = undefined;
     p.rooms[0].ceilingHeightM = 2.4;
@@ -34,6 +36,7 @@ export function plenumFixture(
         plenums: p.plenums.map((pl) => ({ ...pl, use: "return" })),
       };
     if (${attached}) p = connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
+    if (${machineBody}) p = placeSupplyPlenum(p, p.hvacSystems[0].id);
     console.log(JSON.stringify(p));
   `,
         ],
@@ -47,8 +50,9 @@ export async function importPlenumFixture(
   page: Page,
   attached = false,
   use: "supply" | "return" = "supply",
+  machineBody = false,
 ) {
-  const project = plenumFixture(attached, use);
+  const project = plenumFixture(attached, use, machineBody);
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
     name: "plenum.hvacproj",
@@ -59,7 +63,7 @@ export async function importPlenumFixture(
     name: "Continua liberamente nell’editor",
   });
   if (await free.count()) await free.click();
-  await expect(page.getByTestId("plenum-2d")).toHaveCount(1);
+  await expect(page.getByTestId("plenum-2d")).toHaveCount(machineBody ? 2 : 1);
   return project;
 }
 

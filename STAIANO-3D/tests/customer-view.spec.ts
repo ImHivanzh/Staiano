@@ -1,6 +1,6 @@
 import { chooseTerminalModel, pickPlanPoint } from "./ui-helpers";
 import { expect, test } from "./browser-test";
-import { openDisclosure, openInspector } from "./ui-helpers";
+import { openDisclosure } from "./ui-helpers";
 import { execFileSync } from "node:child_process";
 
 test("customer view shows graphical connection pipes, saved plenums and air flows live", async ({
@@ -18,12 +18,14 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
         `
     import { guidedProjectFixture, guidedTerminalPoint } from './tests/guided-fixture.ts';
     import { placeMachineOnPlan, saveTerminalOnPlan, connectTerminalOnPlan } from './src/domain/ducted/graphic-installation.ts';
+    import { addTerminalPlenum } from './src/domain/ducted/attached-plenums.ts';
     import { placeSupplyPlenum } from './src/domain/ducted/placement.ts';
     let p = guidedProjectFixture();
     const systemId = p.hvacSystems[0].id;
     p = placeMachineOnPlan(p, systemId, p.rooms[0].id, { x: 2, y: 4 });
-    p = saveTerminalOnPlan(p, { ...guidedTerminalPoint(), roomId: p.rooms[0].id, systemId, color: 'RAL9016', use: 'supply', mounting: 'ceiling', lengthMm: 1000, plenumOptions: { insulatedPlenum: true } }, { x: 4, y: 2 });
+    p = saveTerminalOnPlan(p, { ...guidedTerminalPoint(), roomId: p.rooms[0].id, systemId, color: 'RAL9016', use: 'supply', mounting: 'ceiling', lengthMm: 1000 }, { x: 4, y: 2 });
     p = connectTerminalOnPlan(p, p.airTerminals[0].id, systemId);
+    p = addTerminalPlenum(p, p.airTerminals[0].id);
     console.log(JSON.stringify(placeSupplyPlenum(p, systemId)));
   `,
       ],
@@ -231,21 +233,32 @@ test("guided return offers EGA 6 Push and all sizes, disabling supply-only famil
 }) => {
   test.setTimeout(90000);
   await page.setViewportSize({ width: 1920, height: 1080 });
+  const fixture = JSON.parse(
+    execFileSync(
+      process.execPath,
+      [
+        "--import",
+        "tsx",
+        "--input-type=module",
+        "-e",
+        `
+      import { guidedProjectFixture } from './tests/guided-fixture.ts';
+      import { placeMachineOnPlan } from './src/domain/ducted/graphic-installation.ts';
+      let p = guidedProjectFixture();
+      p.floors[0].configurationWizard = undefined;
+      p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 4 });
+      console.log(JSON.stringify(p));
+    `,
+      ],
+      { encoding: "utf8" },
+    ),
+  );
   await page.goto("/");
-  await page.getByRole("button", { name: "Disegna manualmente" }).click();
-  await page
-    .getByRole("dialog")
-    .getByRole("button", { name: "Crea stanza", exact: true })
-    .click();
-  await openInspector(page, "Configura impianto");
-  const popup = page.getByRole("dialog", {
-    name: /^(?:Vista |Configura impianto$)/,
-    exact: true,
+  await page.getByTestId("project-file").setInputFiles({
+    name: "ripresa.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(fixture)),
   });
-  await popup.getByRole("button", { name: "Canalizzato", exact: true }).click();
-  await popup
-    .getByRole("button", { name: "Apri planimetria operativa" })
-    .click();
   const plan = page.getByRole("region", {
     name: "Configurazione grafica canalizzato",
   });
@@ -255,6 +268,10 @@ test("guided return offers EGA 6 Push and all sizes, disabling supply-only famil
     .click();
   await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
   await pickPlanPoint(plan, 2, 2);
+  await plan.getByRole("button", { name: "Collega", exact: true }).click();
+  await plan.getByTestId("draft-terminal").click();
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  await page.keyboard.press("Escape");
   await plan.getByTestId("draft-terminal").click();
   const terminalPopup = page.getByRole("dialog", {
     name: "Scegli bocchetta sul punto",
@@ -286,8 +303,9 @@ test("guided return offers EGA 6 Push and all sizes, disabling supply-only famil
   await terminalPopup.getByLabel("Larghezza faccia dichiarata").fill("600");
   await terminalPopup.getByLabel("Altezza faccia dichiarata").fill("600");
   await terminalPopup
-    .getByLabel("Colore scelto", { exact: true })
-    .fill("RAL9016");
+    .getByRole("group", { name: "Colore scelto", exact: true })
+    .getByRole("button", { name: /^RAL 9016 · Bianco/ })
+    .click();
   await terminalPopup
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
@@ -307,9 +325,6 @@ test("guided return offers EGA 6 Push and all sizes, disabling supply-only famil
   await edited
     .locator("footer")
     .getByRole("button", { name: "Annulla", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Torna all’editor", exact: true })
     .click();
   await page.getByRole("button", { name: "3D", exact: true }).click();
   const opened = page.waitForEvent("popup");

@@ -46,9 +46,9 @@ export function insertPlenum(
 }
 
 /**
- * Plenum della bocchetta come elemento autonomo, con la stessa logica del
- * plenum macchina: si crea dalla bocchetta, uno solo per bocchetta, e da quel
- * momento ha posizione, rotazione e geometria proprie.
+ * Plenum della bocchetta come elemento autonomo: nasce con le misure di
+ * catalogo del terminale ma è un corpo separato, con posizione, rotazione,
+ * materiale e stacchi propri. Il collegamento resta l'unico legame.
  */
 export function addTerminalPlenum(
   project: Project,
@@ -62,37 +62,18 @@ export function addTerminalPlenum(
   if (terminal.locked)
     throw new Error("Sblocca la bocchetta prima di aggiungere il plenum.");
   if (project.plenums.some((p) => p.attachmentId === terminal.id))
-    throw new Error("La bocchetta ha già un plenum.");
-  if (
-    terminal.commercialOptions?.insulatedPlenum === false &&
-    !terminal.commercialOptions.plenumMaterial
-  )
-    throw new Error(
-      "La bocchetta è configurata senza plenum: abilita il plenum nella scheda Bocchetta.",
-    );
+    throw new Error("La bocchetta ha già un plenum collegato.");
   const body = catalogueTerminalPlenum(project, terminal);
   if (!body)
     throw new Error(
-      "La bocchetta non ha un plenum di catalogo: scegli materiale e stacco nella scheda Bocchetta.",
+      "La bocchetta non ha un plenum di catalogo: verifica famiglia e misura nella scheda Bocchetta.",
     );
   const plenum: Plenum = { ...body, id: newId(), status: "proposed" };
   return syncAttachedPlenums({
     ...project,
     plenums: [...project.plenums, plenum],
     airTerminals: project.airTerminals.map((t) =>
-      t.id === terminal.id
-        ? {
-            ...t,
-            plenumId: plenum.id,
-            commercialOptions: {
-              fixingBridges: true,
-              continuityKit: true,
-              ...t.commercialOptions,
-              insulatedPlenum: plenum.material !== "galvanized",
-              plenumMaterial: plenum.material ?? "insulated",
-            },
-          }
-        : t,
+      t.id === terminal.id ? { ...t, plenumId: plenum.id } : t,
     ),
   });
 }
@@ -141,9 +122,6 @@ export function connectPlenum(
       use = free;
     }
   }
-  const published = terminal
-    ? resolveTerminalAccessorySpecification(terminal)?.plenum
-    : null;
   const next: Project = {
     ...project,
     plenums: project.plenums.map((p) =>
@@ -156,32 +134,12 @@ export function connectPlenum(
             ...(!terminal
               ? { widthMm: owner.widthMm, heightMm: owner.heightMm }
               : {}),
-            ...(published
-              ? {
-                  widthMm: published.lengthMm ?? terminal!.widthMm,
-                  heightMm: published.heightMm ?? p.heightMm,
-                  depthMm: published.widthMm ?? p.depthMm,
-                  portCount: published.portCount,
-                  portDiameterMm: published.portDiameterMm,
-                  model: published.modelCode,
-                }
-              : {}),
           }
         : p,
     ),
     airTerminals: project.airTerminals.map((t) =>
       t.id === terminal?.id
-        ? {
-            ...t,
-            plenumId,
-            commercialOptions: {
-              fixingBridges: true,
-              continuityKit: true,
-              ...t.commercialOptions,
-              insulatedPlenum: plenum.material !== "galvanized",
-              plenumMaterial: plenum.material ?? "insulated",
-            },
-          }
+        ? { ...t, plenumId }
         : t.plenumId === plenumId
           ? { ...t, plenumId: null }
           : t,
@@ -197,44 +155,6 @@ export function syncAttachedPlenums(
   previous?: Project,
 ): Project {
   const plenums = project.plenums.flatMap((plenum): Plenum[] => {
-    const terminal = project.airTerminals.find(
-      (t) => t.id === plenum.attachmentId,
-    );
-    if (
-      terminal?.commercialOptions?.insulatedPlenum === false &&
-      terminal.commercialOptions.plenumMaterial !== "galvanized"
-    )
-      return [];
-    const oldTerminal = previous?.airTerminals.find(
-      (t) => t.id === terminal?.id,
-    );
-    if (
-      terminal &&
-      oldTerminal &&
-      [
-        "family",
-        "productId",
-        "catalogVersion",
-        "widthMm",
-        "commercialOptions",
-      ].some(
-        (key) =>
-          JSON.stringify(terminal[key as keyof typeof terminal]) !==
-          JSON.stringify(oldTerminal[key as keyof typeof oldTerminal]),
-      )
-    ) {
-      const spec = resolveTerminalAccessorySpecification(terminal)?.plenum;
-      if (spec)
-        plenum = {
-          ...plenum,
-          widthMm: spec.lengthMm ?? terminal.widthMm,
-          heightMm: spec.heightMm ?? plenum.heightMm,
-          depthMm: spec.widthMm ?? plenum.depthMm,
-          portCount: spec.portCount,
-          portDiameterMm: spec.portDiameterMm,
-          model: spec.modelCode,
-        };
-    }
     if (plenum.attachmentId === undefined && previous) {
       const old = previous.hvacSystems.find((s) => s.id === plenum.systemId)
         ?.indoorUnits[0];
@@ -440,40 +360,33 @@ export function plenumPortsUpper(project: Project, plenum: Plenum) {
     (t) => t.id === plenum.attachmentId,
   );
   return (
-    !!terminal &&
-    (terminal.commercialOptions?.connectionPosition ??
-      resolveTerminalAccessorySpecification(terminal)?.plenum
-        ?.connectionPosition ??
-      (terminal.mounting === "ceiling" ? "upper" : "lateral")) === "upper"
+    (plenum.connectionPosition ??
+      (terminal
+        ? resolveTerminalAccessorySpecification(terminal)?.plenum
+            ?.connectionPosition
+        : undefined) ??
+      (terminal?.mounting === "ceiling" ? "upper" : "lateral")) === "upper"
   );
 }
 
-/** Catalogue plenums are rendered even when no separate custom body was inserted. */
+/**
+ * Un plenum esiste nel modello solo quando è un corpo salvato e collegato:
+ * la bocchetta non ha un plenum implicito.
+ */
 export function terminalPlenum(
   project: Project,
   terminal: Project["airTerminals"][number],
 ): Plenum | null {
-  if (
-    terminal.commercialOptions?.insulatedPlenum === false &&
-    terminal.commercialOptions.plenumMaterial !== "galvanized"
-  )
-    return null;
   const saved = project.plenums.find((p) => p.attachmentId === terminal.id);
-  if (saved)
-    // Il plenum salvato segue la bocchetta solo finché resta una proposta;
-    // dopo lo spostamento usa la posa scelta dall'operatore.
-    return saved.status === "proposed"
-      ? (attachedPlenumPose(project, saved) ?? saved)
-      : saved;
-  if (
-    !terminal.commercialOptions?.insulatedPlenum &&
-    !terminal.commercialOptions?.plenumMaterial
-  )
-    return null;
-  return catalogueTerminalPlenum(project, terminal);
+  if (!saved) return null;
+  // Il plenum salvato segue la bocchetta solo finché resta una proposta;
+  // dopo lo spostamento usa la posa scelta dall'operatore.
+  return saved.status === "proposed"
+    ? (attachedPlenumPose(project, saved) ?? saved)
+    : saved;
 }
 
-/** Plenum dimensionato dal catalogo, indipendente dalle opzioni commerciali salvate. */
+/** Corpo di catalogo usato alla creazione: da lì il plenum è autonomo. */
 function catalogueTerminalPlenum(
   project: Project,
   terminal: Project["airTerminals"][number],
@@ -496,7 +409,9 @@ function catalogueTerminalPlenum(
     portCount: spec.portCount,
     portDiameterMm: spec.portDiameterMm,
     model: spec.modelCode,
-    material: terminal.commercialOptions?.plenumMaterial ?? "insulated",
+    material: "insulated",
+    connectionPosition: spec.connectionPosition,
+    shape: "rectangular",
     status: "proposed",
     locked: terminal.locked,
     designSettings: null,

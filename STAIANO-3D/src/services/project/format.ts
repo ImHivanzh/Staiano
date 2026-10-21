@@ -125,13 +125,37 @@ export function migrateProject(data: unknown): unknown {
     });
   }
   if (version === 3 || version === 4 || version === 5 || version === 6)
-    return {
+    return migrateProject({
       ...(data as Record<string, unknown>),
       schemaVersion: CURRENT_SCHEMA_VERSION,
-    };
+    });
   if (version !== CURRENT_SCHEMA_VERSION)
     throw new Error("Migration mancante per questa versione progetto.");
-  return data;
+  const old = data as Record<string, unknown>;
+  if (!Array.isArray(old.plenums) || !Array.isArray(old.airTerminals))
+    return data;
+  const terminals = old.airTerminals;
+  return {
+    ...old,
+    // Le scelte storiche passano al corpo già salvato; nessun plenum implicito.
+    plenums: old.plenums.map((plenum) => {
+      if (!plenum || typeof plenum !== "object" || !plenum.attachmentId)
+        return plenum;
+      const options = terminals.find(
+        (terminal) => terminal?.id === plenum.attachmentId,
+      )?.commercialOptions;
+      if (!options || typeof options !== "object") return plenum;
+      return {
+        ...plenum,
+        model: plenum.model ?? options.plenumModelCode,
+        material: plenum.material ?? options.plenumMaterial,
+        shape: plenum.shape ?? options.plenumShape,
+        connectionPosition:
+          plenum.connectionPosition ?? options.connectionPosition,
+        connectionNote: plenum.connectionNote ?? options.connectionNote,
+      };
+    }),
+  };
 }
 export function parseProject(data: unknown): Project {
   const parsed = projectSchema.safeParse(migrateProject(data));

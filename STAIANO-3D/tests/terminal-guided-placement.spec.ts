@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { expect, test } from "./browser-test";
 import {
   openDisclosure,
@@ -13,8 +13,24 @@ for (const width of [1920, 1024])
   }) => {
     await page.setViewportSize({ width, height: width === 1920 ? 1080 : 768 });
     const fixture = JSON.parse(
-      readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
-    ).empty;
+      execFileSync(
+        process.execPath,
+        [
+          "--import",
+          "tsx",
+          "--input-type=module",
+          "-e",
+          `
+        import { guidedProjectFixture } from './tests/guided-fixture.ts';
+        import { placeMachineOnPlan } from './src/domain/ducted/graphic-installation.ts';
+        let p = guidedProjectFixture();
+        p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 4 });
+        console.log(JSON.stringify(p));
+      `,
+        ],
+        { encoding: "utf8" },
+      ),
+    );
     await page.goto("/");
     await page.getByTestId("project-file").setInputFiles({
       name: "vents.hvacproj",
@@ -29,6 +45,10 @@ for (const width of [1920, 1024])
     });
     await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
     await pickPlanPoint(plan, 4, 2);
+    await plan.getByRole("button", { name: "Collega", exact: true }).click();
+    await plan.getByTestId("draft-terminal").click();
+    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+    await page.keyboard.press("Escape");
     await plan.getByTestId("draft-terminal").click();
     const popup = page.getByRole("dialog", {
       name: "Scegli bocchetta sul punto",
@@ -99,20 +119,10 @@ for (const width of [1920, 1024])
         .getByRole("group", { name: "Montaggio terminale" })
         .getByRole("button", { name: "Parete", exact: true }),
     ).toBeVisible();
-    await popup.getByRole("tab", { name: "Plenum", exact: true }).click();
-    await expect(slotWidth).not.toBeVisible();
-    await popup.getByRole("button", { name: "Zincato", exact: true }).click();
-    await popup
-      .getByRole("button", { name: "Trapezoidale", exact: true })
-      .click();
-    await popup
-      .getByText("Altre posizioni dello stacco", { exact: true })
-      .click();
-    await popup.getByLabel("Stacco plenum").selectOption("rear");
-    await popup.getByRole("tab", { name: "Bocchetta", exact: true }).click();
     await expect(
-      popup.getByRole("button", { name: "Zincato", exact: true }),
-    ).not.toBeVisible();
+      popup.getByRole("tab", { name: "Plenum", exact: true }),
+    ).toHaveCount(0);
+    await expect(popup.getByLabel("Stacco plenum")).toHaveCount(0);
     const length = terminalLengthButton(popup, 1000);
     await length.click();
     const white = popup
@@ -126,20 +136,6 @@ for (const width of [1920, 1024])
     await expect(length).toHaveAttribute("aria-pressed", "true");
     await expect(white).toHaveAttribute("aria-pressed", "true");
     await expect(style).toHaveValue("Finitura da preservare");
-    await popup.getByRole("tab", { name: "Plenum", exact: true }).click();
-    await expect(
-      popup.getByRole("button", { name: "Zincato", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await expect(
-      popup.getByRole("button", { name: "Trapezoidale", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await expect(popup.getByLabel("Stacco plenum")).toHaveValue("rear");
-    await popup
-      .getByRole("tab", { name: "Plenum", exact: true })
-      .press("ArrowLeft");
-    await expect(
-      popup.getByRole("tab", { name: "Bocchetta", exact: true }),
-    ).toBeFocused();
     await slotWidth.getByRole("button", { name: "30 mm", exact: true }).click();
     await expect(length).toHaveAttribute("aria-pressed", "true");
     await expect(white).toHaveAttribute("aria-pressed", "true");
@@ -190,15 +186,10 @@ for (const width of [1920, 1024])
         .getByRole("group", { name: "Dimensione della feritoia (mm)" })
         .getByRole("button", { name: "30 mm", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
-    await edit.getByRole("tab", { name: "Plenum", exact: true }).click();
     await expect(
-      edit.getByRole("button", { name: "Zincato", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await expect(
-      edit.getByRole("button", { name: "Trapezoidale", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await expect(edit.getByLabel("Stacco plenum")).toHaveValue("rear");
-    await edit.getByRole("tab", { name: "Bocchetta", exact: true }).click();
+      edit.getByRole("tab", { name: "Plenum", exact: true }),
+    ).toHaveCount(0);
+    await expect(plan.getByTestId("plenum-2d")).toHaveCount(0);
     await openDisclosure(edit, "Prestazioni e misura feritoie");
     await expect(
       edit
@@ -245,9 +236,6 @@ for (const width of [1920, 1024])
       .getByRole("group", { name: "Montaggio terminale" })
       .getByRole("button", { name: "Parete", exact: true })
       .click();
-    await edit.getByRole("tab", { name: "Plenum", exact: true }).click();
-    await edit.getByLabel("Stacco plenum").selectOption("custom");
-    await edit.getByLabel("Descrizione stacco").fill("Due stacchi laterali");
     await edit
       .locator("footer")
       .getByRole("button", { name: "Salva", exact: true })
@@ -262,27 +250,10 @@ for (const width of [1920, 1024])
       path: `output/verification/terminal-bocchetta-${width}.png`,
       animations: "disabled",
     });
-    await edit.getByRole("tab", { name: "Plenum", exact: true }).click();
-    await expect(
-      edit.getByRole("button", { name: "Zincato", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await expect(
-      edit.getByRole("button", { name: "Trapezoidale", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await expect(edit.getByLabel("Stacco plenum")).toHaveValue("custom");
-    await expect(edit.getByLabel("Descrizione stacco")).toHaveValue(
-      "Due stacchi laterali",
-    );
+    await expect(edit.getByLabel("Descrizione stacco")).toHaveCount(0);
     await expect(edit.getByLabel("Lunghezza su misura (mm)")).toHaveValue(
       "1100",
     );
-    await edit
-      .getByRole("button", { name: "Zincato", exact: true })
-      .scrollIntoViewIfNeeded();
-    await page.screenshot({
-      path: `output/verification/terminal-plenum-${width}.png`,
-      animations: "disabled",
-    });
     const deleteTerminal = edit.getByRole("button", {
       name: "Elimina bocchetta",
       exact: true,
@@ -298,16 +269,17 @@ for (const width of [1920, 1024])
     await page.getByRole("button", { name: "Annulla", exact: true }).click();
     await expect(plan.getByTestId("terminal-supply")).toHaveCount(1);
     await plan.getByTestId("terminal-supply").click();
-    await edit.getByRole("tab", { name: "Plenum", exact: true }).click();
-    await expect(edit.getByLabel("Descrizione stacco")).toHaveValue(
-      "Due stacchi laterali",
-    );
+    await expect(edit.getByLabel("Descrizione stacco")).toHaveCount(0);
     await edit
       .locator("footer")
       .getByRole("button", { name: "Annulla", exact: true })
       .click();
     await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
     await pickPlanPoint(plan, 2, 2);
+    await plan.getByRole("button", { name: "Collega", exact: true }).click();
+    await plan.getByTestId("draft-terminal").click();
+    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+    await page.keyboard.press("Escape");
     await plan.getByTestId("draft-terminal").click();
     page.once("dialog", (dialog) => dialog.accept());
     await popup

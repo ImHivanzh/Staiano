@@ -5,6 +5,7 @@ import {
 } from "../../../tests/guided-fixture";
 import { placeMachineOnPlan } from "./graphic-installation";
 import {
+  addTerminalPlenum,
   insertPlenum,
   connectPlenum,
   terminalPlenum,
@@ -39,10 +40,8 @@ it.each(
     const p = fixture("ceiling");
     p.hvacSystems[0].indoorUnits[0].rotation = rotation;
     p.airTerminals[0].rotation = rotation;
-    p.airTerminals[0].commercialOptions = {
-      ...p.airTerminals[0].commercialOptions!,
-      connectionPosition: position,
-    };
+    // Lo stacco è un dato del plenum separato.
+    p.plenums[0].connectionPosition = position;
     const terminal = p.airTerminals[0];
     const result = createDuctFromEndpoints(p, terminal.id, p.hvacSystems[0].id);
     const source = machinePlenum(result.project, terminal.systemId!, "supply")!;
@@ -187,12 +186,10 @@ it("asks for the machine plenum before tracing a duct", () => {
     y: 3,
   });
   p = addGuidedTerminal(p, 2000);
+  // Prima il corpo separato della bocchetta: senza, non esiste un estremo.
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
   expect(() =>
-    createDuctFromEndpoints(
-      p,
-      p.airTerminals[0].id,
-      p.hvacSystems[0].id,
-    ),
+    createDuctFromEndpoints(p, p.airTerminals[0].id, p.hvacSystems[0].id),
   ).toThrow(/strumento Plenum/);
 });
 
