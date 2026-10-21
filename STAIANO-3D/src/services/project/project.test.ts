@@ -135,3 +135,21 @@ describe("formato e archivio", () => {
     expect(store.getState().project?.rooms[0].designLoadW).toBeCloseTo(1890);
   });
 });
+
+it("upgrades v6 projects without stripping the declared drywall cavity", () => {
+  const base = createProject();
+  const project = addRectangle(base, base.floors[0].id, {
+    width: 4,
+    length: 3,
+    height: 2.7,
+    name: "Stanza",
+  });
+  project.walls[0].drywall = { roomId: project.rooms[0].id, offsetM: -0.3 };
+  const legacy = { ...project, schemaVersion: 6 };
+  const restored = decodeProject(JSON.stringify(legacy));
+  expect(restored.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
+  expect(restored.walls[0].drywall).toEqual(project.walls[0].drywall);
+  expect(() =>
+    parseProject({ ...restored, schemaVersion: CURRENT_SCHEMA_VERSION + 1 }),
+  ).toThrow(/Aggiornare/);
+});

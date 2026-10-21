@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { terminalCommercialOptionsSchema } from "@/domain/catalogs/ecoclima-price-schema";
 
-export const CURRENT_SCHEMA_VERSION = 6;
+export const CURRENT_SCHEMA_VERSION = 7;
 export const DIMENSION_MODES = ["internal", "axis", "external"] as const;
 export const DECISION_ORIGINS = [
   "calculated",

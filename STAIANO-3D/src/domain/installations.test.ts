@@ -13,7 +13,7 @@ import {
   guidedProjectFixture,
   addGuidedTerminal,
 } from "../../tests/guided-fixture";
-import { projectSchema } from "@/schemas/project";
+import { projectSchema, CURRENT_SCHEMA_VERSION } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { applyFanCoil } from "./fan-coils/apply";
 import { applyHydronicSystem } from "./hydronic/apply";
@@ -212,7 +212,7 @@ it("migrates v4 physical equipment into stable independent installations without
   const legacy = { ...project, schemaVersion: 4 } as Record<string, unknown>;
   delete legacy.installations;
   const migrated = parseProject(legacy);
-  expect(migrated.schemaVersion).toBe(6);
+  expect(migrated.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
   expect(migrated.hvacSystems[0].id).toBe(project.hvacSystems[0].id);
   expect(migrated.installations).toHaveLength(1);
   expect(ensureInstallations(migrated)).toEqual(migrated);

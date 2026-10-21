@@ -16,7 +16,7 @@ import { updateRoom, addWall, moveWall } from "@/domain/project";
 import { applyRadiatorSolution } from "@/domain/radiators/apply";
 import { sizeRadiators } from "@/domain/radiators/size";
 import { radiatorProducts } from "@/domain/catalogs/radiators";
-import { projectSchema } from "@/schemas/project";
+import { projectSchema, CURRENT_SCHEMA_VERSION } from "@/schemas/project";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 import { validateProject } from "@/domain/validation";
 describe("canalizzato, portate e terminali persistenti", () => {
@@ -388,7 +388,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
     expect(p.airTerminals).toHaveLength(2);
     expect(p.airTerminals[0].depthMm).toBe(60);
     const restored = decodeProject(encodeProject(p));
-    expect(restored.schemaVersion).toBe(6);
+    expect(restored.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
     expect(restored.hvacSystems).toHaveLength(1);
     expect(restored.airTerminals).toHaveLength(2);
     expect(
