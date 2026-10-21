@@ -2,6 +2,9 @@ $ErrorActionPreference = 'Stop'
 $taskRoot = Split-Path -Parent $PSScriptRoot
 $env:DOTNET_CLI_HOME = Join-Path $taskRoot '.cache/dotnet'
 $env:NUGET_PACKAGES = Join-Path $taskRoot '.cache/nuget'
+# Il lock globale in %TEMP%\NuGetScratch può essere inaccessibile a un token
+# ristretto: il restore usa una cartella locale al progetto.
+$env:NUGET_SCRATCH = Join-Path $taskRoot '.cache/nuget-scratch'
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 $env:DOTNET_GENERATE_ASPNET_CERTIFICATE = 'false'
 $taskLocalSdk = Join-Path $taskRoot '.cache/dotnet-sdk/dotnet.exe'
