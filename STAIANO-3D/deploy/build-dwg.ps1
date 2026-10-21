@@ -5,6 +5,11 @@ $env:NUGET_PACKAGES = Join-Path $taskRoot '.cache/nuget'
 # Il lock globale in %TEMP%\NuGetScratch può essere inaccessibile a un token
 # ristretto: il restore usa una cartella locale al progetto.
 $env:NUGET_SCRATCH = Join-Path $taskRoot '.cache/nuget-scratch'
+# Anche MSBuild scrive file temporanei: senza una cartella scrivibile il
+# publish fallisce con accesso negato sui file .rsp.
+$env:TEMP = Join-Path $taskRoot '.cache/build-temp'
+$env:TMP = $env:TEMP
+New-Item -ItemType Directory -Path $env:TEMP -Force | Out-Null
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 $env:DOTNET_GENERATE_ASPNET_CERTIFICATE = 'false'
 $taskLocalSdk = Join-Path $taskRoot '.cache/dotnet-sdk/dotnet.exe'
