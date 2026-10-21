@@ -103,6 +103,8 @@ export function GraphicalDuctedConfigurator({
   mainPlan = false,
   drawingTools,
   configurationOnly = false,
+  editFlexible = false,
+  onCloseFlexible,
 }: {
   project: Project;
   room: Room;
@@ -110,6 +112,8 @@ export function GraphicalDuctedConfigurator({
   mainPlan?: boolean;
   drawingTools?: ReactNode;
   configurationOnly?: boolean;
+  editFlexible?: boolean;
+  onCloseFlexible?: () => void;
 }) {
   const {
     commit,
@@ -327,7 +331,7 @@ export function GraphicalDuctedConfigurator({
           ? curve
               .getSpacedPoints(Math.max(24, Math.ceil(curve.getLength() * 30)))
               .map((p) => ({ x: p.x, y: p.z, elevationM: p.y }))
-          : []
+          : route
         : route;
     if (points.length < 2) return [];
     return [
@@ -445,7 +449,7 @@ export function GraphicalDuctedConfigurator({
     useProjectStore.getState().setTool("select");
     if (mainPlan && next !== "move" && next !== "connect")
       useProjectStore.getState().select(null);
-    setMode(next !== "select" && next === mode ? "select" : next);
+    setMode(next);
     setNotice("");
     setCursor(null);
     setDuctAnchor(null);
@@ -468,7 +472,6 @@ export function GraphicalDuctedConfigurator({
     setSelectedId(id);
     if (mainPlan) useProjectStore.getState().select({ kind: "device", id });
     if (!useProjectStore.getState().error) {
-      setMode("select");
       setCursor(null);
       setNotice("Posizione aggiornata.");
     }
@@ -516,7 +519,6 @@ export function GraphicalDuctedConfigurator({
       if (existing) {
         useProjectStore.getState().select({ kind: "device", id: existing.id });
         setSelectedId(existing.id);
-        setMode("select");
         setNotice("Plenum selezionato.");
         return;
       }
@@ -537,7 +539,6 @@ export function GraphicalDuctedConfigurator({
       if (already) {
         useProjectStore.getState().select({ kind: "device", id: already.id });
         setSelectedId(already.id);
-        setMode("select");
         setNotice("La bocchetta ha già il suo plenum: selezionato.");
         return;
       }
@@ -547,7 +548,6 @@ export function GraphicalDuctedConfigurator({
         const id = saved.project!.plenums.at(-1)!.id;
         saved.select({ kind: "device", id });
         setSelectedId(id);
-        setMode("select");
         setNotice(
           clickedTerminal
             ? "Plenum creato e collegato alla bocchetta: spostalo in pianta o in 3D."
@@ -615,7 +615,6 @@ export function GraphicalDuctedConfigurator({
       setSelectedId(machine?.id ?? terminalId);
       if (mainPlan && machine)
         useProjectStore.getState().select({ kind: "device", id: machine.id });
-      setMode("select");
       setDuctAnchor(null);
       setCursor(null);
       setNotice(
@@ -658,7 +657,6 @@ export function GraphicalDuctedConfigurator({
         if (!useProjectStore.getState().error) {
           setSelectedId(pair.machineId);
           if (pair.plenumId) {
-            setMode("select");
             setCursor(null);
           }
           setNotice(
@@ -692,7 +690,6 @@ export function GraphicalDuctedConfigurator({
         setSelectedId(draft.id);
         if (mainPlan)
           useProjectStore.getState().select({ kind: "device", id: draft.id });
-        setMode("select");
         setCursor(null);
         setNotice("Elemento salvato. Cliccalo per configurarlo.");
       }
@@ -865,7 +862,6 @@ export function GraphicalDuctedConfigurator({
         setSelectedId(draft.id);
         if (mainPlan)
           useProjectStore.getState().select({ kind: "device", id: draft.id });
-        setMode("select");
         setCursor(null);
         setNotice("Elemento salvato. Cliccalo per configurarlo.");
       }
@@ -929,7 +925,6 @@ export function GraphicalDuctedConfigurator({
     if (!useProjectStore.getState().error) {
       if (mainPlan && placedId)
         useProjectStore.getState().select({ kind: "device", id: placedId });
-      setMode("select");
       setCursor(null);
       setNotice("Elemento salvato. Cliccalo per configurarlo.");
       if (
@@ -1387,6 +1382,8 @@ export function GraphicalDuctedConfigurator({
           )}
           <div className={styles.canvas}>
             <Editor2D
+              editFlexible={editFlexible}
+              onCloseFlexible={onCloseFlexible}
               configuration={{
                 project: visibleProject,
                 floorId: room.floorId,
@@ -1424,88 +1421,92 @@ export function GraphicalDuctedConfigurator({
                 },
                 backgroundOverlay: (
                   <>
-                    {planDucts.map(({ duct, points, widthM }) => (
-                      <g
-                        key={duct.id}
-                        data-testid="duct-2d"
-                        data-collision={
-                          ductCollisions.has(duct.id) ? "true" : undefined
-                        }
-                        pointerEvents="none"
-                        aria-hidden="true"
-                      >
-                        {duct.kind === "flexible" ? (
-                          <>
-                            <polyline
-                              points={points
-                                .map((p) => `${p.x},${p.y}`)
-                                .join(" ")}
-                              fill="none"
-                              stroke="#243238"
-                              strokeWidth={widthM + 0.025}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <polyline
-                              points={points
-                                .map((p) => `${p.x},${p.y}`)
-                                .join(" ")}
-                              fill="none"
-                              stroke={
-                                ductCollisions.has(duct.id)
-                                  ? "#dc2626"
-                                  : "#eef3f6"
-                              }
-                              strokeWidth={widthM}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </>
-                        ) : (
-                          points.slice(1).map((end, index) => {
-                            const polygon = ductSegmentPolygon(
-                              points[index],
-                              end,
-                              widthM,
-                            );
-                            return polygon ? (
-                              <polygon
-                                key={index}
-                                points={polygon}
-                                fill="#eef3f6"
+                    {planDucts
+                      .filter(
+                        ({ duct }) => !editFlexible || duct.kind !== "flexible",
+                      )
+                      .map(({ duct, points, widthM }) => (
+                        <g
+                          key={duct.id}
+                          data-testid="duct-2d"
+                          data-collision={
+                            ductCollisions.has(duct.id) ? "true" : undefined
+                          }
+                          pointerEvents="none"
+                          aria-hidden="true"
+                        >
+                          {duct.kind === "flexible" ? (
+                            <>
+                              <polyline
+                                points={points
+                                  .map((p) => `${p.x},${p.y}`)
+                                  .join(" ")}
+                                fill="none"
                                 stroke="#243238"
-                                strokeWidth={0.02}
+                                strokeWidth={widthM + 0.025}
+                                strokeLinecap="round"
                                 strokeLinejoin="round"
                               />
-                            ) : null;
-                          })
-                        )}
-                        {duct.kind !== "flexible" &&
-                          points
-                            .slice(1)
-                            .map((end, index) => (
-                              <circle
-                                key={`joint-${index}`}
-                                cx={end.x}
-                                cy={end.y}
-                                r={widthM / 2}
-                                fill="#eef3f6"
-                                stroke="#243238"
-                                strokeWidth={0.02}
+                              <polyline
+                                points={points
+                                  .map((p) => `${p.x},${p.y}`)
+                                  .join(" ")}
+                                fill="none"
+                                stroke={
+                                  ductCollisions.has(duct.id)
+                                    ? "#dc2626"
+                                    : "#eef3f6"
+                                }
+                                strokeWidth={widthM}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               />
-                            ))}
-                        {duct.diameterMm ? (
-                          <circle
-                            cx={points.at(-1)!.x}
-                            cy={points.at(-1)!.y}
-                            r={duct.diameterMm / 2000}
-                            fill="#ffffff"
-                            stroke="#243238"
-                            strokeWidth={0.02}
-                          />
-                        ) : null}
-                      </g>
-                    ))}
+                            </>
+                          ) : (
+                            points.slice(1).map((end, index) => {
+                              const polygon = ductSegmentPolygon(
+                                points[index],
+                                end,
+                                widthM,
+                              );
+                              return polygon ? (
+                                <polygon
+                                  key={index}
+                                  points={polygon}
+                                  fill="#eef3f6"
+                                  stroke="#243238"
+                                  strokeWidth={0.02}
+                                  strokeLinejoin="round"
+                                />
+                              ) : null;
+                            })
+                          )}
+                          {duct.kind !== "flexible" &&
+                            points
+                              .slice(1)
+                              .map((end, index) => (
+                                <circle
+                                  key={`joint-${index}`}
+                                  cx={end.x}
+                                  cy={end.y}
+                                  r={widthM / 2}
+                                  fill="#eef3f6"
+                                  stroke="#243238"
+                                  strokeWidth={0.02}
+                                />
+                              ))}
+                          {duct.diameterMm ? (
+                            <circle
+                              cx={points.at(-1)!.x}
+                              cy={points.at(-1)!.y}
+                              r={duct.diameterMm / 2000}
+                              fill="#ffffff"
+                              stroke="#243238"
+                              strokeWidth={0.02}
+                            />
+                          ) : null}
+                        </g>
+                      ))}
                     {pointTerminals
                       .filter((item) => item.systemId)
                       .map((terminal) => {
@@ -1995,7 +1996,6 @@ export function GraphicalDuctedConfigurator({
                   .getState()
                   .select({ kind: "device", id: added.id });
               setTerminalOpen(false);
-              setMode("select");
               setNotice(
                 added.systemId
                   ? "Bocchetta aggiornata."

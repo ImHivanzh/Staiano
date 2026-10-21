@@ -722,8 +722,8 @@ function systemForDuctEndpoint(project: Project, id: string) {
 
 /**
  * Percorso predefinito fra lo stacco del plenum e quello della macchina: poche
- * pieghe ortogonali, già trascinabili in 3D. `null` quando la curva flessibile
- * non è realizzabile, così il percorso proposto automatico resta disponibile.
+ * pieghe ortogonali, già trascinabili in 3D. Se la proposta fallisce, conserva
+ * un tracciato fra i collari da correggere; `null` solo senza attacchi.
  */
 function proposedWaypoints(
   project: Project,
@@ -740,7 +740,17 @@ function proposedWaypoints(
     end,
     diameterMm,
   );
-  return route.length > 1 ? route.slice(1, -1) : null;
+  if (route.length > 1) return route.slice(1, -1);
+  // Conserva un tracciato modificabile anche quando la proposta geometrica fallisce.
+  const leads = flexibleCollarLeads(
+    project,
+    terminal.systemId!,
+    terminal,
+    start,
+    end,
+    diameterMm,
+  );
+  return leads ? [leads.from, leads.to] : null;
 }
 
 /**
@@ -915,7 +925,7 @@ export const ductLength = (points: RoutePoint[]) =>
     );
 
 /** Save an operator bend point, keeping the existing route shape when it was automatic. */
-function nearestRouteSegment(nodes: RoutePoint[], target: RoutePoint) {
+function nearestRouteSegment(nodes: RoutePoint[], target: Point | RoutePoint) {
   let segment = 0;
   let point: RoutePoint = nodes[0];
   let distance = Number.POSITIVE_INFINITY;
@@ -924,7 +934,7 @@ function nearestRouteSegment(nodes: RoutePoint[], target: RoutePoint) {
       b = nodes[i + 1];
     const vx = b.x - a.x,
       vy = b.y - a.y,
-      vz = b.elevationM - a.elevationM;
+      vz = "elevationM" in target ? b.elevationM - a.elevationM : 0;
     const lengthSquared = vx * vx + vy * vy + vz * vz;
     const t =
       lengthSquared < 1e-12
@@ -935,19 +945,22 @@ function nearestRouteSegment(nodes: RoutePoint[], target: RoutePoint) {
               1,
               ((target.x - a.x) * vx +
                 (target.y - a.y) * vy +
-                (target.elevationM - a.elevationM) * vz) /
+                ("elevationM" in target
+                  ? target.elevationM - a.elevationM
+                  : 0) *
+                  vz) /
                 lengthSquared,
             ),
           );
     const candidate = {
       x: a.x + vx * t,
       y: a.y + vy * t,
-      elevationM: a.elevationM + vz * t,
+      elevationM: a.elevationM + (b.elevationM - a.elevationM) * t,
     };
     const candidateDistance = Math.hypot(
       target.x - candidate.x,
       target.y - candidate.y,
-      target.elevationM - candidate.elevationM,
+      "elevationM" in target ? target.elevationM - candidate.elevationM : 0,
     );
     if (candidateDistance < distance) {
       distance = candidateDistance;
@@ -986,11 +999,11 @@ function longestRouteSegment(nodes: RoutePoint[]) {
   };
 }
 
-/** Add one bending point; a requested 3D point snaps to the tube centreline. */
+/** Add one bending point; a requested 2D/3D point snaps to the tube centreline. */
 export function addDuctWaypoint(
   project: Project,
   ductId: string,
-  requested?: RoutePoint,
+  requested?: Point | RoutePoint,
 ): { project: Project; index: number } {
   const duct = project.ducts?.find((d) => d.id === ductId);
   if (!duct) return { project, index: -1 };
@@ -1043,6 +1056,33 @@ export function removeDuctWaypoint(
             waypoints: d.waypoints.filter((_, i) => i !== index),
           }
         : d,
+    ),
+  };
+}
+
+/** In pianta cambia solo X/Y; il trascinamento 3D aggiorna anche la quota. */
+export function moveDuctWaypoint(
+  project: Project,
+  ductId: string,
+  index: number,
+  position: Point | RoutePoint,
+): Project {
+  return {
+    ...project,
+    ducts: project.ducts?.map((duct) =>
+      duct.id === ductId &&
+      !duct.locked &&
+      index >= 0 &&
+      index < duct.waypoints.length
+        ? {
+            ...duct,
+            routing: "manual",
+            decisionOrigin: "manual",
+            waypoints: duct.waypoints.map((point, i) =>
+              i === index ? { ...point, ...position } : point,
+            ),
+          }
+        : duct,
     ),
   };
 }

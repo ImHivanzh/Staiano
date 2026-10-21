@@ -168,6 +168,10 @@ export function Configurator() {
   );
   const [billOpen, setBillOpen] = useState(false);
   const [flexibleOpen, setFlexibleOpen] = useState(false);
+  useEffect(() => {
+    if (s.tool !== "select" || s.planPlacementTool !== "select")
+      setFlexibleOpen(false);
+  }, [s.tool, s.planPlacementTool]);
   const [inspectorOpen, setInspectorOpen] = useState(true);
   const [navigationOpen, setNavigationOpen] = useState(true);
   const revealedCheck = useRef<Check | null>(null);
@@ -395,7 +399,7 @@ export function Configurator() {
       }
       if (e.key === "Delete" || e.key === "Backspace") {
         e.preventDefault();
-        deleteSelection();
+        if (!e.repeat) deleteSelection();
       }
     };
     window.addEventListener("keydown", handler);
@@ -1992,10 +1996,9 @@ export function Configurator() {
                   <button
                     type="button"
                     className="bottone piccolo chiara"
-                    aria-pressed={flexibleOpen && s.view === "3d"}
+                    aria-pressed={flexibleOpen}
                     onClick={() => {
                       setFlexibleOpen(true);
-                      s.setView("3d");
                       s.setTool("select");
                       useProjectStore.setState({ planPlacementTool: "select" });
                       const duct = p.ducts?.find(
@@ -2022,7 +2025,6 @@ export function Configurator() {
                       aria-pressed={s.view === "2d"}
                       className={s.view === "2d" ? "attivo" : ""}
                       onClick={() => {
-                        setFlexibleOpen(false);
                         s.setView("2d");
                       }}
                     >
@@ -2064,6 +2066,11 @@ export function Configurator() {
                     room={rooms[0]}
                     mainPlan
                     drawingTools={drawingTools}
+                    editFlexible={flexibleOpen}
+                    onCloseFlexible={() => {
+                      setFlexibleOpen(false);
+                      s.select(null);
+                    }}
                   />
                 ) : (
                   <Editor2D key={`${p.id}-${s.activeFloorId}`} />

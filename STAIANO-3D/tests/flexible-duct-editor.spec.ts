@@ -73,12 +73,146 @@ async function exported(page: Page) {
   );
 }
 
-test("Flessibili apre solo l’editor grafico 3D e salva le curve", async ({
-  page,
-}) => {
+for (const width of [1920, 1024])
+  test.describe(`modifica 2D a ${width}`, () => {
+    test.use({ hasTouch: width === 1024 });
+    test(`Flessibili 2D: trascina, aggiunge e rimuove curve conservando quote e 3D a ${width}`, async ({
+      page,
+    }) => {
+      test.setTimeout(120000);
+      await page.setViewportSize({ width, height: 900 });
+      await importProject(page);
+      await page
+        .getByRole("button", { name: "Flessibili", exact: true })
+        .click();
+      await expect(
+        page.getByRole("button", { name: "2D", exact: true }),
+      ).toHaveAttribute("aria-pressed", "true");
+      const controls = page.getByRole("region", {
+        name: "Modifica grafica flessibili 2D",
+      });
+      await expect(controls).toBeVisible();
+      await page.getByTestId("editor-2d").press("Escape");
+      await expect(
+        page.getByRole("button", { name: "Flessibili", exact: true }),
+      ).toHaveAttribute("aria-pressed", "true");
+      await page
+        .getByRole("button", { name: "Flessibili", exact: true })
+        .click();
+      if (width === 1024)
+        expect(
+          (await controls
+            .getByRole("button", { name: "Aggiungi curva", exact: true })
+            .boundingBox())!.height,
+        ).toBeGreaterThanOrEqual(44);
+      await controls
+        .getByRole("button", { name: "Aggiungi curva", exact: true })
+        .click();
+      // Il focus sul tratto SVG non deve disegnare il contorno del browser,
+      // che in unità del disegno diventa una macchia nera enorme.
+      const outline = await page
+        .locator('[data-testid="editable-duct-2d"]')
+        .first()
+        .evaluate((node) => {
+          (node as SVGElement & { focus: () => void }).focus();
+          return getComputedStyle(node).outlineStyle;
+        });
+      expect(outline).toBe("none");
+      const before = await exported(page);
+      const duct = before.ducts!.find(
+        (item) => item.kind === "flexible" && item.terminalId,
+      )!;
+      const editor = page.getByTestId("editor-2d");
+      const view = await editor.getAttribute("viewBox");
+      const handle = editor.locator(
+        '[data-testid="duct-waypoint-2d"][aria-pressed="true"]',
+      );
+      const index =
+        Number((await handle.getAttribute("aria-label"))!.split(" ")[1]) - 1;
+      const point = duct.waypoints[index];
+      if (width === 1024)
+        expect((await handle.boundingBox())!.width).toBeGreaterThanOrEqual(
+          43.9,
+        );
+      const screen = await editor.evaluate(
+        (node, point) =>
+          [point, { x: point.x + 0.6, y: point.y + 0.4 }].map((p) => {
+            const at = new DOMPoint(p.x, p.y).matrixTransform(
+              (node as SVGSVGElement).getScreenCTM()!,
+            );
+            return { x: at.x, y: at.y };
+          }),
+        point,
+      );
+      if (width === 1024) {
+        const touch = await page.context().newCDPSession(page);
+        await touch.send("Input.dispatchTouchEvent", {
+          type: "touchStart",
+          touchPoints: [{ x: screen[0].x + 12, y: screen[0].y, id: 1 }],
+        });
+        await touch.send("Input.dispatchTouchEvent", {
+          type: "touchMove",
+          touchPoints: [{ x: screen[1].x + 12, y: screen[1].y, id: 1 }],
+        });
+        await touch.send("Input.dispatchTouchEvent", {
+          type: "touchEnd",
+          touchPoints: [],
+        });
+        await touch.detach();
+      } else {
+        await page.mouse.move(screen[0].x, screen[0].y);
+        await page.mouse.down();
+        await page.mouse.move(screen[1].x, screen[1].y, { steps: 8 });
+        await page.mouse.up();
+      }
+      const after = await exported(page);
+      const moved = after.ducts!.find((item) => item.id === duct.id)!;
+      expect(moved.waypoints[index].x).toBeCloseTo(point.x + 0.6, 5);
+      expect(moved.waypoints[index].y).toBeCloseTo(point.y + 0.4, 5);
+      expect(moved.waypoints[index].elevationM).toBe(point.elevationM);
+      expect(moved.waypoints.filter((_, i) => i !== index)).toEqual(
+        duct.waypoints.filter((_, i) => i !== index),
+      );
+      await expect(editor).toHaveAttribute("viewBox", view!);
+      await page.screenshot({ path: `.cache/flessibili-2d-${width}.png` });
+      await page.keyboard.press("Delete");
+      const removed = await exported(page);
+      expect(
+        removed.ducts!.find((item) => item.id === duct.id)!.waypoints,
+      ).toEqual(moved.waypoints.filter((_, i) => i !== index));
+      expect(removed.ducts).toHaveLength(after.ducts!.length);
+      await page.keyboard.press("Control+z");
+      await page
+        .getByRole("button", { name: "Flessibili", exact: true })
+        .click();
+      const restored = await exported(page);
+      expect(
+        restored.ducts!.find((item) => item.id === duct.id)!.waypoints,
+      ).toEqual(moved.waypoints);
+      await page.getByRole("button", { name: "3D", exact: true }).click();
+      await expect(
+        page.getByTestId("viewer-3d").locator("canvas"),
+      ).toHaveAttribute("data-rendered", "true", { timeout: 30000 });
+      await expect(
+        page.getByRole("region", {
+          name: "Modifica grafica flessibili",
+          exact: true,
+        }),
+      ).toContainText(`${moved.waypoints.length} curve`);
+      await page.getByRole("button", { name: "2D", exact: true }).click();
+      await expect(controls).toBeVisible();
+      await controls
+        .getByRole("button", { name: "Termina modifica", exact: true })
+        .click();
+      await expect(controls).toHaveCount(0);
+    });
+  });
+
+test("Flessibili nella vista 3D salva le curve", async ({ page }) => {
   test.setTimeout(180000);
   await page.setViewportSize({ width: 1600, height: 900 });
   await importProject(page);
+  await page.getByRole("button", { name: "3D", exact: true }).click();
   await page.getByRole("button", { name: "Flessibili", exact: true }).click();
   await expect(
     page.getByRole("dialog", { name: "Configura flessibili" }),
@@ -182,13 +316,17 @@ test("Flessibili apre solo l’editor grafico 3D e salva le curve", async ({
   await expect(
     controls.getByRole("button", { name: "Rimuovi curva", exact: true }),
   ).toBeVisible({ timeout: 5000 });
-  await controls
-    .getByRole("button", { name: "Rimuovi curva", exact: true })
-    .click();
+  await page.keyboard.press("Delete");
   const afterRemove = await exported(page);
   expect(
     afterRemove.ducts!.find((duct) => duct.terminalId)!.waypoints.length,
   ).toBe(beforeCount);
+  expect(afterRemove.ducts).toHaveLength(afterDrag.ducts!.length);
+  expect(afterRemove.ducts!.find((duct) => duct.terminalId)!.waypoints).toEqual(
+    afterDrag
+      .ducts!.find((duct) => duct.terminalId)!
+      .waypoints.filter((_, i) => i !== selectedIndex),
+  );
   await controls
     .getByRole("button", { name: "Termina modifica", exact: true })
     .click();
@@ -228,6 +366,67 @@ test("l’avviso di un flessibile irrealizzabile si smonta senza errori React", 
   }
 });
 
+test("il canale tratteggiato si seleziona anche vicino alla linea e fra i trattini", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  await page.setViewportSize({ width: 1600, height: 900 });
+  const project = flexibleProject();
+  const duct = project.ducts!.find((item) => item.terminalId)!;
+  duct.routing = "manual";
+  duct.waypoints = [
+    { x: 3, y: 4, elevationM: 2 },
+    { x: 6, y: 4, elevationM: 2 },
+    { x: 3, y: 4, elevationM: 2 },
+  ];
+  await page.goto("/");
+  await page.getByTestId("project-file").setInputFiles({
+    name: "tratteggio-selezionabile.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(project)),
+  });
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await page.getByRole("button", { name: "Flessibili", exact: true }).click();
+  const canvas = page.getByTestId("viewer-3d").locator("canvas");
+  await expect(canvas).toHaveAttribute("data-rendered", "true", {
+    timeout: 30000,
+  });
+  await page.keyboard.press("Escape");
+  await expect(canvas).not.toHaveAttribute("data-selection", duct.id);
+  await expect(
+    page.getByRole("button", { name: "Flessibili", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  const box = (await canvas.boundingBox())!;
+  const camera = new THREE.PerspectiveCamera(
+    Number(await canvas.getAttribute("data-camera-fov")),
+    box.width / box.height,
+    0.02,
+    2000,
+  );
+  camera.position.fromArray(
+    (await canvas.getAttribute("data-camera-position"))!.split(",").map(Number),
+  );
+  camera.quaternion.fromArray(
+    (await canvas.getAttribute("data-camera-quaternion"))!
+      .split(",")
+      .map(Number),
+  );
+  camera.updateMatrixWorld();
+  const at = new THREE.Vector3(4.5, 2, 4).project(camera);
+  const end = new THREE.Vector3(6, 2, 4).project(camera);
+  const dx = (end.x - at.x) * box.width;
+  const dy = -(end.y - at.y) * box.height;
+  const length = Math.hypot(dx, dy);
+  await page.mouse.click(
+    box.x + ((at.x + 1) * box.width) / 2 - (dy / length) * 6,
+    box.y + ((1 - at.y) * box.height) / 2 + (dx / length) * 6,
+  );
+  await expect(canvas).toHaveAttribute("data-selection", duct.id);
+  await page.screenshot({
+    path: ".cache/flessibile-tratteggiato-selezione.png",
+  });
+});
+
 test("la modifica flessibili conserva zoom e orientamento tra selezioni e aggiunta di curve", async ({
   page,
 }) => {
@@ -235,6 +434,7 @@ test("la modifica flessibili conserva zoom e orientamento tra selezioni e aggiun
   await page.setViewportSize({ width: 1600, height: 900 });
   const project = await importProject(page);
   const duct = project.ducts!.find((duct) => duct.terminalId)!;
+  await page.getByRole("button", { name: "3D", exact: true }).click();
   await page.getByRole("button", { name: "Flessibili", exact: true }).click();
   const canvas = page.getByTestId("viewer-3d").locator("canvas");
   await expect(canvas).toHaveAttribute("data-rendered", "true", {
@@ -260,7 +460,10 @@ test("la modifica flessibili conserva zoom e orientamento tra selezioni e aggiun
   const position = await canvas.getAttribute("data-camera-position");
   const rotation = await canvas.getAttribute("data-camera-quaternion");
   await canvas.click({ position: { x: 8, y: 8 } });
-  await expect(canvas).not.toHaveAttribute("data-selection", duct.id);
+  await expect(canvas).toHaveAttribute("data-selection", duct.id);
+  await expect(
+    page.getByRole("button", { name: "Flessibili", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
   await expect(canvas).toHaveAttribute("data-camera-position", position!);
   await expect(canvas).toHaveAttribute("data-camera-quaternion", rotation!);
   await page.getByRole("button", { name: "Flessibili", exact: true }).click();
@@ -327,6 +530,7 @@ test("un flessibile che attraversa un pilastro è rosso e segnalato in 2D e 3D",
   await expect(
     page.locator('[data-testid="duct-2d"] polyline[stroke="#dc2626"]').first(),
   ).toBeVisible();
+  await page.getByRole("button", { name: "3D", exact: true }).click();
   await page.getByRole("button", { name: "Flessibili", exact: true }).click();
   const viewer = page.getByTestId("viewer-3d");
   await expect(viewer.locator("canvas")).toHaveAttribute(

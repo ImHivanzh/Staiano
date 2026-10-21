@@ -84,6 +84,9 @@ for (const width of [1920, 1024]) {
       await expect(draft).toHaveCount(1);
       await page.keyboard.press("m");
       await dragPlanDevice(page, plan, draft, 4, 0.4);
+      await plan
+        .getByRole("button", { name: "Seleziona", exact: true })
+        .click();
       await draft.click();
       await expect(popup).toBeVisible();
       await expect(page.locator("#proprieta-progetto")).not.toBeVisible();

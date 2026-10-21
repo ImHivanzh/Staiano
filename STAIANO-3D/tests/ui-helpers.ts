@@ -65,6 +65,7 @@ export async function addPlanTerminal(
     .click();
   await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
   await pickPlanPoint(plan, x, y);
+  await plan.getByRole("button", { name: "Seleziona", exact: true }).click();
   await plan.getByTestId("draft-terminal").last().click();
   const popup = page.getByRole("dialog", {
     name: "Scegli bocchetta sul punto",

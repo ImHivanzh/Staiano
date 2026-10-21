@@ -4,6 +4,8 @@ import { TransformControls } from "@react-three/drei";
 import * as THREE from "three";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
+import { moveDuctWaypoint } from "@/domain/ducted/routes";
+import { alignTranslateArrows } from "./translate-arrows";
 
 export function DuctRouteControls({
   project,
@@ -31,27 +33,14 @@ export function DuctRouteControls({
   }, [point]);
   useEffect(() => () => onPreview(null), [onPreview]);
   if (!duct || duct.locked) return null;
-  const apply = (p: Project): Project => ({
-    ...p,
-    ducts: p.ducts?.map((d) =>
-      d.id === id && index !== null
-        ? {
-            ...d,
-            routing: "manual",
-            decisionOrigin: "manual",
-            waypoints: d.waypoints.map((w, i) =>
-              i === index
-                ? {
-                    x: proxy.current.position.x,
-                    y: proxy.current.position.z,
-                    elevationM: proxy.current.position.y,
-                  }
-                : w,
-            ),
-          }
-        : d,
-    ),
-  });
+  const apply = (p: Project): Project =>
+    index === null
+      ? p
+      : moveDuctWaypoint(p, id, index, {
+          x: proxy.current.position.x,
+          y: proxy.current.position.z,
+          elevationM: proxy.current.position.y,
+        });
   return (
     <group>
       {duct.waypoints.map((p, i) => (
@@ -74,6 +63,7 @@ export function DuctRouteControls({
         <>
           <group ref={proxy} />
           <TransformControls
+            ref={alignTranslateArrows}
             object={proxy}
             mode="translate"
             space="world"

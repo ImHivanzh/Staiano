@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import type { RoutePoint } from "@/domain/ducted/routes";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
@@ -106,5 +107,23 @@ export function FlexibleDuct({
         side={THREE.DoubleSide}
       />
     </mesh>
+  ) : points.length > 1 ? (
+    <group>
+      <Line
+        points={points.map((point) => [point.x, point.elevationM, point.y])}
+        color="#bd3434"
+        lineWidth={2}
+        dashed
+        dashSize={0.1}
+        gapSize={0.05}
+      />
+      <Line
+        points={points.map((point) => [point.x, point.elevationM, point.y])}
+        lineWidth={18}
+        transparent
+        opacity={0}
+        depthWrite={false}
+      />
+    </group>
   ) : null;
 }

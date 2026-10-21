@@ -1,8 +1,10 @@
 "use client";
 import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
 import { DrywallLayer } from "./DrywallLayer";
+import { useWaypointDelete } from "../useWaypointDelete";
 import {
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -30,8 +32,14 @@ import { ArrowsOut, Minus, Plus } from "@phosphor-icons/react";
 import { wallMeasuredLength } from "@/domain/geometry/dimensions";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
-import { ductRoute } from "@/domain/ducted/routes";
+import {
+  addDuctWaypoint,
+  ductRoute,
+  moveDuctWaypoint,
+  removeDuctWaypoint,
+} from "@/domain/ducted/routes";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
+import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
 import { ductedMaximumAirflow } from "@/domain/ducted/machine";
 import { terminalAirflowBalance } from "@/domain/air-terminals/airflow-balance";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
@@ -41,12 +49,13 @@ import { pendingConnections } from "@/domain/ducted/plan-connections";
 
 type View = { x: number; y: number; w: number; h: number };
 type Drag = {
-  type: "pan" | "wall" | "device" | "group";
+  type: "pan" | "wall" | "device" | "group" | "duct-waypoint";
   pointerId: number;
   anchor: Point;
   view: View;
   wallId?: string;
   deviceId?: string;
+  waypointIndex?: number;
   delta: Point;
   selection?: Selection[];
 };
@@ -60,7 +69,11 @@ function readableLabel(rotation: number, centerY: number) {
 export function Editor2D({
   placement,
   configuration,
+  editFlexible = false,
+  onCloseFlexible,
 }: {
+  editFlexible?: boolean;
+  onCloseFlexible?: () => void;
   configuration?: {
     project?: Project;
     floorId: string;
@@ -92,13 +105,54 @@ export function Editor2D({
     selection: savedSelection,
     commit,
     select,
+    readOnly,
+    presentation,
   } = useProjectStore();
   const project = placement?.project ?? configuration?.project ?? savedProject;
+  const editingFlexible = editFlexible && !readOnly && !presentation;
+  const selectedDuct = project?.ducts?.find(
+    (duct) => duct.kind === "flexible" && savedSelection[0]?.id === duct.id,
+  );
+  const [ductWaypoint, setDuctWaypoint] = useState<{
+    ductId: string;
+    index: number;
+  } | null>(null);
+  const waypointIndex =
+    ductWaypoint?.ductId === selectedDuct?.id ? ductWaypoint?.index : undefined;
+  function addBend(ductId: string, point?: Point) {
+    let index = -1;
+    commit((current) => {
+      const result = addDuctWaypoint(current, ductId, point);
+      index = result.index;
+      return result.project;
+    });
+    if (index >= 0 && !useProjectStore.getState().error)
+      setDuctWaypoint({ ductId, index });
+  }
+  function removeBend() {
+    if (!selectedDuct || waypointIndex === undefined) return;
+    commit((current) =>
+      removeDuctWaypoint(current, selectedDuct.id, waypointIndex),
+    );
+    setDuctWaypoint(null);
+  }
+  useWaypointDelete(
+    editingFlexible && selectedDuct && waypointIndex !== undefined
+      ? removeBend
+      : null,
+  );
   const activeFloorId = placement
     ? placement.project.airTerminals.find(
         (item) => item.id === placement.terminalId,
       )!.floorId
     : (configuration?.floorId ?? savedFloorId);
+  const ductCollisions = useMemo(
+    () =>
+      editingFlexible && project
+        ? findDuctCollisions(project, ductScenePaths(project, activeFloorId))
+        : new Map(),
+    [editingFlexible, project, activeFloorId],
+  );
   const tool =
     placement || (configuration && !configuration.allowDrawing)
       ? "select"
@@ -152,6 +206,80 @@ export function Editor2D({
     [measure, setMeasure] = useState<[Point, Point] | null>(null);
   const [delta, setDelta] = useState<Point | null>(null),
     [exact, setExact] = useState("");
+  const exactInput = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (tool !== "wall" || readOnly || presentation) return;
+    const handle = (event: KeyboardEvent) => {
+      if (
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        event.isComposing ||
+        document.querySelector(
+          'dialog[open],[role="dialog"][aria-modal="true"]',
+        )
+      )
+        return;
+      const element = event.target instanceof HTMLElement ? event.target : null;
+      const inField = element === exactInput.current;
+      if (
+        element &&
+        (element.matches("input,textarea,select") ||
+          element.isContentEditable) &&
+        !inField
+      )
+        return;
+      if (event.key === "Enter" && exact.trim()) {
+        event.preventDefault();
+        event.stopPropagation();
+        const length = Number(exact.replace(",", "."));
+        if (!Number.isFinite(length) || length < 0.05 || length > 100) {
+          useProjectStore
+            .getState()
+            .setError("Lunghezza del muro compresa tra 0,05 e 100 m.");
+          return;
+        }
+        if (!anchor || !cursor || distance(anchor, cursor.point) < 0.001) {
+          useProjectStore
+            .getState()
+            .setError(
+              "Scegli il punto iniziale e indica la direzione del muro con il cursore.",
+            );
+          return;
+        }
+        finishWall(
+          add(
+            anchor,
+            scale(
+              subtract(cursor.point, anchor),
+              length / distance(cursor.point, anchor),
+            ),
+          ),
+        );
+      } else if (
+        !inField &&
+        (/^[0-9]$/.test(event.key) || event.key === "." || event.key === ",")
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        setExact((value) =>
+          /^[0-9]$/.test(event.key) || !/[.,]/.test(value)
+            ? value + event.key
+            : value,
+        );
+      } else if (
+        !inField &&
+        exact &&
+        (event.key === "Backspace" || event.key === "Delete")
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        setExact((value) => (event.key === "Delete" ? "" : value.slice(0, -1)));
+      }
+    };
+    window.addEventListener("keydown", handle, true);
+    return () => window.removeEventListener("keydown", handle, true);
+  }, [tool, readOnly, presentation, exact, anchor, cursor, project]);
   const [calibrationDistance, setCalibrationDistance] = useState<number | null>(
     null,
   );
@@ -233,6 +361,7 @@ export function Editor2D({
       setChainStart(null);
       setCurveEnd(null);
       setMeasure(null);
+      setExact("");
     };
     reset();
   }, [tool, activeFloorId]);
@@ -340,13 +469,7 @@ export function Editor2D({
         chainStart && !exact.trim() && distance(hit, chainStart) <= view.w / 100
           ? chainStart
           : hit;
-      if (distance(anchor, end) < 0.05) return;
-      commit((p) => addWall(p, activeFloorId, anchor, end));
-      if (chainStart && samePoint(end, chainStart)) {
-        setAnchor(null);
-        setChainStart(null);
-      } else setAnchor(end);
-      setExact("");
+      finishWall(end);
     } else if (tool === "measure") {
       setMeasure([anchor, hit]);
       setAnchor(null);
@@ -359,6 +482,16 @@ export function Editor2D({
           .setError("Distanza reale positiva e due punti distinti richiesti.");
       setAnchor(null);
     }
+  }
+  function finishWall(end: Point) {
+    if (!anchor || distance(anchor, end) < 0.05) return;
+    commit((p) => addWall(p, activeFloorId, anchor, end));
+    if (useProjectStore.getState().error) return;
+    if (chainStart && samePoint(end, chainStart)) {
+      setAnchor(null);
+      setChainStart(null);
+    } else setAnchor(end);
+    setExact("");
   }
   function onMove(e: React.PointerEvent<SVGSVGElement>) {
     const d = drag.current;
@@ -423,6 +556,26 @@ export function Editor2D({
   }
   function onUp(e: React.PointerEvent<SVGSVGElement>) {
     const d = drag.current;
+    if (
+      d?.type === "duct-waypoint" &&
+      d.deviceId &&
+      d.waypointIndex !== undefined &&
+      project &&
+      distance(d.delta, { x: 0, y: 0 }) > 0.001
+    ) {
+      draggedClick.current = true;
+      const point = project.ducts?.find((duct) => duct.id === d.deviceId)
+        ?.waypoints[d.waypointIndex];
+      if (point)
+        commit((current) =>
+          moveDuctWaypoint(
+            current,
+            d.deviceId!,
+            d.waypointIndex!,
+            add(point, d.delta),
+          ),
+        );
+    }
     if (
       d?.type === "group" &&
       d.selection &&
@@ -528,6 +681,16 @@ export function Editor2D({
       ),
   );
   const codes = project ? deviceCodes(project) : new Map<string, string>();
+  const selectedDuctRoute =
+    editingFlexible && selectedDuct && project
+      ? ductRoute(project, selectedDuct)
+      : [];
+  const ductWarning =
+    editingFlexible && selectedDuct
+      ? !flexibleDuctCurve(selectedDuctRoute, selectedDuct.diameterMm ?? 160)
+        ? "Percorso non realizzabile: sposta curve o plenum."
+        : ductCollisions.get(selectedDuct.id)?.message
+      : undefined;
   const previewDevice = (device: {
     id: string;
     roomId: string;
@@ -592,26 +755,33 @@ export function Editor2D({
         data-testid="editor-2d"
         tabIndex={placement ? 0 : undefined}
         onKeyDown={
-          placement
+          editingFlexible
             ? (event) => {
-                const movement = {
-                  ArrowLeft: [-1, 0],
-                  ArrowRight: [1, 0],
-                  ArrowUp: [0, -1],
-                  ArrowDown: [0, 1],
-                }[event.key];
-                if (!movement) return;
-                event.preventDefault();
-                event.stopPropagation();
-                const item = placement.project.airTerminals.find(
-                  (terminal) => terminal.id === placement.terminalId,
-                )!;
-                placement.onMove({
-                  x: item.position.x + movement[0] * snap.stepM,
-                  y: item.position.y + movement[1] * snap.stepM,
-                });
+                if (event.key === "Escape") {
+                  event.stopPropagation();
+                  select(null);
+                }
               }
-            : undefined
+            : placement
+              ? (event) => {
+                  const movement = {
+                    ArrowLeft: [-1, 0],
+                    ArrowRight: [1, 0],
+                    ArrowUp: [0, -1],
+                    ArrowDown: [0, 1],
+                  }[event.key];
+                  if (!movement) return;
+                  event.preventDefault();
+                  event.stopPropagation();
+                  const item = placement.project.airTerminals.find(
+                    (terminal) => terminal.id === placement.terminalId,
+                  )!;
+                  placement.onMove({
+                    x: item.position.x + movement[0] * snap.stepM,
+                    y: item.position.y + movement[1] * snap.stepM,
+                  });
+                }
+              : undefined
         }
         viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
         onPointerDownCapture={
@@ -626,6 +796,11 @@ export function Editor2D({
             : configuration
               ? (event) => {
                   if (event.button !== 0) return;
+                  if (
+                    editingFlexible &&
+                    (event.target as Element).closest("[data-duct-edit]")
+                  )
+                    return;
                   draggedClick.current = false;
                   if (captures(event.target)) {
                     event.stopPropagation();
@@ -645,6 +820,11 @@ export function Editor2D({
           configuration
             ? (event) => {
                 if (event.button !== 0) return;
+                if (
+                  editingFlexible &&
+                  (event.target as Element).closest("[data-duct-edit]")
+                )
+                  return;
                 if (draggedClick.current) {
                   draggedClick.current = false;
                   event.stopPropagation();
@@ -1052,14 +1232,14 @@ export function Editor2D({
                         Math.max(24, Math.ceil(curve.getLength() * 30)),
                       )
                       .map((p) => ({ x: p.x, y: p.z }))
-                  : []
+                  : raw
                 : raw;
             return (
               <polyline
                 key={d.id}
                 points={route.map((p) => `${p.x},${p.y}`).join(" ")}
                 fill="none"
-                stroke="#2589ac"
+                stroke={d.kind === "flexible" && !curve ? "#bd3434" : "#2589ac"}
                 strokeWidth={Math.max(
                   u * 2,
                   (d.diameterMm ?? d.widthMm ?? 50) / 1000,
@@ -1805,7 +1985,226 @@ export function Editor2D({
             </g>
           ))}
         {configuration?.overlay}
+        {editingFlexible &&
+          project?.ducts
+            ?.filter(
+              (duct) =>
+                duct.kind === "flexible" &&
+                project.plenums.some(
+                  (plenum) =>
+                    plenum.id === duct.plenumId &&
+                    plenum.floorId === activeFloorId,
+                ),
+            )
+            .map((duct) => {
+              const points = duct.waypoints.map((point, index) =>
+                delta &&
+                drag.current?.type === "duct-waypoint" &&
+                drag.current.deviceId === duct.id &&
+                drag.current.waypointIndex === index
+                  ? { ...point, ...add(point, delta) }
+                  : point,
+              );
+              const raw = ductRoute(project, { ...duct, waypoints: points });
+              const curve = flexibleDuctCurve(
+                raw,
+                duct.diameterMm ?? 160,
+              )?.curve;
+              const path = curve
+                ? curve
+                    .getSpacedPoints(
+                      Math.max(24, Math.ceil(curve.getLength() * 30)),
+                    )
+                    .map((p) => ({ x: p.x, y: p.z }))
+                : raw;
+              const selected = selectedDuct?.id === duct.id;
+              return (
+                <g key={duct.id} data-duct-edit="true">
+                  <polyline
+                    data-testid="editable-duct-2d"
+                    data-duct-id={duct.id}
+                    data-collision={
+                      ductCollisions.has(duct.id) ? "true" : undefined
+                    }
+                    points={path
+                      .map((point) => `${point.x},${point.y}`)
+                      .join(" ")}
+                    fill="none"
+                    stroke={
+                      !curve || ductCollisions.has(duct.id)
+                        ? "var(--rosso)"
+                        : selected
+                          ? "var(--tinta)"
+                          : "#2589ac"
+                    }
+                    strokeWidth={Math.max(
+                      3 * u,
+                      (duct.diameterMm ?? 160) / 1000,
+                    )}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Flessibile ${codes.get(duct.id) ?? duct.id}`}
+                    aria-pressed={selected}
+                    onPointerDown={(event) => {
+                      if (event.button === 0) {
+                        event.stopPropagation();
+                        select({ kind: "device", id: duct.id });
+                      }
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        select({ kind: "device", id: duct.id });
+                      }
+                    }}
+                    onDoubleClick={(event) => {
+                      event.stopPropagation();
+                      if (!duct.locked)
+                        addBend(duct.id, world(event.clientX, event.clientY));
+                    }}
+                  />
+                  {selected &&
+                    points.map((point, index) => (
+                      <g
+                        key={index}
+                        data-testid="duct-waypoint-2d"
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Curva ${index + 1}`}
+                        aria-pressed={waypointIndex === index}
+                        aria-disabled={duct.locked}
+                        onPointerDown={(event) => {
+                          if (event.button !== 0) return;
+                          event.stopPropagation();
+                          const hit = world(event.clientX, event.clientY);
+                          const nearest = points.reduce(
+                            (best, candidate, i) =>
+                              distance(candidate, hit) <
+                              distance(points[best], hit)
+                                ? i
+                                : best,
+                            index,
+                          );
+                          setDuctWaypoint({ ductId: duct.id, index: nearest });
+                          if (duct.locked) return;
+                          svg.current?.setPointerCapture(event.pointerId);
+                          drag.current = {
+                            type: "duct-waypoint",
+                            deviceId: duct.id,
+                            waypointIndex: nearest,
+                            pointerId: event.pointerId,
+                            anchor: world(event.clientX, event.clientY),
+                            view,
+                            delta: { x: 0, y: 0 },
+                          };
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === "Escape") return;
+                          event.stopPropagation();
+                          setDuctWaypoint({ ductId: duct.id, index });
+                          if (duct.locked) return;
+                          if (
+                            event.key === "Delete" ||
+                            event.key === "Backspace"
+                          ) {
+                            event.preventDefault();
+                            commit((current) =>
+                              removeDuctWaypoint(current, duct.id, index),
+                            );
+                            setDuctWaypoint(null);
+                          }
+                          const movement = {
+                            ArrowLeft: [-1, 0],
+                            ArrowRight: [1, 0],
+                            ArrowUp: [0, -1],
+                            ArrowDown: [0, 1],
+                          }[event.key];
+                          if (movement) {
+                            event.preventDefault();
+                            const step =
+                              snap.enabled && snap.grid ? snap.stepM : 0.1;
+                            commit((current) =>
+                              moveDuctWaypoint(current, duct.id, index, {
+                                x: point.x + movement[0] * step,
+                                y: point.y + movement[1] * step,
+                              }),
+                            );
+                          }
+                        }}
+                      >
+                        <circle
+                          className="duct-waypoint-hit"
+                          cx={point.x}
+                          cy={point.y}
+                          r={22 * u}
+                          fill="transparent"
+                        />
+                        <circle
+                          cx={point.x}
+                          cy={point.y}
+                          r={Math.max(8 * u, 0.055)}
+                          fill={
+                            waypointIndex === index
+                              ? "var(--ambra)"
+                              : "var(--carta)"
+                          }
+                          stroke="var(--tinta)"
+                          strokeWidth={2 * u}
+                        />
+                        <title>{`Curva ${index + 1} · quota ${formatNumber(point.elevationM)} m`}</title>
+                      </g>
+                    ))}
+                </g>
+              );
+            })}
       </svg>
+      {editingFlexible && (
+        <div
+          className="strumenti-flessibili-2d"
+          role="region"
+          aria-label="Modifica grafica flessibili 2D"
+        >
+          <strong>
+            {selectedDuct ? codes.get(selectedDuct.id) : "Flessibili"}
+          </strong>
+          <span>
+            {selectedDuct
+              ? "Trascina i punti · doppio clic sul tubo per aggiungere una curva"
+              : "Seleziona un flessibile in pianta"}
+          </span>
+          <button
+            className="bottone piccolo"
+            disabled={!selectedDuct || selectedDuct.locked}
+            onClick={() => selectedDuct && addBend(selectedDuct.id)}
+          >
+            Aggiungi curva
+          </button>
+          <button
+            className="bottone piccolo"
+            disabled={
+              !selectedDuct ||
+              selectedDuct.locked ||
+              waypointIndex === undefined
+            }
+            onClick={removeBend}
+            title="Rimuovi il punto selezionato (Canc)"
+            aria-keyshortcuts="Delete Backspace"
+          >
+            Rimuovi curva
+          </button>
+          <button className="bottone piccolo tenue" onClick={onCloseFlexible}>
+            Termina modifica
+          </button>
+          {ductWarning && (
+            <span className="avviso-flessibile-2d" role="status">
+              {ductWarning}
+            </span>
+          )}
+        </div>
+      )}
       {!!instructions && (
         <div className="indicazione-editor">{instructions}</div>
       )}
@@ -1823,12 +2222,17 @@ export function Editor2D({
           Lunghezza esatta (m)
           <input
             aria-label="Lunghezza esatta nuovo muro"
+            ref={exactInput}
             value={exact}
             onChange={(e) => setExact(e.target.value)}
             placeholder="Libera"
             inputMode="decimal"
           />
-          <small>La direzione segue il cursore</small>
+          <small>
+            Digita misura · Invio conferma
+            <br />
+            La direzione segue il cursore
+          </small>
         </label>
       )}
       <div className="zoom-editor">

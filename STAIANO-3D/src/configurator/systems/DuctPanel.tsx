@@ -35,7 +35,7 @@ export function DuctPanel({
         Per creare il canale: strumento <strong>Canale</strong> (K) in pianta,
         clicca il plenum della bocchetta (il primo punto è già sullo stacco),
         poi la macchina. Il percorso predefinito si modifica trascinando i punti
-        in 3D o da «Flessibili».
+        in 2D o 3D con «Flessibili».
       </p>
       <button
         className="bottone piccolo"

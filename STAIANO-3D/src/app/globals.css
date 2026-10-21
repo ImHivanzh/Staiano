@@ -640,6 +640,59 @@ input[type="checkbox"] {
   border-radius: var(--r);
   box-shadow: var(--ombra-1);
 }
+.strumenti-flessibili-2d {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--bordo);
+  border-radius: var(--r);
+  background: var(--carta);
+  color: var(--testo);
+  font-size: 12px;
+}
+[data-duct-edit] polyline {
+  cursor: pointer;
+}
+[data-duct-edit] circle {
+  cursor: move;
+}
+[data-duct-edit] [aria-disabled="true"] {
+  cursor: default;
+}
+/* L'outline del browser viene disegnato in unità SVG (metri): sul flessibile
+   diventa una macchia enorme. Il focus resta visibile su tratto e curve. */
+[data-duct-edit] :focus {
+  outline: none;
+}
+[data-duct-edit] polyline:focus-visible {
+  stroke-dasharray: 0.09 0.05;
+}
+[data-duct-edit]
+  [data-testid="duct-waypoint-2d"]:focus-visible
+  > circle:last-of-type {
+  stroke: var(--ambra);
+}
+.duct-waypoint-hit {
+  display: none;
+}
+.avviso-flessibile-2d {
+  flex-basis: 100%;
+  color: var(--rosso);
+}
+@media (pointer: coarse) {
+  .duct-waypoint-hit {
+    display: initial;
+  }
+  .strumenti-flessibili-2d button {
+    min-height: 44px;
+  }
+}
 .stato-editor {
   position: absolute;
   bottom: 12px;

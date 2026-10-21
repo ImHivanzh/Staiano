@@ -14,8 +14,16 @@ import {
 import { machinePlenum, placeSupplyPlenum } from "./placement";
 import { flexibleDuctCurve } from "./flexible-curve";
 import { Vector3 } from "three";
-import { createDuctFromEndpoints, ductRoute } from "./routes";
+import {
+  addDuctWaypoint,
+  createDuctFromEndpoints,
+  ductRoute,
+  moveDuctWaypoint,
+} from "./routes";
 import { projectSchema } from "@/schemas/project";
+import { movePlacedDevice } from "../geometry/move-device";
+import { validateProject } from "../validation";
+import { decodeProject, encodeProject } from "@/services/project/format";
 
 /** Bocchetta e macchina con i rispettivi plenum salvati, macchina posizionata in pianta. */
 function fixture(mounting: "wall" | "ceiling" = "ceiling") {
@@ -193,6 +201,48 @@ it("asks for the machine plenum before tracing a duct", () => {
   ).toThrow(/strumento Plenum/);
 });
 
+it("saves an editable route by the wall even when automatic routing fails", () => {
+  let p = fixture("wall");
+  const terminal = p.airTerminals[0];
+  p = movePlacedDevice(
+    p,
+    terminal.id,
+    { x: 0.2, y: 3 },
+    {
+      enabled: true,
+      grid: false,
+      stepM: 0.1,
+      toleranceM: 0.12,
+      orthogonal: false,
+      angle45: false,
+      parallel: false,
+    },
+  );
+  const plenum = terminalPlenum(p, p.airTerminals[0])!;
+  expect(
+    p
+      .ducts!.filter((duct) => duct.terminalId === terminal.id)
+      .every((duct) => ductRoute(p, duct).length === 0),
+  ).toBe(true);
+  const result = createDuctFromEndpoints(p, plenum.id, p.hvacSystems[0].id);
+  const saved = decodeProject(encodeProject(result.project));
+  for (const id of result.ductIds) {
+    const duct = saved.ducts!.find((item) => item.id === id)!;
+    expect(duct.routing).toBe("manual");
+    expect(duct.waypoints.length).toBeGreaterThan(0);
+    expect(ductRoute(saved, duct).length).toBeGreaterThan(1);
+  }
+  expect(validateProject(saved)).toContainEqual(
+    expect.objectContaining({
+      status: "warning",
+      code: "ductEnvelope",
+    }),
+  );
+  expect(validateProject(saved)).toContainEqual(
+    expect.objectContaining({ code: "ductBendRadius", status: "invalid" }),
+  );
+});
+
 it("rejects two terminals or a plenum that is not connected", () => {
   const p = fixture();
   const terminal = p.airTerminals[0];
@@ -204,4 +254,45 @@ it("rejects two terminals or a plenum that is not connected", () => {
   expect(() =>
     createDuctFromEndpoints(free, free.plenums.at(-1)!.id, terminal.id),
   ).toThrow(/macchina/);
+});
+
+it("moves a bend in plan without changing its elevation or the other points", () => {
+  const p = fixture();
+  const result = addDuctWaypoint(p, p.ducts![0].id);
+  const duct = result.project.ducts![0];
+  const before = structuredClone(duct.waypoints);
+  const point = before[result.index];
+  const moved = moveDuctWaypoint(result.project, duct.id, result.index, {
+    x: point.x + 0.5,
+    y: point.y - 0.3,
+  });
+  expect(moved.ducts![0].waypoints).toEqual(
+    before.map((waypoint, i) =>
+      i === result.index
+        ? { ...point, x: point.x + 0.5, y: point.y - 0.3 }
+        : waypoint,
+    ),
+  );
+  expect(duct.waypoints).toEqual(before);
+  duct.locked = true;
+  expect(
+    moveDuctWaypoint(result.project, duct.id, result.index, { x: 5, y: 5 })
+      .ducts![0],
+  ).toEqual(duct);
+});
+
+it("adds a bend using the plan projection and interpolates the existing elevation", () => {
+  const p = fixture();
+  const duct = p.ducts![0];
+  duct.routing = "manual";
+  duct.waypoints = [
+    { x: 5, y: 3, elevationM: 1 },
+    { x: 7, y: 3, elevationM: 3 },
+  ];
+  const result = addDuctWaypoint(p, duct.id, { x: 6, y: 3 });
+  expect(result.project.ducts![0].waypoints[result.index]).toEqual({
+    x: 6,
+    y: 3,
+    elevationM: 2,
+  });
 });

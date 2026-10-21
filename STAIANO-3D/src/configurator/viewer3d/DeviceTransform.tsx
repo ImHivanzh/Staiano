@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useCallback } from "react";
 import { TransformControls } from "@react-three/drei";
+import { alignTranslateArrows } from "./translate-arrows";
 import * as THREE from "three";
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
@@ -157,6 +158,7 @@ export function DeviceTransform({
     <>
       <group ref={proxy} />
       <TransformControls
+        ref={alignTranslateArrows}
         object={proxy}
         mode={mode}
         space={mode === "translate" ? "world" : "local"}

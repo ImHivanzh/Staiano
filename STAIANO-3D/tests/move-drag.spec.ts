@@ -68,8 +68,17 @@ for (const width of [1920, 1024])
       await page.mouse.up();
     }
     await expect(page.getByRole("dialog")).toHaveCount(0);
-    await page.keyboard.press("m");
+    await expect(
+      plan.getByRole("button", { name: "Muovi (M)", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
     await dragPlanDevice(page, plan, plan.getByTestId("draft-terminal"), 5, 2);
+    await expect(
+      plan.getByRole("button", { name: "Muovi (M)", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await plan.getByRole("button", { name: "Seleziona", exact: true }).click();
+    await expect(
+      plan.getByRole("button", { name: "Muovi (M)", exact: true }),
+    ).toHaveAttribute("aria-pressed", "false");
     await expect(page.getByTestId("save-status")).toHaveText("Salvato");
     const download = page.waitForEvent("download");
     await openDisclosure(page, "File");
@@ -89,4 +98,11 @@ for (const width of [1920, 1024])
     expect(result.ductedDrafts).toHaveLength(2);
     await page.reload();
     await expect(plan.getByTestId("pending-connection")).toHaveCount(1);
+    const insert = plan.getByRole("button", { name: "Macchina", exact: true });
+    await insert.click();
+    await pickPlanPoint(plan, 4, 3);
+    await expect(insert).toHaveAttribute("aria-pressed", "true");
+    await pickPlanPoint(plan, 5, 3);
+    await expect(plan.getByTestId("draft-machine")).toHaveCount(3);
+    await expect(insert).toHaveAttribute("aria-pressed", "true");
   });

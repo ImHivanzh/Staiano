@@ -57,6 +57,7 @@ import {
 } from "@/domain/ducted/plan-connections";
 import { DeviceTransform, type TransformMode } from "./DeviceTransform";
 import { DuctRouteControls } from "./DuctRouteControls";
+import { useWaypointDelete } from "../useWaypointDelete";
 import { DuctMeshes } from "./DuctMeshes";
 import { DuctPanel } from "@/configurator/systems/DuctPanel";
 import {
@@ -208,14 +209,12 @@ export default function Viewer3D({
     if (!p) return;
     if (transforming.current) return;
     if (editFlexible) {
-      select(target);
       return;
     }
     if (planPlacementTool === "plenum" && !readOnly && !presentation) {
       const existing = p.plenums.find((item) => item.id === target.id);
       if (existing) {
         select(target);
-        useProjectStore.setState({ planPlacementTool: "select" });
         setPropertiesOpen(true);
         return;
       }
@@ -225,7 +224,6 @@ export default function Viewer3D({
         : undefined;
       if (existingTerminalPlenum) {
         select({ kind: "device", id: existingTerminalPlenum.id });
-        useProjectStore.setState({ planPlacementTool: "select" });
         setPropertiesOpen(true);
         return;
       }
@@ -239,7 +237,6 @@ export default function Viewer3D({
       const saved = useProjectStore.getState();
       if (!saved.error) {
         saved.select({ kind: "device", id: saved.project!.plenums.at(-1)!.id });
-        useProjectStore.setState({ planPlacementTool: "select" });
         setPropertiesOpen(true);
       }
       return;
@@ -281,8 +278,6 @@ export default function Viewer3D({
           );
         if (!useProjectStore.getState().error) {
           select({ kind: "device", id: pair.machineId });
-          if (pair.plenumId)
-            useProjectStore.setState({ planPlacementTool: "select" });
         }
       } else if (
         p.plenums.some((item) => item.id === target.id) ||
@@ -405,6 +400,11 @@ export default function Viewer3D({
         : null,
     );
   }, [selectedDuct, selectedDuctWaypoint]);
+  useWaypointDelete(
+    !readOnly && !presentation && selectedDuct && selectedDuctWaypoint !== null
+      ? removeDuctBend
+      : null,
+  );
   const toggleDuctKind = useCallback(() => {
     if (!selectedDuct) return;
     useProjectStore
@@ -1088,6 +1088,8 @@ export default function Viewer3D({
                 type="button"
                 disabled={selectedDuct.locked || selectedDuctWaypoint === null}
                 onClick={removeDuctBend}
+                title="Rimuovi il punto selezionato (Canc)"
+                aria-keyshortcuts="Delete Backspace"
               >
                 Rimuovi curva
               </button>
@@ -1301,7 +1303,7 @@ export default function Viewer3D({
                 }}
                 frameloop="demand"
                 onPointerMissed={() => {
-                  if (!transforming.current) select(null);
+                  if (!transforming.current && !editFlexible) select(null);
                 }}
                 fallback={
                   <div className="vuoto">
@@ -1321,7 +1323,7 @@ export default function Viewer3D({
                   defaultHeightM={p?.projectSettings.defaultHeightM ?? 2.7}
                   selection={selection}
                   onSelect={(target) => {
-                    if (!transforming.current) select(target);
+                    if (!transforming.current && !editFlexible) select(target);
                   }}
                   cutWallIds={
                     cutaway
