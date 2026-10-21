@@ -90,6 +90,7 @@ export function addGuidedTerminal(
       use: "supply",
       mounting,
       lengthMm,
+      plenumOptions: { insulatedPlenum: true },
       // Explicit operator measurements, never inferred from nominal diameter.
       ...(familyCode === "EDSC-C"
         ? { manualDimensions: { widthMm: 500, heightMm: 500, depthMm: 200 } }

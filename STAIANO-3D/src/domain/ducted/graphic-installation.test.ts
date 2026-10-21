@@ -126,7 +126,11 @@ it("connects configured devices across an undrawn gap while retaining floor chec
     origin: { x: 20, y: 0 },
   });
   const room = p.rooms.find((r) => r.centroid.x > 20)!;
-  p = saveTerminalOnPlan(p, { ...input(p), roomId: room.id }, room.centroid);
+  p = saveTerminalOnPlan(
+    p,
+    { ...input(p), roomId: room.id, plenumOptions: { insulatedPlenum: true } },
+    room.centroid,
+  );
   const terminalId = p.airTerminals.at(-1)!.id;
   const connected = connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id);
   expect(
@@ -143,7 +147,11 @@ it("connects configured devices across an undrawn gap while retaining floor chec
 
 it("shows graphical connections in 3D along the same plan route without changing project data", () => {
   const base = fixture();
-  const saved = saveTerminalOnPlan(base, input(base), { x: 4, y: 2 });
+  const saved = saveTerminalOnPlan(
+    base,
+    { ...input(base), plenumOptions: { insulatedPlenum: true } },
+    { x: 4, y: 2 },
+  );
   const terminalId = saved.airTerminals[0].id;
   const connected = connectTerminalOnPlan(
     saved,

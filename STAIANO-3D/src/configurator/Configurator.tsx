@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NotificationToast } from "./NotificationToast";
 import { FullscreenDialog } from "./FullscreenDialog";
+import { terminalPlenum } from "@/domain/ducted/attached-plenums";
 import { CustomerViewButton } from "./CustomerViewButton";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -78,7 +79,6 @@ import type { ImportedPlan } from "@/services/import/plan-types";
 import { formatNumber, numberFromForm } from "@/utils/format";
 import { Editor2D } from "./editor2d/Editor2D";
 import { GraphicalDuctedConfigurator } from "./systems/GraphicalDuctedConfigurator";
-import { FlexibleDuctPanel } from "./systems/FlexibleDuctPanel";
 import { Properties, selectionWithProperties } from "./properties/Properties";
 import { ConfigurationWizard } from "./import/ConfigurationWizard";
 import { PillarDialog } from "./PillarDialog";
@@ -1992,8 +1992,28 @@ export function Configurator() {
                   <button
                     type="button"
                     className="bottone piccolo chiara"
-                    aria-haspopup="dialog"
-                    onClick={() => setFlexibleOpen(true)}
+                    aria-pressed={flexibleOpen && s.view === "3d"}
+                    onClick={() => {
+                      setFlexibleOpen(true);
+                      s.setView("3d");
+                      s.setTool("select");
+                      useProjectStore.setState({ planPlacementTool: "select" });
+                      const duct = p.ducts?.find(
+                        (d) =>
+                          d.kind === "flexible" &&
+                          !d.locked &&
+                          p.airTerminals.some(
+                            (t) =>
+                              t.id === d.terminalId && terminalPlenum(p, t),
+                          ) &&
+                          p.plenums.some(
+                            (pl) =>
+                              pl.id === d.plenumId &&
+                              pl.floorId === s.activeFloorId,
+                          ),
+                      );
+                      s.select(duct ? { kind: "device", id: duct.id } : null);
+                    }}
                   >
                     Flessibili
                   </button>
@@ -2001,7 +2021,10 @@ export function Configurator() {
                     <button
                       aria-pressed={s.view === "2d"}
                       className={s.view === "2d" ? "attivo" : ""}
-                      onClick={() => s.setView("2d")}
+                      onClick={() => {
+                        setFlexibleOpen(false);
+                        s.setView("2d");
+                      }}
                     >
                       <SquaresFour />
                       2D
@@ -2046,7 +2069,13 @@ export function Configurator() {
                   <Editor2D key={`${p.id}-${s.activeFloorId}`} />
                 )
               ) : (
-                <Viewer3D />
+                <Viewer3D
+                  editFlexible={flexibleOpen}
+                  onCloseFlexible={() => {
+                    setFlexibleOpen(false);
+                    s.select(null);
+                  }}
+                />
               )}
               <div
                 className="pannello-progetto"
@@ -2256,24 +2285,6 @@ export function Configurator() {
           }}
           onImport={acceptPlan}
         />
-      )}
-      {flexibleOpen && p && (
-        <FullscreenDialog
-          open
-          title="Configura flessibili"
-          closeLabel="Chiudi flessibili"
-          onClose={() => setFlexibleOpen(false)}
-        >
-          <FlexibleDuctPanel
-            project={p}
-            floorId={s.activeFloorId}
-            onEdit3D={(ductId) => {
-              s.select({ kind: "device", id: ductId });
-              s.setView("3d");
-              setFlexibleOpen(false);
-            }}
-          />
-        </FullscreenDialog>
       )}
       {s.view === "2d" && <PillarDialog />}
       {newDialog && (

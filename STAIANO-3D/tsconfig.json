@@ -31,5 +31,5 @@
     ".next-update/types/**/*.ts",
     ".next-update/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp", ".cache", "catalog-data", "dist-exe"]
 }

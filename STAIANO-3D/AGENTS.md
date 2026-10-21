@@ -14,6 +14,18 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Il server è gestito dall’attività Windows «Staiano HVAC». Dopo la build, riavviare l’attività con `schtasks /End /TN "Staiano HVAC"` e `schtasks /Run /TN "Staiano HVAC"`. Verificare `.cache/production-server.json` e la risposta HTTP sulla porta 3015. Compilare nella directory alternativa a quella attiva (`.next` o `.next-update`) per preservare gli asset durante la compilazione.
 - Attendere che l’attività risulti `Ready` dopo l’arresto. Se `/Run` non aggiorna l’ultima esecuzione, usare `Start-ScheduledTask -TaskName 'Staiano HVAC'` e verificare nuovamente PID e build. Non serve registrare nuovamente l’attività.
 
+## Sviluppo rapido (modifiche piccole)
+
+- **Test mirati, non tutta la suite.** Durante l'iterazione non lanciare `npm test` né `npm run test:e2e`: esegui solo i test che coprono la modifica.
+  - unit: `npx vitest run src/<cartella>/<file>.test.ts`;
+  - browser/e2e, solo se il flusso toccato è coperto lì: `npx playwright test tests/<file>.spec.ts`;
+  - se nessun test copre la modifica, bastano `npx tsc --noEmit` e una verifica HTTP sulla pagina interessata.
+- La suite completa (`npm test` + `npm run test:e2e`) si esegue una sola volta, alla chiusura: `compila.bat` esegue già `npm test` prima di creare l'EXE, quindi non duplicarla a mano a ogni modifica. Costa circa due minuti (632 test) e sotto carico i test PDF possono andare in timeout, mentre un file mirato si esegue in 10-30 secondi.
+- Il giro completo (build, riavvio dell'attività, verifica HTTP) serve quando la modifica deve arrivare all'utente o al pacchetto EXE; per il lavoro quotidiano basta il controllo mirato qui sopra.
+- Se la sessione dell'agente gira in sandbox `workspace-write`, `npm run dev`, `npm run build` e `vitest` falliscono con `spawn EPERM` (la sandbox blocca i processi figli con pipe): in quel caso serve una sessione con accesso completo, non ritentare la stessa strada.
+- Con il server di sviluppo già aperto (porta stampata all'avvio), l'agente salva i file e verifica con una richiesta HTTP: la ricompilazione è automatica e non serve riavviare nulla.
+- `npm run pulisci` rimuove log, screenshot, download, vecchi EXE e test temporanei accumulati in `.cache` senza toccare chiavi, licenze, auth, fixture e runtime .NET; `npm run pulisci -- --tutto` rimuove anche `.next` e `.next-update`. Usarlo quando `.cache` supera qualche centinaio di MB.
+
 ## Documenti tecnici dei produttori
 
 - `catalog-data/sources` (PDF, HTML, listini: oltre 1 GB) **non è in Git**: serve solo a rigenerare il catalogo e a rispondere alle schede tecniche. In Git c'è l'elenco esatto dei documenti citati, `catalog-data/sources-manifest.json` (produttore, URL di origine, SHA-256), rigenerabile con `npm run catalog:sources:list`; `compila.bat` si ferma se non è allineato ai cataloghi.

@@ -5,8 +5,7 @@ import {
 } from "../../../tests/guided-fixture";
 import { placeMachineOnPlan } from "./graphic-installation";
 import {
-  insertPlenum,
-  connectPlenum,
+  addTerminalPlenum,
   attachedPlenumPorts,
 } from "./attached-plenums";
 import { movePlacedDevice } from "../geometry/move-device";
@@ -35,8 +34,7 @@ function fixture() {
       parallel: false,
     },
   );
-  p = insertPlenum(p, p.rooms[0].id, { x: 1, y: 1 });
-  p = connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
   p.airTerminals[0].commercialOptions = {
     insulatedPlenum: true,
     fixingBridges: true,

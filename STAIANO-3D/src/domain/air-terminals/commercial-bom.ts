@@ -23,6 +23,27 @@ function customTerminalPlenum(options: TerminalCommercialOptions | undefined) {
       !["lateral", "upper"].includes(options.connectionPosition))
   );
 }
+/**
+ * Un plenum salvato resta l'accessorio di catalogo finché coincide con la
+ * scheda; appena l'operatore ne cambia quota o modello diventa una quotazione
+ * separata, distinta dal prezzo del terminale.
+ */
+function savedPlenumIsCatalogue(
+  plenum: Project["plenums"][number],
+  specification: TerminalAccessorySpecification | null,
+) {
+  const spec = specification?.plenum;
+  return (
+    !!spec &&
+    plenum.model === spec.modelCode &&
+    plenum.widthMm === spec.lengthMm &&
+    plenum.heightMm === spec.heightMm &&
+    plenum.depthMm === spec.widthMm &&
+    (plenum.portCount ?? 1) === spec.portCount &&
+    (plenum.portDiameterMm ?? 160) === spec.portDiameterMm &&
+    (plenum.material ?? "insulated") === "insulated"
+  );
+}
 export type EcoclimaBomLine = {
   id: string;
   terminalIds: string[];
@@ -485,7 +506,16 @@ export function calculateEcoclimaBom(
 ): EcoclimaBom {
   const separatePlenums =
     project.plenums?.filter((p) => p.attachmentId !== undefined) ?? [];
-  const usesSeparatePlenums = separatePlenums.length > 0;
+  const terminalPlenums = new Map(
+    separatePlenums.flatMap((plenum) => {
+      const terminal = project.airTerminals.find(
+        (item) => item.id === plenum.attachmentId,
+      );
+      return terminal ? [[terminal.id, plenum] as const] : [];
+    }),
+  );
+  // Plenum di bocchetta già valorizzati nella riga del terminale.
+  const pricedTerminalPlenums = new Set<string>();
   const lines: EcoclimaBomLine[] = [],
     runs = new Map<string, InstalledTerminal[]>();
   for (const terminal of project.airTerminals as InstalledTerminal[]) {
@@ -494,12 +524,17 @@ export function calculateEcoclimaBom(
       terminal,
       catalog,
     );
+    const separate = terminalPlenums.get(terminal.id);
     if (
-      !usesSeparatePlenums &&
       (terminal.commercialOptions?.insulatedPlenum !== false ||
-        terminal.commercialOptions?.plenumMaterial)
-    )
+        terminal.commercialOptions?.plenumMaterial) &&
+      (!separate ||
+        (savedPlenumIsCatalogue(separate, specification) &&
+          !customTerminalPlenum(terminal.commercialOptions)))
+    ) {
       lines.push(priceLine(terminal, "insulated-plenum", 1, catalog));
+      if (separate) pricedTerminalPlenums.add(terminal.id);
+    }
     if (
       specification?.fixingBridgeQuantity ||
       (terminal.commercialOptions?.fixingBridges !== false &&
@@ -587,7 +622,13 @@ export function calculateEcoclimaBom(
     lines.push(line);
   }
   for (const system of project.hvacSystems.filter(
-    (item) => item.type === "ducted" && !usesSeparatePlenums,
+    (item) =>
+      item.type === "ducted" &&
+      !separatePlenums.some(
+        (plenum) =>
+          plenum.systemId === item.id &&
+          item.indoorUnits.some((unit) => unit.id === plenum.attachmentId),
+      ),
   ))
     lines.push({
       id: `${system.id}:machine-plenum`,
@@ -611,6 +652,7 @@ export function calculateEcoclimaBom(
     const terminal = project.airTerminals.find(
       (t) => t.id === plenum.attachmentId,
     );
+    if (terminal && pricedTerminalPlenums.has(terminal.id)) continue;
     lines.push({
       id: `${plenum.id}:plenum`,
       terminalIds: terminal ? [terminal.id] : [],

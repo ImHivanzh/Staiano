@@ -5,14 +5,13 @@ import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import type { Duct, Project } from "@/schemas/project";
 import {
-  airConnectionRoutes,
-  ductRoute,
+  createDuctFromEndpoints,
   type RoutePoint,
 } from "@/domain/ducted/routes";
 import { FlexibleDuct } from "./FlexibleDuct";
 import { useProjectStore } from "@/stores/project-store";
-import { placedPlenumGeometry } from "@/domain/ducted/placement";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
+import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
 
 function FlowParticles({
   points,
@@ -147,35 +146,33 @@ export function DuctMeshes({
   animated = false,
   flowMode = "cool",
   onAddWaypoint,
+  editable = true,
 }: {
   project: Project;
   activeFloorId: string;
   animated?: boolean;
   flowMode?: "cool" | "heat";
+  editable?: boolean;
   /** Doppio clic sul tubo: inserisce una curva nel punto indicato. */
   onAddWaypoint?: (ductId: string, point: RoutePoint) => void;
 }) {
   const { gl } = useThree();
-  const connections = useMemo(
-    () => airConnectionRoutes(project, activeFloorId),
+  const selectedId = useProjectStore((state) => state.selection[0]?.id);
+  const paths = useMemo(
+    () => ductScenePaths(project, activeFloorId),
     [project, activeFloorId],
   );
   const reducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ducts = useMemo(() => {
-    const geometries = new Map(
-      project.plenums
-        .filter((pl) => pl.floorId === activeFloorId)
-        .map((pl) => [pl.id, placedPlenumGeometry(project, pl)]),
-    );
-    return (project.ducts ?? [])
-      .filter((d) => geometries.has(d.plenumId))
-      .map((duct) => ({
-        duct,
-        points: ductRoute(project, duct, geometries.get(duct.plenumId)),
-      }));
-  }, [project, activeFloorId]);
+  const collisions = useMemo(
+    () => findDuctCollisions(project, paths),
+    [project, paths],
+  );
+  const connections = paths.filter((path) => !path.duct);
+  const ducts = paths.flatMap((path) =>
+    path.duct ? [{ duct: path.duct, points: path.points }] : [],
+  );
   const systems = project.hvacSystems.filter((s) => s.type === "ducted");
   useEffect(() => {
     gl.domElement.setAttribute(
@@ -183,29 +180,61 @@ export function DuctMeshes({
       String(connections.length),
     );
     gl.domElement.setAttribute("data-duct-count", String(ducts.length));
+    gl.domElement.setAttribute(
+      "data-duct-collision-count",
+      String(collisions.size),
+    );
     return () => {
       gl.domElement.removeAttribute("data-air-connections");
       gl.domElement.removeAttribute("data-duct-count");
+      gl.domElement.removeAttribute("data-duct-collision-count");
     };
-  }, [gl, connections.length, ducts.length]);
+  }, [gl, connections.length, ducts.length, collisions.size]);
   return (
     <group>
-      {connections.map(({ terminalId, portIndex, diameterMm, points, end }) => (
-        <group key={`${terminalId}:${portIndex}`}>
-          <FlexibleDuct
-            points={points}
-            diameterMm={diameterMm}
-            color="#ffffff"
-            fallbackPoint={end}
-          />
-          <FlowParticles
-            points={points}
-            diameterMm={diameterMm}
-            animated={animated && !reducedMotion}
-            color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
-          />
-        </group>
-      ))}
+      {connections.map(
+        ({ id, terminalId, portIndex, diameterMm, points, fallbackPoint }) => (
+          <group
+            key={id}
+            onClick={(event) => {
+              if (!editable) return;
+              event.stopPropagation();
+              const terminal = project.airTerminals.find(
+                (t) => t.id === terminalId,
+              );
+              if (!terminal?.systemId) return;
+              let ductId: string | undefined;
+              useProjectStore.getState().commit((current) => {
+                const result = createDuctFromEndpoints(
+                  current,
+                  terminal.id,
+                  terminal.systemId!,
+                );
+                ductId = result.ductIds[portIndex ?? 0];
+                return result.project;
+              });
+              if (ductId && !useProjectStore.getState().error)
+                useProjectStore
+                  .getState()
+                  .select({ kind: "device", id: ductId });
+            }}
+          >
+            <FlexibleDuct
+              points={points}
+              diameterMm={diameterMm}
+              color={collisions.has(id) ? "#dc2626" : "#ffffff"}
+              collision={collisions.get(id)}
+              fallbackPoint={fallbackPoint}
+            />
+            <FlowParticles
+              points={points}
+              diameterMm={diameterMm}
+              animated={animated && !reducedMotion}
+              color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
+            />
+          </group>
+        ),
+      )}
       {ducts.map(({ duct, points }) => {
         const terminal = project.airTerminals.find(
           (t) => t.id === duct.terminalId,
@@ -218,12 +247,14 @@ export function DuctMeshes({
           <group
             key={duct.id}
             onClick={(e) => {
+              if (!editable) return;
               e.stopPropagation();
               useProjectStore
                 .getState()
                 .select({ kind: "device", id: duct.id });
             }}
             onDoubleClick={(e) => {
+              if (!editable) return;
               e.stopPropagation();
               useProjectStore
                 .getState()
@@ -239,7 +270,14 @@ export function DuctMeshes({
               <FlexibleDuct
                 points={points}
                 diameterMm={duct.diameterMm ?? 160}
-                color="#ffffff"
+                color={
+                  collisions.has(duct.id)
+                    ? "#dc2626"
+                    : selectedId === duct.id
+                      ? "#50c7df"
+                      : "#ffffff"
+                }
+                collision={collisions.get(duct.id)}
                 fallbackPoint={
                   terminal
                     ? {

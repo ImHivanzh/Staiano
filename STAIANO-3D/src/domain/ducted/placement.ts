@@ -52,24 +52,34 @@ export function placeDuctedMachine(
   };
 }
 
+/**
+ * Plenum della macchina: al massimo uno di mandata e uno di ripresa, anche se
+ * storici (senza attachmentId) o collegati direttamente all'unità interna.
+ */
+export function machinePlenums(project: Project, systemId: string): Plenum[] {
+  const system = project.hvacSystems.find(
+    (item) => item.id === systemId && item.type === "ducted",
+  );
+  if (!system) return [];
+  return project.plenums.filter(
+    (plenum) =>
+      plenum.systemId === systemId &&
+      (plenum.attachmentId === undefined ||
+        plenum.attachmentId === null ||
+        system.indoorUnits.some((unit) => unit.id === plenum.attachmentId)),
+  );
+}
+
 /** Create a dedicated saved plenum, never shared with a second autonomous machine. */
 export function placePlenum(
   project: Project,
   systemId: string,
   use: "supply" | "return" = "supply",
 ): Project {
-  if (
-    project.plenums.some(
-      (pl) =>
-        pl.systemId === systemId &&
-        pl.use === use &&
-        (pl.attachmentId === undefined ||
-          project.hvacSystems
-            .find((s) => s.id === systemId)
-            ?.indoorUnits.some((u) => u.id === pl.attachmentId)),
-    )
-  )
-    return project;
+  const existing = machinePlenums(project, systemId);
+  if (existing.some((plenum) => plenum.use === use)) return project;
+  if (existing.length >= 2)
+    throw new Error("La macchina ha già i plenum di mandata e di ripresa.");
   const system = project.hvacSystems.find(
     (s) => s.id === systemId && s.type === "ducted",
   );
@@ -108,6 +118,28 @@ export function placeSupplyPlenum(project: Project, systemId: string) {
   return placePlenum(project, systemId, "supply");
 }
 
+/** The insertion tool accepts a configured machine, never an arbitrary plan point. */
+export function addMachinePlenum(project: Project, machineId: string): Project {
+  const system = project.hvacSystems.find(
+    (s) => s.type === "ducted" && s.indoorUnits.some((u) => u.id === machineId),
+  );
+  const machine = system?.indoorUnits.find((u) => u.id === machineId);
+  if (!system || !machine)
+    throw new Error(
+      "Clicca una macchina configurata per aggiungere il suo plenum.",
+    );
+  if (machine.locked)
+    throw new Error("Sblocca la macchina prima di aggiungere il plenum.");
+  const existing = machinePlenums(project, system.id);
+  if (existing.length >= 2)
+    throw new Error("La macchina ha già i plenum di mandata e di ripresa.");
+  return placePlenum(
+    project,
+    system.id,
+    existing.some((p) => p.use === "supply") ? "return" : "supply",
+  );
+}
+
 export function moveSystemObject(
   project: Project,
   id: string,
@@ -122,10 +154,6 @@ export function moveSystemObject(
   const item = plenum ?? system?.indoorUnits.find((u) => u.id === id);
   if (!item) return project;
   if (item.locked) throw new Error("Sbloccare l’elemento prima di spostarlo.");
-  if (plenum?.attachmentId)
-    throw new Error(
-      "Il plenum segue l’elemento collegato: sposta la bocchetta o la macchina.",
-    );
   if (plenum)
     return {
       ...project,
@@ -158,7 +186,16 @@ export function moveSystemObject(
 
 /** The same saved dimensions and real outlet list feed 3D and dossier views. */
 export function placedPlenumGeometry(project: Project, plenum: Plenum) {
-  if (!plenum.systemId || plenum.attachmentId !== undefined) return null;
+  if (
+    !plenum.systemId ||
+    (plenum.attachmentId !== undefined &&
+      !project.hvacSystems.some(
+        (s) =>
+          s.id === plenum.systemId &&
+          s.indoorUnits.some((u) => u.id === plenum.attachmentId),
+      ))
+  )
+    return null;
   const calculated = calculatePlenum(
     project,
     plenum.systemId,
@@ -204,7 +241,6 @@ export function machinePlenum(
           .find((s) => s.id === systemId)
           ?.indoorUnits.some((u) => u.id === p.attachmentId)),
   );
-  if (saved) return saved;
   const system = project.hvacSystems.find(
     (s) => s.id === systemId && s.type === "ducted",
   );
@@ -217,7 +253,7 @@ export function machinePlenum(
     !geometry.bodyHeightMm ||
     !geometry.totalDepthMm
   )
-    return null;
+    return saved ?? null;
   // La mandata esce davanti alla macchina; la ripresa sta dietro, con la
   // transizione rivolta verso l'attacco della macchina.
   const forward =
@@ -246,5 +282,9 @@ export function machinePlenum(
     locked: false,
     designSettings: geometry.settings,
   };
-  return plenum;
+  return saved
+    ? saved.status === "proposed"
+      ? { ...saved, ...plenum, id: saved.id, locked: saved.locked }
+      : saved
+    : plenum;
 }

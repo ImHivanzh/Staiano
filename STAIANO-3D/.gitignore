@@ -1,6 +1,9 @@
 node_modules/
 .next/
 .next-update/
+.next-agent*/
+.next-prova/
+pip-*/
 out/
 coverage/
 test-results/

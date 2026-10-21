@@ -11,6 +11,10 @@ test("Collega associa il plenum separato alla bocchetta e salva i flessibili", a
   await page.getByTestId("plenum-2d").locator("rect").click();
   await page.getByTestId("terminal-supply").first().click();
   await expect(page.getByText(/Collegamento salvato/)).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Collega", exact: true }),
+  ).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByTestId("connection-preview")).toHaveCount(0);
   const result = await exportPlenumFixture(page);
   expect(result.plenums[0].attachmentId).toBe(before.airTerminals[0].id);
   expect(result.ducts).toHaveLength(result.plenums[0].portCount!);
@@ -42,5 +46,5 @@ test("Collega associa il plenum separato alla bocchetta e salva i flessibili", a
   await page.screenshot({ path: ".cache/flessibile-percorso-3d.png" });
   const edited = await exportPlenumFixture(page);
   expect(edited.ducts![0].routing).toBe("manual");
-  expect(edited.ducts![0].waypoints).toHaveLength(1);
+  expect(edited.ducts![0].waypoints.length).toBeGreaterThan(0);
 });

@@ -1,6 +1,6 @@
 import type { Duct, Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "@/domain/project";
-import { machinePlenum, placedPlenumGeometry } from "./placement";
+import { machinePlenum, machinePlenums, placedPlenumGeometry } from "./placement";
 import {
   floorRoutingPolygons,
   indoorRoute,
@@ -23,6 +23,7 @@ import {
   syncAttachedPlenums,
   terminalPlenum,
 } from "./attached-plenums";
+import { connectTerminalOnPlan } from "./graphic-installation";
 
 export type RoutePoint = Point & { elevationM: number };
 
@@ -37,7 +38,7 @@ function machineDuctStart(
   if (!terminal) return null;
   const plenum = machinePlenum(project, systemId, terminal.use);
   if (!plenum) return null;
-  if (plenum.attachmentId) {
+  if (!placedPlenumGeometry(project, plenum) && plenum.attachmentId) {
     const port = attachedPlenumPorts(project, plenum)[portIndex];
     if (!port) return null;
     return { x: port.x, y: port.y, elevationM: port.elevationM };
@@ -70,7 +71,7 @@ function flexibleCollarLeads(
   if (!source || !target) return null;
   // Leave both collars straight before bending, so the hose cannot cut through either body.
   const lead = Math.max(0.1, (leadMultiplier * diameterMm) / 1000);
-  const direction = source.attachmentId ? -1 : 1;
+  const direction = placedPlenumGeometry(project, source) ? 1 : -1;
   const from = {
     x: start.x - Math.sin(source.rotation) * lead * direction,
     y: start.y + Math.cos(source.rotation) * lead * direction,
@@ -83,6 +84,26 @@ function flexibleCollarLeads(
     elevationM: end.elevationM + (upper ? lead : 0),
   };
   return { source, target, from, to, lead };
+}
+
+function manualFlexibleRoute(
+  project: Project,
+  duct: Duct,
+  terminal: Project["airTerminals"][number],
+  start: RoutePoint,
+  end: RoutePoint,
+): RoutePoint[] {
+  if (!duct.waypoints.length) return [];
+  const leads = flexibleCollarLeads(
+    project,
+    duct.systemId,
+    terminal,
+    start,
+    end,
+    duct.diameterMm ?? 160,
+  );
+  // I punti operatore non possono invertire l'ingresso nei collari.
+  return leads ? [start, leads.from, ...duct.waypoints, leads.to, end] : [];
 }
 
 function flexibleConnectionRoute(
@@ -365,7 +386,13 @@ export function ductRoute(
 ): RoutePoint[] {
   const plenum = project.plenums.find((pl) => pl.id === duct.plenumId);
   if (!plenum) return [];
-  if (plenum.attachmentId) {
+  const terminal = project.airTerminals.find((t) => t.id === duct.terminalId);
+  if (duct.terminalId && (!terminal || !terminalPlenum(project, terminal)))
+    return [];
+  if (
+    plenum.attachmentId &&
+    project.airTerminals.some((t) => t.id === plenum.attachmentId)
+  ) {
     const machine = project.hvacSystems.find((s) => s.id === duct.systemId)
       ?.indoorUnits[0];
     const terminal = project.airTerminals.find((t) => t.id === duct.terminalId);
@@ -383,7 +410,11 @@ export function ductRoute(
     if (!start) return [];
     if (duct.routing === "manual")
       // Percorso tracciato a mano: tubo da plenum a plenum lungo i punti salvati.
-      return duct.waypoints.length ? [start, ...duct.waypoints, end] : [];
+      return duct.kind === "flexible"
+        ? manualFlexibleRoute(project, duct, terminal, start, end)
+        : duct.waypoints.length
+          ? [start, ...duct.waypoints, end]
+          : [];
     return flexibleConnectionRoute(
       project,
       duct.systemId,
@@ -414,7 +445,7 @@ export function ductRoute(
       : null;
     if (!end) return [];
     if (duct.kind === "flexible" && duct.routing === "manual")
-      return duct.waypoints.length ? [start, ...duct.waypoints, end] : [];
+      return manualFlexibleRoute(project, duct, terminal, start, end);
     if (duct.kind === "flexible" && duct.routing !== "manual")
       return flexibleConnectionRoute(
         project,
@@ -648,6 +679,185 @@ export function setDuctRoute(
   return updated;
 }
 
+/**
+ * La bocchetta sceglie anche il proprio plenum: un clic sul plenum vale come
+ * un clic sulla bocchetta, non serve cercare il simbolo del terminale.
+ */
+function terminalForDuctEndpoint(project: Project, id: string) {
+  return (
+    project.airTerminals.find((terminal) => terminal.id === id) ??
+    project.airTerminals.find((terminal) =>
+      project.plenums.some(
+        (plenum) => plenum.id === id && plenum.attachmentId === terminal.id,
+      ),
+    ) ??
+    null
+  );
+}
+
+/** Un plenum agganciato a una bocchetta non identifica la macchina. */
+function systemForDuctEndpoint(project: Project, id: string) {
+  const direct = project.hvacSystems.find(
+    (system) =>
+      system.type === "ducted" &&
+      (system.id === id || system.indoorUnits.some((unit) => unit.id === id)),
+  );
+  if (direct) return direct;
+  const plenum = project.plenums.find((item) => item.id === id);
+  if (!plenum?.systemId) return null;
+  const system = project.hvacSystems.find(
+    (item) => item.type === "ducted" && item.id === plenum.systemId,
+  );
+  if (!system) return null;
+  return plenum.attachmentId === undefined ||
+    plenum.attachmentId === null ||
+    system.indoorUnits.some((unit) => unit.id === plenum.attachmentId)
+    ? system
+    : null;
+}
+
+/**
+ * Percorso predefinito fra lo stacco del plenum e quello della macchina: poche
+ * pieghe ortogonali, già trascinabili in 3D. `null` quando la curva flessibile
+ * non è realizzabile, così il percorso proposto automatico resta disponibile.
+ */
+function proposedWaypoints(
+  project: Project,
+  terminal: Project["airTerminals"][number],
+  start: RoutePoint,
+  end: RoutePoint,
+  diameterMm: number,
+): RoutePoint[] | null {
+  const route = flexibleConnectionRoute(
+    project,
+    terminal.systemId!,
+    terminal,
+    start,
+    end,
+    diameterMm,
+  );
+  return route.length > 1 ? route.slice(1, -1) : null;
+}
+
+/**
+ * Crea il canale fra gli estremi scelti in pianta: plenum della bocchetta
+ * (primo punto già sullo stacco) e macchina o plenum macchina. Il percorso è
+ * calcolato una volta e resta modificabile come percorso manuale.
+ */
+export function createDuctFromEndpoints(
+  project: Project,
+  firstId: string,
+  secondId: string,
+) {
+  const firstTerminal = terminalForDuctEndpoint(project, firstId);
+  const secondTerminal = terminalForDuctEndpoint(project, secondId);
+  if (firstTerminal && secondTerminal)
+    throw new Error(
+      "Il canale collega il plenum della bocchetta alla macchina, non due bocchette.",
+    );
+  const terminal = firstTerminal ?? secondTerminal;
+  if (!terminal)
+    throw new Error(
+      "Clicca il plenum della bocchetta (o la bocchetta), poi la macchina.",
+    );
+  const system =
+    systemForDuctEndpoint(project, firstTerminal ? secondId : firstId) ??
+    systemForDuctEndpoint(project, secondTerminal ? firstId : secondId);
+  if (!system)
+    throw new Error(
+      "Clicca la macchina (o il suo plenum) per chiudere il canale.",
+    );
+  if (!system.indoorUnits.length)
+    throw new Error(
+      "Posiziona la macchina sulla planimetria prima del canale.",
+    );
+  if (terminal.floorId !== system.indoorUnits[0].floorId)
+    throw new Error("Bocchetta e macchina devono stare sullo stesso piano.");
+  let next =
+    terminal.systemId === system.id
+      ? project
+      : connectTerminalOnPlan(project, terminal.id, system.id);
+  const current = next.airTerminals.find((item) => item.id === terminal.id)!;
+  const body = terminalPlenum(next, current);
+  if (!body)
+    throw new Error(
+      "La bocchetta non ha un plenum: dichiara gli accessori o inseriscilo in pianta.",
+    );
+  if (!machinePlenums(next, system.id).some((plenum) => plenum.use === current.use))
+    throw new Error(
+      `La macchina non ha ancora il plenum di ${current.use === "return" ? "ripresa" : "mandata"}: crealo con lo strumento Plenum, poi traccia il canale.`,
+    );
+  if (!machinePlenum(next, system.id, current.use))
+    throw new Error(
+      "La macchina non ha il plenum di questo lato: verifica l'attacco dichiarato.",
+    );
+  next = next.plenums.some((plenum) => plenum.id === body.id)
+    ? next
+    : {
+        ...next,
+        plenums: [...next.plenums, { ...body, status: "manual" as const }],
+      };
+  next = {
+    ...next,
+    airTerminals: next.airTerminals.map((item) =>
+      item.id === current.id ? { ...item, plenumId: body.id } : item,
+    ),
+  };
+  next = syncAttachedPlenums(next);
+  const plenum = next.plenums.find((item) => item.id === body.id);
+  if (!plenum)
+    throw new Error("Plenum della bocchetta non disponibile sul piano.");
+  const targets = (next.ducts ?? []).filter(
+    (duct) => duct.plenumId === plenum.id && duct.terminalId === current.id,
+  );
+  if (!targets.length)
+    throw new Error("Il plenum della bocchetta non ha stacchi collegabili.");
+  const ports = attachedPlenumPorts(next, plenum);
+  const ducts = (next.ducts ?? []).map((duct) => {
+    if (!targets.some((target) => target.id === duct.id)) return duct;
+    // Un percorso già tracciato dall'operatore non viene riscritto.
+    if (duct.routing === "manual" && duct.waypoints.length) return duct;
+    const index = Number(duct.branchId?.split(":").at(-1) ?? 0);
+    const start = machineDuctStart(next, system.id, current.id, index);
+    const end = ports[index];
+    if (!start || !end)
+      throw new Error(
+        "Percorso non realizzabile: verifica gli stacchi dei due plenum.",
+      );
+    const diameterMm = duct.diameterMm ?? plenum.portDiameterMm ?? 160;
+    const waypoints = proposedWaypoints(next, current, start, end, diameterMm);
+    if (!waypoints) return duct;
+    return {
+      ...duct,
+      kind: "flexible" as const,
+      shape: "circle" as const,
+      diameterMm,
+      widthMm: null,
+      heightMm: null,
+      routing: "manual" as const,
+      waypoints,
+      decisionOrigin: "manual" as const,
+    };
+  });
+  const updated: Project = { ...next, ducts };
+  if (
+    targets.some(
+      (target) =>
+        ductRoute(
+          updated,
+          updated.ducts!.find((duct) => duct.id === target.id)!,
+        ).length < 2,
+    )
+  )
+    throw new Error("Percorso non realizzabile: sposta curve o plenum.");
+  return {
+    project: updated,
+    terminalId: current.id,
+    systemId: system.id,
+    ductIds: targets.map((target) => target.id),
+  };
+}
+
 /** Cambia rigido/flessibile mantenendo percorso e diametro dello stacco. */
 export function setDuctKind(
   project: Project,
@@ -779,9 +989,9 @@ export function addDuctWaypoint(
   if (duct.locked) throw new Error("Sblocca il canale prima di modificarlo.");
   const route = ductRoute(project, duct);
   if (route.length < 2) return { project, index: -1 };
-  // Il primo punto manuale sostituisce il percorso proposto: un solo punto da
-  // trascinare, non tutte le curve automatiche.
-  const interior = duct.routing === "manual" ? duct.waypoints : [];
+  // Conserva il percorso proposto: semplificarlo può far attraversare il plenum dal retro.
+  const interior =
+    duct.routing === "manual" ? duct.waypoints : route.slice(1, -1);
   const nodes: RoutePoint[] = [route[0], ...interior, route.at(-1)!];
   const { segment, point } = requested
     ? nearestRouteSegment(nodes, requested)

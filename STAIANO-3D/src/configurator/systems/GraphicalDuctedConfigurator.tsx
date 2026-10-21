@@ -1,6 +1,13 @@
 "use client";
-import { connectPlenum, insertPlenum } from "@/domain/ducted/attached-plenums";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  addTerminalPlenum,
+  attachedPlenumPorts,
+  connectPlenum,
+  terminalPlenum,
+} from "@/domain/ducted/attached-plenums";
+import { addMachinePlenum } from "@/domain/ducted/placement";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
 import {
   Cursor,
   ArrowsOutCardinal,
@@ -45,7 +52,7 @@ import { indoorRoute } from "@/domain/geometry/indoor-route";
 import { nearestFootprintEdge } from "@/domain/geometry/footprint";
 import { connectionFootprintEdge } from "@/domain/geometry/footprint";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
-import { ductRoute, setDuctRoute } from "@/domain/ducted/routes";
+import { ductRoute, createDuctFromEndpoints } from "@/domain/ducted/routes";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 import {
   placeMachineOnPlan,
@@ -211,9 +218,13 @@ export function GraphicalDuctedConfigurator({
   const [machineOpen, setMachineOpen] = useState(false);
   const [notice, setNotice] = useState("");
   const [cursor, setCursor] = useState<Point | null>(null);
-  // Disegno grafico del canale: bocchetta scelta e punti tracciati in pianta.
-  const [ductTarget, setDuctTarget] = useState<string | null>(null);
-  const [ductPoints, setDuctPoints] = useState<Point[]>([]);
+  // Canale: plenum della bocchetta e macchina scelti in pianta. Il primo
+  // punto è già lo stacco del plenum; il percorso viene proposto dal motore.
+  const [ductAnchor, setDuctAnchor] = useState<{
+    kind: "terminal" | "machine";
+    id: string;
+    rawId: string;
+  } | null>(null);
   const saveTerminalButton = useRef<HTMLButtonElement>(null);
   const saveEquipmentButton = useRef<HTMLButtonElement>(null);
   const selectedDraft = drafts.find((item) => item.id === selectedId);
@@ -273,6 +284,10 @@ export function GraphicalDuctedConfigurator({
   const pointTerminals = terminals.filter(
     (item) => linearRunMembers(project, item)[0]?.id === item.id,
   );
+  const ductCollisions = useMemo(
+    () => findDuctCollisions(project, ductScenePaths(project, room.floorId)),
+    [project, room.floorId],
+  );
   const balance = system
     ? terminalAirflowBalance(project, system.id, "supply")
     : null;
@@ -325,33 +340,37 @@ export function GraphicalDuctedConfigurator({
   });
   const instruction =
     mode === "duct"
-      ? ductTarget
-        ? `Traccia il canale: ${ductPoints.length} punti. Invio salva, Escape annulla.`
-        : "Canale: clicca la bocchetta da servire, poi traccia il percorso in pianta."
-      : mode === "heatPump"
-        ? "Clicca per inserire la pompa all’esterno. Escape annulla."
-        : mode === "radiator" ||
-            mode === "fanCoil" ||
-            mode === "split" ||
-            mode === "vrv"
-          ? "Clicca per inserire l’apparecchio. Escape annulla."
-          : mode === "machine"
-            ? "Clicca per inserire la macchina. Escape annulla."
-            : mode === "point"
-              ? "Clicca per inserire la bocchetta. Escape annulla."
-              : mode === "connect"
-                ? selectedTerminal
-                  ? "Bocchetta selezionata: clicca la macchina. Escape annulla."
-                  : selectedMachine
-                    ? "Macchina selezionata: clicca la bocchetta. Escape annulla."
-                    : "Seleziona macchina e bocchetta, in qualsiasi ordine. Escape annulla."
-                : mode === "move"
-                  ? "Trascina l’oggetto nella nuova posizione e rilascia per confermare. Escape termina."
-                  : selectedTerminal
-                    ? `Bocchetta ${selectedTerminal.family} selezionata. Trascina per spostarla; usa Ruota 90° a soffitto. A parete si orienta spostandola su un’altra parete.`
+      ? ductAnchor
+        ? ductAnchor.kind === "terminal"
+          ? "Plenum selezionato: il primo punto è già sullo stacco. Clicca la macchina o il suo plenum."
+          : "Macchina selezionata: clicca il plenum della bocchetta."
+        : "Canale: clicca il plenum della bocchetta, poi la macchina. Il percorso è proposto e modificabile."
+      : mode === "plenum"
+        ? "Clicca una bocchetta o una macchina per creare il plenum già collegato. Escape annulla."
+        : mode === "heatPump"
+          ? "Clicca per inserire la pompa all’esterno. Escape annulla."
+          : mode === "radiator" ||
+              mode === "fanCoil" ||
+              mode === "split" ||
+              mode === "vrv"
+            ? "Clicca per inserire l’apparecchio. Escape annulla."
+            : mode === "machine"
+              ? "Clicca per inserire la macchina. Escape annulla."
+              : mode === "point"
+                ? "Clicca per inserire la bocchetta. Escape annulla."
+                : mode === "connect"
+                  ? selectedTerminal
+                    ? "Bocchetta selezionata: clicca la macchina. Escape annulla."
                     : selectedMachine
-                      ? "Macchina selezionata. Clicca per modificarla."
-                      : "Seleziona un elemento oppure usa gli strumenti Inserisci e Collega.";
+                      ? "Macchina selezionata: clicca la bocchetta. Escape annulla."
+                      : "Seleziona macchina e bocchetta, in qualsiasi ordine. Escape annulla."
+                  : mode === "move"
+                    ? "Trascina l’oggetto nella nuova posizione e rilascia per confermare. Escape termina."
+                    : selectedTerminal
+                      ? `Bocchetta ${selectedTerminal.family} selezionata. Trascina per spostarla; usa Ruota 90° a soffitto. A parete si orienta spostandola su un’altra parete.`
+                      : selectedMachine
+                        ? "Macchina selezionata. Clicca per modificarla."
+                        : "Seleziona un elemento oppure usa gli strumenti Inserisci e Collega.";
   useEffect(() => {
     const cancel = (event: KeyboardEvent) => {
       if (
@@ -393,8 +412,7 @@ export function GraphicalDuctedConfigurator({
         event.preventDefault();
         useProjectStore.getState().setTool("select");
         setMode("duct");
-        setDuctTarget(null);
-        setDuctPoints([]);
+        setDuctAnchor(null);
         setCursor(null);
         setNotice("");
         useProjectStore.getState().setError(null);
@@ -405,40 +423,13 @@ export function GraphicalDuctedConfigurator({
       setMode("select");
       setSelectedId(null);
       setCursor(null);
-      setDuctTarget(null);
-      setDuctPoints([]);
+      setDuctAnchor(null);
       setNotice("Operazione annullata.");
       useProjectStore.getState().setError(null);
     };
     window.addEventListener("keydown", cancel);
     return () => window.removeEventListener("keydown", cancel);
   }, []);
-  // Invio chiude il disegno del canale e salva il percorso tracciato.
-  useEffect(() => {
-    if (mode !== "duct") return;
-    const save = (event: KeyboardEvent) => {
-      if (event.key !== "Enter") return;
-      if (
-        document.querySelector(
-          'dialog[open],[role="dialog"][aria-modal="true"]',
-        )
-      )
-        return;
-      if (!ductTarget || !ductPoints.length) return;
-      event.preventDefault();
-      commit((current) => setDuctRoute(current, ductTarget, ductPoints));
-      if (useProjectStore.getState().error) return;
-      setNotice(
-        "Canale salvato: percorso e sezione compaiono in pianta e in 3D.",
-      );
-      setMode("select");
-      setDuctTarget(null);
-      setDuctPoints([]);
-      setCursor(null);
-    };
-    window.addEventListener("keydown", save);
-    return () => window.removeEventListener("keydown", save);
-  }, [mode, ductTarget, ductPoints, commit]);
   useEffect(
     () =>
       useProjectStore.subscribe((state, previous) => {
@@ -457,8 +448,7 @@ export function GraphicalDuctedConfigurator({
     setMode(next !== "select" && next === mode ? "select" : next);
     setNotice("");
     setCursor(null);
-    setDuctTarget(null);
-    setDuctPoints([]);
+    setDuctAnchor(null);
     useProjectStore.getState().setError(null);
     if (next !== "move" && next !== "connect") setSelectedId(null);
   }
@@ -483,6 +473,31 @@ export function GraphicalDuctedConfigurator({
       setNotice("Posizione aggiornata.");
     }
   }
+  /** Plenum della bocchetta, macchina o plenum macchina scelti in pianta. */
+  function ductEndpoint(id: string) {
+    const terminal =
+      terminals.find((item) => item.id === id) ??
+      terminals.find((item) =>
+        project.plenums.some(
+          (plenum) => plenum.id === id && plenum.attachmentId === item.id,
+        ),
+      );
+    if (terminal)
+      return { kind: "terminal" as const, id: terminal.id, rawId: id };
+    const plenum = project.plenums.find((item) => item.id === id);
+    const system =
+      systems.find(
+        (item) =>
+          item.id === plenum?.systemId &&
+          (plenum?.attachmentId === undefined ||
+            plenum?.attachmentId === null ||
+            item.indoorUnits.some((unit) => unit.id === plenum.attachmentId)),
+      ) ??
+      systems.find((item) => item.indoorUnits.some((unit) => unit.id === id));
+    return system
+      ? { kind: "machine" as const, id: system.id, rawId: id }
+      : null;
+  }
   function pick(point: Point, deviceId?: string, draftId?: string) {
     useProjectStore.getState().setError(null);
     const clickedSystem = systems.find((item) =>
@@ -491,14 +506,44 @@ export function GraphicalDuctedConfigurator({
     const clickedTerminal = terminals.find((item) => item.id === deviceId);
     const clickedDraft = drafts.find((item) => item.id === draftId);
     if (mode === "plenum") {
-      const targetRoom = project.rooms.find(
-        (r) => r.floorId === room.floorId && pointInPolygon(point, r.polygon),
-      );
-      if (!targetRoom) {
-        setNotice("Inserisci il plenum in una stanza.");
+      if (!deviceId) {
+        setNotice(
+          "Clicca una bocchetta o una macchina per creare il plenum già collegato.",
+        );
         return;
       }
-      commit((p) => insertPlenum(p, targetRoom.id, point));
+      const existing = project.plenums.find((item) => item.id === deviceId);
+      if (existing) {
+        useProjectStore
+          .getState()
+          .select({ kind: "device", id: existing.id });
+        setSelectedId(existing.id);
+        setMode("select");
+        setNotice("Plenum selezionato.");
+        return;
+      }
+      const create = clickedTerminal
+        ? (p: Project) => addTerminalPlenum(p, clickedTerminal.id)
+        : clickedSystem
+          ? (p: Project) => addMachinePlenum(p, deviceId)
+          : null;
+      if (!create) {
+        setNotice(
+          "Clicca una bocchetta o una macchina per creare il plenum già collegato.",
+        );
+        return;
+      }
+      const already = clickedTerminal
+        ? project.plenums.find((pl) => pl.attachmentId === clickedTerminal.id)
+        : null;
+      if (already) {
+        useProjectStore.getState().select({ kind: "device", id: already.id });
+        setSelectedId(already.id);
+        setMode("select");
+        setNotice("La bocchetta ha già il suo plenum: selezionato.");
+        return;
+      }
+      commit(create);
       const saved = useProjectStore.getState();
       if (!saved.error) {
         const id = saved.project!.plenums.at(-1)!.id;
@@ -506,26 +551,78 @@ export function GraphicalDuctedConfigurator({
         setSelectedId(id);
         setMode("select");
         setNotice(
-          "Plenum inserito. Usa Collega con una bocchetta di mandata o una macchina di ripresa.",
+          clickedTerminal
+            ? "Plenum creato e collegato alla bocchetta: spostalo in pianta o in 3D."
+            : "Plenum creato e collegato alla macchina.",
         );
       }
       return;
     }
     if (mode === "duct") {
-      if (!ductTarget) {
-        const target = terminals.find((item) => item.id === deviceId);
-        if (!target) {
-          setNotice("Clicca la bocchetta da servire, poi traccia il canale.");
-          return;
-        }
-        setDuctTarget(target.id);
-        setDuctPoints([]);
+      const id = deviceId ?? draftId;
+      const endpoint = id ? ductEndpoint(id) : null;
+      if (!endpoint) {
         setNotice(
-          "Traccia il percorso del canale in pianta. Invio salva, Escape annulla.",
+          "Clicca il plenum della bocchetta, il suo simbolo o la macchina.",
         );
         return;
       }
-      setDuctPoints((points) => [...points, point]);
+      if (!ductAnchor) {
+        if (endpoint.kind === "terminal") {
+          const terminal = terminals.find((item) => item.id === endpoint.id);
+          if (!terminal || !terminalPlenum(project, terminal)) {
+            setNotice(
+              "La bocchetta non ha un plenum: dichiara gli accessori o inseriscilo in pianta.",
+            );
+            return;
+          }
+          setDuctAnchor(endpoint);
+          setNotice(
+            "Plenum selezionato: il primo punto è già sullo stacco. Clicca la macchina o il suo plenum.",
+          );
+        } else {
+          setDuctAnchor(endpoint);
+          setNotice("Macchina selezionata: clicca il plenum della bocchetta.");
+        }
+        return;
+      }
+      if (endpoint.kind === ductAnchor.kind) {
+        setNotice(
+          ductAnchor.kind === "terminal"
+            ? "Hai scelto un’altra bocchetta: clicca la macchina o il suo plenum."
+            : "Hai scelto la stessa macchina: clicca il plenum della bocchetta.",
+        );
+        return;
+      }
+      const terminalId =
+        endpoint.kind === "terminal" ? endpoint.id : ductAnchor.id;
+      const systemId =
+        endpoint.kind === "machine" ? endpoint.id : ductAnchor.id;
+      commit(
+        (current) =>
+          createDuctFromEndpoints(current, ductAnchor.rawId, endpoint.rawId)
+            .project,
+      );
+      if (useProjectStore.getState().error) return;
+      const saved = useProjectStore.getState().project!;
+      const ductIds = (saved.ducts ?? [])
+        .filter(
+          (item) =>
+            item.terminalId === terminalId && item.systemId === systemId,
+        )
+        .map((item) => item.id);
+      const machine = saved.hvacSystems.find((item) => item.id === systemId)
+        ?.indoorUnits[0];
+      setActiveSystemId(systemId);
+      setSelectedId(machine?.id ?? terminalId);
+      if (mainPlan && machine)
+        useProjectStore.getState().select({ kind: "device", id: machine.id });
+      setMode("select");
+      setDuctAnchor(null);
+      setCursor(null);
+      setNotice(
+        `Canale creato (${ductIds.length} ${ductIds.length === 1 ? "ramo" : "rami"}): percorso predefinito, modificalo in 3D o in «Flessibili».`,
+      );
       return;
     }
     if (mode === "connect") {
@@ -562,6 +659,10 @@ export function GraphicalDuctedConfigurator({
         );
         if (!useProjectStore.getState().error) {
           setSelectedId(pair.machineId);
+          if (pair.plenumId) {
+            setMode("select");
+            setCursor(null);
+          }
           setNotice(
             "Collegamento salvato. Collega altri terminali, poi configura la macchina. Escape termina.",
           );
@@ -930,6 +1031,25 @@ export function GraphicalDuctedConfigurator({
     mode === "connect" && previewDevice && cursor
       ? connectionFootprintEdge(previewDevice, cursor)
       : null;
+  // Primo punto del canale già sullo stacco del plenum scelto.
+  const ductAnchorPoint =
+    mode === "duct" && ductAnchor
+      ? ductAnchor.kind === "terminal"
+        ? (() => {
+            const terminal = terminals.find(
+              (item) => item.id === ductAnchor.id,
+            );
+            const body = terminal ? terminalPlenum(project, terminal) : null;
+            const port = body ? attachedPlenumPorts(project, body)[0] : null;
+            return port ? { x: port.x, y: port.y } : null;
+          })()
+        : (systems.find((item) => item.id === ductAnchor.id)?.indoorUnits.at(0)
+            ?.position ?? null)
+      : null;
+  const ductPreview =
+    mode === "duct" && ductAnchorPoint && cursor
+      ? indoorRoute(project, room.floorId, ductAnchorPoint, cursor)
+      : [];
   const initialConfiguration = useRef(() => {
     if (!configurationOnly || !initialId) return;
     const draft = [
@@ -1310,6 +1430,9 @@ export function GraphicalDuctedConfigurator({
                       <g
                         key={duct.id}
                         data-testid="duct-2d"
+                        data-collision={
+                          ductCollisions.has(duct.id) ? "true" : undefined
+                        }
                         pointerEvents="none"
                         aria-hidden="true"
                       >
@@ -1330,7 +1453,11 @@ export function GraphicalDuctedConfigurator({
                                 .map((p) => `${p.x},${p.y}`)
                                 .join(" ")}
                               fill="none"
-                              stroke="#eef3f6"
+                              stroke={
+                                ductCollisions.has(duct.id)
+                                  ? "#dc2626"
+                                  : "#eef3f6"
+                              }
                               strokeWidth={widthM}
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -1381,28 +1508,6 @@ export function GraphicalDuctedConfigurator({
                         ) : null}
                       </g>
                     ))}
-                    {mode === "duct" && ductTarget && (
-                      <g data-testid="duct-preview" pointerEvents="none">
-                        <polyline
-                          points={[...ductPoints, ...(cursor ? [cursor] : [])]
-                            .map((point) => `${point.x},${point.y}`)
-                            .join(" ")}
-                          fill="none"
-                          stroke="var(--tinta)"
-                          strokeWidth={0.03}
-                          strokeDasharray="0.08 0.06"
-                        />
-                        {ductPoints.map((point, index) => (
-                          <circle
-                            key={index}
-                            cx={point.x}
-                            cy={point.y}
-                            r={0.05}
-                            fill="var(--tinta)"
-                          />
-                        ))}
-                      </g>
-                    )}
                     {pointTerminals
                       .filter((item) => item.systemId)
                       .map((terminal) => {
@@ -1487,6 +1592,37 @@ export function GraphicalDuctedConfigurator({
                         stroke={
                           previewRoute.length ? "var(--tinta)" : "var(--rosso)"
                         }
+                        strokeWidth={0.04}
+                        strokeDasharray="0.08 0.06"
+                        pointerEvents="none"
+                      />
+                    )}
+                    {ductAnchorPoint && (
+                      <g data-testid="duct-anchor" pointerEvents="none">
+                        <circle
+                          cx={ductAnchorPoint.x}
+                          cy={ductAnchorPoint.y}
+                          r={0.16}
+                          fill="none"
+                          stroke="var(--tinta)"
+                          strokeWidth={0.02}
+                        />
+                        <circle
+                          cx={ductAnchorPoint.x}
+                          cy={ductAnchorPoint.y}
+                          r={0.07}
+                          fill="var(--tinta)"
+                        />
+                      </g>
+                    )}
+                    {ductPreview.length > 1 && (
+                      <polyline
+                        data-testid="duct-preview"
+                        points={ductPreview
+                          .map((p) => `${p.x},${p.y}`)
+                          .join(" ")}
+                        fill="none"
+                        stroke="var(--tinta)"
                         strokeWidth={0.04}
                         strokeDasharray="0.08 0.06"
                         pointerEvents="none"

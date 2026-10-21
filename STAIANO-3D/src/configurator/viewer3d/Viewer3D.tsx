@@ -1,9 +1,10 @@
 "use client";
 import {
+  addTerminalPlenum,
   connectPlenum,
-  insertPlenum,
   syncAttachedPlenums,
 } from "@/domain/ducted/attached-plenums";
+import { addMachinePlenum } from "@/domain/ducted/placement";
 import {
   Component,
   useCallback,
@@ -60,6 +61,7 @@ import { DuctMeshes } from "./DuctMeshes";
 import { DuctPanel } from "@/configurator/systems/DuctPanel";
 import {
   addDuctWaypoint,
+  ductRoute,
   removeDuctWaypoint,
   setDuctKind,
   type RoutePoint,
@@ -120,7 +122,15 @@ function RenderMarker({
   return null;
 }
 
-export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
+export default function Viewer3D({
+  readOnly = false,
+  editFlexible = false,
+  onCloseFlexible,
+}: {
+  readOnly?: boolean;
+  editFlexible?: boolean;
+  onCloseFlexible?: () => void;
+}) {
   const {
     project: p,
     activeFloorId,
@@ -176,7 +186,15 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   } | null>(null);
   const [preview, setPreview] = useState<Project | null>(null);
   const [dragGuide, setDragGuide] = useState("");
-  const onPreview = useCallback((next: Project | null) => setPreview(next), []);
+  const transforming = useRef(false);
+  const onPreview = useCallback((next: Project | null) => {
+    if (next) transforming.current = true;
+    else
+      requestAnimationFrame(() => {
+        transforming.current = false;
+      });
+    setPreview(next);
+  }, []);
   const sceneProject = preview
     ? syncAttachedPlenums(preview, p ?? undefined)
     : p;
@@ -188,6 +206,44 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
   );
   const pickDevice = (target: Selection) => {
     if (!p) return;
+    if (transforming.current) return;
+    if (editFlexible) {
+      select(target);
+      return;
+    }
+    if (planPlacementTool === "plenum" && !readOnly && !presentation) {
+      const existing = p.plenums.find((item) => item.id === target.id);
+      if (existing) {
+        select(target);
+        useProjectStore.setState({ planPlacementTool: "select" });
+        setPropertiesOpen(true);
+        return;
+      }
+      const terminal = p.airTerminals.find((item) => item.id === target.id);
+      const existingTerminalPlenum = terminal
+        ? p.plenums.find((item) => item.attachmentId === terminal.id)
+        : undefined;
+      if (existingTerminalPlenum) {
+        select({ kind: "device", id: existingTerminalPlenum.id });
+        useProjectStore.setState({ planPlacementTool: "select" });
+        setPropertiesOpen(true);
+        return;
+      }
+      useProjectStore
+        .getState()
+        .commit((project) =>
+          terminal
+            ? addTerminalPlenum(project, terminal.id)
+            : addMachinePlenum(project, target.id),
+        );
+      const saved = useProjectStore.getState();
+      if (!saved.error) {
+        saved.select({ kind: "device", id: saved.project!.plenums.at(-1)!.id });
+        useProjectStore.setState({ planPlacementTool: "select" });
+        setPropertiesOpen(true);
+      }
+      return;
+    }
     if (planPlacementTool === "connect" && !readOnly && !presentation) {
       const pair = connectionSelection(p, selectedId, target.id);
       if (pair) {
@@ -223,8 +279,11 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                         pair.systemId,
                       ),
           );
-        if (!useProjectStore.getState().error)
+        if (!useProjectStore.getState().error) {
           select({ kind: "device", id: pair.machineId });
+          if (pair.plenumId)
+            useProjectStore.setState({ planPlacementTool: "select" });
+        }
       } else if (
         p.plenums.some((item) => item.id === target.id) ||
         p.ductedDrafts?.some((item) => item.id === target.id) ||
@@ -404,6 +463,23 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
     [p],
   );
   const focusFrame = useMemo<SceneFrame>(() => {
+    if (editFlexible && p && selectedDuct) {
+      const points = ductRoute(p, selectedDuct);
+      if (points.length > 1) {
+        const box = bounds(points);
+        return {
+          minX: box.minX - 0.5,
+          maxX: box.maxX + 0.5,
+          minZ: box.minY - 0.5,
+          maxZ: box.maxY + 0.5,
+          base: Math.max(
+            0,
+            Math.min(...points.map((point) => point.elevationM)) - 0.3,
+          ),
+          height: Math.max(...points.map((point) => point.elevationM)) + 0.3,
+        };
+      }
+    }
     if (!focused || !p) return frame;
     if (chosenDevice) {
       let elevation = 0.1 + chosenDevice.heightMm / 2000;
@@ -457,7 +533,18 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
           frame.height,
         )
       : frame;
-  }, [focused, p, frame, chosenDevice, selectedRoom, walls, rooms, selectedId]);
+  }, [
+    editFlexible,
+    selectedDuct,
+    focused,
+    p,
+    frame,
+    chosenDevice,
+    selectedRoom,
+    walls,
+    rooms,
+    selectedId,
+  ]);
   useEffect(() => {
     if (!tour || !p) return;
     const targets = [
@@ -857,21 +944,10 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                       </button>
                       <button
                         onClick={() => {
-                          if (!p || !configurationRoom) return;
-                          const room = selectedRoom ?? configurationRoom;
-                          useProjectStore
-                            .getState()
-                            .commit((project) =>
-                              insertPlenum(project, room.id, room.centroid),
-                            );
-                          const saved = useProjectStore.getState();
-                          if (!saved.error) {
-                            saved.select({
-                              kind: "device",
-                              id: saved.project!.plenums.at(-1)!.id,
-                            });
-                            setPropertiesOpen(true);
-                          }
+                          useProjectStore.setState({
+                            planPlacementTool: "plenum",
+                          });
+                          setError(null);
                         }}
                       >
                         <EquipmentIcon type="plenum" />
@@ -974,8 +1050,27 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               </label>
             </div>
           )}
+          {!readOnly && !presentation && editFlexible && !selectedDuct && (
+            <div
+              className={styles.transformBar}
+              role="region"
+              aria-label="Modifica grafica flessibili"
+            >
+              <strong>Flessibili</strong>
+              <span>
+                Clicca un tubo, aggiungi curve e trascina i punti nel modello.
+              </span>
+              <button type="button" onClick={onCloseFlexible}>
+                Termina modifica
+              </button>
+            </div>
+          )}
           {!readOnly && !presentation && selectedDuct && (
-            <div className={styles.transformBar}>
+            <div
+              className={styles.transformBar}
+              role="region"
+              aria-label="Modifica grafica flessibili"
+            >
               <strong>{codes.get(selectedDuct.id) ?? "Canale"}</strong>
               <span>
                 {selectedDuct.kind === "flexible" ? "Flessibile" : "Rigido"} ·{" "}
@@ -996,18 +1091,25 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               >
                 Rimuovi curva
               </button>
-              <button
-                type="button"
-                disabled={selectedDuct.locked}
-                onClick={toggleDuctKind}
-              >
-                {selectedDuct.kind === "flexible"
-                  ? "Rendi rigido"
-                  : "Rendi flessibile"}
-              </button>
+              {!editFlexible && (
+                <button
+                  type="button"
+                  disabled={selectedDuct.locked}
+                  onClick={toggleDuctKind}
+                >
+                  {selectedDuct.kind === "flexible"
+                    ? "Rendi rigido"
+                    : "Rendi flessibile"}
+                </button>
+              )}
               <label>
                 Doppio clic sul tubo per una curva · trascina i punti
               </label>
+              {editFlexible && (
+                <button type="button" onClick={onCloseFlexible}>
+                  Termina modifica
+                </button>
+              )}
             </div>
           )}
           {channelPanel && p && !presentation && (
@@ -1042,7 +1144,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               </div>
             </FullscreenDialog>
           )}
-          {channelView && !presentation && !channelPanel && (
+          {channelView && !presentation && !channelPanel && !editFlexible && (
             <button
               className={styles.channelConfig}
               onClick={() => setChannelPanel(true)}
@@ -1131,6 +1233,12 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
               termina.
             </p>
           )}
+          {!readOnly && !presentation && planPlacementTool === "plenum" && (
+            <p className="nota" role="status">
+              Clicca una bocchetta o una macchina per creare il plenum già
+              collegato. Escape annulla.
+            </p>
+          )}
           {!readOnly &&
             !presentation &&
             p &&
@@ -1192,7 +1300,9 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   ),
                 }}
                 frameloop="demand"
-                onPointerMissed={() => select(null)}
+                onPointerMissed={() => {
+                  if (!transforming.current) select(null);
+                }}
                 fallback={
                   <div className="vuoto">
                     WebGL non disponibile. Usare la vista 2D.
@@ -1210,7 +1320,9 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                   openings={p?.openings ?? []}
                   defaultHeightM={p?.projectSettings.defaultHeightM ?? 2.7}
                   selection={selection}
-                  onSelect={select}
+                  onSelect={(target) => {
+                    if (!transforming.current) select(target);
+                  }}
                   cutWallIds={
                     cutaway
                       ? new Set(
@@ -1221,7 +1333,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                       : new Set()
                   }
                   floorFinish={floorFinish}
-                  technicalVoids={channelView}
+                  technicalVoids={channelView || editFlexible}
                   isolatedRoom={isolated ? selectedRoom : undefined}
                 />
                 {sceneProject && (
@@ -1234,17 +1346,19 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     showHydronicPipes={channelView}
                   />
                 )}
-                {sceneProject && (channelView || !!selectedDuct) && (
-                  <DuctMeshes
-                    project={sceneProject}
-                    activeFloorId={activeFloorId}
-                    animated={presentation || readOnly}
-                    flowMode={comfortMode === "heat" ? "heat" : "cool"}
-                    onAddWaypoint={addDuctBend}
-                  />
-                )}
+                {sceneProject &&
+                  (channelView || editFlexible || !!selectedDuct) && (
+                    <DuctMeshes
+                      project={sceneProject}
+                      activeFloorId={activeFloorId}
+                      animated={presentation || readOnly}
+                      editable={!readOnly && !presentation}
+                      flowMode={comfortMode === "heat" ? "heat" : "cool"}
+                      onAddWaypoint={addDuctBend}
+                    />
+                  )}
                 {p &&
-                  (channelView || !!selectedDuct) &&
+                  (channelView || editFlexible || !!selectedDuct) &&
                   !readOnly &&
                   !presentation &&
                   selectedId && (
@@ -1347,8 +1461,9 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                     interior ? (selectedRoom ?? rooms[0]) : undefined
                   }
                   frame={focusFrame}
+                  preserveView={editFlexible}
                   top={top}
-                  fitKey={`${activeFloorId}|${isolatedRoomId ?? ""}|${focused ? (selectedId ?? "") : ""}|${fitNonce}`}
+                  fitKey={`${activeFloorId}|${editFlexible ? "" : (isolatedRoomId ?? "")}|${focused && !editFlexible ? (selectedId ?? "") : ""}|${editFlexible}|${fitNonce}`}
                   walls={walls}
                   rooms={rooms}
                   cutaway={cutaway}

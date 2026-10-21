@@ -1,7 +1,40 @@
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { test, expect } from "./browser-test";
 import { projectSchema } from "../src/schemas/project";
-import { openDisclosure, pickPlanPoint } from "./ui-helpers";
+import { openDisclosure } from "./ui-helpers";
+
+function plenumProject() {
+  return projectSchema.parse(
+    JSON.parse(
+      execFileSync(
+        process.execPath,
+        [
+          "--import",
+          "tsx",
+          "--input-type=module",
+          "-e",
+          `
+    import { guidedProjectFixture, addGuidedTerminal } from './tests/guided-fixture.ts';
+    import { placeMachineOnPlan } from './src/domain/ducted/graphic-installation.ts';
+    import { insertPlenum, connectPlenum } from './src/domain/ducted/attached-plenums.ts';
+    import { placeSupplyPlenum } from './src/domain/ducted/placement.ts';
+    let p = guidedProjectFixture();
+    p.floors[0].configurationWizard = undefined;
+    p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+    p = addGuidedTerminal(p, 2000);
+    p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
+    p = connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
+    p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+    p = { ...p, ducts: [] };
+    console.log(JSON.stringify(p));
+  `,
+        ],
+        { encoding: "utf8" },
+      ),
+    ),
+  );
+}
 
 async function saved(page: import("@playwright/test").Page) {
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
@@ -15,22 +48,16 @@ async function saved(page: import("@playwright/test").Page) {
   );
 }
 
-/** Canale disegnato in pianta con lo strumento Canale, come in officina. */
-test("il canale si traccia in pianta e compare come doppia linea", async ({
+/** Il canale parte dal plenum: primo punto già sullo stacco, poi la macchina. */
+test("il plenum è il primo estremo e la macchina chiude il percorso predefinito", async ({
   page,
 }) => {
   test.setTimeout(120000);
-  const project = JSON.parse(
-    readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
-  ).network;
-  const terminal = project.airTerminals.find(
-    (item: { use: string; position: { x: number } }) =>
-      item.use === "supply" && item.position.x < 3,
-  );
+  const project = plenumProject();
   await page.setViewportSize({ width: 1680, height: 1050 });
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
-    name: "canale-disegnato.hvacproj",
+    name: "canale-dal-plenum.hvacproj",
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(project)),
   });
@@ -44,32 +71,35 @@ test("il canale si traccia in pianta e compare come doppia linea", async ({
   await expect(plan).toBeVisible();
 
   await plan.getByRole("button", { name: "Canale", exact: true }).click();
-  // Prima la bocchetta da servire, poi i punti del percorso.
-  await pickPlanPoint(plan, terminal.position.x, terminal.position.y);
-  await pickPlanPoint(plan, terminal.position.x, terminal.position.y + 1);
-  await pickPlanPoint(
-    plan,
-    terminal.position.x + 1.2,
-    terminal.position.y + 1.6,
-  );
-  await expect(plan.getByTestId("duct-preview")).toBeVisible();
-  await page.screenshot({ path: ".cache/canale-tracciato.png" });
-  await page.keyboard.press("Enter");
+  // Primo estremo: il plenum della bocchetta (il secondo è quello macchina).
+  await plan.getByTestId("plenum-2d").first().locator("rect").click();
+  await expect(plan.getByTestId("duct-anchor")).toBeVisible();
+  await expect(page.getByText(/Plenum selezionato/).first()).toBeVisible();
+  await page.screenshot({ path: ".cache/canale-plenum-selezionato.png" });
+  // Secondo estremo: la macchina. Il percorso viene proposto e reso modificabile.
+  await plan
+    .getByRole("button", { name: /^Macchina / })
+    .first()
+    .click();
 
+  await expect(page.getByText(/Canale creato/)).toBeVisible();
   await expect(plan.getByTestId("duct-2d").first()).toBeVisible();
-  await page.screenshot({ path: ".cache/canale-2d.png" });
+  await page.screenshot({ path: ".cache/canale-dal-plenum-2d.png" });
   await page.getByRole("button", { name: "3D", exact: true }).click();
   const canvas = page.getByTestId("viewer-3d").locator("canvas");
   await expect(canvas).toHaveAttribute("data-rendered", "true", {
     timeout: 30000,
   });
   await expect(canvas).toHaveAttribute("data-duct-count", /^[1-9]/);
-  await page.screenshot({ path: ".cache/canale-3d.png" });
+  await page.screenshot({ path: ".cache/canale-dal-plenum-3d.png" });
   const result = await saved(page);
-  const duct = result.ducts?.find((item) => item.terminalId === terminal.id);
-  expect(duct, "il canale della bocchetta è salvato").toBeTruthy();
-  expect(duct!.routing).toBe("manual");
-  expect(duct!.waypoints).toHaveLength(2);
-  expect(duct!.shape).toBe("rectangle");
-  expect(duct!.widthMm).toBeGreaterThan(0);
+  const terminalId = result.airTerminals[0].id;
+  const ducts = result.ducts?.filter((item) => item.terminalId === terminalId);
+  expect(ducts?.length, "un tubo per stacco del plenum").toBeGreaterThan(0);
+  for (const duct of ducts!) {
+    expect(duct.routing).toBe("manual");
+    expect(duct.waypoints.length).toBeGreaterThan(0);
+    expect(duct.shape).toBe("circle");
+    expect(duct.diameterMm).toBeGreaterThan(0);
+  }
 });

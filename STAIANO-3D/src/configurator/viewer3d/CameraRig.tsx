@@ -22,6 +22,7 @@ export function CameraRig({
   animate = false,
   sync,
   interiorRoom,
+  preserveView = false,
 }: {
   frame: SceneFrame;
   top: boolean;
@@ -35,6 +36,7 @@ export function CameraRig({
   animate?: boolean;
   sync?: { projectId: string; floorId: string; follow: boolean };
   interiorRoom?: Room;
+  preserveView?: boolean;
 }) {
   const { camera, size, invalidate } = useThree();
   const controls = useRef<OrbitControlsImpl>(null);
@@ -87,7 +89,10 @@ export function CameraRig({
       remote?.floorId === sync?.floorId
     )
       return;
-    const fitRequest = `${sync?.projectId ?? ""}|${fitKey}|${top}|${viewRotation ?? ""}|${underside ?? false}|${interiorRoom?.id ?? ""}|${size.width}|${size.height}`;
+    const selectedView = preserveView
+      ? ""
+      : `${viewRotation ?? ""}|${underside ?? false}|${interiorRoom?.id ?? ""}`;
+    const fitRequest = `${sync?.projectId ?? ""}|${fitKey}|${top}|${selectedView}|${size.width}|${size.height}`;
     if (initialized.current && lastFitRequest.current === fitRequest) return;
     lastFitRequest.current = fitRequest;
     const base = frame.base ?? 0;
@@ -196,6 +201,7 @@ export function CameraRig({
     sync?.projectId,
     sync?.floorId,
     interiorRoom,
+    preserveView,
   ]);
   useFrame(() => {
     if (motion.current && controls.current) {

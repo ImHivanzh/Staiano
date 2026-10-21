@@ -1,0 +1,18 @@
+# Percorsi esclusi dalle ricerche (ripgrep rispetta .ignore).
+# Servono a tenere veloci grep/glob dell'agente: sono cache e artefatti rigenerabili.
+node_modules/
+.next/
+.next-update/
+.next-agent*/
+.next-prova/
+.cache/
+catalog-data/sources/
+dist-exe/
+test-results/
+test-results-*/
+playwright-report/
+tmp/
+output/verification/
+public/workers/
+native/**/bin/
+native/**/obj/

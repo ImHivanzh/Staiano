@@ -1,20 +1,23 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { RoutePoint } from "@/domain/ducted/routes";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
-import { Html } from "@react-three/drei";
+import type { DuctCollision } from "@/domain/ducted/collisions";
 
 export function FlexibleDuct({
   points,
   diameterMm,
   color,
   fallbackPoint,
+  collision,
 }: {
   points: RoutePoint[];
   diameterMm: number;
   color: string;
   fallbackPoint?: RoutePoint;
+  collision?: DuctCollision;
 }) {
   const shape = useMemo(() => {
     const path = flexibleDuctCurve(points, diameterMm);
@@ -50,7 +53,48 @@ export function FlexibleDuct({
     },
     [shape],
   );
-  const warningPoint = points[0] ?? fallbackPoint;
+  const warningPoint = collision?.point ?? points[0] ?? fallbackPoint;
+  const { gl } = useThree();
+  const warning = useRef<HTMLSpanElement | null>(null);
+  const projected = useMemo(() => new THREE.Vector3(), []);
+  useEffect(() => {
+    if ((shape && !collision) || !warningPoint) return;
+    // A DOM label needs no nested React root, which cannot unmount during a scene render.
+    const element = document.createElement("span");
+    element.setAttribute("role", collision ? "alert" : "status");
+    element.textContent =
+      collision?.message ?? "Percorso non realizzabile: sposta curve o plenum";
+    Object.assign(element.style, {
+      position: "absolute",
+      top: "0",
+      left: "0",
+      background: "#fff",
+      color: "#a12525",
+      padding: "6px",
+      whiteSpace: collision ? "normal" : "nowrap",
+      maxWidth: collision ? "min(360px, calc(100vw - 32px))" : "none",
+      pointerEvents: "none",
+    });
+    gl.domElement.parentElement?.appendChild(element);
+    warning.current = element;
+    return () => {
+      warning.current = null;
+      element.remove();
+    };
+  }, [gl, shape, warningPoint, collision]);
+  useFrame(({ camera, size }) => {
+    if (!warning.current || !warningPoint) return;
+    projected
+      .set(warningPoint.x, warningPoint.elevationM + 0.15, warningPoint.y)
+      .project(camera);
+    warning.current.style.transform = `translate(${((projected.x + 1) / 2) * size.width}px,${((1 - projected.y) / 2) * size.height}px)`;
+    warning.current.style.visibility =
+      Math.abs(projected.z) > 1 ||
+      Math.abs(projected.x) > 1 ||
+      Math.abs(projected.y) > 1
+        ? "hidden"
+        : "visible";
+  });
   return shape ? (
     <mesh geometry={shape.geometry}>
       <meshStandardMaterial
@@ -62,25 +106,5 @@ export function FlexibleDuct({
         side={THREE.DoubleSide}
       />
     </mesh>
-  ) : warningPoint ? (
-    <Html
-      position={[
-        warningPoint.x,
-        warningPoint.elevationM + 0.15,
-        warningPoint.y,
-      ]}
-    >
-      <span
-        role="status"
-        style={{
-          background: "#fff",
-          color: "#a12525",
-          padding: "6px",
-          whiteSpace: "nowrap",
-        }}
-      >
-        Percorso non realizzabile: sposta curve o plenum
-      </span>
-    </Html>
   ) : null;
 }

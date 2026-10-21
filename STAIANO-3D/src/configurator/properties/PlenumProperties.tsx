@@ -27,15 +27,44 @@ export function PlenumProperties({
     <div className="corpo-proprieta">
       <h3>Plenum {plenum.use === "return" ? "di ripresa" : "di mandata"}</h3>
       <p>
-        {plenum.attachmentId
-          ? `Collegato a ${codes.get(plenum.attachmentId) ?? "elemento"}. Posizione e orientamento seguono l’elemento.`
-          : "Usa Collega e seleziona una bocchetta di mandata o una macchina di ripresa."}
+        {terminal
+          ? `Collegato alla bocchetta ${codes.get(terminal.id) ?? "elemento"}. Elemento autonomo: spostalo e ruotalo in pianta o in 3D; la bocchetta non lo trascina.`
+          : machineAttached
+            ? `Collegato alla macchina ${codes.get(plenum.attachmentId!) ?? "elemento"}. Elemento autonomo: spostalo e ruotalo in pianta o in 3D.`
+            : "Plenum libero: usa Collega e seleziona una bocchetta o una macchina."}
       </p>
       <form
         key={JSON.stringify(plenum)}
         onSubmit={(e) => {
           e.preventDefault();
           const data = new FormData(e.currentTarget);
+          const nextUse = terminal
+            ? plenum.use
+            : (String(data.get("use") ?? plenum.use) as "supply" | "return");
+          if (!terminal && nextUse !== plenum.use) {
+            const system = project.hvacSystems.find(
+              (item) => item.id === plenum.systemId,
+            );
+            const conflict = project.plenums.some(
+              (item) =>
+                item.id !== id &&
+                item.systemId === plenum.systemId &&
+                item.use === nextUse &&
+                (item.attachmentId === undefined ||
+                  item.attachmentId === null ||
+                  system?.indoorUnits.some(
+                    (unit) => unit.id === item.attachmentId,
+                  )),
+            );
+            if (conflict) {
+              useProjectStore
+                .getState()
+                .setError(
+                  `La macchina ha già il plenum di ${nextUse === "supply" ? "mandata" : "ripresa"}: massimo due plenums per macchina.`,
+                );
+              return;
+            }
+          }
           commit((p) => ({
             ...p,
             airTerminals: p.airTerminals.map((t) =>
@@ -57,10 +86,7 @@ export function PlenumProperties({
               pl.id === id
                 ? {
                     ...pl,
-                    use: terminal
-                      ? pl.use
-                      : (String(data.get("use") ?? pl.use) as
-                          "supply" | "return"),
+                    use: nextUse,
                     model: String(data.get("model")),
                     widthMm: numberFromForm(data.get("width")),
                     heightMm: numberFromForm(data.get("height")),
@@ -113,8 +139,8 @@ export function PlenumProperties({
                 <option value="return">Ripresa</option>
               </select>
               <small>
-                La macchina ha un plenum per lato: il secondo collegamento
-                prende il lato libero.
+                Massimo due plenums per macchina: mandata e, se serve, ripresa.
+                Il secondo collegamento prende il lato libero.
               </small>
             </label>
           )}

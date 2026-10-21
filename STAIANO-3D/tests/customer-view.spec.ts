@@ -22,7 +22,7 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
     let p = guidedProjectFixture();
     const systemId = p.hvacSystems[0].id;
     p = placeMachineOnPlan(p, systemId, p.rooms[0].id, { x: 2, y: 4 });
-    p = saveTerminalOnPlan(p, { ...guidedTerminalPoint(), roomId: p.rooms[0].id, systemId, color: 'RAL9016', use: 'supply', mounting: 'ceiling', lengthMm: 1000 }, { x: 4, y: 2 });
+    p = saveTerminalOnPlan(p, { ...guidedTerminalPoint(), roomId: p.rooms[0].id, systemId, color: 'RAL9016', use: 'supply', mounting: 'ceiling', lengthMm: 1000, plenumOptions: { insulatedPlenum: true } }, { x: 4, y: 2 });
     p = connectTerminalOnPlan(p, p.airTerminals[0].id, systemId);
     console.log(JSON.stringify(placeSupplyPlenum(p, systemId)));
   `,
@@ -44,6 +44,10 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
     .getByRole("button", { name: "Apri vista cliente", exact: true })
     .click();
   const client = await opened;
+  const connectionCount = async () =>
+    Number(
+      await client.locator("canvas").getAttribute("data-air-connections"),
+    ) + Number(await client.locator("canvas").getAttribute("data-duct-count"));
   const errors: string[] = [];
   client.on("pageerror", (error) => errors.push(error.message));
   for (const width of [1920, 1024]) {
@@ -52,10 +56,8 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
       height: width === 1920 ? 1080 : 768,
     });
     const canvas = client.locator("canvas");
-    await expect(canvas).toHaveAttribute("data-air-connections", "1", {
-      timeout: 30000,
-    });
-    await expect(canvas).toHaveAttribute("data-plenum-count", "1");
+    await expect.poll(connectionCount, { timeout: 30000 }).toBe(1);
+    await expect(canvas).toHaveAttribute("data-plenum-count", "2");
     await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
     await expect
       .poll(async () =>
@@ -84,15 +86,9 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
   await page.keyboard.press("Escape");
   await plan.locator('summary[aria-label="Azioni bocchetta"]').click();
   await plan.getByRole("button", { name: "Scollega", exact: true }).click();
-  await expect(client.locator("canvas")).toHaveAttribute(
-    "data-air-connections",
-    "0",
-  );
+  await expect.poll(connectionCount).toBe(0);
   await page.keyboard.press("Control+z");
-  await expect(client.locator("canvas")).toHaveAttribute(
-    "data-air-connections",
-    "1",
-  );
+  await expect.poll(connectionCount).toBe(1);
   expect(errors).toEqual([]);
   await client.close();
 });

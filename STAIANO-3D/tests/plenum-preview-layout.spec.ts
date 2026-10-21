@@ -17,6 +17,8 @@ for (const width of [1920, 1024]) {
     );
     await expect(viewer.locator("canvas")).toHaveAttribute(
       "data-plenum-count",
+      // Solo il plenum di catalogo della bocchetta: la macchina non ne ha uno
+      // finché l'operatore non lo crea.
       "1",
     );
     await expect(viewer.locator("canvas")).toHaveAttribute(

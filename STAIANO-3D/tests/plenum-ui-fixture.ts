@@ -5,7 +5,10 @@ import { projectSchema } from "../src/schemas/project";
 import { expect } from "./browser-test";
 import { openDisclosure } from "./ui-helpers";
 
-export function plenumFixture(attached = false) {
+export function plenumFixture(
+  attached = false,
+  use: "supply" | "return" = "supply",
+) {
   return projectSchema.parse(
     JSON.parse(
       execFileSync(
@@ -25,6 +28,11 @@ export function plenumFixture(attached = false) {
     p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
     p = addGuidedTerminal(p, 1000);
     p = insertPlenum(p, p.rooms[0].id, { x: 5, y: 4 });
+    if ("${use}" === "return")
+      p = {
+        ...p,
+        plenums: p.plenums.map((pl) => ({ ...pl, use: "return" })),
+      };
     if (${attached}) p = connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
     console.log(JSON.stringify(p));
   `,
@@ -35,8 +43,12 @@ export function plenumFixture(attached = false) {
   );
 }
 
-export async function importPlenumFixture(page: Page, attached = false) {
-  const project = plenumFixture(attached);
+export async function importPlenumFixture(
+  page: Page,
+  attached = false,
+  use: "supply" | "return" = "supply",
+) {
+  const project = plenumFixture(attached, use);
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
     name: "plenum.hvacproj",

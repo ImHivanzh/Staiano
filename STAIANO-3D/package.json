@@ -18,6 +18,7 @@
     "format:check": "prettier --check src tests *.json *.md",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "pulisci": "node scripts/pulizia-cache.mjs",
     "catalog:update:cordivari": "tsx scripts/catalog-import/radiators.ts --cordivari",
     "catalog:update:global": "tsx scripts/catalog-import/radiators.ts --global",
     "catalog:update:ecoclima": "tsx scripts/catalog-import/ecoclima.ts",

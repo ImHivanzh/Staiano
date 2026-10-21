@@ -80,6 +80,7 @@ export function DuctRouteControls({
             size={0.7}
             onMouseDown={() => {
               dragging.current = true;
+              onPreview(project);
             }}
             onObjectChange={() => {
               if (dragging.current) onPreview(apply(project));

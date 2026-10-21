@@ -31,7 +31,7 @@ import {
 import { deviceCodes } from "@/services/export/device-codes";
 import { systemLinearBalances } from "./air-terminals/linear-meters";
 import { calculatePlenum } from "./ducted/plenum";
-import { placedPlenumGeometry } from "./ducted/placement";
+import { placedPlenumGeometry, machinePlenums } from "./ducted/placement";
 import { pillarFootprint } from "./geometry/pillars";
 import {
   convexFootprintsOverlap,
@@ -40,6 +40,7 @@ import {
 import { ductRoute } from "./ducted/routes";
 import { flexibleDuctCurve } from "./ducted/flexible-curve";
 import { wallCavityPolygons } from "./ducted/wall-cavity";
+import { ductScenePaths, findDuctCollisions } from "./ducted/collisions";
 import { validateHydronicSystem } from "./hydronic/validation";
 import {
   fanCoilProductAtVersion,
@@ -860,6 +861,18 @@ export function validateProject(p: Project): Check[] {
         entityId: t.id,
       });
   }
+  for (const system of p.hvacSystems.filter((item) => item.type === "ducted")) {
+    // Mandata e ripresa: due plenum al massimo, la ripresa è facoltativa.
+    const owned = machinePlenums(p, system.id);
+    const uses = owned.map((plenum) => plenum.use);
+    if (owned.length > 2 || new Set(uses).size !== uses.length)
+      checks.push({
+        code: "machinePlenums",
+        status: "invalid",
+        entityId: owned[0]?.id ?? system.id,
+        message: `${codes.get(system.id)}: massimo due plenums per macchina, uno di mandata e uno di ripresa.`,
+      });
+  }
   for (const plenum of p.plenums) {
     if (!plenum.systemId || plenum.attachmentId !== undefined) continue;
     const result = calculatePlenum(p, plenum.systemId, plenum.use);
@@ -997,6 +1010,13 @@ export function validateProject(p: Project): Check[] {
         message: `${codes.get(duct.id)}: percorso fuori dalla geometria interna o sopra la quota disponibile.`,
       });
   }
+  for (const collision of findDuctCollisions(p, ductScenePaths(p)).values())
+    checks.push({
+      code: "ductCollision",
+      status: "invalid",
+      entityId: collision.entityId,
+      message: `${codes.get(collision.entityId) ?? "Flessibile"}: ${collision.message}`,
+    });
   return checks;
 }
 

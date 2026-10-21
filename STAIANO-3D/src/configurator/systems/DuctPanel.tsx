@@ -1,6 +1,7 @@
 "use client";
 import type { Project } from "@/schemas/project";
 import {
+  addDuctWaypoint,
   ductLength,
   ductRoute,
   generateDuctRoutes,
@@ -31,9 +32,10 @@ export function DuctPanel({
         collegamenti.
       </p>
       <p className="nota">
-        Per disegnare il canale a mano: strumento <strong>Canale</strong> (K) in
-        pianta, clicca la bocchetta, traccia i punti e premi Invio. Il percorso
-        e il tubo compaiono in pianta e in 3D.
+        Per creare il canale: strumento <strong>Canale</strong> (K) in pianta,
+        clicca il plenum della bocchetta (il primo punto è già sullo stacco),
+        poi la macchina. Il percorso predefinito si modifica trascinando i punti
+        in 3D o da «Flessibili».
       </p>
       <button
         className="bottone piccolo"
@@ -62,30 +64,8 @@ export function DuctPanel({
             className="bottone piccolo"
             disabled={duct.locked}
             onClick={() => {
-              const route = ductRoute(project, duct);
-              if (!duct.waypoints.length && route.length > 1) {
-                const first = route[0],
-                  last = route.at(-1)!;
-                commit((p) => ({
-                  ...p,
-                  ducts: p.ducts?.map((d) =>
-                    d.id === duct.id
-                      ? {
-                          ...d,
-                          routing: "manual",
-                          waypoints: [
-                            {
-                              x: (first.x + last.x) / 2,
-                              y: (first.y + last.y) / 2,
-                              elevationM:
-                                (first.elevationM + last.elevationM) / 2,
-                            },
-                          ],
-                        }
-                      : d,
-                  ),
-                }));
-              }
+              if (!duct.waypoints.length)
+                commit((p) => addDuctWaypoint(p, duct.id).project);
               useProjectStore.setState({
                 view: "3d",
                 selection: [{ kind: "device", id: duct.id }],
@@ -98,32 +78,7 @@ export function DuctPanel({
           <button
             className="bottone piccolo tenue"
             disabled={duct.locked}
-            onClick={() => {
-              const points = ductRoute(project, duct);
-              if (points.length < 2) return;
-              const first = points.at(-2)!,
-                last = points.at(-1)!;
-              commit((p) => ({
-                ...p,
-                ducts: p.ducts?.map((d) =>
-                  d.id === duct.id
-                    ? {
-                        ...d,
-                        routing: "manual",
-                        waypoints: [
-                          ...d.waypoints,
-                          {
-                            x: (first.x + last.x) / 2,
-                            y: (first.y + last.y) / 2,
-                            elevationM:
-                              (first.elevationM + last.elevationM) / 2,
-                          },
-                        ],
-                      }
-                    : d,
-                ),
-              }));
-            }}
+            onClick={() => commit((p) => addDuctWaypoint(p, duct.id).project)}
           >
             Aggiungi punto percorso
           </button>

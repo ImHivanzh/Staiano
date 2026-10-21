@@ -9,6 +9,8 @@ import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
 import { sizeAirTerminal } from "@/domain/air-terminals/size";
 import { calculatePlenum } from "./plenum";
 import { placePlenum, placeSupplyPlenum } from "./placement";
+import { connectPlenum, insertPlenum } from "./attached-plenums";
+import { validateProject } from "../validation";
 
 function terminals(
   project: Project,
@@ -118,6 +120,70 @@ describe("plenum di mandata e plenum di ripresa", () => {
     p = placePlenum(p, system.id, "return");
     const again = placePlenum(p, system.id, "return");
     expect(again.plenums).toHaveLength(1);
+  });
+
+  it("tiene al massimo due plenums per macchina, con la ripresa facoltativa", () => {
+    let p = withReturnConnection(fixture());
+    const system = p.hvacSystems[0];
+    p = placeSupplyPlenum(p, system.id);
+    // La sola mandata è valida: la ripresa non è obbligatoria.
+    expect(p.plenums).toHaveLength(1);
+    expect(projectSchema.safeParse(p).success).toBe(true);
+    p = placePlenum(p, system.id, "return");
+    expect(p.plenums).toHaveLength(2);
+    expect(placePlenum(p, system.id, "supply").plenums).toHaveLength(2);
+    expect(placePlenum(p, system.id, "return").plenums).toHaveLength(2);
+    // Un terzo plenum, anche passando da Collega, non entra.
+    const machine = p.hvacSystems[0].indoorUnits[0];
+    p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
+    expect(() => connectPlenum(p, p.plenums.at(-1)!.id, machine.id)).toThrow(
+      /già i plenum di mandata e di ripresa/,
+    );
+  });
+
+  it("conta anche il plenum storico della macchina nel limite dei due lati", () => {
+    let p = withReturnConnection(fixture());
+    const system = p.hvacSystems[0];
+    p = placeSupplyPlenum(p, system.id);
+    const legacy = p.plenums[0];
+    const machine = p.hvacSystems[0].indoorUnits[0];
+    expect(legacy.attachmentId).toBeUndefined();
+    p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
+    p = connectPlenum(p, p.plenums.at(-1)!.id, machine.id);
+    // Il secondo plenum prende il lato libero: ora ci sono mandata e ripresa.
+    expect(p.plenums).toHaveLength(2);
+    expect(p.plenums.map((pl) => pl.use).sort()).toEqual(["return", "supply"]);
+    p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 1 });
+    expect(() => connectPlenum(p, p.plenums.at(-1)!.id, machine.id)).toThrow(
+      /già i plenum di mandata e di ripresa/,
+    );
+  });
+
+  it("segnala nei controlli un progetto con più di due plenums macchina", () => {
+    const p = withReturnConnection(fixture());
+    const system = p.hvacSystems[0];
+    const base = placeSupplyPlenum(p, system.id);
+    const machine = base.hvacSystems[0].indoorUnits[0];
+    const template = base.plenums[0];
+    const broken = {
+      ...base,
+      plenums: [
+        ...base.plenums,
+        { ...template, id: "extra-supply", attachmentId: machine.id },
+        {
+          ...template,
+          id: "extra-return",
+          attachmentId: machine.id,
+          use: "return" as const,
+        },
+      ],
+    };
+    expect(validateProject(broken)).toContainEqual(
+      expect.objectContaining({
+        code: "machinePlenums",
+        status: "invalid",
+      }),
+    );
   });
 
   it("senza raccordo di ripresa dichiarato non inventa la geometria", () => {

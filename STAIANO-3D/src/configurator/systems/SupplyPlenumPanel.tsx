@@ -226,8 +226,8 @@ export function SupplyPlenumPanel({
         <div className={styles.setup}>
           <h4>Posa nel progetto</h4>
           <p className={styles.hint}>
-            Un plenum per la mandata e uno per la ripresa, dedicati a questa
-            macchina. La ripresa si colloca dal lato opposto della macchina.
+            Un plenum di mandata; la ripresa è facoltativa. Massimo due plenums
+            per macchina, uno per lato. La ripresa si colloca dal lato opposto.
           </p>
           <div
             className={styles.actions}
@@ -248,7 +248,7 @@ export function SupplyPlenumPanel({
               aria-pressed={!!returnPlenum}
               onClick={() => setUse("return")}
             >
-              Ripresa {returnPlenum ? "· creata" : "· da creare"}
+              Ripresa {returnPlenum ? "· creata" : "· facoltativa"}
             </button>
           </div>
           <label className="campo">

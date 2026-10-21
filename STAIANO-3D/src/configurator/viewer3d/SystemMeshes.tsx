@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Plenum, Project, Selection } from "@/schemas/project";
-import { machinePlenum, placedPlenumGeometry } from "@/domain/ducted/placement";
+import { placedPlenumGeometry } from "@/domain/ducted/placement";
 import {
   plenumPortsUpper,
   terminalPlenum,
@@ -173,7 +173,7 @@ function PlenumMesh({
     () => (geometry ? layoutFromMachineGeometry(geometry) : null),
     [geometry],
   );
-  if (plenum.attachmentId !== undefined) {
+  if (plenum.attachmentId !== undefined && !geometry) {
     const upper = plenumPortsUpper(project, plenum);
     const count = plenum.portCount ?? 1;
     const radius = (plenum.portDiameterMm ?? 160) / 2000;
@@ -263,17 +263,9 @@ export function SystemMeshes({
   const { gl } = useThree();
   const plenums = useMemo(
     () => [
+      // Solo i plenum salvati sono oggetti fisici: la macchina non ne mostra
+      // uno finché l'operatore non lo crea con lo strumento Plenum.
       ...project.plenums,
-      ...project.hvacSystems
-        .filter((s) => s.type === "ducted")
-        .flatMap((system) =>
-          (["supply", "return"] as const).flatMap((use) => {
-            const plenum = machinePlenum(project, system.id, use);
-            return plenum && !project.plenums.some((p) => p.id === plenum.id)
-              ? [plenum]
-              : [];
-          }),
-        ),
       ...project.airTerminals.flatMap((terminal) => {
         if (project.plenums.some((p) => p.attachmentId === terminal.id))
           return [];

@@ -8,6 +8,7 @@ import {
   connectTerminalOnPlan,
 } from "./graphic-installation";
 import {
+  addTerminalPlenum,
   insertPlenum,
   connectPlenum,
   syncAttachedPlenums,
@@ -104,18 +105,34 @@ it("saves a separate terminal plenum, its real port count and flexible 3D routes
   });
 });
 
-it("moves and rotates attachments with their owner and cascades deletion", () => {
-  const p = fixture();
+it("follows the terminal while proposed, then moves and rotates independently and cascades deletion", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, {
+    x: 3,
+    y: 3,
+  });
+  p = addGuidedTerminal(p, 1000);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
   const id = p.airTerminals[0].id;
-  let moved = syncAttachedPlenums(movePlacedDevice(p, id, { x: 4, y: 3 }));
-  expect(moved.plenums[0].position).toEqual(moved.airTerminals[0].position);
-  moved = rotateDevice90(moved, id);
-  expect(moved.plenums[0].rotation).toBeCloseTo(moved.airTerminals[0].rotation);
-  expect(moved.plenums[0].rotation).toBeCloseTo(
-    p.airTerminals[0].rotation + Math.PI / 2,
+  const plenumId = p.plenums[0].id;
+  expect(p.plenums[0].status).toBe("proposed");
+  const following = syncAttachedPlenums(movePlacedDevice(p, id, { x: 4, y: 3 }));
+  expect(following.plenums[0].position).toEqual(
+    following.airTerminals[0].position,
+  );
+  // L'operatore sposta il plenum: diventa autonomo e la bocchetta non lo trascina.
+  const placed = movePlacedDevice(following, plenumId, { x: 5, y: 4 });
+  expect(placed.plenums[0].status).toBe("manual");
+  const ownerMoved = syncAttachedPlenums(
+    movePlacedDevice(placed, id, { x: 4.5, y: 2.5 }),
+  );
+  expect(ownerMoved.plenums[0].position).toEqual({ x: 5, y: 4 });
+  const rotated = rotateDevice90(ownerMoved, plenumId);
+  expect(rotated.plenums[0].rotation).toBeCloseTo(
+    ownerMoved.plenums[0].rotation + Math.PI / 2,
   );
   const deleted = syncAttachedPlenums(
-    removeSelection(moved, [{ kind: "device", id }]),
+    removeSelection(rotated, [{ kind: "device", id }]),
   );
   expect(deleted.plenums).toHaveLength(0);
   expect(deleted.ducts).toHaveLength(0);
@@ -156,11 +173,17 @@ it("keeps the terminal plenum when reconnecting and supports a return plenum on 
       .sort(),
   ).toEqual(["return", "supply"]);
   const moved = rotateDevice90(p, p.hvacSystems[0].indoorUnits[0].id);
+  // Il plenum già posizionato non segue più la macchina: ruota da solo.
   expect(moved.plenums.find((pl) => pl.id === id)!.rotation).toBeCloseTo(
-    plenum.rotation + Math.PI / 2,
+    plenum.rotation,
   );
   expect(projectSchema.safeParse(moved).success).toBe(true);
-  expect(() => movePlacedDevice(moved, id, { x: 4, y: 4 })).toThrow(/segue/);
+  const relocated = movePlacedDevice(moved, id, { x: 4, y: 4 });
+  expect(relocated.plenums.find((pl) => pl.id === id)!.position).toEqual({
+    x: 4,
+    y: 4,
+  });
+  expect(relocated.plenums.find((pl) => pl.id === id)!.status).toBe("manual");
   expect(recordOperatorChanges(p, moved).ducts!.length).toBeGreaterThan(0);
 });
 
@@ -195,9 +218,9 @@ it("wall terminals snap and rotate onto perpendicular walls even with fine snapp
       ),
     ),
   ).toBeCloseTo(1);
-  expect(second.plenums[0].rotation).toBeCloseTo(
-    second.airTerminals[0].rotation,
-  );
+  // Il plenum salvato resta nella posa scelta: non segue la nuova parete.
+  expect(second.plenums[0].rotation).toBeCloseTo(p.plenums[0].rotation);
+  expect(second.plenums[0].position).toEqual(p.plenums[0].position);
   expect(projectSchema.safeParse(second).success).toBe(true);
 });
 
@@ -237,7 +260,7 @@ it("rotating a machine plenum rotates the machine so body, text and ports stay a
   ).toThrow(/Sblocca il plenum/);
 });
 
-it("pairs plenum connections in both orders, prevents locked attachment motion and counts the saved plenum once", () => {
+it("pairs plenum connections in both orders, blocks locked plenum motion and counts the saved plenum once", () => {
   const p = fixture();
   const plenum = p.plenums[0],
     terminal = p.airTerminals[0];
@@ -249,17 +272,21 @@ it("pairs plenum connections in both orders, prevents locked attachment motion a
   );
   const locked = { ...p, plenums: [{ ...plenum, locked: true }] };
   expect(() =>
-    checkLockedObjects(
-      locked,
-      syncAttachedPlenums(
-        movePlacedDevice(locked, terminal.id, { x: 4, y: 3 }),
-      ),
-    ),
+    movePlacedDevice(locked, plenum.id, { x: 4, y: 3 }),
+  ).toThrow(/Sbloccare l’elemento/);
+  expect(() =>
+    checkLockedObjects(locked, {
+      ...locked,
+      plenums: [{ ...locked.plenums[0], position: { x: 4, y: 3 } }],
+    }),
   ).toThrow(/bloccato/);
   const bom = calculateEcoclimaBom(p);
-  expect(bom.lines.filter((line) => /plenum/.test(line.kind))).toHaveLength(1);
-  expect(bom.lines.find((line) => /plenum/.test(line.kind))?.id).toBe(
-    `${plenum.id}:plenum`,
+  // Un plenum con le quote di catalogo resta una sola riga, quotata dal listino.
+  expect(
+    bom.lines.filter((line) => line.kind === "insulated-plenum"),
+  ).toHaveLength(1);
+  expect(bom.lines.some((line) => line.id === `${plenum.id}:plenum`)).toBe(
+    false,
   );
 });
 

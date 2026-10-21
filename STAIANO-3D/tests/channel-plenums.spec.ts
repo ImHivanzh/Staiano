@@ -12,7 +12,8 @@ for (const viewport of [
     test.setTimeout(120000);
     await page.setViewportSize(viewport);
     const project = plenumFixture(true);
-    // Existing projects with no separately inserted bodies still show their catalogue plenums.
+    // Existing projects with no separately inserted terminal body still show
+    // the catalogue plenum; a machine plenum appears only once created.
     project.plenums = [];
     project.ducts = [];
     project.airTerminals.forEach((t) => {
@@ -34,7 +35,7 @@ for (const viewport of [
     await expect(canvas).toHaveAttribute("data-rendered", "true", {
       timeout: 30000,
     });
-    await expect(canvas).toHaveAttribute("data-plenum-count", "2");
+    await expect(canvas).toHaveAttribute("data-plenum-count", "1");
     await expect(canvas).toHaveAttribute("data-air-connections", /[1-9]/);
     await expect(
       page.getByText("Percorso non realizzabile: sposta curve o plenum"),

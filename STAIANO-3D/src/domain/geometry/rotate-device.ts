@@ -9,7 +9,9 @@ export function rotateDevice90(project: Project, id: string): Project {
   const terminal = project.airTerminals.find((t) => t.id === id);
   const linked = project.plenums.find((p) => p.id === id && p.attachmentId);
   if (linked?.locked) throw new Error("Sblocca il plenum prima di ruotarlo.");
-  if (linked) return rotateDevice90(project, linked.attachmentId!);
+  // La proposta segue il proprietario; un plenum già posizionato ruota da solo.
+  if (linked && linked.status === "proposed")
+    return rotateDevice90(project, linked.attachmentId!);
   // Un plenum della macchina non ha un proprietario diretto: ruotarlo significa
   // ruotare la macchina stessa, così corpo, etichette e stacchi restano solidali.
   const machinePlenum = project.plenums.find(
