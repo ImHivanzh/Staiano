@@ -1,5 +1,5 @@
 import { z } from "zod";
-import snapshot from "../../../catalog-data/generated/models3d.json";
+import snapshot from "../../../catalog-data/generated/models3d.json" with { type: "json" };
 
 const dimensions = z.tuple([
   z.number().positive().max(10000),

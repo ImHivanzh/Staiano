@@ -1,5 +1,5 @@
-import raw from "../../../catalog-data/generated/fan-coils.json";
-import history from "../../../catalog-data/generated/fan-coils-history.json";
+import raw from "../../../catalog-data/generated/fan-coils.json" with { type: "json" };
+import history from "../../../catalog-data/generated/fan-coils-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import {
   fanCoilCatalogSchema,

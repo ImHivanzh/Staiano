@@ -1,5 +1,5 @@
 import { z } from "zod";
-import raw from "../../../catalog-data/generated/ecoclima-commercial.json";
+import raw from "../../../catalog-data/generated/ecoclima-commercial.json" with { type: "json" };
 import { sourceMetadataSchema } from "./radiator-schema";
 
 /** Published original price tables, deliberately isolated from technical sizing. */

@@ -1,6 +1,6 @@
 import type { buildDossier } from "./dossier";
 import { encryptDossier } from "./dossier-crypto";
-import publicKey from "../../../dossier-guide/public-key.json";
+import publicKey from "../../../dossier-guide/public-key.json" with { type: "json" };
 
 export const DOSSIER_GUIDE_URL = "https://impianto.staianopoint.com/";
 

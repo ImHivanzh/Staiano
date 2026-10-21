@@ -1,5 +1,5 @@
-import raw from "../../../catalog-data/generated/ecoclima.json";
-import history from "../../../catalog-data/generated/ecoclima-history.json";
+import raw from "../../../catalog-data/generated/ecoclima.json" with { type: "json" };
+import history from "../../../catalog-data/generated/ecoclima-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import {
   airTerminalCatalogSchema,

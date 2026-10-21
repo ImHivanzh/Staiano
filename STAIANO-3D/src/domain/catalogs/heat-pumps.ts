@@ -1,5 +1,5 @@
-import raw from "../../../catalog-data/generated/heat-pumps.json";
-import history from "../../../catalog-data/generated/heat-pumps-history.json";
+import raw from "../../../catalog-data/generated/heat-pumps.json" with { type: "json" };
+import history from "../../../catalog-data/generated/heat-pumps-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import { heatPumpCatalogSchema } from "./heat-pump-schema";
 export {

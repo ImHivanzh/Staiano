@@ -1,5 +1,5 @@
 import { z } from "zod";
-import raw from "../../../catalog-data/generated/split-series-presentation.json";
+import raw from "../../../catalog-data/generated/split-series-presentation.json" with { type: "json" };
 import { sourceMetadataSchema } from "./radiator-schema";
 import type { SplitIndoor } from "./split-schema";
 

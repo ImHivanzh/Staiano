@@ -1,5 +1,5 @@
-import raw from "../../../catalog-data/generated/hvac.json";
-import history from "../../../catalog-data/generated/hvac-history.json";
+import raw from "../../../catalog-data/generated/hvac.json" with { type: "json" };
+import history from "../../../catalog-data/generated/hvac-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import { hvacCatalogSchema, type HvacProduct } from "./hvac-schema";
 export const hvacCatalog = hvacCatalogSchema.parse(raw);

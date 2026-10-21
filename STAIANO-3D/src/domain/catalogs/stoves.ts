@@ -1,4 +1,4 @@
-import snapshot from "./stoves.json";
+import snapshot from "./stoves.json" with { type: "json" };
 
 export const stoveCatalog = snapshot;
 export type StoveProduct = (typeof stoveCatalog.products)[number];

@@ -1,4 +1,4 @@
-import data from "../../../catalog-data/generated/radiator-finishes.json";
+import data from "../../../catalog-data/generated/radiator-finishes.json" with { type: "json" };
 import {
   radiatorFinishCatalogSchema,
   type RadiatorFinishRole,

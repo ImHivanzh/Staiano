@@ -1,4 +1,4 @@
-import data from "../../../catalog-data/generated/ecoclima-terminal-finishes.json";
+import data from "../../../catalog-data/generated/ecoclima-terminal-finishes.json" with { type: "json" };
 import type { AirTerminalFamily } from "@/domain/catalogs/air-terminal-schema";
 import type { EcoclimaPrice } from "@/domain/catalogs/ecoclima-price-schema";
 

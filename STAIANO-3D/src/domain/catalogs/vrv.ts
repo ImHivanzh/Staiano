@@ -1,5 +1,5 @@
-import raw from "../../../catalog-data/generated/vrv.json";
-import history from "../../../catalog-data/generated/vrv-history.json";
+import raw from "../../../catalog-data/generated/vrv.json" with { type: "json" };
+import history from "../../../catalog-data/generated/vrv-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import { vrvCatalogSchema } from "./vrv-schema";
 export {
