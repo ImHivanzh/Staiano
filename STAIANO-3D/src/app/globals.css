@@ -2006,9 +2006,10 @@ input[type="checkbox"] {
 
 .notifica-toast {
   position: fixed;
-  inset: auto 20px 20px auto;
+  /* Sotto la testata: i comandi (Salva, File) stanno in alto a destra. */
+  inset: 84px 20px auto auto;
   width: min(460px, calc(100vw - 32px));
-  max-height: calc(100dvh - 40px);
+  max-height: calc(100dvh - 104px);
   overflow-y: auto;
   margin: 0;
   padding: 16px;
@@ -2042,7 +2043,9 @@ input[type="checkbox"] {
 }
 @media (max-width: 600px) {
   .notifica-toast {
+    top: max(84px, calc(env(safe-area-inset-top) + 76px));
     right: 16px;
-    bottom: max(16px, env(safe-area-inset-bottom));
+    bottom: auto;
+    max-height: calc(100dvh - 120px);
   }
 }
