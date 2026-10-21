@@ -38,6 +38,7 @@ import {
   footprintCorners,
 } from "./geometry/footprint";
 import { ductRoute } from "./ducted/routes";
+import { flexibleDuctCurve } from "./ducted/flexible-curve";
 import { validateHydronicSystem } from "./hydronic/validation";
 import {
   fanCoilProductAtVersion,
@@ -953,6 +954,17 @@ export function validateProject(p: Project): Check[] {
   }
   for (const duct of p.ducts ?? []) {
     const route = ductRoute(p, duct);
+    if (
+      duct.kind === "flexible" &&
+      route.length > 1 &&
+      !flexibleDuctCurve(route, duct.diameterMm ?? 160)
+    )
+      checks.push({
+        code: "ductBendRadius",
+        status: "invalid",
+        entityId: duct.id,
+        message: `${codes.get(duct.id)}: curva troppo stretta per Ø ${duct.diameterMm ?? 160} mm; spostare i punti del percorso per avere un raggio almeno pari al diametro.`,
+      });
     if (route.length < 2)
       checks.push({
         code: "ductConnection",

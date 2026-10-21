@@ -6,7 +6,7 @@
 #   compila.bat nopublish       compila e collauda senza pubblicare
 #
 # Richiede: Node 24.14.0 su Windows x64, albero di lavoro pulito e HEAD uguale a
-# codeberg/main per il canale EXE esistente (il sorgente canonico resta su GitLab). I segreti CODEBERG_TOKEN e
+# origin/main su GitLab. I segreti GITLAB_TOKEN e
 # LICENSE_PUBLISH_TOKEN si leggono da .env.local (escluso dal repository).
 param(
   [Parameter(ValueFromRemainingArguments = $true)]
@@ -76,12 +76,9 @@ Write-Step 'Manifest dei documenti tecnici'
 Invoke-Native $node @('scripts/catalog-sources.mjs', 'check')
 
 # 3. Il pacchetto deve corrispondere al ramo main pubblicato: allinea e, se serve, pubblica i commit.
-Write-Step 'Allineamento sorgente GitLab e canale EXE esistente'
-if (-not (@(& $git remote) -contains 'codeberg')) {
-  Invoke-Native $git @('remote', 'add', 'codeberg', 'https://codeberg.org/AvocadoOra/Staiano-3D.git')
-}
+Write-Step 'Allineamento sorgente e canale EXE GitLab'
 $head = (& $git rev-parse HEAD).Trim()
-foreach ($releaseRemote in @('origin', 'codeberg')) {
+foreach ($releaseRemote in @('origin')) {
   Invoke-Native $git @('fetch', $releaseRemote, 'main')
   $remote = (& $git rev-parse "$releaseRemote/main").Trim()
   if ($head -ne $remote) {
@@ -142,7 +139,7 @@ if ($reported -ne $release.buildId) {
 }
 Write-Host "build $($release.buildId) verificata"
 
-# 8. Pubblicazione: release immutabile Codeberg + registrazione sul Worker.
+# 8. Pubblicazione: release immutabile GitLab + registrazione sul Worker.
 if ($skipPublish) {
   Write-Step 'Pubblicazione'
   Write-Host 'saltata (nopublish)'

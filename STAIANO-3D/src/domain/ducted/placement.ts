@@ -3,7 +3,6 @@ import { newId } from "@/domain/project";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { pointInPolygon } from "@/domain/geometry/primitives";
 import { calculatePlenum } from "./plenum";
-import { roomCeilingHeightM } from "@/domain/air-conditioning/elevation";
 
 export function placeDuctedMachine(
   project: Project,
@@ -59,7 +58,17 @@ export function placePlenum(
   systemId: string,
   use: "supply" | "return" = "supply",
 ): Project {
-  if (project.plenums.some((pl) => pl.systemId === systemId && pl.use === use))
+  if (
+    project.plenums.some(
+      (pl) =>
+        pl.systemId === systemId &&
+        pl.use === use &&
+        (pl.attachmentId === undefined ||
+          project.hvacSystems
+            .find((s) => s.id === systemId)
+            ?.indoorUnits.some((u) => u.id === pl.attachmentId)),
+    )
+  )
     return project;
   const system = project.hvacSystems.find(
     (s) => s.id === systemId && s.type === "ducted",
@@ -68,57 +77,27 @@ export function placePlenum(
   let next = system.indoorUnits.length
     ? project
     : placeDuctedMachine(project, systemId);
-  const machine = next.hvacSystems.find((s) => s.id === systemId)!
-    .indoorUnits[0];
-  const result = calculatePlenum(next, systemId, use);
-  const geometry = result.machineGeometry;
-  if (
-    !geometry?.bodyWidthMm ||
-    !geometry.bodyHeightMm ||
-    !geometry.totalDepthMm
-  )
+  const proposed = machinePlenum(next, systemId, use);
+  if (!proposed)
     throw new Error(
       use === "supply"
         ? "Attacco macchina e stacchi verificati necessari. Nessuna geometria del plenum inventata."
         : "Raccordo di ripresa della macchina non dichiarato: inserisci larghezza e altezza dell’attacco prima di creare il plenum.",
     );
-  // La mandata esce davanti alla macchina; la ripresa sta dietro, con la
-  // transizione rivolta verso l'attacco della macchina.
-  const forward =
-    use === "supply"
-      ? { x: -Math.sin(machine.rotation), y: Math.cos(machine.rotation) }
-      : { x: Math.sin(machine.rotation), y: -Math.cos(machine.rotation) };
-  const gap = (machine.depthMm + geometry.totalDepthMm) / 2000;
-  const room = next.rooms.find((r) => r.id === machine.roomId)!;
-  const plenum: Plenum = {
-    id: newId(),
-    systemId,
-    use,
-    floorId: machine.floorId,
-    roomId: machine.roomId,
-    position: {
-      x: machine.position.x + forward.x * gap,
-      y: machine.position.y + forward.y * gap,
-    },
-    rotation: use === "supply" ? machine.rotation : machine.rotation + Math.PI,
-    widthMm: geometry.bodyWidthMm,
-    heightMm: geometry.bodyHeightMm,
-    depthMm: geometry.totalDepthMm,
-    elevationM:
-      roomCeilingHeightM(room) -
-      Math.max(machine.heightMm, geometry.bodyHeightMm) / 2000 -
-      0.05,
-    model: `${use === "supply" ? "Mandata" : "Ripresa"} su misura / ${result.machineModel ?? system.productId}`,
-    status: "proposed",
-    locked: false,
-    designSettings: geometry.settings,
-  };
+  const plenum = { ...proposed, id: newId() };
+  const machine = next.hvacSystems.find((s) => s.id === systemId)!
+    .indoorUnits[0];
   next = {
     ...next,
     plenums: [...next.plenums, plenum],
     airTerminals: next.airTerminals.map((t) =>
       t.systemId === systemId && t.floorId === machine.floorId && t.use === use
-        ? { ...t, plenumId: plenum.id }
+        ? {
+            ...t,
+            plenumId:
+              next.plenums.find((p) => p.attachmentId === t.id)?.id ??
+              plenum.id,
+          }
         : t,
     ),
   };
@@ -208,4 +187,64 @@ export function placedPlenumGeometry(project: Project, plenum: Plenum) {
       ],
     })),
   };
+}
+
+/** Saved or catalogue-sized body, shared by the channel view and its endpoints. */
+export function machinePlenum(
+  project: Project,
+  systemId: string,
+  use: "supply" | "return",
+): Plenum | null {
+  const saved = project.plenums.find(
+    (p) =>
+      p.systemId === systemId &&
+      p.use === use &&
+      (p.attachmentId === undefined ||
+        project.hvacSystems
+          .find((s) => s.id === systemId)
+          ?.indoorUnits.some((u) => u.id === p.attachmentId)),
+  );
+  if (saved) return saved;
+  const system = project.hvacSystems.find(
+    (s) => s.id === systemId && s.type === "ducted",
+  );
+  const machine = system?.indoorUnits[0];
+  if (!machine) return null;
+  const result = calculatePlenum(project, systemId, use);
+  const geometry = result.machineGeometry;
+  if (
+    !geometry?.bodyWidthMm ||
+    !geometry.bodyHeightMm ||
+    !geometry.totalDepthMm
+  )
+    return null;
+  // La mandata esce davanti alla macchina; la ripresa sta dietro, con la
+  // transizione rivolta verso l'attacco della macchina.
+  const forward =
+    use === "supply"
+      ? { x: -Math.sin(machine.rotation), y: Math.cos(machine.rotation) }
+      : { x: Math.sin(machine.rotation), y: -Math.cos(machine.rotation) };
+  const gap = (machine.depthMm + geometry.totalDepthMm) / 2000;
+  const room = project.rooms.find((r) => r.id === machine.roomId)!;
+  const plenum: Plenum = {
+    id: `machine-plenum:${systemId}:${use}`,
+    systemId,
+    use,
+    floorId: machine.floorId,
+    roomId: machine.roomId,
+    position: {
+      x: machine.position.x + forward.x * gap,
+      y: machine.position.y + forward.y * gap,
+    },
+    rotation: use === "supply" ? machine.rotation : machine.rotation + Math.PI,
+    widthMm: geometry.bodyWidthMm,
+    heightMm: geometry.bodyHeightMm,
+    depthMm: geometry.totalDepthMm,
+    elevationM: room.heightM - machine.heightMm / 2000 - 0.05,
+    model: `${use === "supply" ? "Mandata" : "Ripresa"} su misura / ${result.machineModel ?? system.productId}`,
+    status: "proposed",
+    locked: false,
+    designSettings: geometry.settings,
+  };
+  return plenum;
 }

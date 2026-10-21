@@ -229,8 +229,14 @@ describe("operator-led configuration acceptance", () => {
     const retained = p.ducts!.find((d) => d.id === duct.id)!;
     const route = ductRoute(p, retained);
     expect(route[0].x).toBeCloseTo(originalStart.x + 0.5);
-    expect(route[1]).toEqual(waypoint);
-    expect(route.at(-1)).toMatchObject({ x: 4, y: 4 });
+    expect(route).toContainEqual(waypoint);
+    // The hose ends at a plenum collar above the moved grille, not at its face centre.
+    expect(route.at(-1)!.elevationM).toBeGreaterThan(
+      p.airTerminals[0].elevationM!,
+    );
+    expect(Math.abs(route.at(-1)!.x - 4)).toBeLessThanOrEqual(
+      p.airTerminals[0].widthMm / 2000,
+    );
     expect(
       p.ducts!.filter(
         (d) => d.terminalId === duct.terminalId && d.branchId === duct.branchId,
@@ -278,7 +284,7 @@ describe("operator-led configuration acceptance", () => {
     const insertionCount = duct.waypoints.length;
     expect(insertionCount).toBeGreaterThan(0);
     const route = ductRoute(p, duct);
-    expect(route[added.index + 1]).toMatchObject(duct.waypoints[added.index]);
+    expect(route).toContainEqual(duct.waypoints[added.index]);
     const requested = addDuctWaypoint(p, generated.id, {
       x: duct.waypoints[0].x + 0.1,
       y: duct.waypoints[0].y + 0.1,

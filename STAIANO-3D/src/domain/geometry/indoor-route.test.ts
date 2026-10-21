@@ -2,6 +2,7 @@ import { expect, it } from "vitest";
 import { addRectangle, createProject } from "@/domain/project";
 import { pdfQaFixture } from "../../../scripts/verification/pdf-fixture";
 import { ductRoute } from "@/domain/ducted/routes";
+import { validateProject } from "@/domain/validation";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
 import {
   floorRoutingPolygons,
@@ -97,7 +98,21 @@ it("keeps generated ducts and the interior part of hydronic pipes inside the act
     system.outdoorUnit.position = { x: coil.position.x, y: -1 };
   }
   const polygons = floorRoutingPolygons(p, p.floors[0].id);
-  const routes = p.ducts!.map((duct) => ductRoute(p, duct));
+  const checks = validateProject(p);
+  const routes = p.ducts!.flatMap((duct) => {
+    const route = ductRoute(p, duct);
+    // If the collar has no indoor bending clearance, flag it instead of drawing a hose outside.
+    if (!route.length) {
+      expect(
+        checks.some(
+          (check) =>
+            check.code === "ductConnection" && check.entityId === duct.id,
+        ),
+      ).toBe(true);
+      return [];
+    }
+    return [route];
+  });
   for (const system of p.hydronicSystems!)
     for (const id of system.fanCoilIds) {
       const pipe = hydronicPipeRoute(p, system, id);

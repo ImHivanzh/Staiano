@@ -2,30 +2,24 @@
 import { useEffect, useMemo } from "react";
 import * as THREE from "three";
 import type { RoutePoint } from "@/domain/ducted/routes";
+import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
+import { Html } from "@react-three/drei";
 
 export function FlexibleDuct({
   points,
   diameterMm,
   color,
+  fallbackPoint,
 }: {
   points: RoutePoint[];
   diameterMm: number;
   color: string;
+  fallbackPoint?: RoutePoint;
 }) {
   const shape = useMemo(() => {
-    const vertices = points
-      .filter(
-        (p, i) =>
-          !i ||
-          Math.hypot(
-            p.x - points[i - 1].x,
-            p.y - points[i - 1].y,
-            p.elevationM - points[i - 1].elevationM,
-          ) > 0.001,
-      )
-      .map((p) => new THREE.Vector3(p.x, p.elevationM, p.y));
-    if (vertices.length < 2) return null;
-    const curve = new THREE.CatmullRomCurve3(vertices, false, "centripetal");
+    const path = flexibleDuctCurve(points, diameterMm);
+    if (!path) return null;
+    const { curve } = path;
     const length = curve.getLength();
     const geometry = new THREE.TubeGeometry(
       curve,
@@ -56,6 +50,7 @@ export function FlexibleDuct({
     },
     [shape],
   );
+  const warningPoint = points[0] ?? fallbackPoint;
   return shape ? (
     <mesh geometry={shape.geometry}>
       <meshStandardMaterial
@@ -67,5 +62,25 @@ export function FlexibleDuct({
         side={THREE.DoubleSide}
       />
     </mesh>
+  ) : warningPoint ? (
+    <Html
+      position={[
+        warningPoint.x,
+        warningPoint.elevationM + 0.15,
+        warningPoint.y,
+      ]}
+    >
+      <span
+        role="status"
+        style={{
+          background: "#fff",
+          color: "#a12525",
+          padding: "6px",
+          whiteSpace: "nowrap",
+        }}
+      >
+        Percorso non realizzabile: sposta curve o plenum
+      </span>
+    </Html>
   ) : null;
 }

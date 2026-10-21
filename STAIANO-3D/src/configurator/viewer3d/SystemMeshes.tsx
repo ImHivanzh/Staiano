@@ -3,7 +3,11 @@ import { useEffect, useMemo } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Plenum, Project, Selection } from "@/schemas/project";
-import { placedPlenumGeometry } from "@/domain/ducted/placement";
+import { machinePlenum, placedPlenumGeometry } from "@/domain/ducted/placement";
+import {
+  plenumPortsUpper,
+  terminalPlenum,
+} from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 
@@ -170,10 +174,7 @@ function PlenumMesh({
     [geometry],
   );
   if (plenum.attachmentId !== undefined) {
-    const terminal = project.airTerminals.find(
-      (t) => t.id === plenum.attachmentId,
-    );
-    const ceiling = terminal?.mounting === "ceiling";
+    const upper = plenumPortsUpper(project, plenum);
     const count = plenum.portCount ?? 1;
     const radius = (plenum.portDiameterMm ?? 160) / 2000;
     return (
@@ -196,8 +197,6 @@ function PlenumMesh({
             }
             metalness={0.6}
             roughness={0.4}
-            transparent
-            opacity={0.72}
           />
         </mesh>
         {Array.from({ length: count }, (_, i) => (
@@ -205,10 +204,10 @@ function PlenumMesh({
             key={i}
             position={[
               (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000,
-              ceiling ? plenum.heightMm / 2000 + 0.03 : 0,
-              ceiling ? 0 : -plenum.depthMm / 2000 - 0.03,
+              upper ? plenum.heightMm / 2000 + 0.03 : 0,
+              upper ? 0 : -plenum.depthMm / 2000 - 0.03,
             ]}
-            rotation={ceiling ? [0, 0, 0] : [Math.PI / 2, 0, 0]}
+            rotation={upper ? [0, 0, 0] : [Math.PI / 2, 0, 0]}
           >
             <cylinderGeometry args={[radius, radius, 0.06, 24, 1, true]} />
             <meshStandardMaterial
@@ -262,7 +261,29 @@ export function SystemMeshes({
 }) {
   const chosen = (id: string) => selection.some((s) => s.id === id);
   const { gl } = useThree();
-  const plenumCount = project.plenums.filter(
+  const plenums = useMemo(
+    () => [
+      ...project.plenums,
+      ...project.hvacSystems
+        .filter((s) => s.type === "ducted")
+        .flatMap((system) =>
+          (["supply", "return"] as const).flatMap((use) => {
+            const plenum = machinePlenum(project, system.id, use);
+            return plenum && !project.plenums.some((p) => p.id === plenum.id)
+              ? [plenum]
+              : [];
+          }),
+        ),
+      ...project.airTerminals.flatMap((terminal) => {
+        if (project.plenums.some((p) => p.attachmentId === terminal.id))
+          return [];
+        const plenum = terminalPlenum(project, terminal);
+        return plenum ? [plenum] : [];
+      }),
+    ],
+    [project],
+  );
+  const plenumCount = plenums.filter(
     (plenum) =>
       plenum.floorId === activeFloorId &&
       (!isolatedRoomId || plenum.roomId === isolatedRoomId),
@@ -354,7 +375,7 @@ export function SystemMeshes({
               </group>
             )),
         )}
-      {project.plenums
+      {plenums
         .filter(
           (pl) =>
             pl.floorId === activeFloorId &&
@@ -367,7 +388,15 @@ export function SystemMeshes({
             rotation={[0, -pl.rotation, 0]}
             onClick={(e) => {
               e.stopPropagation();
-              onSelect({ kind: "device", id: pl.id });
+              onSelect({
+                kind: "device",
+                id: pl.id.startsWith("terminal-plenum:")
+                  ? pl.attachmentId!
+                  : pl.id.startsWith("machine-plenum:")
+                    ? project.hvacSystems.find((s) => s.id === pl.systemId)!
+                        .indoorUnits[0].id
+                    : pl.id,
+              });
             }}
           >
             <PlenumMesh

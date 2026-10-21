@@ -120,7 +120,7 @@ Revocare tutte le sessioni: `node scripts/configure-access.mjs --rotate-session-
 - EXE `63buggbHCJ0E13KB23Wy_` (258,8 MB, SHA-256
   `827d2220b59037d981ffdfb96c131f8f1f0739f1e5798029c21f8fdc9a71aeb0`)
   compilato dalla revisione `52ec177`, collaudato con `--version` e pubblicato
-  sul canale Codeberg con registrazione sul Worker. Non installato su questa
+  sul canale GitLab con registrazione sul Worker. Non installato su questa
   postazione: `compila.bat installa` per installarlo.
 
 ## Limiti
@@ -130,3 +130,12 @@ rumore e perdite prima di costruire. Il raccordo reale può avere area libera
 diversa dal nominale. Scarico termico/calcoli di potenza restano limiti
 convenzionali dichiarati. Prestazioni assenti ed errori sorgente non vengono
 sostituiti da valori stimati. I plenum su misura restano da quotare.
+
+
+## 21 ottobre 2026 — GitLab e flessibili fra plenum
+
+- Canale EXE migrato al progetto GitLab `imhivanzh/Staiano3D`, ID 87880568: Generic Package Registry, release e Worker di aggiornamento. Rimosso il remoto precedente, il relativo token locale e il segreto del Worker. Download reale del pacchetto esistente (271408128 byte), firma e SHA-256 verificati senza cambiare la sequenza 29. Evidenza locale: `.cache/gitlab-download-verified.json`.
+- Suite completa: 612 test passati e una vecchia aspettativa sul percorso attraverso una zona esterna aggiornata al nuovo requisito fisico; il file corretto ha poi superato tutti i 23 test. Copertura totale corrente: 613 test. Log: `.cache/migration-tests-final.log`, `.cache/gap-check-final.log`.
+- Quattro flussi Edge passati: PC 1920 px, iPad 1024 px, modifica delle curve e associazione del plenum. Nessun errore runtime o console nei flussi. Screenshot: `.cache/channel-plenums-1920.png` e `.cache/channel-plenums-1024.png`. Log: `.cache/channel-browser-verified.log`.
+- Typecheck e lint dei sorgenti modificati passati. Il lint globale include artefatti generati e segnala anche errori preesistenti in `deploy/executable.cjs` e `SiteContext.tsx`; non e' un gate pulito di questo repository.
+- Quote catalogo, rotazioni, spostamenti, corpi separati e imbocchi condividono la stessa geometria. Le curve sono raccordi circolari tangenti (preferito R=2D, minimo R=D), con controllo delle sovrapposizioni del tubo con se stesso. Dove manca spazio, viene segnalato un percorso non realizzabile. Restano da verificare le prescrizioni del tubo scelto, i supporti e le interferenze dell'impianto completo.

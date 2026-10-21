@@ -25,8 +25,6 @@ import { duplicateSelection } from "../geometry/selection";
 import { validateProject } from "../validation";
 import { calculateEcoclimaBom } from "../air-terminals/commercial-bom";
 import { airConnectionRoutes, routeBelowTerminals } from "./routes";
-import { indoorRoute } from "../geometry/indoor-route";
-import { nearestFootprintEdge } from "../geometry/footprint";
 import { translateSelection, removeSelection } from "../geometry/selection";
 import { movePlacedDevice } from "../geometry/move-device";
 import { refreshDuctedBindings } from "./refresh";
@@ -120,16 +118,27 @@ it("connects a terminal in a new room without selecting served rooms beforehand"
 
 it("connects configured devices across an undrawn gap while retaining floor checks and save compatibility", () => {
   let p = fixture();
-  p = addRectangle(p, p.floors[0].id, { width: 6, length: 5, height: 2.7, name: "Stanza separata", origin: { x: 20, y: 0 } });
-  const room = p.rooms.find(r => r.centroid.x > 20)!;
+  p = addRectangle(p, p.floors[0].id, {
+    width: 6,
+    length: 5,
+    height: 2.7,
+    name: "Stanza separata",
+    origin: { x: 20, y: 0 },
+  });
+  const room = p.rooms.find((r) => r.centroid.x > 20)!;
   p = saveTerminalOnPlan(p, { ...input(p), roomId: room.id }, room.centroid);
   const terminalId = p.airTerminals.at(-1)!.id;
   const connected = connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id);
-  expect(connected.airTerminals.find(t => t.id === terminalId)?.systemId).toBe(p.hvacSystems[0].id);
-  expect(airConnectionRoutes(connected, p.floors[0].id)[0].points.length).toBeGreaterThan(1);
+  expect(
+    connected.airTerminals.find((t) => t.id === terminalId)?.systemId,
+  ).toBe(p.hvacSystems[0].id);
+  // Association and saving work across an undrawn gap; a physical hose must not cross outdoors.
+  expect(airConnectionRoutes(connected, p.floors[0].id)[0].points).toEqual([]);
   expect(() => decodeProject(encodeProject(connected))).not.toThrow();
   p.airTerminals.at(-1)!.floorId = "another-floor";
-  expect(() => connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id)).toThrow(/stesso piano/);
+  expect(() =>
+    connectTerminalOnPlan(p, terminalId, p.hvacSystems[0].id),
+  ).toThrow(/stesso piano/);
 });
 
 it("shows graphical connections in 3D along the same plan route without changing project data", () => {
@@ -145,14 +154,15 @@ it("shows graphical connections in 3D along the same plan route without changing
   const [connection] = airConnectionRoutes(connected, connected.floors[0].id);
   const terminal = connected.airTerminals[0];
   const machine = connected.hvacSystems[0].indoorUnits[0];
-  expect(connection.points.map(({ x, y }) => ({ x, y }))).toEqual(
-    indoorRoute(
-      connected,
-      connected.floors[0].id,
-      nearestFootprintEdge(machine, terminal.position),
-      terminal.position,
-    ),
+  const start = connection.points[0];
+  expect(
+    (start.y - machine.position.y) * Math.cos(machine.rotation) -
+      (start.x - machine.position.x) * Math.sin(machine.rotation),
+  ).toBeGreaterThan(machine.depthMm / 2000);
+  expect(connection.points.at(-1)!.elevationM).toBeGreaterThan(
+    terminal.elevationM!,
   );
+  expect(connection.diameterMm).toBeGreaterThan(70);
   expect(
     connection.points.every((point) => Number.isFinite(point.elevationM)),
   ).toBe(true);

@@ -389,13 +389,14 @@ describe("Worker licenze — revoca e amministrazione", () => {
 });
 
 describe("Worker licenze — regressioni e pannello", () => {
-  it("accetta pacchetti solo dal publisher e dalla revisione corrente di Codeberg", async () => {
+  it("accetta pacchetti solo dal publisher e dalla revisione corrente di GitLab", async () => {
     env.PUBLISH_TOKEN = "publisher-di-prova";
-    env.CODEBERG_READ_TOKEN = "read-only-di-prova";
+    env.GITLAB_READ_TOKEN = "read-only-di-prova";
+    env.GITLAB_READ_USERNAME = "gitlab+deploy-token-test";
     const commit = "c".repeat(40);
     const fetchHead = vi.fn().mockImplementation(
       async () =>
-        new Response(JSON.stringify({ commit: { id: commit } }), {
+        new Response(`0040${commit} refs/heads/main\n`, {
           headers: { "Content-Type": "application/json" },
         }),
     );
@@ -404,7 +405,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       commit,
       sha256: "d".repeat(64),
       size: 10,
-      url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`,
+      url: `https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/${commit}/StaianoHVAC.exe`,
     };
     expect((await call(env, "/publish", { method: "POST", body })).status).toBe(
       401,
@@ -417,7 +418,7 @@ describe("Worker licenze — regressioni e pannello", () => {
           body: {
             ...body,
             commit: "b".repeat(40),
-            url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${"b".repeat(40)}/StaianoHVAC.exe`,
+            url: `https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/${"b".repeat(40)}/StaianoHVAC.exe`,
           },
         })
       ).status,
@@ -432,20 +433,50 @@ describe("Worker licenze — regressioni e pannello", () => {
       ).status,
     ).toBe(200);
     expect(fetchHead).toHaveBeenCalledWith(
-      "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D/branches/main",
+      "https://gitlab.com/imhivanzh/Staiano3D.git/info/refs?service=git-upload-pack",
       expect.objectContaining({
-        headers: { Authorization: "token read-only-di-prova" },
+        headers: {
+          Authorization: `Basic ${btoa("gitlab+deploy-token-test:read-only-di-prova")}`,
+        },
         redirect: "manual",
       }),
     );
+    db.prepare("UPDATE releases SET url = ? WHERE commit_sha = ?").run(
+      "https://retired.invalid/package.exe",
+      commit,
+    );
+    expect(
+      (
+        await call(env, "/publish", {
+          method: "POST",
+          token: env.PUBLISH_TOKEN,
+          body,
+        })
+      ).status,
+    ).toBe(200);
+    expect(
+      db
+        .prepare("SELECT sequence, url FROM releases WHERE commit_sha = ?")
+        .get(commit),
+    ).toMatchObject({ sequence: 1, url: body.url });
+    expect(
+      (
+        await call(env, "/publish", {
+          method: "POST",
+          token: env.PUBLISH_TOKEN,
+          body: { ...body, sha256: "f".repeat(64) },
+        })
+      ).status,
+    ).toBe(409);
     const status = await call(env, "/publish/status", {
       token: env.PUBLISH_TOKEN,
     });
     expect(await status.json()).toMatchObject({ commit });
   });
-  it("rifiuta redirect e revisioni Codeberg inaccessibili prima di registrare un pacchetto", async () => {
+  it("rifiuta redirect e revisioni GitLab inaccessibili prima di registrare un pacchetto", async () => {
     env.PUBLISH_TOKEN = "publisher-di-prova";
-    env.CODEBERG_READ_TOKEN = "read-only-di-prova";
+    env.GITLAB_READ_TOKEN = "read-only-di-prova";
+    env.GITLAB_READ_USERNAME = "gitlab+deploy-token-test";
     const commit = "c".repeat(40);
     const fetchHead = vi.fn().mockImplementation(async (_url, init) => {
       if (init.redirect !== "manual")
@@ -460,7 +491,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       commit,
       sha256: "d".repeat(64),
       size: 10,
-      url: `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe`,
+      url: `https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/${commit}/StaianoHVAC.exe`,
     };
     expect(
       (
@@ -485,7 +516,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       db.prepare("SELECT COUNT(*) AS count FROM releases").get(),
     ).toMatchObject({ count: 0 });
   });
-  it("scarica da GitHub e dal suo CDN senza inoltrare credenziali, preservando Codeberg", async () => {
+  it("scarica solo dal pacchetto GitLab previsto e non espone il deploy token nei redirect", async () => {
     const created = await createLicense(env);
     const body = {
       licenseKey: created.key,
@@ -494,34 +525,24 @@ describe("Worker licenze — regressioni e pannello", () => {
       sequence: 1,
     };
     await call(env, "/activate", { method: "POST", body });
-    const github = `https://github.com/ImHivanzh/Staiano/releases/download/exe-${"c".repeat(40)}/StaianoHVAC.exe`;
+    const commit = "c".repeat(40);
+    const url = `https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/${commit}/StaianoHVAC.exe`;
     db.prepare(
       "INSERT INTO releases (commit_sha, sha256, size, url, created_at) VALUES (?, ?, ?, ?, ?)",
-    ).run("c".repeat(40), "d".repeat(64), 3, github, new Date().toISOString());
-    env.CODEBERG_READ_TOKEN = "legacy-read-only";
-    const upstream = vi
-      .fn()
-      .mockResolvedValueOnce(
-        new Response(null, {
-          status: 302,
-          headers: {
-            Location:
-              "https://release-assets.githubusercontent.com/test/package",
-          },
-        }),
-      )
-      .mockResolvedValueOnce(new Response("exe"));
+    ).run(commit, "d".repeat(64), 3, url, new Date().toISOString());
+    env.GITLAB_READ_TOKEN = "read-only-di-prova";
+    const upstream = vi.fn().mockResolvedValueOnce(new Response("exe"));
     vi.stubGlobal("fetch", upstream);
     expect(
       await (
         await call(env, "/updates/download", { method: "POST", body })
       ).text(),
     ).toBe("exe");
-    expect(upstream).toHaveBeenNthCalledWith(
-      2,
-      "https://release-assets.githubusercontent.com/test/package",
+    expect(upstream).toHaveBeenCalledWith(
+      url,
       expect.objectContaining({
-        headers: { "User-Agent": "Staiano-licenses" },
+        headers: { "DEPLOY-TOKEN": "read-only-di-prova" },
+        redirect: "manual",
       }),
     );
     upstream.mockResolvedValueOnce(
@@ -533,22 +554,17 @@ describe("Worker licenze — regressioni e pannello", () => {
     expect(
       (await call(env, "/updates/download", { method: "POST", body })).status,
     ).toBe(502);
-    expect(upstream).toHaveBeenCalledTimes(3);
-    db.prepare("UPDATE releases SET url = ?").run(
-      "https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/old/StaianoHVAC.exe",
-    );
-    upstream.mockResolvedValueOnce(new Response("old"));
+    expect(upstream).toHaveBeenCalledTimes(2);
+    db.prepare("UPDATE releases SET url = ?").run(url.replace("87880568", "1"));
     expect(
-      await (
-        await call(env, "/updates/download", { method: "POST", body })
-      ).text(),
-    ).toBe("old");
-    expect(upstream).toHaveBeenLastCalledWith(
-      expect.stringContaining("codeberg.org"),
-      expect.objectContaining({
-        headers: { Authorization: "token legacy-read-only" },
-      }),
-    );
+      (await call(env, "/updates/download", { method: "POST", body })).status,
+    ).toBe(502);
+    expect(upstream).toHaveBeenCalledTimes(2);
+    db.prepare("UPDATE releases SET url = ?").run(url);
+    delete env.GITLAB_READ_TOKEN;
+    expect(
+      (await call(env, "/updates/download", { method: "POST", body })).status,
+    ).toBe(503);
   });
   it("protegge registrazione passkey, origine e challenge monouso", async () => {
     env.PASSKEY_ORIGIN = "https://licenze.test";
@@ -801,7 +817,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       "c".repeat(40),
       "d".repeat(64),
       10,
-      "https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/build-test/StaianoHVAC.exe",
+      "https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/cccccccccccccccccccccccccccccccccccccccc/StaianoHVAC.exe",
       new Date().toISOString(),
     );
     const response = await call(env, "/updates/check", {
@@ -855,7 +871,7 @@ describe("Worker licenze — regressioni e pannello", () => {
       commit,
       "d".repeat(64),
       10,
-      "https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/test/StaianoHVAC.exe",
+      "https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/cccccccccccccccccccccccccccccccccccccccc/StaianoHVAC.exe",
       new Date().toISOString(),
     );
     for (const appVersion of [undefined, "1.0.0", "a".repeat(40)]) {

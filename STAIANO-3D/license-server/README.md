@@ -29,7 +29,7 @@ Non riapplicare `0002` a un database già migrato. Pubblicazione:
 
 Pacchetti EXE e canale di aggiornamento: [deploy/ci/README.md](../deploy/ci/README.md).
 Le release si producono dalla copia di sviluppo con `compila.bat`, che richiede il
-segreto `PUBLISH_TOKEN` sul Worker e i token `CODEBERG_TOKEN` e
+segreto `PUBLISH_TOKEN` sul Worker e i token `GITLAB_TOKEN` e
 `LICENSE_PUBLISH_TOKEN` in `.env.local`. Il canale diventa operativo con la prima
 release pubblicata e collaudata; il pannello ne mostra lo stato.
 

@@ -12,18 +12,26 @@ import {
 import { FlexibleDuct } from "./FlexibleDuct";
 import { useProjectStore } from "@/stores/project-store";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
+import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 
 function FlowParticles({
   points,
   animated,
   color,
+  diameterMm,
 }: {
   points: RoutePoint[];
   animated: boolean;
   color: string;
+  diameterMm?: number;
 }) {
   const ref = useRef<THREE.InstancedMesh>(null);
   const curve = useMemo(() => {
+    if (diameterMm)
+      return (
+        flexibleDuctCurve(points, diameterMm)?.curve ??
+        new THREE.CurvePath<THREE.Vector3>()
+      );
     const curve = new THREE.CurvePath<THREE.Vector3>();
     for (let i = 1; i < points.length; i++) {
       const start = points[i - 1],
@@ -44,7 +52,7 @@ function FlowParticles({
       );
     }
     return curve;
-  }, [points]);
+  }, [points, diameterMm]);
   const transform = useMemo(() => new THREE.Object3D(), []);
   useFrame(({ clock, invalidate }) => {
     if (!animated || !ref.current || curve.getLength() < 0.001) return;
@@ -182,31 +190,26 @@ export function DuctMeshes({
   }, [gl, connections.length, ducts.length]);
   return (
     <group>
-      {/* shortcut: collegamenti senza canale con spessore illustrativo; usare dimensioni salvate dopo configurazione del canale. */}
-      {connections.map(({ terminalId, points }) => (
-        <group key={terminalId}>
-          {points.slice(1).map((end, index) => (
-            <DuctSegment
-              key={index}
-              start={points[index]}
-              end={end}
-              duct={{
-                shape: "circle",
-                diameterMm: 70,
-                widthMm: null,
-                heightMm: null,
-              }}
-              color="#65aebe"
-            />
-          ))}
+      {connections.map(({ terminalId, portIndex, diameterMm, points, end }) => (
+        <group key={`${terminalId}:${portIndex}`}>
+          <FlexibleDuct
+            points={points}
+            diameterMm={diameterMm}
+            color="#ffffff"
+            fallbackPoint={end}
+          />
           <FlowParticles
             points={points}
+            diameterMm={diameterMm}
             animated={animated && !reducedMotion}
             color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
           />
         </group>
       ))}
       {ducts.map(({ duct, points }) => {
+        const terminal = project.airTerminals.find(
+          (t) => t.id === duct.terminalId,
+        );
         const color =
           systems.findIndex((s) => s.id === duct.systemId) % 2 === 0
             ? "#20a8cd"
@@ -237,6 +240,14 @@ export function DuctMeshes({
                 points={points}
                 diameterMm={duct.diameterMm ?? 160}
                 color="#ffffff"
+                fallbackPoint={
+                  terminal
+                    ? {
+                        ...terminal.position,
+                        elevationM: terminal.elevationM ?? 2,
+                      }
+                    : undefined
+                }
               />
             ) : (
               points
@@ -264,6 +275,9 @@ export function DuctMeshes({
             )}
             <FlowParticles
               points={points}
+              diameterMm={
+                duct.kind === "flexible" ? (duct.diameterMm ?? 160) : undefined
+              }
               animated={animated && !reducedMotion}
               color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
             />

@@ -11,17 +11,24 @@ import {
   insertPlenum,
   connectPlenum,
   syncAttachedPlenums,
+  terminalPlenum,
+  attachedPlenumPorts,
 } from "./attached-plenums";
-import { placeSupplyPlenum } from "./placement";
+import {
+  machinePlenum,
+  placedPlenumGeometry,
+  placeSupplyPlenum,
+} from "./placement";
 import { movePlacedDevice } from "../geometry/move-device";
 import { rotateDevice90 } from "../geometry/rotate-device";
-import { ductRoute } from "./routes";
+import { airConnectionRoutes, ductRoute, plenumLocalToPlan } from "./routes";
 import { projectSchema } from "@/schemas/project";
 import { removeSelection } from "../geometry/selection";
 import { recordOperatorChanges } from "../project-commands";
 import { checkLockedObjects } from "../project-commands";
 import { connectionSelection } from "@/configurator/viewer3d/connection-selection";
 import { calculateEcoclimaBom } from "../air-terminals/commercial-bom";
+import { flexibleDuctCurve } from "./flexible-curve";
 
 function fixture(mounting: "ceiling" | "wall" = "ceiling") {
   let p = guidedProjectFixture();
@@ -45,7 +52,7 @@ it("saves a separate terminal plenum, its real port count and flexible 3D routes
     expect(
       (start.y - machine.position.y) * Math.cos(machine.rotation) -
         (start.x - machine.position.x) * Math.sin(machine.rotation),
-    ).toBeCloseTo(machine.depthMm / 2000);
+    ).toBeGreaterThan(machine.depthMm / 2000);
     expect(ductRoute(p, duct).at(-1)!.elevationM).toBeGreaterThan(
       p.airTerminals[0].elevationM!,
     );
@@ -58,7 +65,7 @@ it("saves a separate terminal plenum, its real port count and flexible 3D routes
       waypoints: [{ x: 3, y: 2, elevationM: 2.5 }],
     })),
   };
-  expect(ductRoute(edited, edited.ducts[0])[1]).toEqual({
+  expect(ductRoute(edited, edited.ducts[0])).toContainEqual({
     x: 3,
     y: 2,
     elevationM: 2.5,
@@ -202,4 +209,85 @@ it("pairs plenum connections in both orders, prevents locked attachment motion a
   expect(bom.lines.find((line) => /plenum/.test(line.kind))?.id).toBe(
     `${plenum.id}:plenum`,
   );
+});
+
+it.each([0, Math.PI / 2, Math.PI])(
+  "connects each catalogue collar between the two visible plenums at rotation %s without rewriting the project",
+  (rotation) => {
+    let p = guidedProjectFixture();
+    p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, {
+      x: 3,
+      y: 3,
+    });
+    p = addGuidedTerminal(p, 1000);
+    p.hvacSystems[0].indoorUnits[0].rotation = rotation;
+    const before = JSON.stringify(p);
+    const terminal = p.airTerminals[0];
+    const body = terminalPlenum(p, terminal)!;
+    const source = machinePlenum(p, terminal.systemId!, "supply")!;
+    const ports = placedPlenumGeometry(p, source)!.ports.filter((port) =>
+      port.branch.terminalIds.includes(terminal.id),
+    );
+    const connections = airConnectionRoutes(p, p.floors[0].id);
+    expect(connections).toHaveLength(body.portCount!);
+    for (const [index, connection] of connections.entries()) {
+      expect(
+        flexibleDuctCurve(connection.points, connection.diameterMm),
+      ).not.toBeNull();
+      const port = ports[index];
+      expect(connection.points[0]).toEqual(
+        plenumLocalToPlan(source, [
+          port.centerMm[0] / 1000,
+          port.centerMm[1] / 1000,
+          (port.centerMm[2] + port.collarLengthMm) / 1000,
+        ]),
+      );
+      const { diameterMm: diameter, ...end } = attachedPlenumPorts(p, body)[
+        index
+      ];
+      expect(connection.points.at(-1)).toMatchObject(end);
+      expect(connection.diameterMm).toBe(diameter);
+      const [start, lead] = connection.points;
+      expect(
+        (lead.y - start.y) * Math.cos(source.rotation) -
+          (lead.x - start.x) * Math.sin(source.rotation),
+      ).toBeGreaterThan(0);
+    }
+    expect(JSON.stringify(p)).toBe(before);
+    const moved = movePlacedDevice(p, terminal.id, { x: 5, y: 3 });
+    const next = airConnectionRoutes(moved, p.floors[0].id);
+    expect(next[0].points[0]).toEqual(connections[0].points[0]);
+    expect(next[0].points.at(-1)).not.toEqual(connections[0].points.at(-1));
+  },
+);
+
+it("does not invent a terminal plenum when it was excluded or its catalogue dimensions are unknown", () => {
+  const p = fixture();
+  p.plenums = [];
+  p.ducts = [];
+  const terminal = p.airTerminals[0];
+  terminal.commercialOptions = {
+    ...terminal.commercialOptions!,
+    insulatedPlenum: false,
+  };
+  expect(terminalPlenum(p, terminal)).toBeNull();
+  expect(airConnectionRoutes(p, p.floors[0].id)).toEqual([]);
+  terminal.commercialOptions.insulatedPlenum = true;
+  terminal.catalogVersion = "missing";
+  expect(terminalPlenum(p, terminal)).toBeNull();
+});
+
+it("places the machine plenum beside an existing terminal plenum and aligns it with the machine above a suspended ceiling", () => {
+  let p = fixture();
+  const attached = p.plenums[0];
+  p.rooms[0].ceilingHeightM = 2.4;
+  p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  expect(p.plenums).toHaveLength(2);
+  expect(p.airTerminals[0].plenumId).toBe(attached.id);
+  const source = machinePlenum(p, p.hvacSystems[0].id, "supply")!;
+  const machine = p.hvacSystems[0].indoorUnits[0];
+  expect(source.elevationM).toBeCloseTo(
+    p.rooms[0].heightM - machine.heightMm / 2000 - 0.05,
+  );
+  expect(placeSupplyPlenum(p, p.hvacSystems[0].id).plenums).toHaveLength(2);
 });

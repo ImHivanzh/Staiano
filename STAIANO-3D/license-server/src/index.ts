@@ -44,7 +44,8 @@ export type Env = {
   LICENSE_PRIVATE_KEY?: string;
   ADMIN_TOKEN?: string;
   PUBLISH_TOKEN?: string;
-  CODEBERG_READ_TOKEN?: string;
+  GITLAB_READ_TOKEN?: string;
+  GITLAB_READ_USERNAME?: string;
   PASSKEY_ORIGIN?: string;
   ASSETS?: { fetch(request: Request): Promise<Response> };
   API_LIMITER?: {
@@ -662,35 +663,50 @@ async function publishRelease(env: Env, request: Request): Promise<Response> {
     !/^[a-f0-9]{40}$/.test(commit) ||
     !/^[a-f0-9]{64}$/.test(sha256) ||
     url !==
-      `https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/exe-${commit}/StaianoHVAC.exe` ||
+      `https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/${commit}/StaianoHVAC.exe` ||
     typeof body.size !== "number" ||
     !Number.isSafeInteger(body.size) ||
     body.size < 1 ||
     body.size > 536_870_912
   )
     return json({ message: "Pacchetto di aggiornamento non valido." }, 400);
-  if (!env.CODEBERG_READ_TOKEN)
+  if (!env.GITLAB_READ_TOKEN || !env.GITLAB_READ_USERNAME)
     return json({ message: "Accesso alle build non configurato." }, 503);
   const head = await fetch(
-    "https://codeberg.org/api/v1/repos/AvocadoOra/Staiano-3D/branches/main",
+    "https://gitlab.com/imhivanzh/Staiano3D.git/info/refs?service=git-upload-pack",
     {
-      headers: { Authorization: `token ${env.CODEBERG_READ_TOKEN}` },
+      headers: {
+        Authorization: `Basic ${btoa(`${env.GITLAB_READ_USERNAME}:${env.GITLAB_READ_TOKEN}`)}`,
+      },
       redirect: "manual",
       signal: AbortSignal.timeout(10_000),
     },
   );
-  if (!head.ok) return json({ message: "Codeberg non raggiungibile." }, 503);
-  const branch = (await head.json()) as { commit?: { id?: string } };
-  if (branch.commit?.id !== commit)
+  if (!head.ok) return json({ message: "GitLab non raggiungibile." }, 503);
+  const refs = await head.text();
+  const main = refs.match(
+    /(?:^|\n)[0-9a-f]{4}([a-f0-9]{40}) refs\/heads\/main(?:\0[^\n]*)?(?:\n|$)/,
+  )?.[1];
+  if (main !== commit)
     return json(
       { message: "La build non corrisponde alla revisione corrente di main." },
       409,
     );
   await env.DB.prepare(
-    "INSERT INTO releases (commit_sha, sha256, size, url, created_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(commit_sha) DO NOTHING",
+    "INSERT INTO releases (commit_sha, sha256, size, url, created_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(commit_sha) DO UPDATE SET url = excluded.url WHERE releases.sha256 = excluded.sha256 AND releases.size = excluded.size",
   )
     .bind(commit, sha256, body.size, url, new Date().toISOString())
     .run();
+  const stored = await env.DB.prepare(
+    "SELECT * FROM releases WHERE commit_sha = ?",
+  )
+    .bind(commit)
+    .first<ReleaseRow>();
+  if (stored?.sha256 !== sha256 || stored.size !== body.size)
+    return json(
+      { message: "La revisione ha già un pacchetto differente." },
+      409,
+    );
   return json({ status: "published", commit });
 }
 
@@ -734,18 +750,11 @@ async function handleUpdate(env: Env, request: Request): Promise<Response> {
   if (new URL(request.url).pathname === "/updates/download") {
     if (body.sequence !== release.sequence)
       return json({ message: "Pacchetto non più corrente." }, 409);
-    const legacy = release.url.startsWith(
-      "https://codeberg.org/AvocadoOra/Staiano-3D/releases/download/",
-    );
-    if (legacy && !env.CODEBERG_READ_TOKEN)
-      return json({ message: "Download non configurato." }, 503);
-    if (
-      !legacy &&
-      !/^https:\/\/github\.com\/ImHivanzh\/Staiano\/releases\/download\/exe-[a-f0-9]{40}\/StaianoHVAC\.exe$/.test(
-        release.url,
-      )
-    )
+    const packageUrl = `https://gitlab.com/api/v4/projects/87880568/packages/generic/staiano-hvac/${release.commit_sha}/StaianoHVAC.exe`;
+    if (release.url !== packageUrl)
       return json({ message: "Destinazione download non consentita." }, 502);
+    if (!env.GITLAB_READ_TOKEN)
+      return json({ message: "Download non configurato." }, 503);
     let url = release.url;
     for (let attempt = 0; attempt < 4; attempt++) {
       const target = new URL(url);
@@ -753,19 +762,14 @@ async function handleUpdate(env: Env, request: Request): Promise<Response> {
         target.protocol !== "https:" ||
         target.username ||
         target.password ||
-        (legacy
-          ? target.hostname !== "codeberg.org"
-          : ![
-              "github.com",
-              "release-assets.githubusercontent.com",
-              "objects.githubusercontent.com",
-            ].includes(target.hostname))
+        target.origin !== "https://gitlab.com" ||
+        !target.pathname.startsWith(
+          "/api/v4/projects/87880568/packages/generic/staiano-hvac/",
+        )
       )
         return json({ message: "Destinazione download non consentita." }, 502);
       const upstream = await fetch(url, {
-        headers: legacy
-          ? { Authorization: `token ${env.CODEBERG_READ_TOKEN}` }
-          : { "User-Agent": "Staiano-licenses" },
+        headers: { "DEPLOY-TOKEN": env.GITLAB_READ_TOKEN },
         redirect: "manual",
         signal: AbortSignal.timeout(300_000),
       });

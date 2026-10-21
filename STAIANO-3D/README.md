@@ -1,6 +1,6 @@
 # Staiano HVAC
 
-Repository canonico: [imhivanzh/Staiano3D](https://gitlab.com/imhivanzh/Staiano3D), cartella `STAIANO-3D/`. Eseguire i comandi e gli script da questa cartella. I nuovi pacchetti EXE vengono pubblicati nelle Releases Codeberg.
+Repository canonico: [imhivanzh/Staiano3D](https://gitlab.com/imhivanzh/Staiano3D), cartella `STAIANO-3D/`. Eseguire i comandi e gli script da questa cartella. I pacchetti EXE vengono pubblicati nel Generic Package Registry GitLab e collegati alle Releases dello stesso progetto.
 
 Per presentare il progetto sulla TV collegata al PC, usare **Apri vista cliente**
 nella barra della vista. Spostare la nuova finestra sullo schermo TV e premere
@@ -216,4 +216,4 @@ Ricompilazione del parser: `npm run dwg:build`. ODA commerciale disattivato.
 
 Per compilare il lettore DWG occorre l’SDK .NET 8. È supportata anche l’installazione locale in `.cache/dotnet-sdk/`; lo script la usa senza modificare il PATH di Windows. Il ripristino usa NuGet ufficiale e verifica `packages.lock.json`.
 
-Il remoto `codeberg` è conservato per le release EXE esistenti. La migrazione del canale di aggiornamento a GitLab richiede un accesso di servizio separato, ancora da autorizzare.
+Sorgenti e distribuzione EXE usano esclusivamente GitLab (`origin`, progetto `imhivanzh/Staiano3D`).

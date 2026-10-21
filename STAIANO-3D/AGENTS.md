@@ -23,7 +23,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Licenza
 
 - Il Worker `licenses` è universale: le licenze includono `productId`; per questa app usare `staiano-hvac`. Le chiavi `LIC-` e le storiche `STAIANO-` sono compatibili. Protocollo: `license-server/INTEGRATION.md`.
-- Pubblicazione: `compila.bat` nella radice del progetto compila, collauda e pubblica il pacchetto (fa il push su Codeberg se servono commit; `installa` lo installa anche qui, `nopublish` prova senza pubblicare). Richiede albero pulito, Node 24.14.0 e `CODEBERG_TOKEN` + `LICENSE_PUBLISH_TOKEN` in `.env.local`. Il workflow in `deploy/ci/` resta un'alternativa non usata.
+- Pubblicazione: `compila.bat` nella radice del progetto compila, collauda e pubblica il pacchetto (fa il push su GitLab se servono commit; `installa` lo installa anche qui, `nopublish` prova senza pubblicare). Richiede albero pulito, Node 24.14.0 e `GITLAB_TOKEN` + `LICENSE_PUBLISH_TOKEN` in `.env.local`. Il workflow in `deploy/ci/` resta un'alternativa non usata.
 - Quando è installato, il programma gira come EXE: il record effettivo è `C:\local-software\StaianoHVAC\application\data\.cache\production-server.json`; verificare anche `X-Staiano-Build` sulla porta 3015. Il repository resta una copia di sviluppo, non è necessario al programma installato.
 - Il pannello supporta passkey WebAuthn. La prima registrazione richiede accesso amministratore esistente e conferma dell'autenticatore da parte dell'utente. Non creare passkey amministrative sintetiche in produzione; usare autenticatore virtuale solo nei test locali.
 
@@ -34,5 +34,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Repository GitLab e distribuzione
 
 - Repository sorgente canonico: https://gitlab.com/imhivanzh/Staiano3D, ramo `main`, progetto nella sottocartella `STAIANO-3D/`. Eseguire npm e gli script da questa sottocartella. GitHub resta sospeso e non viene usato per la distribuzione.
-- `origin` punta a GitLab. `codeberg` conserva la copia precedente e ospita ancora il canale EXE; la migrazione dei segreti di aggiornamento richiede autorizzazione separata.
-- Pubblicazione EXE: `compila.bat`; accesso Codeberg per il canale EXE tramite Git Credential Manager oppure `CODEBERG_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.
+- `origin` punta a GitLab; sorgenti, release e pacchetti EXE usano esclusivamente questo progetto.
+- Pubblicazione EXE: `compila.bat`; accesso GitLab (scope `api`) per il canale EXE tramite Git Credential Manager oppure `GITLAB_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.

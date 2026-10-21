@@ -135,43 +135,8 @@ export function syncAttachedPlenums(
       }
     }
     if (!plenum.attachmentId) return [plenum];
-    const terminal = project.airTerminals.find(
-      (t) => t.id === plenum.attachmentId,
-    );
-    const system = project.hvacSystems.find((s) =>
-      s.indoorUnits.some((u) => u.id === plenum.attachmentId),
-    );
-    const owner =
-      terminal ?? system?.indoorUnits.find((u) => u.id === plenum.attachmentId);
-    if (!owner) return [];
-    const room = project.rooms.find((r) => r.id === owner.roomId);
-    if (!room) return [];
-    const ceiling = terminal?.mounting === "ceiling";
-    const gap = (owner.depthMm ?? 0) / 2000 + plenum.depthMm / 2000;
-    return [
-      {
-        ...plenum,
-        systemId: terminal ? terminal.systemId : system!.id,
-        roomId: owner.roomId,
-        floorId: owner.floorId,
-        rotation: owner.rotation,
-        ...(!terminal
-          ? { widthMm: owner.widthMm, heightMm: owner.heightMm }
-          : {}),
-        position: ceiling
-          ? owner.position
-          : {
-              x: owner.position.x + Math.sin(owner.rotation) * gap,
-              y: owner.position.y - Math.cos(owner.rotation) * gap,
-            },
-        elevationM: terminal
-          ? (terminal.elevationM ?? roomCeilingHeightM(room)) +
-            (ceiling
-              ? (terminal.depthMm ?? 0) / 1000 + plenum.heightMm / 2000
-              : 0)
-          : room.heightM - owner.heightMm / 2000 - 0.05,
-      },
-    ];
+    const placed = attachedPlenumPose(project, plenum);
+    return placed ? [placed] : [];
   });
   const ducts = (project.ducts ?? [])
     .filter((d) => {
@@ -226,15 +191,12 @@ export function syncAttachedPlenums(
 }
 
 export function attachedPlenumPorts(project: Project, plenum: Plenum) {
-  const terminal = project.airTerminals.find(
-    (t) => t.id === plenum.attachmentId,
-  );
+  const upper = plenumPortsUpper(project, plenum);
   const count = plenum.portCount ?? 1;
   const diameter = plenum.portDiameterMm ?? 160;
   return Array.from({ length: count }, (_, i) => {
     const along = (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000;
-    const forward =
-      terminal?.mounting === "ceiling" ? 0 : -plenum.depthMm / 2000 - 0.06;
+    const forward = upper ? 0 : -plenum.depthMm / 2000 - 0.06;
     return {
       x:
         plenum.position.x +
@@ -245,9 +207,88 @@ export function attachedPlenumPorts(project: Project, plenum: Plenum) {
         along * Math.sin(plenum.rotation) +
         forward * Math.cos(plenum.rotation),
       elevationM:
-        (plenum.elevationM ?? 2) +
-        (terminal?.mounting === "ceiling" ? plenum.heightMm / 2000 + 0.06 : 0),
+        (plenum.elevationM ?? 2) + (upper ? plenum.heightMm / 2000 + 0.06 : 0),
       diameterMm: diameter,
     };
   });
+}
+
+export function plenumPortsUpper(project: Project, plenum: Plenum) {
+  const terminal = project.airTerminals.find(
+    (t) => t.id === plenum.attachmentId,
+  );
+  return (
+    terminal?.mounting === "ceiling" &&
+    (terminal.commercialOptions?.connectionPosition ??
+      resolveTerminalAccessorySpecification(terminal)?.plenum
+        ?.connectionPosition ??
+      "upper") === "upper"
+  );
+}
+
+/** Catalogue plenums are rendered even when no separate custom body was inserted. */
+export function terminalPlenum(
+  project: Project,
+  terminal: Project["airTerminals"][number],
+): Plenum | null {
+  const saved = project.plenums.find((p) => p.attachmentId === terminal.id);
+  if (saved) return attachedPlenumPose(project, saved);
+  if (terminal.commercialOptions?.insulatedPlenum === false) return null;
+  const spec = resolveTerminalAccessorySpecification(terminal)?.plenum;
+  if (!spec?.lengthMm || !spec.widthMm || !spec.heightMm) return null;
+  return attachedPlenumPose(project, {
+    id: `terminal-plenum:${terminal.id}`,
+    attachmentId: terminal.id,
+    systemId: terminal.systemId,
+    floorId: terminal.floorId,
+    roomId: terminal.roomId,
+    use: terminal.use,
+    position: terminal.position,
+    rotation: terminal.rotation,
+    widthMm: spec.lengthMm,
+    heightMm: spec.heightMm,
+    depthMm: spec.widthMm,
+    elevationM: terminal.elevationM ?? undefined,
+    portCount: spec.portCount,
+    portDiameterMm: spec.portDiameterMm,
+    model: spec.modelCode,
+    material: terminal.commercialOptions?.plenumMaterial ?? "insulated",
+    status: "proposed",
+    locked: terminal.locked,
+    designSettings: null,
+  });
+}
+
+function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
+  const terminal = project.airTerminals.find(
+    (t) => t.id === plenum.attachmentId,
+  );
+  const system = project.hvacSystems.find((s) =>
+    s.indoorUnits.some((u) => u.id === plenum.attachmentId),
+  );
+  const owner =
+    terminal ?? system?.indoorUnits.find((u) => u.id === plenum.attachmentId);
+  if (!owner) return null;
+  const room = project.rooms.find((r) => r.id === owner.roomId);
+  if (!room) return null;
+  const ceiling = terminal?.mounting === "ceiling";
+  const gap = (owner.depthMm ?? 0) / 2000 + plenum.depthMm / 2000;
+  return {
+    ...plenum,
+    systemId: terminal ? terminal.systemId : system!.id,
+    roomId: owner.roomId,
+    floorId: owner.floorId,
+    rotation: owner.rotation,
+    ...(!terminal ? { widthMm: owner.widthMm, heightMm: owner.heightMm } : {}),
+    position: ceiling
+      ? owner.position
+      : {
+          x: owner.position.x + Math.sin(owner.rotation) * gap,
+          y: owner.position.y - Math.cos(owner.rotation) * gap,
+        },
+    elevationM: terminal
+      ? (terminal.elevationM ?? roomCeilingHeightM(room)) +
+        (ceiling ? (terminal.depthMm ?? 0) / 1000 + plenum.heightMm / 2000 : 0)
+      : room.heightM - owner.heightMm / 2000 - 0.05,
+  };
 }
