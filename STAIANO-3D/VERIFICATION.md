@@ -135,7 +135,15 @@ sostituiti da valori stimati. I plenum su misura restano da quotare.
 ## 21 ottobre 2026 — GitLab e flessibili fra plenum
 
 - Canale EXE migrato al progetto GitLab `imhivanzh/Staiano3D`, ID 87880568: Generic Package Registry, release e Worker di aggiornamento. Rimosso il remoto precedente, il relativo token locale e il segreto del Worker. Download reale del pacchetto esistente (271408128 byte), firma e SHA-256 verificati senza cambiare la sequenza 29. Evidenza locale: `.cache/gitlab-download-verified.json`.
-- Suite completa: 612 test passati e una vecchia aspettativa sul percorso attraverso una zona esterna aggiornata al nuovo requisito fisico; il file corretto ha poi superato tutti i 23 test. Copertura totale corrente: 613 test. Log: `.cache/migration-tests-final.log`, `.cache/gap-check-final.log`.
+- Suite completa della migrazione: 613 test passati in una esecuzione pulita. Log: `.cache/migration-tests-clean.log`.
 - Quattro flussi Edge passati: PC 1920 px, iPad 1024 px, modifica delle curve e associazione del plenum. Nessun errore runtime o console nei flussi. Screenshot: `.cache/channel-plenums-1920.png` e `.cache/channel-plenums-1024.png`. Log: `.cache/channel-browser-verified.log`.
 - Typecheck e lint dei sorgenti modificati passati. Il lint globale include artefatti generati e segnala anche errori preesistenti in `deploy/executable.cjs` e `SiteContext.tsx`; non e' un gate pulito di questo repository.
 - Quote catalogo, rotazioni, spostamenti, corpi separati e imbocchi condividono la stessa geometria. Le curve sono raccordi circolari tangenti (preferito R=2D, minimo R=D), con controllo delle sovrapposizioni del tubo con se stesso. Dove manca spazio, viene segnalato un percorso non realizzabile. Restano da verificare le prescrizioni del tubo scelto, i supporti e le interferenze dell'impianto completo.
+
+
+## Cartongesso con scostamento firmato e intercapedini laterali
+
+- Dichiarazione sul muro, con lato stanza e scostamento positivo/negativo. Geometria e vuoti condivisi da 2D, 3D e routing dei flessibili; porte e finestre restano aperte nelle due superfici.
+- Casi +30 e -30 cm provati da interazione sul muro, inclusi parete laterale, conteggio dei due tubi, esportazione e persistenza, su PC e iPad. Log: `.cache/drywall-browser.log`; immagini: `.cache/drywall-30-2d.png`, `.cache/drywall-30-3d.png`, `.cache/drywall--30-3d.png`.
+- Test geometrici di scostamento, continuità degli angoli, area e volume utili, copia della stanza, rimozione del rivestimento, bocchette presso gli angoli e pilastri sovrapposti. Test dei tubi nella profondità dichiarata e degli attacchi superiori reali.
+- Il precedente EXE della migrazione, build `c5KAmA0ObsePmexIWngP3`, è stato collaudato sulla porta 3016 con tre test browser, compreso il caso reale di due stacchi e due tubi. La postazione l'ha ricevuto dal canale GitLab. Evidenza: `.cache/exe-gitlab-final/verified.json`.

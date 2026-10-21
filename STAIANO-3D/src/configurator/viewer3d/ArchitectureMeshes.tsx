@@ -17,6 +17,7 @@ import {
   type WallPanel,
 } from "./architecture-geometry";
 import { useSurfaceMaterials } from "./use-surface-materials";
+import { drywallGeometry } from "@/domain/geometry/drywall";
 
 export type ArchitectureMeshesProps = {
   walls: readonly Wall[];
@@ -31,6 +32,7 @@ export type ArchitectureMeshesProps = {
   isolatedRoom?: Room;
   floorFinish?: "oak" | "stone";
   onReady?: () => void;
+  technicalVoids?: boolean;
 };
 
 type WallExtension = { startM: number; endM: number; lengthM: number };
@@ -262,6 +264,8 @@ function ArchitecturalWall({
   isolatedRoom,
   textures,
   onSelect,
+  transparent = false,
+  fixtures = true,
 }: {
   wall: Wall;
   walls: readonly Wall[];
@@ -274,6 +278,8 @@ function ArchitecturalWall({
   isolatedRoom?: Room;
   textures: ReturnType<typeof useSurfaceMaterials>;
   onSelect: ArchitectureMeshesProps["onSelect"];
+  transparent?: boolean;
+  fixtures?: boolean;
 }) {
   const trueHeight = architecturalWallHeight(wall, rooms, defaultHeightM);
   const height = cut ? Math.min(cutHeightM, trueHeight) : trueHeight;
@@ -387,23 +393,30 @@ function ArchitecturalWall({
           map={textures.plaster}
           color="#f4f1e9"
           roughness={0.91}
+          transparent={transparent}
+          opacity={transparent ? 0.18 : 1}
+          depthWrite={!transparent}
         />
         <meshStandardMaterial
           attach="material-1"
           color={cut ? "#cbc3b4" : "#e5e0d4"}
           roughness={0.9}
+          transparent={transparent}
+          opacity={transparent ? 0.18 : 1}
+          depthWrite={!transparent}
         />
       </mesh>
       <mesh geometry={baseboard} receiveShadow>
         <meshStandardMaterial color="#e5dfd2" roughness={0.61} />
       </mesh>
-      {apertures.map((opening) => (
-        <OpeningFrame
-          key={opening.id}
-          opening={opening}
-          thickness={wall.thickness}
-        />
-      ))}
+      {fixtures &&
+        apertures.map((opening) => (
+          <OpeningFrame
+            key={opening.id}
+            opening={opening}
+            thickness={wall.thickness}
+          />
+        ))}
       {openings
         .filter(
           (o) =>
@@ -464,9 +477,19 @@ export function ArchitectureMeshes({
   isolatedRoom,
   floorFinish,
   onReady,
+  technicalVoids = false,
 }: ArchitectureMeshesProps) {
   const textures = useSurfaceMaterials();
   const { gl, invalidate } = useThree();
+  useEffect(() => {
+    gl.domElement.setAttribute(
+      "data-drywall-count",
+      String(walls.filter((w) => w.drywall).length),
+    );
+    return () => {
+      gl.domElement.removeAttribute("data-drywall-count");
+    };
+  }, [gl, walls]);
   useEffect(() => {
     gl.domElement.setAttribute("data-materials", "pbr");
     onReady?.();
@@ -489,22 +512,94 @@ export function ArchitectureMeshes({
           floorFinish={floorFinish}
         />
       ))}
-      {walls.map((wall) => (
-        <ArchitecturalWall
-          key={wall.id}
-          wall={wall}
-          walls={walls}
-          rooms={rooms}
-          openings={openings}
-          defaultHeightM={defaultHeightM}
-          chosen={selected.has(wall.id)}
-          cut={cutWallIds?.has(wall.id) ?? false}
-          cutHeightM={cutHeightM}
-          isolatedRoom={isolatedRoom}
-          textures={textures}
-          onSelect={onSelect}
-        />
-      ))}
+      {walls.map((wall) => {
+        const hollow = drywallGeometry({ walls, rooms }, wall);
+        const renderWall = (
+          copy: Wall,
+          key: string,
+          thin = false,
+          fixtures = true,
+          wallOpenings = openings,
+        ) => (
+          <ArchitecturalWall
+            key={key}
+            wall={copy}
+            walls={walls}
+            rooms={rooms}
+            openings={wallOpenings}
+            defaultHeightM={defaultHeightM}
+            chosen={selected.has(wall.id)}
+            cut={cutWallIds?.has(wall.id) ?? false}
+            cutHeightM={cutHeightM}
+            isolatedRoom={isolatedRoom}
+            textures={textures}
+            onSelect={onSelect}
+            transparent={thin && technicalVoids}
+            fixtures={fixtures}
+          />
+        );
+        if (!hollow) return renderWall(wall, wall.id);
+        const tangent = {
+          x: (wall.end.x - wall.start.x) / distance(wall.start, wall.end),
+          y: (wall.end.y - wall.start.y) / distance(wall.start, wall.end),
+        };
+        const layer = (face: typeof hollow.front, thickness: number) => {
+          const forward =
+            (face.end.x - face.start.x) * tangent.x +
+              (face.end.y - face.start.y) * tangent.y >=
+            0;
+          const start = forward ? face.start : face.end,
+            end = forward ? face.end : face.start;
+          return {
+            ...wall,
+            thickness,
+            start: {
+              x: start.x - (hollow.normal.x * thickness) / 2,
+              y: start.y - (hollow.normal.y * thickness) / 2,
+            },
+            end: {
+              x: end.x - (hollow.normal.x * thickness) / 2,
+              y: end.y - (hollow.normal.y * thickness) / 2,
+            },
+          };
+        };
+        const front = layer(hollow.front, 0.0125),
+          back = layer(hollow.back, wall.thickness);
+        const apertures = (copy: Wall) =>
+          openings.map((opening) =>
+            opening.wallId === wall.id
+              ? {
+                  ...opening,
+                  offsetM:
+                    opening.offsetM -
+                    ((copy.start.x - wall.start.x) * tangent.x +
+                      (copy.start.y - wall.start.y) * tangent.y),
+                }
+              : opening,
+          );
+        return (
+          <group key={wall.id} name="Cartongesso con intercapedine vuota">
+            {renderWall(back, "back", false, false, apertures(back))}
+            {renderWall(front, "front", true, true, apertures(front))}
+            {(["start", "end"] as const).map((end) =>
+              hollow[end === "start" ? "joinedStart" : "joinedEnd"]
+                ? null
+                : renderWall(
+                    {
+                      ...wall,
+                      thickness: 0.0125,
+                      start: hollow.back[end],
+                      end: hollow.front[end],
+                    },
+                    end,
+                    true,
+                    false,
+                    [],
+                  ),
+            )}
+          </group>
+        );
+      })}
     </group>
   );
 }

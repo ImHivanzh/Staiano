@@ -7,6 +7,8 @@ import {
   segmentInsideFloor,
 } from "@/domain/geometry/indoor-route";
 import { flexibleDuctCurve } from "./flexible-curve";
+import { wallCavityGeometry, wallCavityPolygons } from "./wall-cavity";
+import { roofHeightAt } from "../geometry/ceilings";
 import { footprintCorners } from "@/domain/geometry/footprint";
 import {
   pointInPolygon,
@@ -61,12 +63,13 @@ function flexibleCollarLeads(
   start: RoutePoint,
   end: RoutePoint,
   diameterMm: number,
+  leadMultiplier = 1.1,
 ) {
   const source = machinePlenum(project, systemId, terminal.use);
   const target = terminalPlenum(project, terminal);
   if (!source || !target) return null;
   // Leave both collars straight before bending, so the hose cannot cut through either body.
-  const lead = Math.max(0.15, (3 * diameterMm) / 1000);
+  const lead = Math.max(0.1, (leadMultiplier * diameterMm) / 1000);
   const direction = source.attachmentId ? -1 : 1;
   const from = {
     x: start.x - Math.sin(source.rotation) * lead * direction,
@@ -90,87 +93,131 @@ function flexibleConnectionRoute(
   end: RoutePoint,
   diameterMm: number,
 ) {
-  const leads = flexibleCollarLeads(
-    project,
-    systemId,
-    terminal,
-    start,
-    end,
-    diameterMm,
-  );
-  if (!leads) return [];
-  const { source, target, from, to, lead } = leads;
-  const polygons = floorRoutingPolygons(project, terminal.floorId);
-  const candidates: { points: RoutePoint[]; length: number }[] = [];
-  for (const sourceOffset of [0, -2 * lead, 2 * lead]) {
-    for (const targetOffset of [0, -2 * lead, 2 * lead]) {
-      const a = {
-        x: from.x + Math.cos(source.rotation) * sourceOffset,
-        y: from.y + Math.sin(source.rotation) * sourceOffset,
+  for (const leadMultiplier of [3, 2, 1.1]) {
+    const leads = flexibleCollarLeads(
+      project,
+      systemId,
+      terminal,
+      start,
+      end,
+      diameterMm,
+      leadMultiplier,
+    );
+    if (!leads) return [];
+    const { source, target, from, to, lead } = leads;
+    const cavityGeometry = wallCavityGeometry(project, terminal);
+    const cavity = cavityGeometry?.polygon;
+    if (cavity) {
+      const depth = cavityGeometry!.depthM;
+      const normal = {
+        x: -cavityGeometry!.normal.x,
+        y: -cavityGeometry!.normal.y,
       };
-      const b = {
-        x: to.x + Math.cos(target.rotation) * targetOffset,
-        y: to.y + Math.sin(target.rotation) * targetOffset,
-      };
-      const routes = [
-        indoorRoute(project, terminal.floorId, a, b),
-        indoorRoute(project, terminal.floorId, b, a).reverse(),
-        [a, b],
-      ];
-      for (const route of routes) {
-        if (route.length < 2) continue;
-        const points = [
-          start,
-          from,
-          ...route.map((point, i) => ({
-            ...point,
-            elevationM:
-              from.elevationM +
-              ((to.elevationM - from.elevationM) * i) / (route.length - 1),
-          })),
-          to,
-          end,
+      const radius = diameterMm / 2000;
+      const toDepth =
+        (to.x - cavity[0].x) * normal.x + (to.y - cavity[0].y) * normal.y;
+      if (depth < target.depthMm / 1000 || toDepth + radius > depth + 1e-6)
+        continue;
+    }
+    const polygons = [
+      ...floorRoutingPolygons(project, terminal.floorId),
+      ...wallCavityPolygons(project, terminal.floorId),
+    ];
+    const candidates: { points: RoutePoint[]; length: number }[] = [];
+    for (const sourceOffset of [0, -2 * lead, 2 * lead]) {
+      for (const targetOffset of [0, -2 * lead, 2 * lead]) {
+        const a = {
+          x: from.x + Math.cos(source.rotation) * sourceOffset,
+          y: from.y + Math.sin(source.rotation) * sourceOffset,
+        };
+        const b = {
+          x: to.x + Math.cos(target.rotation) * targetOffset,
+          y: to.y + Math.sin(target.rotation) * targetOffset,
+        };
+        const routes = [
+          indoorRoute(project, terminal.floorId, a, b, polygons),
+          indoorRoute(project, terminal.floorId, b, a, polygons).reverse(),
+          [a, b],
         ];
-        const rounded = flexibleDuctCurve(points, diameterMm);
-        if (!rounded) continue;
-        const samples = rounded.curve.getSpacedPoints(
-          Math.max(24, Math.ceil(rounded.curve.getLength() / 0.05)),
-        );
-        const radius = diameterMm / 2000;
-        if (
-          !samples.every(
-            (p) =>
-              p.y >= radius &&
-              segmentInsideFloor(
-                { x: p.x - radius, y: p.z },
-                { x: p.x + radius, y: p.z },
-                polygons,
-              ) &&
-              segmentInsideFloor(
-                { x: p.x, y: p.z - radius },
-                { x: p.x, y: p.z + radius },
-                polygons,
-              ),
+        for (const route of routes) {
+          if (route.length < 2) continue;
+          const points = [
+            start,
+            from,
+            ...route.map((point, i) => ({
+              ...point,
+              elevationM:
+                from.elevationM +
+                ((to.elevationM - from.elevationM) * i) / (route.length - 1),
+            })),
+            to,
+            end,
+          ];
+          const rounded = flexibleDuctCurve(points, diameterMm);
+          if (!rounded) continue;
+          const samples = rounded.curve.getSpacedPoints(
+            Math.max(24, Math.ceil(rounded.curve.getLength() / 0.05)),
+          );
+          const radius = diameterMm / 2000;
+          if (
+            terminal.mounting === "wall" &&
+            samples.some((point) => {
+              const plan = { x: point.x, y: point.z };
+              const containing = project.rooms.filter(
+                (room) =>
+                  room.floorId === terminal.floorId &&
+                  pointInPolygon(plan, room.polygon),
+              );
+              const rooms = containing.length
+                ? containing
+                : project.rooms.filter((room) => room.id === terminal.roomId);
+              return (
+                point.y + radius >
+                Math.max(
+                  ...rooms.map((room) => roofHeightAt(project, room, plan)),
+                ) +
+                  1e-6
+              );
+            })
           )
-        )
-          continue;
-        if (
-          !samples
-            .slice(1)
-            .every((p, i) =>
-              segmentInsideFloor(
-                { x: samples[i].x, y: samples[i].z },
-                { x: p.x, y: p.z },
-                polygons,
-              ),
+            continue;
+          if (
+            !samples.every(
+              (p) =>
+                p.y >= radius &&
+                segmentInsideFloor(
+                  { x: p.x - radius, y: p.z },
+                  { x: p.x + radius, y: p.z },
+                  polygons,
+                ) &&
+                segmentInsideFloor(
+                  { x: p.x, y: p.z - radius },
+                  { x: p.x, y: p.z + radius },
+                  polygons,
+                ),
             )
-        )
-          continue;
-        candidates.push({ points, length: rounded.curve.getLength() });
+          )
+            continue;
+          if (
+            !samples
+              .slice(1)
+              .every((p, i) =>
+                segmentInsideFloor(
+                  { x: samples[i].x, y: samples[i].z },
+                  { x: p.x, y: p.z },
+                  polygons,
+                ),
+              )
+          )
+            continue;
+          candidates.push({ points, length: rounded.curve.getLength() });
+        }
       }
     }
+    const best = candidates.sort((a, b) => a.length - b.length)[0];
+    if (best) return best.points;
   }
-  return candidates.sort((a, b) => a.length - b.length)[0]?.points ?? [];
+  return [];
 }
 
 /** Sezione rettangolare equivalente allo stacco circolare, con proporzione 2:1. */

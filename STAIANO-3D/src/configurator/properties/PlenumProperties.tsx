@@ -15,6 +15,9 @@ export function PlenumProperties({
   const plenum = project.plenums.find((p) => p.id === id)!;
   const { commit } = useProjectStore();
   const codes = deviceCodes(project);
+  const terminal = project.airTerminals.find(
+    (t) => t.id === plenum.attachmentId,
+  );
   const machineAttached =
     !!plenum.attachmentId &&
     project.hvacSystems.some((s) =>
@@ -35,6 +38,21 @@ export function PlenumProperties({
           const data = new FormData(e.currentTarget);
           commit((p) => ({
             ...p,
+            airTerminals: p.airTerminals.map((t) =>
+              t.id === terminal?.id
+                ? {
+                    ...t,
+                    commercialOptions: {
+                      insulatedPlenum: true,
+                      fixingBridges: true,
+                      continuityKit: true,
+                      ...t.commercialOptions,
+                      connectionPosition: String(data.get("port-position")) as
+                        "lateral" | "upper",
+                    },
+                  }
+                : t,
+            ),
             plenums: p.plenums.map((pl) =>
               pl.id === id
                 ? {
@@ -55,6 +73,34 @@ export function PlenumProperties({
         }}
       >
         <fieldset disabled={plenum.locked}>
+          {terminal && (
+            <label className="campo">
+              <span>Direzione stacchi reali</span>
+              <select
+                name="port-position"
+                defaultValue={
+                  terminal.commercialOptions?.connectionPosition ?? "lateral"
+                }
+              >
+                <option value="lateral">Orizzontali dietro il plenum</option>
+                <option value="upper">Superiori, verso l’alto</option>
+                {terminal.commercialOptions?.connectionPosition &&
+                  !["lateral", "upper"].includes(
+                    terminal.commercialOptions.connectionPosition,
+                  ) && (
+                    <option
+                      value={terminal.commercialOptions.connectionPosition}
+                    >
+                      Posizione personalizzata salvata
+                    </option>
+                  )}
+              </select>
+              <small>
+                Indica gli attacchi effettivi del plenum; non modifica le quote
+                dichiarate.
+              </small>
+            </label>
+          )}
           <label className="campo">
             <span>Modello</span>
             <input name="model" maxLength={100} defaultValue={plenum.model} />

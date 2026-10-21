@@ -93,8 +93,8 @@ export function indoorRoute(
   floorId: string,
   start: Point,
   end: Point,
+  polygons = floorRoutingPolygons(project, floorId),
 ): Point[] {
-  const polygons = floorRoutingPolygons(project, floorId);
   // Partially drawn plans leave no walkable polygon: keep devices connectable.
   const direct = () => (samePoint(start, end) ? [start] : [start, end]);
   for (const corner of [

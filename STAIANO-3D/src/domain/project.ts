@@ -2,6 +2,7 @@ import type { Point, Project, Room, Wall } from "@/schemas/project";
 import { projectSchema, CURRENT_SCHEMA_VERSION } from "@/schemas/project";
 import {
   add,
+  area,
   bounds,
   cross,
   distance,
@@ -17,10 +18,12 @@ import { reconcileRooms, overlappingPolygons } from "@/domain/geometry/rooms";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
 import { calculateRoomThermal } from "./geometry/ceilings";
 import { calculateThermal } from "@/domain/thermal/calculate";
-import { pillarAreaInRoom } from "@/domain/geometry/pillars";
+import { pillarFootprint } from "@/domain/geometry/pillars";
 import { ensureInstallations } from "./installations";
 import { roomCeilingHeightM } from "./air-conditioning/elevation";
 import { refreshDuctedBindings } from "./ducted/refresh";
+import { drywallGeometry } from "./geometry/drywall";
+import { clipToConvex } from "./geometry/pillars";
 
 export const newId = () => crypto.randomUUID();
 export function createProject(name = "Nuovo progetto"): Project {
@@ -154,10 +157,31 @@ export function recomputeProject(project: Project): Project {
     reconcileRooms(p.walls, p.rooms, f.id, p.projectSettings.defaultHeightM),
   );
   p.rooms = p.rooms.map((room) => {
+    const liningPolygons = p.walls
+      .filter((w) => w.drywall?.roomId === room.id && w.drywall.offsetM > 0)
+      .flatMap((w) => {
+        const lining = drywallGeometry(p, w);
+        return lining ? [lining.polygon] : [];
+      });
+    const linings = liningPolygons.reduce(
+      (sum, polygon) => sum + area(clipToConvex(room.polygon, polygon)),
+      0,
+    );
     const occupied = (p.pillars ?? [])
       .filter((c) => c.floorId === room.floorId)
-      .reduce((sum, c) => sum + pillarAreaInRoom(c, room.polygon), 0);
-    const netAreaM2 = Math.max(0, room.netAreaM2 - occupied);
+      .reduce((sum, c) => {
+        const clipped = clipToConvex(room.polygon, pillarFootprint(c));
+        return (
+          sum +
+          area(clipped) -
+          liningPolygons.reduce(
+            (overlap, polygon) =>
+              overlap + area(clipToConvex(clipped, polygon)),
+            0,
+          )
+        );
+      }, 0);
+    const netAreaM2 = Math.max(0, room.netAreaM2 - occupied - linings);
     return {
       ...room,
       netAreaM2,
@@ -231,6 +255,12 @@ export function recomputeProject(project: Project): Project {
       })
       .filter((item) => p.rooms.some((r) => r.id === item.roomId));
   p.radiators = reassociate(p.radiators);
+  p.walls = p.walls.map((w) =>
+    w.drywall &&
+    !p.rooms.some((r) => r.id === w.drywall!.roomId && r.wallIds.includes(w.id))
+      ? { ...w, drywall: undefined }
+      : w,
+  );
   p.fanCoils = reassociate(p.fanCoils ?? []).map((u) => ({
     ...u,
     elevationM:

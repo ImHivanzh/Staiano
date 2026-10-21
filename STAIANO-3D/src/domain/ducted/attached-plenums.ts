@@ -218,11 +218,11 @@ export function plenumPortsUpper(project: Project, plenum: Plenum) {
     (t) => t.id === plenum.attachmentId,
   );
   return (
-    terminal?.mounting === "ceiling" &&
+    !!terminal &&
     (terminal.commercialOptions?.connectionPosition ??
       resolveTerminalAccessorySpecification(terminal)?.plenum
         ?.connectionPosition ??
-      "upper") === "upper"
+      (terminal.mounting === "ceiling" ? "upper" : "lateral")) === "upper"
   );
 }
 

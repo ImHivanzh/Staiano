@@ -1221,6 +1221,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
                       : new Set()
                   }
                   floorFinish={floorFinish}
+                  technicalVoids={channelView}
                   isolatedRoom={isolated ? selectedRoom : undefined}
                 />
                 {sceneProject && (

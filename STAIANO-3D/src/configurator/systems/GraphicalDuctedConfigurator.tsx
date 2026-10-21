@@ -46,6 +46,7 @@ import { nearestFootprintEdge } from "@/domain/geometry/footprint";
 import { connectionFootprintEdge } from "@/domain/geometry/footprint";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import { ductRoute, setDuctRoute } from "@/domain/ducted/routes";
+import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 import {
   placeMachineOnPlan,
   configureMachineOnPlan,
@@ -300,7 +301,19 @@ export function GraphicalDuctedConfigurator({
   const planDucts = (project.ducts ?? []).flatMap((duct) => {
     const plenum = project.plenums.find((pl) => pl.id === duct.plenumId);
     if (!plenum || plenum.floorId !== room.floorId) return [];
-    const points = ductRoute(project, duct);
+    const route = ductRoute(project, duct);
+    const curve =
+      duct.kind === "flexible"
+        ? flexibleDuctCurve(route, duct.diameterMm ?? 160)?.curve
+        : null;
+    const points =
+      duct.kind === "flexible"
+        ? curve
+          ? curve
+              .getSpacedPoints(Math.max(24, Math.ceil(curve.getLength() * 30)))
+              .map((p) => ({ x: p.x, y: p.z, elevationM: p.y }))
+          : []
+        : route;
     if (points.length < 2) return [];
     return [
       {
@@ -1300,34 +1313,62 @@ export function GraphicalDuctedConfigurator({
                         pointerEvents="none"
                         aria-hidden="true"
                       >
-                        {points.slice(1).map((end, index) => {
-                          const polygon = ductSegmentPolygon(
-                            points[index],
-                            end,
-                            widthM,
-                          );
-                          return polygon ? (
-                            <polygon
-                              key={index}
-                              points={polygon}
-                              fill="#eef3f6"
+                        {duct.kind === "flexible" ? (
+                          <>
+                            <polyline
+                              points={points
+                                .map((p) => `${p.x},${p.y}`)
+                                .join(" ")}
+                              fill="none"
                               stroke="#243238"
-                              strokeWidth={0.02}
+                              strokeWidth={widthM + 0.025}
+                              strokeLinecap="round"
                               strokeLinejoin="round"
                             />
-                          ) : null;
-                        })}
-                        {points.slice(1).map((end, index) => (
-                          <circle
-                            key={`joint-${index}`}
-                            cx={end.x}
-                            cy={end.y}
-                            r={widthM / 2}
-                            fill="#eef3f6"
-                            stroke="#243238"
-                            strokeWidth={0.02}
-                          />
-                        ))}
+                            <polyline
+                              points={points
+                                .map((p) => `${p.x},${p.y}`)
+                                .join(" ")}
+                              fill="none"
+                              stroke="#eef3f6"
+                              strokeWidth={widthM}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </>
+                        ) : (
+                          points.slice(1).map((end, index) => {
+                            const polygon = ductSegmentPolygon(
+                              points[index],
+                              end,
+                              widthM,
+                            );
+                            return polygon ? (
+                              <polygon
+                                key={index}
+                                points={polygon}
+                                fill="#eef3f6"
+                                stroke="#243238"
+                                strokeWidth={0.02}
+                                strokeLinejoin="round"
+                              />
+                            ) : null;
+                          })
+                        )}
+                        {duct.kind !== "flexible" &&
+                          points
+                            .slice(1)
+                            .map((end, index) => (
+                              <circle
+                                key={`joint-${index}`}
+                                cx={end.x}
+                                cy={end.y}
+                                r={widthM / 2}
+                                fill="#eef3f6"
+                                stroke="#243238"
+                                strokeWidth={0.02}
+                              />
+                            ))}
                         {duct.diameterMm ? (
                           <circle
                             cx={points.at(-1)!.x}

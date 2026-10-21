@@ -58,6 +58,15 @@ export const wallSchema = z.object({
   height: finite.positive().max(30).nullable(),
   locked: z.boolean().default(false),
   curveId: id.optional(),
+  drywall: z
+    .object({
+      roomId: id,
+      offsetM: finite
+        .min(-2)
+        .max(2)
+        .refine((value) => Math.abs(value) >= 0.01),
+    })
+    .optional(),
   recognition: z
     .object({
       confidence: finite.min(0).max(1),
@@ -578,6 +587,15 @@ export const projectSchema = z
     }
     const walls = new Map(p.walls.map((w) => [w.id, w]));
     const rooms = new Map(p.rooms.map((r) => [r.id, r]));
+    for (const wall of p.walls)
+      if (
+        wall.drywall &&
+        !rooms.get(wall.drywall.roomId)?.wallIds.includes(wall.id)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Cartongesso senza una stanza adiacente coerente",
+        });
     for (const draft of p.equipmentDrafts ?? []) {
       if (rooms.get(draft.roomId)?.floorId !== draft.floorId)
         ctx.addIssue({

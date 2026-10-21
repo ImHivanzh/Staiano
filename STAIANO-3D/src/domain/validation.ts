@@ -39,6 +39,7 @@ import {
 } from "./geometry/footprint";
 import { ductRoute } from "./ducted/routes";
 import { flexibleDuctCurve } from "./ducted/flexible-curve";
+import { wallCavityPolygons } from "./ducted/wall-cavity";
 import { validateHydronicSystem } from "./hydronic/validation";
 import {
   fanCoilProductAtVersion,
@@ -973,6 +974,8 @@ export function validateProject(p: Project): Check[] {
         message: `${codes.get(duct.id)}: attacco o collegamento non disponibile; rigenerare la proposta.`,
       });
     const floorId = p.plenums.find((pl) => pl.id === duct.plenumId)?.floorId;
+    const terminal = p.airTerminals.find((t) => t.id === duct.terminalId);
+    const cavities = floorId ? wallCavityPolygons(p, floorId) : [];
     if (
       route.some(
         (point) =>
@@ -980,7 +983,9 @@ export function validateProject(p: Project): Check[] {
           !p.rooms.some(
             (r) =>
               r.floorId === floorId &&
-              pointInPolygon(point, r.polygon) &&
+              (pointInPolygon(point, r.polygon) ||
+                (r.id === terminal?.roomId &&
+                  cavities.some((cavity) => pointInPolygon(point, cavity)))) &&
               point.elevationM <= r.heightM,
           ),
       )

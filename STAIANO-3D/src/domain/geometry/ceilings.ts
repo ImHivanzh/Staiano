@@ -11,6 +11,7 @@ import { convexFootprintsOverlap } from "./footprint";
 import { clipToConvex, pillarFootprint } from "./pillars";
 import { calculateThermal } from "../thermal/calculate";
 import { roomWallSpan } from "./placement";
+import { drywallGeometry } from "./drywall";
 
 export function ceilingBandPolygon(
   project: Project,
@@ -258,14 +259,26 @@ export function calculateRoomThermal(project: Project, room: Room) {
         sum + topVolume(intersection) - area(intersection) * band.elevationM
       );
     }, 0);
+  const linings = project.walls
+    .filter((w) => w.drywall?.roomId === room.id && w.drywall.offsetM > 0)
+    .flatMap((w) => {
+      const lining = drywallGeometry(project, w);
+      return lining ? [lining.polygon] : [];
+    });
+  const outsideLinings = (polygon: Point[]) =>
+    clearVolume(polygon) -
+    linings.reduce(
+      (sum, lining) => sum + clearVolume(clipToConvex(polygon, lining)),
+      0,
+    );
   const volumeM3 =
-    clearVolume(room.polygon) -
+    outsideLinings(room.polygon) -
     (project.pillars ?? [])
       .filter((p) => p.floorId === room.floorId)
       .reduce(
         (sum, pillar) =>
           sum +
-          clearVolume(clipToConvex(room.polygon, pillarFootprint(pillar))),
+          outsideLinings(clipToConvex(room.polygon, pillarFootprint(pillar))),
         0,
       );
   return calculateThermal(room.netAreaM2, volumeM3 / room.netAreaM2);

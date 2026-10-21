@@ -311,6 +311,10 @@ export function duplicateSelection(
     id: wallMap.get(wall.id)!,
     start: add(wall.start, offset),
     end: add(wall.end, offset),
+    drywall:
+      wall.drywall && roomMap.has(wall.drywall.roomId)
+        ? { ...wall.drywall, roomId: roomMap.get(wall.drywall.roomId)! }
+        : undefined,
   }));
   const allDevices = [
     ...project.radiators,

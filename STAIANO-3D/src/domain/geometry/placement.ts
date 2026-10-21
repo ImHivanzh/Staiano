@@ -19,11 +19,20 @@ export function roomWallSpan(
           ) < 1e-4,
       ),
     );
-  return (
+  const span =
     segments
       .map((e) => ({ ...e, lengthM: distance(e.start, e.end) }))
-      .sort((a, b) => b.lengthM - a.lengthM)[0] ?? null
-  );
+      .sort((a, b) => b.lengthM - a.lengthM)[0] ?? null;
+  if (!span || wall.drywall?.roomId !== room.id || wall.drywall.offsetM <= 0)
+    return span;
+  const offset = wall.drywall.offsetM;
+  const dx = (-(span.end.y - span.start.y) / span.lengthM) * offset;
+  const dy = ((span.end.x - span.start.x) / span.lengthM) * offset;
+  return {
+    ...span,
+    start: { x: span.start.x + dx, y: span.start.y + dy },
+    end: { x: span.end.x + dx, y: span.end.y + dy },
+  };
 }
 export function positionAlongRoomWall(
   room: Room,

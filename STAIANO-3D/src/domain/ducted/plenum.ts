@@ -413,21 +413,33 @@ export function calculatePlenum(
         : variant?.nominalDiameterMm
           ? [variant.nominalDiameterMm]
           : [];
-    const ports = supplied.length
-      ? supplied.map((c) => ({
-          diameter: c.portDiameterMm,
-          flow: c.airflowM3h,
-          index: c.terminalPortIndex,
-          source: c.sourceMetadata.sourceUrl,
-          plenum: c.plenumModelCode,
-        }))
-      : direct.map((diameter, index) => ({
-          diameter,
-          flow: terminal.requiredAirflowM3h / direct.length,
-          index,
-          source: family!.sourceMetadata.sourceUrl,
-          plenum: undefined,
-        }));
+    const attached = project.plenums.find(
+      (p) => p.attachmentId === terminal.id,
+    );
+    const ports =
+      attached?.portCount && attached.portDiameterMm
+        ? Array.from({ length: attached.portCount }, (_, index) => ({
+            diameter: attached.portDiameterMm!,
+            flow: terminal.requiredAirflowM3h / attached.portCount!,
+            index,
+            source: undefined,
+            plenum: attached.model,
+          }))
+        : supplied.length
+          ? supplied.map((c) => ({
+              diameter: c.portDiameterMm,
+              flow: c.airflowM3h,
+              index: c.terminalPortIndex,
+              source: c.sourceMetadata.sourceUrl,
+              plenum: c.plenumModelCode,
+            }))
+          : direct.map((diameter, index) => ({
+              diameter,
+              flow: terminal.requiredAirflowM3h / direct.length,
+              index,
+              source: family!.sourceMetadata.sourceUrl,
+              plenum: undefined,
+            }));
     const room = rooms.find((r) => r.id === terminal.roomId);
     if (!ports.length) {
       sourceBranches.push({

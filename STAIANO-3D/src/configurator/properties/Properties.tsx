@@ -15,6 +15,7 @@ import { formatNumber, numberFromForm } from "@/utils/format";
 import { RoomSystems } from "@/configurator/systems/RoomSystems";
 import { DeviceProperties } from "./DeviceProperties";
 import { WallOpenings } from "./WallOpenings";
+import { DrywallProperties } from "./DrywallProperties";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
 import {
   CursorClick,
@@ -614,6 +615,7 @@ export function Properties() {
               Applica parete{walls.length > 1 ? " a tutti" : ""}
             </button>
           </form>
+          {walls.length === 1 && <DrywallProperties project={p} wall={w} />}
           {walls.length === 1 && (
             <WallOpenings key={w.id} project={p} wall={w} />
           )}

@@ -1,5 +1,6 @@
 "use client";
 import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
+import { DrywallLayer } from "./DrywallLayer";
 import {
   useEffect,
   useRef,
@@ -30,6 +31,7 @@ import { wallMeasuredLength } from "@/domain/geometry/dimensions";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import { ductRoute } from "@/domain/ducted/routes";
+import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 import { ductedMaximumAirflow } from "@/domain/ducted/machine";
 import { terminalAirflowBalance } from "@/domain/air-terminals/airflow-balance";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
@@ -1019,6 +1021,17 @@ export function Editor2D({
               </g>
             );
           })}
+        {project && (
+          <DrywallLayer
+            project={project}
+            floorId={activeFloorId}
+            width={u}
+            enabled={tool === "select"}
+            onSelect={(selection) => {
+              if (tool === "select") select(selection);
+            }}
+          />
+        )}
         {project?.ducts
           ?.filter((d) =>
             project.plenums.some(
@@ -1026,7 +1039,21 @@ export function Editor2D({
             ),
           )
           .map((d) => {
-            const route = ductRoute(project, d);
+            const raw = ductRoute(project, d);
+            const curve =
+              d.kind === "flexible"
+                ? flexibleDuctCurve(raw, d.diameterMm ?? 160)?.curve
+                : null;
+            const route =
+              d.kind === "flexible"
+                ? curve
+                  ? curve
+                      .getSpacedPoints(
+                        Math.max(24, Math.ceil(curve.getLength() * 30)),
+                      )
+                      .map((p) => ({ x: p.x, y: p.z }))
+                  : []
+                : raw;
             return (
               <polyline
                 key={d.id}
