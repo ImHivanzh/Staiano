@@ -61,10 +61,19 @@ export function connectPlenum(
     );
   if (plenum.locked || owner.locked)
     throw new Error("Sblocca gli elementi prima di collegarli.");
-  if (
-    project.plenums.some((p) => p.id !== plenumId && p.attachmentId === ownerId)
-  )
-    throw new Error("L’elemento ha già un plenum collegato.");
+  const attached = project.plenums.filter(
+    (p) => p.id !== plenumId && p.attachmentId === ownerId,
+  );
+  if (terminal && attached.length)
+    throw new Error("La bocchetta ha già un plenum collegato.");
+  // La macchina ha un plenum di mandata e uno di ripresa: se il lato
+  // dichiarato è già occupato, il secondo plenum prende l'altro lato.
+  let use = terminal ? ("supply" as const) : plenum.use;
+  if (!terminal && attached.some((p) => p.use === use)) {
+    use = use === "supply" ? "return" : "supply";
+    if (attached.some((p) => p.use === use))
+      throw new Error("La macchina ha già i plenum di mandata e di ripresa.");
+  }
   const published = terminal
     ? resolveTerminalAccessorySpecification(terminal)?.plenum
     : null;
@@ -76,7 +85,7 @@ export function connectPlenum(
             ...p,
             attachmentId: ownerId,
             systemId: terminal ? terminal.systemId : system!.id,
-            use: terminal ? "supply" : "return",
+            use,
             ...(!terminal
               ? { widthMm: owner.widthMm, heightMm: owner.heightMm }
               : {}),

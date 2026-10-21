@@ -1170,7 +1170,7 @@ export default function Viewer3D({ readOnly = false }: { readOnly?: boolean }) {
           <div className={styles.scene}>
             <WebGLError>
               <Canvas
-                shadows={{ type: THREE.PCFSoftShadowMap }}
+                shadows={{ type: THREE.PCFShadowMap }}
                 dpr={[1, 1.75]}
                 gl={{
                   antialias: true,

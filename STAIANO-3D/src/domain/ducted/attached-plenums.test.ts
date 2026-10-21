@@ -21,7 +21,12 @@ import {
 } from "./placement";
 import { movePlacedDevice } from "../geometry/move-device";
 import { rotateDevice90 } from "../geometry/rotate-device";
-import { airConnectionRoutes, ductRoute, plenumLocalToPlan } from "./routes";
+import {
+  airConnectionRoutes,
+  ductRoute,
+  plenumLocalToPlan,
+  setDuctRoute,
+} from "./routes";
 import { projectSchema } from "@/schemas/project";
 import { removeSelection } from "../geometry/selection";
 import { recordOperatorChanges } from "../project-commands";
@@ -37,6 +42,33 @@ function fixture(mounting: "ceiling" | "wall" = "ceiling") {
   p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
   return connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
 }
+
+it("salva il percorso tracciato in pianta come tubi flessibili fra i due plenum", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = addGuidedTerminal(p, 2000, "EDLS", "wall");
+  const terminal = p.airTerminals[0];
+  expect(p.plenums).toHaveLength(0);
+  const points = [
+    { x: 3.6, y: 3 },
+    { x: 4.4, y: 3.8 },
+  ];
+  p = setDuctRoute(p, terminal.id, points);
+  expect(projectSchema.safeParse(p).success).toBe(true);
+  const plenum = p.plenums.find((pl) => pl.attachmentId === terminal.id)!;
+  expect(plenum).toBeDefined();
+  expect(p.airTerminals.find((item) => item.id === terminal.id)!.plenumId).toBe(
+    plenum.id,
+  );
+  // Una bocchetta a due stacchi: un tubo per stacco, non un disegno unico.
+  expect(p.ducts).toHaveLength(plenum.portCount!);
+  for (const duct of p.ducts!) {
+    expect(duct.kind).toBe("flexible");
+    expect(duct.routing).toBe("manual");
+    expect(duct.waypoints).toHaveLength(points.length);
+    expect(ductRoute(p, duct).length).toBeGreaterThanOrEqual(2);
+  }
+});
 
 it("saves a separate terminal plenum, its real port count and flexible 3D routes", () => {
   const p = fixture();
@@ -98,11 +130,31 @@ it("keeps the terminal plenum when reconnecting and supports a return plenum on 
   expect(p.airTerminals[0].plenumId).toBe(p.plenums[0].id);
   p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
   const id = p.plenums.at(-1)!.id;
+  p = {
+    ...p,
+    plenums: p.plenums.map((pl) =>
+      pl.id === id ? { ...pl, use: "return" as const } : pl,
+    ),
+  };
   p = connectPlenum(p, id, p.hvacSystems[0].indoorUnits[0].id);
   const plenum = p.plenums.find((pl) => pl.id === id)!;
   expect(plenum.use).toBe("return");
   expect(plenum.widthMm).toBe(p.hvacSystems[0].indoorUnits[0].widthMm);
   expect(plenum.heightMm).toBe(p.hvacSystems[0].indoorUnits[0].heightMm);
+  // Secondo lato: un altro plenum della stessa macchina prende la mandata.
+  p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 1 });
+  const supplyId = p.plenums.at(-1)!.id;
+  p = connectPlenum(p, supplyId, p.hvacSystems[0].indoorUnits[0].id);
+  expect(
+    p.plenums
+      .filter(
+        (pl) =>
+          pl.attachmentId &&
+          pl.attachmentId === p.hvacSystems[0].indoorUnits[0].id,
+      )
+      .map((pl) => pl.use)
+      .sort(),
+  ).toEqual(["return", "supply"]);
   const moved = rotateDevice90(p, p.hvacSystems[0].indoorUnits[0].id);
   expect(moved.plenums.find((pl) => pl.id === id)!.rotation).toBeCloseTo(
     plenum.rotation + Math.PI / 2,

@@ -57,6 +57,10 @@ export function PlenumProperties({
               pl.id === id
                 ? {
                     ...pl,
+                    use: terminal
+                      ? pl.use
+                      : (String(data.get("use") ?? pl.use) as
+                          "supply" | "return"),
                     model: String(data.get("model")),
                     widthMm: numberFromForm(data.get("width")),
                     heightMm: numberFromForm(data.get("height")),
@@ -98,6 +102,19 @@ export function PlenumProperties({
               <small>
                 Indica gli attacchi effettivi del plenum; non modifica le quote
                 dichiarate.
+              </small>
+            </label>
+          )}
+          {!terminal && (
+            <label className="campo">
+              <span>Lato impianto</span>
+              <select name="use" defaultValue={plenum.use}>
+                <option value="supply">Mandata</option>
+                <option value="return">Ripresa</option>
+              </select>
+              <small>
+                La macchina ha un plenum per lato: il secondo collegamento
+                prende il lato libero.
               </small>
             </label>
           )}

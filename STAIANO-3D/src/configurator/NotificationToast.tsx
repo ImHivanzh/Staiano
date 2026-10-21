@@ -41,7 +41,17 @@ export function NotificationToast({
   className?: string;
   children?: ReactNode;
 }) {
-  const host = useSyncExternalStore(subscribeToDialogs, toastHost, () => null);
+  const liveHost = useSyncExternalStore(
+    subscribeToDialogs,
+    toastHost,
+    () => null,
+  );
+  // L'host resta fermo finché la notifica è aperta: spostare il portale
+  // mentre un dialogo si chiude faceva fallire removeChild a React.
+  const shown = useRef<{ message: string; host: Element | null } | null>(null);
+  if (shown.current?.message !== message)
+    shown.current = { message, host: liveHost };
+  const host = shown.current?.host ?? null;
   const element = useRef<HTMLDivElement>(null);
   const [dismissed, setDismissed] = useState<string | null>(null);
   const visible = message !== dismissed;

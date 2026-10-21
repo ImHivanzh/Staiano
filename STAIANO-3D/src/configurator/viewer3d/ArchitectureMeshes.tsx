@@ -266,6 +266,7 @@ function ArchitecturalWall({
   onSelect,
   transparent = false,
   fixtures = true,
+  lining = false,
 }: {
   wall: Wall;
   walls: readonly Wall[];
@@ -280,6 +281,8 @@ function ArchitecturalWall({
   onSelect: ArchitectureMeshesProps["onSelect"];
   transparent?: boolean;
   fixtures?: boolean;
+  /** Cartongesso/controparete: tinta leggermente più calda del soffitto. */
+  lining?: boolean;
 }) {
   const trueHeight = architecturalWallHeight(wall, rooms, defaultHeightM);
   const height = cut ? Math.min(cutHeightM, trueHeight) : trueHeight;
@@ -391,7 +394,7 @@ function ArchitecturalWall({
         <meshStandardMaterial
           attach="material-0"
           map={textures.plaster}
-          color="#f4f1e9"
+          color={lining ? "#e8e1d1" : "#f4f1e9"}
           roughness={0.91}
           transparent={transparent}
           opacity={transparent ? 0.18 : 1}
@@ -399,7 +402,7 @@ function ArchitecturalWall({
         />
         <meshStandardMaterial
           attach="material-1"
-          color={cut ? "#cbc3b4" : "#e5e0d4"}
+          color={lining ? "#ded6c6" : cut ? "#cbc3b4" : "#e5e0d4"}
           roughness={0.9}
           transparent={transparent}
           opacity={transparent ? 0.18 : 1}
@@ -535,6 +538,7 @@ export function ArchitectureMeshes({
             textures={textures}
             onSelect={onSelect}
             transparent={thin && technicalVoids}
+            lining={thin}
             fixtures={fixtures}
           />
         );

@@ -861,7 +861,7 @@ export const projectSchema = z
             ? owner.use !== "supply" ||
               pl.use !== "supply" ||
               owner.systemId !== pl.systemId
-            : pl.use !== "return" ||
+            : // La macchina ha un plenum per lato: mandata o ripresa.
               !system?.indoorUnits.some((u) => u.id === owner.id))
         )
           ctx.addIssue({

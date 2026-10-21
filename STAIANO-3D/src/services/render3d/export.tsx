@@ -177,7 +177,7 @@ function PanoramaScene({
   return (
     <Canvas
       dpr={1}
-      shadows={{ type: THREE.PCFSoftShadowMap }}
+      shadows={{ type: THREE.PCFShadowMap }}
       gl={{
         antialias: true,
         alpha: true,

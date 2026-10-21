@@ -30,6 +30,11 @@ class CircularBend extends Curve<Vector3> {
  * https://flexibleduct.org/images/ADC~IR5E.pdf, section 4.4. Product-specific limits still apply.
  */
 export function flexibleDuctCurve(points: RoutePoint[], diameterMm: number) {
+  return attempt(points, diameterMm, 2) ?? attempt(points, diameterMm, 1);
+}
+
+/** `target` è il raggio in diametri: 2 ideale, 1 minimo ammesso all'attacco. */
+function attempt(points: RoutePoint[], diameterMm: number, target: 1 | 2) {
   if (!Number.isFinite(diameterMm) || diameterMm <= 0) return null;
   const vertices: Vector3[] = [];
   for (const point of points) {
@@ -59,7 +64,7 @@ export function flexibleDuctCurve(points: RoutePoint[], diameterMm: number) {
   );
   if (angles.some((a) => a > Math.PI - 1e-4)) return null;
   const diameter = diameterMm / 1000;
-  const trims = angles.map((a) => 2 * diameter * Math.tan(a / 2));
+  const trims = angles.map((a) => target * diameter * Math.tan(a / 2));
   const factors = directions.map((_, i) =>
     Math.min(
       1,
@@ -67,7 +72,7 @@ export function flexibleDuctCurve(points: RoutePoint[], diameterMm: number) {
     ),
   );
   const radii = angles.map((angle, i) =>
-    angle ? 2 * diameter * Math.min(factors[i - 1], factors[i]) : 0,
+    angle ? target * diameter * Math.min(factors[i - 1], factors[i]) : 0,
   );
   if (radii.some((r, i) => angles[i] > 1e-6 && r < diameter - 1e-8))
     return null;

@@ -12,7 +12,6 @@ import {
 } from "@/domain/project";
 import { bounds, distance } from "@/domain/geometry/primitives";
 import { formatNumber, numberFromForm } from "@/utils/format";
-import { RoomSystems } from "@/configurator/systems/RoomSystems";
 import { DeviceProperties } from "./DeviceProperties";
 import { WallOpenings } from "./WallOpenings";
 import { DrywallProperties } from "./DrywallProperties";
@@ -409,16 +408,6 @@ export function Properties() {
                 Unisci le due stanze
               </button>
             )}
-          </details>
-          <details className="azione-inspector">
-            <summary>
-              <GearSix size={20} aria-hidden="true" />
-              <span>
-                Configura impianto
-                <small>Radiatori, canalizzato, split o ventilconvettori</small>
-              </span>
-            </summary>
-            <RoomSystems key={r.id} room={r} project={p} />
           </details>
           <details className="azione-inspector dettagli-inspector">
             <summary>
