@@ -146,6 +146,24 @@ it("follows the terminal while proposed, then keeps its offset and follows the t
   expect(deleted.ducts).toHaveLength(0);
 });
 
+it("eliminando il plenum della macchina spariscono i flessibili del suo lato", () => {
+  let p = fixture();
+  p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  const machine = p.plenums.find(
+    (pl) =>
+      pl.systemId === p.hvacSystems[0].id &&
+      !p.airTerminals.some((t) => t.id === pl.attachmentId),
+  )!;
+  const ductIds = p.ducts!.map((d) => d.id);
+  expect(ductIds.length).toBeGreaterThan(0);
+  const deleted = removeSelection(p, [{ kind: "device", id: machine.id }]);
+  // Il commit dello store risincronizza dopo la cancellazione.
+  const next = syncAttachedPlenums(deleted, p);
+  expect(next.plenums.some((pl) => pl.id === machine.id)).toBe(false);
+  expect(next.ducts!.filter((d) => ductIds.includes(d.id))).toHaveLength(0);
+  expect(next.ducts!.filter((d) => d.terminalId)).toHaveLength(0);
+});
+
 it("keeps the terminal plenum when reconnecting and supports a return plenum on the machine", () => {
   let p = fixture();
   const terminal = p.airTerminals[0];

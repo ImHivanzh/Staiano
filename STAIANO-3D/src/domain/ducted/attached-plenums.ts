@@ -194,10 +194,28 @@ export function followAttachmentPose(
   };
 }
 
+/** Lati macchina (sistema e uso) il cui plenum è stato eliminato. */
+export function removedMachineSides(
+  project: Project,
+  previous: Project,
+): Set<string> {
+  return new Set(
+    previous.plenums
+      .filter(
+        (pl) =>
+          pl.systemId &&
+          !project.plenums.some((p) => p.id === pl.id) &&
+          !previous.airTerminals.some((t) => t.id === pl.attachmentId),
+      )
+      .map((pl) => `${pl.systemId}:${pl.use}`),
+  );
+}
+
 /** Recompute attachment poses from their owner at every command and 3D preview. */
 export function syncAttachedPlenums(
   project: Project,
   previous?: Project,
+  removedSides?: ReadonlySet<string>,
 ): Project {
   const plenums = project.plenums.flatMap((plenum): Plenum[] => {
     const saved = previous?.plenums.find((p) => p.id === plenum.id);
@@ -259,6 +277,11 @@ export function syncAttachedPlenums(
     return placed ? [placed] : [];
   });
   const posed = { ...project, plenums };
+  // Lato macchina eliminato in questa modifica: i rami non si ricreano,
+  // altrimenti restano appesi nel vuoto.
+  const removed =
+    removedSides ??
+    (previous ? removedMachineSides(project, previous) : new Set<string>());
   for (let i = 0; i < plenums.length; i++) {
     const plenum = plenums[i];
     if (plenum.attachmentId === undefined && plenum.systemId)
@@ -266,6 +289,14 @@ export function syncAttachedPlenums(
   }
   const ducts = (project.ducts ?? [])
     .filter((d) => {
+      const terminal = project.airTerminals.find(
+        (t) => t.id === d.terminalId,
+      );
+      if (
+        terminal?.systemId &&
+        removed.has(`${terminal.systemId}:${terminal.use}`)
+      )
+        return false;
       const plenum = plenums.find((p) => p.id === d.plenumId);
       return (
         !!plenum &&
@@ -285,6 +316,7 @@ export function syncAttachedPlenums(
       (t) => t.id === plenum.attachmentId,
     );
     if (!terminal || !terminal.systemId || !plenum.systemId) continue;
+    if (removed.has(`${plenum.systemId}:${terminal.use}`)) continue;
     for (let i = 0; i < (plenum.portCount ?? 1); i++) {
       const branchId = `${plenum.id}:${i}`;
       const existing = ducts.find(

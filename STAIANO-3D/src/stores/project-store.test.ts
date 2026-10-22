@@ -1,6 +1,16 @@
 import { beforeEach, expect, it } from "vitest";
 import { useProjectStore } from "./project-store";
-import { guidedProjectFixture } from "../../tests/guided-fixture";
+import {
+  guidedProjectFixture,
+  addGuidedTerminal,
+} from "../../tests/guided-fixture";
+import {
+  connectPlenum,
+  insertPlenum,
+} from "@/domain/ducted/attached-plenums";
+import { placeMachineOnPlan } from "@/domain/ducted/graphic-installation";
+import { placeSupplyPlenum } from "@/domain/ducted/placement";
+import { removeSelection } from "@/domain/geometry/selection";
 
 beforeEach(() => {
   useProjectStore.setState({ readOnly: false });
@@ -54,6 +64,29 @@ it("ignores an unknown installation and clears the plan on view, floor or projec
   state.openInstallationPlan(id);
   state.load(guidedProjectFixture());
   expect(useProjectStore.getState().installationPlanId).toBeNull();
+});
+
+it("eliminando il plenum macchina non ricrea i flessibili appesi", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = addGuidedTerminal(p, 1000);
+  p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
+  p = connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
+  p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  const machine = p.plenums.find(
+    (pl) =>
+      pl.systemId && !p.airTerminals.some((t) => t.id === pl.attachmentId),
+  )!;
+  expect(p.ducts!.length).toBeGreaterThan(0);
+  useProjectStore.getState().load(p);
+  useProjectStore
+    .getState()
+    .commit((project) =>
+      removeSelection(project, [{ kind: "device", id: machine.id }]),
+    );
+  const after = useProjectStore.getState().project!;
+  expect(after.plenums.some((pl) => pl.id === machine.id)).toBe(false);
+  expect(after.ducts ?? []).toHaveLength(0);
 });
 
 it("keeps every equipment type on the main plan", () => {

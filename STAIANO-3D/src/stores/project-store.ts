@@ -1,4 +1,7 @@
-import { syncAttachedPlenums } from "@/domain/ducted/attached-plenums";
+import {
+  removedMachineSides,
+  syncAttachedPlenums,
+} from "@/domain/ducted/attached-plenums";
 import { syncCeilingTerminals } from "@/domain/geometry/ceilings";
 import { create } from "zustand";
 import type { Project, Selection } from "@/schemas/project";
@@ -148,6 +151,7 @@ export const useProjectStore = create<State>((set, get) => ({
         syncCeilingTerminals(fn(structuredClone(state.project))),
         state.project,
       );
+      const removedSides = removedMachineSides(changed, state.project);
       checkLockedObjects(state.project, changed);
       const next = refreshVrvBindings(
         refreshSplitBindings(
@@ -156,7 +160,7 @@ export const useProjectStore = create<State>((set, get) => ({
       );
       next.updatedAt = new Date().toISOString();
       const valid = projectSchema.parse(
-        syncAttachedPlenums(syncCeilingTerminals(next)),
+        syncAttachedPlenums(syncCeilingTerminals(next), changed, removedSides),
       );
       const ids = new Set(
         [
