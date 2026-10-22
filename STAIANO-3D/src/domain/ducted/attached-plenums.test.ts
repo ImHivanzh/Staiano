@@ -109,7 +109,7 @@ it("saves a separate terminal plenum, its real port count and flexible 3D routes
   });
 });
 
-it("follows the terminal while proposed, then moves and rotates independently and cascades deletion", () => {
+it("follows the terminal while proposed, then keeps its offset and follows the terminal, cascading deletion", () => {
   let p = guidedProjectFixture();
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, {
     x: 3,
@@ -122,17 +122,19 @@ it("follows the terminal while proposed, then moves and rotates independently an
   expect(p.plenums[0].status).toBe("proposed");
   const following = syncAttachedPlenums(
     movePlacedDevice(p, id, { x: 4, y: 3 }),
+    p,
   );
   expect(following.plenums[0].position).toEqual(
     following.airTerminals[0].position,
   );
-  // L'operatore sposta il plenum: diventa autonomo e la bocchetta non lo trascina.
+  // L'operatore sposta il plenum: resta agganciato e conserva il distacco.
   const placed = movePlacedDevice(following, plenumId, { x: 5, y: 4 });
   expect(placed.plenums[0].status).toBe("manual");
   const ownerMoved = syncAttachedPlenums(
     movePlacedDevice(placed, id, { x: 4.5, y: 2.5 }),
+    placed,
   );
-  expect(ownerMoved.plenums[0].position).toEqual({ x: 5, y: 4 });
+  expect(ownerMoved.plenums[0].position).toEqual({ x: 5.5, y: 3.5 });
   const rotated = rotateDevice90(ownerMoved, plenumId);
   expect(rotated.plenums[0].rotation).toBeCloseTo(
     ownerMoved.plenums[0].rotation + Math.PI / 2,
@@ -207,6 +209,7 @@ it("wall terminals snap and rotate onto perpendicular walls even with fine snapp
   };
   const first = syncAttachedPlenums(
     movePlacedDevice(p, terminal.id, { x: 4, y: 0.3 }, snap),
+    p,
   );
   const second = syncAttachedPlenums(
     movePlacedDevice(
@@ -215,6 +218,7 @@ it("wall terminals snap and rotate onto perpendicular walls even with fine snapp
       { x: 7.7, y: 3 },
       { ...snap, enabled: false },
     ),
+    first,
   );
   expect(second.airTerminals[0].wallId).not.toBe(first.airTerminals[0].wallId);
   expect(
@@ -224,9 +228,26 @@ it("wall terminals snap and rotate onto perpendicular walls even with fine snapp
       ),
     ),
   ).toBeCloseTo(1);
-  // Il plenum salvato resta nella posa scelta: non segue la nuova parete.
-  expect(second.plenums[0].rotation).toBeCloseTo(p.plenums[0].rotation);
-  expect(second.plenums[0].position).toEqual(p.plenums[0].position);
+  // Il plenum è agganciato: conserva il distacco dalla bocchetta e ruota con lei.
+  const before = {
+    x: p.plenums[0].position.x - p.airTerminals[0].position.x,
+    y: p.plenums[0].position.y - p.airTerminals[0].position.y,
+  };
+  const turned = second.airTerminals[0].rotation - p.airTerminals[0].rotation;
+  const expected = {
+    x: before.x * Math.cos(turned) - before.y * Math.sin(turned),
+    y: before.x * Math.sin(turned) + before.y * Math.cos(turned),
+  };
+  expect(
+    second.plenums[0].position.x - second.airTerminals[0].position.x,
+  ).toBeCloseTo(expected.x, 6);
+  expect(
+    second.plenums[0].position.y - second.airTerminals[0].position.y,
+  ).toBeCloseTo(expected.y, 6);
+  expect(second.plenums[0].rotation).toBeCloseTo(
+    p.plenums[0].rotation + turned,
+    6,
+  );
   expect(projectSchema.safeParse(second).success).toBe(true);
 });
 

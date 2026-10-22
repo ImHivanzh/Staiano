@@ -37,7 +37,7 @@ export function PlenumProperties({
       <h3>Plenum {plenum.use === "return" ? "di ripresa" : "di mandata"}</h3>
       <p>
         {terminal
-          ? `Collegato alla bocchetta ${codes.get(terminal.id) ?? "elemento"}. Elemento autonomo: spostalo e ruotalo in pianta o in 3D; la bocchetta non lo trascina.`
+          ? `Collegato alla bocchetta ${codes.get(terminal.id) ?? "elemento"}. Agganciato: segue la bocchetta quando la sposti o la ruoti.`
           : machineAttached
             ? `Collegato alla macchina ${codes.get(plenum.attachmentId!) ?? "elemento"}. Elemento autonomo: spostalo e ruotalo in pianta o in 3D.`
             : "Plenum libero: usa Collega e seleziona una bocchetta o una macchina."}

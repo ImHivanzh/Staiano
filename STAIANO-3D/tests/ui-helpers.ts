@@ -190,6 +190,7 @@ export async function dragPlanDevice(
   device: Locator,
   x: number,
   y: number,
+  duringDrag?: () => Promise<void>,
 ) {
   const start = await device.locator("rect").first().boundingBox();
   if (!start) throw new Error("Device is not visible");
@@ -205,5 +206,6 @@ export async function dragPlanDevice(
   await page.mouse.move(start.x + start.width / 2, start.y + start.height / 2);
   await page.mouse.down();
   await page.mouse.move(end.x, end.y, { steps: 12 });
+  await duringDrag?.();
   await page.mouse.up();
 }

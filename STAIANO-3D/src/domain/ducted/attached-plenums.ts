@@ -149,35 +149,81 @@ export function connectPlenum(
   return syncAttachedPlenums(next);
 }
 
+type AttachmentOwner = {
+  position: Point;
+  rotation: number;
+  roomId: string;
+  floorId: string;
+};
+
+/** Bocchetta o macchina a cui il plenum è agganciato. */
+function attachmentOwner(
+  project: Project,
+  plenum: Plenum,
+): AttachmentOwner | undefined {
+  if (plenum.attachmentId) {
+    const terminal = project.airTerminals.find(
+      (t) => t.id === plenum.attachmentId,
+    );
+    if (terminal) return terminal;
+    const unit = project.hvacSystems
+      .flatMap((s) => s.indoorUnits)
+      .find((u) => u.id === plenum.attachmentId);
+    if (unit) return unit;
+  }
+  if (plenum.attachmentId !== undefined || !plenum.systemId) return undefined;
+  return project.hvacSystems.find((s) => s.id === plenum.systemId)
+    ?.indoorUnits[0];
+}
+
+/** Posa del plenum che segue il titolare conservando il distacco salvato. */
+export function followAttachmentPose(
+  plenum: Pick<Plenum, "position" | "rotation">,
+  previous: Pick<AttachmentOwner, "position" | "rotation">,
+  owner: Pick<AttachmentOwner, "position" | "rotation">,
+): Pick<Plenum, "position" | "rotation"> {
+  const angle = owner.rotation - previous.rotation;
+  const dx = plenum.position.x - previous.position.x;
+  const dy = plenum.position.y - previous.position.y;
+  return {
+    rotation: plenum.rotation + angle,
+    position: {
+      x: owner.position.x + dx * Math.cos(angle) - dy * Math.sin(angle),
+      y: owner.position.y + dx * Math.sin(angle) + dy * Math.cos(angle),
+    },
+  };
+}
+
 /** Recompute attachment poses from their owner at every command and 3D preview. */
 export function syncAttachedPlenums(
   project: Project,
   previous?: Project,
 ): Project {
   const plenums = project.plenums.flatMap((plenum): Plenum[] => {
-    if (plenum.attachmentId === undefined && previous) {
-      const old = previous.hvacSystems.find((s) => s.id === plenum.systemId)
-        ?.indoorUnits[0];
-      const owner = project.hvacSystems.find((s) => s.id === plenum.systemId)
-        ?.indoorUnits[0];
-      const saved = previous.plenums.find((p) => p.id === plenum.id);
-      if (old && owner && saved) {
-        const angle = owner.rotation - old.rotation;
-        const dx = saved.position.x - old.position.x,
-          dy = saved.position.y - old.position.y;
-        return [
-          {
-            ...plenum,
-            roomId: owner.roomId,
-            rotation: saved.rotation + angle,
-            position: {
-              x: owner.position.x + dx * Math.cos(angle) - dy * Math.sin(angle),
-              y: owner.position.y + dx * Math.sin(angle) + dy * Math.cos(angle),
-            },
-          },
-        ];
-      }
-    }
+    const saved = previous?.plenums.find((p) => p.id === plenum.id);
+    const oldOwner = saved ? attachmentOwner(previous!, saved) : undefined;
+    const owner = attachmentOwner(project, plenum);
+    const terminalOwner =
+      !!plenum.attachmentId &&
+      project.airTerminals.some((t) => t.id === plenum.attachmentId);
+    // Agganciato come il plenum della macchina: conserva il distacco scelto,
+    // ma segue spostamenti e rotazioni del titolare. La sola proposta iniziale
+    // usa la posa di catalogo calcolata qui sotto.
+    if (
+      saved &&
+      oldOwner &&
+      owner &&
+      (plenum.attachmentId === undefined ||
+        (terminalOwner && plenum.status !== "proposed"))
+    )
+      return [
+        {
+          ...plenum,
+          roomId: owner.roomId,
+          floorId: owner.floorId,
+          ...followAttachmentPose(plenum, oldOwner, owner),
+        },
+      ];
     if (!plenum.attachmentId) return [plenum];
     if (
       !project.airTerminals.some((t) => t.id === plenum.attachmentId) &&
@@ -186,8 +232,8 @@ export function syncAttachedPlenums(
       )
     )
       return [];
-    // Solo la proposta iniziale segue l'elemento: appena l'operatore sposta il
-    // plenum, posizione e rotazione salvate restano sue, come per le macchine.
+    // Senza la posa precedente il plenum gia posizionato resta dov'e:
+    // aggiorna solo il legame con il titolare.
     if (plenum.status !== "proposed") {
       const terminal = project.airTerminals.find(
         (t) => t.id === plenum.attachmentId,
@@ -379,14 +425,14 @@ export function terminalPlenum(
 ): Plenum | null {
   const saved = project.plenums.find((p) => p.attachmentId === terminal.id);
   if (!saved) return null;
-  // Il plenum salvato segue la bocchetta solo finché resta una proposta;
-  // dopo lo spostamento usa la posa scelta dall'operatore.
+  // La proposta usa la posa di catalogo calcolata; una volta spostato, il
+  // plenum salva il distacco dal titolare e syncAttachedPlenums lo aggiorna.
   return saved.status === "proposed"
     ? (attachedPlenumPose(project, saved) ?? saved)
     : saved;
 }
 
-/** Corpo di catalogo usato alla creazione: da lì il plenum è autonomo. */
+/** Corpo di catalogo usato alla creazione: da lì il plenum conserva il distacco. */
 function catalogueTerminalPlenum(
   project: Project,
   terminal: Project["airTerminals"][number],

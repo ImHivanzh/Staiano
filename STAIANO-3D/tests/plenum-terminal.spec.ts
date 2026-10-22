@@ -58,7 +58,7 @@ async function exportProject(page: Page) {
   );
 }
 
-test("Plenum crea il plenum della bocchetta come elemento autonomo", async ({
+test("Plenum crea il plenum della bocchetta agganciato alla bocchetta", async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -71,7 +71,7 @@ test("Plenum crea il plenum della bocchetta come elemento autonomo", async ({
     page.getByText(/Plenum creato e collegato alla bocchetta/),
   ).toBeVisible();
   await expect(page.getByTestId("plenum-2d")).toHaveCount(1);
-  await expect(tool).toHaveAttribute("aria-pressed", "false");
+  await expect(tool).toHaveAttribute("aria-pressed", "true");
   const after = await exportProject(page);
   const terminal = after.airTerminals.find(
     (item) => item.id === before.airTerminals[0].id,
@@ -103,10 +103,10 @@ test("cliccare di nuovo la stessa bocchetta seleziona il plenum esistente senza 
     page.getByText(/La bocchetta ha già il suo plenum/),
   ).toBeVisible();
   await expect(page.getByTestId("plenum-2d")).toHaveCount(1);
-  await expect(tool).toHaveAttribute("aria-pressed", "false");
+  await expect(tool).toHaveAttribute("aria-pressed", "true");
 });
 
-test("il plenum resta dove lo sposta l'operatore mentre la bocchetta si muove", async ({
+test("il plenum agganciato segue la bocchetta e conserva il distacco scelto", async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -122,19 +122,34 @@ test("il plenum resta dove lo sposta l'operatore mentre la bocchetta si muove", 
   await dragPlanDevice(page, plan, plan.getByTestId("plenum-2d"), 4, 2);
   const placed = await exportProject(page);
   expect(placed.plenums[0].status).toBe("manual");
-  const plenumPosition = placed.plenums[0].position;
+  const offset = {
+    x: placed.plenums[0].position.x - placed.airTerminals[0].position.x,
+    y: placed.plenums[0].position.y - placed.airTerminals[0].position.y,
+  };
   await moveTool.click();
+  const plenum = plan.getByTestId("plenum-2d");
+  const plenumBefore = await plenum.getAttribute("transform");
   await dragPlanDevice(
     page,
     plan,
     plan.getByTestId("terminal-supply").first(),
     5,
     3,
+    async () => {
+      // Anteprima: il plenum si muove con la bocchetta già durante il trascinamento.
+      await expect(plenum).not.toHaveAttribute("transform", plenumBefore!);
+    },
   );
   const after = await exportProject(page);
   expect(after.airTerminals[0].position).not.toEqual(
     before.airTerminals[0].position,
   );
-  // La bocchetta si è spostata; il plenum resta nella posa scelta dall'operatore.
-  expect(after.plenums[0].position).toEqual(plenumPosition);
+  // La bocchetta trascina il plenum: il distacco scelto resta invariato.
+  expect(after.plenums[0].position).not.toEqual(placed.plenums[0].position);
+  expect(
+    Math.hypot(
+      after.plenums[0].position.x - after.airTerminals[0].position.x,
+      after.plenums[0].position.y - after.airTerminals[0].position.y,
+    ),
+  ).toBeCloseTo(Math.hypot(offset.x, offset.y), 2);
 });

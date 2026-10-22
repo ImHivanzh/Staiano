@@ -46,6 +46,7 @@ import { hydronicPipeRoute } from "@/domain/hydronic/routes";
 import { refrigerantRoute } from "@/domain/air-conditioning/outdoor";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { pendingConnections } from "@/domain/ducted/plan-connections";
+import { followAttachmentPose } from "@/domain/ducted/attached-plenums";
 
 type View = { x: number; y: number; w: number; h: number };
 type Drag = {
@@ -713,6 +714,46 @@ export function Editor2D({
       groupWalls.some((w) => samePoint(p, w.start) || samePoint(p, w.end)))
       ? add(p, delta)
       : p;
+  // Plenum agganciato: durante lo spostamento del titolare si muove con lui,
+  // come il plenum della macchina canalizzata.
+  const followedPlenums = new Map<
+    string,
+    { position: Point; rotation: number }
+  >();
+  const draggedOwnerId = drag.current?.deviceId;
+  if (delta && draggedOwnerId && project) {
+    const terminalOwner = project.airTerminals.find(
+      (t) => t.id === draggedOwnerId,
+    );
+    const owner =
+      terminalOwner ??
+      project.hvacSystems
+        .flatMap((s) => s.indoorUnits)
+        .find((u) => u.id === draggedOwnerId);
+    const pose = owner
+      ? (runPreview.find((t) => t.id === owner.id) ??
+        (terminalOwner && terminalPose
+          ? { ...terminalOwner, ...terminalPose }
+          : null) ?? { ...owner, position: add(owner.position, delta) })
+      : null;
+    if (owner && pose)
+      for (const plenum of project.plenums) {
+        const attached =
+          plenum.attachmentId === owner.id ||
+          (plenum.attachmentId === undefined &&
+            !!plenum.systemId &&
+            project.hvacSystems.some(
+              (s) =>
+                s.id === plenum.systemId &&
+                s.indoorUnits.some((u) => u.id === owner.id),
+            ));
+        if (attached)
+          followedPlenums.set(
+            plenum.id,
+            followAttachmentPose(plenum, owner, pose),
+          );
+      }
+  }
   const instructions =
     configuration?.instruction ??
     (placement
@@ -1733,12 +1774,16 @@ export function Editor2D({
         {[...(project?.plenums ?? []), ...(project?.pillars ?? [])]
           .filter((o) => o.floorId === activeFloorId)
           .map((o) => {
-            const pos = previewDevice({
-              ...o,
-              roomId:
-                "roomId" in o && typeof o.roomId === "string" ? o.roomId : "",
-              wallId: null,
-            });
+            const followed = followedPlenums.get(o.id);
+            const position =
+              followed?.position ??
+              previewDevice({
+                ...o,
+                roomId:
+                  "roomId" in o && typeof o.roomId === "string" ? o.roomId : "",
+                wallId: null,
+              });
+            const rotation = followed?.rotation ?? o.rotation;
             const plenum = "systemId" in o;
             return (
               <g
@@ -1754,7 +1799,7 @@ export function Editor2D({
                     configuration.onPick(o.position, o.id);
                   }
                 }}
-                transform={`translate(${pos.x} ${pos.y}) rotate(${(o.rotation * 180) / Math.PI})`}
+                transform={`translate(${position.x} ${position.y}) rotate(${(rotation * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, o.id)}
               >
                 <rect
@@ -1773,7 +1818,7 @@ export function Editor2D({
                   textAnchor="middle"
                   dominantBaseline="central"
                   y={0}
-                  transform={`rotate(${(-o.rotation * 180) / Math.PI} 0 0)`}
+                  transform={`rotate(${(-rotation * 180) / Math.PI} 0 0)`}
                 >
                   {codes.get(o.id)}
                 </text>
