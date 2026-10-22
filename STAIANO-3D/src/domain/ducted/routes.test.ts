@@ -19,6 +19,7 @@ import {
   createDuctFromEndpoints,
   ductRoute,
   moveDuctWaypoint,
+  removeDuctWaypoint,
 } from "./routes";
 import { projectSchema } from "@/schemas/project";
 import { movePlacedDevice } from "../geometry/move-device";
@@ -185,6 +186,39 @@ it("corrects collar entry on saved manual routes without rewriting their waypoin
     ),
   ).toBeLessThan(-0.99);
   expect(JSON.stringify(duct.waypoints)).toBe(before);
+});
+
+it("keeps the hose when the operator deletes every bend", () => {
+  const p = fixture();
+  const terminal = p.airTerminals[0];
+  const plenum = p.plenums.find((item) => item.attachmentId === terminal.id)!;
+  const machine = p.hvacSystems[0].indoorUnits[0];
+  const result = createDuctFromEndpoints(p, plenum.id, machine.id);
+  let next = result.project;
+  for (const id of result.ductIds) {
+    const duct = next.ducts!.find((item) => item.id === id)!;
+    expect(duct.waypoints.length).toBeGreaterThan(0);
+    for (let i = duct.waypoints.length; i > 0; i--)
+      next = removeDuctWaypoint(next, id, i - 1);
+    expect(next.ducts!.find((item) => item.id === id)!.waypoints).toHaveLength(
+      0,
+    );
+    expect(
+      ductRoute(
+        next,
+        next.ducts!.find((item) => item.id === id)!,
+      ),
+    ).toHaveLength(4);
+    // La curva si può reinserire: il tubo è ancora selezionabile.
+    const added = addDuctWaypoint(next, id);
+    expect(added.index).toBe(0);
+    expect(
+      ductRoute(
+        added.project,
+        added.project.ducts!.find((item) => item.id === id)!,
+      ).length,
+    ).toBeGreaterThan(4);
+  }
 });
 
 it("asks for the machine plenum before tracing a duct", () => {

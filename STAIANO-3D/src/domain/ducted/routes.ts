@@ -97,7 +97,6 @@ function manualFlexibleRoute(
   start: RoutePoint,
   end: RoutePoint,
 ): RoutePoint[] {
-  if (!duct.waypoints.length) return [];
   const leads = flexibleCollarLeads(
     project,
     duct.systemId,
@@ -106,7 +105,7 @@ function manualFlexibleRoute(
     end,
     duct.diameterMm ?? 160,
   );
-  // I punti operatore non possono invertire l'ingresso nei collari.
+  // Senza curve resta il tubo dritto fra i collari, così non sparisce dalla scena.
   return leads ? [start, leads.from, ...duct.waypoints, leads.to, end] : [];
 }
 
