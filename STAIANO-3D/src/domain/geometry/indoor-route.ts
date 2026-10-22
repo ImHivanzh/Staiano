@@ -49,24 +49,87 @@ export function nearestIndoorPoint(
   );
 }
 
+type Bounds = { minX: number; minY: number; maxX: number; maxY: number };
+
+// Il piano si ripete a ogni tratto del grafo di visibilità: le cornici dei
+// poligoni si calcolano una volta per l'array passato, non per ogni coppia.
+const boundsCache = new WeakMap<Point[][], Map<Point[], Bounds>>();
+
+function polygonBounds(polygon: Point[]): Bounds {
+  const bounds = {
+    minX: Infinity,
+    minY: Infinity,
+    maxX: -Infinity,
+    maxY: -Infinity,
+  };
+  for (const point of polygon) {
+    bounds.minX = Math.min(bounds.minX, point.x);
+    bounds.minY = Math.min(bounds.minY, point.y);
+    bounds.maxX = Math.max(bounds.maxX, point.x);
+    bounds.maxY = Math.max(bounds.maxY, point.y);
+  }
+  return bounds;
+}
+
+function floorBounds(polygons: Point[][]) {
+  let bounds = boundsCache.get(polygons);
+  if (!bounds) {
+    bounds = new Map(
+      polygons.map((polygon) => [polygon, polygonBounds(polygon)]),
+    );
+    boundsCache.set(polygons, bounds);
+  }
+  return bounds;
+}
+
+const EPSILON = 1e-9;
+
+const insideBounds = (p: Point, b: Bounds) =>
+  p.x >= b.minX - EPSILON &&
+  p.x <= b.maxX + EPSILON &&
+  p.y >= b.minY - EPSILON &&
+  p.y <= b.maxY + EPSILON;
+
+/** Segment-AABB overlap, conservative: a polygon outside it cannot be cut. */
+function touchesBounds(a: Point, b: Point, bounds: Bounds) {
+  return !(
+    Math.max(a.x, b.x) < bounds.minX - EPSILON ||
+    Math.min(a.x, b.x) > bounds.maxX + EPSILON ||
+    Math.max(a.y, b.y) < bounds.minY - EPSILON ||
+    Math.min(a.y, b.y) > bounds.maxY + EPSILON
+  );
+}
+
+function insideFloor(
+  p: Point,
+  polygons: Point[][],
+  bounds = floorBounds(polygons),
+): boolean {
+  return polygons.some((polygon) => {
+    const box = bounds.get(polygon)!;
+    return (
+      insideBounds(p, box) &&
+      (pointInPolygon(p, polygon) ||
+        polygon.some((q, i) =>
+          onSegment(p, q, polygon[(i + 1) % polygon.length]),
+        ))
+    );
+  });
+}
+
 export function segmentInsideFloor(
   a: Point,
   b: Point,
   polygons: Point[][],
 ): boolean {
-  const contains = (p: Point) =>
-    polygons.some(
-      (polygon) =>
-        pointInPolygon(p, polygon) ||
-        polygon.some((q, i) =>
-          onSegment(p, q, polygon[(i + 1) % polygon.length]),
-        ),
-    );
+  const bounds = floorBounds(polygons);
+  const contains = (p: Point) => insideFloor(p, polygons, bounds);
   if (!contains(a) || !contains(b)) return false;
   const length = distance(a, b);
   if (length < 1e-7) return true;
   const cuts = [0, 1];
-  for (const polygon of polygons)
+  for (const polygon of polygons) {
+    if (!touchesBounds(a, b, bounds.get(polygon)!)) continue;
     for (let i = 0; i < polygon.length; i++) {
       const c = polygon[i],
         d = polygon[(i + 1) % polygon.length];
@@ -77,6 +140,7 @@ export function segmentInsideFloor(
       for (const p of [c, d])
         if (onSegment(p, a, b)) cuts.push(distance(a, p) / length);
     }
+  }
   cuts.sort((x, y) => x - y);
   return cuts.slice(1).every((t, i) => {
     const middle = (t + cuts[i]) / 2;
@@ -97,6 +161,14 @@ export function indoorRoute(
 ): Point[] {
   // Partially drawn plans leave no walkable polygon: keep devices connectable.
   const direct = () => (samePoint(start, end) ? [start] : [start, end]);
+  // Fuori piano il grafo di visibilità non può collegare nulla: stesso esito,
+  // senza esplorare tutti i vertici (era il blocco su piante grandi).
+  const bounds = floorBounds(polygons);
+  if (
+    !insideFloor(start, polygons, bounds) ||
+    !insideFloor(end, polygons, bounds)
+  )
+    return direct();
   for (const corner of [
     { x: start.x, y: end.y },
     { x: end.x, y: start.y },
