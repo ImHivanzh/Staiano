@@ -247,6 +247,13 @@ export const plenumSchema = z.object({
   connectionPosition: z
     .enum(["lateral", "upper", "lower", "rear", "left", "right", "custom"])
     .optional(),
+  /** Lato di ogni singolo stacco; se manca vale connectionPosition. */
+  connectionPositions: z
+    .array(
+      z.enum(["lateral", "upper", "lower", "rear", "left", "right", "custom"]),
+    )
+    .max(24)
+    .optional(),
   connectionNote: z.string().max(200).optional(),
   shape: z.enum(["rectangular", "trapezoidal"]).optional(),
   /** Un plenum di ripresa, uno di mandata: raccolgono bocchette di quel lato. */

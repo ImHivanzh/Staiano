@@ -232,16 +232,26 @@ export function syncAttachedPlenums(
       oldOwner &&
       owner &&
       (plenum.attachmentId === undefined ||
-        (terminalOwner && plenum.status !== "proposed"))
-    )
+        !terminalOwner ||
+        plenum.status !== "proposed")
+    ) {
+      // Il comando puo aver gia seguito il titolare (rotateDevice90 sincronizza
+      // al suo interno): non applicare due volte lo stesso spostamento.
+      const followed = followAttachmentPose(plenum, oldOwner, owner);
+      const expected = followAttachmentPose(saved, oldOwner, owner);
+      const already =
+        Math.abs(plenum.rotation - expected.rotation) < 1e-9 &&
+        Math.abs(plenum.position.x - expected.position.x) < 1e-9 &&
+        Math.abs(plenum.position.y - expected.position.y) < 1e-9;
       return [
         {
           ...plenum,
           roomId: owner.roomId,
           floorId: owner.floorId,
-          ...followAttachmentPose(plenum, oldOwner, owner),
+          ...(already ? {} : followed),
         },
       ];
+    }
     if (!plenum.attachmentId) return [plenum];
     if (
       !project.airTerminals.some((t) => t.id === plenum.attachmentId) &&
@@ -410,29 +420,106 @@ export function syncAttachedPlenums(
   };
 }
 
+export type PlenumConnectionSide =
+  | "left"
+  | "right"
+  | "rear"
+  | "top"
+  | "bottom";
+
+function normalizedSide(
+  position:
+    | "lateral"
+    | "upper"
+    | "lower"
+    | "rear"
+    | "left"
+    | "right"
+    | "custom",
+): PlenumConnectionSide {
+  return position === "upper"
+    ? "top"
+    : position === "lower"
+      ? "bottom"
+      : position === "left"
+        ? "left"
+        : position === "right"
+          ? "right"
+          : "rear";
+}
+
+/** Lato del corpo su cui arriva lo stacco numero portIndex. */
+export function plenumConnectionSide(
+  project: Project,
+  plenum: Plenum,
+  portIndex = 0,
+): PlenumConnectionSide {
+  const terminal = project.airTerminals.find(
+    (t) => t.id === plenum.attachmentId,
+  );
+  const position =
+    plenum.connectionPositions?.[portIndex] ??
+    plenum.connectionPosition ??
+    (terminal
+      ? resolveTerminalAccessorySpecification(terminal)?.plenum
+          ?.connectionPosition
+      : undefined) ??
+    (terminal?.mounting === "ceiling" ? "upper" : "lateral");
+  return normalizedSide(position);
+}
+
+/** Posizione locale dello stacco sul corpo, in metri. */
+export function plenumPortLocal(
+  plenum: Pick<Plenum, "widthMm" | "heightMm" | "depthMm">,
+  side: PlenumConnectionSide,
+  ordinal: number,
+  total: number,
+  lead = 0.06,
+) {
+  const fraction = total > 1 ? (ordinal + 0.5) / total - 0.5 : 0;
+  const halfWidth = plenum.widthMm / 2000;
+  const halfDepth = plenum.depthMm / 2000;
+  const halfHeight = plenum.heightMm / 2000;
+  return side === "top"
+    ? { x: fraction * (plenum.widthMm / 1000), y: 0, z: halfHeight + lead }
+    : side === "bottom"
+      ? {
+          x: fraction * (plenum.widthMm / 1000),
+          y: 0,
+          z: -halfHeight - lead,
+        }
+      : side === "left"
+        ? {
+            x: -halfWidth - lead,
+            y: fraction * (plenum.depthMm / 1000),
+            z: 0,
+          }
+        : side === "right"
+          ? {
+              x: halfWidth + lead,
+              y: fraction * (plenum.depthMm / 1000),
+              z: 0,
+            }
+          : {
+              x: fraction * (plenum.widthMm / 1000),
+              y: -halfDepth - lead,
+              z: 0,
+            };
+}
+
 export function attachedPlenumPorts(project: Project, plenum: Plenum) {
-  const side = plenumConnectionSide(project, plenum);
   const count = plenum.portCount ?? 1;
   const diameter = plenum.portDiameterMm ?? 160;
-  const lead = 0.06;
-  return Array.from({ length: count }, (_, i) => {
-    const along =
-      (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000;
-    const alongDepth =
-      (((i + 0.5) / count - 0.5) * plenum.depthMm) / 1000;
-    const halfWidth = plenum.widthMm / 2000;
-    const halfDepth = plenum.depthMm / 2000;
-    const halfHeight = plenum.heightMm / 2000;
-    const local =
-      side === "top"
-        ? { x: along, y: 0, z: halfHeight + lead }
-        : side === "bottom"
-          ? { x: along, y: 0, z: -halfHeight - lead }
-          : side === "left"
-            ? { x: -halfWidth - lead, y: alongDepth, z: 0 }
-            : side === "right"
-              ? { x: halfWidth + lead, y: alongDepth, z: 0 }
-              : { x: along, y: -halfDepth - lead, z: 0 };
+  const sides = Array.from({ length: count }, (_, i) =>
+    plenumConnectionSide(project, plenum, i),
+  );
+  const totals: Record<string, number> = {};
+  for (const side of sides) totals[side] = (totals[side] ?? 0) + 1;
+  const seen: Record<string, number> = {};
+  return sides.map((side) => {
+    const ordinal = seen[side] ?? 0;
+    seen[side] = ordinal + 1;
+    const local = plenumPortLocal(plenum, side, ordinal, totals[side]);
     return {
       x:
         plenum.position.x +
@@ -446,32 +533,6 @@ export function attachedPlenumPorts(project: Project, plenum: Plenum) {
       diameterMm: diameter,
     };
   });
-}
-
-/** Lato del corpo su cui arrivano gli stacchi dei flessibili. */
-export function plenumConnectionSide(
-  project: Project,
-  plenum: Plenum,
-): "left" | "right" | "rear" | "top" | "bottom" {
-  const terminal = project.airTerminals.find(
-    (t) => t.id === plenum.attachmentId,
-  );
-  const position =
-    plenum.connectionPosition ??
-    (terminal
-      ? resolveTerminalAccessorySpecification(terminal)?.plenum
-          ?.connectionPosition
-      : undefined) ??
-    (terminal?.mounting === "ceiling" ? "upper" : "lateral");
-  return position === "upper"
-    ? "top"
-    : position === "lower"
-      ? "bottom"
-      : position === "left"
-        ? "left"
-        : position === "right"
-          ? "right"
-          : "rear";
 }
 
 /**

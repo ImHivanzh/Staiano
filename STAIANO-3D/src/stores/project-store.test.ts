@@ -11,6 +11,7 @@ import {
 import { placeMachineOnPlan } from "@/domain/ducted/graphic-installation";
 import { placeSupplyPlenum } from "@/domain/ducted/placement";
 import { removeSelection } from "@/domain/geometry/selection";
+import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 
 beforeEach(() => {
   useProjectStore.setState({ readOnly: false });
@@ -87,6 +88,27 @@ it("eliminando il plenum macchina non ricrea i flessibili appesi", () => {
   const after = useProjectStore.getState().project!;
   expect(after.plenums.some((pl) => pl.id === machine.id)).toBe(false);
   expect(after.ducts ?? []).toHaveLength(0);
+});
+
+it("ruota una volta la macchina e il suo plenum manuale", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
+  const id = p.plenums[0].id;
+  const machineId = p.hvacSystems[0].indoorUnits[0].id;
+  p = connectPlenum(p, id, machineId);
+  useProjectStore.getState().load(p);
+  const before = p.plenums.find((pl) => pl.id === id)!;
+  useProjectStore
+    .getState()
+    .commit((project) => rotateDevice90(project, machineId));
+  const after = useProjectStore.getState().project!;
+  expect(after.hvacSystems[0].indoorUnits[0].rotation).toBeCloseTo(
+    Math.PI / 2,
+  );
+  expect(after.plenums.find((pl) => pl.id === id)!.rotation).toBeCloseTo(
+    before.rotation + Math.PI / 2,
+  );
 });
 
 it("keeps every equipment type on the main plan", () => {

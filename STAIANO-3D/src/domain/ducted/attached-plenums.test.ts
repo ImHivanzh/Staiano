@@ -199,9 +199,9 @@ it("keeps the terminal plenum when reconnecting and supports a return plenum on 
       .sort(),
   ).toEqual(["return", "supply"]);
   const moved = rotateDevice90(p, p.hvacSystems[0].indoorUnits[0].id);
-  // Il plenum già posizionato non segue più la macchina: ruota da solo.
+  // Il plenum collegato alla macchina ruota con lei, conservando il distacco.
   expect(moved.plenums.find((pl) => pl.id === id)!.rotation).toBeCloseTo(
-    plenum.rotation,
+    plenum.rotation + Math.PI / 2,
   );
   expect(projectSchema.safeParse(moved).success).toBe(true);
   const relocated = movePlacedDevice(moved, id, { x: 4, y: 4 });
@@ -430,6 +430,42 @@ it.each([
     expect(port.elevationM).toBeCloseTo(2 + dz);
   },
 );
+
+it("puts each flexible collar on its own side of the same plenum", () => {
+  const p = fixture();
+  const plenum = {
+    ...p.plenums[0],
+    position: { x: 2, y: 2 },
+    rotation: 0,
+    elevationM: 2,
+    widthMm: 600,
+    depthMm: 200,
+    heightMm: 300,
+    portCount: 2,
+    connectionPositions: ["left", "right"] as ("left" | "right")[],
+  };
+  const [left, right] = attachedPlenumPorts(p, plenum);
+  expect(left.x).toBeCloseTo(2 - 0.36);
+  expect(left.y).toBeCloseTo(2);
+  expect(right.x).toBeCloseTo(2 + 0.36);
+  expect(right.y).toBeCloseTo(2);
+});
+
+it("turns a machine plenum together with its machine", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, {
+    x: 3,
+    y: 3,
+  });
+  p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
+  const machine = p.hvacSystems[0].indoorUnits[0];
+  p = connectPlenum(p, p.plenums[0].id, machine.id);
+  expect(p.plenums[0].attachmentId).toBe(machine.id);
+  const turned = rotateDevice90(p, machine.id);
+  expect(turned.plenums[0].rotation).toBeCloseTo(Math.PI / 2);
+  expect(turned.plenums[0].position.x).toBeCloseTo(4);
+  expect(turned.plenums[0].position.y).toBeCloseTo(2);
+});
 
 it("keeps the plenum inlet direction when the body is unconnected", () => {
   const p = fixture();

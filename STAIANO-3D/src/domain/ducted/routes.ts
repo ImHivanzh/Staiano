@@ -69,6 +69,7 @@ function flexibleCollarLeads(
   end: RoutePoint,
   diameterMm: number,
   leadMultiplier = 1.1,
+  targetPortIndex = 0,
 ) {
   const source = machinePlenum(project, systemId, terminal.use);
   const target = terminalPlenum(project, terminal);
@@ -81,7 +82,7 @@ function flexibleCollarLeads(
     y: start.y + Math.cos(source.rotation) * lead * direction,
     elevationM: start.elevationM,
   };
-  const side = plenumConnectionSide(project, target);
+  const side = plenumConnectionSide(project, target, targetPortIndex);
   const to = {
     x:
       end.x +
@@ -108,6 +109,7 @@ function manualFlexibleRoute(
   terminal: Project["airTerminals"][number],
   start: RoutePoint,
   end: RoutePoint,
+  targetPortIndex = 0,
 ): RoutePoint[] {
   const leads = flexibleCollarLeads(
     project,
@@ -116,6 +118,8 @@ function manualFlexibleRoute(
     start,
     end,
     duct.diameterMm ?? 160,
+    1.1,
+    targetPortIndex,
   );
   // Senza curve resta il tubo dritto fra i collari, così non sparisce dalla scena.
   return leads ? [start, leads.from, ...duct.waypoints, leads.to, end] : [];
@@ -128,6 +132,7 @@ function flexibleConnectionRoute(
   start: RoutePoint,
   end: RoutePoint,
   diameterMm: number,
+  targetPortIndex = 0,
 ) {
   for (const leadMultiplier of [3, 2, 1.1]) {
     const leads = flexibleCollarLeads(
@@ -138,6 +143,7 @@ function flexibleConnectionRoute(
       end,
       diameterMm,
       leadMultiplier,
+      targetPortIndex,
     );
     if (!leads) return [];
     const { source, target, from, to, lead } = leads;
@@ -355,6 +361,7 @@ export function airConnectionRoutes(project: Project, floorId: string) {
         start,
         end,
         end.diameterMm,
+        index,
       );
       const below = routeBelowTerminals(
         project,
@@ -412,21 +419,20 @@ export function ductRoute(
       ?.indoorUnits[0];
     const terminal = project.airTerminals.find((t) => t.id === duct.terminalId);
     if (!machine || !terminal) return [];
-    const end = attachedPlenumPorts(project, plenum)[
-      Number(duct.branchId?.split(":").at(-1) ?? 0)
-    ];
+    const index = Number(duct.branchId?.split(":").at(-1) ?? 0);
+    const end = attachedPlenumPorts(project, plenum)[index];
     if (!end) return [];
     const start = machineDuctStart(
       project,
       duct.systemId,
       terminal.id,
-      Number(duct.branchId?.split(":").at(-1) ?? 0),
+      index,
     );
     if (!start) return [];
     if (duct.routing === "manual")
       // Percorso tracciato a mano: tubo da plenum a plenum lungo i punti salvati.
       return duct.kind === "flexible"
-        ? manualFlexibleRoute(project, duct, terminal, start, end)
+        ? manualFlexibleRoute(project, duct, terminal, start, end, index)
         : duct.waypoints.length
           ? [start, ...duct.waypoints, end]
           : [];
@@ -437,6 +443,7 @@ export function ductRoute(
       start,
       end,
       duct.diameterMm ?? 160,
+      index,
     );
   }
   const geometry =
@@ -453,14 +460,20 @@ export function ductRoute(
       (port.centerMm[2] + port.collarLengthMm) / 1000,
     ]);
     const terminalBody = terminalPlenum(project, terminal);
+    const targetIndex = port.branch.terminalPortIndex ?? 0;
     const end = terminalBody
-      ? attachedPlenumPorts(project, terminalBody)[
-          port.branch.terminalPortIndex ?? 0
-        ]
+      ? attachedPlenumPorts(project, terminalBody)[targetIndex]
       : null;
     if (!end) return [];
     if (duct.kind === "flexible" && duct.routing === "manual")
-      return manualFlexibleRoute(project, duct, terminal, start, end);
+      return manualFlexibleRoute(
+        project,
+        duct,
+        terminal,
+        start,
+        end,
+        targetIndex,
+      );
     if (duct.kind === "flexible" && duct.routing !== "manual")
       return flexibleConnectionRoute(
         project,
@@ -469,6 +482,7 @@ export function ductRoute(
         start,
         end,
         duct.diameterMm ?? 160,
+        targetIndex,
       );
     const automatic =
       duct.routing === "manual"
@@ -742,6 +756,7 @@ function proposedWaypoints(
   start: RoutePoint,
   end: RoutePoint,
   diameterMm: number,
+  targetPortIndex = 0,
 ): RoutePoint[] | null {
   const route = flexibleConnectionRoute(
     project,
@@ -750,6 +765,7 @@ function proposedWaypoints(
     start,
     end,
     diameterMm,
+    targetPortIndex,
   );
   if (route.length > 1) return route.slice(1, -1);
   // Conserva un tracciato modificabile anche quando la proposta geometrica fallisce.
@@ -760,6 +776,8 @@ function proposedWaypoints(
     start,
     end,
     diameterMm,
+    1.1,
+    targetPortIndex,
   );
   return leads ? [leads.from, leads.to] : null;
 }
@@ -854,7 +872,14 @@ export function createDuctFromEndpoints(
         "Percorso non realizzabile: verifica gli stacchi dei due plenum.",
       );
     const diameterMm = duct.diameterMm ?? plenum.portDiameterMm ?? 160;
-    const waypoints = proposedWaypoints(next, current, start, end, diameterMm);
+    const waypoints = proposedWaypoints(
+      next,
+      current,
+      start,
+      end,
+      diameterMm,
+      index,
+    );
     if (!waypoints) return duct;
     return {
       ...duct,

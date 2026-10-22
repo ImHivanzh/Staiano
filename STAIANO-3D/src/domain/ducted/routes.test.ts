@@ -10,6 +10,7 @@ import {
   connectPlenum,
   terminalPlenum,
   plenumConnectionSide,
+  syncAttachedPlenums,
 } from "./attached-plenums";
 import { machinePlenum, placeSupplyPlenum } from "./placement";
 import { flexibleDuctCurve } from "./flexible-curve";
@@ -100,6 +101,41 @@ it.each(
     }
   },
 );
+
+it("uses a different side for each collar of the same plenum", () => {
+  let p = fixture();
+  p = {
+    ...p,
+    plenums: p.plenums.map((plenum) =>
+      plenum.attachmentId === p.airTerminals[0].id
+        ? {
+            ...plenum,
+            portCount: 2,
+            connectionPositions: ["left", "right"] as (
+              | "left"
+              | "right"
+            )[],
+          }
+        : plenum,
+    ),
+  };
+  p = syncAttachedPlenums(p);
+  const result = createDuctFromEndpoints(
+    p,
+    p.airTerminals[0].id,
+    p.hvacSystems[0].id,
+  );
+  const tangents = result.ductIds.map((id) => {
+    const duct = result.project.ducts!.find((item) => item.id === id)!;
+    return flexibleDuctCurve(
+      ductRoute(result.project, duct),
+      duct.diameterMm!,
+    )!.curve.getTangentAt(1);
+  });
+  expect(Math.abs(tangents[0].x)).toBeGreaterThan(0.99);
+  expect(Math.abs(tangents[1].x)).toBeGreaterThan(0.99);
+  expect(Math.sign(tangents[0].x)).toBe(-Math.sign(tangents[1].x));
+});
 
 it("creates the predefined route from the plenum collar to the machine, fully editable", () => {
   const p = fixture();

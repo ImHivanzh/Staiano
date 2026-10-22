@@ -4,7 +4,10 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Plenum, Project, Selection } from "@/schemas/project";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
-import { plenumConnectionSide } from "@/domain/ducted/attached-plenums";
+import {
+  plenumConnectionSide,
+  plenumPortLocal,
+} from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 
@@ -171,9 +174,19 @@ function PlenumMesh({
     [geometry],
   );
   if (plenum.attachmentId !== undefined && !geometry) {
-    const side = plenumConnectionSide(project, plenum);
     const count = plenum.portCount ?? 1;
     const radius = (plenum.portDiameterMm ?? 160) / 2000;
+    const sides = Array.from({ length: count }, (_, i) =>
+      plenumConnectionSide(project, plenum, i),
+    );
+    const totals: Record<string, number> = {};
+    for (const side of sides) totals[side] = (totals[side] ?? 0) + 1;
+    const seen: Record<string, number> = {};
+    const ordinals = sides.map((side) => {
+      const ordinal = seen[side] ?? 0;
+      seen[side] = ordinal + 1;
+      return ordinal;
+    });
     return (
       <group>
         <mesh>
@@ -196,43 +209,37 @@ function PlenumMesh({
             roughness={0.4}
           />
         </mesh>
-        {Array.from({ length: count }, (_, i) => (
-          <mesh
-            key={i}
-            position={[
-              side === "left"
-                ? -plenum.widthMm / 2000 - 0.03
-                : side === "right"
-                  ? plenum.widthMm / 2000 + 0.03
-                  : (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000,
-              side === "top"
-                ? plenum.heightMm / 2000 + 0.03
-                : side === "bottom"
-                  ? -plenum.heightMm / 2000 - 0.03
-                  : 0,
-              side === "left" || side === "right"
-                ? (((i + 0.5) / count - 0.5) * plenum.depthMm) / 1000
-                : side === "rear"
-                  ? -plenum.depthMm / 2000 - 0.03
-                  : 0,
-            ]}
-            rotation={
-              side === "top" || side === "bottom"
-                ? [0, 0, 0]
-                : side === "left" || side === "right"
-                  ? [0, 0, Math.PI / 2]
-                  : [Math.PI / 2, 0, 0]
-            }
-          >
-            <cylinderGeometry args={[radius, radius, 0.06, 24, 1, true]} />
-            <meshStandardMaterial
-              color="#d1dde0"
-              metalness={0.7}
-              roughness={0.3}
-              side={THREE.DoubleSide}
-            />
-          </mesh>
-        ))}
+        {Array.from({ length: count }, (_, i) => {
+          const side = sides[i];
+          const local = plenumPortLocal(
+            plenum,
+            side,
+            ordinals[i],
+            totals[side],
+            0.03,
+          );
+          return (
+            <mesh
+              key={i}
+              position={[local.x, local.z, local.y]}
+              rotation={
+                side === "top" || side === "bottom"
+                  ? [0, 0, 0]
+                  : side === "left" || side === "right"
+                    ? [0, 0, Math.PI / 2]
+                    : [Math.PI / 2, 0, 0]
+              }
+            >
+              <cylinderGeometry args={[radius, radius, 0.06, 24, 1, true]} />
+              <meshStandardMaterial
+                color="#d1dde0"
+                metalness={0.7}
+                roughness={0.3}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+          );
+        })}
       </group>
     );
   }
