@@ -124,9 +124,12 @@ it("follows the terminal while proposed, then keeps its offset and follows the t
     movePlacedDevice(p, id, { x: 4, y: 3 }),
     p,
   );
-  expect(following.plenums[0].position).toEqual(
-    following.airTerminals[0].position,
-  );
+  // Il plenum segue la bocchetta conservando il distacco di catalogo.
+  const offset = (state: typeof p) => ({
+    x: state.plenums[0].position.x - state.airTerminals[0].position.x,
+    y: state.plenums[0].position.y - state.airTerminals[0].position.y,
+  });
+  expect(offset(following)).toEqual(offset(p));
   // L'operatore sposta il plenum: resta agganciato e conserva il distacco.
   const placed = movePlacedDevice(following, plenumId, { x: 5, y: 4 });
   expect(placed.plenums[0].status).toBe("manual");

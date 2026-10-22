@@ -218,6 +218,47 @@ it("permits hoses above a suspended ceiling but reports penetration of it and th
   );
 });
 
+it("keeps a flush ceiling plenum under the slab and connects it without collisions", () => {
+  let p = guidedProjectFixture();
+  p.rooms[0].heightM = 2.7;
+  p.rooms[0].ceilingHeightM = null;
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = addGuidedTerminal(p, 1000);
+  p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
+  p = createDuctFromEndpoints(
+    p,
+    p.airTerminals[0].id,
+    p.hvacSystems[0].id,
+  ).project;
+  const terminal = p.airTerminals[0];
+  const plenum = p.plenums.find((pl) => pl.attachmentId === terminal.id)!;
+  // Senza controsoffitto il plenum non ha vuoto: resta sotto il solaio e di
+  // fianco alla bocchetta, così si vede e il tubo non attraversa il soffitto.
+  expect(plenum.elevationM! + plenum.heightMm / 2000).toBeLessThanOrEqual(
+    p.rooms[0].heightM + 1e-9,
+  );
+  expect(plenum.position).not.toEqual(terminal.position);
+  expect(findDuctCollisions(p, ductScenePaths(p)).size).toBe(0);
+});
+
+it("keeps the ceiling terminal plenum in the void above a suspended ceiling", () => {
+  let p = guidedProjectFixture();
+  p.rooms[0].heightM = 3.2;
+  p.rooms[0].ceilingHeightM = 2.4;
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = addGuidedTerminal(p, 1000);
+  p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
+  const terminal = p.airTerminals[0];
+  const plenum = p.plenums.find((pl) => pl.attachmentId === terminal.id)!;
+  // Con il controsoffitto il plenum sta sopra la faccia della bocchetta.
+  expect(plenum.position).toEqual(terminal.position);
+  expect(plenum.elevationM! - plenum.heightMm / 2000).toBeGreaterThanOrEqual(
+    terminal.elevationM!,
+  );
+});
+
 it("reports the same saved-duct collision in the project checks and the scene", () => {
   let p = guidedProjectFixture();
   p.rooms[0].heightM = 4;

@@ -1,5 +1,7 @@
 import type { Duct, Plenum, Point, Project } from "@/schemas/project";
+import { Box3, Vector3 } from "three";
 import { newId } from "@/domain/project";
+import { bodies, segmentBodyDistance, type Body } from "./duct-bodies";
 import {
   machinePlenum,
   machinePlenums,
@@ -97,10 +99,62 @@ function flexibleCollarLeads(
         (side === "rear" ? -1 : 0) * Math.cos(target.rotation)) *
         lead,
     elevationM:
-      end.elevationM +
-      (side === "top" ? lead : side === "bottom" ? -lead : 0),
+      end.elevationM + (side === "top" ? lead : side === "bottom" ? -lead : 0),
   };
   return { source, target, from, to, lead };
+}
+
+/** Corpi del piano, riusati fra le proposte della stessa modifica del progetto. */
+const floorBodyCache = new WeakMap<Project, Map<string, Body[]>>();
+function routingBodies(project: Project, floorId: string): Body[] {
+  let floors = floorBodyCache.get(project);
+  if (!floors) floorBodyCache.set(project, (floors = new Map()));
+  let volumes = floors.get(floorId);
+  if (!volumes)
+    floors.set(
+      floorId,
+      (volumes = bodies(project, new Set([floorId]), new Map())),
+    );
+  return volumes;
+}
+
+/**
+ * Stessa regola dei controlli di collisione: il percorso può toccare i corpi a
+ * cui è collegato solo al collare, non attraversarli. Serve a scartare le curve
+ * che poi l'editor segnerebbe in rosso.
+ */
+function crossesBody(
+  samples: Vector3[],
+  radius: number,
+  volumes: Body[],
+  startIds: string[],
+  endIds: string[],
+) {
+  const lengths = [0];
+  for (let i = 1; i < samples.length; i++)
+    lengths.push(lengths[i - 1] + samples[i].distanceTo(samples[i - 1]));
+  const total = lengths.at(-1) ?? 0;
+  const bounds = new Box3().setFromPoints(samples).expandByScalar(radius);
+  for (const body of volumes) {
+    if (!bounds.intersectsBox(body.bounds)) continue;
+    for (let i = 1; i < samples.length; i++) {
+      let lo = lengths[i - 1],
+        hi = lengths[i];
+      if (startIds.includes(body.deviceId)) lo = Math.max(lo, radius + 0.065);
+      if (endIds.includes(body.deviceId))
+        hi = Math.min(hi, total - radius - 0.065);
+      if (hi <= lo) continue;
+      const span = lengths[i] - lengths[i - 1];
+      const a = samples[i - 1]
+          .clone()
+          .lerp(samples[i], span ? (lo - lengths[i - 1]) / span : 0),
+        b = samples[i - 1]
+          .clone()
+          .lerp(samples[i], span ? (hi - lengths[i - 1]) / span : 1);
+      if (segmentBodyDistance(a, b, body) < (radius - 1e-5) ** 2) return true;
+    }
+  }
+  return false;
 }
 
 function manualFlexibleRoute(
@@ -165,7 +219,21 @@ function flexibleConnectionRoute(
       ...floorRoutingPolygons(project, terminal.floorId),
       ...wallCavityPolygons(project, terminal.floorId),
     ];
+    const volumes = routingBodies(project, terminal.floorId);
+    const startIds = [
+      source.id,
+      ...(project.hvacSystems
+        .find((s) => s.id === systemId)
+        ?.indoorUnits.map((u) => u.id) ?? []),
+    ];
+    const endIds = [
+      target.id,
+      terminal.id,
+      terminal.wallId,
+      terminal.ceilingBandId,
+    ].filter((id): id is string => !!id);
     const candidates: { points: RoutePoint[]; length: number }[] = [];
+    const clean: typeof candidates = [];
     for (const sourceOffset of [0, -2 * lead, 2 * lead]) {
       for (const targetOffset of [0, -2 * lead, 2 * lead]) {
         const a = {
@@ -252,11 +320,27 @@ function flexibleConnectionRoute(
               )
           )
             continue;
-          candidates.push({ points, length: rounded.curve.getLength() });
+          const candidate = { points, length: rounded.curve.getLength() };
+          candidates.push(candidate);
+          const trace = rounded.curve.getSpacedPoints(
+            Math.min(
+              4096,
+              Math.max(
+                2,
+                Math.ceil(candidate.length / Math.min(0.025, radius / 2)),
+              ),
+            ),
+          );
+          // Fra due curve di pari lunghezza vince quella che non attraversa un
+          // corpo: il percorso proposto non nasce già in collisione.
+          if (!crossesBody(trace, radius, volumes, startIds, endIds))
+            clean.push(candidate);
         }
       }
     }
-    const best = candidates.sort((a, b) => a.length - b.length)[0];
+    const best = (clean.length ? clean : candidates).sort(
+      (a, b) => a.length - b.length,
+    )[0];
     if (best) return best.points;
   }
   return [];
@@ -422,12 +506,7 @@ export function ductRoute(
     const index = Number(duct.branchId?.split(":").at(-1) ?? 0);
     const end = attachedPlenumPorts(project, plenum)[index];
     if (!end) return [];
-    const start = machineDuctStart(
-      project,
-      duct.systemId,
-      terminal.id,
-      index,
-    );
+    const start = machineDuctStart(project, duct.systemId, terminal.id, index);
     if (!start) return [];
     if (duct.routing === "manual")
       // Percorso tracciato a mano: tubo da plenum a plenum lungo i punti salvati.

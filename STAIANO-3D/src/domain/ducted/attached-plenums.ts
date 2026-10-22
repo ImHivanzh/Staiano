@@ -1,6 +1,7 @@
 import type { Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "../project";
 import { roomCeilingHeightM } from "../air-conditioning/elevation";
+import { roofHeightAt } from "../geometry/ceilings";
 import { resolveTerminalAccessorySpecification } from "../air-terminals/commercial-bom";
 import {
   machinePlenum,
@@ -622,7 +623,17 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
       elevationM: room.heightM - owner.heightMm / 2000 - 0.05,
     };
   }
-  const gap = (owner.depthMm ?? 0) / 2000 + plenum.depthMm / 2000;
+  const face = terminal?.elevationM ?? roomCeilingHeightM(room);
+  const roof = roofHeightAt(project, room, owner.position);
+  const height = plenum.heightMm / 1000;
+  // Il plenum di una bocchetta a soffitto vive nel vuoto sopra la faccia,
+  // insieme ai flessibili. Senza controsoffitto il solaio è a filo e il corpo
+  // non ci sta: scende di fianco alla bocchetta invece di attraversare il
+  // solaio, così non resta nascosto né bloccato nei controlli del percorso.
+  const inVoid = face + (terminal?.depthMm ?? 0) / 1000 + height <= roof + 1e-9;
+  const gap =
+    (ceiling ? (terminal?.heightMm ?? 0) : (owner.depthMm ?? 0)) / 2000 +
+    plenum.depthMm / 2000;
   return {
     ...plenum,
     systemId: terminal ? terminal.systemId : system!.id,
@@ -630,15 +641,18 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
     floorId: owner.floorId,
     rotation: owner.rotation,
     ...(!terminal ? { widthMm: owner.widthMm, heightMm: owner.heightMm } : {}),
-    position: ceiling
-      ? owner.position
-      : {
-          x: owner.position.x + Math.sin(owner.rotation) * gap,
-          y: owner.position.y - Math.cos(owner.rotation) * gap,
-        },
+    position:
+      ceiling && inVoid
+        ? owner.position
+        : {
+            x: owner.position.x + Math.sin(owner.rotation) * gap,
+            y: owner.position.y - Math.cos(owner.rotation) * gap,
+          },
     elevationM: terminal
-      ? (terminal.elevationM ?? roomCeilingHeightM(room)) +
-        (ceiling ? (terminal.depthMm ?? 0) / 1000 + plenum.heightMm / 2000 : 0)
+      ? ceiling
+        ? Math.min(face + (terminal.depthMm ?? 0) / 1000 + height, roof) -
+          height / 2
+        : face
       : room.heightM - owner.heightMm / 2000 - 0.05,
   };
 }

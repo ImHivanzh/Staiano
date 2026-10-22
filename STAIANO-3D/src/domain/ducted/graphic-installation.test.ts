@@ -168,9 +168,11 @@ it("shows graphical connections in 3D along the same plan route without changing
     (start.y - machine.position.y) * Math.cos(machine.rotation) -
       (start.x - machine.position.x) * Math.sin(machine.rotation),
   ).toBeGreaterThan(machine.depthMm / 2000);
-  expect(connection.points.at(-1)!.elevationM).toBeGreaterThan(
-    terminal.elevationM!,
-  );
+  // The hose ends at the plenum collar, not at the grille face centre.
+  const collar = connected.plenums[0];
+  expect(
+    Math.abs(connection.points.at(-1)!.elevationM - collar.elevationM!),
+  ).toBeLessThanOrEqual(collar.heightMm / 2000);
   expect(connection.diameterMm).toBeGreaterThan(70);
   expect(
     connection.points.every((point) => Number.isFinite(point.elevationM)),

@@ -254,10 +254,13 @@ describe("operator-led configuration acceptance", () => {
     const route = ductRoute(p, retained);
     expect(route[0].x).toBeCloseTo(originalStart.x + 0.5);
     expect(route).toContainEqual(waypoint);
-    // The hose ends at a plenum collar above the moved grille, not at its face centre.
-    expect(route.at(-1)!.elevationM).toBeGreaterThan(
-      p.airTerminals[0].elevationM!,
-    );
+    // The hose ends at the plenum collar, not at the grille face centre.
+    const collar = p.plenums.find(
+      (pl) => pl.attachmentId === p.airTerminals[0].id,
+    )!;
+    expect(
+      Math.abs(route.at(-1)!.elevationM - collar.elevationM!),
+    ).toBeLessThanOrEqual(collar.heightMm / 2000);
     expect(Math.abs(route.at(-1)!.x - 4)).toBeLessThanOrEqual(
       p.airTerminals[0].widthMm / 2000,
     );
