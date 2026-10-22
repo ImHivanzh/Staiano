@@ -4,7 +4,7 @@ import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Plenum, Project, Selection } from "@/schemas/project";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
-import { plenumPortsUpper } from "@/domain/ducted/attached-plenums";
+import { plenumConnectionSide } from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 
@@ -171,7 +171,7 @@ function PlenumMesh({
     [geometry],
   );
   if (plenum.attachmentId !== undefined && !geometry) {
-    const upper = plenumPortsUpper(project, plenum);
+    const side = plenumConnectionSide(project, plenum);
     const count = plenum.portCount ?? 1;
     const radius = (plenum.portDiameterMm ?? 160) / 2000;
     return (
@@ -200,11 +200,29 @@ function PlenumMesh({
           <mesh
             key={i}
             position={[
-              (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000,
-              upper ? plenum.heightMm / 2000 + 0.03 : 0,
-              upper ? 0 : -plenum.depthMm / 2000 - 0.03,
+              side === "left"
+                ? -plenum.widthMm / 2000 - 0.03
+                : side === "right"
+                  ? plenum.widthMm / 2000 + 0.03
+                  : (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000,
+              side === "top"
+                ? plenum.heightMm / 2000 + 0.03
+                : side === "bottom"
+                  ? -plenum.heightMm / 2000 - 0.03
+                  : 0,
+              side === "left" || side === "right"
+                ? (((i + 0.5) / count - 0.5) * plenum.depthMm) / 1000
+                : side === "rear"
+                  ? -plenum.depthMm / 2000 - 0.03
+                  : 0,
             ]}
-            rotation={upper ? [0, 0, 0] : [Math.PI / 2, 0, 0]}
+            rotation={
+              side === "top" || side === "bottom"
+                ? [0, 0, 0]
+                : side === "left" || side === "right"
+                  ? [0, 0, Math.PI / 2]
+                  : [Math.PI / 2, 0, 0]
+            }
           >
             <cylinderGeometry args={[radius, radius, 0.06, 24, 1, true]} />
             <meshStandardMaterial
@@ -350,6 +368,19 @@ export function SystemMeshes({
                     ]}
                   />
                   <meshStandardMaterial color="#335a6b" />
+                </mesh>
+                {/* Fronte visibile dall'alto: distingue 0° da 180°. */}
+                <mesh
+                  position={[
+                    0,
+                    u.heightMm / 2000 + 0.002,
+                    u.depthMm / 2000 - 0.03,
+                  ]}
+                >
+                  <boxGeometry
+                    args={[(u.widthMm / 1000) * 0.8, 0.004, 0.03]}
+                  />
+                  <meshStandardMaterial color="#00aeef" />
                 </mesh>
               </group>
             )),

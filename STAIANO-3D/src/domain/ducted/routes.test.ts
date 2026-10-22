@@ -9,7 +9,7 @@ import {
   insertPlenum,
   connectPlenum,
   terminalPlenum,
-  plenumPortsUpper,
+  plenumConnectionSide,
 } from "./attached-plenums";
 import { machinePlenum, placeSupplyPlenum } from "./placement";
 import { flexibleDuctCurve } from "./flexible-curve";
@@ -55,9 +55,29 @@ it.each(
     const result = createDuctFromEndpoints(p, terminal.id, p.hvacSystems[0].id);
     const source = machinePlenum(result.project, terminal.systemId!, "supply")!;
     const target = terminalPlenum(result.project, terminal)!;
-    const outward = plenumPortsUpper(result.project, target)
-      ? new Vector3(0, 1, 0)
-      : new Vector3(Math.sin(target.rotation), 0, -Math.cos(target.rotation));
+    const side = plenumConnectionSide(result.project, target);
+    const outward =
+      side === "top"
+        ? new Vector3(0, 1, 0)
+        : side === "bottom"
+          ? new Vector3(0, -1, 0)
+          : side === "left"
+            ? new Vector3(
+                -Math.cos(target.rotation),
+                0,
+                -Math.sin(target.rotation),
+              )
+            : side === "right"
+              ? new Vector3(
+                  Math.cos(target.rotation),
+                  0,
+                  Math.sin(target.rotation),
+                )
+              : new Vector3(
+                  Math.sin(target.rotation),
+                  0,
+                  -Math.cos(target.rotation),
+                );
     for (const id of result.ductIds) {
       const duct = result.project.ducts!.find((d) => d.id === id)!;
       const path = flexibleDuctCurve(

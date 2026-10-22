@@ -391,6 +391,8 @@ function priceLine(
     upper: "superiore",
     lower: "inferiore",
     rear: "posteriore",
+    left: "sinistro",
+    right: "destro",
     custom: "personalizzato",
   };
   const labels = {

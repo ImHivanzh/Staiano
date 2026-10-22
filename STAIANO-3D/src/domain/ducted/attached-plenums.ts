@@ -411,40 +411,67 @@ export function syncAttachedPlenums(
 }
 
 export function attachedPlenumPorts(project: Project, plenum: Plenum) {
-  const upper = plenumPortsUpper(project, plenum);
+  const side = plenumConnectionSide(project, plenum);
   const count = plenum.portCount ?? 1;
   const diameter = plenum.portDiameterMm ?? 160;
+  const lead = 0.06;
   return Array.from({ length: count }, (_, i) => {
-    const along = (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000;
-    const forward = upper ? 0 : -plenum.depthMm / 2000 - 0.06;
+    const along =
+      (((i + 0.5) / count - 0.5) * plenum.widthMm) / 1000;
+    const alongDepth =
+      (((i + 0.5) / count - 0.5) * plenum.depthMm) / 1000;
+    const halfWidth = plenum.widthMm / 2000;
+    const halfDepth = plenum.depthMm / 2000;
+    const halfHeight = plenum.heightMm / 2000;
+    const local =
+      side === "top"
+        ? { x: along, y: 0, z: halfHeight + lead }
+        : side === "bottom"
+          ? { x: along, y: 0, z: -halfHeight - lead }
+          : side === "left"
+            ? { x: -halfWidth - lead, y: alongDepth, z: 0 }
+            : side === "right"
+              ? { x: halfWidth + lead, y: alongDepth, z: 0 }
+              : { x: along, y: -halfDepth - lead, z: 0 };
     return {
       x:
         plenum.position.x +
-        along * Math.cos(plenum.rotation) -
-        forward * Math.sin(plenum.rotation),
+        local.x * Math.cos(plenum.rotation) -
+        local.y * Math.sin(plenum.rotation),
       y:
         plenum.position.y +
-        along * Math.sin(plenum.rotation) +
-        forward * Math.cos(plenum.rotation),
-      elevationM:
-        (plenum.elevationM ?? 2) + (upper ? plenum.heightMm / 2000 + 0.06 : 0),
+        local.x * Math.sin(plenum.rotation) +
+        local.y * Math.cos(plenum.rotation),
+      elevationM: (plenum.elevationM ?? 2) + local.z,
       diameterMm: diameter,
     };
   });
 }
 
-export function plenumPortsUpper(project: Project, plenum: Plenum) {
+/** Lato del corpo su cui arrivano gli stacchi dei flessibili. */
+export function plenumConnectionSide(
+  project: Project,
+  plenum: Plenum,
+): "left" | "right" | "rear" | "top" | "bottom" {
   const terminal = project.airTerminals.find(
     (t) => t.id === plenum.attachmentId,
   );
-  return (
-    (plenum.connectionPosition ??
-      (terminal
-        ? resolveTerminalAccessorySpecification(terminal)?.plenum
-            ?.connectionPosition
-        : undefined) ??
-      (terminal?.mounting === "ceiling" ? "upper" : "lateral")) === "upper"
-  );
+  const position =
+    plenum.connectionPosition ??
+    (terminal
+      ? resolveTerminalAccessorySpecification(terminal)?.plenum
+          ?.connectionPosition
+      : undefined) ??
+    (terminal?.mounting === "ceiling" ? "upper" : "lateral");
+  return position === "upper"
+    ? "top"
+    : position === "lower"
+      ? "bottom"
+      : position === "left"
+        ? "left"
+        : position === "right"
+          ? "right"
+          : "rear";
 }
 
 /**

@@ -245,7 +245,7 @@ export const plenumSchema = z.object({
   material: z.enum(["insulated", "galvanized"]).optional(),
   /** Direzione degli stacchi reali: dato del corpo, mai della bocchetta. */
   connectionPosition: z
-    .enum(["lateral", "upper", "lower", "rear", "custom"])
+    .enum(["lateral", "upper", "lower", "rear", "left", "right", "custom"])
     .optional(),
   connectionNote: z.string().max(200).optional(),
   shape: z.enum(["rectangular", "trapezoidal"]).optional(),

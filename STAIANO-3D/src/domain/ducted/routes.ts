@@ -23,7 +23,7 @@ import { linearRunMembers } from "../air-terminals/linear-run";
 import { needsTerminalReconfiguration } from "../air-terminals/legacy";
 import {
   attachedPlenumPorts,
-  plenumPortsUpper,
+  plenumConnectionSide,
   syncAttachedPlenums,
   terminalPlenum,
 } from "./attached-plenums";
@@ -81,11 +81,23 @@ function flexibleCollarLeads(
     y: start.y + Math.cos(source.rotation) * lead * direction,
     elevationM: start.elevationM,
   };
-  const upper = plenumPortsUpper(project, target);
+  const side = plenumConnectionSide(project, target);
   const to = {
-    x: end.x + (upper ? 0 : Math.sin(target.rotation) * lead),
-    y: end.y - (upper ? 0 : Math.cos(target.rotation) * lead),
-    elevationM: end.elevationM + (upper ? lead : 0),
+    x:
+      end.x +
+      ((side === "left" ? -1 : side === "right" ? 1 : 0) *
+        Math.cos(target.rotation) -
+        (side === "rear" ? -1 : 0) * Math.sin(target.rotation)) *
+        lead,
+    y:
+      end.y +
+      ((side === "left" ? -1 : side === "right" ? 1 : 0) *
+        Math.sin(target.rotation) +
+        (side === "rear" ? -1 : 0) * Math.cos(target.rotation)) *
+        lead,
+    elevationM:
+      end.elevationM +
+      (side === "top" ? lead : side === "bottom" ? -lead : 0),
   };
   return { source, target, from, to, lead };
 }

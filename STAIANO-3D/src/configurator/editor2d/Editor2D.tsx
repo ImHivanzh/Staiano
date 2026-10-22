@@ -1485,6 +1485,12 @@ export function Editor2D({
                   stroke="#00aeef"
                   strokeWidth={u}
                 />
+                {/* Fronte della macchina: a 180° deve essere visibile il cambio di lato. */}
+                <path
+                  d={`M 0 ${d.depthMm / 2000 - 0.015} L ${-u * 7} ${d.depthMm / 2000 - 0.075} L ${u * 7} ${d.depthMm / 2000 - 0.075} Z`}
+                  fill="#00aeef"
+                  pointerEvents="none"
+                />
                 {balance && (
                   <text
                     data-testid="machine-airflow"

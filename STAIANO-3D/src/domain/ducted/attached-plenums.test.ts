@@ -403,6 +403,34 @@ it("does not invent a terminal plenum: only the saved connected body exists", ()
   expect(() => addTerminalPlenum(p, terminal.id)).toThrow(/catalogo/);
 });
 
+it.each([
+  ["rear", 0, -0.16, 0],
+  ["upper", 0, 0, 0.21],
+  ["lower", 0, 0, -0.21],
+  ["left", -0.36, 0, 0],
+  ["right", 0.36, 0, 0],
+] as const)(
+  "places the %s collar on the chosen side of the plenum",
+  (side, dx, dy, dz) => {
+    const p = fixture();
+    const plenum = {
+      ...p.plenums[0],
+      position: { x: 2, y: 2 },
+      rotation: 0,
+      elevationM: 2,
+      widthMm: 600,
+      depthMm: 200,
+      heightMm: 300,
+      portCount: 1,
+      connectionPosition: side,
+    };
+    const [port] = attachedPlenumPorts(p, plenum);
+    expect(port.x).toBeCloseTo(2 + dx);
+    expect(port.y).toBeCloseTo(2 + dy);
+    expect(port.elevationM).toBeCloseTo(2 + dz);
+  },
+);
+
 it("keeps the plenum inlet direction when the body is unconnected", () => {
   const p = fixture();
   const plenum = {

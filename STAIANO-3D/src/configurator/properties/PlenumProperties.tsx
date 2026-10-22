@@ -25,13 +25,18 @@ export function PlenumProperties({
       s.indoorUnits.some((u) => u.id === plenum.attachmentId),
     );
   // Lo stacco è un dato del corpo: se manca, si parte dalla scheda di catalogo.
-  const connectionPosition =
+  const storedPosition =
     plenum.connectionPosition ??
     (terminal
       ? resolveTerminalAccessorySpecification(terminal)?.plenum
           ?.connectionPosition
       : undefined) ??
     "lateral";
+  // I valori storici senza geometria propria ricadono sul lato posteriore.
+  const connectionPosition =
+    storedPosition === "lateral" || storedPosition === "custom"
+      ? "rear"
+      : storedPosition;
   return (
     <div className="corpo-proprieta">
       <h3>Plenum {plenum.use === "return" ? "di ripresa" : "di mandata"}</h3>
@@ -99,7 +104,13 @@ export function PlenumProperties({
                           connectionPosition: String(
                             data.get("port-position"),
                           ) as
-                            "lateral" | "upper" | "lower" | "rear" | "custom",
+                            | "lateral"
+                            | "upper"
+                            | "lower"
+                            | "rear"
+                            | "left"
+                            | "right"
+                            | "custom",
                         }
                       : {}),
                     status: "manual",
@@ -115,11 +126,11 @@ export function PlenumProperties({
               <label className="campo">
                 <span>Direzione stacchi reali</span>
                 <select name="port-position" defaultValue={connectionPosition}>
-                  <option value="lateral">Orizzontali dietro il plenum</option>
-                  <option value="upper">Superiori, verso l’alto</option>
-                  <option value="lower">Inferiori · su richiesta</option>
-                  <option value="rear">Posteriori · su richiesta</option>
-                  <option value="custom">Personalizzati · su richiesta</option>
+                  <option value="rear">Dietro · orizzontali</option>
+                  <option value="upper">Sopra · verso l’alto</option>
+                  <option value="lower">Sotto · verso il basso</option>
+                  <option value="left">Sinistra</option>
+                  <option value="right">Destra</option>
                 </select>
                 <small>
                   Dato del plenum, non della bocchetta: non modifica le quote
