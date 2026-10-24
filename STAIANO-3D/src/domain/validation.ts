@@ -329,7 +329,9 @@ export function validateProject(p: Project): Check[] {
         valid &&
         Math.abs(
           r.designLoadW -
-            (r.conditioningExclusion ? 0 : r.netAreaM2 * r.heightM * 35),
+            (r.conditioningExclusion
+              ? 0
+              : r.volumeM3 * p.projectSettings.coefficientWm3),
         ) < 1e-5
           ? "valid"
           : "invalid",

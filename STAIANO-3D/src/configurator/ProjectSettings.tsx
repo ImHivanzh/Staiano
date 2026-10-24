@@ -25,11 +25,31 @@ export function ProjectSettings({ project }: { project: Project }) {
               defaultHeightM: numberFromForm(data.get("height")),
               externalWallThicknessM: numberFromForm(data.get("external")),
               internalWallThicknessM: numberFromForm(data.get("internal")),
+              coefficientWm3: numberFromForm(data.get("coefficientWm3")),
             },
           }));
         }}
       >
         <div className="filtri-progetto">
+          <label className="campo">
+            <span id="settings-coefficient-label">
+              Coefficiente termico (W/m³)
+            </span>
+            <input
+              name="coefficientWm3"
+              type="number"
+              min="0"
+              step="any"
+              required
+              defaultValue={project.projectSettings.coefficientWm3}
+              aria-labelledby="settings-coefficient-label"
+              aria-describedby="settings-coefficient-help"
+            />
+            <small id="settings-coefficient-help">
+              Ricalcola il fabbisogno di tutti gli ambienti. Gli apparecchi già
+              scelti restano nel progetto.
+            </small>
+          </label>
           <LengthInput
             label="Altezza predefinita"
             name="height"

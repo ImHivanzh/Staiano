@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "products": {
+    "nordica-isetta-cc165": {
+      "articleId": 116945672,
+      "articleCode": "3010340",
+      "revisionCode": "3010340-001",
+      "articleSha256": "c92a07b30ba72aaa44430a46cf8de2fab8684bfdfa638f7c22f06f7ab2bf43ea",
+      "articleUrl": "https://www.lanordica-extraflame.com/api/articles/116945672",
+      "sheetName": "004305002-000 CEMI ISETTA CC.165[L271].pdf",
+      "sheetBytes": 1134552,
+      "sheetSha256": "3573cab62c84a9721632acb92aea186f40b72bfd81c24823907ef0814cc815aa",
+      "sheetUrl": "https://storage.onpage.it/ffa738277b3d7a8e068742bad97292ac20221fc6/004305002-000%20CEMI%20ISETTA%20CC.165%5BL271%5D.pdf"
+    }
+  }
+}

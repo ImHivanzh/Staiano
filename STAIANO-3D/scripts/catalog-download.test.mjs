@@ -39,6 +39,21 @@ test("does not retry unavailable documents or silently replace a changed revisio
   assert.equal(request.mock.callCount(), 2);
 });
 
+test("verifies official JSON source records against their pinned digest", async () => {
+  const data = Buffer.from('{"revision":"3010340-001"}');
+  const document = {
+    sourceUrl: "https://manufacturer.example/api/articles/3010340",
+    sha256: createHash("sha256").update(data).digest("hex"),
+  };
+  mock.method(globalThis, "fetch", async () =>
+    new Response(data, { headers: { "Content-Type": "application/json" } }),
+  );
+  assert.deepEqual(await downloadCatalogSource(document), {
+    content: data,
+    contentType: "application/json",
+  });
+});
+
 test("stops after three transient failures", async () => {
   const request = mock.method(
     globalThis,

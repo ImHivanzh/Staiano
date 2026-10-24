@@ -20,13 +20,13 @@ import {
   positionRecessedAlongRoomWall,
   roomWallSpan,
 } from "@/domain/geometry/placement";
-import { fanCoilProductAtVersion, isRecessedFanCoil } from "@/domain/catalogs/fan-coils";
 import {
-  wallRun,
-  wallRunMeasuredLength,
-} from "@/domain/geometry/wall-runs";
+  fanCoilProductAtVersion,
+  isRecessedFanCoil,
+} from "@/domain/catalogs/fan-coils";
+import { wallRun, wallRunMeasuredLength } from "@/domain/geometry/wall-runs";
 import { calculateRoomThermal } from "./geometry/ceilings";
-import { calculateThermal } from "@/domain/thermal/calculate";
+import { THERMAL_COEFFICIENT_W_M3 } from "@/domain/thermal/calculate";
 import { pillarFootprint } from "@/domain/geometry/pillars";
 import { ensureInstallations } from "./installations";
 import { roomCeilingHeightM } from "./air-conditioning/elevation";
@@ -35,7 +35,12 @@ import { drywallGeometry } from "./geometry/drywall";
 import { clipToConvex } from "./geometry/pillars";
 
 export const newId = () => crypto.randomUUID();
-export function createProject(name = "Nuovo progetto"): Project {
+export function createProject(
+  name = "Nuovo progetto",
+  coefficientWm3: number = THERMAL_COEFFICIENT_W_M3,
+): Project {
+  if (!Number.isFinite(coefficientWm3) || coefficientWm3 <= 0)
+    throw new Error("Il coefficiente termico deve essere positivo e finito.");
   const now = new Date().toISOString();
   return {
     schemaVersion: CURRENT_SCHEMA_VERSION,
@@ -73,7 +78,7 @@ export function createProject(name = "Nuovo progetto"): Project {
       defaultHeightM: 3,
       internalWallThicknessM: 0.1,
       externalWallThicknessM: 0.3,
-      coefficientWm3: 35,
+      coefficientWm3,
       maxNoiseDbA: 37,
       dimensionMode: "internal",
     },
@@ -163,7 +168,13 @@ export function recomputeProject(project: Project): Project {
     wallIds: [...new Set(r.wallIds.flatMap((id) => expanded.get(id) ?? [id]))],
   }));
   p.rooms = p.floors.flatMap((f) =>
-    reconcileRooms(p.walls, p.rooms, f.id, p.projectSettings.defaultHeightM),
+    reconcileRooms(
+      p.walls,
+      p.rooms,
+      f.id,
+      p.projectSettings.defaultHeightM,
+      p.projectSettings.coefficientWm3,
+    ),
   );
   p.rooms = p.rooms.map((room) => {
     const liningPolygons = p.walls
@@ -292,10 +303,7 @@ export function recomputeProject(project: Project): Project {
     if (available + 1e-6 < unit.depthMm / 1000 - 0.002) return unit;
     const along = Math.min(
       Math.max(
-        distance(
-          span.start,
-          projection(unit.position, span.start, span.end),
-        ),
+        distance(span.start, projection(unit.position, span.start, span.end)),
         unit.widthMm / 2000,
       ),
       span.lengthM - unit.widthMm / 2000,
@@ -508,7 +516,7 @@ export function addRectangle(
     );
   room.name = input.name.trim() || "Nuovo ambiente";
   room.heightM = input.height;
-  Object.assign(room, calculateThermal(room.netAreaM2, room.heightM));
+  Object.assign(room, calculateRoomThermal(result, room));
   return result;
 }
 export function moveWall(p: Project, wallId: string, delta: Point): Project {
@@ -570,7 +578,7 @@ export function addAdjacentRoom(
     throw new Error("Spazio adiacente occupato o geometria non valida.");
   room.name = name || "Ambiente adiacente";
   room.heightM = heightM;
-  Object.assign(room, calculateThermal(room.netAreaM2, heightM));
+  Object.assign(room, calculateRoomThermal(result, room));
   return result;
 }
 export function resizeWall(

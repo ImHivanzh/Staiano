@@ -128,7 +128,7 @@ function safeRuntimePath(root, name) {
   return path.join(root, ...name.split("/"));
 }
 
-const CATALOG_EXTENSIONS = [".pdf", ".html", ".xlsx", ".xls"];
+const CATALOG_EXTENSIONS = [".pdf", ".html", ".json", ".xlsx", ".xls"];
 const CATALOG_MANIFEST = "sources-manifest.json";
 
 /** Scansione unica: conteggio per estensione e impronta della cartella. */
@@ -228,10 +228,10 @@ function catalogInstructions(dataRoot, report) {
   const manifestFile = path.join(dataRoot, "catalog-data", CATALOG_MANIFEST);
   const origin =
     sourceHint || "<PERCORSO DELLA COPIA DI SVILUPPO>\\catalog-data\\sources";
-  const copy = `robocopy "${origin}" "${directory}" *.pdf *.html *.xlsx *.xls /S /NFL /NDL /NJH /NJS /NP`;
+  const copy = `robocopy "${origin}" "${directory}" *.pdf *.html *.json *.xlsx *.xls /S /NFL /NDL /NJH /NJS /NP`;
   const verify = [
     `$attesi = (Get-Content "${manifestFile}" -Raw | ConvertFrom-Json).documents`,
-    `$presenti = Get-ChildItem "${directory}" -Recurse -File | Where-Object { $_.Extension -in '.pdf','.html','.xlsx','.xls' } | Get-FileHash -Algorithm SHA256 | ForEach-Object { $_.Hash.ToLower() }`,
+    `$presenti = Get-ChildItem "${directory}" -Recurse -File | Where-Object { $_.Extension -in '.pdf','.html','.json','.xlsx','.xls' } | Get-FileHash -Algorithm SHA256 | ForEach-Object { $_.Hash.ToLower() }`,
     `$attesi | Where-Object { $_.sha256 -notin $presenti } | Select-Object manufacturer, sourceUrl, sha256`,
   ];
   const shown = missing.slice(0, 60);

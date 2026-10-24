@@ -826,7 +826,7 @@ export async function renderDossierPdf(
     });
     tracked("NOTA", 72, 94, 5.8, bold, faint, 0.8);
     [
-      "Documento preliminare. Il dimensionamento convenzionale (35 W/m³) non sostituisce il calcolo delle",
+      `Documento preliminare. Il dimensionamento convenzionale (${n(p.projectSettings.coefficientWm3)} W/m³) non sostituisce il calcolo delle`,
       "dispersioni né il progetto esecutivo. Verificare dati, fonti e disponibilità commerciale prima dell'ordine.",
     ].forEach((line, index) => txt(line, 72, 80 - index * 12, 8, font, ink));
     page.drawRectangle({ x: 0, y: 0, width, height: 30, color: navy });
@@ -1677,7 +1677,7 @@ export async function renderDossierPdf(
       paragraph(
         r.conditioningExclusion
           ? "Carico da dimensionare: 0 W per esclusione esplicita dell’operatore."
-          : `${r.roof || r.ceilingBands?.length ? `${n(r.volumeM3, 4)} m³ (tetto e ribassamenti)` : `${n(r.netAreaM2, 4)} m² x ${n(r.heightM, 4)} m`} x 35 W/m³ = ${n(r.designLoadW, 2)} W = ${n(r.designLoadW / 1000, 3)} kW = ${n(wattsToBtuh(r.designLoadW), 0)} BTU/h. Calcolo senza arrotondamenti intermedi; valori stampati arrotondati.`,
+          : `${n(r.volumeM3, 4)} m³ x ${n(p.projectSettings.coefficientWm3)} W/m³ = ${n(r.designLoadW, 2)} W = ${n(r.designLoadW / 1000, 3)} kW = ${n(wattsToBtuh(r.designLoadW), 0)} BTU/h. Calcolo senza arrotondamenti intermedi; valori stampati arrotondati.`,
       );
       const rad = p.radiators.filter((d) => d.roomId === r.id);
       if (rad.length) {

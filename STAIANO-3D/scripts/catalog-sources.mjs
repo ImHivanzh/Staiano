@@ -8,11 +8,12 @@ import { downloadCatalogSource } from "./catalog-download.mjs";
 const GENERATED = path.join("catalog-data", "generated");
 const SOURCES = path.join("catalog-data", "sources");
 const MANIFEST = path.join("catalog-data", "sources-manifest.json");
-const EXTENSIONS = [".pdf", ".html", ".xlsx", ".xls"];
+const EXTENSIONS = [".pdf", ".html", ".json", ".xlsx", ".xls"];
 const IGNORED = /\.(staging|previous|report)\.json$/;
 const MIME = {
   "application/pdf": ".pdf",
   "text/html": ".html",
+  "application/json": ".json",
   "application/xhtml+xml": ".html",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
   "application/vnd.ms-excel": ".xls",

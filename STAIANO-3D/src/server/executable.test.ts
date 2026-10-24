@@ -187,6 +187,7 @@ describe("documenti tecnici dell'EXE", () => {
         "a.pdf",
         "b.PDF",
         "ecoclima/c.html",
+        "ecoclima/c.json",
         "ecoclima/d.xlsx",
         "ecoclima/e.xls",
         "ecoclima/f.txt",
@@ -195,7 +196,7 @@ describe("documenti tecnici dell'EXE", () => {
         await writeFile(path.join(root, name), "documento");
       expect(catalogDocuments(root)).toEqual({
         total: 5,
-        byExtension: { ".pdf": 2, ".html": 1, ".xlsx": 1, ".xls": 1 },
+        byExtension: { ".pdf": 2, ".html": 1, ".json": 1, ".xlsx": 1, ".xls": 1 },
       });
     } finally {
       await rm(root, { recursive: true, force: true });
@@ -221,7 +222,7 @@ describe("documenti tecnici dell'EXE", () => {
     expect(ensureCatalogDocuments(root)).toEqual({ total: 0, byExtension: {} });
     const text = await readFile(instructions, "utf8");
     expect(text).toContain(
-      `robocopy "<PERCORSO DELLA COPIA DI SVILUPPO>\\catalog-data\\sources" "${path.join(root, "catalog-data", "sources")}" *.pdf *.html *.xlsx *.xls /S`,
+      `robocopy "<PERCORSO DELLA COPIA DI SVILUPPO>\\catalog-data\\sources" "${path.join(root, "catalog-data", "sources")}" *.pdf *.html *.json *.xlsx *.xls /S`,
     );
     expect(text).toContain("SHA-256");
     expect(text).toContain("sources:fetch");

@@ -2,7 +2,7 @@ import { z } from "zod";
 export const sourceMetadataSchema = z.object({
   manufacturer: z.string().min(1),
   sourceUrl: z.url(),
-  sourceType: z.enum(["pdf", "html", "excel"]),
+  sourceType: z.enum(["pdf", "html", "excel", "json"]),
   documentRevision: z.string().nullable(),
   retrievedAt: z.iso.datetime({ offset: true }).nullable(),
   importedAt: z.iso.datetime({ offset: true }),

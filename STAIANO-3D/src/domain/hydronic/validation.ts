@@ -108,7 +108,7 @@ export function validateHydronicSystem(
       );
   }
   warnings.push(
-    "Verifica preliminare sulle potenze massime dichiarate dove disponibili, altrimenti sulle capacità di catalogo: carico a 35 W/m³, temperatura esterna di progetto, sbrinamento, portate, accumulo, perdite e distanze di posa richiedono progetto tecnico. Non certifica il dimensionamento idraulico.",
+    `Verifica preliminare sulle potenze massime dichiarate dove disponibili, altrimenti sulle capacità di catalogo: carico a ${project.projectSettings.coefficientWm3.toLocaleString("it-IT")} W/m³, temperatura esterna di progetto, sbrinamento, portate, accumulo, perdite e distanze di posa richiedono progetto tecnico. Non certifica il dimensionamento idraulico.`,
   );
   return {
     designLoadW,

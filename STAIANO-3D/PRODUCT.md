@@ -181,3 +181,14 @@ Comandi M7, cataloghi e proprietà della PdC rimangono nelle schede dell'apparec
 Le ricostruzioni Ardesia Cordivari a 2–6 colonne usano tubi Ø25 mm dalle schede
 originali. Le altre geometrie illustrative mantengono i propri criteri; le mesh
 OEM discordanti restano consultabili e marcate da verificare.
+
+## Coefficiente termico del progetto
+
+La schermata iniziale e «Nuovo progetto» permettono di scegliere il coefficiente
+in W/m³ prima del disegno, dell’importazione o del percorso guidato. Il valore
+predefinito è 35 e resta tale per i progetti precedenti. Il valore scelto si salva
+nel progetto e si modifica anche da File > Impostazioni progetto e piani.
+Il fabbisogno usa il volume netto effettivo, comprese falde e ribassamenti.
+Il ricalcolo conserva geometria, apparecchi ed esclusioni dalla climatizzazione;
+controlli, dimensionamento e PDF usano i nuovi carichi. I file dello schema 8
+richiedono una versione aggiornata sugli altri client.

@@ -1,0 +1,4718 @@
+{
+  "version": 1,
+  "products": [
+    {
+      "id": "nordica-amika-ad",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1200.0,
+        "depthMm": 465.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 114.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/amika-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.168830+00:00",
+        "importedAt": "2026-10-24T13:43:19.168830+00:00",
+        "sha256": "94c0e614001b4739e195aa191eb93d7b10984c0c54c9ef639cd2ec55f4f06243",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-amika-petra-ad",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1200.0,
+        "depthMm": 465.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 117.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/amika-petra-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.161859+00:00",
+        "importedAt": "2026-10-24T13:43:19.161859+00:00",
+        "sha256": "03b4360a2b98e6e52f3391e8cdbc91533c164be0e6fcc069a1e2ecfd5cb2949e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-angelica-evo",
+      "dimensionsMm": {
+        "widthMm": 495.0,
+        "heightMm": 1016.0,
+        "depthMm": 555.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 99.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/angelica-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.182188+00:00",
+        "importedAt": "2026-10-24T13:43:19.182188+00:00",
+        "sha256": "bc73a0bd00cacc876d44ce3535c76c857a5c88ab105a88b8537b7984283c8751",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-angelica-junior",
+      "dimensionsMm": {
+        "widthMm": 495.0,
+        "heightMm": 926.0,
+        "depthMm": 555.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 94.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/angelica-junior",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.165434+00:00",
+        "importedAt": "2026-10-24T13:43:19.165434+00:00",
+        "sha256": "09d52898c30b0a9b479dbb42eede46fdca5085ffb6d2b2ced7b0ad9718cbc065",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-dahiana-ad",
+      "dimensionsMm": {
+        "widthMm": 525.0,
+        "heightMm": 1080.0,
+        "depthMm": 602.0
+      },
+      "nominalPowerW": {
+        "minW": 3500.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 153.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/dahiana-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.352664+00:00",
+        "importedAt": "2026-10-24T13:43:19.352664+00:00",
+        "sha256": "a38e630ba65fbe91b7527d0c6c69547b32a909447ee937e13b7d1e0e1ac2ec30",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-daniela",
+      "dimensionsMm": {
+        "widthMm": 500.0,
+        "heightMm": 1006.0,
+        "depthMm": 586.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 113.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/daniela",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.347669+00:00",
+        "importedAt": "2026-10-24T13:43:19.347669+00:00",
+        "sha256": "24541a445ff7f6429842d1ebcae5ee05c1c21a202c1ad1425dfe879dc675d2ec",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-debby-evo",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1199.0,
+        "depthMm": 573.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 134.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/debby-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.353616+00:00",
+        "importedAt": "2026-10-24T13:43:19.353616+00:00",
+        "sha256": "e122237937cc76a2d529ce8ff2c77cdc140c0a87f7d7c354d481c9f6b3a4be7c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-debby-petra-evo",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1199.0,
+        "depthMm": 573.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 160.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/debby-petra-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.354680+00:00",
+        "importedAt": "2026-10-24T13:43:19.354680+00:00",
+        "sha256": "4e77903315034c80c14d03f6f7456e5f296b392274e3e9210acc809e5dd94b4d",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-katia-11-50-evo",
+      "dimensionsMm": {
+        "widthMm": 515.0,
+        "heightMm": 1082.0,
+        "depthMm": 572.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 11000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 160.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/katia-11-50-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.514058+00:00",
+        "importedAt": "2026-10-24T13:43:19.514058+00:00",
+        "sha256": "a711b6d10aebbce98c4032d76d9b29d99ad3888a09a416bd7755fd67d6788c9c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-katia-9-50-evo",
+      "dimensionsMm": {
+        "widthMm": 515.0,
+        "heightMm": 1082.0,
+        "depthMm": 572.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 160.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/katia-9-50-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.548322+00:00",
+        "importedAt": "2026-10-24T13:43:19.548322+00:00",
+        "sha256": "e930fd4d135220437f1bf518a43f773cadafc9b3f641a547b8938469108694fa",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-ketty-50",
+      "dimensionsMm": {
+        "widthMm": 456.0,
+        "heightMm": 884.0,
+        "depthMm": 479.0
+      },
+      "nominalPowerW": {
+        "minW": 2500.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 77.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/ketty-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.545791+00:00",
+        "importedAt": "2026-10-24T13:43:19.545791+00:00",
+        "sha256": "a476a5e8a7c7076943684cf3ccb6bda4e33357c29a06c4bc482cc0c6719eed26",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-klaudia-ad-evo",
+      "dimensionsMm": {
+        "widthMm": 498.0,
+        "heightMm": 1017.0,
+        "depthMm": 576.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 102.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/klaudia-ad-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.543145+00:00",
+        "importedAt": "2026-10-24T13:43:19.543145+00:00",
+        "sha256": "2ae9c8202c9b83967133eee459a58e5e66d593c861a0de35fbfd2bb6cd45a16a",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-lucia16",
+      "dimensionsMm": {
+        "widthMm": 556.0,
+        "heightMm": 1097.0,
+        "depthMm": 597.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 181.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/lucia16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.722072+00:00",
+        "importedAt": "2026-10-24T13:43:19.722072+00:00",
+        "sha256": "cd83125edcc6065ddb03012352e172b0b9503f31cd91466ec360381863b82ef9",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-luisella-50",
+      "dimensionsMm": {
+        "widthMm": 572.0,
+        "heightMm": 892.0,
+        "depthMm": 307.0
+      },
+      "nominalPowerW": {
+        "minW": 2500.0,
+        "maxW": 5100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 64.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/luisella-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.738192+00:00",
+        "importedAt": "2026-10-24T13:43:19.738192+00:00",
+        "sha256": "c1ca6ca26af1d93039c5f4ac79745d82f6d32dbd99a3ee7847a48c8c25307360",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-luisella-50-maxi",
+      "dimensionsMm": {
+        "widthMm": 639.0,
+        "heightMm": 892.0,
+        "depthMm": 290.0
+      },
+      "nominalPowerW": {
+        "minW": 2500.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 99.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/luisella-50-maxi",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.719408+00:00",
+        "importedAt": "2026-10-24T13:43:19.719408+00:00",
+        "sha256": "6aad5c43963b05c25fb2d3379ba91e3273562eeade5a86d6a1bf55295bf19329",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-mariella-ad",
+      "dimensionsMm": {
+        "widthMm": 495.0,
+        "heightMm": 1019.0,
+        "depthMm": 508.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 97.5,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/mariella-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.721511+00:00",
+        "importedAt": "2026-10-24T13:43:19.721511+00:00",
+        "sha256": "7d60b5b70dfd398b945508c752d83694942a501dc57403a616a55f89ae7e07b2",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-noris-evo",
+      "dimensionsMm": {
+        "widthMm": 576.0,
+        "heightMm": 1174.0,
+        "depthMm": 642.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 188.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.929831+00:00",
+        "importedAt": "2026-10-24T13:43:19.929831+00:00",
+        "sha256": "5fa732b769fd6d9bfd9e52ed0ce543f574a7584682ef16e7eaab4adeebecde8e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-noris-lux-evo",
+      "dimensionsMm": {
+        "widthMm": 576.0,
+        "heightMm": 1174.0,
+        "depthMm": 642.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 201.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-lux-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.892021+00:00",
+        "importedAt": "2026-10-24T13:43:19.892021+00:00",
+        "sha256": "1c1ffef6c27e7b83396756f575b9465f2c62017fcd31acdb2f2758265a1785b4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-peggy",
+      "dimensionsMm": {
+        "widthMm": 500.0,
+        "heightMm": 620.0,
+        "depthMm": 570.0
+      },
+      "nominalPowerW": {
+        "minW": 2500.0,
+        "maxW": 5100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 91.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/peggy",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.931108+00:00",
+        "importedAt": "2026-10-24T13:43:19.931108+00:00",
+        "sha256": "6439b988dffd6cd43d968704e6626cbc6454c9e26bf3b5c58354bd5db4da8c40",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-sabry-ad",
+      "dimensionsMm": {
+        "widthMm": 456.0,
+        "heightMm": 924.0,
+        "depthMm": 555.0
+      },
+      "nominalPowerW": {
+        "minW": 2800.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 87.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sabry-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:19.914067+00:00",
+        "importedAt": "2026-10-24T13:43:19.914067+00:00",
+        "sha256": "9793c5e316896d10477d75eb4ca230cc80d07c7760aad6a594f30ff418beb6f4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-teodora-evo",
+      "dimensionsMm": {
+        "widthMm": 610.0,
+        "heightMm": 739.0,
+        "depthMm": 632.0
+      },
+      "nominalPowerW": {
+        "minW": 2500.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 139.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/teodora-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.076565+00:00",
+        "importedAt": "2026-10-24T13:43:20.076565+00:00",
+        "sha256": "a93463b87735010c3c7fddf49777b025384d0c9d6d055bfefaff7b3a22339f6c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-teorema-ad",
+      "dimensionsMm": {
+        "widthMm": 525.0,
+        "heightMm": 1080.0,
+        "depthMm": 652.0
+      },
+      "nominalPowerW": {
+        "minW": 3800.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 162.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/teorema-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.123240+00:00",
+        "importedAt": "2026-10-24T13:43:20.123240+00:00",
+        "sha256": "b117405d145a981e05b0edb2949d01720158a618efa3e0e8750c23cacbf54862",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-angelica-plus-evo",
+      "dimensionsMm": {
+        "widthMm": 495.0,
+        "heightMm": 1016.0,
+        "depthMm": 555.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 103.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/angelica-plus-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.122735+00:00",
+        "importedAt": "2026-10-24T13:43:20.122735+00:00",
+        "sha256": "6065fa6af6f572524678e7a16e34c8723a6349aeeb3ed84ba3feff9fed35737f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-annabella-plus-50",
+      "dimensionsMm": {
+        "widthMm": 703.0,
+        "heightMm": 1078.0,
+        "depthMm": 343.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 132.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/annabella-plus-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.149012+00:00",
+        "importedAt": "2026-10-24T13:43:20.149012+00:00",
+        "sha256": "7dc679403a07a2dd95a7a49cf74a5ebaf28977f704e841a52b3fae47b4fefd40",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-annalisa-plus-crystal-evo",
+      "dimensionsMm": {
+        "widthMm": 902.0,
+        "heightMm": 1150.0,
+        "depthMm": 436.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 185.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/annalisa-plus-crystal-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.231975+00:00",
+        "importedAt": "2026-10-24T13:43:20.231975+00:00",
+        "sha256": "0b3a51432966b08304ff198a6afe2f93889b0c3058f148e87417bb2ce2a35361",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-annalisa-plus-gres-evo",
+      "dimensionsMm": {
+        "widthMm": 902.0,
+        "heightMm": 1150.0,
+        "depthMm": 436.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 187.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/annalisa-plus-gres-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.316461+00:00",
+        "importedAt": "2026-10-24T13:43:20.316461+00:00",
+        "sha256": "2e34838b327cc4f86eb23103c620352f80ae006e05e8f111a401c3382567d7e4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-dahiana-plus-ad",
+      "dimensionsMm": {
+        "widthMm": 525.0,
+        "heightMm": 1080.0,
+        "depthMm": 602.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 158.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/dahiana-plus-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.332163+00:00",
+        "importedAt": "2026-10-24T13:43:20.332163+00:00",
+        "sha256": "9d1ba3f6d0cb5b14917058cde82b492c1fabbb61a11500328e40a08af89b4953",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-daniela-plus",
+      "dimensionsMm": {
+        "widthMm": 500.0,
+        "heightMm": 1006.0,
+        "depthMm": 586.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 117.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/daniela-plus",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.348842+00:00",
+        "importedAt": "2026-10-24T13:43:20.348842+00:00",
+        "sha256": "d74ec9496a7a10debefd45e4c6fa5bfa1728ec80258ccf9432dfbf5815153e43",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-klaudia-plus-ad-evo",
+      "dimensionsMm": {
+        "widthMm": 498.0,
+        "heightMm": 1017.0,
+        "depthMm": 576.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 106.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/klaudia-plus-ad-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.463178+00:00",
+        "importedAt": "2026-10-24T13:43:20.463178+00:00",
+        "sha256": "914ec907102314253cb9530033afb29dad798dc529ff005214cd199375abbc72",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-lucia-plus16",
+      "dimensionsMm": {
+        "widthMm": 556.0,
+        "heightMm": 1097.0,
+        "depthMm": 597.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 186.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/lucia-plus16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.504993+00:00",
+        "importedAt": "2026-10-24T13:43:20.504993+00:00",
+        "sha256": "a9b8e4f557328cb62934aea0e4e7172bf57c6e64b679df6e656c20dae2b4434f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-mariella-plus-ad",
+      "dimensionsMm": {
+        "widthMm": 495.0,
+        "heightMm": 1019.0,
+        "depthMm": 508.0
+      },
+      "nominalPowerW": {
+        "minW": 3000.0,
+        "maxW": 7500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 102.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/mariella-plus-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.550271+00:00",
+        "importedAt": "2026-10-24T13:43:20.550271+00:00",
+        "sha256": "5abd306b5262803aea79403fd881dd98656a0ce67e8683eb6dc38f2fec9f4f86",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-marilena-plus-50-ad",
+      "dimensionsMm": {
+        "widthMm": 750.0,
+        "heightMm": 1077.0,
+        "depthMm": 350.0
+      },
+      "nominalPowerW": {
+        "minW": 3200.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 118.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marilena-plus-50-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.520943+00:00",
+        "importedAt": "2026-10-24T13:43:20.520943+00:00",
+        "sha256": "680203f0b513a6f2698b3baedd2b5269d467e91b758dbeaceb121a7c30763304",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-marilena-plus-crystal-50-ad",
+      "dimensionsMm": {
+        "widthMm": 750.0,
+        "heightMm": 1077.0,
+        "depthMm": 350.0
+      },
+      "nominalPowerW": {
+        "minW": 3200.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 154.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marilena-plus-crystal-50-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.645090+00:00",
+        "importedAt": "2026-10-24T13:43:20.645090+00:00",
+        "sha256": "3b708055d377c650a9ff77a9c3537d28a8677ee4d52cfa71ed39be28b84c6e10",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-marilena-plus-petra-50-ad",
+      "dimensionsMm": {
+        "widthMm": 750.0,
+        "heightMm": 1077.0,
+        "depthMm": 350.0
+      },
+      "nominalPowerW": {
+        "minW": 3200.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 135.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marilena-plus-petra-50-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.673742+00:00",
+        "importedAt": "2026-10-24T13:43:20.673742+00:00",
+        "sha256": "a7cab185d9cd30406162ad41219ba4b4f41305dd6bbccfe219f6b6071e1514a0",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-noris-plus-evo",
+      "dimensionsMm": {
+        "widthMm": 576.0,
+        "heightMm": 1174.0,
+        "depthMm": 642.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 195.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-plus-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.680918+00:00",
+        "importedAt": "2026-10-24T13:43:20.680918+00:00",
+        "sha256": "282bcaf91e07f4b3d29efe8093e34cdb2dd7507bcff64d1b478c3e86d72d15a2",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-noris-plus-lux-evo",
+      "dimensionsMm": {
+        "widthMm": 576.0,
+        "heightMm": 1174.0,
+        "depthMm": 642.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 208.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-plus-lux-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.759185+00:00",
+        "importedAt": "2026-10-24T13:43:20.759185+00:00",
+        "sha256": "c53cc215535a72e55b6e9649cbb34fc995411b7ed983cf6d2d2e503b49ec13b3",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-sharon-plus-crystal",
+      "dimensionsMm": {
+        "widthMm": 900.0,
+        "heightMm": 1150.0,
+        "depthMm": 290.0
+      },
+      "nominalPowerW": {
+        "minW": 3500.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 155.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sharon-plus-crystal",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.834190+00:00",
+        "importedAt": "2026-10-24T13:43:20.834190+00:00",
+        "sha256": "2ba0fd9253ace18a741263b6b647dff891aed8364d62579965c0cc3a43801c08",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-sharon-plus-petra",
+      "dimensionsMm": {
+        "widthMm": 900.0,
+        "heightMm": 1150.0,
+        "depthMm": 290.0
+      },
+      "nominalPowerW": {
+        "minW": 3500.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 167.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sharon-plus-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.865009+00:00",
+        "importedAt": "2026-10-24T13:43:20.865009+00:00",
+        "sha256": "08ca878f6e523054201941b619e59add4f198ddbaaab3c07ab69af466eadca5c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-sharon-plus-steel",
+      "dimensionsMm": {
+        "widthMm": 900.0,
+        "heightMm": 1150.0,
+        "depthMm": 295.0
+      },
+      "nominalPowerW": {
+        "minW": 3500.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 155.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sharon-plus-steel",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.883002+00:00",
+        "importedAt": "2026-10-24T13:43:20.883002+00:00",
+        "sha256": "215dd517d8eef501e8af24e47bbb3f16d757ef8254fd604fa1185d7f66f379b5",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-souvenir-plus-lux-50",
+      "dimensionsMm": {
+        "widthMm": 822.0,
+        "heightMm": 1162.0,
+        "depthMm": 343.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 149.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/souvenir-plus-lux-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:20.932611+00:00",
+        "importedAt": "2026-10-24T13:43:20.932611+00:00",
+        "sha256": "cfc9b1f5a666c7cd72fc023e65048cf299e9fb65562f44705ff6aa508a430b27",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-souvenir-plus-petra-50",
+      "dimensionsMm": {
+        "widthMm": 821.0,
+        "heightMm": 1124.0,
+        "depthMm": 343.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 156.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/souvenir-plus-petra-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.046147+00:00",
+        "importedAt": "2026-10-24T13:43:21.046147+00:00",
+        "sha256": "8fcb723abc4aa823c6844a53a05cec3a1562adbf447b615049824cb043e1d6b1",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-souvenir-plus-steel-50",
+      "dimensionsMm": {
+        "widthMm": 821.0,
+        "heightMm": 1122.0,
+        "depthMm": 343.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 10000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 141.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/souvenir-plus-steel-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.059516+00:00",
+        "importedAt": "2026-10-24T13:43:21.059516+00:00",
+        "sha256": "674233375b94223bbca68e1175177b42662a6f60d1136bd9c85daed34f5ab6db",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-teorema-plus-ad",
+      "dimensionsMm": {
+        "widthMm": 525.0,
+        "heightMm": 1080.0,
+        "depthMm": 652.0
+      },
+      "nominalPowerW": {
+        "minW": 3800.0,
+        "maxW": 12000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 172.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/teorema-plus-ad",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.037595+00:00",
+        "importedAt": "2026-10-24T13:43:21.037595+00:00",
+        "sha256": "82576e071401d3935be40a0bef727a95b77ed7809af60615c466e671aa158bdd",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-terry-plus",
+      "dimensionsMm": {
+        "widthMm": 569.0,
+        "heightMm": 1151.0,
+        "depthMm": 598.0
+      },
+      "nominalPowerW": {
+        "minW": 3500.0,
+        "maxW": 12100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 206.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/terry-plus",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.098182+00:00",
+        "importedAt": "2026-10-24T13:43:21.098182+00:00",
+        "sha256": "77dac66e9f5fbc5c5fc23d67e91adafd2cea8c77b6dc6d4957b900c6b16985a9",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-costanza-idro-50",
+      "dimensionsMm": {
+        "widthMm": 495.0,
+        "heightMm": 1152.0,
+        "depthMm": 628.0
+      },
+      "nominalPowerW": {
+        "minW": 4800.0,
+        "maxW": 16000.0
+      },
+      "waterPowerW": {
+        "minW": 3300.0,
+        "maxW": 12000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 165.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/costanza-idro-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.192520+00:00",
+        "importedAt": "2026-10-24T13:43:21.192520+00:00",
+        "sha256": "2cabe6e3a52c8db7e8ba5b14a8aaff2b788c0eaeb4fe0b3d5c45d2e4729d6a55",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-evelyne-idro-evo",
+      "dimensionsMm": {
+        "widthMm": 878.0,
+        "heightMm": 1099.0,
+        "depthMm": 412.0
+      },
+      "nominalPowerW": {
+        "minW": 5700.0,
+        "maxW": 19400.0
+      },
+      "waterPowerW": {
+        "minW": 4300.0,
+        "maxW": 16800.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 209.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/evelyne-idro-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.234876+00:00",
+        "importedAt": "2026-10-24T13:43:21.234876+00:00",
+        "sha256": "3e94c6d6e82ba498fe33b39767569accecd942257ba9cd7ddd3ba818e04e6e27",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-floriana-idro-crystal",
+      "dimensionsMm": {
+        "widthMm": 854.0,
+        "heightMm": 1107.0,
+        "depthMm": 402.0
+      },
+      "nominalPowerW": {
+        "minW": 5700.0,
+        "maxW": 19400.0
+      },
+      "waterPowerW": {
+        "minW": 4300.0,
+        "maxW": 16800.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 198.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/floriana-idro-crystal",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.249454+00:00",
+        "importedAt": "2026-10-24T13:43:21.249454+00:00",
+        "sha256": "9a23c781e5b8513bd81f5c7fa31258ba5f2963a8e07a370005eb9e77a53315ca",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-floriana-idro-gres",
+      "dimensionsMm": {
+        "widthMm": 854.0,
+        "heightMm": 1107.0,
+        "depthMm": 402.0
+      },
+      "nominalPowerW": {
+        "minW": 5700.0,
+        "maxW": 19400.0
+      },
+      "waterPowerW": {
+        "minW": 4300.0,
+        "maxW": 16800.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 199.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/floriana-idro-gres",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.295832+00:00",
+        "importedAt": "2026-10-24T13:43:21.295832+00:00",
+        "sha256": "1418146fceaece0f67c409e82cdbe2c4302d5a8457d138fade84ad34987ff0c8",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-guenda-idro-evo",
+      "dimensionsMm": {
+        "widthMm": 576.0,
+        "heightMm": 1157.0,
+        "depthMm": 638.0
+      },
+      "nominalPowerW": {
+        "minW": 5000.0,
+        "maxW": 16800.0
+      },
+      "waterPowerW": {
+        "minW": 3500.0,
+        "maxW": 14000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 210.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/guenda-idro-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.357267+00:00",
+        "importedAt": "2026-10-24T13:43:21.357267+00:00",
+        "sha256": "2583b4749ec06e9e0880237ad49ec8579cc00a56363cbe38e968a404d94438ab",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-iside-idro-5016",
+      "dimensionsMm": {
+        "widthMm": 690.0,
+        "heightMm": 1196.0,
+        "depthMm": 628.0
+      },
+      "nominalPowerW": {
+        "minW": 5400.0,
+        "maxW": 19000.0
+      },
+      "waterPowerW": {
+        "minW": 4000.0,
+        "maxW": 14700.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 247.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/iside-idro-5016",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.418262+00:00",
+        "importedAt": "2026-10-24T13:43:21.418262+00:00",
+        "sha256": "6c544372bb5f9071514e72c530693fb320b438c65b25d292366a22e33b867c0a",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isidora-idro-h16-50-evo",
+      "dimensionsMm": {
+        "widthMm": 596.0,
+        "heightMm": 1165.0,
+        "depthMm": 708.0
+      },
+      "nominalPowerW": {
+        "minW": 5600.0,
+        "maxW": 18400.0
+      },
+      "waterPowerW": {
+        "minW": 4600.0,
+        "maxW": 16000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 227.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/isidora-idro-h16-50-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.414007+00:00",
+        "importedAt": "2026-10-24T13:43:21.414007+00:00",
+        "sha256": "fd835d0cd3de989b6e8d9e3f4e36aaaa41a1c967c214bcceb3158556066a6e96",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isidora-idro-h20-50-evo",
+      "dimensionsMm": {
+        "widthMm": 596.0,
+        "heightMm": 1243.0,
+        "depthMm": 708.0
+      },
+      "nominalPowerW": {
+        "minW": 5600.0,
+        "maxW": 22400.0
+      },
+      "waterPowerW": {
+        "minW": 4600.0,
+        "maxW": 20000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 235.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/isidora-idro-h20-50-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.460534+00:00",
+        "importedAt": "2026-10-24T13:43:21.460534+00:00",
+        "sha256": "f4d807e65203c3c680377fbf6fbc58eabaf842bf2550478bd8e1aba230fb5119",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isidora-idro-h23-50-evo",
+      "dimensionsMm": {
+        "widthMm": 596.0,
+        "heightMm": 1243.0,
+        "depthMm": 737.0
+      },
+      "nominalPowerW": {
+        "minW": 5600.0,
+        "maxW": 25800.0
+      },
+      "waterPowerW": {
+        "minW": 4600.0,
+        "maxW": 23000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 235.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/isidora-idro-h23-50-evo",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.589710+00:00",
+        "importedAt": "2026-10-24T13:43:21.589710+00:00",
+        "sha256": "1969ae4695d4c6477ed1e4174097842ddc3ba0b65591deb6080bf7a61066da5b",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-marina-idro-h11",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1039.0,
+        "depthMm": 601.0
+      },
+      "nominalPowerW": {
+        "minW": 4200.0,
+        "maxW": 14800.0
+      },
+      "waterPowerW": {
+        "minW": 3000.0,
+        "maxW": 11000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 180.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marina-idro-h11",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.587558+00:00",
+        "importedAt": "2026-10-24T13:43:21.587558+00:00",
+        "sha256": "cc5047a9091e02f8d078e8c755cb309ce2a0245e5bc0856f3b02a6ea7b20aeed",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-marina-idro-h13",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1149.0,
+        "depthMm": 601.0
+      },
+      "nominalPowerW": {
+        "minW": 5100.0,
+        "maxW": 17500.0
+      },
+      "waterPowerW": {
+        "minW": 3700.0,
+        "maxW": 13000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 190.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marina-idro-h13",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.599944+00:00",
+        "importedAt": "2026-10-24T13:43:21.599944+00:00",
+        "sha256": "49182e4311521dc54c735e9668de8ae86000e1446dd7c602e6299d573012df51",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-miriana-idro-h16",
+      "dimensionsMm": {
+        "widthMm": 599.0,
+        "heightMm": 1170.0,
+        "depthMm": 724.0
+      },
+      "nominalPowerW": {
+        "minW": 5600.0,
+        "maxW": 18400.0
+      },
+      "waterPowerW": {
+        "minW": 4600.0,
+        "maxW": 16000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 220.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/miriana-idro-h16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.627271+00:00",
+        "importedAt": "2026-10-24T13:43:21.627271+00:00",
+        "sha256": "5d920d8a97a6d5e46612bba49e3c8bd62633336cdf4cedcab1da634c84fc43c7",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-miriana-idro-h20",
+      "dimensionsMm": {
+        "widthMm": 599.0,
+        "heightMm": 1248.0,
+        "depthMm": 724.0
+      },
+      "nominalPowerW": {
+        "minW": 5600.0,
+        "maxW": 22400.0
+      },
+      "waterPowerW": {
+        "minW": 4600.0,
+        "maxW": 20000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 209.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/miriana-idro-h20",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.768739+00:00",
+        "importedAt": "2026-10-24T13:43:21.768739+00:00",
+        "sha256": "502c2add1aa30ecad21f01284c17ad54db0c7a3a605e32d979a4b6d4a67a5f81",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-miriana-idro-h23",
+      "dimensionsMm": {
+        "widthMm": 599.0,
+        "heightMm": 1248.0,
+        "depthMm": 724.0
+      },
+      "nominalPowerW": {
+        "minW": 5600.0,
+        "maxW": 25800.0
+      },
+      "waterPowerW": {
+        "minW": 4600.0,
+        "maxW": 23000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 209.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/miriana-idro-h23",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.757499+00:00",
+        "importedAt": "2026-10-24T13:43:21.757499+00:00",
+        "sha256": "0c1fe3e2a085e16dee648e5c15488e3b97cd0256fc480f97693418628bc62d06",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-raffaella-idro-h15-5016",
+      "dimensionsMm": {
+        "widthMm": 633.0,
+        "heightMm": 1176.0,
+        "depthMm": 626.0
+      },
+      "nominalPowerW": {
+        "minW": 5400.0,
+        "maxW": 19000.0
+      },
+      "waterPowerW": {
+        "minW": 4000.0,
+        "maxW": 14700.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 214.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/raffaella-idro-h15-5016",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.796813+00:00",
+        "importedAt": "2026-10-24T13:43:21.796813+00:00",
+        "sha256": "34da8110f3dca6ad9d9e91fcbad9b8648a8d2fec124e8afdd292264a9eddc016",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-raffaella-idro-h18-5016",
+      "dimensionsMm": {
+        "widthMm": 633.0,
+        "heightMm": 1176.0,
+        "depthMm": 626.0
+      },
+      "nominalPowerW": {
+        "minW": 5400.0,
+        "maxW": 23600.0
+      },
+      "waterPowerW": {
+        "minW": 4000.0,
+        "maxW": 17700.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 214.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/raffaella-idro-h18-5016",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.826622+00:00",
+        "importedAt": "2026-10-24T13:43:21.826622+00:00",
+        "sha256": "9ad4da1b21d612b6be79c2a02ac7fcde159f1297d3d1a3045eca96175a33c6f5",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-rosanna-idro-50",
+      "dimensionsMm": {
+        "widthMm": 511.0,
+        "heightMm": 1150.0,
+        "depthMm": 632.0
+      },
+      "nominalPowerW": {
+        "minW": 4300.0,
+        "maxW": 14300.0
+      },
+      "waterPowerW": {
+        "minW": 2900.0,
+        "maxW": 11000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 163.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/rosanna-idro-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.927565+00:00",
+        "importedAt": "2026-10-24T13:43:21.927565+00:00",
+        "sha256": "9c86343d60dc78c89055afe74207fd6702a01cdecaf156972a4d86a0c0515f44",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-virna-idro16",
+      "dimensionsMm": {
+        "widthMm": 793.0,
+        "heightMm": 1105.0,
+        "depthMm": 384.0
+      },
+      "nominalPowerW": {
+        "minW": 4300.0,
+        "maxW": 14500.0
+      },
+      "waterPowerW": {
+        "minW": 3700.0,
+        "maxW": 12300.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 151.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/virna-idro16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:21.938533+00:00",
+        "importedAt": "2026-10-24T13:43:21.938533+00:00",
+        "sha256": "6184c177c019b22c96bb88fbe989fc84ce6193c94b1a96affaf15ff5266926bf",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-flexi-7",
+      "dimensionsMm": {
+        "widthMm": 530.0,
+        "heightMm": 1050.0,
+        "depthMm": 570.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 7100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 193.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/flexi-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:24.768526+00:00",
+        "importedAt": "2026-10-24T13:43:24.768526+00:00",
+        "sha256": "8a1db9171eef5cab61e549d13c76e97a4816dc670e1374f44f3bcb86a116a8c1",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-flexi-9",
+      "dimensionsMm": {
+        "widthMm": 530.0,
+        "heightMm": 1050.0,
+        "depthMm": 570.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 8300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 193.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/flexi-9/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:24.852997+00:00",
+        "importedAt": "2026-10-24T13:43:24.852997+00:00",
+        "sha256": "092bfcdcea2fc85a8938c451f0f635a3ed91c61e8704e8fbff61983e4c892439",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-aria",
+      "dimensionsMm": {
+        "widthMm": 620.0,
+        "heightMm": 720.0,
+        "depthMm": 510.0
+      },
+      "nominalPowerW": {
+        "minW": 2700.0,
+        "maxW": 5700.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 127.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/aria/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:24.766011+00:00",
+        "importedAt": "2026-10-24T13:43:24.766011+00:00",
+        "sha256": "03ab01b41c72a3e6b69620b6792983f5ea086be02307a21b17e3256ae73918a4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-alfa-s",
+      "dimensionsMm": {
+        "widthMm": 390.0,
+        "heightMm": 1060.0,
+        "depthMm": 590.0
+      },
+      "nominalPowerW": {
+        "minW": 2100.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 148.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/alfa-s/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:24.771810+00:00",
+        "importedAt": "2026-10-24T13:43:24.771810+00:00",
+        "sha256": "32fb96c9ae59e70ab0faec89128cd4eb38eca7994690a40ce4da5f031db30224",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-whisper-7",
+      "dimensionsMm": {
+        "widthMm": 5040.0,
+        "heightMm": 10400.0,
+        "depthMm": 5610.0
+      },
+      "nominalPowerW": {
+        "minW": 4300.0,
+        "maxW": 6600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 140.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/whisper-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:26.970740+00:00",
+        "importedAt": "2026-10-24T13:43:26.970740+00:00",
+        "sha256": "b6b2df939541b2734453c4e962b99c8e7c33be6248c753af53bc0f014fd987d9",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-elettra",
+      "dimensionsMm": {
+        "widthMm": 970.0,
+        "heightMm": 1040.0,
+        "depthMm": 350.0
+      },
+      "nominalPowerW": {
+        "minW": 3200.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 170.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/elettra/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:27.029668+00:00",
+        "importedAt": "2026-10-24T13:43:27.029668+00:00",
+        "sha256": "b26501194f1f9e236a7ff68d62c7094dda7ee189a121e91f174b7c36eb5620d5",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-circular-7",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1210.0,
+        "depthMm": 540.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 174.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/circular-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:27.045249+00:00",
+        "importedAt": "2026-10-24T13:43:27.045249+00:00",
+        "sha256": "96ab7a233c3de432b7707bd28f247478b62e7be4ec43adbcf84d97410fa4154e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-circular-9-2",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1210.0,
+        "depthMm": 540.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 8200.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 150.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/circular-9-2/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:27.056070+00:00",
+        "importedAt": "2026-10-24T13:43:27.056070+00:00",
+        "sha256": "973930381e0ee917da9d7b0f334ca48340d2e573e367b2b58b6d0db43ca37dc9",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hoop-7",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1110.0,
+        "depthMm": 550.0
+      },
+      "nominalPowerW": {
+        "minW": 4200.0,
+        "maxW": 6400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 190.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hoop-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:28.887252+00:00",
+        "importedAt": "2026-10-24T13:43:28.887252+00:00",
+        "sha256": "04d0a706f023f2a5427cdcb2ef7ec87528f14504341bb7f9683121f04f44f712",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hoop-9",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1110.0,
+        "depthMm": 550.0
+      },
+      "nominalPowerW": {
+        "minW": 4200.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 190.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hoop-9/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:28.936505+00:00",
+        "importedAt": "2026-10-24T13:43:28.936505+00:00",
+        "sha256": "e572081b3b6145ec9b45862e58855faafef288a3596e4ac0d99d7b1a9814d184",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-mild",
+      "dimensionsMm": {
+        "widthMm": 690.0,
+        "heightMm": 800.0,
+        "depthMm": 610.0
+      },
+      "nominalPowerW": {
+        "minW": 3900.0,
+        "maxW": 8800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 164.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/mild/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:28.909325+00:00",
+        "importedAt": "2026-10-24T13:43:28.909325+00:00",
+        "sha256": "74c5c60ab8eaafd21704df4559d02e310be79ebf70aa15760a6bebea747511e3",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-easy-7",
+      "dimensionsMm": {
+        "widthMm": 5250.0,
+        "heightMm": 10300.0,
+        "depthMm": 4800.0
+      },
+      "nominalPowerW": {
+        "minW": 3100.0,
+        "maxW": 6600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 140.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:28.945706+00:00",
+        "importedAt": "2026-10-24T13:43:28.945706+00:00",
+        "sha256": "4f8f453bc190f4306078caf92d11e6d2827394f831fd753a9e55f157305abe77",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-easy-9",
+      "dimensionsMm": {
+        "widthMm": 5250.0,
+        "heightMm": 10300.0,
+        "depthMm": 4800.0
+      },
+      "nominalPowerW": {
+        "minW": 3100.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 140.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-9/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:30.901224+00:00",
+        "importedAt": "2026-10-24T13:43:30.901224+00:00",
+        "sha256": "a44988cf64d6c112ccb2829b0854a8ce17fc788a0616ac20bdf6e10bd5525705",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-160-design",
+      "dimensionsMm": {
+        "widthMm": 630.0,
+        "heightMm": 1240.0,
+        "depthMm": 680.0
+      },
+      "nominalPowerW": {
+        "minW": 6700.0,
+        "maxW": 19000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 235.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-160-design/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:31.054901+00:00",
+        "importedAt": "2026-10-24T13:43:31.054901+00:00",
+        "sha256": "1b17d7358aa95e20424757648a56cf9d31deaf8f20568ac1908408627f2a0e2e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-100-touch",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1130.0,
+        "depthMm": 580.0
+      },
+      "nominalPowerW": {
+        "minW": 4400.0,
+        "maxW": 13000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 190.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-100-touch/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:31.062300+00:00",
+        "importedAt": "2026-10-24T13:43:31.062300+00:00",
+        "sha256": "3eca6749fd61b1ecc657fcb070a974464acc2ea3360710044f63c8dbdc78db91",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-140-touch",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1130.0,
+        "depthMm": 580.0
+      },
+      "nominalPowerW": {
+        "minW": 4400.0,
+        "maxW": 17600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 190.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-140-touch/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:31.054132+00:00",
+        "importedAt": "2026-10-24T13:43:31.054132+00:00",
+        "sha256": "10e704d11f1be74100ed925609a2e848fe31423006aceb5c21f3ce67d7664bbd",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-160-touch-steel",
+      "dimensionsMm": {
+        "widthMm": 610.0,
+        "heightMm": 1180.0,
+        "depthMm": 640.0
+      },
+      "nominalPowerW": {
+        "minW": 6700.0,
+        "maxW": 19000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 235.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-160-touch-steel/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:33.322189+00:00",
+        "importedAt": "2026-10-24T13:43:33.322189+00:00",
+        "sha256": "0324fa37650d65e4f10bec5e39011de14a41e39b56811210cc2aa2b206769bc4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-200",
+      "dimensionsMm": {
+        "widthMm": 640.0,
+        "heightMm": 1250.0,
+        "depthMm": 640.0
+      },
+      "nominalPowerW": {
+        "minW": 7000.0,
+        "maxW": 21900.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 270.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-200/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:33.510111+00:00",
+        "importedAt": "2026-10-24T13:43:33.510111+00:00",
+        "sha256": "e08e6a0d541a52a7609d48284fdd012f6638dd86ad01aa6ee14cdc99ec8523db",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-250",
+      "dimensionsMm": {
+        "widthMm": 640.0,
+        "heightMm": 1250.0,
+        "depthMm": 640.0
+      },
+      "nominalPowerW": {
+        "minW": 7000.0,
+        "maxW": 26500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 240.0,
+      "flueDiameterMm": 100.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-250/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:33.615074+00:00",
+        "importedAt": "2026-10-24T13:43:33.615074+00:00",
+        "sha256": "8befb236d07b08134300d82cad9b99439abf04aae7bef0d9478da390590483a7",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-180-silhouette",
+      "dimensionsMm": {
+        "widthMm": 930.0,
+        "heightMm": 1000.0,
+        "depthMm": 390.0
+      },
+      "nominalPowerW": {
+        "minW": 9400.0,
+        "maxW": 19100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 200.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-180-silhouette/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:33.458778+00:00",
+        "importedAt": "2026-10-24T13:43:33.458778+00:00",
+        "sha256": "b36f96efa6dc54637c5e52b45825676a775194e572e8be5335984b62bd5c95d7",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-dual-7",
+      "dimensionsMm": {
+        "widthMm": 5020.0,
+        "heightMm": 10410.0,
+        "depthMm": 5610.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 143.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/dual-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:35.673946+00:00",
+        "importedAt": "2026-10-24T13:43:35.673946+00:00",
+        "sha256": "5f18776296a738be92b12405601727545ce2ff98b20ddc9d604b1a21d9d55017",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-dual-9",
+      "dimensionsMm": {
+        "widthMm": 4600.0,
+        "heightMm": 10810.0,
+        "depthMm": 5620.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 7800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 150.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/dual-9/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:35.858643+00:00",
+        "importedAt": "2026-10-24T13:43:35.858643+00:00",
+        "sha256": "969db2deb3a5211f53d0c9702ef8b938bb51f504ec7bab5ab7fc81294abe2458",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-s70",
+      "dimensionsMm": {
+        "widthMm": 440.0,
+        "heightMm": 930.0,
+        "depthMm": 500.0
+      },
+      "nominalPowerW": {
+        "minW": 2900.0,
+        "maxW": 6400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 129.5,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/s70/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:35.950067+00:00",
+        "importedAt": "2026-10-24T13:43:35.950067+00:00",
+        "sha256": "135d297408afe43db1b2d2d180d84dde50d6173608d0ba9d82232f429a408927",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-s90",
+      "dimensionsMm": {
+        "widthMm": 440.0,
+        "heightMm": 930.0,
+        "depthMm": 500.0
+      },
+      "nominalPowerW": {
+        "minW": 2900.0,
+        "maxW": 7800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 129.5,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/s90/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:36.022647+00:00",
+        "importedAt": "2026-10-24T13:43:36.022647+00:00",
+        "sha256": "4198d9ba5255fa85a12ba2222e581add0b460d06cbd60266c0a17398539e58dc",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-r-70",
+      "dimensionsMm": {
+        "widthMm": 440.0,
+        "heightMm": 950.0,
+        "depthMm": 450.0
+      },
+      "nominalPowerW": {
+        "minW": 2900.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 115.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/r-70/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:38.051734+00:00",
+        "importedAt": "2026-10-24T13:43:38.051734+00:00",
+        "sha256": "7f84e5bfbaa9765ebe8a3b57b9960826181208450220f93477edcb7aa198d090",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-rv80",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1010.0,
+        "depthMm": 520.0
+      },
+      "nominalPowerW": {
+        "minW": 2900.0,
+        "maxW": 7300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 123.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv80/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:38.213124+00:00",
+        "importedAt": "2026-10-24T13:43:38.213124+00:00",
+        "sha256": "32269bb94a2ca52b6ccf9200e374ef836a0d583476e3cf8e1ea2c2bfe7f58728",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-rv-100",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1100.0,
+        "depthMm": 530.0
+      },
+      "nominalPowerW": {
+        "minW": 4300.0,
+        "maxW": 10300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 120.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv-100/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:38.211366+00:00",
+        "importedAt": "2026-10-24T13:43:38.211366+00:00",
+        "sha256": "f0828cd44a99bde6750596bf79939f57dea41b6d4e61131ec657f214cfca0cd8",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-rv-110",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1120.0,
+        "depthMm": 560.0
+      },
+      "nominalPowerW": {
+        "minW": 4300.0,
+        "maxW": 10300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 150.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv-110/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:38.415880+00:00",
+        "importedAt": "2026-10-24T13:43:38.415880+00:00",
+        "sha256": "5903c4259447677c4b1795260bc14f868e52faf1ffc2ee4692ecf65697348fd3",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-sphere-v",
+      "dimensionsMm": {
+        "widthMm": 600.0,
+        "heightMm": 1150.0,
+        "depthMm": 600.0
+      },
+      "nominalPowerW": {
+        "minW": 4900.0,
+        "maxW": 10800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 201.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/sphere-v/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:40.269356+00:00",
+        "importedAt": "2026-10-24T13:43:40.269356+00:00",
+        "sha256": "577770bf8d6f960fce8fb5c6a5cc500a9ead16f998c31715cff2202f028debc2",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-rv-120-touch-steel",
+      "dimensionsMm": {
+        "widthMm": 540.0,
+        "heightMm": 1170.0,
+        "depthMm": 570.0
+      },
+      "nominalPowerW": {
+        "minW": 4900.0,
+        "maxW": 10800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 165.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv-120-touch-steel/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:40.251176+00:00",
+        "importedAt": "2026-10-24T13:43:40.251176+00:00",
+        "sha256": "c14404f5810764d83117e7bd168161ca228730a9482b1b046a7f5c1e37f26b57",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-block-9",
+      "dimensionsMm": {
+        "widthMm": 470.0,
+        "heightMm": 1010.0,
+        "depthMm": 520.0
+      },
+      "nominalPowerW": {
+        "minW": 4200.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 178.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/block-9/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:40.011576+00:00",
+        "importedAt": "2026-10-24T13:43:40.011576+00:00",
+        "sha256": "9c08925078b701fddc996779f4777c370ed7a8d2313c62291f50246ac9c0c192",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-block-7",
+      "dimensionsMm": {
+        "widthMm": 470.0,
+        "heightMm": 1010.0,
+        "depthMm": 520.0
+      },
+      "nominalPowerW": {
+        "minW": 4200.0,
+        "maxW": 6400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 178.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/block-7/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:40.435359+00:00",
+        "importedAt": "2026-10-24T13:43:40.435359+00:00",
+        "sha256": "c0880a0ee99436e32adf268e9da94dd24bc1b0dc444a06d5edbda00b5145269e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-luna",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1080.0,
+        "depthMm": 560.0
+      },
+      "nominalPowerW": {
+        "minW": 2400.0,
+        "maxW": 5400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 127.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/luna/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:41.908844+00:00",
+        "importedAt": "2026-10-24T13:43:41.908844+00:00",
+        "sha256": "41b37255229eb000707fb98ce50cc9542b72677d8c7f605e6f755376d7521f7c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-vittoria-v",
+      "dimensionsMm": {
+        "widthMm": 510.0,
+        "heightMm": 1160.0,
+        "depthMm": 570.0
+      },
+      "nominalPowerW": {
+        "minW": 4200.0,
+        "maxW": 10600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 190.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/vittoria-v/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:42.148147+00:00",
+        "importedAt": "2026-10-24T13:43:42.148147+00:00",
+        "sha256": "3c4e794220c1655e6366b8ecdbe89f5e36b6b825e53e5419f06818fafe2bec3f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-easy-12",
+      "dimensionsMm": {
+        "widthMm": 5250.0,
+        "heightMm": 10760.0,
+        "depthMm": 5460.0
+      },
+      "nominalPowerW": {
+        "minW": 4800.0,
+        "maxW": 11300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 145.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-12/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:42.113862+00:00",
+        "importedAt": "2026-10-24T13:43:42.113862+00:00",
+        "sha256": "b248d71e38ba5536a0599afc863a230f73b29b100bae7a6ecaddb6b29f7aa7b1",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-line",
+      "dimensionsMm": {
+        "widthMm": 8000.0,
+        "heightMm": 11500.0,
+        "depthMm": 2500.0
+      },
+      "nominalPowerW": {
+        "minW": 3600.0,
+        "maxW": 8100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 104.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/line/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:42.363657+00:00",
+        "importedAt": "2026-10-24T13:43:42.363657+00:00",
+        "sha256": "ad49406b5b67cc397ef68ac9632e6bf14300168738992bb7daa99c15ec532b5d",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-stilo",
+      "dimensionsMm": {
+        "widthMm": 850.0,
+        "heightMm": 1150.0,
+        "depthMm": 350.0
+      },
+      "nominalPowerW": {
+        "minW": 4600.0,
+        "maxW": 10500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 180.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/stilo/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:44.038621+00:00",
+        "importedAt": "2026-10-24T13:43:44.038621+00:00",
+        "sha256": "fd37ba51eed743cf4ee2aa509bb192ecf312b0f3ac0e90ccd901b9ecd015736a",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-easy-12-c",
+      "dimensionsMm": {
+        "widthMm": 5250.0,
+        "heightMm": 10760.0,
+        "depthMm": 5710.0
+      },
+      "nominalPowerW": {
+        "minW": 4800.0,
+        "maxW": 11300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 150.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-12-c/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:44.051117+00:00",
+        "importedAt": "2026-10-24T13:43:44.051117+00:00",
+        "sha256": "fb3b9c04a140b9dd614412faa96b7eab3bc3ac609a25b35c959668df8229b517",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-sphere-c",
+      "dimensionsMm": {
+        "widthMm": 600.0,
+        "heightMm": 1150.0,
+        "depthMm": 600.0
+      },
+      "nominalPowerW": {
+        "minW": 4900.0,
+        "maxW": 10800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 207.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/sphere-c/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:44.193549+00:00",
+        "importedAt": "2026-10-24T13:43:44.193549+00:00",
+        "sha256": "6b5883523f8a64abc1b2cdafdee0094d1bc13b5b54b1755b11df2f6fb9197264",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-olivia-steel",
+      "dimensionsMm": {
+        "widthMm": 800.0,
+        "heightMm": 1140.0,
+        "depthMm": 250.0
+      },
+      "nominalPowerW": {
+        "minW": 3100.0,
+        "maxW": 8400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 105.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/olivia-steel/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:44.308327+00:00",
+        "importedAt": "2026-10-24T13:43:44.308327+00:00",
+        "sha256": "1b48807eddabd16f2d816493fc71dd8b8cf6d18d4e37f9a7fdb3f88dc1bea556",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-rc-120-touch-steel",
+      "dimensionsMm": {
+        "widthMm": 540.0,
+        "heightMm": 1170.0,
+        "depthMm": 580.0
+      },
+      "nominalPowerW": {
+        "minW": 4900.0,
+        "maxW": 10800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 170.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/rc-120-touch-steel/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:46.084242+00:00",
+        "importedAt": "2026-10-24T13:43:46.084242+00:00",
+        "sha256": "090cc13d8fbce2f7e2f0c49f23d1199a39f8d49f8671baf49b344bea75635598",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-rc-70",
+      "dimensionsMm": {
+        "widthMm": 440.0,
+        "heightMm": 960.0,
+        "depthMm": 470.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 7400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 107.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/rc-70/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:46.226493+00:00",
+        "importedAt": "2026-10-24T13:43:46.226493+00:00",
+        "sha256": "bbfef6247c652284448405f0332b87058c4f042f976bd009910a577958a21f44",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-sc-90",
+      "dimensionsMm": {
+        "widthMm": 440.0,
+        "heightMm": 930.0,
+        "depthMm": 500.0
+      },
+      "nominalPowerW": {
+        "minW": 3300.0,
+        "maxW": 8300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 128.5,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/sc-90/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:46.488389+00:00",
+        "importedAt": "2026-10-24T13:43:46.488389+00:00",
+        "sha256": "3326c6542dd2f9e5f9ef497484b8420abda38e5665033ae6a185bfe5540ddac3",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-vittoria-c",
+      "dimensionsMm": {
+        "widthMm": 510.0,
+        "heightMm": 1160.0,
+        "depthMm": 560.0
+      },
+      "nominalPowerW": {
+        "minW": 4000.0,
+        "maxW": 11100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 195.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/vittoria-c/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:46.627006+00:00",
+        "importedAt": "2026-10-24T13:43:46.627006+00:00",
+        "sha256": "85765c63a8b776a0b9ad7d5dc4768093c77a65cfd097e7106453b2d4ef296cdf",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-120-style",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1140.0,
+        "depthMm": 620.0
+      },
+      "nominalPowerW": {
+        "minW": 5200.0,
+        "maxW": 12400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 175.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-120-style/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:48.382485+00:00",
+        "importedAt": "2026-10-24T13:43:48.382485+00:00",
+        "sha256": "3d0e45588cc505f7190081cc98f46683ab1dc4da13b7fa18c5c9675e4cbbb51c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-100-globe",
+      "dimensionsMm": {
+        "widthMm": 600.0,
+        "heightMm": 1150.0,
+        "depthMm": 620.0
+      },
+      "nominalPowerW": {
+        "minW": 4400.0,
+        "maxW": 12100.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 210.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-100-globe/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:48.522770+00:00",
+        "importedAt": "2026-10-24T13:43:48.522770+00:00",
+        "sha256": "bb9c067325b319169f8e0109d7c8f023128683c3ab805d77ffc84eef7eca2a63",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-140-silhouette",
+      "dimensionsMm": {
+        "widthMm": 930.0,
+        "heightMm": 1100.0,
+        "depthMm": 390.0
+      },
+      "nominalPowerW": {
+        "minW": 8100.0,
+        "maxW": 17300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 200.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-140-silhouette/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:48.649190+00:00",
+        "importedAt": "2026-10-24T13:43:48.649190+00:00",
+        "sha256": "dfae9e35d22e6c47b64127b670c72275c0afda81e944d44f27bf4cc79baacc72",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-160-touch",
+      "dimensionsMm": {
+        "widthMm": 610.0,
+        "heightMm": 1180.0,
+        "depthMm": 640.0
+      },
+      "nominalPowerW": {
+        "minW": 6700.0,
+        "maxW": 19000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 235.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-160-touch/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:48.964547+00:00",
+        "importedAt": "2026-10-24T13:43:48.964547+00:00",
+        "sha256": "b43104e9cf0b5432b1e8e439bc63b846c055147b14585e9f2b0c4ef0d8a3df63",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-120-country",
+      "dimensionsMm": {
+        "widthMm": 550.0,
+        "heightMm": 1200.0,
+        "depthMm": 600.0
+      },
+      "nominalPowerW": {
+        "minW": 4400.0,
+        "maxW": 15500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 219.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-120-country/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:50.639922+00:00",
+        "importedAt": "2026-10-24T13:43:50.639922+00:00",
+        "sha256": "dc45c96bbb474a6cf2156ec4ddaaeb39c01ac0ad1016e62ce0102391cb407e33",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-180-plus",
+      "dimensionsMm": {
+        "widthMm": 610.0,
+        "heightMm": 1250.0,
+        "depthMm": 600.0
+      },
+      "nominalPowerW": {
+        "minW": 6100.0,
+        "maxW": 21000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 215.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-180-plus/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:50.644021+00:00",
+        "importedAt": "2026-10-24T13:43:50.644021+00:00",
+        "sha256": "e00e17b7502669ee1a8038b2383aa388ac66dc0dd84f81d7cd53f7367f83ce9a",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-120-plus",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 1110.0,
+        "depthMm": 580.0
+      },
+      "nominalPowerW": {
+        "minW": 5200.0,
+        "maxW": 12400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 160.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-120-plus/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:50.723222+00:00",
+        "importedAt": "2026-10-24T13:43:50.723222+00:00",
+        "sha256": "a6bf05a41df075e39f9c741754684e9c4624e391737d105911ca691ac5af3f5f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-hrv-140-globe",
+      "dimensionsMm": {
+        "widthMm": 610.0,
+        "heightMm": 1150.0,
+        "depthMm": 620.0
+      },
+      "nominalPowerW": {
+        "minW": 4400.0,
+        "maxW": 17600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 210.0,
+      "flueDiameterMm": 80.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-140-globe/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:51.050508+00:00",
+        "importedAt": "2026-10-24T13:43:51.050508+00:00",
+        "sha256": "28eec652f297f8c9a0a844fa15ed1f509a88d68728fedaf5744cad985db5872a",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-dafne-view",
+      "dimensionsMm": {
+        "widthMm": 450.0,
+        "heightMm": 950.0,
+        "depthMm": 370.0
+      },
+      "nominalPowerW": {
+        "minW": 6000.0,
+        "maxW": 6000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 90.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/dafne-view/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:52.882638+00:00",
+        "importedAt": "2026-10-24T13:43:52.882638+00:00",
+        "sha256": "72cfce4458c0f97f17b1edae96f9a311e8cde24df6589390544a3e59f47b358f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-dafne",
+      "dimensionsMm": {
+        "widthMm": 450.0,
+        "heightMm": 950.0,
+        "depthMm": 370.0
+      },
+      "nominalPowerW": {
+        "minW": 6000.0,
+        "maxW": 6000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 90.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/dafne/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:52.950270+00:00",
+        "importedAt": "2026-10-24T13:43:52.950270+00:00",
+        "sha256": "54e9e802a7da11f9de1b8815a9488616442b10dc3380ce6149cf456a8e2d542d",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-minerva",
+      "dimensionsMm": {
+        "widthMm": 750.0,
+        "heightMm": 970.0,
+        "depthMm": 470.0
+      },
+      "nominalPowerW": {
+        "minW": 9000.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 175.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/minerva/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:52.867481+00:00",
+        "importedAt": "2026-10-24T13:43:52.867481+00:00",
+        "sha256": "942498dbb3b9885dd3052769b560b9da8ea9c18bb8edf4c9e7e35a922e4eed19",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-minerva-stone",
+      "dimensionsMm": {
+        "widthMm": 760.0,
+        "heightMm": 1010.0,
+        "depthMm": 470.0
+      },
+      "nominalPowerW": {
+        "minW": 9000.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 210.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/minerva-stone/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:53.227936+00:00",
+        "importedAt": "2026-10-24T13:43:53.227936+00:00",
+        "sha256": "bb26ba20f3c3230f80f63f949c236442e49aa0fb40cb251025e0751ffcb63292",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-calliope-stone",
+      "dimensionsMm": {
+        "widthMm": 540.0,
+        "heightMm": 1000.0,
+        "depthMm": 390.0
+      },
+      "nominalPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 156.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/calliope-stone/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.673242+00:00",
+        "importedAt": "2026-10-24T13:43:54.673242+00:00",
+        "sha256": "d7281457fd6029004632226bab541cd42e23d3c18b7482a03cc84096d29dd9a4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-thor",
+      "dimensionsMm": {
+        "widthMm": 520.0,
+        "heightMm": 770.0,
+        "depthMm": 370.0
+      },
+      "nominalPowerW": {
+        "minW": 6500.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 150.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/thor/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.448746+00:00",
+        "importedAt": "2026-10-24T13:43:54.448746+00:00",
+        "sha256": "3a730b2e101303a6478e33672516cda4bc8eab71f13adca8121ea1ded01e02bb",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "ravelli-efesto",
+      "dimensionsMm": {
+        "widthMm": 600.0,
+        "heightMm": 730.0,
+        "depthMm": 480.0
+      },
+      "nominalPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 163.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "Ravelli",
+        "sourceUrl": "https://ita.ravelligroup.it/prodotto/efesto/",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.414029+00:00",
+        "importedAt": "2026-10-24T13:43:54.414029+00:00",
+        "sha256": "1c3df719c3a0af103c938cc49ff0f6ac4bb6f5358fcb976b0db30c858d85914f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-larissa16",
+      "dimensionsMm": {
+        "widthMm": 628.0,
+        "heightMm": 1225.0,
+        "depthMm": 483.0
+      },
+      "nominalPowerW": {
+        "minW": 9300.0,
+        "maxW": 9300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 202.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/larissa16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:53.415806+00:00",
+        "importedAt": "2026-10-24T13:43:53.415806+00:00",
+        "sha256": "b1c7acbf1f1a99112c42c2b5011ccce5163acb12d2bbb509d1778f0247da7f6e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-asia-50",
+      "dimensionsMm": {
+        "widthMm": 438.0,
+        "heightMm": 1385.0,
+        "depthMm": 473.0
+      },
+      "nominalPowerW": {
+        "minW": 7000.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 154.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/asia-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:53.604707+00:00",
+        "importedAt": "2026-10-24T13:43:53.604707+00:00",
+        "sha256": "8b5c790fbb0e3ee800fc59cd0f837155c6a8dddd6592e08e14e8229a56c582c9",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-aurelia-eos-ceramica",
+      "dimensionsMm": {
+        "widthMm": 551.0,
+        "heightMm": 1489.0,
+        "depthMm": 605.0
+      },
+      "nominalPowerW": {
+        "minW": 12100.0,
+        "maxW": 12100.0
+      },
+      "waterPowerW": {
+        "minW": 9900.0,
+        "maxW": 9900.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 225.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/aurelia-eos-ceramica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:53.792389+00:00",
+        "importedAt": "2026-10-24T13:43:53.792389+00:00",
+        "sha256": "0bfad1c0b1cc405ce21c8108defbacd35ff8403d0c9faa1c221d3f1b1351e8be",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-aurelia-eos-petra",
+      "dimensionsMm": {
+        "widthMm": 551.0,
+        "heightMm": 1489.0,
+        "depthMm": 605.0
+      },
+      "nominalPowerW": {
+        "minW": 12100.0,
+        "maxW": 12100.0
+      },
+      "waterPowerW": {
+        "minW": 9900.0,
+        "maxW": 9900.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 256.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/aurelia-eos-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:53.994902+00:00",
+        "importedAt": "2026-10-24T13:43:53.994902+00:00",
+        "sha256": "00a14489e298a3ad66f0b4d3e60b078744fdd7ad8a1e5f31974e7ec7de0f80b5",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-aurelia-eos-steel",
+      "dimensionsMm": {
+        "widthMm": 551.0,
+        "heightMm": 1489.0,
+        "depthMm": 605.0
+      },
+      "nominalPowerW": {
+        "minW": 12100.0,
+        "maxW": 12100.0
+      },
+      "waterPowerW": {
+        "minW": 9900.0,
+        "maxW": 9900.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 212.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/aurelia-eos-steel",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.168776+00:00",
+        "importedAt": "2026-10-24T13:43:54.168776+00:00",
+        "sha256": "8b5f3d207048dbce72e84f70223c60f721234f199b300c8719194ba230dd54d5",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-brigitta16",
+      "dimensionsMm": {
+        "widthMm": 404.0,
+        "heightMm": 640.0,
+        "depthMm": 397.0
+      },
+      "nominalPowerW": {
+        "minW": 4700.0,
+        "maxW": 4700.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 70.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/brigitta16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.373081+00:00",
+        "importedAt": "2026-10-24T13:43:54.373081+00:00",
+        "sha256": "181f1d53c663f4d1cdf500334ff4cbfcfc6423258a0ceefd0def4b17c93b80b2",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-candy-eos165",
+      "dimensionsMm": {
+        "widthMm": 404.0,
+        "heightMm": 1142.0,
+        "depthMm": 397.0
+      },
+      "nominalPowerW": {
+        "minW": 6600.0,
+        "maxW": 6600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 86.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/candy-eos165",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.537904+00:00",
+        "importedAt": "2026-10-24T13:43:54.537904+00:00",
+        "sha256": "3420c16e09d96c8039a8df45a0d7bdd61abf65d57bb6c26eb3fcf33b9b8fe24f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-concita16-maiolica",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1545.0,
+        "depthMm": 569.0
+      },
+      "nominalPowerW": {
+        "minW": 11800.0,
+        "maxW": 11800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 185.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/concita16-maiolica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.572966+00:00",
+        "importedAt": "2026-10-24T13:43:54.572966+00:00",
+        "sha256": "9581b8aaa8a235a35fb2235633c88618eeac9bf33d3d6e819c7b99286ebce1f4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-concita16-steel",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1545.0,
+        "depthMm": 569.0
+      },
+      "nominalPowerW": {
+        "minW": 11800.0,
+        "maxW": 11800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 157.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/concita16-steel",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.655971+00:00",
+        "importedAt": "2026-10-24T13:43:54.655971+00:00",
+        "sha256": "d7d6667394d2782e41f64ae76c5a133faf09884e87634ea282813ee5f278b71f",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-dante16",
+      "dimensionsMm": {
+        "widthMm": 822.0,
+        "heightMm": 1514.0,
+        "depthMm": 593.0
+      },
+      "nominalPowerW": {
+        "minW": 12400.0,
+        "maxW": 12400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 158.0,
+      "flueDiameterMm": 160.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/dante16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.716766+00:00",
+        "importedAt": "2026-10-24T13:43:54.716766+00:00",
+        "sha256": "be3d759c5771abd519cfa15670cb30fa6c376e5b6c9063f5b6fcb37a8646499d",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-dante16-con-portalegna",
+      "dimensionsMm": {
+        "widthMm": 822.0,
+        "heightMm": 1938.0,
+        "depthMm": 593.0
+      },
+      "nominalPowerW": {
+        "minW": 12400.0,
+        "maxW": 12400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 183.0,
+      "flueDiameterMm": 160.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/dante16-con-portalegna",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.738590+00:00",
+        "importedAt": "2026-10-24T13:43:54.738590+00:00",
+        "sha256": "632f23e0c8dc631a42f6b061e4890ebc8e7b1c58b3632df5b3b071b2676809c4",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-emi-eos",
+      "dimensionsMm": {
+        "widthMm": 404.0,
+        "heightMm": 992.0,
+        "depthMm": 398.0
+      },
+      "nominalPowerW": {
+        "minW": 6600.0,
+        "maxW": 6600.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 75.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/emi-eos",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.847594+00:00",
+        "importedAt": "2026-10-24T13:43:54.847594+00:00",
+        "sha256": "f6da1b08737405afdd51238e5d90669dd06f1156b7ec448a5fad4aa4e320d857",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-emiliana165-maiolica",
+      "dimensionsMm": {
+        "widthMm": 453.0,
+        "heightMm": 1002.0,
+        "depthMm": 490.0
+      },
+      "nominalPowerW": {
+        "minW": 6500.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 135.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/emiliana165-maiolica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.877755+00:00",
+        "importedAt": "2026-10-24T13:43:54.877755+00:00",
+        "sha256": "f1fdc854836be25f9beefd7ea8c7f43872a523ca4d34bd1a0d19751602ac42a6",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-emiliana165-steel",
+      "dimensionsMm": {
+        "widthMm": 453.0,
+        "heightMm": 1002.0,
+        "depthMm": 490.0
+      },
+      "nominalPowerW": {
+        "minW": 6500.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 121.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/emiliana165-steel",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.912622+00:00",
+        "importedAt": "2026-10-24T13:43:54.912622+00:00",
+        "sha256": "7fd61b31829ac2b3640cec64e06a36f4b0c7c7854f640d98c5f987c040416ecb",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-ester-50",
+      "dimensionsMm": {
+        "widthMm": 540.0,
+        "heightMm": 1331.0,
+        "depthMm": 485.0
+      },
+      "nominalPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 243.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/ester-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:54.907105+00:00",
+        "importedAt": "2026-10-24T13:43:54.907105+00:00",
+        "sha256": "c078fa601a4dfc3554cc6fa8b8aefdbd23331c353fc3d6674cdeea21fa5690cd",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-ester-forno-50",
+      "dimensionsMm": {
+        "widthMm": 540.0,
+        "heightMm": 1512.0,
+        "depthMm": 485.0
+      },
+      "nominalPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 317.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/ester-forno-50",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.029068+00:00",
+        "importedAt": "2026-10-24T13:43:55.029068+00:00",
+        "sha256": "1d3d6c2addbfb0b142f855de82e7bb69107e5431af56783bd8ca13b12a32d08b",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-fedora16-maiolica",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1086.0,
+        "depthMm": 547.0
+      },
+      "nominalPowerW": {
+        "minW": 8300.0,
+        "maxW": 8300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 175.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/fedora16-maiolica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.058671+00:00",
+        "importedAt": "2026-10-24T13:43:55.058671+00:00",
+        "sha256": "bf4b494b1f974783f7d42c06a492bd3a208dbdf14c1289faf6dc29a408200408",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-fedora16-steel",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1086.0,
+        "depthMm": 547.0
+      },
+      "nominalPowerW": {
+        "minW": 8300.0,
+        "maxW": 8300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 150.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/fedora16-steel",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.121949+00:00",
+        "importedAt": "2026-10-24T13:43:55.121949+00:00",
+        "sha256": "439e1ef2e7c6dc7ebf52a7c9b3d160a3df97cf57bc6e0ad0f343cfa03039ed68",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-gemma16-ceramica",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1358.0,
+        "depthMm": 495.0
+      },
+      "nominalPowerW": {
+        "minW": 7000.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 87.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma16-ceramica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.141349+00:00",
+        "importedAt": "2026-10-24T13:43:55.141349+00:00",
+        "sha256": "d7b0b626c303271eb23df28ceb233a370ca4d24a22f673eaa50efb28aab398fa",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-gemma16-petra",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1358.0,
+        "depthMm": 495.0
+      },
+      "nominalPowerW": {
+        "minW": 7000.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 100.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma16-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.213433+00:00",
+        "importedAt": "2026-10-24T13:43:55.213433+00:00",
+        "sha256": "9f8fc19b52cec9ba557a62630d4ab3204d2e2947bab8efd4a5ac431dc40c87e3",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-gemma-forno165-ceramica",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1265.0,
+        "depthMm": 495.0
+      },
+      "nominalPowerW": {
+        "minW": 7300.0,
+        "maxW": 7300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 125.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma-forno165-ceramica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.279323+00:00",
+        "importedAt": "2026-10-24T13:43:55.279323+00:00",
+        "sha256": "3b82c8c4168ed8001f958ae22c7a64abbca5c14e47b39a3624f503e9e91d57ff",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-gemma-forno165-petra",
+      "dimensionsMm": {
+        "widthMm": 460.0,
+        "heightMm": 1265.0,
+        "depthMm": 495.0
+      },
+      "nominalPowerW": {
+        "minW": 7300.0,
+        "maxW": 7300.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 140.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma-forno165-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.306636+00:00",
+        "importedAt": "2026-10-24T13:43:55.306636+00:00",
+        "sha256": "367077aa45404280eb12f00ff71f2c763bfe654da5010f61eae2d6ad095b2fea",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-giulietta165",
+      "dimensionsMm": {
+        "widthMm": 487.0,
+        "heightMm": 750.0,
+        "depthMm": 430.0
+      },
+      "nominalPowerW": {
+        "minW": 6500.0,
+        "maxW": 6500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 115.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/giulietta165",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.319091+00:00",
+        "importedAt": "2026-10-24T13:43:55.319091+00:00",
+        "sha256": "499c0a8c9f8f8f6a958cc34ba7bdae22d1b1cabe0a07d00ec6ecfcad2de8107c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isetta165",
+      "dimensionsMm": {
+        "widthMm": 661.0,
+        "heightMm": 898.0,
+        "depthMm": 594.0
+      },
+      "nominalPowerW": {
+        "minW": 8200.0,
+        "maxW": 8200.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 164.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isetta165",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.387551+00:00",
+        "importedAt": "2026-10-24T13:43:55.387551+00:00",
+        "sha256": "433d313adde81dfc0343f7076fa29cb9915566ea5d073a553d1b927994295e84",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isetta-cc165",
+      "dimensionsMm": {
+        "widthMm": 661.0,
+        "heightMm": 898.0,
+        "depthMm": 594.0
+      },
+      "nominalPowerW": {
+        "minW": 8200.0,
+        "maxW": 8200.0
+      },
+      "partLoadPowerW": 4900.0,
+      "waterPowerW": null,
+      "weightKg": 172,
+      "flueDiameterMm": 150,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://storage.onpage.it/ffa738277b3d7a8e068742bad97292ac20221fc6/004305002-000%20CEMI%20ISETTA%20CC.165%5BL271%5D.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "3010340-001",
+        "retrievedAt": "2026-10-24T13:43:55.847758+00:00",
+        "importedAt": "2026-10-24T13:43:55.847758+00:00",
+        "sha256": "3573cab62c84a9721632acb92aea186f40b72bfd81c24823907ef0814cc815aa",
+        "page": 4
+      },
+      "supportingSources": [
+        {
+          "sourceMetadata": {
+            "manufacturer": "La Nordica Extraflame",
+            "sourceUrl": "https://www.lanordica-extraflame.com/api/articles/116945672",
+            "sourceType": "json",
+            "documentRevision": "3010340-001",
+            "retrievedAt": "2026-10-24T13:43:55.847758+00:00",
+            "importedAt": "2026-10-24T13:43:55.847758+00:00",
+            "sha256": "c92a07b30ba72aaa44430a46cf8de2fab8684bfdfa638f7c22f06f7ab2bf43ea",
+            "page": null
+          }
+        },
+        {
+          "sourceMetadata": {
+            "manufacturer": "La Nordica Extraflame",
+            "sourceUrl": "https://storage.onpage.it/ffa738277b3d7a8e068742bad97292ac20221fc6/004305002-000%20CEMI%20ISETTA%20CC.165%5BL271%5D.pdf",
+            "sourceType": "pdf",
+            "documentRevision": "3010340-001",
+            "retrievedAt": "2026-10-24T13:43:55.847758+00:00",
+            "importedAt": "2026-10-24T13:43:55.847758+00:00",
+            "sha256": "3573cab62c84a9721632acb92aea186f40b72bfd81c24823907ef0814cc815aa",
+            "page": 1
+          }
+        },
+        {
+          "sourceMetadata": {
+            "manufacturer": "La Nordica Extraflame",
+            "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isetta-cc165",
+            "sourceType": "html",
+            "documentRevision": null,
+            "retrievedAt": "2026-10-24T13:43:55.847758+00:00",
+            "importedAt": "2026-10-24T13:43:55.847758+00:00",
+            "sha256": "c80edbe2be8884a64a4337fda21f7fa9c445d7e8f967d755161a70faa1295863",
+            "page": null
+          }
+        }
+      ],
+      "articleCode": "3010340",
+      "imageAssetSku": "3008340"
+    },
+    {
+      "id": "nordica-isetta-forno",
+      "dimensionsMm": {
+        "widthMm": 661.0,
+        "heightMm": 1162.0,
+        "depthMm": 452.0
+      },
+      "nominalPowerW": {
+        "minW": 8200.0,
+        "maxW": 8200.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 228.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isetta-forno",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.479438+00:00",
+        "importedAt": "2026-10-24T13:43:55.479438+00:00",
+        "sha256": "31f6ddff91be8fb56800b37b07cee2c045df4738e7135831d32be3e688d0f1f0",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isotta-cc-eos165",
+      "dimensionsMm": {
+        "widthMm": 791.0,
+        "heightMm": 1216.0,
+        "depthMm": 660.0
+      },
+      "nominalPowerW": {
+        "minW": 11000.0,
+        "maxW": 11000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 228.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isotta-cc-eos165",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.496158+00:00",
+        "importedAt": "2026-10-24T13:43:55.496158+00:00",
+        "sha256": "6e24e6c8faa4c2c0f74ad38e563dd5dd6fe018dc7427246d1a7733b4db42dda8",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isotta-eos165",
+      "dimensionsMm": {
+        "widthMm": 791.0,
+        "heightMm": 1216.0,
+        "depthMm": 660.0
+      },
+      "nominalPowerW": {
+        "minW": 11000.0,
+        "maxW": 11000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 215.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isotta-eos165",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.570491+00:00",
+        "importedAt": "2026-10-24T13:43:55.570491+00:00",
+        "sha256": "6c63c2a7731d8dbc27fa588e7b45e56da344c5085d7c17f9a233131e82bad029",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-isotta-forno-eos",
+      "dimensionsMm": {
+        "widthMm": 790.0,
+        "heightMm": 1244.0,
+        "depthMm": 520.0
+      },
+      "nominalPowerW": {
+        "minW": 11000.0,
+        "maxW": 11000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 305.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isotta-forno-eos",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.670864+00:00",
+        "importedAt": "2026-10-24T13:43:55.670864+00:00",
+        "sha256": "38ddcc379d75c611c1f56ebb96c0d467e0a7e3e734233895293c781b651b745b",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-jennifer16-eps",
+      "dimensionsMm": {
+        "widthMm": 702.0,
+        "heightMm": 1370.0,
+        "depthMm": 478.0
+      },
+      "nominalPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 143.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/jennifer16-eps",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.712559+00:00",
+        "importedAt": "2026-10-24T13:43:55.712559+00:00",
+        "sha256": "3a5ad7020804d55a00520ca3c1cbe7e96e15544707b7e527ea936a56fd4e7946",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-lavinia-eos",
+      "dimensionsMm": {
+        "widthMm": 773.0,
+        "heightMm": 1213.0,
+        "depthMm": 685.0
+      },
+      "nominalPowerW": {
+        "minW": 11700.0,
+        "maxW": 11700.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 248.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/lavinia-eos",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.765446+00:00",
+        "importedAt": "2026-10-24T13:43:55.765446+00:00",
+        "sha256": "bd200a0bb1bf1ccf7607223d0be345c0ab6d4d0e2ad1af297bad943f0a0c7198",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-liu-16-maiolica",
+      "dimensionsMm": {
+        "widthMm": 537.0,
+        "heightMm": 1562.0,
+        "depthMm": 508.0
+      },
+      "nominalPowerW": {
+        "minW": 7500.0,
+        "maxW": 7500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 170.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/liu-16-maiolica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.846701+00:00",
+        "importedAt": "2026-10-24T13:43:55.846701+00:00",
+        "sha256": "68df4173e523e1b3799d04a0275d9e4501fb31f1580c30bae530c3bb07f292e3",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-liu-16-petra",
+      "dimensionsMm": {
+        "widthMm": 528.0,
+        "heightMm": 1562.0,
+        "depthMm": 508.0
+      },
+      "nominalPowerW": {
+        "minW": 7500.0,
+        "maxW": 7500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 201.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/liu-16-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.894542+00:00",
+        "importedAt": "2026-10-24T13:43:55.894542+00:00",
+        "sha256": "01552c70dbadc1066dae22bf1c8847f32ff1bf2bbb572e4dcbef7a472de32466",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-marlena16",
+      "dimensionsMm": {
+        "widthMm": 465.0,
+        "heightMm": 1562.0,
+        "depthMm": 475.0
+      },
+      "nominalPowerW": {
+        "minW": 7500.0,
+        "maxW": 7500.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 140.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/marlena16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:55.937293+00:00",
+        "importedAt": "2026-10-24T13:43:55.937293+00:00",
+        "sha256": "47c92cb85a6c003760927cfec0a97b84e943423ecc79ca69880f25c76a1d3703",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-nova-forno16-maiolica",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1547.0,
+        "depthMm": 569.0
+      },
+      "nominalPowerW": {
+        "minW": 11800.0,
+        "maxW": 11800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 256.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/nova-forno16-maiolica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.072510+00:00",
+        "importedAt": "2026-10-24T13:43:56.072510+00:00",
+        "sha256": "87fc5907e22488cb7a506d7091fceff8f8c442b6cda33e5dcb7d93fa7b70716c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-nova-forno16-steel",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1547.0,
+        "depthMm": 569.0
+      },
+      "nominalPowerW": {
+        "minW": 11800.0,
+        "maxW": 11800.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 217.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/nova-forno16-steel",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.027954+00:00",
+        "importedAt": "2026-10-24T13:43:56.027954+00:00",
+        "sha256": "54ccb0622a0e101d24a792f6fa9a4d24236b71eeb6bf9d00900be40601a7f672",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-rossella-plforno165-ceramica",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1411.0,
+        "depthMm": 536.0
+      },
+      "nominalPowerW": {
+        "minW": 9400.0,
+        "maxW": 9400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 195.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-plforno165-ceramica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.085087+00:00",
+        "importedAt": "2026-10-24T13:43:56.085087+00:00",
+        "sha256": "8a383c747ef35f0ac32b9aaf718a162b9c9025fea50ab8d044febfa71f28fed9",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-rossella-plus-forno165-petra",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1411.0,
+        "depthMm": 536.0
+      },
+      "nominalPowerW": {
+        "minW": 9400.0,
+        "maxW": 9400.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 219.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-plus-forno165-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.147078+00:00",
+        "importedAt": "2026-10-24T13:43:56.147078+00:00",
+        "sha256": "1eda673dc602f30ee402e9b4cda78df1667b74f030c66214eda20ffb00a2ab90",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-rossella-r116-ceramica",
+      "dimensionsMm": {
+        "widthMm": 578.0,
+        "heightMm": 1370.0,
+        "depthMm": 586.0
+      },
+      "nominalPowerW": {
+        "minW": 9000.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 155.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-r116-ceramica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.214110+00:00",
+        "importedAt": "2026-10-24T13:43:56.214110+00:00",
+        "sha256": "f5f519e4ec280817ac67f616994037f370a42d64622a7d0498ec1b342dd785c0",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-rossella-r116-petra",
+      "dimensionsMm": {
+        "widthMm": 578.0,
+        "heightMm": 1370.0,
+        "depthMm": 586.0
+      },
+      "nominalPowerW": {
+        "minW": 9000.0,
+        "maxW": 9000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 170.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-r116-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.257144+00:00",
+        "importedAt": "2026-10-24T13:43:56.257144+00:00",
+        "sha256": "5fc2252e91a695acc9881ad6ce54136b5986825d343e94052db7ad312f6b996c",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-super-junior-lean",
+      "dimensionsMm": {
+        "widthMm": 356.0,
+        "heightMm": 802.0,
+        "depthMm": 423.0
+      },
+      "nominalPowerW": {
+        "minW": 5700.0,
+        "maxW": 5700.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 66.1,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/super-junior-lean",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.268510+00:00",
+        "importedAt": "2026-10-24T13:43:56.268510+00:00",
+        "sha256": "12f32ed04cb9b7e2aed03e7f5900335ef17ae383e557936d813ff3335fe558aa",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-tea16",
+      "dimensionsMm": {
+        "widthMm": 414.0,
+        "heightMm": 1346.0,
+        "depthMm": 473.0
+      },
+      "nominalPowerW": {
+        "minW": 7000.0,
+        "maxW": 7000.0
+      },
+      "waterPowerW": null,
+      "partLoadPowerW": null,
+      "weightKg": 79.0,
+      "flueDiameterMm": 120.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/tea16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.343139+00:00",
+        "importedAt": "2026-10-24T13:43:56.343139+00:00",
+        "sha256": "a944112ff8ae5459b85f769602ae54bcffb60d276c3ee13f27a7820574655759",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-sierra16",
+      "dimensionsMm": {
+        "widthMm": 1252.0,
+        "heightMm": 858.0,
+        "depthMm": 665.0
+      },
+      "nominalPowerW": {
+        "minW": 15400.0,
+        "maxW": 15400.0
+      },
+      "waterPowerW": {
+        "minW": 10200.0,
+        "maxW": 10200.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 310.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/sierra16",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.415812+00:00",
+        "importedAt": "2026-10-24T13:43:56.415812+00:00",
+        "sha256": "97278fc5ad8fc0c49d887dc9cd18de6638e4362daa705e86a283b7b9b87a4cdd",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-termorosa-dsa16-ceramica",
+      "dimensionsMm": {
+        "widthMm": 1030.0,
+        "heightMm": 855.0,
+        "depthMm": 664.0
+      },
+      "nominalPowerW": {
+        "minW": 11000.0,
+        "maxW": 11000.0
+      },
+      "waterPowerW": {
+        "minW": 7000.0,
+        "maxW": 7000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 217.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorosa-dsa16-ceramica",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.443525+00:00",
+        "importedAt": "2026-10-24T13:43:56.443525+00:00",
+        "sha256": "04a25acd0ff37234c039959d2e6470556005fde8d678bb56be3ed14d3ffec9be",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-termorosa-dsa16-petra",
+      "dimensionsMm": {
+        "widthMm": 1030.0,
+        "heightMm": 855.0,
+        "depthMm": 664.0
+      },
+      "nominalPowerW": {
+        "minW": 11000.0,
+        "maxW": 11000.0
+      },
+      "waterPowerW": {
+        "minW": 7000.0,
+        "maxW": 7000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 231.0,
+      "flueDiameterMm": 150.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorosa-dsa16-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.474846+00:00",
+        "importedAt": "2026-10-24T13:43:56.474846+00:00",
+        "sha256": "f86c389a3ecb959cde74790dd96d4c277eb7c927e6fab3eddf530d0b1326b7eb",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-termorossella-plus-dsa16-cera",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 967.0,
+        "depthMm": 538.0
+      },
+      "nominalPowerW": {
+        "minW": 11100.0,
+        "maxW": 11100.0
+      },
+      "waterPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 162.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorossella-plus-dsa16-cera",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.558793+00:00",
+        "importedAt": "2026-10-24T13:43:56.558793+00:00",
+        "sha256": "9b08af5b0629e5e3286080850de08cb01bbccd898d6c191c7099db8cde7c27e8",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-termorossella-plus-dsa16-petr",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 967.0,
+        "depthMm": 538.0
+      },
+      "nominalPowerW": {
+        "minW": 11100.0,
+        "maxW": 11100.0
+      },
+      "waterPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 175.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorossella-plus-dsa16-petr",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.621773+00:00",
+        "importedAt": "2026-10-24T13:43:56.621773+00:00",
+        "sha256": "7ff7ca5261e32942ac70a15289b21f3eabb4a4c39949ef8bf4988b95f55dd854",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-trossplus-forno-dsa16-ceram",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1411.0,
+        "depthMm": 538.0
+      },
+      "nominalPowerW": {
+        "minW": 11100.0,
+        "maxW": 11100.0
+      },
+      "waterPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 218.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/trossplus-forno-dsa16-ceram",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.628333+00:00",
+        "importedAt": "2026-10-24T13:43:56.628333+00:00",
+        "sha256": "363a8ec45a00fe2f8994c49043d9d84d38439b8f6b6d98791e39669865db6f8e",
+        "page": null
+      },
+      "supportingSources": []
+    },
+    {
+      "id": "nordica-trossplus-forno-dsa16-petra",
+      "dimensionsMm": {
+        "widthMm": 559.0,
+        "heightMm": 1411.0,
+        "depthMm": 538.0
+      },
+      "nominalPowerW": {
+        "minW": 11100.0,
+        "maxW": 11100.0
+      },
+      "waterPowerW": {
+        "minW": 8000.0,
+        "maxW": 8000.0
+      },
+      "partLoadPowerW": null,
+      "weightKg": 242.0,
+      "flueDiameterMm": 130.0,
+      "sourceMetadata": {
+        "manufacturer": "La Nordica Extraflame",
+        "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/trossplus-forno-dsa16-petra",
+        "sourceType": "html",
+        "documentRevision": null,
+        "retrievedAt": "2026-10-24T13:43:56.681555+00:00",
+        "importedAt": "2026-10-24T13:43:56.681555+00:00",
+        "sha256": "c8c7968bb8ecca5f3b7e6e1eb8a5a06bc484102918d3bdeb09994003ed05648c",
+        "page": null
+      },
+      "supportingSources": []
+    }
+  ]
+}

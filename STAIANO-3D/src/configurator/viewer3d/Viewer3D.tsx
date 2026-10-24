@@ -1483,8 +1483,9 @@ export default function Viewer3D({
                 )}
                 {loadMap && (
                   <small>
-                    Fabbisogno convenzionale volume × 35 W/m³; non una mappa di
-                    temperature.
+                    Fabbisogno convenzionale volume ×{" "}
+                    {p.projectSettings.coefficientWm3.toLocaleString("it-IT")}{" "}
+                    W/m³; non una mappa di temperature.
                   </small>
                 )}
                 {channelView && (

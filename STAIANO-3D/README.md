@@ -10,6 +10,12 @@ La sincronizzazione funziona fra finestre dello stesso browser e computer.
 
 Configuratore HVAC locale per Termoidraulica Staiano.
 
+All’avvio scegli il **coefficiente termico in W/m³**, prima di disegnare o
+importare la planimetria. Il fabbisogno è il volume netto × il coefficiente
+scelto; puoi modificarlo anche da **File > Impostazioni progetto e piani**.
+Il valore predefinito e quello conservato nei progetti precedenti è 35 W/m³.
+I nuovi salvataggi usano lo schema 8: aggiorna gli altri client prima di importarli.
+
 Accesso interno: <https://hvac.internal.staianopoint.com>. Il login richiede
 la password amministrativa impostata sul server. Progetti e cataloghi restano
 sul dispositivo; non è richiesto un account cloud.

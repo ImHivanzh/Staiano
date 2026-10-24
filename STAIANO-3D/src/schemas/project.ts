@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { terminalCommercialOptionsSchema } from "@/domain/catalogs/ecoclima-price-schema";
 
-export const CURRENT_SCHEMA_VERSION = 7;
+export const CURRENT_SCHEMA_VERSION = 8;
 export const DIMENSION_MODES = ["internal", "axis", "external"] as const;
 export const DECISION_ORIGINS = [
   "calculated",
@@ -543,7 +543,7 @@ export const projectSchema = z
       defaultHeightM: finite.positive().max(30),
       internalWallThicknessM: finite.min(0.01).max(2),
       externalWallThicknessM: finite.min(0.01).max(2),
-      coefficientWm3: z.literal(35),
+      coefficientWm3: finite.positive().default(35),
       maxNoiseDbA: z.literal(37),
       dimensionMode: z.enum(DIMENSION_MODES).default("internal"),
     }),

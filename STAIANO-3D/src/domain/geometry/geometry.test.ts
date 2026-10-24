@@ -138,7 +138,7 @@ describe("geometria e creazione manuale", () => {
     expect(r.designLoadW).toBeCloseTo(1508.22);
     expect(area(p.walls.map((w) => w.start))).toBeGreaterThan(r.netAreaM2);
   });
-  it("35 W/m³ fisso, nessun arrotondamento intermedio", () => {
+  it("35 W/m³ predefinito, nessun arrotondamento intermedio", () => {
     expect(calculateThermal(20, 2.7)).toEqual({
       volumeM3: 54,
       designLoadW: 1890,

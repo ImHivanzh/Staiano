@@ -27,13 +27,8 @@ import "./inspector.css";
 import { LengthInput } from "../LengthInput";
 import { CeilingDesign } from "./CeilingDesign";
 import { RoomConditioning } from "./RoomConditioning";
-import {
-  roomRectSides,
-} from "@/domain/geometry/dimensions";
-import {
-  wallRun,
-  wallRunMeasuredLength,
-} from "@/domain/geometry/wall-runs";
+import { roomRectSides } from "@/domain/geometry/dimensions";
+import { wallRun, wallRunMeasuredLength } from "@/domain/geometry/wall-runs";
 import {
   setWallEndpoints,
   splitWall,
@@ -443,12 +438,11 @@ export function Properties() {
               </div>
             </dl>
             <p className="formula">
-              {formatNumber(r.netAreaM2)} m² × {formatNumber(r.heightM)} m<br />
-              = {formatNumber(r.volumeM3)} m³
+              Volume netto: {formatNumber(r.volumeM3)} m³
               <br />
               {r.conditioningExclusion
                 ? `Escluso dalla climatizzazione: ${r.conditioningExclusion.reason}. Carico da dimensionare: 0 W.`
-                : `× 35 W/m³ = ${formatNumber(r.designLoadW)} W`}
+                : `× ${formatNumber(p.projectSettings.coefficientWm3)} W/m³ = ${formatNumber(r.designLoadW)} W`}
             </p>
             <p className="nota">
               Stima convenzionale. Verifica tecnica necessaria prima

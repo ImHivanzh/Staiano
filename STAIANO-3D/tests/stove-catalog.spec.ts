@@ -22,6 +22,10 @@ test("catalogo stufe: marchio, tecnologia, modello, foto e finiture ufficiali", 
   });
   await expect(photo).toBeVisible();
   await expect(photo).toHaveJSProperty("naturalWidth", 440);
+  await expect(catalog.getByRole("region", { name: "Dati tecnici verificati" })).toBeVisible();
+  await expect(catalog.getByText("Ingombro nominale (L × H × P)", { exact: true })).toBeVisible();
+  await expect(catalog.getByText("530 × 1050 × 570 mm", { exact: true })).toBeVisible();
+  await expect(catalog.getByText("Potenza nominale", { exact: true })).toBeVisible();
   const finishes = catalog.getByRole("group", {
     name: "Finitura del produttore",
     exact: true,

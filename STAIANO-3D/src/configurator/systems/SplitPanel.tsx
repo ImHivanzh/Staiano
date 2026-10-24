@@ -41,10 +41,11 @@ export function SplitPanel({
     ),
     { commit } = useProjectStore();
   const [manufacturer, setManufacturer] = useState(
-      existing?.manufacturer ?? lastAvailableManufacturer(
-        project.hvacSystems.map((system) => system.manufacturer),
-        ["Daikin", "Mitsubishi Electric", "Gree"],
-      ),
+      existing?.manufacturer ??
+        lastAvailableManufacturer(
+          project.hvacSystems.map((system) => system.manufacturer),
+          ["Daikin", "Mitsubishi Electric", "Gree"],
+        ),
     ),
     [roomIds, setRoomIds] = useState(
       existing?.roomIds ??
@@ -308,7 +309,8 @@ export function SplitPanel({
                 di installazione da verificare nel manuale del modello.
               </p>
               <p className="nota">
-                Richiesta stanza = superficie netta × altezza ×35 W/m³. Le
+                Richiesta stanza = volume netto ×{" "}
+                {formatNumber(project.projectSettings.coefficientWm3)} W/m³. Le
                 capacità per stanza sono quelle simultanee della combinazione
                 ufficiale: ogni unità deve soddisfare separatamente
                 raffrescamento e riscaldamento.

@@ -47,14 +47,15 @@ describe("formato e archivio", () => {
     p.walls[0].floorId = "missing";
     expect(() => parseProject(p)).toThrow(/Piano/);
   });
-  it("rifiuta negativi, duplicati, coefficiente alterato", () => {
+  it("rifiuta negativi, duplicati e coefficienti termici non validi", () => {
     const p = fixture();
-    expect(() =>
-      parseProject({
-        ...p,
-        projectSettings: { ...p.projectSettings, coefficientWm3: 40 },
-      }),
-    ).toThrow();
+    for (const coefficientWm3 of [0, -1, NaN, Infinity])
+      expect(() =>
+        parseProject({
+          ...p,
+          projectSettings: { ...p.projectSettings, coefficientWm3 },
+        }),
+      ).toThrow();
     expect(() =>
       parseProject({ ...p, walls: [...p.walls, p.walls[0]] }),
     ).toThrow(/duplicati/);
@@ -64,6 +65,29 @@ describe("formato e archivio", () => {
         walls: p.walls.map((w) => ({ ...w, thickness: -1 })),
       }),
     ).toThrow();
+  });
+  it("conserva il coefficiente scelto nel salvataggio e mantiene 35 nei progetti v7", () => {
+    const project = fixture();
+    const old = { ...project, schemaVersion: 7 };
+    const restored = parseProject(old);
+    expect(restored.projectSettings.coefficientWm3).toBe(35);
+    expect(restored.walls).toEqual(project.walls);
+    expect(restored.rooms).toEqual(project.rooms);
+    const custom = decodeProject(
+      encodeProject({
+        ...project,
+        projectSettings: { ...project.projectSettings, coefficientWm3: 42.75 },
+      }),
+    );
+    expect(custom.projectSettings.coefficientWm3).toBe(42.75);
+    expect(custom.rooms[0].designLoadW).toBe(custom.rooms[0].volumeM3 * 42.75);
+    expect(decodeProject(encodeProject(custom))).toEqual(custom);
+    const { coefficientWm3: omitted, ...settings } = project.projectSettings;
+    expect(omitted).toBe(35);
+    expect(
+      parseProject({ ...old, projectSettings: settings }).projectSettings
+        .coefficientWm3,
+    ).toBe(35);
   });
   it("migra v0 senza cambiare geometria", () => {
     const p = fixture();

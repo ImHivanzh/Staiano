@@ -77,6 +77,7 @@ import {
 import { applyPlanImport } from "@/domain/geometry/import-plan";
 import type { ImportedPlan } from "@/services/import/plan-types";
 import { formatNumber, numberFromForm } from "@/utils/format";
+import { THERMAL_COEFFICIENT_W_M3 } from "@/domain/thermal/calculate";
 import { Editor2D } from "./editor2d/Editor2D";
 import { GraphicalDuctedConfigurator } from "./systems/GraphicalDuctedConfigurator";
 import { Properties, selectionWithProperties } from "./properties/Properties";
@@ -158,7 +159,10 @@ export function Configurator() {
   const [checkRoom, setCheckRoom] = useState("");
   const [rectangleOpen, setRectangleOpen] = useState(false),
     [ready, setReady] = useState(false),
-    [newDialog, setNewDialog] = useState(false);
+    [newDialog, setNewDialog] = useState<false | "choose" | "guided">(false);
+  const [newCoefficient, setNewCoefficient] = useState(
+    String(THERMAL_COEFFICIENT_W_M3),
+  );
   const [pdfBusy, setPdfBusy] = useState(false);
   const [skpBusy, setSkpBusy] = useState(false);
   const [sheetsBusy, setSheetsBusy] = useState(false);
@@ -500,7 +504,7 @@ export function Configurator() {
   ) {
     try {
       await flushSave();
-      const next = createProject(name);
+      const next = createProject(name, numberFromForm(newCoefficient));
       if (mode === "guided")
         next.floors[0].configurationWizard = {
           step: 0,
@@ -542,7 +546,7 @@ export function Configurator() {
       return;
     }
     if (!p) {
-      await newProject("guided");
+      setNewDialog("guided");
     } else {
       s.commit((project) => ({
         ...project,
@@ -1195,7 +1199,7 @@ export function Configurator() {
               className="bottone nuovo-progetto"
               aria-label="Nuovo"
               title="Nuovo progetto"
-              onClick={() => setNewDialog(true)}
+              onClick={() => setNewDialog("choose")}
             >
               <Plus />
               Nuovo
@@ -1440,6 +1444,25 @@ export function Configurator() {
               Costruisci la planimetria, definisci gli ambienti e verifica il
               fabbisogno. I progetti restano locali finché non li condividi.
             </p>
+            <label className="campo" style={{ maxWidth: "24rem" }}>
+              <span id="start-coefficient-label">
+                Coefficiente termico (W/m³)
+              </span>
+              <input
+                type="number"
+                min="0"
+                step="any"
+                required
+                value={newCoefficient}
+                onChange={(event) => setNewCoefficient(event.target.value)}
+                aria-describedby="start-coefficient-help"
+                aria-labelledby="start-coefficient-label"
+              />
+              <small id="start-coefficient-help">
+                Fabbisogno = volume netto × coefficiente. Usato per tutti gli
+                ambienti.
+              </small>
+            </label>
             <div className="scelte-inizio">
               <button
                 className="inizio-manuale"
@@ -1491,7 +1514,7 @@ export function Configurator() {
               <h2>Progetti sul dispositivo</h2>
               <button
                 className="bottone chiara"
-                onClick={() => setNewDialog(true)}
+                onClick={() => setNewDialog("choose")}
               >
                 <Plus />
                 Nuovo progetto
@@ -2343,11 +2366,13 @@ export function Configurator() {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
                 const mode =
-                  (e.nativeEvent as SubmitEvent).submitter?.getAttribute(
-                    "value",
-                  ) === "import"
-                    ? "import"
-                    : "manual";
+                  newDialog === "guided"
+                    ? "guided"
+                    : (e.nativeEvent as SubmitEvent).submitter?.getAttribute(
+                          "value",
+                        ) === "import"
+                      ? "import"
+                      : "manual";
                 void newProject(mode, String(data.get("name")));
               }}
             >
@@ -2361,13 +2386,48 @@ export function Configurator() {
                   autoFocus
                 />
               </label>
+              <label className="campo">
+                <span id="new-coefficient-label">
+                  Coefficiente termico (W/m³)
+                </span>
+                <input
+                  type="number"
+                  min="0"
+                  step="any"
+                  required
+                  value={newCoefficient}
+                  onChange={(event) => setNewCoefficient(event.target.value)}
+                  aria-describedby="new-coefficient-help"
+                  aria-labelledby="new-coefficient-label"
+                />
+                <small id="new-coefficient-help">
+                  Fabbisogno = volume netto × coefficiente. Modificabile nelle
+                  impostazioni del progetto.
+                </small>
+              </label>
               <div className="azioni">
-                <button className="bottone pieno" type="submit" value="manual">
-                  Disegna manualmente
-                </button>
-                <button className="bottone" type="submit" value="import">
-                  Importa planimetria
-                </button>
+                {newDialog === "guided" ? (
+                  <button
+                    className="bottone pieno"
+                    type="submit"
+                    value="guided"
+                  >
+                    Avvia procedura guidata
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      className="bottone pieno"
+                      type="submit"
+                      value="manual"
+                    >
+                      Disegna manualmente
+                    </button>
+                    <button className="bottone" type="submit" value="import">
+                      Importa planimetria
+                    </button>
+                  </>
+                )}
               </div>
             </form>
           </section>

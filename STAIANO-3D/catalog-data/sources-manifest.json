@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-23T13:25:39.461Z",
+  "generatedAt": "2026-10-24T13:48:06.113Z",
   "documents": [
     {
       "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
@@ -2013,6 +2013,684 @@
       "page": null
     },
     {
+      "sha256": "00a14489e298a3ad66f0b4d3e60b078744fdd7ad8a1e5f31974e7ec7de0f80b5",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/aurelia-eos-petra",
+      "page": null
+    },
+    {
+      "sha256": "01552c70dbadc1066dae22bf1c8847f32ff1bf2bbb572e4dcbef7a472de32466",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/liu-16-petra",
+      "page": null
+    },
+    {
+      "sha256": "03b4360a2b98e6e52f3391e8cdbc91533c164be0e6fcc069a1e2ecfd5cb2949e",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/amika-petra-ad",
+      "page": null
+    },
+    {
+      "sha256": "04a25acd0ff37234c039959d2e6470556005fde8d678bb56be3ed14d3ffec9be",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorosa-dsa16-ceramica",
+      "page": null
+    },
+    {
+      "sha256": "08ca878f6e523054201941b619e59add4f198ddbaaab3c07ab69af466eadca5c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sharon-plus-petra",
+      "page": null
+    },
+    {
+      "sha256": "09d52898c30b0a9b479dbb42eede46fdca5085ffb6d2b2ced7b0ad9718cbc065",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/angelica-junior",
+      "page": null
+    },
+    {
+      "sha256": "0b3a51432966b08304ff198a6afe2f93889b0c3058f148e87417bb2ce2a35361",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/annalisa-plus-crystal-evo",
+      "page": null
+    },
+    {
+      "sha256": "0bfad1c0b1cc405ce21c8108defbacd35ff8403d0c9faa1c221d3f1b1351e8be",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/aurelia-eos-ceramica",
+      "page": null
+    },
+    {
+      "sha256": "0c1fe3e2a085e16dee648e5c15488e3b97cd0256fc480f97693418628bc62d06",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/miriana-idro-h23",
+      "page": null
+    },
+    {
+      "sha256": "12f32ed04cb9b7e2aed03e7f5900335ef17ae383e557936d813ff3335fe558aa",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/super-junior-lean",
+      "page": null
+    },
+    {
+      "sha256": "1418146fceaece0f67c409e82cdbe2c4302d5a8457d138fade84ad34987ff0c8",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/floriana-idro-gres",
+      "page": null
+    },
+    {
+      "sha256": "181f1d53c663f4d1cdf500334ff4cbfcfc6423258a0ceefd0def4b17c93b80b2",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/brigitta16",
+      "page": null
+    },
+    {
+      "sha256": "1969ae4695d4c6477ed1e4174097842ddc3ba0b65591deb6080bf7a61066da5b",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/isidora-idro-h23-50-evo",
+      "page": null
+    },
+    {
+      "sha256": "1c1ffef6c27e7b83396756f575b9465f2c62017fcd31acdb2f2758265a1785b4",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-lux-evo",
+      "page": null
+    },
+    {
+      "sha256": "1d3d6c2addbfb0b142f855de82e7bb69107e5431af56783bd8ca13b12a32d08b",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/ester-forno-50",
+      "page": null
+    },
+    {
+      "sha256": "1eda673dc602f30ee402e9b4cda78df1667b74f030c66214eda20ffb00a2ab90",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-plus-forno165-petra",
+      "page": null
+    },
+    {
+      "sha256": "215dd517d8eef501e8af24e47bbb3f16d757ef8254fd604fa1185d7f66f379b5",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sharon-plus-steel",
+      "page": null
+    },
+    {
+      "sha256": "24541a445ff7f6429842d1ebcae5ee05c1c21a202c1ad1425dfe879dc675d2ec",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/daniela",
+      "page": null
+    },
+    {
+      "sha256": "2583b4749ec06e9e0880237ad49ec8579cc00a56363cbe38e968a404d94438ab",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/guenda-idro-evo",
+      "page": null
+    },
+    {
+      "sha256": "282bcaf91e07f4b3d29efe8093e34cdb2dd7507bcff64d1b478c3e86d72d15a2",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-plus-evo",
+      "page": null
+    },
+    {
+      "sha256": "2ae9c8202c9b83967133eee459a58e5e66d593c861a0de35fbfd2bb6cd45a16a",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/klaudia-ad-evo",
+      "page": null
+    },
+    {
+      "sha256": "2ba0fd9253ace18a741263b6b647dff891aed8364d62579965c0cc3a43801c08",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sharon-plus-crystal",
+      "page": null
+    },
+    {
+      "sha256": "2cabe6e3a52c8db7e8ba5b14a8aaff2b788c0eaeb4fe0b3d5c45d2e4729d6a55",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/costanza-idro-50",
+      "page": null
+    },
+    {
+      "sha256": "2e34838b327cc4f86eb23103c620352f80ae006e05e8f111a401c3382567d7e4",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/annalisa-plus-gres-evo",
+      "page": null
+    },
+    {
+      "sha256": "31f6ddff91be8fb56800b37b07cee2c045df4738e7135831d32be3e688d0f1f0",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isetta-forno",
+      "page": null
+    },
+    {
+      "sha256": "3420c16e09d96c8039a8df45a0d7bdd61abf65d57bb6c26eb3fcf33b9b8fe24f",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/candy-eos165",
+      "page": null
+    },
+    {
+      "sha256": "34da8110f3dca6ad9d9e91fcbad9b8648a8d2fec124e8afdd292264a9eddc016",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/raffaella-idro-h15-5016",
+      "page": null
+    },
+    {
+      "sha256": "3573cab62c84a9721632acb92aea186f40b72bfd81c24823907ef0814cc815aa",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://storage.onpage.it/ffa738277b3d7a8e068742bad97292ac20221fc6/004305002-000%20CEMI%20ISETTA%20CC.165%5BL271%5D.pdf",
+      "page": 1
+    },
+    {
+      "sha256": "363a8ec45a00fe2f8994c49043d9d84d38439b8f6b6d98791e39669865db6f8e",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/trossplus-forno-dsa16-ceram",
+      "page": null
+    },
+    {
+      "sha256": "367077aa45404280eb12f00ff71f2c763bfe654da5010f61eae2d6ad095b2fea",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma-forno165-petra",
+      "page": null
+    },
+    {
+      "sha256": "38ddcc379d75c611c1f56ebb96c0d467e0a7e3e734233895293c781b651b745b",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isotta-forno-eos",
+      "page": null
+    },
+    {
+      "sha256": "3a5ad7020804d55a00520ca3c1cbe7e96e15544707b7e527ea936a56fd4e7946",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/jennifer16-eps",
+      "page": null
+    },
+    {
+      "sha256": "3b708055d377c650a9ff77a9c3537d28a8677ee4d52cfa71ed39be28b84c6e10",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marilena-plus-crystal-50-ad",
+      "page": null
+    },
+    {
+      "sha256": "3b82c8c4168ed8001f958ae22c7a64abbca5c14e47b39a3624f503e9e91d57ff",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma-forno165-ceramica",
+      "page": null
+    },
+    {
+      "sha256": "3e94c6d6e82ba498fe33b39767569accecd942257ba9cd7ddd3ba818e04e6e27",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/evelyne-idro-evo",
+      "page": null
+    },
+    {
+      "sha256": "433d313adde81dfc0343f7076fa29cb9915566ea5d073a553d1b927994295e84",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isetta165",
+      "page": null
+    },
+    {
+      "sha256": "439e1ef2e7c6dc7ebf52a7c9b3d160a3df97cf57bc6e0ad0f343cfa03039ed68",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/fedora16-steel",
+      "page": null
+    },
+    {
+      "sha256": "47c92cb85a6c003760927cfec0a97b84e943423ecc79ca69880f25c76a1d3703",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/marlena16",
+      "page": null
+    },
+    {
+      "sha256": "49182e4311521dc54c735e9668de8ae86000e1446dd7c602e6299d573012df51",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marina-idro-h13",
+      "page": null
+    },
+    {
+      "sha256": "499c0a8c9f8f8f6a958cc34ba7bdae22d1b1cabe0a07d00ec6ecfcad2de8107c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/giulietta165",
+      "page": null
+    },
+    {
+      "sha256": "4e77903315034c80c14d03f6f7456e5f296b392274e3e9210acc809e5dd94b4d",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/debby-petra-evo",
+      "page": null
+    },
+    {
+      "sha256": "502c2add1aa30ecad21f01284c17ad54db0c7a3a605e32d979a4b6d4a67a5f81",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/miriana-idro-h20",
+      "page": null
+    },
+    {
+      "sha256": "54ccb0622a0e101d24a792f6fa9a4d24236b71eeb6bf9d00900be40601a7f672",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/nova-forno16-steel",
+      "page": null
+    },
+    {
+      "sha256": "5abd306b5262803aea79403fd881dd98656a0ce67e8683eb6dc38f2fec9f4f86",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/mariella-plus-ad",
+      "page": null
+    },
+    {
+      "sha256": "5d920d8a97a6d5e46612bba49e3c8bd62633336cdf4cedcab1da634c84fc43c7",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/miriana-idro-h16",
+      "page": null
+    },
+    {
+      "sha256": "5fa732b769fd6d9bfd9e52ed0ce543f574a7584682ef16e7eaab4adeebecde8e",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-evo",
+      "page": null
+    },
+    {
+      "sha256": "5fc2252e91a695acc9881ad6ce54136b5986825d343e94052db7ad312f6b996c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-r116-petra",
+      "page": null
+    },
+    {
+      "sha256": "6065fa6af6f572524678e7a16e34c8723a6349aeeb3ed84ba3feff9fed35737f",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/angelica-plus-evo",
+      "page": null
+    },
+    {
+      "sha256": "6184c177c019b22c96bb88fbe989fc84ce6193c94b1a96affaf15ff5266926bf",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/virna-idro16",
+      "page": null
+    },
+    {
+      "sha256": "632f23e0c8dc631a42f6b061e4890ebc8e7b1c58b3632df5b3b071b2676809c4",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/dante16-con-portalegna",
+      "page": null
+    },
+    {
+      "sha256": "6439b988dffd6cd43d968704e6626cbc6454c9e26bf3b5c58354bd5db4da8c40",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/peggy",
+      "page": null
+    },
+    {
+      "sha256": "674233375b94223bbca68e1175177b42662a6f60d1136bd9c85daed34f5ab6db",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/souvenir-plus-steel-50",
+      "page": null
+    },
+    {
+      "sha256": "680203f0b513a6f2698b3baedd2b5269d467e91b758dbeaceb121a7c30763304",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marilena-plus-50-ad",
+      "page": null
+    },
+    {
+      "sha256": "68df4173e523e1b3799d04a0275d9e4501fb31f1580c30bae530c3bb07f292e3",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/liu-16-maiolica",
+      "page": null
+    },
+    {
+      "sha256": "6aad5c43963b05c25fb2d3379ba91e3273562eeade5a86d6a1bf55295bf19329",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/luisella-50-maxi",
+      "page": null
+    },
+    {
+      "sha256": "6c544372bb5f9071514e72c530693fb320b438c65b25d292366a22e33b867c0a",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/iside-idro-5016",
+      "page": null
+    },
+    {
+      "sha256": "6c63c2a7731d8dbc27fa588e7b45e56da344c5085d7c17f9a233131e82bad029",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isotta-eos165",
+      "page": null
+    },
+    {
+      "sha256": "6e24e6c8faa4c2c0f74ad38e563dd5dd6fe018dc7427246d1a7733b4db42dda8",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isotta-cc-eos165",
+      "page": null
+    },
+    {
+      "sha256": "77dac66e9f5fbc5c5fc23d67e91adafd2cea8c77b6dc6d4957b900c6b16985a9",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/terry-plus",
+      "page": null
+    },
+    {
+      "sha256": "7d60b5b70dfd398b945508c752d83694942a501dc57403a616a55f89ae7e07b2",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/mariella-ad",
+      "page": null
+    },
+    {
+      "sha256": "7dc679403a07a2dd95a7a49cf74a5ebaf28977f704e841a52b3fae47b4fefd40",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/annabella-plus-50",
+      "page": null
+    },
+    {
+      "sha256": "7fd61b31829ac2b3640cec64e06a36f4b0c7c7854f640d98c5f987c040416ecb",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/emiliana165-steel",
+      "page": null
+    },
+    {
+      "sha256": "7ff7ca5261e32942ac70a15289b21f3eabb4a4c39949ef8bf4988b95f55dd854",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorossella-plus-dsa16-petr",
+      "page": null
+    },
+    {
+      "sha256": "82576e071401d3935be40a0bef727a95b77ed7809af60615c466e671aa158bdd",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/teorema-plus-ad",
+      "page": null
+    },
+    {
+      "sha256": "87fc5907e22488cb7a506d7091fceff8f8c442b6cda33e5dcb7d93fa7b70716c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/nova-forno16-maiolica",
+      "page": null
+    },
+    {
+      "sha256": "8a383c747ef35f0ac32b9aaf718a162b9c9025fea50ab8d044febfa71f28fed9",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-plforno165-ceramica",
+      "page": null
+    },
+    {
+      "sha256": "8b5c790fbb0e3ee800fc59cd0f837155c6a8dddd6592e08e14e8229a56c582c9",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/asia-50",
+      "page": null
+    },
+    {
+      "sha256": "8b5f3d207048dbce72e84f70223c60f721234f199b300c8719194ba230dd54d5",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/aurelia-eos-steel",
+      "page": null
+    },
+    {
+      "sha256": "8fcb723abc4aa823c6844a53a05cec3a1562adbf447b615049824cb043e1d6b1",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/souvenir-plus-petra-50",
+      "page": null
+    },
+    {
+      "sha256": "914ec907102314253cb9530033afb29dad798dc529ff005214cd199375abbc72",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/klaudia-plus-ad-evo",
+      "page": null
+    },
+    {
+      "sha256": "94c0e614001b4739e195aa191eb93d7b10984c0c54c9ef639cd2ec55f4f06243",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/amika-ad",
+      "page": null
+    },
+    {
+      "sha256": "9581b8aaa8a235a35fb2235633c88618eeac9bf33d3d6e819c7b99286ebce1f4",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/concita16-maiolica",
+      "page": null
+    },
+    {
+      "sha256": "97278fc5ad8fc0c49d887dc9cd18de6638e4362daa705e86a283b7b9b87a4cdd",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/sierra16",
+      "page": null
+    },
+    {
+      "sha256": "9793c5e316896d10477d75eb4ca230cc80d07c7760aad6a594f30ff418beb6f4",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/sabry-ad",
+      "page": null
+    },
+    {
+      "sha256": "9a23c781e5b8513bd81f5c7fa31258ba5f2963a8e07a370005eb9e77a53315ca",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/floriana-idro-crystal",
+      "page": null
+    },
+    {
+      "sha256": "9ad4da1b21d612b6be79c2a02ac7fcde159f1297d3d1a3045eca96175a33c6f5",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/raffaella-idro-h18-5016",
+      "page": null
+    },
+    {
+      "sha256": "9b08af5b0629e5e3286080850de08cb01bbccd898d6c191c7099db8cde7c27e8",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorossella-plus-dsa16-cera",
+      "page": null
+    },
+    {
+      "sha256": "9c86343d60dc78c89055afe74207fd6702a01cdecaf156972a4d86a0c0515f44",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/rosanna-idro-50",
+      "page": null
+    },
+    {
+      "sha256": "9d1ba3f6d0cb5b14917058cde82b492c1fabbb61a11500328e40a08af89b4953",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/dahiana-plus-ad",
+      "page": null
+    },
+    {
+      "sha256": "9f8fc19b52cec9ba557a62630d4ab3204d2e2947bab8efd4a5ac431dc40c87e3",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma16-petra",
+      "page": null
+    },
+    {
+      "sha256": "a38e630ba65fbe91b7527d0c6c69547b32a909447ee937e13b7d1e0e1ac2ec30",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/dahiana-ad",
+      "page": null
+    },
+    {
+      "sha256": "a476a5e8a7c7076943684cf3ccb6bda4e33357c29a06c4bc482cc0c6719eed26",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/ketty-50",
+      "page": null
+    },
+    {
+      "sha256": "a711b6d10aebbce98c4032d76d9b29d99ad3888a09a416bd7755fd67d6788c9c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/katia-11-50-evo",
+      "page": null
+    },
+    {
+      "sha256": "a7cab185d9cd30406162ad41219ba4b4f41305dd6bbccfe219f6b6071e1514a0",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marilena-plus-petra-50-ad",
+      "page": null
+    },
+    {
+      "sha256": "a93463b87735010c3c7fddf49777b025384d0c9d6d055bfefaff7b3a22339f6c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/teodora-evo",
+      "page": null
+    },
+    {
+      "sha256": "a944112ff8ae5459b85f769602ae54bcffb60d276c3ee13f27a7820574655759",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/tea16",
+      "page": null
+    },
+    {
+      "sha256": "a9b8e4f557328cb62934aea0e4e7172bf57c6e64b679df6e656c20dae2b4434f",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/lucia-plus16",
+      "page": null
+    },
+    {
+      "sha256": "b117405d145a981e05b0edb2949d01720158a618efa3e0e8750c23cacbf54862",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/teorema-ad",
+      "page": null
+    },
+    {
+      "sha256": "b1c7acbf1f1a99112c42c2b5011ccce5163acb12d2bbb509d1778f0247da7f6e",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/larissa16",
+      "page": null
+    },
+    {
+      "sha256": "bc73a0bd00cacc876d44ce3535c76c857a5c88ab105a88b8537b7984283c8751",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/angelica-evo",
+      "page": null
+    },
+    {
+      "sha256": "bd200a0bb1bf1ccf7607223d0be345c0ab6d4d0e2ad1af297bad943f0a0c7198",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/lavinia-eos",
+      "page": null
+    },
+    {
+      "sha256": "be3d759c5771abd519cfa15670cb30fa6c376e5b6c9063f5b6fcb37a8646499d",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/dante16",
+      "page": null
+    },
+    {
+      "sha256": "bf4b494b1f974783f7d42c06a492bd3a208dbdf14c1289faf6dc29a408200408",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/fedora16-maiolica",
+      "page": null
+    },
+    {
+      "sha256": "c078fa601a4dfc3554cc6fa8b8aefdbd23331c353fc3d6674cdeea21fa5690cd",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/ester-50",
+      "page": null
+    },
+    {
+      "sha256": "c1ca6ca26af1d93039c5f4ac79745d82f6d32dbd99a3ee7847a48c8c25307360",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/luisella-50",
+      "page": null
+    },
+    {
+      "sha256": "c53cc215535a72e55b6e9649cbb34fc995411b7ed983cf6d2d2e503b49ec13b3",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/noris-plus-lux-evo",
+      "page": null
+    },
+    {
+      "sha256": "c80edbe2be8884a64a4337fda21f7fa9c445d7e8f967d755161a70faa1295863",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/isetta-cc165",
+      "page": null
+    },
+    {
+      "sha256": "c8c7968bb8ecca5f3b7e6e1eb8a5a06bc484102918d3bdeb09994003ed05648c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/trossplus-forno-dsa16-petra",
+      "page": null
+    },
+    {
+      "sha256": "c92a07b30ba72aaa44430a46cf8de2fab8684bfdfa638f7c22f06f7ab2bf43ea",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/api/articles/116945672",
+      "page": null
+    },
+    {
+      "sha256": "cc5047a9091e02f8d078e8c755cb309ce2a0245e5bc0856f3b02a6ea7b20aeed",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/marina-idro-h11",
+      "page": null
+    },
+    {
+      "sha256": "cd83125edcc6065ddb03012352e172b0b9503f31cd91466ec360381863b82ef9",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/lucia16",
+      "page": null
+    },
+    {
+      "sha256": "cfc9b1f5a666c7cd72fc023e65048cf299e9fb65562f44705ff6aa508a430b27",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/souvenir-plus-lux-50",
+      "page": null
+    },
+    {
+      "sha256": "d74ec9496a7a10debefd45e4c6fa5bfa1728ec80258ccf9432dfbf5815153e43",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/daniela-plus",
+      "page": null
+    },
+    {
+      "sha256": "d7b0b626c303271eb23df28ceb233a370ca4d24a22f673eaa50efb28aab398fa",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/gemma16-ceramica",
+      "page": null
+    },
+    {
+      "sha256": "d7d6667394d2782e41f64ae76c5a133faf09884e87634ea282813ee5f278b71f",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/concita16-steel",
+      "page": null
+    },
+    {
+      "sha256": "e122237937cc76a2d529ce8ff2c77cdc140c0a87f7d7c354d481c9f6b3a4be7c",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/debby-evo",
+      "page": null
+    },
+    {
+      "sha256": "e930fd4d135220437f1bf518a43f773cadafc9b3f641a547b8938469108694fa",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/katia-9-50-evo",
+      "page": null
+    },
+    {
+      "sha256": "f1fdc854836be25f9beefd7ea8c7f43872a523ca4d34bd1a0d19751602ac42a6",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/emiliana165-maiolica",
+      "page": null
+    },
+    {
+      "sha256": "f4d807e65203c3c680377fbf6fbc58eabaf842bf2550478bd8e1aba230fb5119",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/isidora-idro-h20-50-evo",
+      "page": null
+    },
+    {
+      "sha256": "f5f519e4ec280817ac67f616994037f370a42d64622a7d0498ec1b342dd785c0",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/rossella-r116-ceramica",
+      "page": null
+    },
+    {
+      "sha256": "f6da1b08737405afdd51238e5d90669dd06f1156b7ec448a5fad4aa4e320d857",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/emi-eos",
+      "page": null
+    },
+    {
+      "sha256": "f86c389a3ecb959cde74790dd96d4c277eb7c927e6fab3eddf530d0b1326b7eb",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/legna/stufe-legna/termorosa-dsa16-petra",
+      "page": null
+    },
+    {
+      "sha256": "fd835d0cd3de989b6e8d9e3f4e36aaaa41a1c967c214bcceb3158556066a6e96",
+      "manufacturer": "La Nordica Extraflame",
+      "sourceUrl": "https://www.lanordica-extraflame.com/it/pellet/stufe-pellet/isidora-idro-h16-50-evo",
+      "page": null
+    },
+    {
       "sha256": "76a85816d814783a04ffc8a0fcf8872f42434939329d8ac60095a8cc55056647",
       "manufacturer": "Lazzarini",
       "sourceUrl": "https://docga.plateforme-services.com/api/download/variant_documents_8101ed7b-720e-4de1-b70c-f82628f27d21/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ",
@@ -2071,6 +2749,360 @@
       "manufacturer": "Olimpia Splendid",
       "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
       "page": 20
+    },
+    {
+      "sha256": "0324fa37650d65e4f10bec5e39011de14a41e39b56811210cc2aa2b206769bc4",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-160-touch-steel/",
+      "page": null
+    },
+    {
+      "sha256": "03ab01b41c72a3e6b69620b6792983f5ea086be02307a21b17e3256ae73918a4",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/aria/",
+      "page": null
+    },
+    {
+      "sha256": "04d0a706f023f2a5427cdcb2ef7ec87528f14504341bb7f9683121f04f44f712",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hoop-7/",
+      "page": null
+    },
+    {
+      "sha256": "090cc13d8fbce2f7e2f0c49f23d1199a39f8d49f8671baf49b344bea75635598",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/rc-120-touch-steel/",
+      "page": null
+    },
+    {
+      "sha256": "092bfcdcea2fc85a8938c451f0f635a3ed91c61e8704e8fbff61983e4c892439",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/flexi-9/",
+      "page": null
+    },
+    {
+      "sha256": "10e704d11f1be74100ed925609a2e848fe31423006aceb5c21f3ce67d7664bbd",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-140-touch/",
+      "page": null
+    },
+    {
+      "sha256": "135d297408afe43db1b2d2d180d84dde50d6173608d0ba9d82232f429a408927",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/s70/",
+      "page": null
+    },
+    {
+      "sha256": "1b17d7358aa95e20424757648a56cf9d31deaf8f20568ac1908408627f2a0e2e",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-160-design/",
+      "page": null
+    },
+    {
+      "sha256": "1b48807eddabd16f2d816493fc71dd8b8cf6d18d4e37f9a7fdb3f88dc1bea556",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/olivia-steel/",
+      "page": null
+    },
+    {
+      "sha256": "1c3df719c3a0af103c938cc49ff0f6ac4bb6f5358fcb976b0db30c858d85914f",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/efesto/",
+      "page": null
+    },
+    {
+      "sha256": "28eec652f297f8c9a0a844fa15ed1f509a88d68728fedaf5744cad985db5872a",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-140-globe/",
+      "page": null
+    },
+    {
+      "sha256": "32269bb94a2ca52b6ccf9200e374ef836a0d583476e3cf8e1ea2c2bfe7f58728",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv80/",
+      "page": null
+    },
+    {
+      "sha256": "32fb96c9ae59e70ab0faec89128cd4eb38eca7994690a40ce4da5f031db30224",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/alfa-s/",
+      "page": null
+    },
+    {
+      "sha256": "3326c6542dd2f9e5f9ef497484b8420abda38e5665033ae6a185bfe5540ddac3",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/sc-90/",
+      "page": null
+    },
+    {
+      "sha256": "3a730b2e101303a6478e33672516cda4bc8eab71f13adca8121ea1ded01e02bb",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/thor/",
+      "page": null
+    },
+    {
+      "sha256": "3c4e794220c1655e6366b8ecdbe89f5e36b6b825e53e5419f06818fafe2bec3f",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/vittoria-v/",
+      "page": null
+    },
+    {
+      "sha256": "3d0e45588cc505f7190081cc98f46683ab1dc4da13b7fa18c5c9675e4cbbb51c",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-120-style/",
+      "page": null
+    },
+    {
+      "sha256": "3eca6749fd61b1ecc657fcb070a974464acc2ea3360710044f63c8dbdc78db91",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-100-touch/",
+      "page": null
+    },
+    {
+      "sha256": "4198d9ba5255fa85a12ba2222e581add0b460d06cbd60266c0a17398539e58dc",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/s90/",
+      "page": null
+    },
+    {
+      "sha256": "41b37255229eb000707fb98ce50cc9542b72677d8c7f605e6f755376d7521f7c",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/luna/",
+      "page": null
+    },
+    {
+      "sha256": "4f8f453bc190f4306078caf92d11e6d2827394f831fd753a9e55f157305abe77",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-7/",
+      "page": null
+    },
+    {
+      "sha256": "54e9e802a7da11f9de1b8815a9488616442b10dc3380ce6149cf456a8e2d542d",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/dafne/",
+      "page": null
+    },
+    {
+      "sha256": "577770bf8d6f960fce8fb5c6a5cc500a9ead16f998c31715cff2202f028debc2",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/sphere-v/",
+      "page": null
+    },
+    {
+      "sha256": "5903c4259447677c4b1795260bc14f868e52faf1ffc2ee4692ecf65697348fd3",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv-110/",
+      "page": null
+    },
+    {
+      "sha256": "5f18776296a738be92b12405601727545ce2ff98b20ddc9d604b1a21d9d55017",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/dual-7/",
+      "page": null
+    },
+    {
+      "sha256": "6b5883523f8a64abc1b2cdafdee0094d1bc13b5b54b1755b11df2f6fb9197264",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/sphere-c/",
+      "page": null
+    },
+    {
+      "sha256": "72cfce4458c0f97f17b1edae96f9a311e8cde24df6589390544a3e59f47b358f",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/dafne-view/",
+      "page": null
+    },
+    {
+      "sha256": "74c5c60ab8eaafd21704df4559d02e310be79ebf70aa15760a6bebea747511e3",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/mild/",
+      "page": null
+    },
+    {
+      "sha256": "7f84e5bfbaa9765ebe8a3b57b9960826181208450220f93477edcb7aa198d090",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/r-70/",
+      "page": null
+    },
+    {
+      "sha256": "85765c63a8b776a0b9ad7d5dc4768093c77a65cfd097e7106453b2d4ef296cdf",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/vittoria-c/",
+      "page": null
+    },
+    {
+      "sha256": "8a1db9171eef5cab61e549d13c76e97a4816dc670e1374f44f3bcb86a116a8c1",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/flexi-7/",
+      "page": null
+    },
+    {
+      "sha256": "8befb236d07b08134300d82cad9b99439abf04aae7bef0d9478da390590483a7",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-250/",
+      "page": null
+    },
+    {
+      "sha256": "942498dbb3b9885dd3052769b560b9da8ea9c18bb8edf4c9e7e35a922e4eed19",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/minerva/",
+      "page": null
+    },
+    {
+      "sha256": "969db2deb3a5211f53d0c9702ef8b938bb51f504ec7bab5ab7fc81294abe2458",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/dual-9/",
+      "page": null
+    },
+    {
+      "sha256": "96ab7a233c3de432b7707bd28f247478b62e7be4ec43adbcf84d97410fa4154e",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/circular-7/",
+      "page": null
+    },
+    {
+      "sha256": "973930381e0ee917da9d7b0f334ca48340d2e573e367b2b58b6d0db43ca37dc9",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/circular-9-2/",
+      "page": null
+    },
+    {
+      "sha256": "9c08925078b701fddc996779f4777c370ed7a8d2313c62291f50246ac9c0c192",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/block-9/",
+      "page": null
+    },
+    {
+      "sha256": "a44988cf64d6c112ccb2829b0854a8ce17fc788a0616ac20bdf6e10bd5525705",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-9/",
+      "page": null
+    },
+    {
+      "sha256": "a6bf05a41df075e39f9c741754684e9c4624e391737d105911ca691ac5af3f5f",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-120-plus/",
+      "page": null
+    },
+    {
+      "sha256": "ad49406b5b67cc397ef68ac9632e6bf14300168738992bb7daa99c15ec532b5d",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/line/",
+      "page": null
+    },
+    {
+      "sha256": "b248d71e38ba5536a0599afc863a230f73b29b100bae7a6ecaddb6b29f7aa7b1",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-12/",
+      "page": null
+    },
+    {
+      "sha256": "b26501194f1f9e236a7ff68d62c7094dda7ee189a121e91f174b7c36eb5620d5",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/elettra/",
+      "page": null
+    },
+    {
+      "sha256": "b36f96efa6dc54637c5e52b45825676a775194e572e8be5335984b62bd5c95d7",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-180-silhouette/",
+      "page": null
+    },
+    {
+      "sha256": "b43104e9cf0b5432b1e8e439bc63b846c055147b14585e9f2b0c4ef0d8a3df63",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-160-touch/",
+      "page": null
+    },
+    {
+      "sha256": "b6b2df939541b2734453c4e962b99c8e7c33be6248c753af53bc0f014fd987d9",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/whisper-7/",
+      "page": null
+    },
+    {
+      "sha256": "bb26ba20f3c3230f80f63f949c236442e49aa0fb40cb251025e0751ffcb63292",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/minerva-stone/",
+      "page": null
+    },
+    {
+      "sha256": "bb9c067325b319169f8e0109d7c8f023128683c3ab805d77ffc84eef7eca2a63",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-100-globe/",
+      "page": null
+    },
+    {
+      "sha256": "bbfef6247c652284448405f0332b87058c4f042f976bd009910a577958a21f44",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/rc-70/",
+      "page": null
+    },
+    {
+      "sha256": "c0880a0ee99436e32adf268e9da94dd24bc1b0dc444a06d5edbda00b5145269e",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/block-7/",
+      "page": null
+    },
+    {
+      "sha256": "c14404f5810764d83117e7bd168161ca228730a9482b1b046a7f5c1e37f26b57",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv-120-touch-steel/",
+      "page": null
+    },
+    {
+      "sha256": "d7281457fd6029004632226bab541cd42e23d3c18b7482a03cc84096d29dd9a4",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/calliope-stone/",
+      "page": null
+    },
+    {
+      "sha256": "dc45c96bbb474a6cf2156ec4ddaaeb39c01ac0ad1016e62ce0102391cb407e33",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-120-country/",
+      "page": null
+    },
+    {
+      "sha256": "dfae9e35d22e6c47b64127b670c72275c0afda81e944d44f27bf4cc79baacc72",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-140-silhouette/",
+      "page": null
+    },
+    {
+      "sha256": "e00e17b7502669ee1a8038b2383aa388ac66dc0dd84f81d7cd53f7367f83ce9a",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-180-plus/",
+      "page": null
+    },
+    {
+      "sha256": "e08e6a0d541a52a7609d48284fdd012f6638dd86ad01aa6ee14cdc99ec8523db",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hrv-200/",
+      "page": null
+    },
+    {
+      "sha256": "e572081b3b6145ec9b45862e58855faafef288a3596e4ac0d99d7b1a9814d184",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/hoop-9/",
+      "page": null
+    },
+    {
+      "sha256": "f0828cd44a99bde6750596bf79939f57dea41b6d4e61131ec657f214cfca0cd8",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/rv-100/",
+      "page": null
+    },
+    {
+      "sha256": "fb3b9c04a140b9dd614412faa96b7eab3bc3ac609a25b35c959668df8229b517",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/easy-12-c/",
+      "page": null
+    },
+    {
+      "sha256": "fd37ba51eed743cf4ee2aa509bb192ecf312b0f3ac0e90ccd901b9ecd015736a",
+      "manufacturer": "Ravelli",
+      "sourceUrl": "https://ita.ravelligroup.it/prodotto/stilo/",
+      "page": null
     },
     {
       "sha256": "4ec415bb4d07eeaaef950db5376bb139b73d961dcf37fd501a87f9d50a7be28f",

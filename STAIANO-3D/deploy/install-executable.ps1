@@ -54,7 +54,7 @@ $manifest = Join-Path $sourceRoot 'catalog-data\sources-manifest.json'
 if (Test-Path -LiteralPath $manifest) { Copy-Item -LiteralPath $manifest -Destination (Join-Path $catalogRoot 'sources-manifest.json') -Force }
 if (Test-Path -LiteralPath $catalog) {
   New-Item -ItemType Directory -Path (Join-Path $catalogRoot 'sources') -Force | Out-Null
-  & robocopy.exe $catalog (Join-Path $catalogRoot 'sources') '*.pdf' '*.html' '*.xlsx' '*.xls' /S /NFL /NDL /NJH /NJS /NP | Out-Null
+  & robocopy.exe $catalog (Join-Path $catalogRoot 'sources') '*.pdf' '*.html' '*.json' '*.xlsx' '*.xls' /S /NFL /NDL /NJH /NJS /NP | Out-Null
   if ($LASTEXITCODE -ge 8) { throw 'Copia dei documenti tecnici non riuscita.' }
 }
 

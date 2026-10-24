@@ -251,6 +251,7 @@ export function calculateRoomThermal(project: Project, room: Room) {
     return calculateThermal(
       room.netAreaM2,
       room.ceilingHeightM ?? room.heightM,
+      project.projectSettings.coefficientWm3,
     );
   const topVolume = (polygon: Point[]) => {
     if (polygon.length < 3) return 0;
@@ -305,5 +306,9 @@ export function calculateRoomThermal(project: Project, room: Room) {
           outsideLinings(clipToConvex(room.polygon, pillarFootprint(pillar))),
         0,
       );
-  return calculateThermal(room.netAreaM2, volumeM3 / room.netAreaM2);
+  return calculateThermal(
+    room.netAreaM2,
+    volumeM3 / room.netAreaM2,
+    project.projectSettings.coefficientWm3,
+  );
 }

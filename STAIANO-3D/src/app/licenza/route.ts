@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { dirname, join } from "node:path";
 import { buildInfo, licenseSetup, licenseStatus } from "@/server/license";
 
 export const runtime = "nodejs";
@@ -38,6 +39,11 @@ export async function GET(request: NextRequest) {
   const query = request.nextUrl.searchParams;
   const [status, setup] = await Promise.all([licenseStatus(), licenseSetup()]);
   const build = buildInfo();
+  const updateRequired = status.state === "update-required";
+  const dataDirectory = dirname(dirname(setup.filePath));
+  const powershellLiteral = (value: string) => `'${value.replace(/'/g, "''")}'`;
+  const updateCommand = `$versione = Get-Content -LiteralPath ${powershellLiteral(join(dirname(dataDirectory), "active.json"))} -Raw | ConvertFrom-Json
+& $versione.executable --update --data-dir ${powershellLiteral(dataDirectory)}`;
   const version = build.commit
     ? `${build.buildId} · ${build.commit.slice(0, 12)}`
     : build.buildId;
@@ -51,14 +57,17 @@ export async function GET(request: NextRequest) {
       : query.get("refresh")
         ? "Verifica della licenza completata."
         : "";
-  const requested = query.get("state") ?? "";
   const message = error
     ? error
-    : notice
-      ? notice
-      : status.ok
-        ? `Licenza attiva${status.customer ? ` per ${status.customer}` : ""}.`
-        : stateMessages[requested] || status.message || stateMessages.missing;
+    : updateRequired
+      ? stateMessages["update-required"]
+      : notice
+        ? notice
+        : status.ok
+          ? `Licenza attiva${status.customer ? ` per ${status.customer}` : ""}.`
+          : status.message ||
+            stateMessages[status.state] ||
+            stateMessages.missing;
   const tone = error || !status.ok ? " error" : " ok";
   const rows = [
     ["Cliente", status.customer ?? "—"],
@@ -113,6 +122,14 @@ button:hover{background:#294781}
 button:focus-visible{outline:2px solid #365aa8;outline-offset:3px}
 .access-note{font-size:12px;line-height:1.6;color:#516679;margin:28px 0 0}
 .access-note a{color:#365aa8}
+.update-help{font-size:14px;line-height:1.6;color:#516679}
+.update-help p{margin:0 0 16px}
+.update-help pre{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#edf2f6;color:#183249;border-radius:6px;font-size:13px;line-height:1.6;tab-size:2}
+.update-help pre:focus-visible{outline:2px solid #365aa8;outline-offset:3px}
+.update-help a{color:#365aa8;text-underline-offset:3px}
+.license-details{margin-top:24px;font-size:14px;color:#516679}
+.license-details summary{cursor:pointer;padding:8px 0}
+.license-details summary:focus-visible{outline:2px solid #365aa8;outline-offset:3px}
 ::selection{background:#c0cfea;color:#183249}
 @media(max-width:740px){body{padding:20px}main{width:min(100%,480px);min-height:0;grid-template-columns:1fr}.identity{padding:24px 28px}.identity-copy,.identity .local-note{display:none}.brand{font-size:18px}.logo{width:44px;height:44px;padding:6px}.entry{padding:32px 28px}h1{font-size:26px}}
 @media(max-width:380px){body{padding:12px}.identity{padding:20px}.entry{padding:28px 20px}}
@@ -124,13 +141,26 @@ button:focus-visible{outline:2px solid #365aa8;outline-offset:3px}
   <p class="local-note">Assistenza: Termoidraulica Staiano.</p>
 </section>
 <section class="entry" aria-labelledby="license-title">
-  <h1 id="license-title">${status.ok ? "Licenza" : "Attivazione licenza"}</h1>
+  <h1 id="license-title">${updateRequired ? "Aggiorna Staiano HVAC" : status.ok ? "Licenza" : "Attivazione licenza"}</h1>
   <p id="license-message" class="message${tone}"${tone.includes("error") ? ' role="alert"' : ""}>${escapeHtml(message)}</p>
-  <div class="righe">${rows}</div>
+  ${updateRequired ? "" : `<div class="righe">${rows}</div>`}
   ${
     status.ok
       ? `<a class="fonte-catalogo" href="/" style="font-size:14px">Apri il configuratore</a><p class="access-note">La disattivazione e lo spostamento su un’altra postazione si gestiscono dalla sezione Licenza dell’amministratore.</p>`
-      : `<form method="post" action="/api/license" aria-describedby="license-message">
+      : updateRequired
+        ? `<section class="update-help" aria-label="Come aggiornare Staiano HVAC">
+  ${
+    build.packaged
+      ? `<p>Salva il progetto prima di procedere: l’aggiornamento riavvia Staiano. Sul computer che esegue StaianoHVAC.exe, apri PowerShell come amministratore e incolla questo comando. Funziona anche senza l’attività «Staiano HVAC Update».</p>
+  <pre role="region" tabindex="0" aria-label="Comando PowerShell di aggiornamento"><code>${escapeHtml(updateCommand)}</code></pre>
+  <p>Se non trovi active.json o manca anche l’attività «Staiano HVAC», richiedi all’assistenza il pacchetto d’installazione aggiornato.</p>`
+      : `<p>Chiedi all’amministratore di aggiornare e riavviare il server Staiano. Se usi il browser da un altro computer, l’aggiornamento va eseguito sul server.</p>`
+  }
+  <p>Al termine, riapri il configuratore. Non occorre inserire di nuovo la chiave di licenza.</p>
+  <a href="/">Riapri il configuratore</a>
+  </section>
+  <details class="license-details"><summary>Versione e stato della licenza</summary><div class="righe">${rows}</div></details>`
+        : `<form method="post" action="/api/license" aria-describedby="license-message">
     <input type="hidden" name="action" value="activate">
     <label for="licenseKey">Chiave di licenza</label>
     <input id="licenseKey" name="licenseKey" required autofocus autocomplete="off" spellcheck="false" placeholder="STAIANO-XXXXX-XXXXX-XXXXX-XXXXX" maxlength="40">

@@ -132,8 +132,10 @@ export function recordOperatorChanges(
         : s,
     ),
   };
-  // Topology changes clean dependent references; pillar edits recalculate net area.
-  return JSON.stringify(before.pillars) !== JSON.stringify(next.pillars) ||
+  // Changes to thermal assumptions and geometry refresh derived room loads.
+  return before.projectSettings.coefficientWm3 !==
+    next.projectSettings.coefficientWm3 ||
+    JSON.stringify(before.pillars) !== JSON.stringify(next.pillars) ||
     JSON.stringify(before.fanCoils?.map((u) => [u.id, u.roomId])) !==
       JSON.stringify(next.fanCoils?.map((u) => [u.id, u.roomId])) ||
     JSON.stringify(before.hvacSystems.map((s) => [s.id, s.roomIds])) !==

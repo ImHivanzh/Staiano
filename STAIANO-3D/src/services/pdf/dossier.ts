@@ -30,7 +30,7 @@ import { vrvIndoorAtVersion, vrvOutdoorAtVersion } from "@/domain/catalogs/vrv";
 import { hvacOutdoorDimensions } from "@/domain/air-conditioning/outdoor";
 
 export const TECHNICAL_NOTE =
-  "Dimensionamento convenzionale preliminare: Q = volume netto x 35 W/m³. Non sostituisce un calcolo delle dispersioni dell'edificio o un progetto esecutivo. Il fabbisogno indicato deriva dal criterio convenzionale Volume × 35 W/m³ e deve essere verificato da un tecnico qualificato prima dell’esecuzione dell’impianto. Il coefficiente fisso non considera clima, involucro, ricambi d'aria, apporti solari e condizioni di esercizio. Potenze e portate provengono dai cataloghi indicati; verificare condizioni nominali, installazione e disponibilità commerciale prima dell'ordine. I prezzi di listino Ecoclima, quando riportati, sono separati dal dimensionamento tecnico.";
+  "Dimensionamento convenzionale preliminare: Q = volume netto x coefficiente termico scelto nel progetto (W/m³). Non sostituisce un calcolo delle dispersioni dell'edificio o un progetto esecutivo. Il fabbisogno indicato deve essere verificato da un tecnico qualificato prima dell’esecuzione dell’impianto. Il coefficiente scelto non determina automaticamente clima, involucro, ricambi d'aria, apporti solari e condizioni di esercizio. Potenze e portate provengono dai cataloghi indicati; verificare condizioni nominali, installazione e disponibilità commerciale prima dell'ordine. I prezzi di listino Ecoclima, quando riportati, sono separati dal dimensionamento tecnico.";
 type Source = z.infer<typeof sourceMetadataSchema>;
 const display = (value: number) =>
   value.toLocaleString("it-IT", { maximumFractionDigits: 2 });

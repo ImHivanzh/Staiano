@@ -16,7 +16,10 @@ import {
   subtract,
   perimeter,
 } from "./primitives";
-import { calculateThermal } from "@/domain/thermal/calculate";
+import {
+  calculateThermal,
+  THERMAL_COEFFICIENT_W_M3,
+} from "@/domain/thermal/calculate";
 
 type Edge = { a: Point; b: Point; wall: Wall };
 export type RoomFace = {
@@ -180,6 +183,7 @@ export function reconcileRooms(
   previous: Room[],
   floorId: string,
   defaultHeightM: number,
+  coefficientWm3: number = THERMAL_COEFFICIENT_W_M3,
 ): Room[] {
   const used = new Set<string>();
   return detectRoomFaces(walls.filter((w) => w.floorId === floorId)).map(
@@ -241,7 +245,7 @@ export function reconcileRooms(
           parent?.roof && face.wallIds.includes(parent.roof.ridgeWallId)
             ? parent.roof
             : undefined,
-        ...calculateThermal(netAreaM2, heightM),
+        ...calculateThermal(netAreaM2, heightM, coefficientWm3),
         ...(parent?.conditioningExclusion
           ? {
               conditioningExclusion: parent.conditioningExclusion,
