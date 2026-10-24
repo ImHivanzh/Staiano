@@ -1,4 +1,4 @@
-export const THERMAL_COEFFICIENT_W_M3 = 35 as const;
+export const THERMAL_COEFFICIENT_W_M3 = 37 as const;
 export function calculateThermal(
   areaM2: number,
   heightM: number,

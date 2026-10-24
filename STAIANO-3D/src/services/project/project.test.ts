@@ -37,12 +37,12 @@ describe("formato e archivio", () => {
     const p = fixture();
     p.rooms[0].designLoadW = 1;
     const next = decodeProject(encodeProject(p));
-    expect(next.rooms[0].designLoadW).toBeCloseTo(1890);
+    expect(next.rooms[0].designLoadW).toBeCloseTo(1998);
     expect(next.id).toBe(p.id);
   });
   it("rifiuta JSON, versioni future e riferimenti mancanti", () => {
     expect(() => decodeProject("<html>")).toThrow();
-    expect(() => parseProject({ schemaVersion: 9 })).toThrow(/Versione/);
+    expect(() => parseProject({ schemaVersion: 10 })).toThrow(/Versione/);
     const p = fixture();
     p.walls[0].floorId = "missing";
     expect(() => parseProject(p)).toThrow(/Piano/);
@@ -66,13 +66,25 @@ describe("formato e archivio", () => {
       }),
     ).toThrow();
   });
-  it("conserva il coefficiente scelto nel salvataggio e mantiene 35 nei progetti v7", () => {
+  it("usa i nuovi default e conserva i default storici nei progetti precedenti", () => {
     const project = fixture();
-    const old = { ...project, schemaVersion: 7 };
+    expect(project.projectSettings.coefficientWm3).toBe(37);
+    expect(project.projectSettings.externalWallThicknessM).toBe(0.5);
+    const old = {
+      ...project,
+      schemaVersion: 8,
+      projectSettings: {
+        ...project.projectSettings,
+        externalWallThicknessM: 0.3,
+        coefficientWm3: 35,
+      },
+    };
     const restored = parseProject(old);
     expect(restored.projectSettings.coefficientWm3).toBe(35);
+    expect(restored.projectSettings.externalWallThicknessM).toBe(0.3);
     expect(restored.walls).toEqual(project.walls);
-    expect(restored.rooms).toEqual(project.rooms);
+    expect(restored.rooms[0].designLoadW).toBe(restored.rooms[0].volumeM3 * 35);
+    expect(restored.rooms[0].netAreaM2).toBe(project.rooms[0].netAreaM2);
     const custom = decodeProject(
       encodeProject({
         ...project,
@@ -83,11 +95,17 @@ describe("formato e archivio", () => {
     expect(custom.rooms[0].designLoadW).toBe(custom.rooms[0].volumeM3 * 42.75);
     expect(decodeProject(encodeProject(custom))).toEqual(custom);
     const { coefficientWm3: omitted, ...settings } = project.projectSettings;
-    expect(omitted).toBe(35);
+    expect(omitted).toBe(37);
     expect(
       parseProject({ ...old, projectSettings: settings }).projectSettings
         .coefficientWm3,
     ).toBe(35);
+    const legacySettings: Record<string, unknown> = { ...settings };
+    delete legacySettings.externalWallThicknessM;
+    expect(
+      parseProject({ ...old, projectSettings: legacySettings }).projectSettings
+        .externalWallThicknessM,
+    ).toBe(0.3);
   });
   it("migra v0 senza cambiare geometria", () => {
     const p = fixture();
@@ -170,7 +188,7 @@ describe("formato e archivio", () => {
     store.getState().undo();
     expect(store.getState().project?.walls).toHaveLength(0);
     store.getState().redo();
-    expect(store.getState().project?.rooms[0].designLoadW).toBeCloseTo(1890);
+    expect(store.getState().project?.rooms[0].designLoadW).toBeCloseTo(1998);
   });
 });
 

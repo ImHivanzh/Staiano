@@ -7,9 +7,9 @@ Prove e limiti sono in `VERIFICATION.md`, `docs/REQUIREMENTS-AUDIT.md` e
 | Area                | Stato verificato                                                                                                                                              |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Accesso e progetto  | Password hashata, cookie firmato, API/modelli protetti; schema v2, IndexedDB, recovery, CRUD, import/export.                                                  |
-| Planimetria         | Disegno reale 2D, quote, snap, muri inclinati, rettangoli, irregolari, piani, adiacenza, divisione/unione. Import DXF, PDF, raster, DWG MIT.                  |
+| Planimetria         | Disegno reale 2D, quote, snap, muri inclinati, rettangoli, irregolari, piani, adiacenza, divisione/unione. Spessore esterno predefinito 50 cm; modifica massiva di tutti i muri o dei soli esterni. |
 | Geometria e viewer  | Contorni netti, aree/volumi/carichi aggiornati, edit 2D/3D sincronizzato, sezioni, ombre, PBR, foto/modelli ufficiali e render PDF.                           |
-| Potenza e radiatori | Volume ×35 fisso. 466 modelli Cordivari/Global/Zehnder/Lazzarini, ricerca esatta completa, immagini/finiture ufficiali.                                       |
+| Potenza e radiatori | Volume netto × coefficiente configurabile (37 W/m³ predefinito). 466 modelli Cordivari/Global/Zehnder/Lazzarini, immagini/finiture ufficiali.                  |
 | Terminali Ecoclima  | 127 famiglie, 1778 varianti, 6788 punti; foto originali, scelta mandata/ripresa, metri lineari e capacità per stanza. Dati incerti espliciti.                 |
 | Listino e distinta  | Revisione 15-2026, prezzi/accessori originali, finiture scelte, totali noti e righe sconosciute separate dal calcolo termico.                                 |
 | Canalizzato         | 21 modelli di catalogo e macchine manuali. Massima portata documentata in distribuzione, dimensionamento terminali e verifica zone indipendenti.              |

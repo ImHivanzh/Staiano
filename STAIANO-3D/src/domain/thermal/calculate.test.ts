@@ -10,10 +10,10 @@ import { validateProject } from "../validation";
 import { roomWallSpan } from "../geometry/placement";
 import { useProjectStore } from "@/stores/project-store";
 
-it("usa il coefficiente scelto senza arrotondare e mantiene 35 come valore iniziale", () => {
+it("usa il coefficiente scelto senza arrotondare e mantiene 37 come valore iniziale", () => {
   expect(calculateThermal(20, 2.7)).toEqual({
     volumeM3: 54,
-    designLoadW: 1890,
+    designLoadW: 1998,
   });
   const result = calculateThermal(12.345, 2.678, 42.75);
   expect(result).toEqual({

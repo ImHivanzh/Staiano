@@ -19,7 +19,7 @@ test("sceglie il coefficiente iniziale, ricalcola dalle impostazioni e lo conser
   await page.goto("/");
   await expect(
     page.getByRole("spinbutton", { name: coefficientName, exact: true }),
-  ).toHaveValue("35");
+  ).toHaveValue("37");
   await page
     .getByRole("spinbutton", { name: coefficientName, exact: true })
     .fill("42.75");

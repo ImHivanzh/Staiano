@@ -13,8 +13,9 @@ Configuratore HVAC locale per Termoidraulica Staiano.
 All’avvio scegli il **coefficiente termico in W/m³**, prima di disegnare o
 importare la planimetria. Il fabbisogno è il volume netto × il coefficiente
 scelto; puoi modificarlo anche da **File > Impostazioni progetto e piani**.
-Il valore predefinito e quello conservato nei progetti precedenti è 35 W/m³.
-I nuovi salvataggi usano lo schema 8: aggiorna gli altri client prima di importarli.
+Il valore predefinito dei nuovi progetti è 37 W/m³ e lo spessore esterno è
+50 cm. I progetti esistenti conservano il coefficiente salvato; quelli storici
+senza il campo mantengono 35 W/m³. I nuovi salvataggi usano lo schema 9.
 
 Accesso interno: <https://hvac.internal.staianopoint.com>. Il login richiede
 la password amministrativa impostata sul server. Progetti e cataloghi restano
@@ -170,7 +171,10 @@ metri, centimetri o millimetri, salvando le misure nelle unità del modello.
 **Applica spessori a tutti i muri** estende le nuove misure ai muri già
 disegnati mantenendo le quote interne: le facce interne restano ferme, i muri
 perimetrali crescono verso l’esterno e quelli condivisi allontanano gli ambienti
-quanto basta a conservarne le misure nette.
+quanto basta a conservarne le misure nette. **Applica spessore ai soli muri
+esterni** cambia i muri marcati Esterno e conserva spessore e misure interne.
+I nuovi progetti usano 50 cm per i muri esterni; i progetti già salvati non
+cambiano finché non applichi una modifica.
 
 Nelle proprietà stanza è possibile dichiarare un ambiente non climatizzato,
 con motivo obbligatorio. Superficie, volume e apparecchi restano conservati;

@@ -5,7 +5,7 @@ Aggiornamento 7 ottobre 2026: gli ADR iniziali descrivono la base storica. Login
 ## Ambito e vincoli
 
 Configuratore preliminare di abitazioni: geometria netta, stima convenzionale
-volume netto × coefficiente del progetto (predefinito 35 W/m³), dimensionamento
+volume netto × coefficiente del progetto (predefinito 37 W/m³), dimensionamento
 su cataloghi ufficiali, controlli e dossier.
 La creazione manuale è un ingresso principale, equivalente all'importazione.
 Nessuna AI, OCR, autenticazione, cloud obbligatorio o API a pagamento.

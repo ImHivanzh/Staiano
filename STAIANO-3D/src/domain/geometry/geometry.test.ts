@@ -24,6 +24,8 @@ import { calculateThermal } from "@/domain/thermal/calculate";
 import { validateProject } from "@/domain/validation";
 const rectangle = () => {
   const p = createProject();
+  p.projectSettings.externalWallThicknessM = 0.3;
+  p.projectSettings.coefficientWm3 = 35;
   return addRectangle(p, p.floors[0].id, {
     width: 4.2,
     length: 3.8,
@@ -138,10 +140,10 @@ describe("geometria e creazione manuale", () => {
     expect(r.designLoadW).toBeCloseTo(1508.22);
     expect(area(p.walls.map((w) => w.start))).toBeGreaterThan(r.netAreaM2);
   });
-  it("35 W/m³ predefinito, nessun arrotondamento intermedio", () => {
+  it("37 W/m³ predefinito, nessun arrotondamento intermedio", () => {
     expect(calculateThermal(20, 2.7)).toEqual({
       volumeM3: 54,
-      designLoadW: 1890,
+      designLoadW: 1998,
     });
     expect(() => calculateThermal(0, 2.7)).toThrow();
   });

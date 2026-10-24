@@ -76,7 +76,7 @@ test("units, project defaults and floor management preserve existing geometry th
   expect(saved.rooms[0].floorId).toBe(before.rooms[0].floorId);
   expect(saved.rooms[0].heightM).toBe(3);
   expect(
-    saved.walls.every((wall: { thickness: number }) => wall.thickness === 0.3),
+    saved.walls.every((wall: { thickness: number }) => wall.thickness === 0.5),
   ).toBe(true);
   await page.getByRole("button", { name: "Planimetria", exact: true }).click();
   await openDisclosure(page, "Disegno e misure");
@@ -228,10 +228,29 @@ test("fan coils use the correct room label", async ({ page }) => {
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
     .click();
+  await plan
+    .getByRole("button", { name: "Ventilconvettore", exact: true })
+    .click();
+  await pickPlanPoint(plan, 3.8, 0.4);
+  await plan.getByTestId("draft-fanCoil").last().click();
+  await chooseFanCoilModel(
+    page.getByRole("dialog", { name: "Configura apparecchio", exact: true }),
+    { manufacturer: "Aermec", model: "FCZ" },
+  );
+  await page
+    .getByRole("dialog", { name: "Configura apparecchio", exact: true })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
   await page.getByRole("button", { name: /^Soggiorno/ }).click();
   await expect(page.locator(".impianto-attuale")).toHaveText(
-    /1 ventilconvettori nella stanza/,
+    /2 ventilconvettori nella stanza/,
   );
+  const saved = await snapshot(page);
+  expect(saved.fanCoils).toHaveLength(2);
+  expect(
+    new Set(saved.fanCoils.map((unit: { roomId: string }) => unit.roomId)),
+  ).toEqual(new Set([saved.rooms[0].id]));
 });
 
 test("recalibration previews changes, cancellation preserves data and confirmation retains physical dimensions", async ({

@@ -77,7 +77,7 @@ export function createProject(
       radiatorDeltaTK: 50,
       defaultHeightM: 3,
       internalWallThicknessM: 0.1,
-      externalWallThicknessM: 0.3,
+      externalWallThicknessM: 0.5,
       coefficientWm3,
       maxNoiseDbA: 37,
       dimensionMode: "internal",

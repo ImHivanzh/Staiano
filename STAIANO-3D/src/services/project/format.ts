@@ -124,11 +124,19 @@ export function migrateProject(data: unknown): unknown {
       },
     });
   }
-  if ([3, 4, 5, 6, 7].includes(version))
+  if ([3, 4, 5, 6, 7, 8].includes(version)) {
+    const old = data as Record<string, unknown>;
+    const settings = (old.projectSettings ?? {}) as Record<string, unknown>;
     return migrateProject({
-      ...(data as Record<string, unknown>),
+      ...old,
       schemaVersion: CURRENT_SCHEMA_VERSION,
+      projectSettings: {
+        ...settings,
+        coefficientWm3: settings.coefficientWm3 ?? 35,
+        externalWallThicknessM: settings.externalWallThicknessM ?? 0.3,
+      },
     });
+  }
   if (version !== CURRENT_SCHEMA_VERSION)
     throw new Error("Migration mancante per questa versione progetto.");
   const old = data as Record<string, unknown>;

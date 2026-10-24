@@ -44,10 +44,16 @@ const average = (points: Point[]): Point => ({
   x: points.reduce((sum, p) => sum + p.x, 0) / points.length,
   y: points.reduce((sum, p) => sum + p.y, 0) / points.length,
 });
-const targetThickness = (wall: Wall, preset: WallThicknessPreset) =>
-  wall.type === "ESTERNO"
-    ? preset.externalWallThicknessM
-    : preset.internalWallThicknessM;
+const targetThickness = (
+  wall: Wall,
+  preset: WallThicknessPreset,
+  onlyType?: Wall["type"],
+) =>
+  onlyType && wall.type !== onlyType
+    ? wall.thickness
+    : wall.type === "ESTERNO"
+      ? preset.externalWallThicknessM
+      : preset.internalWallThicknessM;
 
 /**
  * Lato della stanza rispetto all'asse del muro: +1 a sinistra della direzione,
@@ -136,6 +142,7 @@ function jointPoint(joint: Joint): Point {
 export function applyWallThicknessPreservingInterior(
   project: Project,
   preset: WallThicknessPreset,
+  onlyType?: Wall["type"],
 ): Project {
   const { internalWallThicknessM: internal, externalWallThicknessM: external } =
     preset;
@@ -188,7 +195,7 @@ export function applyWallThicknessPreservingInterior(
         plus: plus.room.id,
         minus: minus.room.id,
         normal: leftNormal(direction),
-        delta: targetThickness(wall, preset) - wall.thickness,
+        delta: targetThickness(wall, preset, onlyType) - wall.thickness,
       },
     ];
   });
@@ -213,7 +220,7 @@ export function applyWallThicknessPreservingInterior(
     const direction = unit(wall.start, wall.end);
     if (!direction) continue;
     const sides = roomSides.get(wall.id) ?? [];
-    const half = (targetThickness(wall, preset) - wall.thickness) / 2;
+    const half = (targetThickness(wall, preset, onlyType) - wall.thickness) / 2;
     const adjustments = sides.map(({ room, side }) => {
       const shift = shifts.get(room.id)!;
       return {
@@ -259,7 +266,7 @@ export function applyWallThicknessPreservingInterior(
     }
   }
   const walls = project.walls.map((wall) => {
-    const thickness = targetThickness(wall, preset),
+    const thickness = targetThickness(wall, preset, onlyType),
       lane = lines.get(wall.id),
       ends = endpoints.get(wall.id);
     if (!lane || !ends?.start || !ends?.end) return { ...wall, thickness };

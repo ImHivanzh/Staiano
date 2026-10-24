@@ -100,7 +100,7 @@ Le prove browser rifiutano errori runtime e console inattesi. La suite locale us
 
 - Il riconoscimento raster è un'euristica per muri ortogonali leggibili. Scansioni rumorose, muri obliqui e simboli ambigui richiedono correzione manuale. I punteggi non sono probabilità calibrate. Porte e finestre non ricevono automaticamente altezze o tipologie inventate.
 - Frecce, convezione, percorsi proposti e mappa fabbisogno sono illustrazioni. Non sono una simulazione CFD, una mappa della temperatura, un calcolo delle perdite di carico o un dimensionamento idraulico esecutivo.
-- Il calcolo termico resta convenzionale, volume netto × 35 W/m³. Le temperature e le condizioni di targa devono essere confrontate prima della scelta finale.
+- Il calcolo termico resta convenzionale, volume netto × coefficiente configurabile (37 W/m³ predefinito). Le temperature e le condizioni di targa devono essere confrontate prima della scelta finale.
 - La rappresentazione parametrica permette di usare i modelli mancanti, ma non sostituisce una mesh OEM verificata o un disegno di fabbricazione approvato. Disposizione del plenum e collari sono una proposta modificabile; il diametro nominale commerciale va verificato sull'articolo ordinato.
 - Alcune misure e prestazioni acustiche originali mancano: restano esplicite. Compatibilità M7 e montaggio a parete/soffitto valgono per i modelli documentati.
 - I progetti appartengono all'archivio locale del browser/dispositivo e dell'utente. Non è ancora presente un archivio centrale condiviso fra TV e computer.

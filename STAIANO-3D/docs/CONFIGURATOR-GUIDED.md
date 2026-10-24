@@ -18,7 +18,7 @@ oggetti. Nessuna geometria persistita separatamente per i due renderer.
 
 `services/import` estrae segmenti CAD/PDF e rasterizza immagini/PDF. Il wizard
 esistente richiede scala e selezione esplicite; raster esclusivamente sfondo.
-Le stanze hanno area e volume netti, carico convenzionale volume × 35 W/m³.
+Le stanze hanno area e volume netti, carico convenzionale volume × coefficiente configurabile (37 W/m³ predefinito).
 Canalizzato, split, radiatori e terminali hanno motori puri e revisioni catalogo.
 Il plenum ha un calcolo di connessioni e una geometria su misura documentata,
 ma l'anteprima è separata dagli oggetti persistiti. `services/pdf/render.ts`

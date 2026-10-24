@@ -16,6 +16,7 @@ import { splitWall } from "./wall-commands";
 
 const rectangle = () => {
   const empty = createProject();
+  empty.projectSettings.externalWallThicknessM = 0.3;
   return addRectangle(empty, empty.floors[0].id, {
     width: 4.2,
     length: 3.8,
@@ -54,6 +55,40 @@ describe("spessore di tutti i muri con quote interne invariate", () => {
     expect(current.minY).toBeCloseTo(previous.minY - 0.05, 6);
     expect(current.maxY).toBeCloseTo(previous.maxY + 0.05, 6);
     expect(next.projectSettings.externalWallThicknessM).toBe(0.4);
+  });
+
+  it("cambia solo i muri esterni in blocco e conserva superfici e muri interni", () => {
+    const base = rectangle();
+    const project = addWall(
+      base,
+      base.floors[0].id,
+      { x: 2.1, y: 0 },
+      { x: 2.1, y: 3.8 },
+    );
+    const internal = project.walls.filter((wall) => wall.type === "INTERNO"),
+      roomAreas = new Map(
+        project.rooms.map((room) => [room.id, area(room.polygon)]),
+      );
+    const next = applyWallThicknessPreservingInterior(
+      project,
+      { internalWallThicknessM: 0.1, externalWallThicknessM: 0.6 },
+      "ESTERNO",
+    );
+    expect(
+      next.walls
+        .filter((wall) => wall.type === "ESTERNO")
+        .every((wall) => wall.thickness === 0.6),
+    ).toBe(true);
+    for (const wall of next.walls.filter((item) => item.type === "INTERNO")) {
+      const previous = internal.find((item) => item.id === wall.id)!;
+      expect(wall.thickness).toBe(previous.thickness);
+      expect(wall.start.x).toBeCloseTo(previous.start.x, 10);
+      expect(wall.start.y).toBeCloseTo(previous.start.y, 10);
+      expect(wall.end.x).toBeCloseTo(previous.end.x, 10);
+      expect(wall.end.y).toBeCloseTo(previous.end.y, 10);
+    }
+    for (const room of next.rooms)
+      expect(area(room.polygon)).toBeCloseTo(roomAreas.get(room.id)!, 6);
   });
 
   it("l'apertura resta nella stessa posizione della faccia interna", () => {

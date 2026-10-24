@@ -186,9 +186,14 @@ OEM discordanti restano consultabili e marcate da verificare.
 
 La schermata iniziale e «Nuovo progetto» permettono di scegliere il coefficiente
 in W/m³ prima del disegno, dell’importazione o del percorso guidato. Il valore
-predefinito è 35 e resta tale per i progetti precedenti. Il valore scelto si salva
+predefinito dei nuovi progetti è 37; i progetti esistenti mantengono il valore
+salvato e quelli storici senza coefficiente restano a 35. Il valore scelto si salva
 nel progetto e si modifica anche da File > Impostazioni progetto e piani.
 Il fabbisogno usa il volume netto effettivo, comprese falde e ribassamenti.
 Il ricalcolo conserva geometria, apparecchi ed esclusioni dalla climatizzazione;
-controlli, dimensionamento e PDF usano i nuovi carichi. I file dello schema 8
+controlli, dimensionamento e PDF usano i nuovi carichi. I file dello schema 9
 richiedono una versione aggiornata sugli altri client.
+
+I nuovi progetti usano 50 cm come preset dei muri esterni. Impostazioni progetto
+può applicare lo spessore a tutti i muri oppure soltanto a quelli marcati
+«Esterno», mantenendo superficie netta degli ambienti e spessori interni.

@@ -30,12 +30,13 @@ export function ProjectSettings({ project }: { project: Project }) {
           };
           if (
             submitter instanceof HTMLButtonElement &&
-            submitter.value === "walls"
+            ["walls", "external-walls"].includes(submitter.value)
           ) {
             commit((p) =>
               applyWallThicknessPreservingInterior(
                 { ...p, projectSettings: settings },
                 settings,
+                submitter.value === "external-walls" ? "ESTERNO" : undefined,
               ),
             );
             return;
@@ -104,6 +105,13 @@ export function ProjectSettings({ project }: { project: Project }) {
             disabled={!project.walls.length}
           >
             Applica spessori a tutti i muri
+          </button>
+          <button
+            className="bottone chiara"
+            value="external-walls"
+            disabled={!project.walls.some((wall) => wall.type === "ESTERNO")}
+          >
+            Applica spessore ai soli muri esterni
           </button>
         </div>
       </form>
