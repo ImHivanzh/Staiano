@@ -195,7 +195,7 @@ describe("documenti tecnici dell'EXE", () => {
       ])
         await writeFile(path.join(root, name), "documento");
       expect(catalogDocuments(root)).toEqual({
-        total: 5,
+        total: 6,
         byExtension: { ".pdf": 2, ".html": 1, ".json": 1, ".xlsx": 1, ".xls": 1 },
       });
     } finally {
