@@ -112,6 +112,27 @@ it("uses the manufacturer's maximum outputs separately for heating and cooling",
       row.description.includes(model.model),
     )?.details,
   ).toContain("6040 W caldo / 3810 W freddo; potenze massime dichiarate");
+  const historical = structuredClone(installed);
+  historical.hydronicSystems![0].catalogVersion = "heat-pumps-9e3730348d934831";
+  expect(
+    validateHydronicSystem(historical, historical.hydronicSystems![0])
+      .capacityCovered,
+  ).toBe(false);
+  const updated = applyHydronicSystem(historical, {
+    systemId: historical.hydronicSystems![0].id,
+    productId: model.id,
+    catalogVersion: heatPumpCatalog.version,
+    roomIds: options.roomIds,
+    fanCoilIds: [],
+    operatingPointIndex: 1,
+  });
+  expect(updated.hydronicSystems![0].catalogVersion).toBe(
+    heatPumpCatalog.version,
+  );
+  expect(
+    validateHydronicSystem(updated, updated.hydronicSystems![0])
+      .capacityCovered,
+  ).toBe(true);
   project.rooms[0].designLoadW = 7800;
   const larger = recommendedHeatPump(project, project.floors[0].id, options)!;
   expect(larger.operatingPoints[1].maxHeatingW).toBeGreaterThanOrEqual(7800);

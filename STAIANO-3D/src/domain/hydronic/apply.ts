@@ -49,6 +49,7 @@ import {
 
 export type HydronicSystemInput = {
   productId: string;
+  catalogVersion?: string;
   roomIds: string[];
   fanCoilIds: string[];
   operatingPointIndex: number;
@@ -68,7 +69,8 @@ export function applyHydronicSystem(
     throw new Error(
       "Sbloccare la pompa di calore prima di modificare l’impianto.",
     );
-  const version = existing?.catalogVersion ?? heatPumpCatalog.version;
+  const version =
+    input.catalogVersion ?? existing?.catalogVersion ?? heatPumpCatalog.version;
   const product = heatPumpProductAtVersion(input.productId, version);
   if (
     !product ||

@@ -186,6 +186,7 @@ export function HydronicPanel({
               systemId,
               name: formId ? name : undefined,
               productId: product.id,
+              catalogVersion: heatPumpCatalog.version,
               roomIds,
               fanCoilIds,
               operatingPointIndex,
