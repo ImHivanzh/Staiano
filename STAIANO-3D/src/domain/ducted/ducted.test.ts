@@ -243,6 +243,7 @@ describe("canalizzato, portate e terminali persistenti", () => {
   });
   it("preserva apparecchi e associazioni quando una stanza servita è divisa", () => {
     let p = createProject();
+    p.projectSettings.externalWallThicknessM = 0.3;
     p = addRectangle(p, p.floors[0].id, {
       width: 4.2,
       length: 3.8,
@@ -270,7 +271,8 @@ describe("canalizzato, portate e terminali persistenti", () => {
     expect(() => projectSchema.parse(p)).not.toThrow();
   });
   it("il radiatore segue la parete trascinata mantenendo ID e catalogo", () => {
-    let p = createProject();
+    let p = createProject("Nuovo progetto", 35);
+    p.projectSettings.externalWallThicknessM = 0.3;
     p = addRectangle(p, p.floors[0].id, {
       width: 5,
       length: 4,

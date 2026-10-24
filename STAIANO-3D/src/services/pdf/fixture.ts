@@ -8,7 +8,8 @@ import { sizeRadiators } from "@/domain/radiators/size";
 import { applyRadiatorSolution } from "@/domain/radiators/apply";
 /** Real catalogue products and domain commands, also used for PDF visual QA. */
 export function dossierFixture() {
-  let p = createProject("Abitazione Staiano - verifica dossier");
+  let p = createProject("Abitazione Staiano - verifica dossier", 35);
+  p.projectSettings.externalWallThicknessM = 0.3;
   p = addRectangle(p, p.floors[0].id, {
     width: 4.2,
     length: 3.8,

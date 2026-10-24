@@ -369,7 +369,8 @@ describe("regressione radiatori su fonti ufficiali", () => {
     ).toThrow();
   });
   it("posiziona ingombro netto reale, persiste fonte e famiglia", () => {
-    let p = createProject();
+    let p = createProject("Nuovo progetto", 35);
+    p.projectSettings.externalWallThicknessM = 0.3;
     p = addRectangle(p, p.floors[0].id, {
       width: 5,
       length: 4,
@@ -388,7 +389,8 @@ describe("regressione radiatori su fonti ufficiali", () => {
     expect(p.catalogVersions.Global).toBeTruthy();
   });
   it("applica varianti miste con singole dimensioni, rese e codici persistenti", () => {
-    let p = createProject();
+    let p = createProject("Nuovo progetto", 35);
+    p.projectSettings.externalWallThicknessM = 0.3;
     p = addRectangle(p, p.floors[0].id, {
       width: 5,
       length: 5,

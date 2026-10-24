@@ -15,7 +15,7 @@ import {
 
 /** Shared walls, measured openings and source-backed products; no invented SKU. */
 export function realisticProjectFixture(): Project {
-  let p = createProject("Casa Staiano — verifica realismo 3D");
+  let p = createProject("Casa Staiano — verifica realismo 3D", 35);
   const floorId = p.floors[0].id;
   const segments = [
     [0, 0, 9.2, 0, "ESTERNO"],

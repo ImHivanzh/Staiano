@@ -7,7 +7,8 @@ import { rescaleFloor } from "./rescale-floor";
 import { distance, projection } from "./primitives";
 
 it("recalibration updates geometry and wall placement while retaining physical dimensions and heights", () => {
-  let p = createProject();
+  let p = createProject("Nuovo progetto", 35);
+  p.projectSettings.externalWallThicknessM = 0.3;
   p = addRectangle(p, p.floors[0].id, {
     width: 4.2,
     length: 3.8,

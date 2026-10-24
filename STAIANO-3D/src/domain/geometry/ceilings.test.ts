@@ -26,7 +26,7 @@ import { area, bounds } from "./primitives";
 import { movePlacedDevice } from "./move-device";
 
 function fixture() {
-  let project = createProject();
+  let project = createProject("Nuovo progetto", 35);
   project = addRectangle(project, project.floors[0].id, {
     width: 8,
     length: 12,

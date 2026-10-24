@@ -15,7 +15,8 @@ import { convertLength } from "@/configurator/LengthInput";
 import { guidedProjectFixture } from "../../tests/guided-fixture";
 
 function fixture() {
-  const project = createProject("Prova impostazioni");
+  const project = createProject("Prova impostazioni", 35);
+  project.projectSettings.externalWallThicknessM = 0.3;
   return addRectangle(project, project.floors[0].id, {
     width: 5,
     length: 4,

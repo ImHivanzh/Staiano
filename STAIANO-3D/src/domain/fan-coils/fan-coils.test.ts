@@ -19,7 +19,8 @@ import { deviceEnvelopesOverlap } from "@/domain/geometry/device-envelope";
 import { createInstallation } from "@/domain/installations";
 
 function fixture() {
-  const p = createProject();
+  const p = createProject("Nuovo progetto", 35);
+  p.projectSettings.externalWallThicknessM = 0.3;
   return addRectangle(p, p.floors[0].id, {
     width: 8,
     length: 6,

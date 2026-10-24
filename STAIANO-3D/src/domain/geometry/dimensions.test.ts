@@ -14,6 +14,7 @@ import { splitWall } from "./wall-commands";
 
 const fixture = () => {
   const p = createProject("Quote");
+  p.projectSettings.externalWallThicknessM = 0.3;
   return addRectangle(p, p.floors[0].id, {
     width: 5,
     length: 4,

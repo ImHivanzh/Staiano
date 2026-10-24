@@ -5,7 +5,7 @@ import { sizeRadiators } from "../src/domain/radiators/size";
 import { applyRadiatorSolution } from "../src/domain/radiators/apply";
 
 export function largeProjectFixture() {
-  let p = createProject("Verifica 50 ambienti");
+  let p = createProject("Verifica 50 ambienti", 35);
   const walls: Wall[] = [];
   for (let i = 0; i < 50; i++) {
     const x = (i % 10) * 7,

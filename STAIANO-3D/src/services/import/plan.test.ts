@@ -138,7 +138,7 @@ describe("Importazione locale planimetrie", () => {
     const result = applyPlanImport(project, project.floors[0].id, imported);
     expect(result.rooms).toHaveLength(1);
     expect(result.rooms[0].netAreaM2).toBeCloseTo(4.2 * 3.8, 7);
-    expect(result.rooms[0].designLoadW).toBeCloseTo(4.2 * 3.8 * 3 * 35, 7);
+    expect(result.rooms[0].designLoadW).toBeCloseTo(4.2 * 3.8 * 3 * 37, 7);
     expect(result.sourceFilesMetadata[0].sourceType).toBe("dxf");
     expect(project.walls).toHaveLength(0);
   });

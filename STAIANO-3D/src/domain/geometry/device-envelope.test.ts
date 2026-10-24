@@ -16,7 +16,8 @@ import {
 } from "./device-envelope";
 
 function fixture() {
-  let p = createProject();
+  let p = createProject("Nuovo progetto", 35);
+  p.projectSettings.externalWallThicknessM = 0.3;
   p = addRectangle(p, p.floors[0].id, {
     width: 5,
     length: 4,

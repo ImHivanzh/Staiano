@@ -35,7 +35,8 @@ export function guidedTerminalPoint(familyCode = "EDLS") {
 }
 
 export function guidedProjectFixture(requiredM = 4.2): Project {
-  let p = createProject("Staiano — accettazione configurazione guidata");
+  let p = createProject("Staiano — accettazione configurazione guidata", 35);
+  p.projectSettings.externalWallThicknessM = 0.3;
   p = addRectangle(p, p.floors[0].id, {
     width: 8,
     length: 6,
