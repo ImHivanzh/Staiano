@@ -1,5 +1,6 @@
 "use client";
 import type { Project } from "@/schemas/project";
+import { applyWallThicknessPreservingInterior } from "@/domain/geometry/wall-thickness";
 import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm } from "@/utils/format";
 import { LengthInput } from "./LengthInput";
@@ -11,23 +12,35 @@ export function ProjectSettings({ project }: { project: Project }) {
       <h2>Impostazioni progetto</h2>
       <p className="nota">
         Altezza e spessori predefiniti per i nuovi elementi. Le misure degli
-        elementi già disegnati si modificano dalle loro proprietà.
+        elementi già disegnati si modificano dalle loro proprietà, oppure in un
+        solo comando con «Applica spessori a tutti i muri».
       </p>
       <form
         key={JSON.stringify(project.projectSettings)}
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
-          commit((p) => ({
-            ...p,
-            projectSettings: {
-              ...p.projectSettings,
-              defaultHeightM: numberFromForm(data.get("height")),
-              externalWallThicknessM: numberFromForm(data.get("external")),
-              internalWallThicknessM: numberFromForm(data.get("internal")),
-              coefficientWm3: numberFromForm(data.get("coefficientWm3")),
-            },
-          }));
+          const submitter = (event.nativeEvent as SubmitEvent).submitter;
+          const settings = {
+            ...project.projectSettings,
+            defaultHeightM: numberFromForm(data.get("height")),
+            externalWallThicknessM: numberFromForm(data.get("external")),
+            internalWallThicknessM: numberFromForm(data.get("internal")),
+            coefficientWm3: numberFromForm(data.get("coefficientWm3")),
+          };
+          if (
+            submitter instanceof HTMLButtonElement &&
+            submitter.value === "walls"
+          ) {
+            commit((p) =>
+              applyWallThicknessPreservingInterior(
+                { ...p, projectSettings: settings },
+                settings,
+              ),
+            );
+            return;
+          }
+          commit((p) => ({ ...p, projectSettings: settings }));
         }}
       >
         <div className="filtri-progetto">
@@ -77,7 +90,22 @@ export function ProjectSettings({ project }: { project: Project }) {
             required
           />
         </div>
-        <button className="bottone pieno">Applica impostazioni</button>
+        <p className="nota">
+          «Applica spessori a tutti i muri» aggiorna anche i muri già disegnati
+          mantenendo le quote interne: i muri perimetrali crescono verso
+          l’esterno, quelli interni allontanano gli ambienti quanto serve a
+          conservarne le misure nette.
+        </p>
+        <div className="azioni-progetto">
+          <button className="bottone pieno">Applica impostazioni</button>
+          <button
+            className="bottone chiara"
+            value="walls"
+            disabled={!project.walls.length}
+          >
+            Applica spessori a tutti i muri
+          </button>
+        </div>
       </form>
       <h3>Gestione piani</h3>
       <p className="nota">

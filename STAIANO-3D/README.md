@@ -167,6 +167,10 @@ Nel menu File, **Impostazioni progetto e piani** gestisce altezza e spessori dei
 nuovi elementi, nomi e ordine dei piani. Le quote verticali e gli identificativi
 restano indipendenti dall’ordine. I campi dimensionali permettono di scegliere
 metri, centimetri o millimetri, salvando le misure nelle unità del modello.
+**Applica spessori a tutti i muri** estende le nuove misure ai muri già
+disegnati mantenendo le quote interne: le facce interne restano ferme, i muri
+perimetrali crescono verso l’esterno e quelli condivisi allontanano gli ambienti
+quanto basta a conservarne le misure nette.
 
 Nelle proprietà stanza è possibile dichiarare un ambiente non climatizzato,
 con motivo obbligatorio. Superficie, volume e apparecchi restano conservati;
