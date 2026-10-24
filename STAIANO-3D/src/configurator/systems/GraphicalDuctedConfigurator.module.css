@@ -246,6 +246,56 @@
   }
 }
 
+@media (max-width: 640px) {
+  .mainPlan {
+    flex: none;
+    height: auto;
+    overflow: visible;
+  }
+  .mainPlan > .toolbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+  .mainPlan > .toolbar > * {
+    flex-shrink: 0;
+  }
+  .mainPlan .iconButton,
+  .mainPlan .toolbar :global(.menu-progetto > summary),
+  .mainPlan .moreActions .iconSummary {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+  }
+  .mainPlan .toolbar :global(.menu-progetto > .strumenti-disegno),
+  .mainPlan .actionMenu {
+    position: fixed;
+    z-index: 25;
+    top: auto;
+    bottom: 56px;
+    left: 12px;
+    right: 12px;
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    background: var(--carta);
+  }
+  .mainPlan .toolbar :global(.strumenti-disegno) button,
+  .mainPlan .actionMenu button {
+    min-height: 44px;
+  }
+  .mainPlan > .canvas {
+    order: 1;
+    flex: none;
+    min-height: 340px;
+    height: clamp(340px, 52dvh, 480px);
+  }
+  .mainPlan > .status,
+  .mainPlan > :global(.nota) {
+    order: 2;
+    padding-inline: 12px;
+  }
+}
+
 @media (min-width: 1100px) and (pointer: fine) {
   .mainPlan {
     display: grid;

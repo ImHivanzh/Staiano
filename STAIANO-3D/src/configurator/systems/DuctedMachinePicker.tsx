@@ -11,6 +11,7 @@ import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import { FullscreenDialog } from "../FullscreenDialog";
+import { MachinePlenumDetails } from "./MachinePlenumDetails";
 import { ManualMachineForm } from "./ManualMachineForm";
 import { lastAvailableManufacturer } from "./manufacturer-preference";
 import styles from "./DuctedMachinePicker.module.css";
@@ -465,6 +466,13 @@ export function DuctedMachinePicker({
               </section>
             )}
           </div>
+          {placedMachine && savedSystem && (
+            <MachinePlenumDetails
+              key={savedSystem.id}
+              project={project}
+              systemId={savedSystem.id}
+            />
+          )}
         </div>
       </FullscreenDialog>
     </>

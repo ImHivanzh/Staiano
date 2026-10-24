@@ -4,7 +4,12 @@ import type {
   SplitCombination,
   SplitIndoor,
 } from "@/domain/catalogs/split-schema";
-import { roomWallSpan } from "@/domain/geometry/placement";
+import {
+  positionAlongRoomWall,
+  roomWallSpan,
+} from "@/domain/geometry/placement";
+import { indoorUnitFitsBelowCeiling } from "./elevation";
+import { footprintInsideRoom } from "../geometry/footprint";
 export type SplitAssignment = {
   roomId: string;
   slotIndex: number;
@@ -21,15 +26,47 @@ export type SplitSolution = {
 export function usableSplitWall(
   project: Project,
   room: Room,
-  unit: SplitIndoor,
+  unit: Pick<SplitIndoor, "widthMm" | "heightMm" | "depthMm">,
 ) {
-  if (unit.heightMm / 1000 + 0.1 > room.heightM) return null;
   return (
     project.walls
       .filter((w) => room.wallIds.includes(w.id))
-      .map((wall) => ({ wall, span: roomWallSpan(room, wall) }))
-      .filter((c) => c.span && c.span.lengthM >= unit.widthMm / 1000 + 0.2)
-      .sort((a, b) => b.span!.lengthM - a.span!.lengthM)[0] ?? null
+      .flatMap((wall) => {
+        const span = roomWallSpan(room, wall);
+        if (!span || span.lengthM < unit.widthMm / 1000 + 0.2) return [];
+        return [
+          {
+            wall,
+            span,
+            position: positionAlongRoomWall(
+              room,
+              wall,
+              span.lengthM / 2,
+              unit.depthMm / 1000,
+            ),
+            rotation: Math.atan2(
+              span.end.y - span.start.y,
+              span.end.x - span.start.x,
+            ),
+          },
+        ];
+      })
+      .filter(
+        (candidate) =>
+          indoorUnitFitsBelowCeiling(project, room, {
+            ...unit,
+            position: candidate.position,
+            rotation: candidate.rotation,
+          }) &&
+          footprintInsideRoom(
+            room,
+            candidate.position,
+            unit.widthMm / 1000,
+            unit.depthMm / 1000,
+            candidate.rotation,
+          ),
+      )
+      .sort((a, b) => b.span.lengthM - a.span.lengthM)[0] ?? null
   );
 }
 /** Uses exact approved combinations and simultaneous capacity published for every indoor unit. */
@@ -57,6 +94,20 @@ export function sizeSplitSystems(
   const models = new Map(catalog.indoorUnits.map((u) => [u.id, u])),
     requiredW = rooms.reduce((s, r) => s + r.designLoadW, 0),
     solutions: SplitSolution[] = [];
+  const wallFit = new Map(
+    rooms.map((room) => [
+      room.id,
+      new Set(
+        catalog.indoorUnits
+          .filter(
+            (unit) =>
+              unit.manufacturer === manufacturer &&
+              usableSplitWall(project, room, unit),
+          )
+          .map((unit) => unit.id),
+      ),
+    ]),
+  );
   for (const combination of catalog.combinations) {
     if (
       !combination.approved ||
@@ -91,7 +142,7 @@ export function sizeSplitSystems(
           used.has(slot.slotIndex) ||
           slot.coolingW < room.designLoadW ||
           slot.heatingW < room.designLoadW ||
-          !usableSplitWall(project, room, slot.indoor)
+          !wallFit.get(room.id)?.has(slot.indoor.id)
         )
           continue;
         used.add(slot.slotIndex);

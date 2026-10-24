@@ -9,6 +9,8 @@ import {
   heatPumpCatalog,
   heatPumpCatalogAtVersion,
   heatPumpProductAtVersion,
+  heatPumpCapacity,
+  heatPumpProductSchema,
 } from "@/domain/catalogs/heat-pumps";
 import {
   applyHydronicSystem,
@@ -136,6 +138,53 @@ describe("impianto idronico documentato", () => {
     expect(heatPumpProductAtVersion(gree.id, "missing-version")).toBeNull();
   });
   it.each([
+    [35, 6350, 6040, 4520, 3810],
+    [50, 7570, 7190, 5200, 5400],
+    [80, 11740, 11500, 8450, 8500],
+    [120, 14370, 13650, 11470, 10300],
+    [150, 17650, 16770, 13790, 11880],
+  ])(
+    "imports the documented Min/Nom/Max column for Chaffoteaux %s",
+    (size, heat35, heat45, heatMinus7, cold) => {
+      const products = heatPumpCatalog.products.filter(
+        (product) =>
+          product.manufacturer === "Chaffoteaux" &&
+          new RegExp(`\\b${size}\\b`).test(product.model),
+      );
+      expect(products.length).toBeGreaterThan(0);
+      for (const product of products) {
+        expect(
+          product.operatingPoints.map((point) => [
+            point.maxHeatingW,
+            point.maxCoolingW,
+          ]),
+        ).toEqual([
+          [heat35, cold],
+          [heat45, cold],
+          [heatMinus7, cold],
+        ]);
+        expect(
+          heatPumpProductSchema.safeParse({
+            ...product,
+            operatingPoints: [
+              { ...product.operatingPoints[0], maxHeatingW: 1 },
+            ],
+          }).success,
+        ).toBe(false);
+      }
+    },
+  );
+  it("keeps historical declared capacities when maximum outputs are unavailable", () => {
+    const previous = heatPumpCatalogAtVersion("heat-pumps-dd01394cdc900d50")!
+      .products[0];
+    const point = previous.operatingPoints[0];
+    expect(heatPumpCapacity(point)).toEqual({
+      heatingW: point.heatingW,
+      coolingW: point.coolingW,
+      basis: "dichiarate (massimi non disponibili)",
+    });
+  });
+  it.each([
     ["35-m", 3302018, 756, 3500, 3000, 3510, 3500, 5.1, 3.74, 3.1, 3.4],
     ["50-m", 3302019, 756, 5000, 4050, 5000, 5000, 5, 3.65, 2.9, 2.85],
     ["80-m", 3302020, 1106, 8000, 6000, 7410, 7000, 4.8, 3.7, 3, 3.1],
@@ -231,7 +280,7 @@ describe("impianto idronico documentato", () => {
     for (const previous of original.products) {
       expect(
         heatPumpProductAtVersion(previous.id, heatPumpCatalog.version),
-      ).toEqual(previous);
+      ).toMatchObject(previous);
     }
   });
   it("places multiple outdoor units beyond complete wall bounds, preserves save/reload and originals", () => {

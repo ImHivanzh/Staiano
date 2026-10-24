@@ -1,6 +1,7 @@
 "use client";
 import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState } from "react";
+import { ShareNetwork } from "@phosphor-icons/react";
 import type { Project } from "@/schemas/project";
 import {
   flushSave,
@@ -118,10 +119,13 @@ export function ProjectSharing({
     <>
       <button
         type="button"
-        className="bottone piccolo tenue"
+        className="bottone piccolo tenue comando-condivisione"
+        aria-label="Condividi progetto"
+        title="Condividi progetto"
         onClick={() => setOpen(true)}
       >
-        Condividi progetto
+        <ShareNetwork aria-hidden="true" />
+        <span>Condividi progetto</span>
       </button>
       <FullscreenDialog
         open={open}

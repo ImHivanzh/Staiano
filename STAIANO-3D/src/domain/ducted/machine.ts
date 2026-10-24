@@ -4,6 +4,46 @@ import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
 
 type DuctedSystem = Project["hvacSystems"][number];
 
+/** Risolve anche il corpo visibile del ventilconvettore nella sua distribuzione aria. */
+export function ductedMachineForDevice(project: Project, id: string) {
+  const system = project.hvacSystems.find(
+    (item) =>
+      item.type === "ducted" &&
+      (item.fanCoilId === id ||
+        item.indoorUnits.some((unit) => unit.id === id)),
+  );
+  const unit =
+    system?.fanCoilId === id
+      ? system.indoorUnits[0]
+      : system?.indoorUnits.find((item) => item.id === id);
+  if (!system || !unit) return null;
+  return {
+    system,
+    unit,
+    locked:
+      unit.locked ||
+      !!project.fanCoils?.find((item) => item.id === system.fanCoilId)?.locked,
+  };
+}
+
+/** Centro fisico della macchina; il ventilconvettore conserva la propria quota. */
+export function ductedMachineElevationM(
+  project: Project,
+  system: DuctedSystem,
+  unit: DuctedSystem["indoorUnits"][number],
+) {
+  const fanCoil = system.fanCoilId
+    ? project.fanCoils?.find((item) => item.id === system.fanCoilId)
+    : undefined;
+  if (fanCoil)
+    return (
+      fanCoil.elevationM +
+      (fanCoil.mounting === "ceiling" ? fanCoil.depthMm / 2000 : 0)
+    );
+  const room = project.rooms.find((item) => item.id === unit.roomId)!;
+  return room.heightM - unit.heightMm / 2000 - 0.05;
+}
+
 /** Manual values are operator declarations, never verified manufacturer data. */
 export function resolveDuctedMachine(system: DuctedSystem) {
   if (system.type !== "ducted" || system.compatibilityStatus === "invalid")

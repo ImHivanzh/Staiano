@@ -168,10 +168,18 @@ export function Configurator() {
   );
   const [billOpen, setBillOpen] = useState(false);
   const [flexibleOpen, setFlexibleOpen] = useState(false);
-  useEffect(() => {
-    if (s.tool !== "select" || s.planPlacementTool !== "select")
-      setFlexibleOpen(false);
-  }, [s.tool, s.planPlacementTool]);
+  useEffect(
+    () =>
+      useProjectStore.subscribe((state, previous) => {
+        if (
+          (state.tool !== previous.tool ||
+            state.planPlacementTool !== previous.planPlacementTool) &&
+          (state.tool !== "select" || state.planPlacementTool !== "select")
+        )
+          setFlexibleOpen(false);
+      }),
+    [],
+  );
   const [inspectorOpen, setInspectorOpen] = useState(true);
   const [navigationOpen, setNavigationOpen] = useState(true);
   const revealedCheck = useRef<Check | null>(null);
@@ -298,6 +306,20 @@ export function Configurator() {
           menu.open = false;
         });
     };
+    const positionHeaderMenus = () => {
+      document
+        .querySelectorAll<HTMLDetailsElement>(
+          ".azioni-testata .menu-progetto[open]",
+        )
+        .forEach((menu) => {
+          const trigger = menu.querySelector("summary");
+          if (trigger)
+            menu.style.setProperty(
+              "--header-menu-top",
+              `${Math.ceil(trigger.getBoundingClientRect().bottom) + 4}px`,
+            );
+        });
+    };
     const outsideMenu = (event: PointerEvent) => {
       if (
         event.target instanceof Element &&
@@ -404,9 +426,13 @@ export function Configurator() {
     };
     window.addEventListener("keydown", handler);
     window.addEventListener("pointerdown", outsideMenu);
+    window.addEventListener("resize", positionHeaderMenus);
+    document.addEventListener("toggle", positionHeaderMenus, true);
     return () => {
       window.removeEventListener("keydown", handler);
       window.removeEventListener("pointerdown", outsideMenu);
+      window.removeEventListener("resize", positionHeaderMenus);
+      document.removeEventListener("toggle", positionHeaderMenus, true);
     };
   }, []);
   function copySelection() {

@@ -8,6 +8,68 @@ import { distance, projection } from "./primitives";
 import type { WallCandidate } from "./plan-analysis";
 
 describe("fusione delle evidenze AI e dei tratti originali", () => {
+  it("conserva le facce originali non riconosciute dall’AI come contorni da confermare", () => {
+    const pixels = draw([
+      [40, 40, 340, 40, 1, 80],
+      [80, 50, 150, 50, 1, 80],
+      [200, 50, 320, 50, 1, 80],
+    ]);
+    const original = recognizeRaster(pixels, 400, 300).walls;
+    expect(original).toHaveLength(2);
+    const walls = recognizeRaster(
+      pixels,
+      400,
+      300,
+      true,
+      new Uint8Array(400 * 300),
+    ).walls;
+    for (const source of original)
+      expect(
+        walls.some(
+          (w) =>
+            w.layer === "Contorni da verificare" &&
+            w.confidence <= 0.5 &&
+            JSON.stringify([w.start, w.end]) ===
+              JSON.stringify([source.start, source.end]),
+        ),
+      ).toBe(true);
+    expect(walls.some((w) => w.confidence >= 0.9)).toBe(false);
+    expect(new Set(walls.map((w) => w.id)).size).toBe(walls.length);
+  });
+
+  it("ricollega gli estremi dopo la fusione di assi AI e tratti originali", () => {
+    const lines = [
+      [40, 40, 320, 40, 8, 0],
+      [320, 40, 320, 240, 8, 0],
+      [320, 240, 40, 240, 8, 0],
+      [40, 240, 40, 40, 8, 0],
+    ];
+    const pixels = draw(lines);
+    const evidence = draw([
+      [39, 39, 321, 39, 9, 0],
+      [321, 39, 321, 241, 9, 0],
+      [321, 241, 39, 241, 9, 0],
+      [39, 241, 39, 39, 9, 0],
+    ]);
+    const mask = Uint8Array.from({ length: 400 * 300 }, (_, i) =>
+      evidence[i * 4] < 110 ? 1 : 0,
+    );
+    const walls = recognizeRaster(pixels, 400, 300, true, mask).walls;
+    expect(walls).toHaveLength(4);
+    for (const wall of walls)
+      for (const point of [wall.start, wall.end])
+        expect(
+          walls.some(
+            (other) =>
+              other !== wall &&
+              [other.start, other.end].some(
+                (end) => distance(point, end) < 1e-7,
+              ),
+          ),
+        ).toBe(true);
+    expect(walls.every((w) => w.confidence < 0.9)).toBe(true);
+  });
+
   it("non riempie il vano porta fra due tratti collineari", () => {
     const width = 512,
       height = 512;
@@ -54,7 +116,7 @@ describe("fusione delle evidenze AI e dei tratti originali", () => {
       ).toBe(true);
     },
   );
-  it("esclude una linea spessa estranea che tocca la maschera soltanto a un estremo", () => {
+  it("non promuove a muro AI una linea estranea che tocca la maschera soltanto a un estremo", () => {
     const width = 256,
       height = 256;
     const pixels = new Uint8ClampedArray(width * height * 4).fill(255);
@@ -66,11 +128,24 @@ describe("fusione delle evidenze AI e dei tratti originali", () => {
       }
     for (let y = 40; y < 140; y++)
       for (let x = 35; x < 40; x++) mask[y * width + x] = 1;
+    const walls = recognizeRaster(pixels, width, height, true, mask).walls;
     expect(
-      recognizeRaster(pixels, width, height, true, mask).walls.some(
-        (wall) => Math.abs(wall.end.x - wall.start.x) > 150,
+      walls.some(
+        (wall) =>
+          wall.layer !== "Contorni da verificare" &&
+          Math.abs(wall.end.x - wall.start.x) > 150,
       ),
     ).toBe(false);
+    const retained = walls.filter(
+      (wall) => Math.abs(wall.end.x - wall.start.x) > 150,
+    );
+    expect(retained.length).toBeGreaterThan(0);
+    expect(
+      retained.every(
+        (wall) =>
+          wall.confidence <= 0.5 && wall.layer === "Contorni da verificare",
+      ),
+    ).toBe(true);
   });
 });
 

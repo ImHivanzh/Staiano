@@ -275,5 +275,35 @@ for (const sample of corpus)
           dialog.getByRole("button", { name: "Importa muri selezionati" }),
         ).toBeDisabled();
       }
+      if (sample.id === "unite-barn" && variant.name === "contrasto-ridotto") {
+        const alternatives = dialog.getByRole("checkbox", {
+          name: /^Contorni da verificare/,
+        });
+        await expect(alternatives).not.toBeChecked();
+        await dialog
+          .getByLabel(/Ho verificato e confermo i muri proposti/)
+          .check();
+        await expect(alternatives).not.toBeChecked();
+        const opacity = await svg
+          .locator("line")
+          .evaluateAll((nodes) =>
+            nodes.map((node) => ({
+              layer: node.textContent?.split(" · ")[0],
+              opacity: Number(node.getAttribute("opacity")),
+            })),
+          );
+        const primary = opacity.filter(
+          (row) => row.layer === "Muri riconosciuti",
+        );
+        const reviewed = opacity.filter(
+          (row) => row.layer === "Contorni da verificare",
+        );
+        expect(primary.length).toBeGreaterThan(0);
+        expect(reviewed.length).toBeGreaterThan(0);
+        expect(Math.max(...reviewed.map((row) => row.opacity))).toBeLessThan(
+          Math.min(...primary.map((row) => row.opacity)),
+        );
+        await expect(page.getByTestId("wall")).toHaveCount(0);
+      }
     });
   }

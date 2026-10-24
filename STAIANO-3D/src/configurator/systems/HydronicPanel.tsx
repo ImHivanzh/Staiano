@@ -2,9 +2,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import type { Point, Project } from "@/schemas/project";
-import { recommendedHeatPump } from "@/domain/hydronic/size";
+import {
+  heatPumpPreference,
+  recommendedHeatPump,
+} from "@/domain/hydronic/size";
 import {
   heatPumpCatalog,
+  heatPumpCapacity,
   heatPumpProductAtVersion,
 } from "@/domain/catalogs/heat-pumps";
 import {
@@ -68,11 +72,11 @@ export function HydronicPanel({
   const [page, setPage] = useState<"configuration" | "schedule">(
     "configuration",
   );
+  const preferredProduct = heatPumpCatalog.products
+    .filter((product) => product.manufacturer === preferredManufacturer)
+    .sort((a, b) => heatPumpPreference(a) - heatPumpPreference(b))[0];
   const [productId, setProductId] = useState(
-    existing?.productId ??
-      heatPumpCatalog.products.find(
-        (product) => product.manufacturer === preferredManufacturer,
-      )!.id,
+    existing?.productId ?? preferredProduct.id,
   );
   const [operatingPointIndex, setOperatingPointIndex] = useState(
     existing?.operatingPointIndex ?? 1,
@@ -90,6 +94,10 @@ export function HydronicPanel({
   const product = products.find((p) => p.id === productId) ?? products[0];
   const point =
     product.operatingPoints[operatingPointIndex] ?? product.operatingPoints[0];
+  const capacity = heatPumpCapacity(point);
+  const existingPoint =
+    existing && existingProduct?.operatingPoints[existing.operatingPointIndex];
+  const existingCapacity = existingPoint && heatPumpCapacity(existingPoint);
   const roomIds = selectedRooms.filter((id) => rooms.some((r) => r.id === id));
   const coils = (project.fanCoils ?? []).filter((u) =>
     roomIds.includes(u.roomId),
@@ -115,7 +123,9 @@ export function HydronicPanel({
   });
   const orderedProducts = [...products].sort(
     (a, b) =>
-      Number(b.id === recommended?.id) - Number(a.id === recommended?.id),
+      Number(b.id === recommended?.id) -
+        Number(a.id === recommended?.id) ||
+      heatPumpPreference(a) - heatPumpPreference(b),
   );
   if (!formId)
     return (
@@ -210,9 +220,11 @@ export function HydronicPanel({
               onChange={(e) => {
                 setManufacturer(e.target.value);
                 setProductId(
-                  heatPumpCatalog.products.find(
-                    (p) => p.manufacturer === e.target.value,
-                  )!.id,
+                  heatPumpCatalog.products
+                    .filter((p) => p.manufacturer === e.target.value)
+                    .sort(
+                      (a, b) => heatPumpPreference(a) - heatPumpPreference(b),
+                    )[0].id,
                 );
                 setOperatingPointIndex(1);
               }}
@@ -231,6 +243,7 @@ export function HydronicPanel({
             >
               <strong>Consigliato · {recommended.model}</strong>
               <p>
+                Taglia scelta sulle potenze massime dichiarate, dove disponibili.{" "}
                 Copre {formatNumber(load / 1000)} kW degli ambienti serviti, in
                 caldo e freddo alle condizioni scelte.
               </p>
@@ -284,12 +297,15 @@ export function HydronicPanel({
               value={operatingPointIndex}
               onChange={(e) => setOperatingPointIndex(Number(e.target.value))}
             >
-              {product.operatingPoints.map((p, i) => (
-                <option key={i} value={i}>
-                  {p.label} · {formatNumber(p.heatingW / 1000)} /{" "}
-                  {formatNumber(p.coolingW / 1000)} kW
-                </option>
-              ))}
+              {product.operatingPoints.map((p, i) => {
+                const rating = heatPumpCapacity(p);
+                return (
+                  <option key={i} value={i}>
+                    {p.label} · {formatNumber(rating.heatingW / 1000)} /{" "}
+                    {formatNumber(rating.coolingW / 1000)} kW · {rating.basis}
+                  </option>
+                );
+              })}
             </select>
           </label>
           <fieldset>
@@ -354,12 +370,13 @@ export function HydronicPanel({
           <p className="formula">
             Fabbisogno preliminare {formatNumber(load / 1000)} kW
             <br />
-            Pompa: {formatNumber(point.heatingW / 1000)} kW caldo ·{" "}
-            {formatNumber(point.coolingW / 1000)} kW freddo
+            Pompa: potenze {capacity.basis}.{" "}
+            {formatNumber(capacity.heatingW / 1000)} kW caldo ·{" "}
+            {formatNumber(capacity.coolingW / 1000)} kW freddo
             <br />
-            {Math.min(point.heatingW, point.coolingW) < load
+            {Math.min(capacity.heatingW, capacity.coolingW) < load
               ? "Potenza inferiore alla stima: scegliere una taglia superiore."
-              : "Potenze nominali superiori alla stima alle condizioni selezionate."}
+              : "Potenze sufficienti per la stima alle condizioni selezionate."}
           </p>
           <p className="nota">
             {point.heatingConditions}
@@ -421,7 +438,7 @@ export function HydronicPanel({
                     <br />
                     <span>
                       {report.capacityCovered
-                        ? "Pompa: potenze nominali coprono la stima."
+                        ? `Pompa: potenze ${report.capacityBasis} coprono la stima.`
                         : "Pompa: capacità da verificare."}
                     </span>
                     <br />
@@ -466,6 +483,7 @@ export function HydronicPanel({
                 const rating =
                   model.operatingPoints[operatingPointIndex] ??
                   model.operatingPoints[0];
+                const capacity = heatPumpCapacity(rating);
                 return (
                   <button
                     type="button"
@@ -488,8 +506,10 @@ export function HydronicPanel({
                       <span>{model.family}</span>
                     </span>
                     <span>
-                      {formatNumber(rating.coolingW / 1000)} kW freddo ·{" "}
-                      {formatNumber(rating.heatingW / 1000)} kW caldo
+                      {formatNumber(capacity.coolingW / 1000)} kW freddo ·{" "}
+                      {formatNumber(capacity.heatingW / 1000)} kW caldo
+                      <br />
+                      Potenze {capacity.basis}
                     </span>
                     <span>
                       {model.widthMm} × {model.depthMm} × {model.heightMm} mm
@@ -551,17 +571,13 @@ export function HydronicPanel({
                   <th scope="row">Potenza caldo / freddo</th>
                   <td>
                     {formatNumber(
-                      (existingProduct?.operatingPoints[
-                        existing.operatingPointIndex
-                      ]?.heatingW ?? 0) / 1000,
+                      (existingCapacity?.heatingW ?? 0) / 1000,
                     )}{" "}
                     /{" "}
                     {formatNumber(
-                      (existingProduct?.operatingPoints[
-                        existing.operatingPointIndex
-                      ]?.coolingW ?? 0) / 1000,
+                      (existingCapacity?.coolingW ?? 0) / 1000,
                     )}{" "}
-                    kW
+                    kW · potenze {existingCapacity?.basis ?? "non verificabili"}
                   </td>
                 </tr>
                 <tr>

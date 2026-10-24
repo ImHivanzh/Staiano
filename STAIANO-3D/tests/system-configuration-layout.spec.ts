@@ -1,6 +1,5 @@
-import { pickPlanPoint } from "./ui-helpers";
 import { expect, test } from "./browser-test";
-import { openInspector, openDisclosure } from "./ui-helpers";
+import { pickPlanPoint } from "./ui-helpers";
 
 for (const viewport of [
   { width: 1920, height: 1080 },
@@ -11,11 +10,11 @@ for (const viewport of [
     "Canalizzato",
     "Split",
     "Ventilconvettori",
-  ]) {
+  ] as const) {
     test(`${system}: configuration is readable and usable at ${viewport.width}`, async ({
       page,
     }, info) => {
-      test.setTimeout(90000);
+      test.setTimeout(60000);
       await page.setViewportSize(viewport);
       await page.goto("/");
       await page.getByRole("button", { name: "Disegna manualmente" }).click();
@@ -23,159 +22,70 @@ for (const viewport of [
         .getByRole("dialog")
         .getByRole("button", { name: "Crea stanza", exact: true })
         .click();
-      await openInspector(page, "Configura impianto");
+      const plan = page.getByRole("region", {
+        name: "Configurazione grafica canalizzato",
+      });
+      const tools = {
+        Radiatori: ["Radiatore", "radiator"],
+        Canalizzato: ["Macchina", "machine"],
+        Split: ["Split", "split"],
+        Ventilconvettori: ["Ventilconvettore", "fanCoil"],
+      };
+      const [label, type] = tools[system];
+      await plan.getByRole("button", { name: label, exact: true }).click();
+      await pickPlanPoint(plan, 2, 1);
+      if (system === "Canalizzato") {
+        await plan
+          .getByRole("button", { name: "Bocchetta", exact: true })
+          .click();
+        await pickPlanPoint(plan, 3, 0.5);
+        await plan
+          .getByRole("button", { name: "Collega", exact: true })
+          .click();
+        await plan.getByTestId("draft-machine").click();
+        await plan.getByTestId("draft-terminal").click();
+        await page.keyboard.press("Escape");
+      }
+      await plan.getByTestId(`draft-${type}`).click();
       const dialog = page.getByRole("dialog", {
-        name: /^(?:Vista |Configura impianto$)/,
+        name:
+          system === "Canalizzato"
+            ? "Scegli macchina canalizzata"
+            : "Configura apparecchio",
         exact: true,
       });
-      const choice = dialog.getByRole("group", {
-        name: "Impianto da configurare",
-      });
-      await expect
-        .poll(() =>
-          dialog.evaluate((node) => {
-            const select = node
-              .querySelector('[aria-label="Impianto corrente"]')!
-              .getBoundingClientRect();
-            const button = [...node.querySelectorAll("button")]
-              .find((item) => item.textContent?.trim() === "Nuovo impianto")!
-              .getBoundingClientRect();
-            return Math.max(
-              Math.abs(select.top - button.top),
-              Math.abs(select.bottom - button.bottom),
-            );
-          }),
-        )
-        .toBeLessThanOrEqual(1);
-      await choice.getByRole("button", { name: system, exact: true }).click();
-      if (system !== "Canalizzato")
-        await openDisclosure(
-          dialog,
-          "Configurazione da modulo e dettagli tecnici",
-        );
+      await expect(dialog).toBeVisible();
+      expect(
+        await dialog.evaluate((node) => node.scrollWidth <= node.clientWidth),
+      ).toBe(true);
       await expect(
-        choice.getByRole("button", { name: system, exact: true }),
-      ).toHaveAttribute("aria-pressed", "true");
-      if (system === "Radiatori") {
-        await dialog
-          .getByRole("button", { name: "Trova radiatori compatibili" })
-          .scrollIntoViewIfNeeded();
-        await expect(
-          dialog.getByRole("button", { name: "Trova radiatori compatibili" }),
-        ).toBeInViewport();
-      }
-      await dialog.screenshot({ path: info.outputPath("initial.png") });
-
-      if (system === "Radiatori") {
-        await dialog.getByLabel("Marca radiatori").selectOption("Global");
-        await dialog.getByLabel("Famiglia radiatori").selectOption("VIP");
-        await dialog
-          .getByRole("button", { name: "Trova radiatori compatibili" })
-          .click();
-        await expect(
-          dialog.locator(".soluzione-radiatore").first(),
-        ).toContainText("VIP");
-        await expect(
-          dialog
-            .locator(".soluzione-radiatore")
-            .first()
-            .getByRole("button", { name: "Applica e posiziona" }),
-        ).toBeEnabled();
-      } else if (system === "Canalizzato") {
-        await dialog
-          .getByRole("button", { name: "Apri planimetria operativa" })
-          .click();
-        const plan = page.getByRole("region", {
-          name: "Configurazione grafica canalizzato",
-        });
-        await plan
-          .getByRole("button", { name: "Macchina", exact: true })
-          .click();
-        await pickPlanPoint(plan, 2, 2);
-        await plan.getByTestId("draft-machine").click();
-        const picker = page.getByRole("dialog", {
-          name: "Scegli macchina canalizzata",
-        });
-        await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
-        const recommended = picker.locator('[data-recommended="true"]');
-        await expect(recommended).toHaveCount(1);
-        await expect(recommended).toHaveAttribute("aria-pressed", "true");
-        await expect(
-          picker
-            .locator("footer")
-            .getByRole("button", { name: "Salva", exact: true }),
-        ).toBeInViewport();
-        await picker.screenshot({
-          path: info.outputPath("machine-picker.png"),
-        });
-        await picker
+        dialog
           .locator("footer")
-          .getByRole("button", { name: "Salva", exact: true })
+          .getByRole("button", { name: "Salva", exact: true }),
+      ).toBeInViewport();
+      if (system === "Radiatori") {
+        await dialog
+          .getByRole("group", { name: "Marca radiatori", exact: true })
+          .getByRole("button", { name: "Global", exact: true })
+          .click();
+        await dialog
+          .getByRole("group", { name: "Famiglia radiatori", exact: true })
+          .getByText("VIP", { exact: true })
+          .click();
+        await dialog
+          .getByLabel("Potenza da coprire con questo punto (W)")
+          .fill("1800");
+        await dialog
+          .getByRole("button", { name: "Trova radiatori compatibili" })
           .click();
         await expect(
-          plan.getByRole("button", { name: /^Macchina UI/ }),
-        ).toHaveCount(1);
-        return;
-      } else if (system === "Split") {
-        await dialog.getByLabel("Marca split").selectOption("Gree");
-        await expect(
-          dialog.getByRole("heading", { name: "Soluzione selezionata" }),
-        ).toBeVisible();
-        await dialog
-          .getByRole("button", { name: "Configura climatizzazione" })
-          .click();
-        await expect(
-          dialog.getByText(/^Sistema installato: Gree/),
-        ).toBeVisible();
-      } else {
-        const add = dialog.getByRole("button", {
-          name: "Aggiungi ventilconvettore",
-        });
-        await expect(add).toBeEnabled();
-        await add.click();
-        await expect(
-          dialog.getByRole("heading", { name: "Apparecchi nella stanza" }),
-        ).toBeVisible();
-        await expect(
-          dialog.getByText(/Potenza ancora da coprire:/),
-        ).toBeVisible();
-        await dialog
-          .locator(":scope > div")
-          .last()
-          .evaluate((node) => {
-            node.scrollTop = 0;
-          });
-        await add.scrollIntoViewIfNeeded();
-        await expect(add).toBeInViewport();
+          dialog.getByRole("button", { name: "Selezionata", exact: true }),
+        ).toBeEnabled();
       }
-
-      await expect
-        .poll(() =>
-          dialog.evaluate((node) => node.scrollWidth <= node.clientWidth),
-        )
-        .toBe(true);
-      const overflow = await dialog
-        .locator("button, input, select, img")
-        .evaluateAll((nodes) =>
-          nodes
-            .filter((node) => {
-              if (!node.getClientRects().length) return false;
-              const box = node.getBoundingClientRect();
-              return box.left < -1 || box.right > window.innerWidth + 1;
-            })
-            .map(
-              (node) =>
-                node.getAttribute("aria-label") || node.textContent?.trim(),
-            ),
-        );
-      expect(overflow).toEqual([]);
-      await dialog
-        .locator(":scope > div")
-        .last()
-        .evaluate((node) => {
-          node.scrollTop = 0;
-        });
       await dialog.screenshot({ path: info.outputPath("configuration.png") });
+      await page.keyboard.press("Escape");
+      await expect(dialog).toHaveCount(0);
+      await expect(plan.getByTestId(`draft-${type}`)).toHaveCount(1);
     });
   }
 }

@@ -77,7 +77,10 @@ export function SplitProperties({
       <p className="nota">
         Ingombro {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm.
         <br />
-        Quota centro {formatNumber(splitCenterElevationM(room, unit))} m
+        Quota centro {formatNumber(
+          splitCenterElevationM(room, unit, project),
+        )}{" "}
+        m
       </p>
       <details className="azione-inspector">
         <summary>

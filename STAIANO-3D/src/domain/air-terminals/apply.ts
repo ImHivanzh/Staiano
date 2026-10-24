@@ -6,6 +6,7 @@ import {
 } from "@/domain/catalogs/air-terminals";
 import type { AirTerminalSolution } from "./size";
 import { newId } from "@/domain/project";
+import { ceilingHeightAt } from "@/domain/geometry/ceilings";
 import { bounds, distance } from "@/domain/geometry/primitives";
 import {
   footprintCorners,
@@ -138,11 +139,8 @@ export function applyAirTerminalSolution(
         });
     }
   }
-  const elevationM =
-    mounting === "ceiling"
-      ? room.heightM
-      : Math.min(2.2, room.heightM - heightMm / 2000 - 0.05);
-  if (elevationM <= heightMm / 2000 && mounting === "wall")
+  const wallElevationM = Math.min(2.2, room.heightM - heightMm / 2000 - 0.05);
+  if (mounting === "wall" && wallElevationM <= heightMm / 2000)
     throw new Error("Altezza stanza insufficiente per il terminale.");
   for (let pointIndex = 0; pointIndex < solution.numberOfPoints; pointIndex++)
     for (
@@ -202,7 +200,10 @@ export function applyAirTerminalSolution(
         systemId,
         mounting,
         shape: family.shape!,
-        elevationM,
+        elevationM:
+          mounting === "ceiling"
+            ? ceilingHeightAt(project, room, candidate.position)
+            : wallElevationM,
         operatingPointIndex: opIndex,
         pressureDropPa: op.pressureDropPa,
         throwM: op.throwM,

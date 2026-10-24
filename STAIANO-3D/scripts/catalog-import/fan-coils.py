@@ -248,6 +248,46 @@ else:
                          "compatibleFamilies": ["AirLeaf SLI", "AirLeaf RSI", "AirLeaf SLSI"], "requiredBoards": boards,
                          "productPhoto": m7_photo, "sourceMetadata": metadata("innova-m7", "Innova",6)})
 
+# Supplement only the matching maximum-speed point; no capacities exist for lower speeds.
+airleaf = json.loads((ROOT / "catalog-data/curation/innova-airleaf-2026.json").read_text(encoding="utf8"))
+airleaf_source = airleaf["sourceMetadata"]
+airleaf_pdf = SOURCE / "innova-airleaf-2026.pdf"
+if hashlib.sha256(airleaf_pdf.read_bytes()).hexdigest() != airleaf_source["sha256"]:
+    raise ValueError("AirLeaf 2026 source changed: review before import")
+horizontal_installations = {}
+for family, key, file in [
+    ("AirLeaf SL", "horizontalSlInstallation", "innova-airleaf-visible-manual-2026.pdf"),
+    ("AirLeaf SLI", "horizontalSliInstallation", "innova-airleaf-concealed-manual-2026.pdf"),
+]:
+    installation = airleaf[key]
+    if hashlib.sha256((SOURCE / file).read_bytes()).hexdigest() != installation["sourceMetadata"]["sha256"]:
+        raise ValueError(f"AirLeaf horizontal installation source changed: {family}")
+    horizontal_installations[family] = installation
+innova = [p for p in products if p["manufacturer"] == "Innova"]
+if {p["id"] for p in innova} != set(airleaf["products"]):
+    raise ValueError("AirLeaf 2026 product coverage changed")
+for product in innova:
+    row = airleaf["products"][product["id"]]
+    if len(product["operatingPoints"]) != 1:
+        raise ValueError(f"Review AirLeaf operating points: {product['id']}")
+    point = product["operatingPoints"][0]
+    if any(abs(product[k] - row[k]) > 1e-6 for k in ["widthMm", "heightMm", "depthMm"]) or any(
+        abs(point[k] - row[k]) > 1e-6 for k in ["coolingW", "heatingW"]
+    ):
+        raise ValueError(f"AirLeaf 2026 dimensions/capacities disagree: {product['id']}")
+    if not 40 <= row["page"] <= 43 or row["airflowM3h"] <= 0 or row["noiseDbA"] < 0:
+        raise ValueError(f"Invalid AirLeaf source row: {product['id']}")
+    point.update({
+        "label": "Massima · 0 Pa",
+        "airflowM3h": row["airflowM3h"], "noiseDbA": row["noiseDbA"],
+        "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+        "heatingConditions": f"Acqua {'65/55' if product['pipes'] == '4' else '45/40'} °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+        "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora.",
+    })
+    product["sourceMetadata"] = {**airleaf_source, "page": row["page"]}
+    if product["family"] in horizontal_installations:
+        product["ceilingInstallation"] = horizontal_installations[product["family"]]
+
 data = {"products": products, "controls": controls}
 version = "fan-coils-" + hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
 dest = ROOT / "catalog-data/generated/fan-coils.json"

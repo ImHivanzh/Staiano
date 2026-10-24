@@ -161,7 +161,6 @@ it("shows graphical connections in 3D along the same plan route without changing
   const proposal = { ...connected, ducts: [] };
   const before = JSON.stringify(proposal);
   const [connection] = airConnectionRoutes(proposal, proposal.floors[0].id);
-  const terminal = connected.airTerminals[0];
   const machine = connected.hvacSystems[0].indoorUnits[0];
   const start = connection.points[0];
   expect(

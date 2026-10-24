@@ -6,7 +6,10 @@ import { expect, test } from "./browser-test";
 import { projectSchema } from "../src/schemas/project";
 import { openDisclosure } from "./ui-helpers";
 
-function flexibleProject(withClearance = false, withCollision = false) {
+function flexibleProject(
+  withClearance = false,
+  withCollision: false | "pillar" | "band" = false,
+) {
   return projectSchema.parse(
     JSON.parse(
       execFileSync(
@@ -23,6 +26,7 @@ function flexibleProject(withClearance = false, withCollision = false) {
     import { placeSupplyPlenum } from './src/domain/ducted/placement.ts';
     import { generateDuctRoutes, setDuctKind, ductRoute } from './src/domain/ducted/routes.ts';
     import { flexibleDuctCurve } from './src/domain/ducted/flexible-curve.ts';
+    import {roomWallSpan} from './src/domain/geometry/placement.ts';
     let p = guidedProjectFixture();
     p.floors[0].configurationWizard = undefined;
     if (${withClearance}) { p.rooms[0].heightM = 4; p.rooms[0].ceilingHeightM = 2.4; }
@@ -33,9 +37,21 @@ function flexibleProject(withClearance = false, withCollision = false) {
     p = generateDuctRoutes(p, p.hvacSystems[0].id);
     const duct = p.ducts.find((d) => d.terminalId);
     p = setDuctKind(p, duct.id, 'flexible');
-    if (${withCollision}) {
-      const hit = flexibleDuctCurve(ductRoute(p, duct), duct.diameterMm).curve.getPointAt(0.5);
+    if (${withCollision !== false}) {
+      const route = ductRoute(p, duct);
+      // Freeze the manual hose before adding the obstacle: automatic routing can avoid it.
+      const saved = p.ducts.find((item) => item.id === duct.id);
+      saved.routing = 'manual'; saved.waypoints = route.slice(1, -1);
+      const hit = flexibleDuctCurve(route, duct.diameterMm).curve.getPointAt(0.5);
+      if('${withCollision}'==='band') {
+        const room=p.rooms[0],wall=p.walls.find(w=>w.id===room.wallIds[0]),span=roomWallSpan(room,wall);
+        const dx=(span.end.x-span.start.x)/span.lengthM,dy=(span.end.y-span.start.y)/span.lengthM;
+        const along=(hit.x-span.start.x)*dx+(hit.z-span.start.y)*dy;
+        const depth=-(hit.x-span.start.x)*dy+(hit.z-span.start.y)*dx-0.05;
+        room.ceilingBands=[{id:'collision-band',name:'Fascia di prova',wallId:wall.id,offsetM:along-0.5,lengthM:1,depthM:depth,elevationM:hit.y-0.4}];
+      } else {
       p.pillars = [{ id: 'collision-pillar', floorId: p.floors[0].id, position: { x: hit.x, y: hit.z }, widthMm: 500, depthMm: 500, heightMm: 4000, rotation: 0, locked: false }];
+      }
     }
     console.log(JSON.stringify(p));
   `,
@@ -516,7 +532,7 @@ test("un flessibile che attraversa un pilastro è rosso e segnalato in 2D e 3D",
   page,
 }) => {
   test.setTimeout(120000);
-  const project = flexibleProject(true, true);
+  const project = flexibleProject(true, "pillar");
   await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
@@ -545,4 +561,48 @@ test("un flessibile che attraversa un pilastro è rosso e segnalato in 2D e 3D",
       .first(),
   ).toBeVisible();
   await page.screenshot({ path: ".cache/flessibile-collisione-rosso.png" });
+});
+
+test("un flessibile vicino al fronte della fascia usa il raggio reale nei controlli 2D e 3D", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  const project = flexibleProject(false, "band");
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto("/");
+  await page
+    .getByTestId("project-file")
+    .setInputFiles({
+      name: "fascia-flessibile.hvacproj",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(project)),
+    });
+  await expect(
+    page.locator('[data-testid="duct-2d"][data-collision="true"]').first(),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await page.getByRole("button", { name: "Flessibili", exact: true }).click();
+  const viewer = page.getByTestId("viewer-3d");
+  await expect(viewer.locator("canvas")).toHaveAttribute(
+    "data-rendered",
+    "true",
+  );
+  await expect(viewer.locator("canvas")).toHaveAttribute(
+    "data-duct-collision-count",
+    /^[1-9]/,
+  );
+  await expect(
+    viewer
+      .getByRole("alert")
+      .filter({ hasText: /Collisione con.*fascia Fascia di prova/ })
+      .first(),
+  ).toBeVisible();
+  const saved = await exported(page);
+  expect(saved.rooms[0].ceilingBands).toEqual(project.rooms[0].ceilingBands);
+  expect(saved.ducts?.find((d) => d.routing === "manual")?.waypoints).toEqual(
+    project.ducts?.find((d) => d.routing === "manual")?.waypoints,
+  );
+  await page.screenshot({
+    path: ".cache/audit-ceiling-band-flex-collision.png",
+  });
 });

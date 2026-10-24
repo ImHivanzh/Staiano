@@ -1,7 +1,7 @@
+import { indoorUnitFitsBelowCeiling } from "./elevation";
 import type { Project } from "@/schemas/project";
 import { assignInstallationRooms } from "../installations";
 import { vrvCatalog, type VrvCatalog } from "@/domain/catalogs/vrv";
-import { positionAlongRoomWall } from "@/domain/geometry/placement";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import { sizeVrvSystems, usableVrvWall, type VrvSolution } from "./vrv-size";
 import { withHvacOutdoorUnit } from "./outdoor";
@@ -18,9 +18,7 @@ export function vrvSystemFromSolution(
     indoorUnits = solution.assignments.map((assignment) => {
       const room = project.rooms.find((item) => item.id === assignment.roomId)!,
         unit = assignment.indoor,
-        old = previous?.indoorUnits.find(
-          (placed) => placed.roomId === room.id,
-        ),
+        old = previous?.indoorUnits.find((placed) => placed.roomId === room.id),
         candidate = usableVrvWall(project, room, unit);
       if (!candidate)
         throw new Error(
@@ -29,6 +27,11 @@ export function vrvSystemFromSolution(
       const preserve =
         old &&
         room.wallIds.includes(old.wallId ?? "") &&
+        indoorUnitFitsBelowCeiling(project, room, {
+          ...unit,
+          position: old.position,
+          rotation: old.rotation,
+        }) &&
         footprintInsideRoom(
           room,
           old.position,
@@ -37,25 +40,15 @@ export function vrvSystemFromSolution(
           old.rotation,
         );
       const wall = preserve
-          ? project.walls.find((item) => item.id === old.wallId)!
-          : candidate.wall,
-        span = candidate.span!;
+        ? project.walls.find((item) => item.id === old.wallId)!
+        : candidate.wall;
       return {
         id: old?.id ?? crypto.randomUUID(),
         roomId: room.id,
         floorId: room.floorId,
         wallId: wall.id,
-        position: preserve
-          ? old.position
-          : positionAlongRoomWall(
-              room,
-              wall,
-              span.lengthM / 2,
-              unit.depthMm / 1000,
-            ),
-        rotation: preserve
-          ? old.rotation
-          : Math.atan2(span.end.y - span.start.y, span.end.x - span.start.x),
+        position: preserve ? old.position : candidate.position,
+        rotation: preserve ? old.rotation : candidate.rotation,
         widthMm: unit.widthMm,
         heightMm: unit.heightMm,
         depthMm: unit.depthMm,

@@ -3,6 +3,11 @@ import { Box3, Vector3 } from "three";
 import { newId } from "@/domain/project";
 import { bodies, segmentBodyDistance, type Body } from "./duct-bodies";
 import {
+  ceilingSurfaces,
+  segmentHitsCeilingSurface,
+  type CeilingSurface,
+} from "./ceiling-surfaces";
+import {
   machinePlenum,
   machinePlenums,
   placedPlenumGeometry,
@@ -28,6 +33,7 @@ import {
   plenumConnectionSide,
   syncAttachedPlenums,
   terminalPlenum,
+  type PlenumConnectionSide,
 } from "./attached-plenums";
 import { connectTerminalOnPlan } from "./graphic-installation";
 
@@ -63,6 +69,31 @@ function machineDuctStart(
     : null;
 }
 
+function collarLead(
+  point: RoutePoint,
+  plenum: Plenum,
+  side: PlenumConnectionSide | "front",
+  lead: number,
+): RoutePoint {
+  const across = side === "left" ? -1 : side === "right" ? 1 : 0;
+  const forward = side === "rear" ? -1 : side === "front" ? 1 : 0;
+  return {
+    x:
+      point.x +
+      (across * Math.cos(plenum.rotation) -
+        forward * Math.sin(plenum.rotation)) *
+        lead,
+    y:
+      point.y +
+      (across * Math.sin(plenum.rotation) +
+        forward * Math.cos(plenum.rotation)) *
+        lead,
+    elevationM:
+      point.elevationM +
+      (side === "top" ? lead : side === "bottom" ? -lead : 0),
+  };
+}
+
 function flexibleCollarLeads(
   project: Project,
   systemId: string,
@@ -78,30 +109,13 @@ function flexibleCollarLeads(
   if (!source || !target) return null;
   // Leave both collars straight before bending, so the hose cannot cut through either body.
   const lead = Math.max(0.1, (leadMultiplier * diameterMm) / 1000);
-  const direction = placedPlenumGeometry(project, source) ? 1 : -1;
-  const from = {
-    x: start.x - Math.sin(source.rotation) * lead * direction,
-    y: start.y + Math.cos(source.rotation) * lead * direction,
-    elevationM: start.elevationM,
-  };
-  const side = plenumConnectionSide(project, target, targetPortIndex);
-  const to = {
-    x:
-      end.x +
-      ((side === "left" ? -1 : side === "right" ? 1 : 0) *
-        Math.cos(target.rotation) -
-        (side === "rear" ? -1 : 0) * Math.sin(target.rotation)) *
-        lead,
-    y:
-      end.y +
-      ((side === "left" ? -1 : side === "right" ? 1 : 0) *
-        Math.sin(target.rotation) +
-        (side === "rear" ? -1 : 0) * Math.cos(target.rotation)) *
-        lead,
-    elevationM:
-      end.elevationM + (side === "top" ? lead : side === "bottom" ? -lead : 0),
-  };
-  return { source, target, from, to, lead };
+  const sourceSide = placedPlenumGeometry(project, source)
+    ? "front"
+    : plenumConnectionSide(project, source, targetPortIndex);
+  const targetSide = plenumConnectionSide(project, target, targetPortIndex);
+  const from = collarLead(start, source, sourceSide, lead);
+  const to = collarLead(end, target, targetSide, lead);
+  return { source, target, from, to, lead, sourceSide, targetSide };
 }
 
 /** Corpi del piano, riusati fra le proposte della stessa modifica del progetto. */
@@ -126,7 +140,7 @@ function routingBodies(project: Project, floorId: string): Body[] {
 function crossesBody(
   samples: Vector3[],
   radius: number,
-  volumes: Body[],
+  volumes: Array<Body | CeilingSurface>,
   startIds: string[],
   endIds: string[],
 ) {
@@ -151,7 +165,12 @@ function crossesBody(
         b = samples[i - 1]
           .clone()
           .lerp(samples[i], span ? (hi - lengths[i - 1]) / span : 1);
-      if (segmentBodyDistance(a, b, body) < (radius - 1e-5) ** 2) return true;
+      if (
+        "triangles" in body
+          ? segmentHitsCeilingSurface(a, b, radius, body)
+          : segmentBodyDistance(a, b, body) < (radius - 1e-5) ** 2
+      )
+        return true;
     }
   }
   return false;
@@ -188,6 +207,11 @@ function flexibleConnectionRoute(
   diameterMm: number,
   targetPortIndex = 0,
 ) {
+  let fallback: { points: RoutePoint[]; length: number } | undefined;
+  const volumes = [
+    ...routingBodies(project, terminal.floorId),
+    ...ceilingSurfaces(project, terminal.floorId),
+  ];
   for (const leadMultiplier of [3, 2, 1.1]) {
     const leads = flexibleCollarLeads(
       project,
@@ -200,7 +224,7 @@ function flexibleConnectionRoute(
       targetPortIndex,
     );
     if (!leads) return [];
-    const { source, target, from, to, lead } = leads;
+    const { source, target, from, to, lead, sourceSide, targetSide } = leads;
     const cavityGeometry = wallCavityGeometry(project, terminal);
     const cavity = cavityGeometry?.polygon;
     if (cavity) {
@@ -219,7 +243,7 @@ function flexibleConnectionRoute(
       ...floorRoutingPolygons(project, terminal.floorId),
       ...wallCavityPolygons(project, terminal.floorId),
     ];
-    const volumes = routingBodies(project, terminal.floorId);
+
     const startIds = [
       source.id,
       ...(project.hvacSystems
@@ -232,17 +256,23 @@ function flexibleConnectionRoute(
       terminal.wallId,
       terminal.ceilingBandId,
     ].filter((id): id is string => !!id);
+    const sourceAngle =
+      source.rotation +
+      (sourceSide === "left" || sourceSide === "right" ? Math.PI / 2 : 0);
+    const lateralAngle =
+      target.rotation +
+      (targetSide === "left" || targetSide === "right" ? Math.PI / 2 : 0);
     const candidates: { points: RoutePoint[]; length: number }[] = [];
     const clean: typeof candidates = [];
     for (const sourceOffset of [0, -2 * lead, 2 * lead]) {
       for (const targetOffset of [0, -2 * lead, 2 * lead]) {
         const a = {
-          x: from.x + Math.cos(source.rotation) * sourceOffset,
-          y: from.y + Math.sin(source.rotation) * sourceOffset,
+          x: from.x + Math.cos(sourceAngle) * sourceOffset,
+          y: from.y + Math.sin(sourceAngle) * sourceOffset,
         };
         const b = {
-          x: to.x + Math.cos(target.rotation) * targetOffset,
-          y: to.y + Math.sin(target.rotation) * targetOffset,
+          x: to.x + Math.cos(lateralAngle) * targetOffset,
+          y: to.y + Math.sin(lateralAngle) * targetOffset,
         };
         const routes = [
           indoorRoute(project, terminal.floorId, a, b, polygons),
@@ -341,9 +371,10 @@ function flexibleConnectionRoute(
     const best = (clean.length ? clean : candidates).sort(
       (a, b) => a.length - b.length,
     )[0];
-    if (best) return best.points;
+    if (clean.length) return best.points;
+    if (best && (!fallback || best.length < fallback.length)) fallback = best;
   }
-  return [];
+  return fallback?.points ?? [];
 }
 
 /** Sezione rettangolare equivalente allo stacco circolare, con proporzione 2:1. */
@@ -1025,8 +1056,15 @@ export function setDuctKind(
   };
 }
 
-export const ductLength = (points: RoutePoint[]) =>
-  points
+/** Centreline length of the drawn hose; an infeasible route has no measurable length. */
+export function ductLength(
+  points: RoutePoint[],
+  diameterMm?: number,
+): number | null {
+  if (points.length < 2) return null;
+  if (diameterMm !== undefined)
+    return flexibleDuctCurve(points, diameterMm)?.curve.getLength() ?? null;
+  return points
     .slice(1)
     .reduce(
       (sum, p, i) =>
@@ -1038,6 +1076,7 @@ export const ductLength = (points: RoutePoint[]) =>
         ),
       0,
     );
+}
 
 /** Save an operator bend point, keeping the existing route shape when it was automatic. */
 function nearestRouteSegment(nodes: RoutePoint[], target: Point | RoutePoint) {

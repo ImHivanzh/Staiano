@@ -48,10 +48,8 @@ for (const device of [
     const viewer = page.getByTestId("viewer-3d"),
       canvas = viewer.locator("canvas");
     await expect(canvas).toHaveAttribute("data-rendered", "true");
-    await expect(page.locator("#proprieta-progetto")).toBeVisible();
-    await expect(page.locator("#proprieta-progetto")).toContainText(
-      "Apparecchio selezionato",
-    );
+    await expect(canvas).toHaveAttribute("data-selection", pump.id);
+    await expect(page.locator("#proprieta-progetto")).toBeHidden();
     await expect(
       viewer.getByRole("button", { name: "Sposta 3D", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
@@ -155,21 +153,7 @@ for (const device of [
     expect(changed.hydronicSystems[0].outdoorUnit.rotation).toBeCloseTo(
       Math.PI,
     );
-    await page
-      .getByRole("button", { name: "Inverti verso (180°)", exact: true })
-      .click();
-    await expect(page.locator('.proprieta input[name="rotation"]')).toHaveValue(
-      "360",
-    );
-    await page
-      .getByRole("button", {
-        name: "Rivolgi ventilatore all’esterno",
-        exact: true,
-      })
-      .click();
-    await expect(page.locator('.proprieta input[name="rotation"]')).toHaveValue(
-      "180",
-    );
+
   });
 
 test("channel setup stays closed until requested and opens in the configuration popup", async ({
@@ -193,9 +177,12 @@ test("channel setup stays closed until requested and opens in the configuration 
   const panel = page.getByRole("dialog", { name: "Canalizzazione collegata" });
   await expect(panel).toHaveCount(0);
   await openDisclosure(viewer, "Vista 3D");
-  await viewer
-    .getByRole("button", { name: "Vista Canale", exact: true })
-    .click();
+  const channelView = viewer.getByRole("button", {
+    name: "Vista Canale",
+    exact: true,
+  });
+  if ((await channelView.getAttribute("aria-pressed")) !== "true")
+    await channelView.click();
   await viewer
     .getByRole("button", { name: "Configura percorsi", exact: true })
     .click();

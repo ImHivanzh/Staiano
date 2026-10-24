@@ -30298,5 +30298,349 @@
     "Copertura indoor parete Pular 9K/12K/18K/24K. La taglia 7K è esclusa finché modello e dimensioni non sono verificati.",
     "Righe mancanti/duplicate o allocazioni incoerenti della fonte sono escluse dal dimensionamento.",
     "Matrice valida per la famiglia Pular pubblicata nel catalogo 2026. Nessuna interpolazione di combinazioni assenti."
+  ],
+  "outdoorUnits": [
+    {
+      "manufacturer": "Gree",
+      "model": "GWH09AVCXB-K6DNA1B/O",
+      "widthMm": 732,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH12AVCXD-K6DNA1A/O",
+      "widthMm": 802,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH18AVDXE-K6DNA1A/O",
+      "widthMm": 873,
+      "heightMm": 555,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH24AVEXF-K6DNA1A/O",
+      "widthMm": 958,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH09AUCXB-K6DNA1A/O",
+      "widthMm": 732,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH12AUCXB-K6DNA1A/O",
+      "widthMm": 732,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH18AUDXD-K6DNA1A/O",
+      "widthMm": 802,
+      "heightMm": 555,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH24AUDXF-K6DNA1A/O",
+      "widthMm": 958,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH09AWBXB-K6DNA1C/O",
+      "widthMm": 732,
+      "heightMm": 550,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH12AWCXB-K6DNA3E/O",
+      "widthMm": 732,
+      "heightMm": 550,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH18AGD-K6DNA1D/O",
+      "widthMm": 732,
+      "heightMm": 550,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 15
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH24AGD-K6DNA1C/O",
+      "widthMm": 873,
+      "heightMm": 555,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 15
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(14)NK6OO",
+      "widthMm": 745,
+      "heightMm": 550,
+      "depthMm": 300,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 4
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(18)NK6OO",
+      "widthMm": 745,
+      "heightMm": 550,
+      "depthMm": 300,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(21)NK6OO",
+      "widthMm": 964,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(24)NK6OO",
+      "widthMm": 964,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(28)NK6OO",
+      "widthMm": 964,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 8
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(36)NK6OO",
+      "widthMm": 1020,
+      "heightMm": 826,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/Free_Match_UE_scheda_prodotto_2026.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda prodotto Free Match 2026",
+        "retrievedAt": "2026-10-03T05:53:12.806831+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "dcedf84907d6d72a90b38103c6f7a9fa10738dc68568e66326814a01e8a4dc3f",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(42)NK6OO",
+      "widthMm": 1020,
+      "heightMm": 826,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/Free_Match_UE_scheda_prodotto_2026.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda prodotto Free Match 2026",
+        "retrievedAt": "2026-10-03T05:53:12.806831+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "dcedf84907d6d72a90b38103c6f7a9fa10738dc68568e66326814a01e8a4dc3f",
+        "page": 8
+      }
+    }
   ]
 }

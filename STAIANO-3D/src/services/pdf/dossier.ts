@@ -13,7 +13,10 @@ import {
   fanCoilControlAtVersion,
   controllerBoardFor,
 } from "@/domain/catalogs/fan-coils";
-import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
+import {
+  heatPumpProductAtVersion,
+  heatPumpCapacity,
+} from "@/domain/catalogs/heat-pumps";
 import type { z } from "zod";
 import type { sourceMetadataSchema } from "@/domain/catalogs/radiator-schema";
 import { deviceCodes } from "@/services/export/device-codes";
@@ -23,10 +26,8 @@ import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
 } from "@/domain/catalogs/splits";
-import {
-  vrvIndoorAtVersion,
-  vrvOutdoorAtVersion,
-} from "@/domain/catalogs/vrv";
+import { vrvIndoorAtVersion, vrvOutdoorAtVersion } from "@/domain/catalogs/vrv";
+import { hvacOutdoorDimensions } from "@/domain/air-conditioning/outdoor";
 
 export const TECHNICAL_NOTE =
   "Dimensionamento convenzionale preliminare: Q = volume netto x 35 W/m³. Non sostituisce un calcolo delle dispersioni dell'edificio o un progetto esecutivo. Il fabbisogno indicato deriva dal criterio convenzionale Volume × 35 W/m³ e deve essere verificato da un tecnico qualificato prima dell’esecuzione dell’impianto. Il coefficiente fisso non considera clima, involucro, ricambi d'aria, apporti solari e condizioni di esercizio. Potenze e portate provengono dai cataloghi indicati; verificare condizioni nominali, installazione e disponibilità commerciale prima dell'ordine. I prezzi di listino Ecoclima, quando riportati, sono separati dal dimensionamento tecnico.";
@@ -190,6 +191,7 @@ export function buildDossier(project: Project) {
     // Plenum, canali e bocchette della distribuzione aeraulica sono documentati
     // dal ventilconvettore: la riga dell'unità esiste già e non va duplicata.
     if (s.fanCoilId) continue;
+    const outdoorDimensions = hvacOutdoorDimensions(s);
     const product = hvacProductAtVersion(s.productId, s.catalogVersion);
     const combination =
       s.type === "split"
@@ -213,12 +215,17 @@ export function buildDossier(project: Project) {
     combination?.secondarySourceMetadata.forEach((source) =>
       addSource(source, ""),
     );
+    if (outdoorDimensions?.sourceMetadata)
+      addSource(outdoorDimensions.sourceMetadata, "");
     material(
       `hvac:${s.productId}`,
       {
         description: `${s.manufacturer} ${s.genericMachine?.model ?? (vrvOutdoor ? vrvOutdoor.model : combination ? combination.outdoorModel : (product?.indoorModel ?? s.productId))}`,
         unit: "sistemi",
-        details: `Unità esterna: ${product?.outdoorModel ?? vrvOutdoor?.model ?? combination?.outdoorModel ?? "non dichiarata"}; ${s.type === "ducted" ? "canalizzato" : s.type === "vrv" ? "VRV/VRF" : (combination?.mode ?? "split")}; ${s.capacityW === null ? "potenza non dichiarata" : `${s.capacityW} W`}${s.airflowM3h !== null ? `; ${s.airflowM3h} m³/h massimi` : ""}${s.genericMachine ? "; dati inseriti dall’operatore" : ""}`,
+        dimensions: s.outdoorUnit
+          ? `Unità esterna L × H × P: ${s.outdoorUnit.widthMm} × ${s.outdoorUnit.heightMm} × ${s.outdoorUnit.depthMm} mm`
+          : undefined,
+        details: `Unità esterna: ${product?.outdoorModel ?? vrvOutdoor?.model ?? combination?.outdoorModel ?? "non dichiarata"}; ${s.type === "ducted" ? "canalizzato" : s.type === "vrv" ? "VRV/VRF" : (combination?.mode ?? "split")}; ${s.capacityW === null ? "potenza non dichiarata" : `${s.capacityW} W`}${s.airflowM3h !== null ? `; ${s.airflowM3h} m³/h massimi` : ""}${s.genericMachine ? "; dati inseriti dall’operatore" : ""}${s.type === "split" && s.outdoorUnit && outdoorDimensions?.dimensionStatus !== "published" ? "; ingombro esterno indicativo, misure e distanze di servizio da verificare sul disegno del produttore" : ""}`,
       },
       codes.get(s.id)!,
     );
@@ -258,15 +265,17 @@ export function buildDossier(project: Project) {
       product?.sourceMetadata,
       `${code}: catalogo ventilconvettori ${unit.catalogVersion} non disponibile`,
     );
+    if (unit.mounting === "ceiling" && product?.ceilingInstallation)
+      addSource(product.ceilingInstallation.sourceMetadata, "");
     material(
-      `fan-coil:${unit.productId}:${unit.catalogVersion}:${unit.operatingPointIndex}`,
+      `fan-coil:${unit.productId}:${unit.catalogVersion}:${unit.operatingPointIndex}:${unit.mounting}`,
       {
         description: product
           ? `${product.manufacturer} ${product.family} ${product.model}`
           : unit.productId,
         unit: "pezzi",
         dimensions: `${unit.widthMm} x ${unit.heightMm} x ${unit.depthMm} mm`,
-        details: `${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}`,
+        details: `${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}${unit.mounting === "ceiling" && product?.ceilingInstallation ? `; ${product.ceilingInstallation.note}` : ""}`,
       },
       code,
     );
@@ -296,6 +305,7 @@ export function buildDossier(project: Project) {
       system.catalogVersion,
     );
     const point = product?.operatingPoints[system.operatingPointIndex];
+    const capacity = point && heatPumpCapacity(point);
     addSource(
       product?.sourceMetadata,
       `${codes.get(system.id)}: catalogo pompe di calore ${system.catalogVersion} non disponibile`,
@@ -308,11 +318,12 @@ export function buildDossier(project: Project) {
           : system.productId,
         unit: "pezzi",
         dimensions: `${system.outdoorUnit.widthMm} x ${system.outdoorUnit.heightMm} x ${system.outdoorUnit.depthMm} mm`,
-        details: `${point ? `${display(point.heatingW)} W caldo / ${display(point.coolingW)} W freddo; ${point.label}` : "punto operativo non verificabile"}; ventilconvettori ${system.fanCoilIds.map((id) => codes.get(id) ?? id).join(", ") || "nessuno collegato"}`,
+        details: `${point && capacity ? `${display(capacity.heatingW)} W caldo / ${display(capacity.coolingW)} W freddo; potenze ${capacity.basis}; ${point.label}` : "punto operativo non verificabile"}; ventilconvettori ${system.fanCoilIds.map((id) => codes.get(id) ?? id).join(", ") || "nessuno collegato"}`,
       },
       codes.get(system.id)!,
     );
   }
+  const openingIds = new Set(p.openings.map((opening) => opening.id));
   return {
     project: p,
     codes,
@@ -320,7 +331,9 @@ export function buildDossier(project: Project) {
     unresolved,
     materials: [...materialMap.values()],
     accessories: [...accessoryMap.values()],
-    checks: validateProject(p),
+    checks: validateProject(p).filter(
+      (check) => !openingIds.has(check.openingId ?? check.entityId ?? ""),
+    ),
     linearBalances: p.hvacSystems
       .filter((s) => s.type === "ducted")
       .flatMap((s) =>

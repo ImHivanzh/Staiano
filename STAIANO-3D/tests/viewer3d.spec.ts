@@ -60,6 +60,12 @@ test("measured shared-wall house: realistic scene, materials, camera and cutaway
   await page
     .getByLabel("Finitura pavimento", { exact: true })
     .selectOption("stone");
+  await page.getByRole("button", { name: "2D", exact: true }).click();
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await openAppearance(page);
+  await expect(
+    page.getByLabel("Finitura pavimento", { exact: true }),
+  ).toHaveValue("stone");
   await page.screenshot({
     path: testInfo.outputPath("house-stone-cutaway.png"),
     fullPage: true,
@@ -334,7 +340,12 @@ test("real Ecoclima grilles and circular valve keep their catalogue face forms",
   const errors = watchBrowserErrors(page);
   for (const code of ["eblf", "evvmc", "egs"]) {
     await openMeasuredHouse(page, `tests/fixtures/realistic-${code}.hvacproj`);
-    await page.getByRole("button", { name: /^Cucina 17,52/ }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      code.toUpperCase(),
+    );
+    const room = page.getByRole("button", { name: /^Cucina 17,52/ });
+    await room.click();
+    await expect(room).toHaveAttribute("aria-pressed", "true");
     await openAppearance(page);
     await page.getByLabel("Isola selezione", { exact: true }).check();
     await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");

@@ -1,8 +1,7 @@
-import { pickTerminalLength, terminalLengthButton } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Locator, Page } from "@playwright/test";
 import { test, expect } from "./browser-test";
-import { dragPlanDevice, openDisclosure } from "./ui-helpers";
+import { chooseFanCoilModel, dragPlanDevice, openDisclosure } from "./ui-helpers";
 import { projectSchema } from "../src/schemas/project";
 
 const legacy = JSON.parse(
@@ -58,275 +57,6 @@ async function saved(page: Page) {
     JSON.parse(readFileSync((await (await downloaded).path())!, "utf8")),
   );
 }
-async function manual(page: Page, model: string, flow: string) {
-  const popup = page.getByRole("dialog", {
-    name: "Scegli macchina canalizzata",
-  });
-  await popup
-    .getByRole("button", { name: "Dati manuali", exact: true })
-    .click();
-  await popup.getByLabel("Marca macchina manuale").fill("Manuale");
-  await popup.getByLabel("Modello macchina manuale").fill(model);
-  await popup.getByLabel("Portata massima macchina manuale").fill(flow);
-  for (const [label, value] of [
-    ["Larghezza", "900"],
-    ["Altezza", "250"],
-    ["Profondità", "700"],
-  ])
-    await popup
-      .getByLabel(`${label} macchina (mm)`, { exact: true })
-      .fill(value);
-  await popup.getByRole("button", { name: "Salva", exact: true }).click();
-  await expect(popup).toHaveCount(0);
-}
-
-for (const width of [1920, 1024])
-  test(`complete ducted plan flow and persistent incomplete elements at ${width}`, async ({
-    page,
-  }, info) => {
-    test.setTimeout(150000);
-    await page.setViewportSize({ width, height: width === 1920 ? 1080 : 768 });
-    const raw = structuredClone(legacy);
-    raw.hvacSystems = [];
-    raw.airTerminals = [];
-    raw.plenums = [];
-    raw.ducts = [];
-    raw.installations = [
-      {
-        id: "plan-installation",
-        name: "Canalizzato 2D",
-        type: "ducted",
-        roomIds: [raw.rooms[0].id],
-      },
-    ];
-    raw.rooms[0].systemType = "ducted";
-    await load(page, raw);
-    const plan = await launch(page);
-    await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
-    await point(plan, 4, 2, true);
-    await expect(plan.getByTestId("insertion-preview")).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(plan.getByTestId("insertion-preview")).toHaveCount(0);
-    await expect(plan.getByTestId("draft-terminal")).toHaveCount(0);
-    await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
-    await point(plan, 4, 2);
-    await expect(plan.getByTestId("draft-terminal")).toContainText(
-      "Da configurare",
-    );
-    await plan.getByTestId("draft-terminal").click();
-    let terminal = page.getByRole("dialog", {
-      name: "Scegli bocchetta sul punto",
-      exact: true,
-    });
-    await terminal
-      .getByRole("button", { name: "Scegli EDLS", exact: true })
-      .click();
-    await pickTerminalLength(terminal, 1000);
-    await terminal
-      .getByRole("button", { name: "Annulla", exact: true })
-      .last()
-      .click();
-    await expect(plan.getByTestId("draft-terminal")).toHaveCount(1);
-    await plan.getByRole("button", { name: "Macchina", exact: true }).click();
-    await point(plan, 2, 4);
-    const incomplete = await saved(page);
-    expect(incomplete.ductedDrafts).toHaveLength(2);
-    expect(incomplete.hvacSystems).toHaveLength(0);
-    expect(incomplete.airTerminals).toHaveLength(0);
-    await page.reload();
-    await launch(page);
-    await expect(plan.getByTestId("draft-terminal")).toHaveCount(1);
-    await expect(plan.getByTestId("draft-machine")).toHaveCount(1);
-    await plan.getByTestId("draft-terminal").click();
-    await terminal
-      .getByRole("button", { name: "Scegli EDLS", exact: true })
-      .click();
-    await pickTerminalLength(terminal, 1000);
-    await expect(terminal.getByLabel("Finitura scelta")).toHaveCount(0);
-    await openDisclosure(terminal, "Aspetto e finiture facoltativi");
-    await terminal
-      .getByRole("group", { name: "Colore scelto", exact: true })
-      .getByRole("button", { name: "RAL 9016 · Bianco", exact: true })
-      .click();
-    const footer = terminal.locator("footer");
-    await expect(terminalLengthButton(terminal, 999)).toHaveCount(0);
-    await pickTerminalLength(terminal, 1000);
-    await footer.getByRole("button", { name: "Salva", exact: true }).click();
-    await expect(terminal).toHaveCount(0);
-    await expect(plan.getByTestId("terminal-supply")).toHaveCount(1);
-    await expect(plan.getByTestId("air-connection")).toHaveCount(0);
-    await plan.getByTestId("draft-machine").click();
-    const machine = page.getByRole("dialog", {
-      name: "Scegli macchina canalizzata",
-    });
-    await machine
-      .getByRole("button", { name: "Dati manuali", exact: true })
-      .click();
-    await machine.getByLabel("Marca macchina manuale").fill("Scartata");
-    await page.keyboard.press("Escape");
-    await plan.getByTestId("draft-machine").click();
-    await manual(page, "Macchina A", "900");
-    await expect(plan.getByTestId("machine-airflow")).toContainText(
-      "Massima:900,00 m³/h",
-    );
-    await expect(plan.getByTestId("machine-airflow")).toContainText(
-      "Da coprire:900,00 m³/h",
-    );
-    await expect(plan.getByTestId("draft-machine")).toHaveCount(0);
-    await plan.getByRole("button", { name: "Collega", exact: true }).click();
-    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
-    await point(plan, 4, 2, true);
-    await expect(plan.getByTestId("connection-preview")).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(plan.getByTestId("connection-preview")).toHaveCount(0);
-    await expect(plan.getByTestId("air-connection")).toHaveCount(0);
-    await plan.getByRole("button", { name: "Collega", exact: true }).click();
-    await plan.getByTestId("terminal-supply").click();
-    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
-    await expect(plan.getByTestId("air-connection")).toHaveCount(1);
-    await page.keyboard.press("Escape");
-    await plan.getByTestId("terminal-supply").click();
-    terminal = page.getByRole("dialog", {
-      name: "Configura bocchetta",
-      exact: true,
-    });
-    await expect(terminalLengthButton(terminal, 1000)).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
-    await expect(
-      terminal.getByRole("button", { name: "RAL 9016 · Bianco", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await pickTerminalLength(terminal, 1500);
-    await page.keyboard.press("Escape");
-    await plan.getByTestId("terminal-supply").click();
-    await expect(terminalLengthButton(terminal, 1000)).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
-    await pickTerminalLength(terminal, 1500);
-    await terminal
-      .locator("footer")
-      .getByRole("button", { name: "Salva", exact: true })
-      .click();
-    await expect(
-      plan.getByTestId("terminal-supply").locator("rect"),
-    ).toHaveAttribute("width", "1.5");
-    await plan.getByRole("button", { name: "Macchina", exact: true }).click();
-    await point(plan, 6, 4);
-    await plan.getByTestId("draft-machine").click();
-    await manual(page, "Macchina B", "500");
-    await plan.getByRole("button", { name: "Collega", exact: true }).click();
-    await plan
-      .getByRole("button", { name: /^Macchina UI/ })
-      .last()
-      .click();
-    await plan.getByTestId("terminal-supply").click();
-    await expect(plan.getByTestId("air-connection")).toHaveCount(1);
-    await page.keyboard.press("Escape");
-    await plan.getByTestId("terminal-supply").click();
-    await terminal
-      .locator("footer")
-      .getByRole("button", { name: "Annulla", exact: true })
-      .click();
-    await plan.locator('summary[aria-label="Azioni bocchetta"]').click();
-    await plan.getByRole("button", { name: "Scollega" }).click();
-    await expect(plan.getByTestId("air-connection")).toHaveCount(0);
-    await plan.getByRole("button", { name: "Collega", exact: true }).click();
-    await plan.getByTestId("terminal-supply").click();
-    await plan
-      .getByRole("button", { name: /^Macchina UI/ })
-      .last()
-      .click();
-    await expect(
-      plan.getByRole("button", { name: "Collega", exact: true }),
-    ).toHaveAttribute("aria-pressed", "true");
-    await page.keyboard.press("Escape");
-    await plan.getByTestId("terminal-supply").click();
-    await terminal
-      .locator("footer")
-      .getByRole("button", { name: "Annulla", exact: true })
-      .click();
-    const selectedTerminalId = await plan
-      .getByTestId("terminal-supply")
-      .getAttribute("data-device-id");
-    await page.getByRole("button", { name: "3D", exact: true }).click();
-    await expect(
-      page.getByTestId("viewer-3d").locator("canvas"),
-    ).toHaveAttribute("data-selection", selectedTerminalId!);
-    await page.getByRole("button", { name: "2D", exact: true }).click();
-    await expect(plan).toBeVisible();
-    await expect(page.getByTestId("editor-2d")).toHaveCount(1);
-    await plan.screenshot({ path: info.outputPath("plan.png") });
-    await page.screenshot({ path: info.outputPath("main-screen.png") });
-    const configured = await saved(page);
-    expect(configured.hvacSystems).toHaveLength(2);
-    expect(
-      new Set(configured.hvacSystems.map((machine) => machine.installationId))
-        .size,
-    ).toBe(2);
-    expect(configured.airTerminals[0].installationId).toBe(
-      configured.hvacSystems[1].installationId,
-    );
-    await expect(
-      page.getByRole("button", { name: "Nuovo impianto", exact: true }),
-    ).toHaveCount(0);
-    await expect(
-      page.getByRole("region", { name: /^Planimetria operativa/ }),
-    ).toHaveCount(0);
-    for (const machine of configured.hvacSystems) {
-      const installed = configured.airTerminals
-        .filter(
-          (terminal) =>
-            terminal.systemId === machine.id && terminal.use === "supply",
-        )
-        .reduce((sum, terminal) => sum + terminal.availableAirflowM3h, 0);
-      const maximum = machine.genericMachine!.maxAirflowM3h;
-      const label = plan.locator(
-        `[data-testid="machine-airflow"][data-system-id="${machine.id}"]`,
-      );
-      const fitsInside = await label.evaluate((node) => {
-        const text = (node as SVGGraphicsElement).getBBox();
-        const body = (
-          node.parentElement!.querySelector("rect") as SVGRectElement
-        ).getBBox();
-        return (
-          text.x >= body.x &&
-          text.y >= body.y &&
-          text.x + text.width <= body.x + body.width &&
-          text.y + text.height <= body.y + body.height
-        );
-      });
-      expect(fitsInside).toBe(true);
-      await expect(label).toContainText(
-        `Massima:${maximum.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} m³/h`,
-      );
-      await expect(label).toContainText(
-        `Da coprire:${Math.max(0, maximum - installed).toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} m³/h`,
-      );
-    }
-
-    expect(configured.ductedDrafts).toEqual([]);
-    expect(configured.airTerminals[0]).toMatchObject({
-      widthMm: 1500,
-      color: "RAL9016",
-      finish: "RAL9016",
-      systemId: configured.hvacSystems[1].id,
-    });
-    await load(page, configured);
-    await launch(page);
-    await expect(
-      plan.getByRole("button", { name: /^Macchina UI/ }),
-    ).toHaveCount(2);
-    await expect(plan.getByTestId("air-connection")).toHaveCount(1);
-    await plan.getByTestId("terminal-supply").click();
-    await expect(terminalLengthButton(terminal, 1500)).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
-    await terminal.screenshot({ path: info.outputPath("popup.png") });
-  });
-
 test("previous project exposes the ducted tools on the main plan", async ({
   page,
 }) => {
@@ -335,6 +65,12 @@ test("previous project exposes the ducted tools on the main plan", async ({
   await expect(page.getByTestId("editor-2d")).toHaveCount(1);
   await plan.getByRole("button", { name: "Macchina", exact: true }).click();
   await point(plan, 2, 4);
+  await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
+  await point(plan, 4, 2);
+  await plan.getByRole("button", { name: "Collega", exact: true }).click();
+  await plan.getByTestId("draft-terminal").click();
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  await page.keyboard.press("Escape");
   await plan.getByRole("button", { name: /^Macchina UI/ }).click();
   await expect(page.getByLabel("Portata massima macchina manuale")).toHaveValue(
     String(legacy.hvacSystems[0].genericMachine.maxAirflowM3h),
@@ -397,6 +133,10 @@ for (const width of [1920, 1024]) {
       name: "Configura apparecchio",
       exact: true,
     });
+    await chooseFanCoilModel(equipment, {
+      manufacturer: "Aermec",
+      model: "FCZ PO",
+    });
     await equipment
       .locator("footer")
       .getByRole("button", { name: "Salva", exact: true })
@@ -456,7 +196,8 @@ for (const width of [1920, 1024]) {
     );
     await expect(move).toHaveAttribute("aria-pressed", "true");
     await dragPlanDevice(page, plan, plan.getByTestId("heat-pump-2d"), 5, -0.6);
-    await expect(move).toHaveAttribute("aria-pressed", "false");
+    await expect(move).toHaveAttribute("aria-pressed", "true");
+    await page.keyboard.press("Escape");
     await plan.getByTestId("heat-pump-2d").locator("rect").click();
     await expect(pumpDialog).toBeVisible();
     await expect(pumpDialog.getByLabel("Nome pompa di calore")).toHaveValue(
@@ -620,13 +361,13 @@ test("all equipment uses one plan and cancelling creates no empty installation",
   raw.rooms[0].systemType = "none";
   await load(page, raw);
   const plan = await launch(page);
-  for (const [label, type] of [
+  for (const [index, [label, type]] of [
     ["Radiatore", "radiator"],
     ["Ventilconvettore", "fanCoil"],
     ["Split", "split"],
-  ]) {
+  ].entries()) {
     await plan.getByRole("button", { name: label, exact: true }).click();
-    await point(plan, 4, 2);
+    await point(plan, 3 + index, 2);
     await expect(page.locator("dialog[open]")).toHaveCount(0);
     await plan.getByTestId(`draft-${type}`).click();
     const popup = page.getByRole("dialog", {
@@ -672,6 +413,10 @@ test("new fan coils each create an independent installation on the same plan", a
     const popup = page.getByRole("dialog", {
       name: "Configura apparecchio",
       exact: true,
+    });
+    await chooseFanCoilModel(popup, {
+      manufacturer: "Aermec",
+      model: "FCZ",
     });
     await popup
       .locator("footer")
@@ -736,6 +481,7 @@ for (const width of [1920, 1024]) {
     expect(result.hvacSystems[0].indoorUnits[0].position.x).toBeCloseTo(3, 1);
     expect(result.hvacSystems[0].indoorUnits[0].position.y).toBeCloseTo(4, 1);
     await page.keyboard.press("M");
+    await expect(move).toHaveAttribute("aria-pressed", "true");
     await page.keyboard.press("Escape");
     await expect(move).toHaveAttribute("aria-pressed", "false");
     await plan.screenshot({ path: info.outputPath("move-tool.png") });

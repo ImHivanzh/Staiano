@@ -1,5 +1,10 @@
 import { expect, it } from "vitest";
-import { addRectangle, createProject, recomputeProject } from "../project";
+import {
+  addRectangle,
+  createProject,
+  recomputeProject,
+  updateRoom,
+} from "../project";
 import {
   addGuidedTerminal,
   guidedProjectFixture,
@@ -162,4 +167,20 @@ it("integrates the pitched roof volume and subtracts the actual lowered ceiling"
   expect(calculateRoomThermal(project, room).designLoadW).toBeCloseTo(
     calculateRoomThermal(project, room).volumeM3 * 35,
   );
+});
+
+it("uses the finished ceiling height for a flat room, including after reload and removal", () => {
+  let project = fixture();
+  const room = project.rooms[0];
+  project = updateRoom(project, room.id, {
+    roof: undefined,
+    ceilingBands: undefined,
+    ceilingHeightM: 2.5,
+  });
+  expect(project.rooms[0].volumeM3).toBeCloseTo(8 * 12 * 2.5);
+  expect(project.rooms[0].designLoadW).toBeCloseTo(8 * 12 * 2.5 * 35);
+  project = recomputeProject(project);
+  expect(project.rooms[0].volumeM3).toBeCloseTo(8 * 12 * 2.5);
+  project = updateRoom(project, room.id, { ceilingHeightM: null });
+  expect(project.rooms[0].volumeM3).toBeCloseTo(8 * 12 * 3);
 });

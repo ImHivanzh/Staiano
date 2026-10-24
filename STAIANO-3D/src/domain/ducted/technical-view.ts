@@ -2,6 +2,7 @@ import type { Project } from "@/schemas/project";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { calculateSupplyPlenum } from "./plenum";
 import { placedPlenumGeometry } from "./placement";
+import { ductedMachineElevationM } from "./machine";
 
 type Vertex = [number, number, number];
 type XY = [number, number];
@@ -87,8 +88,7 @@ export function plenumTechnicalDrawing(
     if (plenum && machine) {
       const x = (machine.position.x - plenum.position.x) * 1000,
         z = (machine.position.y - plenum.position.y) * 1000;
-      const room = project.rooms.find((r) => r.id === machine.roomId)!;
-      const elevation = room.heightM - machine.heightMm / 2000 - 0.05;
+      const elevation = ductedMachineElevationM(project, system, machine);
       center = [
         x * Math.cos(plenum.rotation) + z * Math.sin(plenum.rotation),
         (elevation - (plenum.elevationM ?? 2)) * 1000,

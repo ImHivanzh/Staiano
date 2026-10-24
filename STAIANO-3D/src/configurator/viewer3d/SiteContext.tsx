@@ -15,7 +15,7 @@ export function SiteContext({
   z: number;
   span: number;
 }) {
-  const ground = useMemo(groundTexture, []);
+  const ground = useMemo(() => groundTexture(), []);
   const foundations = useMemo(
     () =>
       rooms

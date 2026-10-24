@@ -22,6 +22,8 @@ for (const width of [1920, 1024]) {
       name: "Configura apparecchio",
       exact: true,
     });
+    await expect(popup).toContainText("Sovratemperatura acqua/ambiente");
+    await expect(popup).toContainText("(75 + 65) / 2 − 20 = 50 K");
     await popup.getByRole("button", { name: "Cordivari", exact: true }).click();
     await popup.getByRole("button", { name: "Ardesia", exact: true }).click();
     await popup.getByRole("button", { name: "2 colonne", exact: true }).click();
@@ -78,6 +80,9 @@ test("a single compatible radiator solution is applied and selected at once", as
   await expect(plan.getByTestId("radiator-2d")).toHaveCount(0);
   // Criteri che ammettono un solo radiatore: il calcolo parte da solo, la
   // ricerca sparisce e l'applicazione resta al comando Salva del popup.
+  await popup
+    .getByLabel("Potenza da coprire con questo punto (W)")
+    .fill("1000");
   await popup.getByRole("button", { name: /ALTEZZA 500/ }).click();
   await expect(
     popup.getByRole("button", { name: "Trova radiatori compatibili" }),

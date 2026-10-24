@@ -16,6 +16,7 @@ import { applyFanCoil, updateFanCoil, removeFanCoil } from "./apply";
 import { installedFanCoilCapacity, sizeFanCoils } from "./size";
 import { fanCoilEnvelope, fanCoilPlacementValid } from "./placement";
 import { deviceEnvelopesOverlap } from "@/domain/geometry/device-envelope";
+import { createInstallation } from "@/domain/installations";
 
 function fixture() {
   const p = createProject();
@@ -87,13 +88,19 @@ describe("ventilconvettori originali", () => {
     const previous = fanCoilCatalogAtVersion("fan-coils-211ce7f343b9c3dd")!;
     expect(previous).not.toBeNull();
     for (const product of previous.products) {
-      expect(fanCoilCatalog.products.find((p) => p.id === product.id)).toEqual(
+      expect(fanCoilProductAtVersion(product.id, previous.version)).toEqual(
         product,
       );
+      if (product.manufacturer !== "Innova")
+        expect(
+          fanCoilCatalog.products.find((p) => p.id === product.id),
+        ).toEqual(product);
     }
     expect(fanCoilCatalog.controls).toEqual(previous.controls);
     for (const id of ["aermec-fcz200p", "aermec-fcz201po"]) {
+      // I canalizzabili sono ad incasso: a soffitto serve un vuoto tecnico.
       const p = fixture();
+      p.rooms[0].ceilingHeightM = 2.4;
       const placed = applyFanCoil(p, p.rooms[0].id, id, 1, {
         mounting: "ceiling",
       });
@@ -133,6 +140,37 @@ describe("ventilconvettori originali", () => {
     expect(installedFanCoilCapacity(loaded, roomId).coolingW).toBe(
       original.operatingPoints[1].coolingW + 2120,
     );
+  });
+
+  it("dimensiona sul residuo considerando tutti i ventilconvettori dell'ambiente", () => {
+    let p = fixture();
+    const roomId = p.rooms[0].id;
+    p = applyFanCoil(p, roomId, "aermec-fcz200", 2);
+    p = createInstallation(p, "fanCoil", roomId);
+    p = applyFanCoil(p, roomId, "aermec-fcz100", 0, {
+      installationId: p.installations.at(-1)!.id,
+    });
+    expect(installedFanCoilCapacity(p, roomId)).toEqual({
+      coolingW: 2250,
+      heatingW: 2560,
+      unknownCount: 0,
+    });
+    const suggestion = sizeFanCoils(p, p.rooms[0], {
+      manufacturer: "Aermec",
+      mounting: "wall",
+    })[0];
+    expect(suggestion.point.coolingW).toBeGreaterThanOrEqual(
+      p.rooms[0].designLoadW - 2250,
+    );
+    expect(suggestion.point.coolingW).toBeLessThan(p.rooms[0].designLoadW);
+  });
+
+  it("non consiglia altri apparecchi quando il fabbisogno è già coperto", () => {
+    let p = fixture();
+    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz600", 2);
+    expect(
+      sizeFanCoils(p, p.rooms[0], { manufacturer: "Aermec", mounting: "wall" }),
+    ).toEqual([]);
   });
 
   it("modifica velocità e comando conservando posizione manuale e versione catalogo", () => {
@@ -237,10 +275,10 @@ describe("ventilconvettori originali", () => {
     });
     const first = p.fanCoils![0];
     const envelope = fanCoilEnvelope(first);
-    expect(envelope.minZ).toBe(p.rooms[0].heightM);
-    expect(envelope.maxZ).toBeCloseTo(
-      p.rooms[0].heightM + first.depthMm / 1000,
+    expect(envelope.minZ).toBeCloseTo(
+      p.rooms[0].heightM - first.depthMm / 1000,
     );
+    expect(envelope.maxZ).toBeCloseTo(p.rooms[0].heightM);
     p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", 0, {
       mounting: "ceiling",
     });

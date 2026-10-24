@@ -16,19 +16,30 @@ export const heatPumpProductSchema = z.object({
   sourceMetadata: sourceMetadataSchema,
   operatingPoints: z
     .array(
-      z.object({
-        label: z.string(),
-        heatingW: positive,
-        coolingW: positive,
-        heatingConditions: z.string(),
-        coolingConditions: z.string(),
-        heatingWaterSupplyC: z.number().finite(),
-        coolingWaterSupplyC: z.number().finite(),
-        heatingOutdoorC: z.number().finite(),
-        coolingOutdoorC: z.number().finite(),
-        cop: positive.nullable(),
-        eer: positive.nullable(),
-      }),
+      z
+        .object({
+          label: z.string(),
+          heatingW: positive,
+          coolingW: positive,
+          maxHeatingW: positive.optional(),
+          maxCoolingW: positive.optional(),
+          heatingConditions: z.string(),
+          coolingConditions: z.string(),
+          heatingWaterSupplyC: z.number().finite(),
+          coolingWaterSupplyC: z.number().finite(),
+          heatingOutdoorC: z.number().finite(),
+          coolingOutdoorC: z.number().finite(),
+          cop: positive.nullable(),
+          eer: positive.nullable(),
+        })
+        .refine(
+          (point) =>
+            (point.maxHeatingW === undefined ||
+              point.maxHeatingW >= point.heatingW) &&
+            (point.maxCoolingW === undefined ||
+              point.maxCoolingW >= point.coolingW),
+          "La potenza massima non può essere inferiore alla nominale",
+        ),
     )
     .min(1),
 });

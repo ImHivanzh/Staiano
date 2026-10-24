@@ -1,7 +1,7 @@
 import { expect, test } from "./browser-test";
 import { importPlenumFixture, exportPlenumFixture } from "./plenum-ui-fixture";
 
-test("Collega associa il plenum alla ripresa macchina e Ruota 90 gradi muove solo la macchina", async ({
+test("Collega associa il plenum alla ripresa macchina e Ruota 90 gradi conserva l’aggancio", async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -22,6 +22,8 @@ test("Collega associa il plenum alla ripresa macchina e Ruota 90 gradi muove sol
   expect(machine.rotation).toBeCloseTo(
     before.hvacSystems[0].indoorUnits[0].rotation + Math.PI / 2,
   );
-  // Il plenum già posizionato resta autonomo, come quello della bocchetta.
-  expect(result.plenums[0].rotation).toBeCloseTo(before.plenums[0].rotation);
+  expect(result.plenums[0].rotation).toBeCloseTo(before.plenums[0].rotation + Math.PI / 2);
+  const owner = before.hvacSystems[0].indoorUnits[0];
+  expect(result.plenums[0].position.x).toBeCloseTo(owner.position.x - (before.plenums[0].position.y - owner.position.y));
+  expect(result.plenums[0].position.y).toBeCloseTo(owner.position.y + (before.plenums[0].position.x - owner.position.x));
 });

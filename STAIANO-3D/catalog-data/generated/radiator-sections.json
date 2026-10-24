@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "sections": [
+    {
+      "columns": 2,
+      "sourceModelId": "ardesia-2-1150-2000",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2024/05/ardesia_2_col_1150_2000_rev00.obj",
+      "sourceSha256": "88ba82dd130f89862cff4f6db268fa61597a6474c2514e833b5f0a0fdbac210e",
+      "sourceHeightMm": 2000,
+      "connectionOffsetMm": 56,
+      "measuredInteraxisMm": 1944.0,
+      "fixedEndMm": 73,
+      "tubeRadialDeviationMm": 0.050000048734503366,
+      "measuredDimensionsMm": [
+        46.0,
+        2000.0,
+        66.0
+      ],
+      "localUrl": "/models3d/ardesia-section-2.glb",
+      "glbSha256": "83f4f313175540cf0e32831a1db8d33e9b42cc3c02d0157da3e1d3eaa30b24e7",
+      "glbBytes": 53664,
+      "vertices": 1343,
+      "triangles": 1708
+    },
+    {
+      "columns": 3,
+      "sourceModelId": "ardesia-3-690-2000",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2024/05/ardesia_3_col_690_2000_rev00.obj",
+      "sourceSha256": "d48e3f329c6aacdc836529597da50f31ced2b80e6406f934e306174871f53a0e",
+      "sourceHeightMm": 2000,
+      "connectionOffsetMm": 56,
+      "measuredInteraxisMm": 1944.0,
+      "fixedEndMm": 73,
+      "tubeRadialDeviationMm": 0.05000000000000071,
+      "measuredDimensionsMm": [
+        46.0,
+        2000.0,
+        106.9998
+      ],
+      "localUrl": "/models3d/ardesia-section-3.glb",
+      "glbSha256": "7e661230f80d0616034fd7f22401e93d28d91c5000d56069b572e684b6f650f3",
+      "glbBytes": 75176,
+      "vertices": 1689,
+      "triangles": 2806
+    },
+    {
+      "columns": 4,
+      "sourceModelId": "ardesia-4-690-1800",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2024/05/ardesia_4_col_690_1800_rev00.obj",
+      "sourceSha256": "4b0419ec0b538b86230f9da753495d80581aa2b8cd7c8abc00554ca6b258b932",
+      "sourceHeightMm": 1800,
+      "connectionOffsetMm": 56,
+      "measuredInteraxisMm": 1744.0,
+      "fixedEndMm": 73,
+      "tubeRadialDeviationMm": 0.05000000000000071,
+      "measuredDimensionsMm": [
+        46.0,
+        1799.3731979999998,
+        147.9998
+      ],
+      "localUrl": "/models3d/ardesia-section-4.glb",
+      "glbSha256": "52b7c5b46cf09777c96539a2b231963509f476ac72f110a97df43335a3b663f3",
+      "glbBytes": 75248,
+      "vertices": 1689,
+      "triangles": 2812
+    },
+    {
+      "columns": 5,
+      "sourceModelId": "ardesia-5-460-2000",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2024/05/ardesia_5_col_460_2000_rev00.obj",
+      "sourceSha256": "f1f1ec18ffe3eb626b5820cde7c1b5ba3038cf7aa30d22c4cd600742350081d8",
+      "sourceHeightMm": 2000,
+      "connectionOffsetMm": 56,
+      "measuredInteraxisMm": 1944.0,
+      "fixedEndMm": 73,
+      "tubeRadialDeviationMm": 0.05000000000000071,
+      "measuredDimensionsMm": [
+        46.0,
+        2000.0,
+        188.9998
+      ],
+      "localUrl": "/models3d/ardesia-section-5.glb",
+      "glbSha256": "8c62854623d620f81701334978986ec8b675ef13c7b5d3f453aedee436aba14a",
+      "glbBytes": 104460,
+      "vertices": 2358,
+      "triangles": 3910
+    },
+    {
+      "columns": 6,
+      "sourceModelId": "ardesia-6-460-2000",
+      "sourceUrl": "https://www.cordivari.it/wp-content/uploads/2024/05/ardesia_6_col_460_2000_rev00.obj",
+      "sourceSha256": "eb29b713237e1b81e77d00b474e3f6ab1f76e4ac3257111742ce6e157e5e5aae",
+      "sourceHeightMm": 2000,
+      "connectionOffsetMm": 56,
+      "measuredInteraxisMm": 1944.0,
+      "fixedEndMm": 73,
+      "tubeRadialDeviationMm": 0.1707110179362843,
+      "measuredDimensionsMm": [
+        46.0,
+        2000.0,
+        230.1
+      ],
+      "localUrl": "/models3d/ardesia-section-6.glb",
+      "glbSha256": "5b9387e31692a62e51351ce3f98087bab558545226fd4e16be96bd4623be1afc",
+      "glbBytes": 109880,
+      "vertices": 2450,
+      "triangles": 4178
+    }
+  ]
+}

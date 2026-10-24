@@ -1,5 +1,8 @@
 import type { Project } from "@/schemas/project";
-import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
+import {
+  heatPumpProductAtVersion,
+  heatPumpCapacity,
+} from "@/domain/catalogs/heat-pumps";
 import { fanCoilProductAtVersion } from "@/domain/catalogs/fan-coils";
 import { hydronicOutdoorValid, type HydronicSystem } from "./placement";
 import { hydronicTargets, hydronicRoomIds } from "../ducted/plan-connections";
@@ -67,8 +70,13 @@ export function validateHydronicSystem(
     fanCoilHeatingW += op.heatingW;
     fanCoilCoolingW += op.coolingW;
   }
-  const heatingW = point?.heatingW ?? 0,
-    coolingW = point?.coolingW ?? 0;
+  const capacity = point ? heatPumpCapacity(point) : null;
+  const heatingW = capacity?.heatingW ?? 0,
+    coolingW = capacity?.coolingW ?? 0;
+  if (capacity?.basis === "dichiarate (massimi non disponibili)")
+    warnings.push(
+      "Massimi della pompa non disponibili nella revisione di catalogo: confronto sulle capacità dichiarate alle condizioni selezionate.",
+    );
   if (point && heatingW < designLoadW)
     warnings.push(
       "Potenza della pompa in riscaldamento inferiore al fabbisogno degli ambienti serviti.",
@@ -100,12 +108,13 @@ export function validateHydronicSystem(
       );
   }
   warnings.push(
-    "Verifica preliminare su potenze nominali: carico a 35 W/m³, temperatura esterna di progetto, sbrinamento, portate, accumulo, perdite e distanze di posa richiedono progetto tecnico. Non certifica il dimensionamento idraulico.",
+    "Verifica preliminare sulle potenze massime dichiarate dove disponibili, altrimenti sulle capacità di catalogo: carico a 35 W/m³, temperatura esterna di progetto, sbrinamento, portate, accumulo, perdite e distanze di posa richiedono progetto tecnico. Non certifica il dimensionamento idraulico.",
   );
   return {
     designLoadW,
     heatingW,
     coolingW,
+    capacityBasis: capacity?.basis ?? "non verificabili",
     fanCoilHeatingW,
     fanCoilCoolingW,
     warnings,

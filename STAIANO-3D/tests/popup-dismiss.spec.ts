@@ -1,5 +1,5 @@
 import { expect, test } from "./browser-test";
-import { openInspector } from "./ui-helpers";
+import { pickPlanPoint } from "./ui-helpers";
 
 for (const [width, height, reducedMotion] of [
   [1920, 1080, "no-preference"],
@@ -17,9 +17,15 @@ for (const [width, height, reducedMotion] of [
       .getByRole("dialog")
       .getByRole("button", { name: "Crea stanza", exact: true })
       .click();
-    await openInspector(page, "Configura impianto");
+    const plan = page.getByRole("region", {
+      name: "Configurazione grafica canalizzato",
+    });
+    await plan.getByRole("button", { name: "Radiatore", exact: true }).click();
+    await pickPlanPoint(plan, 2, 1);
+    const launch = plan.getByTestId("draft-radiator");
+    await launch.click();
     const popup = page.getByRole("dialog", {
-      name: /^(?:Vista |Configura impianto$)/,
+      name: "Configura apparecchio",
       exact: true,
     });
     const css = await popup.evaluate((node) => {
@@ -40,7 +46,7 @@ for (const [width, height, reducedMotion] of [
     }
     await popup
       .getByRole("heading", {
-        name: /^(?:Vista |Configura impianto$)/,
+        name: "Configura apparecchio",
         exact: true,
       })
       .click();
@@ -57,31 +63,16 @@ for (const [width, height, reducedMotion] of [
     await page.mouse.up();
     await expect(popup).toBeVisible();
 
-    await popup
-      .getByRole("button", { name: "Nuovo impianto", exact: true })
-      .click();
-    const picker = page.getByRole("dialog", {
-      name: "Nuovo impianto",
-      exact: true,
-    });
-    await expect(picker).toBeVisible();
-    await page.mouse.click(5, 5);
-    await expect(picker).toBeHidden();
-    await expect(popup).toBeVisible();
-    await expect(
-      popup.getByRole("button", { name: "Nuovo impianto", exact: true }),
-    ).toBeFocused();
     await page.screenshot({ path: info.outputPath("rounded-popup.png") });
     await page.mouse.click(5, 5);
     await expect(popup).toBeHidden();
-    const launch = page.getByRole("button", {
-      name: /^(?:Vista |Configura impianto$)/,
-      exact: true,
-    });
     await expect(launch).toBeFocused();
     await launch.click();
     await expect(
-      popup.getByRole("button", { name: "Nuovo impianto", exact: true }),
+      popup.getByRole("heading", {
+        name: "Configura apparecchio",
+        exact: true,
+      }),
     ).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(popup).toBeHidden();

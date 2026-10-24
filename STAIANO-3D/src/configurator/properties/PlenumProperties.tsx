@@ -4,7 +4,8 @@ import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm } from "@/utils/format";
 import { removeSelection } from "@/domain/geometry/selection";
 import { deviceCodes } from "@/services/export/device-codes";
-import { resolveTerminalAccessorySpecification } from "@/domain/air-terminals/commercial-bom";
+import { plenumConnectionSide } from "@/domain/ducted/attached-plenums";
+import { placedPlenumGeometry } from "@/domain/ducted/placement";
 
 export function PlenumProperties({
   project,
@@ -25,28 +26,12 @@ export function PlenumProperties({
       s.indoorUnits.some((u) => u.id === plenum.attachmentId),
     );
   // Lo stacco è un dato del corpo: se manca, si parte dalla scheda di catalogo.
-  const storedPosition =
-    plenum.connectionPosition ??
-    (terminal
-      ? resolveTerminalAccessorySpecification(terminal)?.plenum
-          ?.connectionPosition
-      : undefined) ??
-    "lateral";
   // I valori storici senza geometria propria ricadono sul lato posteriore.
-  const normalizePosition = (
-    position:
-      | "lateral"
-      | "upper"
-      | "lower"
-      | "rear"
-      | "left"
-      | "right"
-      | "custom",
-  ) => (position === "lateral" || position === "custom" ? "rear" : position);
   const portCount = Math.max(1, plenum.portCount ?? 1);
-  const connectionPositions = Array.from({ length: portCount }, (_, i) =>
-    normalizePosition(plenum.connectionPositions?.[i] ?? storedPosition),
-  );
+  const connectionPositions = Array.from({ length: portCount }, (_, i) => {
+    const side = plenumConnectionSide(project, plenum, i);
+    return side === "top" ? "upper" : side === "bottom" ? "lower" : side;
+  });
   return (
     <div className="corpo-proprieta">
       <h3>Plenum {plenum.use === "return" ? "di ripresa" : "di mandata"}</h3>
@@ -89,10 +74,7 @@ export function PlenumProperties({
               return;
             }
           }
-          const nextPortCount = Math.max(
-            1,
-            numberFromForm(data.get("ports")),
-          );
+          const nextPortCount = Math.max(1, numberFromForm(data.get("ports")));
           const positions = Array.from(
             { length: nextPortCount },
             (_, i) =>
@@ -139,39 +121,37 @@ export function PlenumProperties({
         }}
       >
         <fieldset disabled={plenum.locked}>
-          {!machineAttached && plenum.attachmentId !== undefined && (
-            <>
-              {connectionPositions.map((position, i) => (
-                <label className="campo" key={i}>
-                  <span>
-                    {portCount > 1 ? `Stacco ${i + 1}` : "Direzione stacchi"}
-                  </span>
-                  <select
-                    name={`port-position-${i}`}
-                    defaultValue={position}
-                  >
-                    <option value="rear">Dietro · orizzontali</option>
-                    <option value="upper">Sopra · verso l’alto</option>
-                    <option value="lower">Sotto · verso il basso</option>
-                    <option value="left">Sinistra</option>
-                    <option value="right">Destra</option>
-                  </select>
+          {plenum.attachmentId !== undefined &&
+            !placedPlenumGeometry(project, plenum) && (
+              <>
+                {connectionPositions.map((position, i) => (
+                  <label className="campo" key={i}>
+                    <span>
+                      {portCount > 1 ? `Stacco ${i + 1}` : "Direzione stacchi"}
+                    </span>
+                    <select name={`port-position-${i}`} defaultValue={position}>
+                      <option value="rear">Dietro · orizzontali</option>
+                      <option value="upper">Sopra · verso l’alto</option>
+                      <option value="lower">Sotto · verso il basso</option>
+                      <option value="left">Sinistra</option>
+                      <option value="right">Destra</option>
+                    </select>
+                  </label>
+                ))}
+                <small>
+                  Ogni stacco può arrivare da un lato diverso. Dato del plenum,
+                  non della bocchetta: non modifica le quote dichiarate.
+                </small>
+                <label className="campo">
+                  <span>Nota stacchi</span>
+                  <input
+                    name="connection-note"
+                    maxLength={200}
+                    defaultValue={plenum.connectionNote ?? ""}
+                  />
                 </label>
-              ))}
-              <small>
-                Ogni stacco può arrivare da un lato diverso. Dato del plenum,
-                non della bocchetta: non modifica le quote dichiarate.
-              </small>
-              <label className="campo">
-                <span>Nota stacchi</span>
-                <input
-                  name="connection-note"
-                  maxLength={200}
-                  defaultValue={plenum.connectionNote ?? ""}
-                />
-              </label>
-            </>
-          )}
+              </>
+            )}
           {!terminal && (
             <label className="campo">
               <span>Lato impianto</span>

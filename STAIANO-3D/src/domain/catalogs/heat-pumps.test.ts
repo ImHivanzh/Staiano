@@ -146,7 +146,7 @@ describe("complete official Gree VERSATI catalog", () => {
     }
     reportUnarchived([...unarchived]);
   });
-  it("preserves every previous catalog model unchanged", () => {
+  it("preserves previous catalog data while adding documented maximum outputs", () => {
     for (const version of [
       "heat-pumps-dd01394cdc900d50",
       "heat-pumps-6b5487027be7da66",
@@ -155,7 +155,7 @@ describe("complete official Gree VERSATI catalog", () => {
       for (const p of previous.products)
         expect(
           heatPumpCatalog.products.find((current) => current.id === p.id),
-        ).toEqual(p);
+        ).toMatchObject(p);
     }
   });
 });

@@ -1,10 +1,11 @@
-import type { Project, Room } from "@/schemas/project";
+import type { Project } from "@/schemas/project";
 import type {
   VrvCatalog,
   VrvIndoor,
   VrvOutdoor,
 } from "@/domain/catalogs/vrv-schema";
-import { roomWallSpan } from "@/domain/geometry/placement";
+import { usableSplitWall as usableVrvWall } from "./size";
+export { usableVrvWall };
 
 export type VrvAssignment = {
   roomId: string;
@@ -20,26 +21,6 @@ export type VrvSolution = {
   connectedHeatingW: number;
   connectionRatio: number;
 };
-
-/** Same wall check as the split placement: the unit must fit the room. */
-export function usableVrvWall(
-  project: Project,
-  room: Room,
-  unit: VrvIndoor,
-) {
-  if (unit.heightMm / 1000 + 0.1 > room.heightM) return null;
-  return (
-    project.walls
-      .filter((wall) => room.wallIds.includes(wall.id))
-      .map((wall) => ({ wall, span: roomWallSpan(room, wall) }))
-      .filter(
-        (candidate) =>
-          candidate.span &&
-          candidate.span.lengthM >= unit.widthMm / 1000 + 0.2,
-      )
-      .sort((a, b) => b.span!.lengthM - a.span!.lengthM)[0] ?? null
-  );
-}
 
 /**
  * Selects one published indoor class per room and an outdoor unit whose
@@ -88,7 +69,8 @@ export function sizeVrvSystems(
     options
       .slice(index)
       .reduce(
-        (sum, candidates) => sum + Math.min(...candidates.map((u) => u.nominalCoolingW)),
+        (sum, candidates) =>
+          sum + Math.min(...candidates.map((u) => u.nominalCoolingW)),
         0,
       ),
   );
@@ -98,10 +80,8 @@ export function sizeVrvSystems(
     (a, b) => a.coolingW - b.coolingW || a.id.localeCompare(b.id),
   )) {
     if (outdoor.coolingW < requiredW || outdoor.heatingW < requiredW) continue;
-    const minConnected =
-      (outdoor.coolingW * outdoor.minConnectionRatio) / 100,
-      maxConnected =
-        (outdoor.coolingW * outdoor.maxConnectionRatio) / 100;
+    const minConnected = (outdoor.coolingW * outdoor.minConnectionRatio) / 100,
+      maxConnected = (outdoor.coolingW * outdoor.maxConnectionRatio) / 100;
     let best: { units: VrvIndoor[]; cooling: number; heating: number } | null =
       null;
     const chosen: VrvIndoor[] = [];

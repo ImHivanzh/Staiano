@@ -158,9 +158,15 @@ test("local AI recognizes reference walls on five real plans without sending the
         result.analysis.walls.filter((wall) => {
           const x = (wall.start.x + wall.end.x) / 2,
             y = (wall.start.y + wall.end.y) / 2;
-          return x >= 85 && x <= 225 && y >= 270 && y <= 310;
+          return (
+            wall.layer !== "Contorni da verificare" &&
+            x >= 85 &&
+            x <= 225 &&
+            y >= 270 &&
+            y <= 310
+          );
         }),
-        "La scritta PORTICO non è un muro",
+        "La scritta PORTICO non è un muro confermato",
       ).toHaveLength(0);
   }
 });

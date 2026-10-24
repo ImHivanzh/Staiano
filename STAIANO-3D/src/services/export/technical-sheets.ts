@@ -6,11 +6,9 @@ import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
+  splitOutdoorAtVersion,
 } from "@/domain/catalogs/splits";
-import {
-  vrvIndoorAtVersion,
-  vrvOutdoorAtVersion,
-} from "@/domain/catalogs/vrv";
+import { vrvIndoorAtVersion, vrvOutdoorAtVersion } from "@/domain/catalogs/vrv";
 import {
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
@@ -120,6 +118,15 @@ export function installedTechnicalSheets(project: Project) {
       );
       for (const source of product?.secondarySourceMetadata ?? [])
         add(system.id, "Abbinamento split", source);
+      const dimensions =
+        product &&
+        splitOutdoorAtVersion(
+          product.outdoorModel,
+          product.manufacturer,
+          system.catalogVersion,
+        );
+      if (dimensions)
+        add(system.id, "Ingombro unità esterna", dimensions.sourceMetadata);
       for (const unit of system.indoorUnits) {
         const indoor = splitIndoorAtVersion(
           unit.productId,
@@ -143,6 +150,12 @@ export function installedTechnicalSheets(project: Project) {
       `${product?.manufacturer ?? "Ventilconvettore"} ${product?.model ?? unit.productId}`,
       product?.sourceMetadata,
     );
+    if (unit.mounting === "ceiling" && product?.ceilingInstallation)
+      add(
+        unit.id,
+        "Vincoli di posa a soffitto",
+        product.ceilingInstallation.sourceMetadata,
+      );
     if (unit.controllerId) {
       const control = fanCoilControlAtVersion(
         unit.controllerId,

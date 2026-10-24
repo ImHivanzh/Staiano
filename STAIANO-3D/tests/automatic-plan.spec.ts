@@ -11,6 +11,11 @@ test("an imported image becomes an editable 2D plan with rooms and openings afte
   test.setTimeout(180000);
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
+  const runtime = await page.request.get("/api/import/reconstruct");
+  test.skip(
+    !(await runtime.json()).available,
+    "Installare il runtime locale Raster2Seq per questo collaudo.",
+  );
   const pixels = gunzipSync(
     readFileSync("tests/fixtures/plan-recognition/unite-barn.rgba.gz"),
   ).toString("base64");
@@ -102,8 +107,15 @@ test("an imported image becomes an editable 2D plan with rooms and openings afte
     path: info.outputPath("automatic-plan-imported.png"),
   });
   await mkdir(".impeccable/review/automatic-plan", { recursive: true });
-  for (const [source, destination] of [["automatic-plan-desktop.png", "desktop.png"], ["automatic-plan-ipad.png", "ipad.png"], ["automatic-plan-imported.png", "imported.png"]])
-    await copyFile(info.outputPath(source), `.impeccable/review/automatic-plan/${destination}`);
+  for (const [source, destination] of [
+    ["automatic-plan-desktop.png", "desktop.png"],
+    ["automatic-plan-ipad.png", "ipad.png"],
+    ["automatic-plan-imported.png", "imported.png"],
+  ])
+    await copyFile(
+      info.outputPath(source),
+      `.impeccable/review/automatic-plan/${destination}`,
+    );
 });
 
 test("closing the importer cancels local reconstruction and removes its temporary image", async ({
@@ -139,13 +151,11 @@ test("closing the importer cancels local reconstruction and removes its temporar
   );
   await page.getByRole("button", { name: /^Importa planimetria/ }).click();
   const dialog = page.getByRole("dialog", { name: "Importa planimetria" });
-  await dialog
-    .getByLabel("File planimetria", { exact: true })
-    .setInputFiles({
-      name: "annulla-pianta.png",
-      mimeType: "image/png",
-      buffer: Buffer.from(png, "base64"),
-    });
+  await dialog.getByLabel("File planimetria", { exact: true }).setInputFiles({
+    name: "annulla-pianta.png",
+    mimeType: "image/png",
+    buffer: Buffer.from(png, "base64"),
+  });
   let created: string[] = [];
   await expect
     .poll(

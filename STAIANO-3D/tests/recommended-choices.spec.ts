@@ -1,7 +1,12 @@
 import { execFileSync } from "node:child_process";
 import type { Page } from "@playwright/test";
 import { expect, test } from "./browser-test";
-import { pickPlanPoint } from "./ui-helpers";
+import {
+  pickPlanPoint,
+  openDisclosure,
+  chooseTerminalModel,
+  chooseFanCoilModel,
+} from "./ui-helpers";
 
 async function load(page: Page) {
   const fixture = JSON.parse(
@@ -17,10 +22,17 @@ async function load(page: Page) {
     import { addRectangle } from './src/domain/project.ts';
     import { ensureInstallations } from './src/domain/installations.ts';
     import { applyManualDuctedSystem } from './src/domain/ducted/apply.ts';
+    import { placeDuctedDraft, placeMachineOnPlan } from './src/domain/ducted/graphic-installation.ts';
+    import { connectDraftOnPlan } from './src/domain/ducted/plan-connections.ts';
     let p = ensureInstallations(guidedProjectFixture());
     p = addRectangle(p, p.floors[0].id, { width: 4, length: 4, height: 2.7, name: 'Studio piccolo', origin: { x: 10, y: 0 } });
     const s = p.hvacSystems[0];
     p = applyManualDuctedSystem(p, p.rooms.map(r => r.id), { ...s.genericMachine, maxAirflowM3h: 1200 }, s.id, s.installationId);
+    p = placeMachineOnPlan(p, s.id, p.rooms[0].id, {x:3,y:3});
+    for (const room of p.rooms) {
+      p = placeDuctedDraft(p, s.installationId, room.id, room.centroid, 'terminal');
+      p = connectDraftOnPlan(p, p.ductedDrafts.at(-1).id, s.id);
+    }
     console.log(JSON.stringify(p));
   `,
       ],
@@ -57,8 +69,19 @@ for (const width of [1920, 1024]) {
       await plan
         .getByRole("button", { name: "Bocchetta", exact: true })
         .click();
-      await pickPlanPoint(plan, room.centroid.x, room.centroid.y);
-      await plan.getByTestId("draft-terminal").last().click();
+      const draft = fixture.ductedDrafts.find(
+        (item: { roomId: string }) => item.roomId === room.id,
+      );
+      await plan.locator(`[data-point-id="${draft.id}"]`).click();
+      await expect(plan.getByTestId("draft-terminal")).toHaveCount(2);
+      const manual = popup
+        .locator("summary")
+        .filter({ hasText: "Configurazione da modulo e dettagli tecnici" });
+      if (await manual.isVisible())
+        await openDisclosure(
+          popup,
+          "Configurazione da modulo e dettagli tecnici",
+        );
       const primary = popup.getByRole("group", {
         name: "Bocchette principali",
       });
@@ -114,9 +137,7 @@ for (const width of [1920, 1024]) {
         popup.getByRole("button", { name: "Scegli EDFL-20", exact: true }),
       ).toHaveCount(0);
       await popup.getByRole("button", { name: "Mandata", exact: true }).click();
-      await popup
-        .getByRole("button", { name: "Scegli EDLS", exact: true })
-        .click();
+      await chooseTerminalModel(popup, "EDLS");
       const length = popup.getByRole("group", {
         name: /^Lunghezza (singola bocchetta|modulo 1)$/,
       });
@@ -189,6 +210,11 @@ for (const width of [1920, 1024]) {
     await pickPlanPoint(plan, 4, -0.7);
     await expect(page.locator("#proprieta-progetto")).not.toBeVisible();
     await plan.getByTestId("draft-heatPump").click();
+    await plan.getByRole("button", { name: "Collega", exact: true }).click();
+    await plan.getByTestId("draft-heatPump").click();
+    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+    await page.keyboard.press("Escape");
+    await plan.getByTestId("draft-heatPump").click();
     await expect(page.locator("#proprieta-progetto")).not.toBeVisible();
     const pump = page.getByRole("dialog", { name: "Scegli pompa di calore" });
     const recommended = pump.locator('button[data-recommended="true"]');
@@ -222,6 +248,11 @@ for (const width of [1920, 1024]) {
       );
       await plan.getByTestId(`draft-${type}`).click();
       const popup = page.getByRole("dialog", { name: "Configura apparecchio" });
+      if (type === "fanCoil")
+        await chooseFanCoilModel(popup, {
+          manufacturer: "Aermec",
+          model: "FCZ",
+        });
       await expect(
         popup.locator(`[aria-label="${recommendation}"]`),
       ).toBeVisible();

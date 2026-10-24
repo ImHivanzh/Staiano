@@ -40765,5 +40765,709 @@
         "page": 31
       }
     }
+  ],
+  "outdoorUnits": [
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA20A9",
+      "widthMm": 828,
+      "heightMm": 550,
+      "depthMm": 329,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA25A9",
+      "widthMm": 828,
+      "heightMm": 550,
+      "depthMm": 329,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA35A9",
+      "widthMm": 828,
+      "heightMm": 550,
+      "depthMm": 329,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA42B9",
+      "widthMm": 940,
+      "heightMm": 734,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA50B8",
+      "widthMm": 940,
+      "heightMm": 734,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ20A9",
+      "widthMm": 840,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ25A9",
+      "widthMm": 840,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ35A9",
+      "widthMm": 840,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ42A9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ50A9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM20A",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM25A9",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM35A9",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM42A",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM50A9/8",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Misure della tabella Perfera All Seasons; RXM50A9/8 conserva la sigla aggregata pubblicata dal produttore. Verificare il suffisso del prodotto consegnato.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM60A",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Misure della tabella Perfera All Seasons; RXM50A9/8 conserva la sigla aggregata pubblicata dal produttore. Verificare il suffisso del prodotto consegnato.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM71A",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Misure della tabella Perfera All Seasons; RXM50A9/8 conserva la sigla aggregata pubblicata dal produttore. Verificare il suffisso del prodotto consegnato.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP20N9",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP25N9",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP35N9",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP50N8",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP60N9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP71N9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF20E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF25E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF35E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF42E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF50D",
+      "widthMm": 870,
+      "heightMm": 734,
+      "depthMm": 373,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF60D9",
+      "widthMm": 870,
+      "heightMm": 734,
+      "depthMm": 373,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF71D9",
+      "widthMm": 870,
+      "heightMm": 734,
+      "depthMm": 373,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "2MXM40A9",
+      "widthMm": 852,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "2MXM50A8",
+      "widthMm": 852,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "2MXM68A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "3MXM40A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "3MXM52A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "3MXM68A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "4MXM68A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "4MXM80A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "5MXM90A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    }
   ]
 }

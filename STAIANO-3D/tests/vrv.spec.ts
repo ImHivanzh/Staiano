@@ -44,6 +44,7 @@ test("VRV/VRF Daikin: inserimento, configurazione, salvataggio e ricaricamento",
   const draft = plan.getByTestId("draft-vrv");
   await expect(draft).toHaveCount(1);
   await draft.click();
+  await expect(draft).toHaveCount(1);
   const popup = page.getByRole("dialog", {
     name: "Configura apparecchio",
     exact: true,
@@ -59,5 +60,6 @@ test("VRV/VRF Daikin: inserimento, configurazione, salvataggio e ricaricamento",
   await page.reload();
   await expect(page.getByTestId("vrv-2d")).toHaveCount(1);
   await page.getByTestId("vrv-2d").click();
-  await expect(page.locator(".corpo-proprieta")).toContainText("VRV/VRF");
+  await expect(popup).toBeVisible();
+  await expect(popup).toContainText("VRV/VRF");
 });

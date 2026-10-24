@@ -1,16 +1,35 @@
+import { execFileSync } from "node:child_process";
 import { pickTerminalLength } from "./ui-helpers";
-import { readFileSync } from "node:fs";
 import { expect, test } from "./browser-test";
 import { pickPlanPoint } from "./ui-helpers";
+
+function fixtureWithMachine() {
+  return JSON.parse(
+    execFileSync(
+      process.execPath,
+      [
+        "--import",
+        "tsx",
+        "--input-type=module",
+        "-e",
+        `
+    import {guidedProjectFixture} from './tests/guided-fixture.ts';
+    import {placeMachineOnPlan} from './src/domain/ducted/graphic-installation.ts';
+    const p=guidedProjectFixture();
+    console.log(JSON.stringify(placeMachineOnPlan(p,p.hvacSystems[0].id,p.rooms[0].id,{x:3,y:4})));
+  `,
+      ],
+      { encoding: "utf8" },
+    ),
+  );
+}
 
 for (const width of [1920, 1024]) {
   test(`published finishes show anodized aluminium, the white surcharge and custom RAL at ${width}`, async ({
     page,
   }) => {
     await page.setViewportSize({ width, height: width === 1920 ? 1080 : 1366 });
-    const fixture = JSON.parse(
-      readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
-    ).empty;
+    const fixture = fixtureWithMachine();
     await page.goto("/");
     await page.getByTestId("project-file").setInputFiles({
       name: "terminal-finishes.hvacproj",
@@ -25,6 +44,10 @@ for (const width of [1920, 1024]) {
     });
     await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
     await pickPlanPoint(plan, 4, 2);
+    await plan.getByRole("button", { name: "Collega", exact: true }).click();
+    await plan.getByTestId("draft-terminal").click();
+    await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+    await page.keyboard.press("Escape");
     await plan.getByTestId("draft-terminal").click();
     const popup = page.getByRole("dialog", {
       name: "Scegli bocchetta sul punto",
@@ -87,9 +110,7 @@ test("terminal requires color, drags without opening a popup, rotates, and wizar
   page,
 }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  const fixture = JSON.parse(
-    readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
-  ).empty;
+  const fixture = fixtureWithMachine();
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
     name: "terminal-movement.hvacproj",
@@ -117,6 +138,10 @@ test("terminal requires color, drags without opening a popup, rotates, and wizar
   });
   await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
   await pickPlanPoint(plan, 4, 2);
+  await plan.getByRole("button", { name: "Collega", exact: true }).click();
+  await plan.getByTestId("draft-terminal").click();
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  await page.keyboard.press("Escape");
   await plan.getByTestId("draft-terminal").click();
   const popup = page.getByRole("dialog", {
     name: "Scegli bocchetta sul punto",
@@ -148,7 +173,12 @@ test("terminal requires color, drags without opening a popup, rotates, and wizar
     popup
       .getByRole("group", { name: "Colore scelto", exact: true })
       .getByRole("button", { name: "RAL 9016 · Bianco", exact: true }),
-  ).toHaveCSS("color", "rgb(255, 255, 255)");
+  ).toHaveAttribute("data-finish", "RAL9016");
+  await expect(
+    popup
+      .getByRole("button", { name: "RAL 9016 · Bianco", exact: true })
+      .locator('span[aria-hidden="true"]'),
+  ).toHaveCSS("background-color", "rgb(255, 255, 255)");
   await popup.screenshot({ path: ".cache/color-buttons-desktop.png" });
   await save.click();
   await expect(popup).toHaveCount(0);

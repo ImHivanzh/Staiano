@@ -44,6 +44,28 @@ function fixture(mounting: "ceiling" | "wall" = "ceiling") {
   return connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
 }
 
+it("retains machine geometry and saved hoses when the historic attachment is null", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = addGuidedTerminal(p, 1000);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
+  p = placeSupplyPlenum(p, p.hvacSystems[0].id);
+  const source = p.plenums.find((pl) => pl.attachmentId === undefined)!;
+  const expected = placedPlenumGeometry(p, source);
+  expect(expected?.ports.length).toBeGreaterThan(0);
+  const nullAttachment = { ...source, attachmentId: null };
+  const loaded = projectSchema.parse({
+    ...p,
+    plenums: p.plenums.map((pl) => (pl.id === source.id ? nullAttachment : pl)),
+  });
+  expect(placedPlenumGeometry(loaded, nullAttachment)).toEqual(expected);
+  expect(loaded.ducts!.length).toBeGreaterThan(0);
+  for (const duct of loaded.ducts!)
+    expect(
+      flexibleDuctCurve(ductRoute(loaded, duct), duct.diameterMm!),
+    ).not.toBeNull();
+});
+
 it("salva il percorso tracciato in pianta come tubi flessibili fra i due plenum", () => {
   let p = guidedProjectFixture();
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });

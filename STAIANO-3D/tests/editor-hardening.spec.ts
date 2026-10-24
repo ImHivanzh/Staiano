@@ -51,6 +51,7 @@ test("inclined manual wall uses exact comma-decimal length and preserves it afte
   await page
     .getByRole("button", { name: "Chiudi stanza rettangolare" })
     .click();
+  await openDisclosure(page, "Disegno e misure");
   await page.getByRole("button", { name: "Disegna muro", exact: true }).click();
   const editor = page.getByTestId("editor-2d");
   const box = await editor.boundingBox();
@@ -98,10 +99,17 @@ test("room copy, group drag, undo and contour deletion preserve project data", a
     page.getByRole("button", { name: /Soggiorno — copia/ }),
   ).toBeVisible();
   await page.getByRole("button", { name: /Soggiorno — copia/ }).click();
+  await page
+    .getByRole("button", { name: "Adatta planimetria", exact: true })
+    .click();
   const polygon = page.locator(".stanza-pianta.scelta");
   const pointsBefore = await polygon.getAttribute("points");
   const box = await polygon.boundingBox();
   if (!box) throw new Error("Copied room missing");
+  await page.keyboard.press("m");
+  await expect(
+    page.getByRole("button", { name: "Muovi (M)", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2 + 60, {
@@ -110,7 +118,10 @@ test("room copy, group drag, undo and contour deletion preserve project data", a
   await page.mouse.up();
   await expect(polygon).not.toHaveAttribute("points", pointsBefore!);
   await openDisclosure(page, "Modifica");
-  await page.getByRole("button", { name: "Annulla", exact: true }).click();
+  await page
+    .getByRole("group", { name: "Comandi rapidi progetto" })
+    .getByRole("button", { name: "Annulla", exact: true })
+    .click();
   await page.getByRole("button", { name: /Soggiorno — copia/ }).click();
   await expect(polygon).toHaveAttribute("points", pointsBefore!);
   await page.getByTestId("wall").first().click();

@@ -1,10 +1,14 @@
 "use client";
 import { NotificationToast } from "../NotificationToast";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FullscreenDialog } from "../FullscreenDialog";
 import type { Point } from "@/schemas/project";
-import type { ImportedPlan, ParsedPlan } from "@/services/import/plan-types";
+import type {
+  ImportedPlan,
+  ParsedPlan,
+  PlanSegment,
+} from "@/services/import/plan-types";
 import { readPlanFile } from "@/services/import/plan-file";
 import { analyzePlan } from "@/services/import/analyze";
 import {
@@ -269,6 +273,16 @@ export function PlanImportWizard({
   }, []);
   const segments = plan?.segments ?? [],
     allPoints = segments.flatMap((s) => [s.start, s.end]);
+  const drawnSegments = useMemo(() => {
+    const activeLayers = new Set(layers),
+      omitted = new Set(excluded);
+    const included = (segment: PlanSegment) =>
+      activeLayers.has(segment.layer) && !omitted.has(segment.id);
+    // I tracciati inclusi restano cliccabili sopra gli assi alternativi.
+    return (plan?.segments ?? []).toSorted(
+      (a, b) => Number(included(a)) - Number(included(b)),
+    );
+  }, [plan?.segments, layers, excluded]);
   let minX = 0,
     minY = 0,
     maxX = plan?.background?.widthPx ?? 100,
@@ -722,7 +736,7 @@ export function PlanImportWizard({
                         {a.text}
                       </text>
                     ))}
-                  {segments.map((s) => (
+                  {drawnSegments.map((s) => (
                     <line
                       key={s.id}
                       x1={s.start.x}
@@ -735,7 +749,8 @@ export function PlanImportWizard({
                               ?.confidence ?? 1) < 0.9
                             ? "#ba7417"
                             : "#08778c"
-                          : plan.analysis?.walls.some((w) => w.id === s.id)
+                          : layers.includes(s.layer) &&
+                              plan.analysis?.walls.some((w) => w.id === s.id)
                             ? "#ba7417"
                             : "#a6afb4"
                       }
@@ -748,6 +763,7 @@ export function PlanImportWizard({
                       }
                       vectorEffect="non-scaling-stroke"
                       opacity={
+                        layers.includes(s.layer) &&
                         plan.analysis?.walls.some((w) => w.id === s.id)
                           ? excluded.includes(s.id)
                             ? 0.45

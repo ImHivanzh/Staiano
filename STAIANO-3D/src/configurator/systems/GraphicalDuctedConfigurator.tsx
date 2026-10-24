@@ -5,6 +5,7 @@ import {
   connectPlenum,
   terminalPlenum,
 } from "@/domain/ducted/attached-plenums";
+import { ductedMachineForDevice } from "@/domain/ducted/machine";
 import { addMachinePlenum } from "@/domain/ducted/placement";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
@@ -503,6 +504,18 @@ export function GraphicalDuctedConfigurator({
   }
   function pick(point: Point, deviceId?: string, draftId?: string) {
     useProjectStore.getState().setError(null);
+    const selecting =
+      mode === "select" ||
+      (!!(deviceId || draftId) &&
+        [
+          "machine",
+          "point",
+          "radiator",
+          "fanCoil",
+          "split",
+          "vrv",
+          "heatPump",
+        ].includes(mode));
     const clickedSystem = systems.find((item) =>
       item.indoorUnits.some((unit) => unit.id === deviceId),
     );
@@ -524,7 +537,7 @@ export function GraphicalDuctedConfigurator({
       }
       const create = clickedTerminal
         ? (p: Project) => addTerminalPlenum(p, clickedTerminal.id)
-        : clickedSystem
+        : ductedMachineForDevice(project, deviceId)
           ? (p: Project) => addMachinePlenum(p, deviceId)
           : null;
       if (!create) {
@@ -681,7 +694,7 @@ export function GraphicalDuctedConfigurator({
       }
       return;
     }
-    if (mode === "heatPump") {
+    if (mode === "heatPump" && !selecting) {
       commit((current) => placeHeatPumpDraft(current, room.floorId, point));
       if (!useProjectStore.getState().error) {
         const draft = useProjectStore
@@ -695,7 +708,7 @@ export function GraphicalDuctedConfigurator({
       }
       return;
     }
-    if (mode === "select") {
+    if (selecting) {
       const equipmentDraft = project.equipmentDrafts?.find(
         (item) => item.id === draftId,
       );

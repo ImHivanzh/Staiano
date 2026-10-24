@@ -12,20 +12,12 @@ import {
   type FanCoilPose,
 } from "./placement";
 
-export function installedFanCoilCapacity(
-  project: Project,
-  roomId: string,
-  installationId?: string,
-) {
+export function installedFanCoilCapacity(project: Project, roomId: string) {
   let coolingW = 0,
     heatingW = 0,
     unknownCount = 0;
   for (const unit of project.fanCoils ?? []) {
-    if (
-      unit.roomId !== roomId ||
-      (installationId && unit.installationId !== installationId)
-    )
-      continue;
+    if (unit.roomId !== roomId) continue;
     const point = fanCoilProductAtVersion(unit.productId, unit.catalogVersion)
       ?.operatingPoints[unit.operatingPointIndex];
     if (!point) {
@@ -54,15 +46,11 @@ export function sizeFanCoils(
     mounting?: FanCoilPlacement["mounting"];
     requiredCoolingW?: number;
     requiredHeatingW?: number;
-    installationId?: string;
   } = {},
   catalog: FanCoilCatalog = fanCoilCatalog,
 ): FanCoilSuggestion[] {
-  const installed = installedFanCoilCapacity(
-    project,
-    room.id,
-    options.installationId,
-  );
+  // All fan coils in the room share its load, even across independent installations.
+  const installed = installedFanCoilCapacity(project, room.id);
   const coolingW =
     options.requiredCoolingW ??
     Math.max(0, room.designLoadW - installed.coolingW);
@@ -71,6 +59,7 @@ export function sizeFanCoils(
     Math.max(0, room.designLoadW - installed.heatingW);
   if (![coolingW, heatingW].every((v) => Number.isFinite(v) && v >= 0))
     return [];
+  if (coolingW === 0 && heatingW === 0) return [];
   const suggestions = catalog.products.flatMap((product) => {
     if (
       (options.manufacturer && options.manufacturer !== product.manufacturer) ||

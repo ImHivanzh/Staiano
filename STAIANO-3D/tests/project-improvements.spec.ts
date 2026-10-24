@@ -2,7 +2,12 @@ import { readFileSync } from "node:fs";
 import type { Page } from "@playwright/test";
 import { PDFDocument } from "pdf-lib";
 import { expect, test } from "./browser-test";
-import { openDisclosure, openInspector } from "./ui-helpers";
+import {
+  chooseFanCoilModel,
+  openDisclosure,
+  openInspector,
+  pickPlanPoint,
+} from "./ui-helpers";
 
 async function snapshot(page: Page) {
   const download = page.waitForEvent("download");
@@ -74,6 +79,7 @@ test("units, project defaults and floor management preserve existing geometry th
     saved.walls.every((wall: { thickness: number }) => wall.thickness === 0.3),
   ).toBe(true);
   await page.getByRole("button", { name: "Planimetria", exact: true }).click();
+  await openDisclosure(page, "Disegno e misure");
   await page
     .getByRole("button", { name: "Stanza rettangolare", exact: true })
     .click();
@@ -126,6 +132,10 @@ test("unconditioned room remains explicit after reopening and PDF preview downlo
 }, info) => {
   await page.setViewportSize({ width: 1440, height: 950 });
   await start(page);
+  await page
+    .getByRole("dialog")
+    .getByRole("spinbutton", { name: "Altezza (m)", exact: true })
+    .fill("2.7");
   await page
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
@@ -201,13 +211,23 @@ test("fan coils use the correct room label", async ({ page }) => {
     .getByRole("dialog")
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
-  await openInspector(page, "Configura impianto");
-  await page
-    .getByRole("group", { name: "Impianto da configurare" })
-    .getByRole("button", { name: "Ventilconvettori", exact: true })
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan
+    .getByRole("button", { name: "Ventilconvettore", exact: true })
     .click();
-  await page.getByRole("button", { name: "Aggiungi ventilconvettore" }).click();
-  await page.getByRole("button", { name: "Chiudi configurazione" }).click();
+  await pickPlanPoint(plan, 2, 0.4);
+  await plan.getByTestId("draft-fanCoil").click();
+  await chooseFanCoilModel(
+    page.getByRole("dialog", { name: "Configura apparecchio", exact: true }),
+    { manufacturer: "Aermec", model: "FCZ" },
+  );
+  await page
+    .getByRole("dialog", { name: "Configura apparecchio", exact: true })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
   await page.getByRole("button", { name: /^Soggiorno/ }).click();
   await expect(page.locator(".impianto-attuale")).toHaveText(
     /1 ventilconvettori nella stanza/,

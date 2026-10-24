@@ -3,6 +3,8 @@ import type { Check } from "@/domain/validation";
 import { splitCatalogAtVersion } from "@/domain/catalogs/splits";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import { roomWallSpan } from "@/domain/geometry/placement";
+import { hvacOutdoorDimensions } from "./outdoor";
+import { indoorUnitFitsBelowCeiling } from "./elevation";
 export function validateSplitSystem(
   project: Project,
   system: Project["hvacSystems"][number],
@@ -37,6 +39,25 @@ export function validateSplitSystem(
       "split-availability",
       "warning",
       "SKU Mitsubishi del catalogo UK: verificare disponibilità italiana; nessuna sostituzione automatica con VGKP o VGK2.",
+    );
+  const dimensions = hvacOutdoorDimensions(system);
+  if (system.outdoorUnit && dimensions?.dimensionStatus === "published")
+    emit(
+      "split-outdoor-dimensions",
+      system.outdoorUnit.widthMm === dimensions.widthMm &&
+        system.outdoorUnit.heightMm === dimensions.heightMm &&
+        system.outdoorUnit.depthMm === dimensions.depthMm
+        ? "valid"
+        : "invalid",
+      `${combination.outdoorModel}: verifica dell'ingombro esterno contro le misure pubblicate.`,
+      system.outdoorUnit.id,
+    );
+  else if (system.outdoorUnit)
+    emit(
+      "split-outdoor-dimensions",
+      "warning",
+      `${combination.outdoorModel}: ingombro esterno indicativo per fascia di potenza, non da disegno del produttore. Verificare misure e distanze di servizio prima della posa.`,
+      system.outdoorUnit.id,
     );
   const rooms = project.rooms.filter((r) => system.roomIds.includes(r.id)),
     load = rooms.reduce((s, r) => s + r.designLoadW, 0);
@@ -137,7 +158,7 @@ export function validateSplitSystem(
       "split-placement",
       span &&
         span.lengthM >= unit.widthMm / 1000 + 0.2 &&
-        unit.heightMm / 1000 + 0.1 <= room.heightM &&
+        indoorUnitFitsBelowCeiling(project, room, unit) &&
         footprintInsideRoom(
           room,
           unit.position,

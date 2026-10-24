@@ -2,70 +2,10 @@
 import { useEffect, useMemo } from "react";
 import { Edges } from "@react-three/drei";
 import * as THREE from "three";
-import type { CeilingBand, Point, Project, Room } from "@/schemas/project";
-import {
-  ceilingBandPolygon,
-  roofHeightAt,
-  roofPlanes,
-} from "@/domain/geometry/ceilings";
-import { onSegment } from "@/domain/geometry/primitives";
+import type { CeilingBand, Project, Room } from "@/schemas/project";
+import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
+import { ceilingShellPositions } from "@/domain/geometry/ceiling-shell";
 import { SuspendedCeiling } from "./CeilingReference";
-
-function shellGeometry(
-  project: Project,
-  room: Room,
-  polygon: Point[],
-  bottom?: number,
-) {
-  const positions: number[] = [];
-  const topAt = (p: Point) =>
-    bottom !== undefined && room.ceilingHeightM !== null
-      ? room.ceilingHeightM
-      : roofHeightAt(project, room, p);
-  const triangle = (
-    a: Point,
-    ah: number,
-    b: Point,
-    bh: number,
-    c: Point,
-    ch: number,
-  ) => positions.push(a.x, ah, a.y, b.x, bh, b.y, c.x, ch, c.y);
-  for (const plane of roofPlanes(project, room, polygon)) {
-    const faces = THREE.ShapeUtils.triangulateShape(
-      plane.map((p) => new THREE.Vector2(p.x, p.y)),
-      [],
-    );
-    for (const [ia, ib, ic] of faces) {
-      const a = plane[ia],
-        b = plane[ib],
-        c = plane[ic];
-      triangle(a, topAt(a), b, topAt(b), c, topAt(c));
-      if (bottom !== undefined) triangle(c, bottom, b, bottom, a, bottom);
-    }
-    for (let i = 0; i < plane.length; i++) {
-      const a = plane[i],
-        b = plane[(i + 1) % plane.length];
-      if (
-        !polygon.some(
-          (p, j) =>
-            onSegment(a, p, polygon[(j + 1) % polygon.length]) &&
-            onSegment(b, p, polygon[(j + 1) % polygon.length]),
-        )
-      )
-        continue;
-      const low = bottom ?? room.heightM;
-      triangle(a, low, b, low, a, topAt(a));
-      triangle(b, low, b, topAt(b), a, topAt(a));
-    }
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(positions, 3),
-  );
-  geometry.computeVertexNormals();
-  return geometry;
-}
 
 function CeilingShell({
   project,
@@ -78,16 +18,24 @@ function CeilingShell({
   band?: CeilingBand;
   transparent: boolean;
 }) {
-  const geometry = useMemo(
-    () =>
-      shellGeometry(
-        project,
-        room,
-        band ? ceilingBandPolygon(project, room, band) : room.polygon,
-        band?.elevationM,
+  const geometry = useMemo(() => {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(
+        ceilingShellPositions(
+          project,
+          room,
+          band ? ceilingBandPolygon(project, room, band) : room.polygon,
+          band?.elevationM,
+          band?.id,
+        ),
+        3,
       ),
-    [project, room, band],
-  );
+    );
+    geometry.computeVertexNormals();
+    return geometry;
+  }, [project, room, band]);
   useEffect(() => () => geometry.dispose(), [geometry]);
   return (
     <mesh

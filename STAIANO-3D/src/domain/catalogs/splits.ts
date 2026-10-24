@@ -19,3 +19,14 @@ export function splitIndoorAtVersion(id: string, version: string) {
     splitCatalogAtVersion(version)?.indoorUnits.find((u) => u.id === id) ?? null
   );
 }
+export function splitOutdoorAtVersion(
+  model: string,
+  manufacturer: string,
+  version: string,
+) {
+  return (
+    splitCatalogAtVersion(version)?.outdoorUnits.find(
+      (unit) => unit.model === model && unit.manufacturer === manufacturer,
+    ) ?? null
+  );
+}

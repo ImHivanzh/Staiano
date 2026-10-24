@@ -6,7 +6,12 @@ import {
   positionAlongRoomWall,
 } from "@/domain/geometry/placement";
 import { radiatorCatalogs } from "@/domain/catalogs/radiators";
-import { elementOutputAtDeltaT, type RadiatorSolution } from "./size";
+import {
+  elementOutputAtDeltaT,
+  radiatorHeightUpperBoundMm,
+  type RadiatorSolution,
+} from "./size";
+import { minimumCeilingHeightM } from "../geometry/ceilings";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
 import {
   footprintCorners,
@@ -85,10 +90,10 @@ export function applyRadiatorSolution(
     if (!version) throw new Error("Versione catalogo non disponibile.");
     if (
       !variant.commercialElementCounts.includes(elements) ||
-      variant.heightMm + 100 > room.heightM * 1000
+      variant.heightMm > radiatorHeightUpperBoundMm(room) + 1e-4
     )
       throw new Error(
-        "Batteria non commerciale o altezza superiore alla stanza.",
+        "Batteria non commerciale o altezza superiore allo spazio sotto soffitto.",
       );
     const actualWidth = variant.pitchMm * elements + variant.widthAdditionMm;
     const actualOutput =
@@ -133,6 +138,8 @@ export function applyRadiatorSolution(
             variant.depthMm / 1000,
             rotation,
           ) ||
+          0.1 + variant.heightMm / 1000 >
+            minimumCeilingHeightM(project, room, corners) + 1e-7 ||
           footprints.some((other) => convexFootprintsOverlap(corners, other))
         )
           continue;
@@ -144,7 +151,7 @@ export function applyRadiatorSolution(
     }
     if (!placement)
       throw new Error(
-        "Ingombro radiatori superiore alla parete libera. Scegliere più pareti o una soluzione diversa.",
+        "Nessuna parete libera contiene il radiatore sotto soffitto, fasce e falde. Scegliere una soluzione diversa.",
       );
     const { space, position, rotation, offset } = placement;
     space.occupied = offset + widthM + 0.1;

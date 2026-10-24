@@ -94,7 +94,7 @@ export function deviceEnvelope(
     );
   }
   const unit = project.hvacSystems
-    .filter((s) => s.type === "split")
+    .filter((s) => s.type === "split" || s.type === "vrv")
     .flatMap((s) => s.indoorUnits)
     .find((d) => d.id === deviceId);
   const room =
@@ -103,7 +103,7 @@ export function deviceEnvelope(
       (r) => r.id === unit.roomId && r.floorId === unit.floorId,
     );
   if (!unit || !room) return null;
-  const centerZ = splitCenterElevationM(room, unit);
+  const centerZ = splitCenterElevationM(room, unit, project);
   return envelope(
     unit,
     unit.depthMm / 1000,
@@ -118,7 +118,7 @@ export function projectDeviceEnvelopes(project: Project): DeviceEnvelope[] {
     ...project.airTerminals,
     ...(project.fanCoils ?? []),
     ...project.hvacSystems
-      .filter((s) => s.type === "split")
+      .filter((s) => s.type === "split" || s.type === "vrv")
       .flatMap((s) => s.indoorUnits),
   ].flatMap((device) => {
     const result = deviceEnvelope(project, device.id);

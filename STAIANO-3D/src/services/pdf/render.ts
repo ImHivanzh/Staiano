@@ -37,7 +37,10 @@ import {
   fanCoilControlAtVersion,
   controllerBoardFor,
 } from "@/domain/catalogs/fan-coils";
-import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
+import {
+  heatPumpProductAtVersion,
+  heatPumpCapacity,
+} from "@/domain/catalogs/heat-pumps";
 import { wattsToBtuh } from "@/domain/thermal/calculate";
 
 export type DossierRenderOptions = {
@@ -916,6 +919,7 @@ export async function renderDossierPdf(
         system.catalogVersion,
       );
       const point = product?.operatingPoints[system.operatingPointIndex];
+      const capacity = point && heatPumpCapacity(point);
       heading(`Pompa di calore ${data.codes.get(system.id)} - ${system.name}`);
       paragraph(
         `Unita esterna ${data.codes.get(outdoor.id)}: piano ${p.floors.find((floor) => floor.id === outdoor.floorId)?.name}; X ${n(outdoor.position.x)}, Y ${n(outdoor.position.y)}, quota ${n(outdoor.elevationM)} m. Ventilconvettori collegati: ${system.fanCoilIds.map((id) => data.codes.get(id) ?? id).join(", ") || "nessuno"}.`,
@@ -923,7 +927,7 @@ export async function renderDossierPdf(
       );
       paragraph(
         point
-          ? `Condizioni caldo: ${point.heatingConditions}; freddo: ${point.coolingConditions}. Le potenze della pompa e dei ventilconvettori a condizioni acqua differenti non provano la copertura del circuito.`
+          ? `Potenze ${capacity!.basis}: ${n(capacity!.heatingW)} W caldo / ${n(capacity!.coolingW)} W freddo. Condizioni caldo: ${point.heatingConditions}; freddo: ${point.coolingConditions}. Le potenze della pompa e dei ventilconvettori a condizioni acqua differenti non provano la copertura del circuito.`
           : "Punto operativo storico non verificabile.",
         8,
         muted,
@@ -2069,6 +2073,7 @@ export async function renderDossierPdf(
           system.catalogVersion,
         );
         const point = product?.operatingPoints[system.operatingPointIndex];
+        const capacity = point && heatPumpCapacity(point);
         heading(`${data.codes.get(system.id)} - ${system.name}`);
         paragraph(
           product
@@ -2081,13 +2086,13 @@ export async function renderDossierPdf(
             "Punto operativo",
             "Caldo / freddo",
             "Condizioni dichiarate",
-            "COP / EER",
+            "COP / EER dichiarati",
           ],
           [
             [
               point?.label ?? "Non verificabile",
-              point
-                ? `${n(point.heatingW)} / ${n(point.coolingW)} W`
+              capacity
+                ? `${n(capacity.heatingW)} / ${n(capacity.coolingW)} W; potenze ${capacity.basis}`
                 : "Non dichiarati",
               point
                 ? `Caldo: ${point.heatingConditions}; freddo: ${point.coolingConditions}`
@@ -2509,14 +2514,20 @@ export async function renderDossierPdf(
       );
       table(
         ["Canale / sistema", "Collegamenti", "Sezione", "Lunghezza / origine"],
-        p.ducts.map((d) => [
-          data.codes.get(d.id) ?? d.id,
-          `${data.codes.get(d.systemId)} / ${data.codes.get(d.plenumId)} -> ${d.terminalId ? data.codes.get(d.terminalId) : "macchina"}`,
-          d.shape === "circle"
-            ? `Ø ${n(d.diameterMm ?? 0)} mm`
-            : `${n(d.widthMm ?? 0)} x ${n(d.heightMm ?? 0)} mm`,
-          `${n(ductLength(ductRoute(p, d)))} m / ${d.decisionOrigin}`,
-        ]),
+        p.ducts.map((d) => {
+          const length = ductLength(
+            ductRoute(p, d),
+            d.kind === "flexible" ? (d.diameterMm ?? 160) : undefined,
+          );
+          return [
+            data.codes.get(d.id) ?? d.id,
+            `${data.codes.get(d.systemId)} / ${data.codes.get(d.plenumId)} -> ${d.terminalId ? data.codes.get(d.terminalId) : "macchina"}`,
+            d.shape === "circle"
+              ? `Ø ${n(d.diameterMm ?? 0)} mm`
+              : `${n(d.widthMm ?? 0)} x ${n(d.heightMm ?? 0)} mm`,
+            `${length === null ? "Da correggere" : `${n(length)} m`} / ${d.decisionOrigin}`,
+          ];
+        }),
         [0.18, 0.34, 0.2, 0.28],
       );
     }

@@ -39,6 +39,7 @@ function fixture(): Project {
     name: "Camera",
     origin: { x: 10, y: 0 },
   });
+  project.rooms[0].ceilingHeightM = 2.2;
   project = applyFanCoil(project, project.rooms[0].id, "aermec-fcz200po", 1, {
     mounting: "ceiling",
   });

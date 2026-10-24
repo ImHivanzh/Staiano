@@ -50,3 +50,24 @@ export function positionAlongRoomWall(
     scale({ x: -v.y, y: v.x }, depthM / 2 + 0.02),
   );
 }
+/**
+ * Centro di un corpo ad incasso: la faccia anteriore resta a filo della faccia
+ * interna della parete (2 mm di gola), il resto del corpo va nella muratura o
+ * nella controparete.
+ */
+export function positionRecessedAlongRoomWall(
+  room: Room,
+  wall: Wall,
+  offsetM: number,
+  depthM: number,
+): Point {
+  const span = roomWallSpan(room, wall);
+  if (!span)
+    throw new Error("Parete non associata al contorno interno stanza.");
+  const v = scale(subtract(span.end, span.start), 1 / span.lengthM);
+  const normal = { x: -v.y, y: v.x };
+  return add(
+    add(span.start, scale(v, offsetM)),
+    scale(normal, -(depthM / 2 - 0.002)),
+  );
+}

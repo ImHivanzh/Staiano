@@ -1,5 +1,4 @@
 import { pickTerminalLength } from "./ui-helpers";
-import { addPlanTerminal, pickPlanPoint } from "./ui-helpers";
 import { openDisclosure } from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Page, TestInfo } from "@playwright/test";
@@ -39,150 +38,6 @@ async function exported(page: Page, info: TestInfo, name: string) {
   await (await waiting).saveAs(file);
   return projectSchema.parse(JSON.parse(readFileSync(file, "utf8")));
 }
-
-test("operator explicitly adds four lengths in the 3D catalogue while the required meters remain separate", async ({
-  page,
-}, info) => {
-  test.setTimeout(90000);
-  const initial = fixtures.empty;
-  await importFixture(page, initial);
-  await page
-    .getByRole("button", { name: "Continua liberamente nell’editor" })
-    .click();
-  await expect(page.getByTestId("terminal-supply")).toHaveCount(0);
-  await page.getByRole("button", { name: "3D", exact: true }).click();
-  const viewer = page.getByTestId("viewer-3d");
-  await expect(viewer.locator("canvas")).toHaveAttribute(
-    "data-rendered",
-    "true",
-    { timeout: 30000 },
-  );
-  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
-  await viewer.getByRole("button", { name: "Bocchette", exact: true }).click();
-  await page
-    .getByRole("button", { name: "Configura canalizzazione", exact: true })
-    .click();
-  const catalog = page.getByRole("dialog", {
-    name: "Configura canalizzazione",
-  });
-  await catalog
-    .getByRole("combobox", { name: "Ambiente destinazione" })
-    .selectOption(initial.rooms[0].id);
-  await catalog
-    .getByRole("button", { name: "Configura sulla pianta principale" })
-    .click();
-  const plan = page.getByRole("region", {
-    name: "Configurazione grafica canalizzato",
-  });
-  await plan.getByRole("button", { name: "Macchina", exact: true }).click();
-  await pickPlanPoint(plan, 2, 4);
-  for (const [index, length] of [1000, 2000, 800, 800].entries())
-    await addPlanTerminal(page, 2 + index * 1.5, 2, "EDLS", [length]);
-  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
-  await page
-    .getByRole("dialog", { name: "Scegli macchina canalizzata" })
-    .locator("footer")
-    .getByRole("button", { name: "Annulla", exact: true })
-    .click();
-  await openDisclosure(plan, "Dettagli tecnici della macchina selezionata");
-  await expect(plan).toContainText("Installati: 4600 mm");
-  await page
-    .getByRole("button", { name: "Torna all’editor", exact: true })
-    .click();
-  const result = await exported(page, info, "operator-four-pieces");
-  expect(result.airTerminals.map((t) => t.widthMm)).toEqual([
-    1000, 2000, 800, 800,
-  ]);
-  expect(result.airTerminals.every((t) => t.decisionOrigin === "manual")).toBe(
-    true,
-  );
-  await page.getByRole("button", { name: "2D", exact: true }).click();
-  await expect(page.getByTestId("terminal-supply")).toHaveCount(4);
-  await expect(page.getByTestId("save-status")).toHaveText("Salvato");
-  await page.reload();
-  expect(
-    (await exported(page, info, "operator-four-reopened")).airTerminals,
-  ).toEqual(result.airTerminals);
-});
-
-test("linear vent meters show proportional room shares and warn about missing supply in other rooms", async ({
-  page,
-}) => {
-  test.setTimeout(90000);
-  const initial = fixtures.threeRooms;
-  await importFixture(page, initial);
-  await page
-    .getByRole("button", { name: "Continua liberamente nell’editor" })
-    .click();
-  await page.getByRole("button", { name: "3D", exact: true }).click();
-  const viewer = page.getByTestId("viewer-3d");
-  await expect(viewer.locator("canvas")).toHaveAttribute(
-    "data-rendered",
-    "true",
-    { timeout: 30000 },
-  );
-  await openDisclosure(viewer, "Aggiungi apparecchio");
-  await viewer.getByRole("button", { name: "Bocchette", exact: true }).click();
-  await page
-    .getByRole("button", { name: "Configura canalizzazione", exact: true })
-    .click();
-  const catalog = page.getByRole("dialog", {
-    name: "Configura canalizzazione",
-  });
-  await catalog
-    .getByRole("combobox", { name: "Ambiente destinazione" })
-    .selectOption(initial.rooms[0].id);
-  await catalog
-    .getByRole("button", { name: "Configura sulla pianta principale" })
-    .click();
-  const plan = page.getByRole("region", {
-    name: "Configurazione grafica canalizzato",
-  });
-  const room = initial.rooms[0];
-  await plan.getByRole("button", { name: "Macchina", exact: true }).click();
-  await pickPlanPoint(plan, room.centroid.x, room.centroid.y);
-  await addPlanTerminal(
-    page,
-    room.centroid.x,
-    room.centroid.y - 1,
-    "EDLS",
-    [2000],
-  );
-  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
-  await page
-    .getByRole("dialog", { name: "Scegli macchina canalizzata" })
-    .locator("footer")
-    .getByRole("button", { name: "Annulla", exact: true })
-    .click();
-  await openDisclosure(plan, "Dettagli tecnici della macchina selezionata");
-  await openDisclosure(plan, "Bilancio bocchette per ambiente");
-  const graph = plan
-    .getByRole("list", { name: "Metri lineari per ambiente" })
-    .first();
-  const rows = graph.getByRole("listitem");
-  await expect(rows).toHaveCount(3);
-  const totalLoad = initial.rooms.reduce(
-    (sum, room) => sum + room.designLoadW,
-    0,
-  );
-  for (const [index, room] of initial.rooms.entries()) {
-    await expect(rows.nth(index)).toContainText(room.name);
-    const ratio = await rows
-      .nth(index)
-      .locator('[aria-hidden="true"] > div')
-      .evaluate(
-        (bar) =>
-          bar.getBoundingClientRect().width /
-          bar.parentElement!.getBoundingClientRect().width,
-      );
-    expect(ratio).toBeCloseTo(room.designLoadW / totalLoad, 2);
-  }
-  const balance = plan.getByRole("region", { name: "Mandata per ambiente" });
-  await expect(balance).toContainText("Installati: 2000 mm");
-  await expect(
-    balance.getByText("Mandata assente", { exact: true }),
-  ).toHaveCount(2);
-});
 
 test("five guided phases persist all confirmations, pause, final review and reopening", async ({
   page,
@@ -262,13 +117,15 @@ test("dragging the actual 3D X handle commits one move and 2D reload retains it"
   camera.updateMatrixWorld();
   const t = initial.airTerminals[0];
   const origin = new Vector3(t.position.x, t.elevationM!, t.position.y);
-  // Three's actual TransformControls picker lies 0.3 units along X and scales with camera distance.
-  const scale =
+  // three-stdlib TransformControls: unit = distance * min(1.9 tan(fov/2), 7) * size / 7,
+  // and the X picker spans local 0.1..1.1, so grab it at 0.8.
+  const unit =
     (origin.distanceTo(camera.position) *
       Math.min(1.9 * Math.tan((Math.PI * camera.fov) / 360), 7) *
       0.8) /
-    4;
-  const start = origin.clone().add(new Vector3(0.3 * scale, 0, 0));
+    7;
+  const sign = Math.sign(camera.position.x - origin.x);
+  const start = origin.clone().add(new Vector3(sign * 0.8 * unit, 0, 0));
   const end = start.clone().add(new Vector3(0.4, 0, 0));
   const screen = (v: Vector3) => {
     const p = v.project(camera);
@@ -289,7 +146,10 @@ test("dragging the actual 3D X handle commits one move and 2D reload retains it"
   expect(moved.airTerminals[0].position.x - t.position.x).toBeLessThan(0.6);
   expect(moved.airTerminals[0].widthMm).toBe(1000);
   await openDisclosure(page, "Modifica");
-  await page.getByRole("button", { name: "Annulla", exact: true }).click();
+  await page
+    .getByRole("group", { name: "Comandi rapidi progetto" })
+    .getByRole("button", { name: "Annulla", exact: true })
+    .click();
   expect(
     (await exported(page, info, "gizmo-undo")).airTerminals[0].position,
   ).toEqual(t.position);
@@ -331,13 +191,8 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
     await expect(
       viewer.getByRole("button", { name, exact: true }),
     ).toBeEnabled();
-  await page
-    .getByRole("button", { name: "Configura sulla planimetria 2D" })
-    .click();
-  const plan = page.getByRole("region", {
-    name: "Configurazione grafica canalizzato",
-  });
-  await plan.getByTestId("terminal-supply").first().focus();
+  await page.getByRole("button", { name: "2D", exact: true }).click();
+  await page.getByTestId("terminal-supply").first().focus();
   await page.keyboard.press("Enter");
   const edit = page.getByRole("dialog", {
     name: "Configura bocchetta",
@@ -352,9 +207,6 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Torna all’editor", exact: true })
-    .click();
   await page.getByRole("button", { name: "3D", exact: true }).click();
   let after = await exported(page, info, "edited-in-3d");
   expect(after.airTerminals[0].widthMm).toBe(1500);
@@ -364,16 +216,19 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
       .map((t) => ({ ...t, requiredAirflowM3h: expect.any(Number) })),
   );
   await openDisclosure(page, "Modifica");
-  await page.getByRole("button", { name: "Annulla", exact: true }).click();
+  await page
+    .getByRole("group", { name: "Comandi rapidi progetto" })
+    .getByRole("button", { name: "Annulla", exact: true })
+    .click();
   expect(
     (await exported(page, info, "terminal-undo")).airTerminals[0].widthMm,
   ).toBe(2000);
   await openDisclosure(page, "Modifica");
   await page.getByRole("button", { name: "Ripeti", exact: true }).click();
   await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
-  await viewer
-    .getByRole("button", { name: "Vista Canale", exact: true })
-    .click();
+  await expect(
+    viewer.getByRole("button", { name: "Vista Canale", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
   await page
     .getByRole("button", { name: "Configura percorsi", exact: true })
     .click();

@@ -1,5 +1,8 @@
 import type { Project } from "@/schemas/project";
-import { assignInstallationRooms } from "../installations";
+import {
+  assignInstallationRooms,
+  removeEmptiedInstallations,
+} from "../installations";
 import {
   fanCoilCatalog,
   fanCoilCatalogAtVersion,
@@ -175,22 +178,26 @@ export function removeFanCoil(project: Project, id: string): Project {
   if (unit.locked)
     throw new Error("Sbloccare il ventilconvettore prima di rimuoverlo.");
   const fanCoils = project.fanCoils?.filter((u) => u.id !== id);
-  return {
-    ...project,
-    fanCoils,
-    rooms: project.rooms.map((r) =>
-      r.id === unit.roomId &&
-      r.systemType === "fanCoil" &&
-      !fanCoils?.some((u) => u.roomId === r.id)
-        ? {
-            ...r,
-            systemType:
-              project.hvacSystems.find((s) => s.roomIds.includes(r.id))?.type ??
-              (project.radiators.some((u) => u.roomId === r.id)
-                ? "radiator"
-                : "none"),
-          }
-        : r,
-    ),
-  };
+  return removeEmptiedInstallations(
+    {
+      ...project,
+      fanCoils,
+      rooms: project.rooms.map((r) =>
+        r.id === unit.roomId &&
+        r.systemType === "fanCoil" &&
+        !fanCoils?.some((u) => u.roomId === r.id)
+          ? {
+              ...r,
+              systemType:
+                project.hvacSystems.find((s) => s.roomIds.includes(r.id))
+                  ?.type ??
+                (project.radiators.some((u) => u.roomId === r.id)
+                  ? "radiator"
+                  : "none"),
+            }
+          : r,
+      ),
+    },
+    project,
+  );
 }

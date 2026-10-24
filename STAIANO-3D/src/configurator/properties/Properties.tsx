@@ -7,7 +7,7 @@ import {
   mergeRooms,
   recomputeProject,
   resizeRectangularRoom,
-  resizeWall,
+  resizeWallRunInternal,
   updateRoom,
 } from "@/domain/project";
 import { bounds, distance } from "@/domain/geometry/primitives";
@@ -28,9 +28,12 @@ import { LengthInput } from "../LengthInput";
 import { CeilingDesign } from "./CeilingDesign";
 import { RoomConditioning } from "./RoomConditioning";
 import {
-  wallMeasuredLength,
   roomRectSides,
 } from "@/domain/geometry/dimensions";
+import {
+  wallRun,
+  wallRunMeasuredLength,
+} from "@/domain/geometry/wall-runs";
 import {
   setWallEndpoints,
   splitWall,
@@ -83,6 +86,8 @@ export function Properties() {
     .filter((w) => !!w);
   const r = rooms[0],
     w = walls[0];
+  const wallChain = w ? wallRun(p, w.id) : null;
+  const wallInternal = w ? wallRunMeasuredLength(p, w.id, "internal") : 0;
   const deviceId = selection.find((s) => s.kind === "device")?.id;
   const selectedObject = [
     ...p.walls,
@@ -224,9 +229,11 @@ export function Properties() {
               </dd>
             </div>
             <div>
-              <dt>Altezza</dt>
+              <dt>
+                {r.ceilingHeightM !== null ? "Altezza finita" : "Altezza"}
+              </dt>
               <dd>
-                {formatNumber(r.heightM)} <small>m</small>
+                {formatNumber(r.ceilingHeightM ?? r.heightM)} <small>m</small>
               </dd>
             </div>
             <div className="carico">
@@ -239,8 +246,16 @@ export function Properties() {
             </div>
           </dl>
           <p className="nota nota-fabbisogno">
-            Il fabbisogno serve a scegliere la potenza dell’impianto.
+            Volume utile {formatNumber(r.volumeM3)} m³. Il fabbisogno serve a
+            scegliere la potenza dell’impianto.
           </p>
+          {r.ceilingHeightM !== null && (
+            <p className="nota" data-testid="ceiling-void">
+              Vuoto tecnico sopra il controsoffitto: almeno{" "}
+              {formatNumber((r.heightM - r.ceilingHeightM) * 100)} cm fino alla
+              struttura. Verifica anche ingombri dei plenum, diametri e curve.
+            </p>
+          )}
           <p className="impianto-attuale">
             <GearSix size={17} aria-hidden="true" />
             {r.conditioningExclusion
@@ -267,6 +282,7 @@ export function Properties() {
               </span>
             </summary>
             <form
+              key={`${r.heightM}-${r.ceilingHeightM}`}
               onSubmit={(e) => {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget),
@@ -547,12 +563,10 @@ export function Properties() {
               commit((p) => {
                 const resized =
                   walls.length === 1
-                    ? resizeWall(
+                    ? resizeWallRunInternal(
                         p,
                         w.id,
-                        numberFromForm(data.get("length")) +
-                          distance(w.start, w.end) -
-                          wallMeasuredLength(p, w, "internal"),
+                        numberFromForm(data.get("length")),
                       )
                     : p;
                 const ids = new Set(walls.map((w) => w.id));
@@ -575,7 +589,7 @@ export function Properties() {
                 min="0.05"
                 max="100"
                 step="0.01"
-                defaultValue={wallMeasuredLength(p, w, "internal").toFixed(3)}
+                defaultValue={wallInternal.toFixed(3)}
                 required
                 aria-label="Lunghezza muro"
               />
@@ -599,6 +613,9 @@ export function Properties() {
             />
             <p className="nota">
               Quote e superficie stanza riferite alle facce interne dei muri.
+              {wallChain && wallChain.walls.length > 1
+                ? ` La misura vale per l’intera fila di ${wallChain.walls.length} segmenti collineari: modificarla sposta l’estremo finale della fila.`
+                : ""}
             </p>
             <button className="bottone chiara" type="submit">
               Applica parete{walls.length > 1 ? " a tutti" : ""}

@@ -7,7 +7,6 @@ import {
 import { footprintCorners } from "../geometry/footprint";
 import { drywallGeometry } from "../geometry/drywall";
 import { projectOutdoorUnits } from "../hydronic/placement";
-import { splitCenterElevationM } from "../air-conditioning/elevation";
 import {
   architecturalWallHeight,
   measuredOpenings,
@@ -90,15 +89,12 @@ export function bodies(
       `apparecchio ${labels.get(e.deviceId) ?? e.deviceId}`,
     );
   for (const system of project.hvacSystems.filter(
-    (s) => (s.type === "ducted" && !s.fanCoilId) || s.type === "vrv",
+    (s) => s.type === "ducted" && !s.fanCoilId,
   ))
     for (const unit of system.indoorUnits) {
       const room = project.rooms.find((r) => r.id === unit.roomId);
       if (!room) continue;
-      const center =
-        system.type === "vrv"
-          ? splitCenterElevationM(room, unit)
-          : room.heightM - unit.heightMm / 2000 - 0.05;
+      const center = room.heightM - unit.heightMm / 2000 - 0.05;
       add(
         unit.id,
         unit.floorId,
@@ -123,8 +119,8 @@ export function bodies(
         unit.depthMm / 1000,
         unit.rotation,
       ),
-      unit.elevationM,
-      unit.elevationM + unit.heightMm / 1000,
+      unit.elevationM - unit.heightMm / 2000,
+      unit.elevationM + unit.heightMm / 2000,
       `unità esterna ${labels.get(unit.id) ?? ""}`,
     );
   // Solo i plenum salvati hanno un corpo fisico: quelli proposti (macchina o

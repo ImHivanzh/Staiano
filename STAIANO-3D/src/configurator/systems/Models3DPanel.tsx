@@ -30,6 +30,12 @@ export function Models3DPanel() {
         originali convertiti in GLB locale, in metri. Geometria conservata,
         materiale tecnico neutro.
       </p>
+      <p className="nota">
+        Nel progetto, Ardesia usa il profilo di un elemento ricavato dagli OBJ:
+        le testate mantengono la forma originale e cambia soltanto la lunghezza
+        dei tubi. I componenti terminali sono illustrativi; le mesh complete qui
+        sotto restano in verifica.
+      </p>
       <label className="campo">
         <span>Modello 3D</span>
         <select

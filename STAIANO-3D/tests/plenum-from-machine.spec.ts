@@ -13,6 +13,10 @@ test("Collega associa il plenum separato alla bocchetta e salva i flessibili", a
   await expect(page.getByText(/Collegamento salvato/)).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Collega", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("button", { name: "Collega", exact: true }),
   ).toHaveAttribute("aria-pressed", "false");
   await expect(page.getByTestId("connection-preview")).toHaveCount(0);
   const result = await exportPlenumFixture(page);

@@ -8,7 +8,14 @@ import {
 } from "./geometry/primitives";
 import { overlappingPolygons } from "./geometry/rooms";
 import { roomWallSpan } from "./geometry/placement";
-import { validateCeilingBand } from "./geometry/ceilings";
+import {
+  validateCeilingBand,
+  minimumCeilingHeightM,
+} from "./geometry/ceilings";
+import {
+  fanCoilCeilingRange,
+  fanCoilRecessedWallValid,
+} from "./fan-coils/placement";
 import { radiatorProductAtVersion } from "./catalogs/radiators";
 import { elementOutputAtDeltaT, radiatorWidth } from "./radiators/size";
 import { airTerminalFamilyAtVersion } from "./catalogs/air-terminals";
@@ -46,12 +53,14 @@ import {
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
   controllerBoardFor,
+  isRecessedFanCoil,
 } from "./catalogs/fan-coils";
 export type Check = {
   code: string;
   status: "valid" | "warning" | "invalid";
   message: string;
   entityId?: string;
+  openingId?: string;
 };
 export type CheckFilterStatus = "problems" | "invalid" | "warning" | "all";
 
@@ -185,6 +194,42 @@ export function validateProject(p: Project): Check[] {
       entityId: unit.id,
       message: `${codes.get(unit.id)}: ${product?.manufacturer ?? ""} ${product?.model ?? unit.productId}, punto ${point?.label ?? "da verificare"}.`,
     });
+    {
+      const room = p.rooms.find((item) => item.id === unit.roomId);
+      const range =
+        room && product
+          ? fanCoilCeilingRange(
+              p,
+              room,
+              {
+                ...unit,
+                family: product.family,
+                features: product.features,
+                ceilingInstallation: product.ceilingInstallation,
+              },
+              unit.position,
+              unit.rotation,
+              unit.mounting,
+            )
+          : null;
+      const bottom =
+        unit.mounting === "ceiling"
+          ? unit.elevationM
+          : unit.elevationM - unit.heightMm / 2000;
+      checks.push({
+        code: "fanCoilCeiling",
+        entityId: unit.id,
+        status: !product
+          ? "warning"
+          : range?.ranges.some(
+                (zone) =>
+                  bottom >= zone.minM - 1e-7 && bottom <= zone.maxM + 1e-7,
+              )
+            ? "valid"
+            : "invalid",
+        message: `${codes.get(unit.id)}: verifica quota del corpo, soffitto e vuoto tecnico${unit.mounting === "ceiling" && product?.ceilingInstallation ? `; quota minima ${product.ceilingInstallation.minFaceHeightM} m, versione orizzontale da verificare sulla targa` : ""}.`,
+      });
+    }
     if (!point || point.noiseDbA === null || point.noiseDbA > 37)
       checks.push({
         code: "fanCoilNoise",
@@ -415,10 +460,21 @@ export function validateProject(p: Project): Check[] {
     ...p.hvacSystems.flatMap((s) => s.indoorUnits),
   ]) {
     const room = p.rooms.find((r) => r.id === d.roomId);
+    const fanUnit = p.fanCoils?.find((unit) => unit.id === d.id);
+    const fanProduct = fanUnit
+      ? fanCoilProductAtVersion(fanUnit.productId, fanUnit.catalogVersion)
+      : null;
+    const recessedWall =
+      fanUnit?.mounting === "wall" && isRecessedFanCoil(fanProduct);
     checks.push({
       code: "placement",
       status:
-        room && pointInPolygon(d.position, room.polygon) ? "valid" : "invalid",
+        room &&
+        (recessedWall && fanUnit && fanProduct
+          ? fanCoilRecessedWallValid(p, room, fanUnit, fanProduct)
+          : pointInPolygon(d.position, room.polygon))
+          ? "valid"
+          : "invalid",
       message: `${d.productId}: posizione in stanza`,
       entityId: d.id,
     });
@@ -435,19 +491,28 @@ export function validateProject(p: Project): Check[] {
       });
   }
   const envelopes = projectDeviceEnvelopes(p);
+  const radiatorIds = new Set(p.radiators.map((unit) => unit.id));
   for (const envelope of envelopes) {
     const room = p.rooms.find((r) => r.id === envelope.roomId);
-    const ceiling =
-      p.airTerminals.some(
-        (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
-      ) ||
-      !!p.fanCoils?.some(
-        (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
-      );
+    const ceiling = p.airTerminals.some(
+      (t) => t.id === envelope.deviceId && t.mounting === "ceiling",
+    );
+    const fanUnit = p.fanCoils?.find((unit) => unit.id === envelope.deviceId);
+    const fanProduct = fanUnit
+      ? fanCoilProductAtVersion(fanUnit.productId, fanUnit.catalogVersion)
+      : null;
+    const recessedWall =
+      fanUnit?.mounting === "wall" && isRecessedFanCoil(fanProduct);
     checks.push({
       code: "deviceEnvelope",
       status:
-        room && deviceEnvelopeInsideRoom(envelope, room, ceiling, p)
+        room &&
+        (recessedWall && fanUnit && fanProduct
+          ? fanCoilRecessedWallValid(p, room, fanUnit, fanProduct)
+          : deviceEnvelopeInsideRoom(envelope, room, ceiling, p)) &&
+        (!radiatorIds.has(envelope.deviceId) ||
+          envelope.maxZ <=
+            minimumCeilingHeightM(p, room, envelope.cornersXY) + 1e-7)
           ? "valid"
           : "invalid",
       entityId: envelope.deviceId,
@@ -770,6 +835,7 @@ export function validateProject(p: Project): Check[] {
               code: "terminalOpening",
               status: "warning",
               entityId: t.id,
+              openingId: opening.id,
               message: `${codes.get(t.id)}: ${bottom === null ? "possibile " : ""}sovrapposizione con ${opening.type === "door" ? "porta" : "finestra"}${bottom === null ? "; quota davanzale mancante" : ""}.`,
             });
         }

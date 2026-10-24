@@ -22,7 +22,7 @@ I progetti esistenti conservano dati e collegamenti. Le bocchette si associano a
 macchina scelta con Collega, anche quando provengono da un altro impianto.
 EDLS, EDFL, EDSC-C mandata ed EGA6 sono le scelte principali delle bocchette, con fotografie.
 Il catalogo completo si espande su richiesta; dopo la scelta del modello continua la configurazione guidata.
-Il canalizzato si inserisce e si configura direttamente sulla planimetria principale, che conserva visibili tutti gli impianti. Non richiede una vista operativa separata. Gli altri apparecchi usano gli strumenti della stessa pianta. Nel canalizzato si piazza la macchina, si clicca per configurarla, si piazzano i punti bocchette e si cliccano per scegliere modello, lunghezza e moduli. La toolbar principale è compatta e usa icone per selezione, disegno, macchina, bocchetta e collegamenti; i tooltip mostrano il nome e il colore distingue lo strumento attivo. Le azioni secondarie sono raccolte nel menu dell’elemento; disegno e misure restano accessibili sulla stessa pianta. Lo strumento “Collega” associa la bocchetta alla macchina con due clic e aggiorna il bilancio della macchina scelta. Più macchine nello stesso ambiente mantengono portate e collegamenti indipendenti. Gli elementi «Da configurare» vengono salvati subito nel progetto e restano esclusi da calcoli e computi. Macchine e bocchette si inseriscono senza scegliere un modello; la configurazione si salva dal popup. Escape annulla inserimento o collegamento. Le bocchette possono essere configurate prima di qualsiasi macchina e si associano soltanto con Collega. I radiatori possono coprire quote del fabbisogno su punti separati. Gli impianti si possono eliminare e recuperare con Annulla.
+Il canalizzato si inserisce e si configura direttamente sulla planimetria principale, che conserva visibili tutti gli impianti. Non richiede una vista operativa separata. Gli altri apparecchi usano gli strumenti della stessa pianta. Nel canalizzato si piazzano macchina e punti bocchette, si associano con Collega, si configura la macchina e infine si scelgono modello, lunghezza e moduli delle bocchette. La toolbar principale è compatta e usa icone per selezione, disegno, macchina, bocchetta e collegamenti; i tooltip mostrano il nome e il colore distingue lo strumento attivo. Le azioni secondarie sono raccolte nel menu dell’elemento; disegno e misure restano accessibili sulla stessa pianta. Lo strumento “Collega” associa la bocchetta alla macchina con due clic e aggiorna il bilancio della macchina scelta. Più macchine nello stesso ambiente mantengono portate e collegamenti indipendenti. Gli elementi «Da configurare» vengono salvati subito nel progetto e restano esclusi da calcoli e computi. Macchine e bocchette si inseriscono senza scegliere un modello; la configurazione si salva dal popup. Escape annulla inserimento o collegamento. Le bozze bocchetta si associano con Collega; la configurazione diventa disponibile dopo quella della macchina collegata. I radiatori possono coprire quote del fabbisogno su punti separati. Gli impianti si possono eliminare e recuperare con Annulla.
 Per la ripresa la scelta principale è EGA6 con chiusura Push a richiesta. Il limite
 di 37 dB(A) vale soltanto per la mandata. La ripresa complessiva si confronta con
 la portata totale della macchina; dimensioni e distribuzione sono scelte dall’operatore.
@@ -70,6 +70,13 @@ La vista Canale mostra tubi corrugati dagli stacchi del plenum macchina agli sta
 
 I flessibili hanno rettilinei e archi circolari tangenti, con raggio preferito pari a due diametri e minimo geometrico pari a un diametro. I percorsi automatici cercano lo spazio per le curve mantenendo gli imbocchi assiali; non usano spline libere. I punti manuali restano salvati. Se non entra una curva o il tubo si sovrappone a se stesso, la mesh non viene inventata: appare “Percorso non realizzabile: sposta curve o plenum”; per i canali salvati compare anche un controllo del progetto. Le indicazioni del produttore del tubo e la verifica esecutiva restano necessarie.
 
+Il controllo considera il diametro dichiarato del tubo e le superfici finite di
+controsoffitti, fronti delle fasce e falde, usando la stessa geometria della vista
+3D. Le giunzioni fra fasce adiacenti lasciano continuo il vuoto tecnico; quote
+inferiori diverse conservano il gradino reale. Se esiste una curva alternativa
+libera, il routing la preferisce mantenendo gli stacchi fermi. Un percorso manuale
+che interferisce viene segnalato in rosso senza riscrivere i punti salvati.
+
 ## Cartongesso per muro e volume tecnico vuoto
 
 Selezionare il muro e aprire Proprietà > Cartongesso e vuoto per i canali. Scegliere il lato stanza per una parete condivisa e inserire lo scostamento in centimetri: +30 crea il nuovo fronte 30 cm verso la stanza; -30 conserva il fronte già presente sulla pianta e dichiara 30 cm di intercapedine dietro. 0 rimuove la dichiarazione. Il riferimento del muro originale rimane salvato. Le superfici e i volumi netti tengono conto dei nuovi fronti interni, senza sottrarre due volte i pilastri sovrapposti.
@@ -77,3 +84,100 @@ Selezionare il muro e aprire Proprietà > Cartongesso e vuoto per i canali. Sceg
 Ripetere sulle pareti laterali: fronti e retro si uniscono agli angoli e il vuoto resta continuo. In 2D la fascia tecnica ha un riempimento leggero e un contorno distinto; in Vista Canale il fronte 3D è trasparente. La struttura è vuota, con due superfici e chiusure soltanto alle estremità libere; porte e finestre conservano i propri varchi. Le bocchette seguono il fronte e rispettano lo spazio residuo presso i risvolti.
 
 Per un plenum inserito separatamente, Proprietà > Direzione stacchi reali distingue attacchi orizzontali e superiori, anche con montaggio a parete. L'orientamento indica il manufatto effettivo: non promette una variante di catalogo. Il numero e il diametro degli stacchi dichiarati alimentano i singoli tubi del plenum macchina. Raggi, ingombro nel vuoto e quota superiore restano controllati; una profondità insufficiente non viene aumentata automaticamente. Il programma propone percorsi, non certifica interferenze dell'impianto completo o supporti di posa.
+
+## Corpi Ardesia da elementi originali
+
+Per le 135 varianti Ardesia il corpo 3D usa il profilo di un elemento estratto
+dagli OBJ Cordivari. Gli elementi si ripetono al passo pubblicato di 46 mm;
+le testate mantengono la forma originale e cambia soltanto la lunghezza assiale
+dei tubi. Interassi, ingombri e dati termici salvati non vengono riscritti.
+Cinque asset locali, circa 418 kB complessivi, coprono le 2–6 colonne.
+
+Questa è una ricostruzione del corpo: tappi, valvole e accessori restano
+illustrativi. Le 18 mesh complete, che comprendono componenti terminali con
+larghezza diversa dalla quota nominale con tappi, restano in verifica e in
+anteprima. Dati storici incompatibili o file non disponibili mantengono la
+ricostruzione dimensionale precedente. I dettagli tecnici riportano la fonte
+della geometria e la nota di larghezza del catalogo.
+
+## Quote di posa e vuoti tecnici distinti
+
+I radiatori verificano tutto il proprio rettangolo sotto il soffitto finito,
+le fasce e le falde. La quota iniziale di disegno resta 10 cm da terra. La posa
+cerca una posizione libera adatta; sotto un colmo può usare l'altezza locale
+superiore alla gronda. Anche la ricerca termica tiene conto del controsoffitto
+centrale e dell'altezza di colmo, prima della verifica puntuale dell'ingombro.
+
+Per i ventilconvettori, il corpo esposto resta sotto le superfici finite; quello
+nascosto può occupare un vuoto dichiarato, senza attraversarne i pannelli.
+Il vuoto della fascia e quello sopra il controsoffitto centrale sono distinti.
+Gli spostamenti a soffitto conservano lo scostamento dal riferimento di posa
+scelto; le quote calcolate restano modificabili senza imporre un passo di 1 cm.
+Le proprietà mostrano gli intervalli geometrici ammessi, riferiti al centro per
+la posa a parete e alla faccia inferiore per quella orizzontale.
+
+Le pose salvate non vengono corrette automaticamente: se una modifica della
+stanza le rende incompatibili, restano consultabili e vengono segnalate.
+
+## Verifiche di progetto e catalogo
+
+Le proprietà mostrano altezza finita, volume utile e vuoto tecnico del controsoffitto.
+Il volume usa la quota finita anche senza tetto o fasce laterali. I metri dei
+flessibili seguono la curva 3D; un percorso irrealizzabile resta da correggere e
+non riceve una falsa lunghezza. Il routing cerca alternative libere prima di
+conservare un percorso ostruito e rispetta il lato di ogni stacco manuale.
+Durante la posa, cliccare un apparecchio già presente apre la configurazione
+senza duplicarlo; lo spazio vuoto resta disponibile per altri inserimenti.
+
+I nuovi sistemi split usano ingombri esterni pubblicati per tutti gli 83 codici
+a catalogo, con fonte e pagina nelle proprietà e nelle schede tecniche. I progetti
+storici mantengono le quote indicative e la richiesta di verifica prima della posa.
+Il caricamento non aggiorna automaticamente dimensioni o revisione del catalogo.
+Le unità VRV e le pompe di calore mantengono le quote pubblicate nei rispettivi
+cataloghi. Ventola e griglia esterna sono dettagli illustrativi condivisi;
+nessuna quota o prestazione viene dedotta dall'aspetto del 3D.
+
+Il catalogo Innova AirLeaf 2026 completa portata e pressione sonora delle 25
+varianti SL/SLS/SLI. Il solo punto selezionabile è quello massimo a 0 Pa, con
+rumore misurato a 1 m: le condizioni restano visibili vicino alla fonte. I
+progetti storici conservano i dati della loro revisione. Selezione, spostamento,
+proprietà, vista 3D e controlli split/VRV usano la quota minima sopra l'intero
+ingombro: controsoffitto piano, fasce ribassate e falde. Anche una fascia stretta
+che attraversa il corpo senza toccarne centro o angoli limita la quota. La
+sommità resta a 0,10 m dalla superficie più bassa: è una scelta iniziale di
+disegno, non una distanza certificata dal produttore. Le posizioni salvate non
+cambiano al caricamento; una posa divenuta impossibile viene segnalata e si
+riposiziona solo con la riconfigurazione esplicita. Gli ingombri VRV partecipano
+anche ai controlli di sovrapposizione con gli altri apparecchi.
+
+Sul telefono la pianta resta visibile sotto una testata compatta. Gli strumenti
+si scorrono lateralmente; i menu di disegno e azioni si aprono nello schermo,
+con comandi da 44 px. Salva, Annulla e PDF restano nei menu File e Modifica.
+
+
+## Schema e dimensionamento del plenum
+
+Aprire la configurazione della macchina già collegata e la sezione «Schema e
+dimensionamento plenum». Lo schema e la distinta usano quella macchina e i suoi
+terminali; l'anteprima 3D si carica soltanto aprendo la sezione. Si possono
+consultare stacchi numerati e diametri, ingrandire il disegno e dichiarare
+l'attacco di ripresa per creare il secondo plenum. I comandi di modifica
+rispettano blocchi e sola lettura. La scheda aeraulica dei ventilconvettori
+espone lo stesso controllo; la loro posa segue la posizione dell'apparecchio.
+Le figure sono schemi dimensionali da verificare prima della fabbricazione.
+
+Nel dimensionamento radiatori il ΔT esprime la sovratemperatura acqua/ambiente
+della resa di catalogo. L'esempio nominale 75/65/20 °C corrisponde a 50 K.
+
+
+## Inserimento coerente dal 3D
+
+Nel menu «Aggiungi apparecchio», radiatori, split, bocchette, macchine manuali,
+ventilconvettori e pompe di calore usano lo stesso comando «Inserisci sulla pianta».
+La posizione si sceglie nella planimetria principale. Le bozze restano salvate;
+i collegamenti precedono la configurazione della macchina e dei suoi terminali.
+Comandi M7, cataloghi e proprietà della PdC rimangono nelle schede dell'apparecchio.
+
+Le ricostruzioni Ardesia Cordivari a 2–6 colonne usano tubi Ø25 mm dalle schede
+originali. Le altre geometrie illustrative mantengono i propri criteri; le mesh
+OEM discordanti restano consultabili e marcate da verificare.

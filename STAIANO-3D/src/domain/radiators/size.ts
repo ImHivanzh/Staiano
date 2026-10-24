@@ -1,3 +1,4 @@
+import type { Room } from "@/schemas/project";
 import type { RadiatorVariant } from "@/domain/catalogs/radiator-schema";
 import { nominalLatticeSearch, type RadiatorProgress } from "./size-lattice";
 export type { RadiatorProgress } from "./size-lattice";
@@ -48,6 +49,14 @@ export function elementOutputAtDeltaT(
     : product.elementOutputW *
         (deltaTK / product.referenceDeltaTK) ** product.exponentN;
 }
+/** Thermal search bound; each actual footprint still needs a local ceiling check. */
+export const radiatorHeightUpperBoundMm = (
+  room: Pick<Room, "heightM" | "ceilingHeightM" | "roof">,
+) =>
+  (room.ceilingHeightM ??
+    Math.max(room.heightM, room.roof?.ridgeHeightM ?? 0)) *
+    1000 -
+  100;
 export const radiatorWidth = (product: RadiatorVariant, elements: number) =>
   product.pitchMm * elements + product.widthAdditionMm;
 function imbalance(elements: number[]) {

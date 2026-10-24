@@ -32,7 +32,9 @@ for (const width of [1024, 1920])
         .getByRole("button", { name: "Chiudi errore", exact: true })
         .click();
     }
+    await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
     await plan.getByTestId("draft-terminal").click();
+    await expect(plan.getByTestId("draft-terminal")).toHaveCount(1);
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(page.locator(".notifica-toast[role=alert]")).toContainText(
       "Collega prima la bocchetta",
@@ -100,7 +102,9 @@ for (const width of [1024, 1920])
     await machine.getByRole("button", { name: "Salva", exact: true }).click();
     await expect(machine).toHaveCount(0);
     await expect(plan.getByTestId("draft-machine")).toHaveCount(0);
+    await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
     await plan.getByTestId("draft-terminal").click();
+    await expect(plan.getByTestId("draft-terminal")).toHaveCount(1);
     const terminal = page.getByRole("dialog", {
       name: "Scegli bocchetta sul punto",
       exact: true,

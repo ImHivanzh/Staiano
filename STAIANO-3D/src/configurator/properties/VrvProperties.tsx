@@ -27,8 +27,7 @@ export function VrvProperties({
   const { commit } = useProjectStore(),
     system = project.hvacSystems.find(
       (item) =>
-        item.type === "vrv" &&
-        item.indoorUnits.some((unit) => unit.id === id),
+        item.type === "vrv" && item.indoorUnits.some((unit) => unit.id === id),
     ),
     unit = system?.indoorUnits.find((item) => item.id === id);
   if (!unit || !system) return null;
@@ -67,15 +66,19 @@ export function VrvProperties({
       </p>
       <p className="riepilogo-apparecchio">
         Capacità nominale:{" "}
-        {model ? `${formatNumber(model.nominalCoolingW / 1000)} kW freddo · ` : ""}
-        {model ? `${formatNumber(model.nominalHeatingW / 1000)} kW caldo` : "non disponibile"}
+        {model
+          ? `${formatNumber(model.nominalCoolingW / 1000)} kW freddo · `
+          : ""}
+        {model
+          ? `${formatNumber(model.nominalHeatingW / 1000)} kW caldo`
+          : "non disponibile"}
       </p>
       <p className="nota">
-        Esterno {outdoor?.model ?? "non verificabile"} · rapporto di
-        connessione {ratio === null ? "non disponibile" : `${formatNumber(ratio, 0)}%`}
+        Esterno {outdoor?.model ?? "non verificabile"} · rapporto di connessione{" "}
+        {ratio === null ? "non disponibile" : `${formatNumber(ratio, 0)}%`}
         <br />
         Ingombro {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm. Quota centro{" "}
-        {formatNumber(splitCenterElevationM(room, unit))} m
+        {formatNumber(splitCenterElevationM(room, unit, project))} m
       </p>
       <details className="azione-inspector">
         <summary>
@@ -152,8 +155,7 @@ export function VrvProperties({
             target="_blank"
             rel="noreferrer"
           >
-            Fonte ufficiale unità esterna · pagina{" "}
-            {outdoor.sourceMetadata.page}
+            Fonte ufficiale unità esterna · pagina {outdoor.sourceMetadata.page}
           </a>
         )}
       </details>

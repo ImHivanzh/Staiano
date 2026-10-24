@@ -17,8 +17,8 @@ export function CatalogAdmin() {
     <main className="pagina cataloghi">
       <h2>Cataloghi tecnici locali</h2>
       <p className="nota">
-        Snapshot verificati. I calcoli usano dati locali e non richiedono
-        Internet.
+        Cataloghi locali con fonti e revisioni. I dati mancanti restano da
+        verificare; i calcoli non richiedono Internet.
       </p>
       <Models3DPanel />
       <StoveCatalog />
@@ -32,6 +32,9 @@ export function CatalogAdmin() {
           Split: {splitCatalog.indoorUnits.length} modelli interni e{" "}
           {splitCatalog.combinations.length} combinazioni mono/multi pubblicate
           · {splitCatalog.version}
+          <br />
+          {splitCatalog.outdoorUnits.length} codici esterni con ingombri
+          pubblicati nella revisione corrente
         </p>
         {["Daikin", "Mitsubishi Electric", "Gree"].map((brand) => {
           const units = splitCatalog.indoorUnits.filter(
@@ -183,8 +186,9 @@ export function CatalogAdmin() {
         <h3>Pompe di calore · {heatPumpCatalog.version}</h3>
         <p className="nota">
           {heatPumpCatalog.products.length} modelli idronici e monoblocco ·{" "}
-          {[...new Set(heatPumpCatalog.products.map((p) => p.manufacturer))]
-            .join(", ")}
+          {[
+            ...new Set(heatPumpCatalog.products.map((p) => p.manufacturer)),
+          ].join(", ")}
           . Capacità e COP/EER alle condizioni dichiarate dal produttore.
         </p>
         {[

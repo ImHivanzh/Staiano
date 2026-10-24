@@ -4,6 +4,7 @@ import { add, bounds, samePoint, pointInPolygon } from "./primitives";
 import { followWallTransforms } from "./follow-walls";
 import { movePlacedDevice } from "./move-device";
 import { overlappingPolygons } from "./rooms";
+import { removeEmptiedInstallations } from "../installations";
 
 function selectedGeometry(project: Project, selection: Selection[]) {
   const roomIds = new Set(
@@ -187,48 +188,53 @@ export function removeSelection(
         (system.type !== "split" || system.indoorUnits.length > 0),
     );
   const systemIds = new Set(systems.map((system) => system.id));
-  return recomputeProject({
-    ...project,
-    walls: project.walls.filter((wall) => !wallIds.has(wall.id)),
-    rooms: project.rooms.filter((room) => !roomIds.has(room.id)),
-    radiators: project.radiators.filter(keepDevice),
-    ductedDrafts: project.ductedDrafts?.filter(keepDevice).map((draft) => ({
-      ...draft,
-      machineId:
-        draft.machineId &&
-        !deviceIds.has(draft.machineId) &&
-        (systemIds.has(draft.machineId) ||
-          project.ductedDrafts?.some(
-            (m) => m.id === draft.machineId && keepDevice(m),
-          ))
-          ? draft.machineId
-          : undefined,
-    })),
-    heatPumpDrafts: project.heatPumpDrafts?.filter(
-      (draft) => !deviceIds.has(draft.id),
+  return recomputeProject(
+    removeEmptiedInstallations(
+      {
+        ...project,
+        walls: project.walls.filter((wall) => !wallIds.has(wall.id)),
+        rooms: project.rooms.filter((room) => !roomIds.has(room.id)),
+        radiators: project.radiators.filter(keepDevice),
+        ductedDrafts: project.ductedDrafts?.filter(keepDevice).map((draft) => ({
+          ...draft,
+          machineId:
+            draft.machineId &&
+            !deviceIds.has(draft.machineId) &&
+            (systemIds.has(draft.machineId) ||
+              project.ductedDrafts?.some(
+                (m) => m.id === draft.machineId && keepDevice(m),
+              ))
+              ? draft.machineId
+              : undefined,
+        })),
+        heatPumpDrafts: project.heatPumpDrafts?.filter(
+          (draft) => !deviceIds.has(draft.id),
+        ),
+        equipmentDrafts: project.equipmentDrafts?.filter(keepDevice),
+        fanCoils: project.fanCoils?.filter(keepDevice),
+        airTerminals: project.airTerminals.filter(keepDevice).map((device) => ({
+          ...device,
+          systemId:
+            device.systemId && systemIds.has(device.systemId)
+              ? device.systemId
+              : null,
+        })),
+        plenums: project.plenums.filter(
+          (pl) =>
+            !deviceIds.has(pl.id) &&
+            !roomIds.has(pl.roomId ?? "") &&
+            (!pl.systemId || systemIds.has(pl.systemId)),
+        ),
+        pillars: project.pillars?.filter((c) => !deviceIds.has(c.id)),
+        ducts: project.ducts?.filter((d) => !deviceIds.has(d.id)),
+        hvacSystems: systems,
+        hydronicSystems: project.hydronicSystems?.filter(
+          (s) => !deviceIds.has(s.outdoorUnit.id),
+        ),
+      },
+      project,
     ),
-    equipmentDrafts: project.equipmentDrafts?.filter(keepDevice),
-    fanCoils: project.fanCoils?.filter(keepDevice),
-    airTerminals: project.airTerminals.filter(keepDevice).map((device) => ({
-      ...device,
-      systemId:
-        device.systemId && systemIds.has(device.systemId)
-          ? device.systemId
-          : null,
-    })),
-    plenums: project.plenums.filter(
-      (pl) =>
-        !deviceIds.has(pl.id) &&
-        !roomIds.has(pl.roomId ?? "") &&
-        (!pl.systemId || systemIds.has(pl.systemId)),
-    ),
-    pillars: project.pillars?.filter((c) => !deviceIds.has(c.id)),
-    ducts: project.ducts?.filter((d) => !deviceIds.has(d.id)),
-    hvacSystems: systems,
-    hydronicSystems: project.hydronicSystems?.filter(
-      (s) => !deviceIds.has(s.outdoorUnit.id),
-    ),
-  });
+  );
 }
 
 /** Copy room metadata and its physical devices; use a free offset by default. */

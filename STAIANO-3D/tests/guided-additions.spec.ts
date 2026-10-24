@@ -1,7 +1,9 @@
-import { readFileSync } from "node:fs";
+import { heatPumpProductAtVersion } from "../src/domain/catalogs/heat-pumps";
+import { exportPlenumFixture } from "./plenum-ui-fixture";
+import { readFileSync, writeFileSync } from "node:fs";
 import { test, expect } from "./browser-test";
 import type { Project } from "../src/schemas/project";
-import { openDisclosure } from "./ui-helpers";
+import { openDisclosure, pickPlanPoint } from "./ui-helpers";
 
 const fixture = JSON.parse(
   readFileSync(".cache/guided-ui-fixtures.json", "utf8"),
@@ -9,7 +11,7 @@ const fixture = JSON.parse(
 
 test("raster analysis creates real walls and a room, saves its original and opens persistent guidance", async ({
   page,
-}) => {
+}, info) => {
   await page.setViewportSize({ width: 1680, height: 1050 });
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
@@ -60,9 +62,25 @@ test("raster analysis creates real walls and a room, saves its original and open
     .getByRole("combobox", { name: "Unità geometria" })
     .selectOption("0.01");
   await dialog.getByLabel("Ho verificato la scala su una misura reale").check();
+  const importWalls = dialog.getByRole("button", {
+    name: "Importa muri selezionati",
+  });
+  await expect(importWalls).toBeDisabled();
   await dialog
-    .getByRole("button", { name: "Importa muri selezionati" })
-    .click();
+    .getByLabel(
+      "Ho verificato e confermo i muri proposti in arancione (affidabilità media)",
+    )
+    .check();
+  await expect(importWalls).toBeEnabled();
+  await importWalls.click();
+  await expect(dialog).toHaveCount(0);
+  const imported = await exportPlenumFixture(page);
+  const rasterPath = info.outputPath("raster-project.json");
+  writeFileSync(rasterPath, JSON.stringify(imported, null, 2));
+  await info.attach("raster-project", {
+    path: rasterPath,
+    contentType: "application/json",
+  });
   await expect(page.getByTestId("wall")).toHaveCount(4);
   await expect(page.locator(".nome-stanza")).toHaveCount(1);
   await expect(
@@ -78,7 +96,8 @@ test("raster analysis creates real walls and a room, saves its original and open
   expect(result.sourceFilesMetadata[0].originalDataUrl).toMatch(
     /^data:image\/png;base64,/,
   );
-  expect(result.floors[0].importAnalysis?.wallsAutoCreated).toBe(4);
+  expect(result.floors[0].importAnalysis?.wallsConfirmedByOperator).toBe(4);
+  expect(result.floors[0].importAnalysis?.wallsAutoCreated).toBe(0);
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await expect(page.getByTestId("wall")).toHaveCount(4);
@@ -103,92 +122,135 @@ test("Innova M7 and Gree outdoor heat pump are real editable objects with summar
   await expect(viewer.locator("canvas")).toHaveAttribute(
     "data-rendered",
     "true",
-    { timeout: 30000 },
   );
-  await viewer
-    .getByRole("button", { name: "Seleziona Soggiorno nel 3D" })
-    .click();
-  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
+  await openDisclosure(viewer, "Aggiungi apparecchio");
   await viewer
     .getByRole("button", { name: "Ventilconvettori", exact: true })
     .click();
-  const panel = page.getByRole("dialog", {
-    name: "Ventilconvettori e comandi",
+  const insert = page.getByRole("complementary", {
+    name: "Inserisci apparecchio",
   });
-  const select = panel.getByRole("combobox", {
-    name: "Serie e modello",
+  await insert
+    .getByRole("button", { name: "Inserisci sulla pianta", exact: true })
+    .click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await pickPlanPoint(plan, 3, 0.4);
+  await plan.getByTestId("draft-fanCoil").click();
+  const panel = page.getByRole("dialog", {
+    name: "Configura apparecchio",
     exact: true,
   });
-  const model = await select
-    .locator("option")
-    .filter({ hasText: "AirLeaf SLI" })
-    .first()
-    .getAttribute("value");
-  await select.selectOption(model!);
   await panel
-    .getByLabel("Comando originale Innova M7")
+    .getByRole("combobox", { name: "Marca ventilconvettore", exact: true })
+    .selectOption("Innova");
+  await panel
+    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
+    .selectOption("AirLeaf SLI");
+  const taglia = panel.getByRole("combobox", {
+    name: "Taglia ventilconvettore",
+    exact: true,
+  });
+  const model = (await taglia
+    .locator("option")
+    .nth(1)
+    .getAttribute("value"))!;
+  await taglia.selectOption(model);
+  await panel
+    .getByRole("combobox", { name: "Comando originale Innova M7", exact: true })
     .selectOption("innova-eeb749ii");
   await panel
-    .getByRole("button", { name: "Aggiungi ventilconvettore" })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
-  await page.getByRole("button", { name: "Chiudi impianto idronico" }).click();
-  await openDisclosure(page, "Modifica");
-  await expect(
-    page
-      .getByRole("combobox", { name: "Elemento nel progetto" })
-      .locator("option")
-      .filter({ hasText: "FC1" }),
-  ).toHaveCount(1);
-  await page.locator(".menu-modifica > summary").press("Escape");
-  await expect(page.locator(".menu-modifica[open]")).toHaveCount(0);
-  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
+  await expect(plan.getByTestId("fan-coil-2d")).toHaveCount(1);
+  const withFan = await exportPlenumFixture(page);
+  expect(withFan.fanCoils![0]).toMatchObject({
+    productId: model,
+    controllerId: "innova-eeb749ii",
+  });
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await openDisclosure(viewer, "Aggiungi apparecchio");
   await viewer
     .getByRole("button", { name: "Pompa di calore", exact: true })
     .click();
+  await insert
+    .getByRole("button", { name: "Inserisci sulla pianta", exact: true })
+    .click();
+  await plan.getByRole("button", { name: "Riduci zoom", exact: true }).click();
+  await pickPlanPoint(plan, -1.2, 3);
+  await plan.getByRole("button", { name: "Collega", exact: true }).click();
+  await plan.getByTestId("draft-heatPump").click();
+  await plan.getByTestId("fan-coil-2d").click();
+  await page.keyboard.press("Escape");
+  await plan.getByTestId("draft-heatPump").click();
   const hydronic = page.getByRole("dialog", {
-    name: "Impianto idronico · macchina esterna",
+    name: "Scegli pompa di calore",
+    exact: true,
   });
-  await hydronic.getByLabel("Marca pompa di calore").selectOption("Gree");
-  await hydronic.getByRole("checkbox").filter({ visible: true }).last().check();
   await hydronic
-    .getByRole("button", { name: "Aggiungi pompa all’esterno" })
-    .click();
+    .getByRole("combobox", { name: "Marca pompa di calore", exact: true })
+    .selectOption("Gree");
   await hydronic
-    .getByRole("button", { name: "Chiudi impianto idronico" })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
-  await openDisclosure(page, "Modifica");
-  await expect(
-    page
-      .getByRole("combobox", { name: "Elemento nel progetto" })
-      .locator("option")
-      .filter({ hasText: "PDC1" }),
-  ).toHaveCount(1);
-  await page.locator(".menu-modifica > summary").press("Escape");
-  await expect(page.locator(".menu-modifica[open]")).toHaveCount(0);
-  await page.getByRole("button", { name: "2D", exact: true }).click();
-  await expect(page.getByTestId("heat-pump-2d")).toHaveCount(1);
-  await expect(page.getByTestId("fan-coil-2d")).toHaveCount(1);
-  await page.getByTestId("heat-pump-2d").click();
-  const rotation = page.locator('.proprieta input[name="rotation"]');
+  await expect(plan.getByTestId("heat-pump-2d")).toHaveCount(1);
+  const connected = await exportPlenumFixture(page);
+  expect(connected.hydronicSystems![0].fanCoilIds).toEqual([
+    withFan.fanCoils![0].id,
+  ]);
+  expect(
+    heatPumpProductAtVersion(
+      connected.hydronicSystems![0].productId,
+      connected.hydronicSystems![0].catalogVersion,
+    )?.manufacturer,
+  ).toBe("Gree");
+  await plan.getByTestId("heat-pump-2d").locator("rect").first().click();
+  await hydronic
+    .getByRole("button", { name: "Dati impianto", exact: true })
+    .click();
+  await openDisclosure(hydronic, "Posizione e proprietà della macchina");
+  const rotation = hydronic.locator('input[name="rotation"]');
   await rotation.fill("0");
-  await page
+  await hydronic
     .getByRole("button", { name: "Aggiorna posizione esterna", exact: true })
     .click();
   await expect(rotation).toHaveValue("0");
-  await page
+  await hydronic
     .getByRole("button", {
       name: "Rivolgi ventilatore all’esterno",
       exact: true,
     })
     .click();
-  await expect(rotation).toHaveValue(/^-?180$/);
-  await page.getByTestId("fan-coil-2d").click();
+  await hydronic
+    .locator("footer")
+    .getByRole("button", { name: "Annulla", exact: true })
+    .click();
+  const saved = await exportPlenumFixture(page);
+  const outdoor = saved.hydronicSystems![0].outdoorUnit,
+    room = saved.rooms.find((item) => item.id === withFan.fanCoils![0].roomId)!;
+  expect(
+    -Math.sin(outdoor.rotation) * (outdoor.position.x - room.centroid.x) +
+      Math.cos(outdoor.rotation) * (outdoor.position.y - room.centroid.y),
+  ).toBeGreaterThan(0);
+  await openDisclosure(page, "Modifica");
+  const objects = page.getByLabel("Elemento nel progetto", { exact: true });
+  await expect(
+    objects.locator("option").filter({ hasText: "FC1" }),
+  ).toHaveCount(1);
+  await expect(
+    objects.locator("option").filter({ hasText: "PDC1" }),
+  ).toHaveCount(1);
+  await objects.selectOption(withFan.fanCoils![0].id);
+  await objects.press("Escape");
   await page.screenshot({
     path: info.outputPath("hydronic-outdoor-2d.png"),
     fullPage: true,
   });
   await page.getByRole("button", { name: "3D", exact: true }).click();
-  await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
+  await openDisclosure(viewer, "Vista 3D");
   await viewer
     .getByRole("button", { name: "Vista Canale", exact: true })
     .click();
@@ -196,13 +258,20 @@ test("Innova M7 and Gree outdoor heat pump are real editable objects with summar
     path: info.outputPath("hydronic-outdoor-3d.png"),
     fullPage: true,
   });
-  await openDisclosure(page, "File");
+  const waiting = page.waitForEvent("download");
   await page
-    .getByRole("combobox", { name: "Tipo dossier" })
-    .selectOption("summary");
-  const download = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Dossier PDF", exact: true }).click();
-  expect((await download).suggestedFilename()).toContain("sintetico");
+    .getByRole("button", { name: "Scarica dossier sintetico PDF", exact: true })
+    .click();
+  const download = await waiting;
+  expect(download.suggestedFilename()).toContain("sintetico");
+  const pdfPath = info.outputPath("hydronic-summary.pdf");
+  await download.saveAs(pdfPath);
+  expect(readFileSync(pdfPath).subarray(0, 4).toString("ascii")).toBe("%PDF");
+  await page.reload();
+  await expect(plan.getByTestId("heat-pump-2d")).toHaveCount(1);
+  const restored = await exportPlenumFixture(page);
+  expect(restored.fanCoils).toEqual(saved.fanCoils);
+  expect(restored.hydronicSystems).toEqual(saved.hydronicSystems);
 });
 
 test("front plenum view shows each actual port number and diameter", async ({
@@ -222,10 +291,16 @@ test("front plenum view shows each actual port number and diameter", async ({
   await page
     .getByRole("button", { name: "Continua liberamente nell’editor" })
     .click();
-  await page.getByRole("button", { name: "3D", exact: true }).click();
-  const viewer = page.getByTestId("viewer-3d");
-  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
-  await viewer.getByRole("button", { name: "Plenum", exact: true }).click();
+  const before = await exportPlenumFixture(page);
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  const viewer = page.getByRole("dialog", {
+    name: "Scegli macchina canalizzata",
+    exact: true,
+  });
+  await openDisclosure(viewer, "Schema e dimensionamento plenum");
   await viewer
     .getByRole("button", { name: "Vista 3D plenum", exact: true })
     .click();
@@ -293,4 +368,12 @@ test("front plenum view shows each actual port number and diameter", async ({
     fullPage: true,
   });
   await viewer.getByRole("button", { name: "Espandi plenum / esci" }).click();
+  await viewer
+    .locator("footer")
+    .getByRole("button", { name: "Annulla", exact: true })
+    .click();
+  const after = await exportPlenumFixture(page);
+  expect(after.hvacSystems).toEqual(before.hvacSystems);
+  expect(after.plenums).toEqual(before.plenums);
+  expect(after.airTerminals).toEqual(before.airTerminals);
 });

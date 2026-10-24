@@ -6,6 +6,7 @@ source rows before changing their expected hash. No interpolation of capacities.
 from pathlib import Path
 import hashlib
 import json
+import re
 from datetime import datetime, timezone
 from pypdf import PdfReader
 
@@ -184,7 +185,6 @@ for size, page in [(6, 8), (8, 10), (10, 12), (12, 14), (14, 16), (16, 20)]:
     if f"GRS-CQ{model_size}Pd/NpG4-E" not in text or "/".join(map(str, [dimensions[1], dimensions[0], dimensions[2]])) not in text:
         raise ValueError("Gree source row/dimensions missing")
     # Same-page named nominal capacity / EER-COP rows, no promotional rated values.
-    import re
     capacities = re.findall(r"Capacità nominale kW ([\d,]+) ([\d,]+)", text)
     efficiency = re.findall(r"EER/COP ([\d,]+) ([\d,]+)", text)
     convert = lambda value: float(value.replace(",", "."))
@@ -233,6 +233,26 @@ for configuration in ["split", "all-in-one"]:
 
 # The live VERSATI listing has 10 monoblocco + 4 Split + 4 All In One systems.
 assert len([p for p in products if p["manufacturer"] == "Gree"]) == 18
+
+# Page 4 distinguishes Min/Nom/Max thermal outputs; COP/EER remain nominal.
+for document in ["chaffoteaux", "chaffoteaux-arianext-lite"]:
+    text = PdfReader(doc_file(document)).pages[3].extract_text()
+    rows = re.findall(r"Potenza\s+termica\s+kW\s+([^\n]+)", text)
+    capacities = [[tuple(float(v.replace(",", ".")) for v in cell.split("/"))
+                   for cell in row.split()] for row in rows]
+    assert len(capacities) == 5 and all(len(row) == 8 for row in capacities), "Chaffoteaux Min/Nom/Max table changed"
+    assert all(len(cell) == 3 and 0 < cell[0] <= cell[1] <= cell[2]
+               for row in capacities for cell in row), "Invalid Chaffoteaux capacity range"
+    for product in products:
+        if product["sourceMetadata"]["sha256"] != DOCS[document][1]:
+            continue
+        size = int(re.search(r"ARIANEXT (?:PLUS|LITE) (\d+)", product["model"])[1])
+        column = {35: 0, 50: 1, 80: 2, 120: 4, 150: 6}[size]
+        for op in product["operatingPoints"]:
+            heat_row = 1 if op["heatingOutdoorC"] == -7 else 2 if op["heatingWaterSupplyC"] == 45 else 0
+            heat, cold = capacities[heat_row][column], capacities[3][column]
+            assert op["heatingW"] == round(heat[1] * 1000) and op["coolingW"] == round(cold[1] * 1000), "Chaffoteaux nominal row mismatch"
+            op["maxHeatingW"], op["maxCoolingW"] = round(heat[2] * 1000), round(cold[2] * 1000)
 
 version_hash = hashlib.sha256(json.dumps(products, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
 catalog = dict(version=f"heat-pumps-{version_hash}", products=products)

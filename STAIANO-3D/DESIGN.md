@@ -300,3 +300,38 @@ Selezionare il muro e aprire Proprietà > Cartongesso e vuoto per i canali. Sceg
 Ripetere sulle pareti laterali: fronti e retro si uniscono agli angoli e il vuoto resta continuo. In 2D la fascia tecnica ha un riempimento leggero e un contorno distinto; in Vista Canale il fronte 3D è trasparente. La struttura è vuota, con due superfici e chiusure soltanto alle estremità libere; porte e finestre conservano i propri varchi. Le bocchette seguono il fronte e rispettano lo spazio residuo presso i risvolti.
 
 Per un plenum inserito separatamente, Proprietà > Direzione stacchi reali distingue attacchi orizzontali e superiori, anche con montaggio a parete. L'orientamento indica il manufatto effettivo: non promette una variante di catalogo. Il numero e il diametro degli stacchi dichiarati alimentano i singoli tubi del plenum macchina. Raggi, ingombro nel vuoto e quota superiore restano controllati; una profondità insufficiente non viene aumentata automaticamente. Il programma propone percorsi, non certifica interferenze dell'impianto completo o supporti di posa.
+
+## Quote finite e percorsi verificabili
+
+Con un controsoffitto centrale, il riepilogo della stanza mostra l'altezza finita.
+La nota riporta volume utile e vuoto tecnico in centimetri, mantenendo accessibile
+la quota strutturale nel form. Gli stacchi del plenum riusano le stesse direzioni
+del modello, comprese quelle manuali della macchina. Durante l'inserimento,
+cliccare un apparecchio esistente ne apre la configurazione senza duplicarlo.
+
+La lunghezza del flessibile è quella della curva disegnata; i percorsi non
+misurabili sono indicati da correggere. Le proprietà delle unità esterne split
+mostrano fonte e pagina delle misure pubblicate, con eventuali note sulle
+discrepanze tra documenti. I progetti storici senza queste misure conservano
+la nota di ingombro indicativo, ripresa da controlli e dossier. Ventole esterne con pale, mozzo e griglia concentrica riusano geometrie
+e materiali fra split, VRV e pompe di calore. Il dettaglio è illustrativo.
+
+Empoli distingue i profili verticali piatti e lo specchio centrale dalla forma
+degli scaldasalviette: quattro profili sul 600 mm, sei sul 750 mm, con riflessione
+della stanza. Ingombri e sezioni dei profili seguono la scheda archiviata; le
+spaziature senza quota restano illustrative. Le finiture usano le palette
+esistenti senza modificare potenze o variante termica.
+
+Su telefono (fino a 640 px), la navigazione occupa una riga e la testata mantiene
+il nome del progetto e azioni compatte con etichette accessibili. I comandi rapidi
+duplicati sono raggiungibili nei menu File e Modifica. La barra degli strumenti
+della pianta scorre orizzontalmente, con bersagli di 44 px; i menu si aprono sopra
+il fondo dello schermo e non sono ritagliati dalla barra. Il canvas precede le
+istruzioni testuali e conserva altezza fra 340 e 480 px. Tablet e desktop
+mantengono i rispettivi layout esistenti.
+
+Split, VRV e pompe di calore condividono carter e appoggi in OutdoorCabinet.
+L'altezza complessiva coincide con l'ingombro salvato: il carter raggiunge la
+quota superiore e poggia sugli appoggi illustrativi senza distacco. Geometria
+e materiali sono condivisi; selezione e colori delle famiglie restano quelli
+esistenti. I dettagli visivi non sostituiscono il disegno costruttivo del modello.

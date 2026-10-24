@@ -90,7 +90,7 @@ export function comfortFields(
       if (room)
         air(
           unit,
-          splitCenterElevationM(room, unit) - unit.heightMm / 3000,
+          splitCenterElevationM(room, unit, project) - unit.heightMm / 3000,
           false,
         );
     }

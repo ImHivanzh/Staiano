@@ -15,7 +15,11 @@ import {
   plenumBranchGroups,
   plenumDiagramSvg,
 } from "@/domain/ducted/plenum-diagram";
-import { placeDuctedMachine, placePlenum } from "@/domain/ducted/placement";
+import {
+  machinePlenums,
+  placeDuctedMachine,
+  placePlenum,
+} from "@/domain/ducted/placement";
 import { LinearSummary } from "./OperatorTerminalControls";
 import styles from "./SupplyPlenumPanel.module.css";
 
@@ -34,18 +38,20 @@ export function SupplyPlenumPanel({
   const [show3D, setShow3D] = useState(false);
   const [grouped, setGrouped] = useState(true);
   const groups = plenumBranchGroups(result.branches);
-  const { commit } = useProjectStore();
-  const placed = project.plenums.find(
-    (pl) => pl.systemId === systemId && pl.use === use,
-  );
+  const { commit, readOnly } = useProjectStore();
+  const bodies = machinePlenums(project, systemId);
+  const placed = bodies.find((pl) => pl.use === use);
   const system = project.hvacSystems.find((s) => s.id === systemId);
   const returnConnection = system?.returnConnection;
-  const supplyPlenum = project.plenums.find(
-    (pl) => pl.systemId === systemId && pl.use === "supply",
-  );
-  const returnPlenum = project.plenums.find(
-    (pl) => pl.systemId === systemId && pl.use === "return",
-  );
+  const locked =
+    readOnly ||
+    !!system?.indoorUnits.some((unit) => unit.locked) ||
+    !!project.fanCoils?.some(
+      (unit) => unit.id === system?.fanCoilId && unit.locked,
+    ) ||
+    bodies.some((plenum) => plenum.locked);
+  const supplyPlenum = bodies.find((pl) => pl.use === "supply");
+  const returnPlenum = bodies.find((pl) => pl.use === "return");
   const [machineRoomId, setMachineRoomId] = useState(
     system?.indoorUnits[0]?.roomId ?? system?.roomIds[0] ?? "",
   );
@@ -255,6 +261,7 @@ export function SupplyPlenumPanel({
             <span>Stanza di posa macchina</span>
             <select
               aria-label="Stanza di posa macchina"
+              disabled={locked || !!system?.fanCoilId}
               value={machineRoomId}
               onChange={(e) => setMachineRoomId(e.target.value)}
             >
@@ -270,6 +277,7 @@ export function SupplyPlenumPanel({
           <div className={styles.actions}>
             <button
               className="bottone piccolo"
+              disabled={locked || !!system?.fanCoilId}
               onClick={() =>
                 commit((p) => placeDuctedMachine(p, systemId, machineRoomId))
               }
@@ -280,12 +288,15 @@ export function SupplyPlenumPanel({
             </button>
             <button
               className="bottone piccolo chiara"
+              disabled={locked}
               onClick={() => {
                 commit((p) => placePlenum(p, systemId, use));
                 const state = useProjectStore.getState();
-                const pl = state.project?.plenums.find(
-                  (item) => item.systemId === systemId && item.use === use,
-                );
+                const pl =
+                  state.project &&
+                  machinePlenums(state.project, systemId).find(
+                    (item) => item.use === use,
+                  );
                 if (pl && !state.error) {
                   state.select({ kind: "device", id: pl.id });
                   onPlaced?.();
@@ -297,6 +308,12 @@ export function SupplyPlenumPanel({
                 : `Crea plenum di ${side} nel progetto`}
             </button>
           </div>
+          {system?.fanCoilId && (
+            <p className={styles.hint}>
+              La posa segue il ventilconvettore: modifica la posizione dalla sua
+              scheda.
+            </p>
+          )}
           {use === "return" && (
             <form
               key={`${systemId}-${returnConnection?.connectionWidthMm ?? ""}-${returnConnection?.connectionHeightMm ?? ""}`}
@@ -326,7 +343,7 @@ export function SupplyPlenumPanel({
                 }));
               }}
             >
-              <fieldset>
+              <fieldset disabled={locked}>
                 <legend>Attacco di ripresa dichiarato</legend>
                 <p className={styles.hint}>
                   Quote dell’attacco di ripresa della macchina, come pubblicate
@@ -511,6 +528,7 @@ export function SupplyPlenumPanel({
           <span>Velocità massima negli stacchi (m/s)</span>
           <input
             key={`${systemId}-${result.settings.maxBranchVelocityMs}`}
+            disabled={locked}
             type="number"
             defaultValue={result.settings.maxBranchVelocityMs}
             min={0.5}

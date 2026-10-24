@@ -1,5 +1,5 @@
 {
-  "version": "split-5fca5af2b8c15f02",
+  "version": "split-a1e83e0e95f5315f",
   "indoorUnits": [
     {
       "id": "daikin-ctxm15a",
@@ -1679,6 +1679,1502 @@
         "importedAt": "2026-10-03T05:56:49.307029+00:00",
         "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
         "page": 49
+      }
+    }
+  ],
+  "outdoorUnits": [
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA20A9",
+      "widthMm": 828,
+      "heightMm": 550,
+      "depthMm": 329,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA25A9",
+      "widthMm": 828,
+      "heightMm": 550,
+      "depthMm": 329,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA35A9",
+      "widthMm": 828,
+      "heightMm": 550,
+      "depthMm": 329,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA42B9",
+      "widthMm": 940,
+      "heightMm": 734,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXA50B8",
+      "widthMm": 940,
+      "heightMm": 734,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 47
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ20A9",
+      "widthMm": 840,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ25A9",
+      "widthMm": 840,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ35A9",
+      "widthMm": 840,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ42A9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXJ50A9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM20A",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM25A9",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM35A9",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM42A",
+      "widthMm": 923,
+      "heightMm": 610,
+      "depthMm": 367,
+      "dimensionNote": "Misure della serie Perfera All Seasons a parete, dal leaflet dedicato; le tabelle FVXM del catalogo generale riportano altre quote e non sono usate per questa serie.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM50A9/8",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Misure della tabella Perfera All Seasons; RXM50A9/8 conserva la sigla aggregata pubblicata dal produttore. Verificare il suffisso del prodotto consegnato.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM60A",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Misure della tabella Perfera All Seasons; RXM50A9/8 conserva la sigla aggregata pubblicata dal produttore. Verificare il suffisso del prodotto consegnato.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXM71A",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Misure della tabella Perfera All Seasons; RXM50A9/8 conserva la sigla aggregata pubblicata dal produttore. Verificare il suffisso del prodotto consegnato.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Leaflet Perfera All Seasons 2025",
+        "retrievedAt": "2026-10-23T07:26:07.188140+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP20N9",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP25N9",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP35N9",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP50N8",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP60N9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXP71N9",
+      "widthMm": 954,
+      "heightMm": 734,
+      "depthMm": 401,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 54
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF20E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF25E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF35E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF42E",
+      "widthMm": 740,
+      "heightMm": 556,
+      "depthMm": 343,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF50D",
+      "widthMm": 870,
+      "heightMm": 734,
+      "depthMm": 373,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF60D9",
+      "widthMm": 870,
+      "heightMm": 734,
+      "depthMm": 373,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "RXF71D9",
+      "widthMm": 870,
+      "heightMm": 734,
+      "depthMm": 373,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Catalogo Residenziale 2025",
+        "retrievedAt": "2026-10-03T02:41:21.764272+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "a4414ccfb82ba4e6f29c6d456c53ffb7ab2dcb26a48f78be9b9f1fe815d4129a",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "2MXM40A9",
+      "widthMm": 852,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "2MXM50A8",
+      "widthMm": 852,
+      "heightMm": 552,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "2MXM68A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "3MXM40A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "3MXM52A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "3MXM68A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "4MXM68A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "4MXM80A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Daikin",
+      "model": "5MXM90A8",
+      "widthMm": 974,
+      "heightMm": 734,
+      "depthMm": 408,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Daikin",
+        "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20251117%20Tabelle%20di%20Combinazione%202025_%2017-11.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Tabelle combinazioni 17/11/2025",
+        "retrievedAt": "2026-10-03T05:53:06.556280+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-AY20VG",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "MSZ-AY, catalogo italiano 2025",
+        "retrievedAt": "2026-10-03T05:50:01.127852+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "f93a90f5ddbe8b3ce33511ee1c0e68db14c84308a438355c4d68533a6511710e",
+        "page": 19
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-AY25VG",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "MSZ-AY, catalogo italiano 2025",
+        "retrievedAt": "2026-10-03T05:50:01.127852+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "f93a90f5ddbe8b3ce33511ee1c0e68db14c84308a438355c4d68533a6511710e",
+        "page": 19
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-AY35VG",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "MSZ-AY, catalogo italiano 2025",
+        "retrievedAt": "2026-10-03T05:50:01.127852+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "f93a90f5ddbe8b3ce33511ee1c0e68db14c84308a438355c4d68533a6511710e",
+        "page": 19
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-AY42VG",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "MSZ-AY, catalogo italiano 2025",
+        "retrievedAt": "2026-10-03T05:50:01.127852+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "f93a90f5ddbe8b3ce33511ee1c0e68db14c84308a438355c4d68533a6511710e",
+        "page": 19
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-AY50VG",
+      "widthMm": 800,
+      "heightMm": 714,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2025-08/MSZ_AY_ITA_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "MSZ-AY, catalogo italiano 2025",
+        "retrievedAt": "2026-10-03T05:50:01.127852+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "f93a90f5ddbe8b3ce33511ee1c0e68db14c84308a438355c4d68533a6511710e",
+        "page": 19
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-LN25VG2",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-LN35VG2",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-LN50VG2",
+      "widthMm": 800,
+      "heightMm": 714,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-LN60VG2",
+      "widthMm": 840,
+      "heightMm": 880,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 49
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-EF25VG",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 51
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-EF35VG",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 51
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-EF50VG",
+      "widthMm": 800,
+      "heightMm": 714,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 51
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-HR25VF",
+      "widthMm": 699,
+      "heightMm": 538,
+      "depthMm": 249,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-HR35VF",
+      "widthMm": 699,
+      "heightMm": 538,
+      "depthMm": 249,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-HR50VF",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-HR60VF",
+      "widthMm": 800,
+      "heightMm": 714,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MUZ-HR71VF",
+      "widthMm": 800,
+      "heightMm": 714,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
+        "sourceType": "pdf",
+        "documentRevision": "Residential catalogue UK 2025",
+        "retrievedAt": "2026-10-03T05:56:49.307029+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "871c8dcdf4319e2607bd65491167068092e1b55f65a84076c351507fbdac6eb1",
+        "page": 55
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-2F33VF4",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 1
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-2F42VF4",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 1
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-2F53VF4",
+      "widthMm": 800,
+      "heightMm": 550,
+      "depthMm": 285,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 1
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-3F54VF4",
+      "widthMm": 840,
+      "heightMm": 710,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 1
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-3F68VF4",
+      "widthMm": 840,
+      "heightMm": 710,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 1
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-4F72VF4",
+      "widthMm": 840,
+      "heightMm": 710,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 2
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-5F102VF2",
+      "widthMm": 950,
+      "heightMm": 796,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 2
+      }
+    },
+    {
+      "manufacturer": "Mitsubishi Electric",
+      "model": "MXZ-6F120VF2",
+      "widthMm": 950,
+      "heightMm": 1048,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Mitsubishi Electric",
+        "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda MXZ-F 19/11/2024",
+        "retrievedAt": "2026-10-03T05:50:01.998936+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+        "page": 2
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH09AVCXB-K6DNA1B/O",
+      "widthMm": 732,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH12AVCXD-K6DNA1A/O",
+      "widthMm": 802,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH18AVDXE-K6DNA1A/O",
+      "widthMm": 873,
+      "heightMm": 555,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH24AVEXF-K6DNA1A/O",
+      "widthMm": 958,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH09AUCXB-K6DNA1A/O",
+      "widthMm": 732,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH12AUCXB-K6DNA1A/O",
+      "widthMm": 732,
+      "heightMm": 555,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH18AUDXD-K6DNA1A/O",
+      "widthMm": 802,
+      "heightMm": 555,
+      "depthMm": 350,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH24AUDXF-K6DNA1A/O",
+      "widthMm": 958,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Residenziale Gree 2026",
+        "retrievedAt": "2026-10-03T05:50:39.903129+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
+        "page": 24
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH09AWBXB-K6DNA1C/O",
+      "widthMm": 732,
+      "heightMm": 550,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH12AWCXB-K6DNA3E/O",
+      "widthMm": 732,
+      "heightMm": 550,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 14
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH18AGD-K6DNA1D/O",
+      "widthMm": 732,
+      "heightMm": 550,
+      "depthMm": 330,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 15
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWH24AGD-K6DNA1C/O",
+      "widthMm": 873,
+      "heightMm": 555,
+      "depthMm": 376,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_PULAR_2026_web.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Brochure Pular 2026",
+        "retrievedAt": "2026-10-03T05:50:31.219750+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "4115411e1d3a24b7b60f4b0452f04d9e0ab95d95d88c02eeb091307a7d45522d",
+        "page": 15
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(14)NK6OO",
+      "widthMm": 745,
+      "heightMm": 550,
+      "depthMm": 300,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 4
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(18)NK6OO",
+      "widthMm": 745,
+      "heightMm": 550,
+      "depthMm": 300,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 5
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(21)NK6OO",
+      "widthMm": 964,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(24)NK6OO",
+      "widthMm": 964,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(28)NK6OO",
+      "widthMm": 964,
+      "heightMm": 660,
+      "depthMm": 402,
+      "dimensionNote": "Dimensioni WXDXH del manuale di servizio convertite in L x H x P, coerenti con la scheda prodotto 2026. Per 21/24/28k la brochure generale riporta un diverso ingombro e non viene usata per la posa.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Service Manual new Free Match 14-28K, rev01",
+        "retrievedAt": "2026-10-23T07:26:06.920764+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+        "page": 8
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(36)NK6OO",
+      "widthMm": 1020,
+      "heightMm": 826,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/Free_Match_UE_scheda_prodotto_2026.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda prodotto Free Match 2026",
+        "retrievedAt": "2026-10-03T05:53:12.806831+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "dcedf84907d6d72a90b38103c6f7a9fa10738dc68568e66326814a01e8a4dc3f",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "Gree",
+      "model": "GWHD(42)NK6OO",
+      "widthMm": 1020,
+      "heightMm": 826,
+      "depthMm": 427,
+      "dimensionNote": "Ingombro netto pubblicato, in L x H x P. Distanze di servizio e accessori da verificare sul manuale del modello.",
+      "sourceMetadata": {
+        "manufacturer": "Gree",
+        "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SCP/Free_Match_UE_scheda_prodotto_2026.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Scheda prodotto Free Match 2026",
+        "retrievedAt": "2026-10-03T05:53:12.806831+00:00",
+        "importedAt": "2026-10-23T07:38:31.669730+00:00",
+        "sha256": "dcedf84907d6d72a90b38103c6f7a9fa10738dc68568e66326814a01e8a4dc3f",
+        "page": 8
       }
     }
   ],

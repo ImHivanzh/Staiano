@@ -23,6 +23,13 @@ export function DuctPanel({
   const { commit } = useProjectStore();
   const ducts = project.ducts?.filter((d) => d.systemId === systemId) ?? [];
   const codes = deviceCodes(project);
+  const lengths = ducts.map((duct) =>
+    ductLength(
+      ductRoute(project, duct),
+      duct.kind === "flexible" ? (duct.diameterMm ?? 160) : undefined,
+    ),
+  );
+  const unmeasurable = lengths.filter((length) => length === null).length;
   return (
     <section aria-label="Canalizzazione collegata">
       <h3>Vista Canale · {codes.get(systemId)}</h3>
@@ -46,9 +53,10 @@ export function DuctPanel({
       <p>
         {ducts.filter((d) => d.terminalId).length} rami collegati ·{" "}
         {formatNumber(
-          ducts.reduce((sum, d) => sum + ductLength(ductRoute(project, d)), 0),
+          lengths.reduce<number>((sum, length) => sum + (length ?? 0), 0),
         )}{" "}
-        m di percorso geometrico
+        m misurabili lungo l’asse dei canali
+        {unmeasurable > 0 && ` · ${unmeasurable} percorsi da correggere`}
       </p>
       {ducts.map((duct) => (
         <details key={duct.id}>

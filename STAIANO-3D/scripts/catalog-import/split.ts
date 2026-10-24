@@ -15,6 +15,12 @@ const metadata = (source: Record<string, unknown>, manufacturer: string) => ({
   documentRevision: source.documentRevision ?? source.revision ?? null,
 });
 const data = {
+  outdoorUnits: inputs
+    .flatMap((v) => v.outdoorUnits ?? [])
+    .map((v) => ({
+      ...v,
+      sourceMetadata: metadata(v.sourceMetadata, v.manufacturer),
+    })),
   indoorUnits: inputs
     .flatMap((v) => v.indoorUnits)
     .map((v) => ({
@@ -56,20 +62,31 @@ const previous = existsSync(file)
 const oldIds = new Set(previous?.combinations.map((v) => v.id)),
   newIds = new Set(catalog.combinations.map((v) => v.id));
 const removed = [...oldIds].filter((id) => !newIds.has(id));
+const outdoorKeys = new Set(
+  catalog.outdoorUnits.map((unit) => `${unit.manufacturer}:${unit.model}`),
+);
+const removedOutdoors = (previous?.outdoorUnits ?? []).filter(
+  (unit) => !outdoorKeys.has(`${unit.manufacturer}:${unit.model}`),
+);
 console.log(
   JSON.stringify(
     {
       version,
       indoorUnits: catalog.indoorUnits.length,
       combinations: catalog.combinations.length,
+      outdoorUnits: catalog.outdoorUnits.length,
       added: [...newIds].filter((id) => !oldIds.has(id)).length,
       removed,
+      removedOutdoors: removedOutdoors.map((unit) => unit.model),
     },
     null,
     2,
   ),
 );
-if (removed.length && !process.argv.includes("--allow-removals"))
+if (
+  (removed.length || removedOutdoors.length) &&
+  !process.argv.includes("--allow-removals")
+)
   throw new Error(
     "Rimozioni catalogo: verificare report e ripetere con --allow-removals solo dopo revisione.",
   );
@@ -81,6 +98,6 @@ const history = existsSync(historyFile)
   ? JSON.parse(readFileSync(historyFile, "utf8"))
   : {};
 if (previous) history[previous.version] = previous;
-history[version] = catalog;
+delete history[version];
 writeFileSync(historyFile, JSON.stringify(history, null, 2) + "\n");
 writeFileSync(file, JSON.stringify(catalog, null, 2) + "\n");

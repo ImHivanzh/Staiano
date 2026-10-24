@@ -96,9 +96,7 @@ function RoomFloor({
   textures: ReturnType<typeof useSurfaceMaterials>;
   floorFinish?: "oak" | "stone";
 }) {
-  const tiled = floorFinish
-    ? floorFinish === "stone"
-    : /bagn|cucin|lavander|tecnic|wc|toilet/i.test(room.name);
+  const tiled = floorFinish === "stone";
   const geometry = useMemo(() => {
     const shape = new THREE.Shape();
     room.polygon.forEach((p, i) =>
@@ -288,19 +286,21 @@ function ArchitecturalWall({
   const height = cut ? Math.min(cutHeightM, trueHeight) : trueHeight;
   const length = distance(wall.start, wall.end);
   const span = roomWallSpan(wall, isolatedRoom);
-  const joined = (point: { x: number; y: number }) =>
-    walls.some(
-      (other) =>
-        other.id !== wall.id &&
-        other.floorId === wall.floorId &&
-        (distance(other.start, point) < 1e-6 ||
-          distance(other.end, point) < 1e-6),
-    );
-  const extension = {
-    startM: joined(wall.start) ? wall.thickness / 2 : 0,
-    endM: joined(wall.end) ? wall.thickness / 2 : 0,
-    lengthM: length,
-  };
+  const extension = useMemo(() => {
+    const joined = (point: { x: number; y: number }) =>
+      walls.some(
+        (other) =>
+          other.id !== wall.id &&
+          other.floorId === wall.floorId &&
+          (distance(other.start, point) < 1e-6 ||
+            distance(other.end, point) < 1e-6),
+      );
+    return {
+      startM: joined(wall.start) ? wall.thickness / 2 : 0,
+      endM: joined(wall.end) ? wall.thickness / 2 : 0,
+      lengthM: length,
+    };
+  }, [walls, wall, length]);
   const apertures = useMemo(
     () =>
       measuredOpenings(wall, openings, height).flatMap((o) => {
@@ -329,8 +329,7 @@ function ArchitecturalWall({
       wall.thickness,
       span.start,
       span.end,
-      extension.startM,
-      extension.endM,
+      extension,
     ],
   );
   const baseboard = useMemo(() => {
@@ -366,8 +365,7 @@ function ArchitecturalWall({
     span.start,
     span.end,
     wall.thickness,
-    extension.startM,
-    extension.endM,
+    extension,
   ]);
   useEffect(
     () => () => {

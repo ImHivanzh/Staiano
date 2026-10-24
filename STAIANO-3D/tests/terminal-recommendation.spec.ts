@@ -2,7 +2,7 @@ import { test, expect } from "./browser-test";
 import { importPlenumFixture } from "./plenum-ui-fixture";
 import { chooseTerminalModel, terminalLengthButton } from "./ui-helpers";
 
-test("changing the slot configuration applies the new recommendation instead of the previous manual length", async ({
+test("changing the slot configuration keeps an available manual length and flags the new recommendation", async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -45,11 +45,15 @@ test("changing the slot configuration applies the new recommendation instead of 
   await terminalLengthButton(popup, manual).click();
   await slots.getByRole("button", { name: "2 feritoie", exact: true }).click();
   await expect(terminalLengthButton(popup, expected)).toHaveAttribute(
-    "aria-pressed",
+    "data-recommended",
     "true",
+  );
+  await expect(terminalLengthButton(popup, expected)).toHaveAttribute(
+    "aria-pressed",
+    "false",
   );
   await expect(terminalLengthButton(popup, manual)).toHaveAttribute(
     "aria-pressed",
-    "false",
+    "true",
   );
 });

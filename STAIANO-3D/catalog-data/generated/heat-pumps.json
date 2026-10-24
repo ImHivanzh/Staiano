@@ -1,5 +1,5 @@
 {
-  "version": "heat-pumps-9e3730348d934831",
+  "version": "heat-pumps-6887d71cf50927c4",
   "products": [
     {
       "id": "chaffoteaux-arianext-plus-35-m-r32",
@@ -44,7 +44,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 6350,
+          "maxCoolingW": 3810
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -57,7 +59,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 6040,
+          "maxCoolingW": 3810
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -70,7 +74,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 4520,
+          "maxCoolingW": 3810
         }
       ]
     },
@@ -117,7 +123,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 7570,
+          "maxCoolingW": 5400
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -130,7 +138,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 7190,
+          "maxCoolingW": 5400
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -143,7 +153,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 5200,
+          "maxCoolingW": 5400
         }
       ]
     },
@@ -190,7 +202,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11740,
+          "maxCoolingW": 8500
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -203,7 +217,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11500,
+          "maxCoolingW": 8500
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -216,7 +232,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 8450,
+          "maxCoolingW": 8500
         }
       ]
     },
@@ -267,7 +285,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 6350,
+          "maxCoolingW": 3810
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -280,7 +300,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 6040,
+          "maxCoolingW": 3810
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -293,7 +315,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 4520,
+          "maxCoolingW": 3810
         }
       ]
     },
@@ -344,7 +368,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 7570,
+          "maxCoolingW": 5400
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -357,7 +383,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 7190,
+          "maxCoolingW": 5400
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -370,7 +398,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 5200,
+          "maxCoolingW": 5400
         }
       ]
     },
@@ -421,7 +451,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11740,
+          "maxCoolingW": 8500
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -434,7 +466,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11500,
+          "maxCoolingW": 8500
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -447,7 +481,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 8450,
+          "maxCoolingW": 8500
         }
       ]
     },
@@ -498,7 +534,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11740,
+          "maxCoolingW": 8500
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -511,7 +549,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11500,
+          "maxCoolingW": 8500
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -524,7 +564,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 8450,
+          "maxCoolingW": 8500
         }
       ]
     },
@@ -575,7 +617,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 14370,
+          "maxCoolingW": 10300
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -588,7 +632,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 13650,
+          "maxCoolingW": 10300
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -601,7 +647,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11470,
+          "maxCoolingW": 10300
         }
       ]
     },
@@ -652,7 +700,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 14370,
+          "maxCoolingW": 10300
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -665,7 +715,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 13650,
+          "maxCoolingW": 10300
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -678,7 +730,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 11470,
+          "maxCoolingW": 10300
         }
       ]
     },
@@ -729,7 +783,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 17650,
+          "maxCoolingW": 11880
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -742,7 +798,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 16770,
+          "maxCoolingW": 11880
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -755,7 +813,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 13790,
+          "maxCoolingW": 11880
         }
       ]
     },
@@ -806,7 +866,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 17650,
+          "maxCoolingW": 11880
         },
         {
           "label": "Caldo A7/W45 · freddo A35/W7",
@@ -819,7 +881,9 @@
           "heatingOutdoorC": 7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna 7 °C · acqua mandata/ritorno 45/40 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 16770,
+          "maxCoolingW": 11880
         },
         {
           "label": "Caldo A−7/W35 · freddo A35/W7",
@@ -832,7 +896,9 @@
           "heatingOutdoorC": -7,
           "coolingOutdoorC": 35,
           "heatingConditions": "EN 14511 · aria esterna -7 °C · acqua mandata/ritorno 35/30 °C",
-          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C"
+          "coolingConditions": "EN 14511 · aria esterna 35 °C · acqua mandata/ritorno 7/12 °C",
+          "maxHeatingW": 13790,
+          "maxCoolingW": 11880
         }
       ]
     },

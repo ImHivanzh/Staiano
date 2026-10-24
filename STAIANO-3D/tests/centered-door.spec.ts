@@ -71,7 +71,8 @@ test("one click adds a centered door, supports undo and persists in 2D and 3D", 
     page.getByLabel("Altezza apertura", { exact: true }),
   ).toHaveValue("2.1");
   await openDisclosure(page, "Modifica");
-  await page.getByRole("button", { name: "Annulla", exact: true }).click();
+  await page.getByRole("group", { name: "Comandi rapidi progetto" })
+    .getByRole("button", { name: "Annulla", exact: true }).click();
   await expect(page.getByTestId("opening-2d")).toHaveCount(0);
   await page.mouse.click(midpoint.x, midpoint.y);
   await expect(add).toBeEnabled();

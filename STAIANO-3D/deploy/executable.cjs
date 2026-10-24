@@ -687,13 +687,9 @@ async function main() {
   await requireCurrentVersion(dataRoot, config);
   try {
     const active = JSON.parse(
-      fs.readFileSync(
-        path.join(path.dirname(dataRoot), "active.json"),
-        "utf8",
-      ),
+      fs.readFileSync(path.join(path.dirname(dataRoot), "active.json"), "utf8"),
     );
-    if (active.sha256)
-      pruneVersions(path.dirname(dataRoot), active.sha256);
+    if (active.sha256) pruneVersions(path.dirname(dataRoot), active.sha256);
   } catch {
     // Installazione senza active.json (copia di sviluppo): nulla da pulire.
   }
@@ -706,7 +702,11 @@ async function main() {
     commit: config.commit,
     executable: process.execPath,
   };
-  atomicJson(path.join(dataRoot, ".cache", "production-server.json"), record);
+  if (
+    !process.env.STAIANO_EXE_TEST_PORT ||
+    process.env.STAIANO_EXE_TEST_PORT === "3015"
+  )
+    atomicJson(path.join(dataRoot, ".cache", "production-server.json"), record);
 }
 
 module.exports = {

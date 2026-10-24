@@ -15,12 +15,32 @@ import {
 } from "../../tests/guided-fixture";
 import { projectSchema, CURRENT_SCHEMA_VERSION } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
-import { applyFanCoil } from "./fan-coils/apply";
+import { applyFanCoil, removeFanCoil } from "./fan-coils/apply";
 import { applyHydronicSystem } from "./hydronic/apply";
 import { validateProject } from "./validation";
 import { applyRadiatorSolution } from "./radiators/apply";
 import { sizeRadiators } from "./radiators/size";
 import { radiatorProducts } from "./catalogs/radiators";
+
+it("removing the last fan coil through its properties removes only its emptied installation", () => {
+  let project = fixture();
+  project = createInstallation(project, "fanCoil", project.rooms[0].id);
+  const installationId = project.installations.at(-1)!.id;
+  project = applyFanCoil(
+    project,
+    project.rooms[0].id,
+    "innova-airleaf-sl-400-2t",
+    0,
+    { installationId },
+  );
+  project = createInstallation(project, "radiator", project.rooms[0].id);
+  const emptyId = project.installations.at(-1)!.id;
+  const next = removeFanCoil(project, project.fanCoils![0].id);
+  expect(next.installations.some((item) => item.id === installationId)).toBe(
+    false,
+  );
+  expect(next.installations.some((item) => item.id === emptyId)).toBe(true);
+});
 import {
   decodeProject,
   encodeProject,

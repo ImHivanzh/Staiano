@@ -10,6 +10,8 @@ import {
   fanCoilCategories,
   fanCoilCategory,
   fanCoilCategoryLabels,
+  isConcealedFanCoil,
+  isRecessedFanCoil,
 } from "@/domain/catalogs/fan-coils";
 import { applyFanCoil, removeFanCoil } from "@/domain/fan-coils/apply";
 import {
@@ -53,9 +55,8 @@ export function FanCoilPanel({
   const [manufacturer, setManufacturer] = useState(
     existingProduct?.manufacturer ?? "Innova",
   );
-  const [productId, setProductId] = useState(
-    existingDevice?.productId ?? fanCoilCatalog.products[0].id,
-  );
+  const [family, setFamily] = useState(existingProduct?.family ?? "");
+  const [productId, setProductId] = useState(existingDevice?.productId ?? "");
   const [operatingPointIndex, setOperatingPointIndex] = useState(
     existingDevice?.operatingPointIndex ?? 0,
   );
@@ -65,20 +66,24 @@ export function FanCoilPanel({
   const [controllerId, setControllerId] = useState(
     existingDevice?.controllerId ?? "",
   );
-  const products = fanCoilCatalog.products.filter(
+  const brandProducts = fanCoilCatalog.products.filter(
     (p) => p.manufacturer === manufacturer,
   );
-  const product = products.find((p) => p.id === productId) ?? products[0];
-  const point =
-    product.operatingPoints[operatingPointIndex] ?? product.operatingPoints[0];
-  const controls = compatibleFanCoilControls(product);
+  const families = [...new Set(brandProducts.map((p) => p.family))];
+  const familyProducts = brandProducts.filter((p) => p.family === family);
+  const product = productId
+    ? (familyProducts.find((p) => p.id === productId) ?? familyProducts[0])
+    : undefined;
+  const point = product
+    ? (product.operatingPoints[operatingPointIndex] ??
+      product.operatingPoints[0])
+    : undefined;
+  const controls = product ? compatibleFanCoilControls(product) : [];
   const controller = controls.find((c) => c.id === controllerId);
   const installed = (project.fanCoils ?? []).filter(
-    (u) =>
-      u.roomId === room.id &&
-      (!installationId || u.installationId === installationId),
+    (u) => u.roomId === room.id,
   );
-  const totals = installedFanCoilCapacity(project, room.id, installationId);
+  const totals = installedFanCoilCapacity(project, room.id);
   const existingPoint = existingDevice
     ? existingProduct?.operatingPoints[existingDevice.operatingPointIndex]
     : undefined;
@@ -98,25 +103,78 @@ export function FanCoilPanel({
         ),
       }
     : project;
-  const suggestion =
-    sizeFanCoils(sizingProject, room, {
-      manufacturer,
-      mounting,
-      installationId,
-    })[0] ?? sizeFanCoils(sizingProject, room, { mounting, installationId })[0];
-  const pose = initialFanCoilPose(
-    existingDevice
-      ? {
-          ...project,
-          fanCoils: project.fanCoils?.filter(
-            (item) => item.id !== existingDevice.id,
-          ),
-        }
-      : project,
-    room,
-    product,
-    mounting,
-  );
+  const suggestion = family
+    ? sizeFanCoils(sizingProject, room, { manufacturer, family, mounting })[0]
+    : undefined;
+  const mountings = [
+    ...new Set(familyProducts.flatMap((item) => item.mountings)),
+  ];
+  const pose = product
+    ? initialFanCoilPose(sizingProject, room, product, mounting)
+    : null;
+  function chooseManufacturer(next: string) {
+    setManufacturer(next);
+    setFamily("");
+    setProductId("");
+    setOperatingPointIndex(0);
+    setControllerId("");
+  }
+  function chooseFamily(next: string) {
+    const nextProducts = fanCoilCatalog.products.filter(
+      (p) => p.manufacturer === manufacturer && p.family === next,
+    );
+    const nextMountings = [
+      ...new Set(nextProducts.flatMap((item) => item.mountings)),
+    ];
+    const nextMounting = nextMountings.includes(mounting)
+      ? mounting
+      : (nextMountings[0] ?? mounting);
+    const recommended = next
+      ? sizeFanCoils(sizingProject, room, {
+          manufacturer,
+          family: next,
+          mounting: nextMounting,
+        })[0]
+      : undefined;
+    setFamily(next);
+    setMounting(nextMounting);
+    setControllerId("");
+    setProductId(recommended?.product.id ?? "");
+    setOperatingPointIndex(recommended?.operatingPointIndex ?? 0);
+  }
+  function chooseMounting(next: "wall" | "ceiling") {
+    const recommended = family
+      ? sizeFanCoils(sizingProject, room, {
+          manufacturer,
+          family,
+          mounting: next,
+        })[0]
+      : undefined;
+    const kept = familyProducts.find(
+      (item) => item.id === productId && item.mountings.includes(next),
+    );
+    setMounting(next);
+    setControllerId("");
+    setProductId(kept?.id ?? recommended?.product.id ?? "");
+    setOperatingPointIndex(
+      kept ? operatingPointIndex : (recommended?.operatingPointIndex ?? 0),
+    );
+  }
+  function chooseTaglia(next: string) {
+    const nextProduct = familyProducts.find((item) => item.id === next);
+    if (nextProduct && !nextProduct.mountings.includes(mounting))
+      setMounting(nextProduct.mountings[0]);
+    setProductId(next);
+    setOperatingPointIndex(0);
+    setControllerId("");
+  }
+  function useSuggestion() {
+    if (!suggestion) return;
+    setFamily(suggestion.product.family);
+    setProductId(suggestion.product.id);
+    setOperatingPointIndex(suggestion.operatingPointIndex);
+    setControllerId("");
+  }
   return (
     <section
       className={styles.panel}
@@ -125,8 +183,11 @@ export function FanCoilPanel({
       <header className={styles.heading}>
         <h3>Ventilconvettori</h3>
         <p className="nota">
-          Scegli modello e velocità. Puoi aggiungere più apparecchi nello stesso
-          ambiente.
+          Scegli la marca e il modello: il sistema indica poi la taglia che copre
+          il fabbisogno residuo, con velocità e rumore del punto scelto. Puoi
+          aggiungere più apparecchi nello stesso ambiente: il consiglio considera
+          la potenza già installata da tutti i ventilconvettori presenti, anche
+          di impianti diversi.
         </p>
       </header>
       {existingDevice && (
@@ -203,21 +264,18 @@ export function FanCoilPanel({
       )}
       <div className={styles.layout}>
         <div className={styles.controls}>
-          <h4>Modello e funzionamento</h4>
+          <h4>Marca, modello e taglia</h4>
+          <p className="nota">
+            Scegli la marca e il modello: il sistema indica la taglia che copre
+            il fabbisogno residuo. Puoi poi sceglierne un’altra o cambiare
+            velocità.
+          </p>
           <label className="campo">
             <span>Marca ventilconvettore</span>
             <select
+              aria-label="Marca ventilconvettore"
               value={manufacturer}
-              onChange={(e) => {
-                setManufacturer(e.target.value);
-                setProductId(
-                  fanCoilCatalog.products.find(
-                    (p) => p.manufacturer === e.target.value,
-                  )!.id,
-                );
-                setOperatingPointIndex(0);
-                setControllerId("");
-              }}
+              onChange={(e) => chooseManufacturer(e.target.value)}
             >
               {[
                 ...new Set(fanCoilCatalog.products.map((p) => p.manufacturer)),
@@ -227,28 +285,28 @@ export function FanCoilPanel({
             </select>
           </label>
           <label className="campo">
-            <span>Serie e modello</span>
+            <span>Modello</span>
             <select
-              value={product.id}
-              onChange={(e) => {
-                setProductId(e.target.value);
-                setOperatingPointIndex(0);
-                setControllerId("");
-              }}
+              aria-label="Modello ventilconvettore"
+              value={family}
+              onChange={(e) => chooseFamily(e.target.value)}
+              disabled={!families.length}
             >
+              <option value="">Scegli il modello</option>
               {fanCoilCategories.map((category) => {
-                const options = products.filter(
-                  (p) => fanCoilCategory(p) === category,
-                );
+                const options = families.filter((name) => {
+                  const sample = brandProducts.find((p) => p.family === name);
+                  return sample && fanCoilCategory(sample) === category;
+                });
                 if (!options.length) return null;
                 return (
                   <optgroup
                     key={category}
                     label={fanCoilCategoryLabels[category]}
                   >
-                    {options.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.family} · {p.model} · {p.pipes} tubi
+                    {options.map((name) => (
+                      <option key={name} value={name}>
+                        {name}
                       </option>
                     ))}
                   </optgroup>
@@ -257,105 +315,172 @@ export function FanCoilPanel({
             </select>
           </label>
           <label className="campo">
-            <span>Velocità / punto di funzionamento</span>
+            <span>Taglia</span>
             <select
-              value={operatingPointIndex}
-              onChange={(e) => setOperatingPointIndex(Number(e.target.value))}
+              aria-label="Taglia ventilconvettore"
+              value={product?.id ?? ""}
+              onChange={(e) => chooseTaglia(e.target.value)}
+              disabled={!family}
             >
-              {product.operatingPoints.map((p, i) => (
-                <option key={i} value={i}>
-                  {p.label} · {formatNumber(p.coolingW / 1000)} /{" "}
-                  {formatNumber(p.heatingW / 1000)} kW ·{" "}
-                  {p.noiseDbA === null
-                    ? "rumore non pubblicato"
-                    : `${formatNumber(p.noiseDbA)} dB(A)`}
+              <option value="">
+                {suggestion
+                  ? `Consigliata: ${suggestion.product.model}`
+                  : family
+                    ? "Scegli la taglia"
+                    : "Scegli prima il modello"}
+              </option>
+              {familyProducts.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.model} · {item.pipes} tubi
+                  {suggestion?.product.id === item.id ? " · consigliata" : ""}
                 </option>
               ))}
             </select>
           </label>
-          <label className="campo">
-            <span>Montaggio</span>
-            <select
-              value={mounting}
-              onChange={(e) =>
-                setMounting(e.target.value as "wall" | "ceiling")
-              }
-            >
-              {product.mountings.map((m) => (
-                <option key={m} value={m}>
-                  {m === "wall" ? "Parete" : "Soffitto"}
-                </option>
-              ))}
-            </select>
-          </label>
-          {point.noiseDbA === null ? (
-            <p role="status" className="nota">
-              Rumore non pubblicato per questo punto. Rispetto del limite
-              acustico non verificabile.
-            </p>
-          ) : (
-            <p className="nota">
-              {formatNumber(point.noiseDbA)} dB(A) alla velocità scelta.
-              {point.noiseDbA > project.projectSettings.maxNoiseDbA
-                ? " Supera il limite acustico impostato."
-                : ""}{" "}
-              Il rumore complessivo di più apparecchi richiede verifica
-              separata.
+          {product && point && (
+            <label className="campo">
+              <span>Velocità / punto di funzionamento</span>
+              <select
+                value={operatingPointIndex}
+                onChange={(e) => setOperatingPointIndex(Number(e.target.value))}
+              >
+                {product.operatingPoints.map((p, i) => (
+                  <option key={i} value={i}>
+                    {p.label} · {formatNumber(p.coolingW / 1000)} /{" "}
+                    {formatNumber(p.heatingW / 1000)} kW ·{" "}
+                    {p.noiseDbA === null
+                      ? "rumore non pubblicato"
+                      : `${formatNumber(p.noiseDbA)} dB(A)`}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          {family && (
+            <label className="campo">
+              <span>Montaggio</span>
+              <select
+                value={mounting}
+                onChange={(e) =>
+                  chooseMounting(e.target.value as "wall" | "ceiling")
+                }
+              >
+                {mountings.map((m) => (
+                  <option key={m} value={m}>
+                    {m === "wall" ? "Parete" : "Soffitto"}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          {product && isRecessedFanCoil(product) && (
+            <p className="nota" data-testid="fan-coil-recess-panel-note">
+              Modello ad incasso: il corpo non va a vista. A parete serve una
+              muratura o controparete di almeno {product.depthMm} mm (faccia
+              anteriore a filo); a soffitto serve un controsoffitto o un vuoto
+              tecnico.
             </p>
           )}
-          {controls.length > 0 ? (
-            <>
-              <label className="campo">
-                <span>Comando originale Innova M7</span>
-                <select
-                  value={controller?.id ?? ""}
-                  onChange={(e) => setControllerId(e.target.value)}
-                >
-                  <option value="">Da definire</option>
-                  {controls.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.series} {c.model} ·{" "}
-                      {c.connection === "bluetooth"
-                        ? "Bluetooth"
-                        : c.connection === "wifi-wired"
-                          ? "Wi-Fi / cablato"
-                          : "Cablato"}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              {controller && (
+          {product && point && mounting === "ceiling" && (
+            <p className="nota">
+              {isConcealedFanCoil(product)
+                ? "Modello senza mobile: usa il vuoto tecnico disponibile, oppure viene appeso sotto il soffitto. Verifica pannelli e accessori del modello."
+                : "Posa a vista: il corpo resta sotto il soffitto; la quota indica la faccia inferiore."}
+              {product.ceilingInstallation && (
                 <>
-                  {controller.productPhoto && (
-                    <Image
-                      unoptimized
-                      src={controller.productPhoto.localPath}
-                      alt={controller.productPhoto.caption}
-                      width={240}
-                      height={120}
-                      style={{
-                        width: "100%",
-                        height: 100,
-                        objectFit: "contain",
-                      }}
-                    />
-                  )}
-                  <p className="nota">
-                    {controller.features.join(" · ")}
-                    <br />
-                    Scheda richiesta: {controllerBoardFor(
-                      product,
-                      controller,
-                    )}{" "}
-                    · {product.pipes} tubi.
-                  </p>
+                  {" "}
+                  {product.ceilingInstallation.note}{" "}
+                  <a
+                    href={product.ceilingInstallation.sourceMetadata.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Vincoli di posa · pagina{" "}
+                    {product.ceilingInstallation.sourceMetadata.page}
+                  </a>
                 </>
               )}
+            </p>
+          )}
+          {product && point && (
+            <>
+              {point.noiseDbA === null ? (
+                <p role="status" className="nota">
+                  Rumore non pubblicato per questo punto. Rispetto del limite
+                  acustico non verificabile.
+                </p>
+              ) : (
+                <p className="nota">
+                  {formatNumber(point.noiseDbA)} dB(A) alla velocità scelta.
+                  {point.noiseDbA > project.projectSettings.maxNoiseDbA
+                    ? " Supera il limite acustico impostato."
+                    : ""}{" "}
+                  Il rumore complessivo di più apparecchi richiede verifica
+                  separata.
+                </p>
+              )}
+              {controls.length > 0 ? (
+                <>
+                  <label className="campo">
+                    <span>Comando originale Innova M7</span>
+                    <select
+                      value={controller?.id ?? ""}
+                      onChange={(e) => setControllerId(e.target.value)}
+                    >
+                      <option value="">Da definire</option>
+                      {controls.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.series} {c.model} ·{" "}
+                          {c.connection === "bluetooth"
+                            ? "Bluetooth"
+                            : c.connection === "wifi-wired"
+                              ? "Wi-Fi / cablato"
+                              : "Cablato"}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  {controller && (
+                    <>
+                      {controller.productPhoto && (
+                        <Image
+                          unoptimized
+                          src={controller.productPhoto.localPath}
+                          alt={controller.productPhoto.caption}
+                          width={240}
+                          height={120}
+                          style={{
+                            width: "100%",
+                            height: 100,
+                            objectFit: "contain",
+                          }}
+                        />
+                      )}
+                      <p className="nota">
+                        {controller.features.join(" · ")}
+                        <br />
+                        Scheda richiesta: {controllerBoardFor(
+                          product,
+                          controller,
+                        )}{" "}
+                        · {product.pipes} tubi.
+                      </p>
+                    </>
+                  )}
+                </>
+              ) : (
+                <p className="nota">
+                  Comando M7: abbinamento non documentato per questa famiglia.
+                  Specificare il comando previsto dal produttore.
+                </p>
+              )}
             </>
-          ) : (
+          )}
+          {!product && (
             <p className="nota">
-              Comando M7: abbinamento non documentato per questa famiglia.
-              Specificare il comando previsto dal produttore.
+              {family
+                ? "Scegli una taglia per vedere velocità, rumore, comando e posa."
+                : "Scegli il modello: poi indico la taglia consigliata per questo ambiente."}
             </p>
           )}
         </div>
@@ -365,101 +490,143 @@ export function FanCoilPanel({
               className={styles.recommendation}
               aria-label="Ventilconvettore consigliato"
             >
-              <strong>Consigliato</strong>
+              <strong>Taglia consigliata</strong>
               <button
                 className="bottone piccolo"
                 type="button"
-                onClick={() => {
-                  setManufacturer(suggestion.product.manufacturer);
-                  setProductId(suggestion.product.id);
-                  setOperatingPointIndex(suggestion.operatingPointIndex);
-                  setControllerId("");
-                }}
+                onClick={useSuggestion}
               >
-                Usa consigliato: {suggestion.product.manufacturer} ·{" "}
-                {suggestion.product.model} · {suggestion.point.label}
+                Usa taglia consigliata: {suggestion.product.model} ·{" "}
+                {suggestion.point.label}
               </button>
             </div>
           ) : (
             <p className="nota">
-              Nessun singolo modello di questa marca copre il fabbisogno residuo
-              rispettando spazio e limite acustico verificabile. Puoi
-              configurare più apparecchi.
+              {family
+                ? "Nessuna taglia di questo modello copre il fabbisogno residuo con lo spazio e la quota disponibili. Per un modello ad incasso servono una parete abbastanza spessa a parete o un controsoffitto/vuoto tecnico a soffitto. Puoi anche configurare più apparecchi."
+                : "Scegli marca e modello: poi indico la taglia che copre il fabbisogno residuo."}
             </p>
           )}
           <h4>Apparecchio da aggiungere</h4>
-          <div className={styles.product}>
-            {product.productPhoto && (
-              <Image
-                unoptimized
-                src={product.productPhoto.localPath}
-                alt={product.productPhoto.caption}
-                width={420}
-                height={200}
-              />
-            )}
-            <div>
-              <h4>{product.model}</h4>
-              <p>
-                {product.manufacturer} · {product.family}
-              </p>
+          {product && point ? (
+            <>
+              <div className={styles.product}>
+                {product.productPhoto && (
+                  <Image
+                    unoptimized
+                    src={product.productPhoto.localPath}
+                    alt={product.productPhoto.caption}
+                    width={420}
+                    height={200}
+                  />
+                )}
+                <div>
+                  <h4>{product.model}</h4>
+                  <p>
+                    {product.manufacturer} · {product.family}
+                  </p>
+                  <p className="nota">
+                    {fanCoilCategoryLabels[fanCoilCategory(product)]}
+                  </p>
+                  <p>
+                    {point.label} · {mounting === "wall" ? "Parete" : "Soffitto"}{" "}
+                    · {product.pipes} tubi
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="bottone chiara"
+                disabled={!pose}
+                ref={saveButtonRef}
+                hidden={!!saveButtonRef}
+                style={saveButtonRef ? { display: "none" } : undefined}
+                onClick={() =>
+                  (onPlace ?? commit)((p) =>
+                    applyFanCoil(p, room.id, product.id, operatingPointIndex, {
+                      mounting,
+                      controllerId: controller?.id ?? null,
+                      installationId,
+                    }),
+                  )
+                }
+              >
+                Aggiungi ventilconvettore
+              </button>
+              <dl className={styles.facts}>
+                <div>
+                  <dt>Raffrescamento</dt>
+                  <dd>{formatNumber(point.coolingW / 1000)} kW</dd>
+                </div>
+                <div>
+                  <dt>Riscaldamento</dt>
+                  <dd>{formatNumber(point.heatingW / 1000)} kW</dd>
+                </div>
+                <div>
+                  <dt>Rumore</dt>
+                  <dd>
+                    {point.noiseDbA === null
+                      ? "Non pubblicato"
+                      : `${formatNumber(point.noiseDbA)} dB(A)`}
+                  </dd>
+                </div>
+              </dl>
+              {!pose && (
+                <p role="status" className="nota">
+                  {product && isRecessedFanCoil(product)
+                    ? mounting === "ceiling"
+                      ? "Modello ad incasso: serve un controsoffitto o un vuoto tecnico abbastanza profondo; non viene appeso a vista. Aggiungi il controsoffitto o scegli un altro montaggio."
+                      : `Modello ad incasso: nessuna parete ha i ${product.depthMm} mm necessari per il corpo. Ispessisci la parete o aggiungi una controparete.`
+                    : `Nessuno spazio libero per questo ingombro. ${
+                        mounting === "ceiling"
+                          ? "Controlla quota del soffitto, vuoto tecnico e vincoli di posa, oppure cambia montaggio."
+                          : "Cambia modello o montaggio."
+                      }`}
+                </p>
+              )}
               <p className="nota">
-                {fanCoilCategoryLabels[fanCoilCategory(product)]}
+                {existingDevice
+                  ? "Modifica l’apparecchio selezionato conservando i collegamenti."
+                  : "Aggiunge un apparecchio. Quelli già posizionati restano nel progetto."}
               </p>
-              <p>
-                {point.label} · {mounting === "wall" ? "Parete" : "Soffitto"} ·{" "}
-                {product.pipes} tubi
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="bottone chiara"
-            disabled={!pose}
-            ref={saveButtonRef}
-            hidden={!!saveButtonRef}
-            style={saveButtonRef ? { display: "none" } : undefined}
-            onClick={() =>
-              (onPlace ?? commit)((p) =>
-                applyFanCoil(p, room.id, product.id, operatingPointIndex, {
-                  mounting,
-                  controllerId: controller?.id ?? null,
-                  installationId,
-                }),
-              )
-            }
-          >
-            Aggiungi ventilconvettore
-          </button>
-          <dl className={styles.facts}>
-            <div>
-              <dt>Raffrescamento</dt>
-              <dd>{formatNumber(point.coolingW / 1000)} kW</dd>
-            </div>
-            <div>
-              <dt>Riscaldamento</dt>
-              <dd>{formatNumber(point.heatingW / 1000)} kW</dd>
-            </div>
-            <div>
-              <dt>Rumore</dt>
-              <dd>
-                {point.noiseDbA === null
-                  ? "Non pubblicato"
-                  : `${formatNumber(point.noiseDbA)} dB(A)`}
-              </dd>
-            </div>
-          </dl>
-          {!pose && (
-            <p role="status" className="nota">
-              Nessuno spazio libero per questo ingombro. Cambia modello o
-              montaggio.
+              <details>
+                <summary>Condizioni dei dati e fonte</summary>
+                <p className="nota">{product.features.join(" · ")}</p>
+                <p className="nota">
+                  Suggerimento conservativo: capacità freddo e caldo dello stesso
+                  punto devono coprire separatamente il fabbisogno residuo. Le
+                  potenze valgono alle condizioni originali, senza correzioni
+                  inventate per altre temperature dell’acqua.
+                </p>
+                <p className="nota">
+                  Freddo: {point.coolingConditions}
+                  <br />
+                  Caldo: {point.heatingConditions}
+                  <br />
+                  Rumore: {point.noiseConditions}
+                  <br />
+                  {product.dimensionNote}
+                </p>
+                <a
+                  className="fonte-catalogo"
+                  href={product.sourceMetadata.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Scheda ufficiale {product.manufacturer}
+                  {product.sourceMetadata.page
+                    ? ` · pagina ${product.sourceMetadata.page}`
+                    : ""}
+                </a>
+              </details>
+            </>
+          ) : (
+            <p className="nota">
+              {family
+                ? "Scegli una taglia per vederne ingombri, prestazioni e posa."
+                : "Scegli il modello per ricevere la taglia consigliata."}
             </p>
           )}
-          <p className="nota">
-            {existingDevice
-              ? "Modifica l’apparecchio selezionato conservando i collegamenti."
-              : "Aggiunge un apparecchio. Quelli già posizionati restano nel progetto."}
-          </p>
           {!saveButtonRef && installed.length > 0 && (
             <h4>Apparecchi nella stanza</h4>
           )}
@@ -500,36 +667,6 @@ export function FanCoilPanel({
                 </div>
               );
             })}
-          <details>
-            <summary>Condizioni dei dati e fonte</summary>
-            <p className="nota">{product.features.join(" · ")}</p>
-            <p className="nota">
-              Suggerimento conservativo: capacità freddo e caldo dello stesso
-              punto devono coprire separatamente il fabbisogno residuo. Le
-              potenze valgono alle condizioni originali, senza correzioni
-              inventate per altre temperature dell’acqua.
-            </p>
-            <p className="nota">
-              Freddo: {point.coolingConditions}
-              <br />
-              Caldo: {point.heatingConditions}
-              <br />
-              Rumore: {point.noiseConditions}
-              <br />
-              {product.dimensionNote}
-            </p>
-            <a
-              className="fonte-catalogo"
-              href={product.sourceMetadata.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Scheda ufficiale {product.manufacturer}
-              {product.sourceMetadata.page
-                ? ` · pagina ${product.sourceMetadata.page}`
-                : ""}
-            </a>
-          </details>
         </div>
       </div>
     </section>

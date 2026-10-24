@@ -47,11 +47,14 @@ test("la FCZ canalizzabile si collega alle bocchette dal piano", async ({
   });
   await equipment.getByLabel("Marca ventilconvettore").selectOption("Aermec");
   await equipment
-    .getByRole("combobox", { name: "Serie e modello", exact: true })
+    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
+    .selectOption("FCZ PO");
+  await equipment
+    .getByRole("combobox", { name: "Taglia ventilconvettore", exact: true })
     .selectOption("aermec-fcz200po");
   await expect(
     equipment
-      .getByRole("combobox", { name: "Serie e modello", exact: true })
+      .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
       .locator("optgroup"),
   ).toHaveAttribute("label", "Ventilconvettori canalizzabili");
   await page.screenshot({ path: ".cache/fcz-categoria.png" });

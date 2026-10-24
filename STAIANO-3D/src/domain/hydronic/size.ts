@@ -1,6 +1,18 @@
 import type { Point, Project } from "@/schemas/project";
-import { heatPumpCatalog } from "../catalogs/heat-pumps";
+import {
+  heatPumpCatalog,
+  heatPumpCapacity,
+  type HeatPumpProduct,
+} from "../catalogs/heat-pumps";
 import { hydronicOutdoorValid, initialHydronicOutdoorPose } from "./placement";
+
+/** Chaffoteaux asks to show and recommend the LITE range before ARIANEXT PLUS. */
+export function heatPumpPreference(product: HeatPumpProduct) {
+  return product.manufacturer === "Chaffoteaux" &&
+    product.family.includes("LITE")
+    ? 0
+    : 1;
+}
 
 export function recommendedHeatPump(
   project: Project,
@@ -32,9 +44,10 @@ export function recommendedHeatPump(
   )?.outdoorUnit;
   const candidates = heatPumpCatalog.products.filter((product) => {
     if (product.manufacturer !== options.manufacturer) return false;
-    const rating =
+    const rating = heatPumpCapacity(
       product.operatingPoints[options.operatingPointIndex] ??
-      product.operatingPoints[0];
+        product.operatingPoints[0],
+    );
     if (rating.coolingW < load || rating.heatingW < load) return false;
     const pose =
       existing ?? initialHydronicOutdoorPose(project, floorId, product);
@@ -54,11 +67,14 @@ export function recommendedHeatPump(
   });
   return (
     candidates.sort((a, b) => {
-      const first =
-        a.operatingPoints[options.operatingPointIndex] ?? a.operatingPoints[0];
-      const second =
-        b.operatingPoints[options.operatingPointIndex] ?? b.operatingPoints[0];
+      const first = heatPumpCapacity(
+        a.operatingPoints[options.operatingPointIndex] ?? a.operatingPoints[0],
+      );
+      const second = heatPumpCapacity(
+        b.operatingPoints[options.operatingPointIndex] ?? b.operatingPoints[0],
+      );
       return (
+        heatPumpPreference(a) - heatPumpPreference(b) ||
         Math.min(first.coolingW, first.heatingW) -
           Math.min(second.coolingW, second.heatingW) ||
         a.widthMm * a.depthMm - b.widthMm * b.depthMm

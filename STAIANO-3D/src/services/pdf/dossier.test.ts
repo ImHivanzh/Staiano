@@ -8,8 +8,93 @@ import { dossierFixture } from "./fixture";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { sizeAirTerminal } from "@/domain/air-terminals/size";
 import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
+import { validateProject } from "@/domain/validation";
 
 describe("Dossier tecnico locale", () => {
+  it("esclude i problemi di porte e finestre solo dal dossier", async () => {
+    const project = dossierFixture();
+    const terminal = project.airTerminals[0];
+    const wall = project.walls.find(
+      (item) => item.id === project.rooms[0].wallIds[0],
+    )!;
+    terminal.mounting = "wall";
+    terminal.wallId = wall.id;
+    terminal.position = wall.start;
+    terminal.rotation = Math.atan2(
+      wall.end.y - wall.start.y,
+      wall.end.x - wall.start.x,
+    );
+    terminal.elevationM = 1;
+    project.openings = ["door", "window"].map((type) => ({
+      id: `test-${type}`,
+      type: type as "door" | "window",
+      wallId: wall.id,
+      floorId: wall.floorId,
+      offsetM: 0,
+      widthM: 100,
+      heightM: 2,
+      sillHeightM: 0,
+    }));
+    const editorChecks = validateProject(project);
+    expect(
+      editorChecks.some(
+        (check) => check.entityId === "test-door" && check.status === "invalid",
+      ),
+    ).toBe(true);
+    expect(
+      editorChecks.some(
+        (check) =>
+          check.openingId === "test-door" && check.code === "terminalOpening",
+      ),
+    ).toBe(true);
+    const dossier = buildDossier(project);
+    expect(dossier.checks).toEqual(
+      editorChecks.filter(
+        (check) =>
+          !project.openings.some(
+            (opening) =>
+              opening.id === check.entityId || opening.id === check.openingId,
+          ),
+      ),
+    );
+    expect(
+      editorChecks.some(
+        (check) =>
+          check.entityId === "test-window" && check.status === "invalid",
+      ),
+    ).toBe(true);
+    expect(
+      editorChecks.some(
+        (check) =>
+          check.openingId === "test-window" && check.code === "terminalOpening",
+      ),
+    ).toBe(true);
+    const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+    for (const variant of ["complete", "summary"] as const) {
+      const task = pdfjs.getDocument({
+        data: await renderDossierPdf(project, { variant }),
+      });
+      const document = await task.promise;
+      try {
+        const texts: string[] = [];
+        for (let page = 1; page <= document.numPages; page++) {
+          const content = await (await document.getPage(page)).getTextContent();
+          texts.push(
+            content.items
+              .map((item) => ("str" in item ? item.str : ""))
+              .join(" "),
+          );
+        }
+        const text = texts.join(" ");
+        expect(text).not.toContain("Porta: apertura fuori");
+        expect(text).not.toContain("sovrapposizione con porta");
+        expect(text).not.toContain("Finestra: apertura fuori");
+        expect(text).not.toContain("sovrapposizione con finestra");
+      } finally {
+        await task.destroy();
+      }
+    }
+  });
   it("aggiunge una pagina panoramica con JPEG incorporato e mantiene il dossier completo", async () => {
     const p = dossierFixture();
     // Original local JPEG proves PDF image embedding; real GPU capture is browser-verified.

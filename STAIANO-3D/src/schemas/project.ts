@@ -318,6 +318,7 @@ export const projectSchema = z
     schemaVersion: z.literal(CURRENT_SCHEMA_VERSION),
     id,
     name: z.string().trim().min(1).max(150),
+    floorFinish: z.enum(["oak", "stone"]).optional(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
     floors: z.array(floorSchema).min(1).max(30),

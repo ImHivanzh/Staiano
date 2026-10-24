@@ -100,15 +100,23 @@ describe("riconoscimento locale della planimetria", () => {
     expect(heuristic.walls.some((w) => w.start.y < 20 || w.end.y < 20)).toBe(
       true,
     );
-    expect(semantic.walls.length).toBeGreaterThan(0);
-    expect(
-      semantic.walls.every((w) => Math.min(w.start.y, w.end.y) >= 25),
-    ).toBe(true);
-    expect(semantic.walls.some((w) => Math.min(w.start.y, w.end.y) < 20)).toBe(
-      false,
+    const primary = semantic.walls.filter(
+      (w) => w.layer !== "Contorni da verificare",
     );
+    expect(primary.length).toBeGreaterThan(0);
+    expect(primary.every((w) => Math.min(w.start.y, w.end.y) >= 25)).toBe(true);
+    expect(primary.some((w) => Math.min(w.start.y, w.end.y) < 20)).toBe(false);
+    const originalOnly = semantic.walls.filter(
+      (w) => Math.min(w.start.y, w.end.y) < 20,
+    );
+    expect(originalOnly.length).toBeGreaterThan(0);
     expect(
-      semantic.walls.some(
+      originalOnly.every(
+        (w) => w.layer === "Contorni da verificare" && w.confidence <= 0.5,
+      ),
+    ).toBe(true);
+    expect(
+      primary.some(
         (w) =>
           Math.abs(w.start.y - w.end.y) < 2 &&
           Math.min(w.start.y, w.end.y) > 60,

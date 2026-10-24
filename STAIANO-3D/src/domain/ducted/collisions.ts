@@ -1,12 +1,18 @@
 import { Box3, Quaternion, Vector3 } from "three";
-import type { Duct, Point, Project } from "@/schemas/project";
+import type { Duct, Project } from "@/schemas/project";
 import { airConnectionRoutes, ductRoute, type RoutePoint } from "./routes";
 import { flexibleDuctCurve } from "./flexible-curve";
 import { bodies, segmentBodyDistance, segmentDistance } from "./duct-bodies";
 import { machinePlenum } from "./placement";
 import { terminalPlenum } from "./attached-plenums";
 import { pointInPolygon } from "../geometry/primitives";
-import { roofHeightAt, ceilingBandPolygon } from "../geometry/ceilings";
+import { roofHeightAt } from "../geometry/ceilings";
+import {
+  ceilingSurfaces,
+  segmentHitsCeilingSurface,
+  type CeilingSurface,
+} from "./ceiling-surfaces";
+import type { Body } from "./duct-bodies";
 import { deviceCodes } from "@/services/export/device-codes";
 
 export type DuctScenePath = {
@@ -135,7 +141,11 @@ export function findDuctCollisions(
   if (!paths.some((path) => path.flexible)) return new Map();
   const result = new Map<string, DuctCollision>(),
     labels = deviceCodes(project);
-  const volumes = bodies(project, new Set(paths.map((p) => p.floorId)), labels);
+  const floors = new Set(paths.map((p) => p.floorId));
+  const volumes: Array<Body | CeilingSurface> = [
+    ...bodies(project, floors, labels),
+    ...[...floors].flatMap((floor) => ceilingSurfaces(project, floor)),
+  ];
   const traces = paths.flatMap((path) => {
     const curve = path.flexible
       ? flexibleDuctCurve(path.points, path.diameterMm)?.curve
@@ -262,7 +272,11 @@ export function findDuctCollisions(
           b = points[i - 1]
             .clone()
             .lerp(points[i], span ? (hi - lengths[i - 1]) / span : 1);
-        if (segmentBodyDistance(a, b, body) < (radius - 1e-5) ** 2) {
+        if (
+          "triangles" in body
+            ? segmentHitsCeilingSurface(a, b, radius, body)
+            : segmentBodyDistance(a, b, body) < (radius - 1e-5) ** 2
+        ) {
           hit(path, body.deviceId, a, body.label);
           break;
         }
@@ -281,20 +295,6 @@ export function findDuctCollisions(
           roofHeightAt(project, room, { x: point.x, y: point.z }) + 1e-5
         )
           hit(path, `roof:${room.id}`, point, `soffitto ${room.name}`);
-        if (
-          room.ceilingHeightM !== null &&
-          Math.abs(point.y - room.ceilingHeightM) < radius - 1e-5
-        )
-          hit(path, `ceiling:${room.id}`, point, `controsoffitto ${room.name}`);
-        for (const band of room.ceilingBands ?? [])
-          if (
-            pointInPolygon(
-              { x: point.x, y: point.z },
-              ceilingBandPolygon(project, room, band),
-            ) &&
-            Math.abs(point.y - band.elevationM) < radius - 1e-5
-          )
-            hit(path, band.id, point, `fascia ${band.name}`);
       }
     }
   }

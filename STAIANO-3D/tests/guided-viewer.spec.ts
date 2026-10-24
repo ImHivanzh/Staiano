@@ -1,10 +1,14 @@
-import { addPlanTerminal, pickPlanPoint } from "./ui-helpers";
+import {
+  addPlanTerminal,
+  pickPlanPoint,
+  configurePlanTerminal,
+} from "./ui-helpers";
 import { readFileSync } from "node:fs";
 import type { Page, TestInfo } from "@playwright/test";
 import { expect, test } from "./browser-test";
 import { projectSchema, type Project } from "../src/schemas/project";
 import { splitCatalogSchema } from "../src/domain/catalogs/split-schema";
-import { openInspector, openDisclosure } from "./ui-helpers";
+import { openDisclosure } from "./ui-helpers";
 
 async function exportProject(
   page: Page,
@@ -34,7 +38,7 @@ async function createManualRoom(page: Page) {
   );
 }
 
-test("novice inserts a real tubular radiator in seven meaningful clicks and saves a GPU JPG", async ({
+test("novice places a verified tubular radiator on the plan and saves a GPU JPG", async ({
   page,
 }, testInfo) => {
   test.setTimeout(90000);
@@ -53,36 +57,41 @@ test("novice inserts a real tubular radiator in seven meaningful clicks and save
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
   meaningfulClicks++;
-  await page.getByRole("button", { name: "3D", exact: true }).click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: "Radiatore", exact: true }).click();
   meaningfulClicks++;
-  const viewer = page.getByTestId("viewer-3d");
-  await expect(viewer.locator("canvas")).toHaveAttribute(
-    "data-rendered",
-    "true",
-  );
-  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
-  await viewer.getByRole("button", { name: "Radiatori", exact: true }).click();
+  await pickPlanPoint(plan, 2, 0.4);
   meaningfulClicks++;
-  const palette = page.getByRole("dialog", { name: "Catalogo radiatori" });
-  await palette
-    .getByRole("button", {
-      name: "Scegli Cordivari Ardesia 3 colonne",
-      exact: true,
-    })
-    .click();
+  await plan.getByTestId("draft-radiator").click();
+  meaningfulClicks++;
+  const palette = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+    exact: true,
+  });
+  await palette.getByRole("button", { name: "Cordivari", exact: true }).click();
+  meaningfulClicks++;
+  await palette.getByRole("button", { name: "Ardesia", exact: true }).click();
+  meaningfulClicks++;
+  await palette.getByRole("button", { name: "3 colonne", exact: true }).click();
+  meaningfulClicks++;
+  await palette.getByRole("button", { name: /^ALTEZZA 500\b/ }).click();
   meaningfulClicks++;
   await expect(
-    palette.getByRole("button", { name: "Inserisci radiatori", exact: true }),
-  ).toBeEnabled({ timeout: 30000 });
+    palette.getByRole("button", { name: "Selezionata", exact: true }),
+  ).toBeEnabled();
   await page.screenshot({
     path: testInfo.outputPath("novice-real-radiator-catalog.png"),
     fullPage: true,
   });
   await palette
-    .getByRole("button", { name: "Inserisci radiatori", exact: true })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
   meaningfulClicks++;
-  expect(meaningfulClicks).toBeLessThanOrEqual(8);
+  // La prima posa comprende posizione, marca, famiglia, colonne e altezza esplicite.
+  expect(meaningfulClicks).toBeLessThanOrEqual(11);
   await expect(palette).toHaveCount(0);
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   const project = await exportProject(page, testInfo, "novice-radiator");
@@ -96,6 +105,12 @@ test("novice inserts a real tubular radiator in seven meaningful clicks and save
   expect(radiator.widthMm).toBeGreaterThan(100);
   expect(radiator.heightMm).toBeGreaterThan(100);
   expect(radiator.depthMm).toBeGreaterThan(50);
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  const viewer = page.getByTestId("viewer-3d");
+  await expect(viewer.locator("canvas")).toHaveAttribute(
+    "data-rendered",
+    "true",
+  );
   await expect(viewer.locator("canvas")).toHaveAttribute(
     "data-selection",
     radiator.id,
@@ -129,7 +144,7 @@ test("novice inserts a real tubular radiator in seven meaningful clicks and save
   expect(restored.radiators).toEqual(project.radiators);
 });
 
-test("3D climatizzatori palette inserts the explicitly chosen real brand and indoor model", async ({
+test("3D climatizzatori placement preserves the explicitly chosen real brand and indoor model", async ({
   page,
 }, testInfo) => {
   await page.setViewportSize({ width: 1680, height: 1050 });
@@ -139,30 +154,44 @@ test("3D climatizzatori palette inserts the explicitly chosen real brand and ind
     .getByTestId("viewer-3d")
     .getByRole("button", { name: "Climatizzatori", exact: true })
     .click();
-  const palette = page.getByRole("dialog", { name: "Catalogo climatizzatori" });
-  await palette
-    .getByRole("button", { name: "Mitsubishi", exact: true })
+  await page
+    .getByRole("complementary", { name: "Inserisci apparecchio" })
+    .getByRole("button", { name: "Inserisci sulla pianta", exact: true })
     .click();
-  const modelChoice = palette
-    .getByRole("button", { name: /^Scegli MSZ/ })
-    .first();
-  const chosenModel = (await modelChoice.getAttribute("aria-label"))!.replace(
-    /^Scegli /,
-    "",
-  );
-  await modelChoice.click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await pickPlanPoint(plan, 2, 0.4);
+  await plan.getByTestId("draft-split").click();
+  const palette = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+    exact: true,
+  });
+  await palette
+    .getByLabel("Marca split", { exact: true })
+    .selectOption("Mitsubishi Electric");
+  const select = palette.getByLabel("Serie e modello split", { exact: true });
+  const choices = select.locator("option").filter({ hasText: /MSZ/ });
+  expect(await choices.count()).toBeGreaterThan(0);
+  const chosen = choices.nth(Math.min(1, (await choices.count()) - 1));
+  const chosenId = (await chosen.getAttribute("value"))!;
+  const chosenModel = (await chosen.textContent())!.match(/\bMSZ\S*\d\S*/)![0];
+  await select.selectOption(chosenId);
+  await expect(select).toHaveValue(chosenId);
   await page.screenshot({
     path: testInfo.outputPath("novice-split-model-catalog.png"),
     fullPage: true,
   });
   await palette
-    .getByRole("button", { name: "Inserisci climatizzatori", exact: true })
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
     .click();
   await expect(palette).toHaveCount(0);
   const project = await exportProject(page, testInfo, "chosen-split");
   expect(project.hvacSystems).toHaveLength(1);
   const system = project.hvacSystems[0];
   expect(system.manufacturer).toBe("Mitsubishi Electric");
+  expect(system.productId).toBe(chosenId);
   expect(system.compatibilityStatus).toBe("verified");
   const original = splitCatalogSchema.parse(
     JSON.parse(readFileSync("catalog-data/generated/splits.json", "utf8")),
@@ -177,6 +206,7 @@ test("3D climatizzatori palette inserts the explicitly chosen real brand and ind
     heightMm: indoor.heightMm,
     depthMm: indoor.depthMm,
   });
+  await page.getByRole("button", { name: "3D", exact: true }).click();
   await expect(page.getByTestId("viewer-3d").locator("canvas")).toHaveAttribute(
     "data-selection",
     system.indoorUnits[0].id,
@@ -209,56 +239,54 @@ test("two independently configured ducted zones keep each terminal assigned afte
   await expect(page.locator(".nome-stanza")).toHaveCount(4);
   await page.getByRole("button", { name: "3D", exact: true }).click();
   const viewer = page.getByTestId("viewer-3d");
-  for (const [roomName, brand] of [
+  for (const [index, [roomName, brand]] of [
     ["Soggiorno", "Daikin"],
     ["Studio", "Gree"],
-  ]) {
-    await page
-      .getByRole("button", { name: new RegExp(`^${roomName} 17,52`) })
-      .click();
-    await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
+  ].entries()) {
+    await openDisclosure(viewer, "Aggiungi apparecchio");
     await viewer
       .getByRole("button", { name: "Bocchette", exact: true })
       .click();
     await page
-      .getByRole("button", { name: "Configura canalizzazione", exact: true })
-      .click();
-    const palette = page.getByRole("dialog", {
-      name: "Configura canalizzazione",
-    });
-    await palette
-      .getByRole("button", { name: "Configura sulla pianta principale" })
+      .getByRole("complementary", { name: "Inserisci apparecchio" })
+      .getByRole("button", { name: "Inserisci sulla pianta", exact: true })
       .click();
     const plan = page.getByRole("region", {
       name: "Configurazione grafica canalizzato",
     });
     const room = blank.rooms.find((item) => item.name === roomName)!;
-    await plan
-      .getByRole("button", { name: "Macchina", exact: true })
-      .click();
+    await plan.getByRole("button", { name: "Macchina", exact: true }).click();
     await pickPlanPoint(plan, room.centroid.x, room.centroid.y);
+    await plan
+      .getByRole("group", { name: "Funzione bocchetta", exact: true })
+      .getByRole("button", { name: "Mandata", exact: true })
+      .click();
+    await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
+    await pickPlanPoint(plan, room.centroid.x - 1, room.centroid.y - 1);
+    await plan.getByRole("button", { name: "Collega", exact: true }).click();
+    await plan.getByTestId("draft-machine").click();
+    await plan.getByTestId("draft-terminal").click();
+    await page.keyboard.press("Escape");
     await plan.getByTestId("draft-machine").click();
     const picker = page.getByRole("dialog", {
       name: "Scegli macchina canalizzata",
+      exact: true,
     });
     await picker.getByLabel("Marca canalizzato").selectOption(brand);
     await picker
       .locator("footer")
       .getByRole("button", { name: "Salva", exact: true })
       .click();
-    await addPlanTerminal(
-      page,
-      room.centroid.x - 1,
-      room.centroid.y - 1,
-      "EDLS",
-      [1000],
-    );
+    await plan.getByTestId("draft-terminal").click();
+    await configurePlanTerminal(page, "EDLS", [1000]);
     await addPlanTerminal(
       page,
       room.centroid.x + 1,
       room.centroid.y - 1,
       "EDLS",
       [1000],
+      "supply",
+      index,
     );
     await addPlanTerminal(
       page,
@@ -267,10 +295,8 @@ test("two independently configured ducted zones keep each terminal assigned afte
       "EGQ",
       [],
       "return",
+      index,
     );
-    await page
-      .getByRole("button", { name: "Torna all’editor", exact: true })
-      .click();
     await page.getByRole("button", { name: "3D", exact: true }).click();
   }
   const before = await exportProject(page, testInfo, "two-independent-zones");
@@ -299,19 +325,17 @@ test("two independently configured ducted zones keep each terminal assigned afte
     expect(terminals.filter((item) => item.use === "return")).toHaveLength(1);
     expect(terminals.every((item) => item.systemId === system.id)).toBe(true);
   }
-  await page.getByRole("button", { name: /^Studio 17,52/ }).click();
-  await openInspector(page, "Configura impianto");
-  await page
-    .getByRole("group", { name: "Impianto da configurare" })
-    .getByRole("button", { name: "Canalizzato", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Apri planimetria operativa" })
-    .click();
+  await page.getByRole("button", { name: "2D", exact: true }).click();
   const plan = page.getByRole("region", {
     name: "Configurazione grafica canalizzato",
   });
-  await plan.getByRole("button", { name: /^Macchina UI/ }).click();
+  await plan.getByRole("button", { name: "Seleziona", exact: true }).click();
+  await plan
+    .getByRole("button", { name: /^Macchina UI/ })
+    .nth(1)
+    .locator("rect")
+    .first()
+    .click();
   const picker = page.getByRole("dialog", {
     name: "Scegli macchina canalizzata",
   });
@@ -321,9 +345,6 @@ test("two independently configured ducted zones keep each terminal assigned afte
   await picker
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Torna all’editor", exact: true })
     .click();
   const after = await exportProject(page, testInfo, "two-zones-edited");
   expect(after.hvacSystems.find((system) => system.id === zoneA.id)).toEqual(
@@ -344,17 +365,22 @@ test("two independently configured ducted zones keep each terminal assigned afte
   const restored = await exportProject(page, testInfo, "two-zones-restored");
   expect(restored.hvacSystems).toEqual(after.hvacSystems);
   expect(restored.airTerminals).toEqual(after.airTerminals);
-  await page.getByRole("button", { name: "3D", exact: true }).click();
-  await openDisclosure(page.getByTestId("viewer-3d"), "Aggiungi apparecchio");
-  await page
-    .getByTestId("viewer-3d")
-    .getByRole("button", { name: "Plenum", exact: true })
-    .click();
-  const plenum = page.getByRole("dialog", {
-    name: "Plenum degli impianti autonomi",
-  });
-  for (const system of restored.hvacSystems) {
-    await plenum.getByLabel("Impianto plenum").selectOption(system.id);
+  for (const [index, system] of restored.hvacSystems.entries()) {
+    await plan
+      .getByRole("button", { name: /^Macchina UI/ })
+      .nth(index)
+      .locator("rect")
+      .first()
+      .click();
+    const details = page.getByRole("dialog", {
+      name: "Scegli macchina canalizzata",
+      exact: true,
+    });
+    await openDisclosure(details, "Schema e dimensionamento plenum");
+    const plenum = details.getByRole("region", {
+      name: "Plenum di mandata",
+      exact: true,
+    });
     const hide = plenum.getByRole("button", {
       name: "Chiudi vista 3D plenum",
       exact: true,
@@ -370,7 +396,7 @@ test("two independently configured ducted zones keep each terminal assigned afte
     const branchCount = Number(alt?.match(/: (\d+) stacchi/)?.[1]);
     expect(branchCount).toBeGreaterThan(0);
     await expect(
-      plenum.getByRole("strong").filter({ hasText: `${branchCount} stacchi` }),
+      plenum.locator("dd").filter({ hasText: `${branchCount} stacchi` }),
     ).toBeVisible();
     const show = plenum.getByRole("button", {
       name: "Vista 3D plenum",
@@ -384,16 +410,17 @@ test("two independently configured ducted zones keep each terminal assigned afte
       path: testInfo.outputPath(`plenum-${system.manufacturer}.png`),
       fullPage: true,
     });
+    await details
+      .locator("footer")
+      .getByRole("button", { name: "Annulla", exact: true })
+      .click();
   }
-  await plenum
-    .getByRole("button", { name: "Chiudi plenum", exact: true })
-    .click();
   const dossierWaiting = page.waitForEvent("download");
   await openDisclosure(page, "File");
   await page.getByRole("button", { name: "Dossier PDF", exact: true }).click();
   await (
     await dossierWaiting
-  ).saveAs("output/verification/autonomous-plenum-render.pdf");
+  ).saveAs(testInfo.outputPath("autonomous-plenum-render.pdf"));
   await expect(page.locator('[data-staiano-render-export="true"]')).toHaveCount(
     0,
   );

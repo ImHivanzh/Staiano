@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { PerspectiveCamera, Vector3 } from "three";
 import type { Locator, Page } from "@playwright/test";
 import { test, expect } from "./browser-test";
@@ -6,7 +6,7 @@ import { openDisclosure } from "./ui-helpers";
 import { execFileSync } from "node:child_process";
 import { projectSchema, type Project } from "../src/schemas/project";
 
-function fixture(): Project {
+function fixture(connected = false): Project {
   return JSON.parse(
     execFileSync(
       process.execPath,
@@ -17,20 +17,28 @@ function fixture(): Project {
         "-e",
         `
     import { guidedProjectFixture, guidedTerminalPoint } from './tests/guided-fixture.ts';
-    import { addWall } from './src/domain/project.ts';
+    import { addWall, updateRoom } from './src/domain/project.ts';
     import { assignInstallationRooms, ensureInstallations } from './src/domain/installations.ts';
-    import { placeMachineOnPlan, saveTerminalOnPlan, placeDuctedDraft } from './src/domain/ducted/graphic-installation.ts';
+    import { placeMachineOnPlan, saveTerminalOnPlan, placeDuctedDraft, connectTerminalOnPlan } from './src/domain/ducted/graphic-installation.ts';
+    import { connectDraftOnPlan } from './src/domain/ducted/plan-connections.ts';
     let project = ensureInstallations(guidedProjectFixture());
     project.floors[0].configurationWizard = undefined;
     project = placeMachineOnPlan(project, project.hvacSystems[0].id, project.rooms[0].id, { x: 2, y: 4 });
     const minY = Math.min(...project.walls.flatMap(wall => [wall.start.y, wall.end.y]));
     const maxY = Math.max(...project.walls.flatMap(wall => [wall.start.y, wall.end.y]));
     project = addWall(project, project.floors[0].id, { x: 4, y: minY }, { x: 4, y: maxY });
+    for (const room of project.rooms) project = updateRoom(project, room.id, {ceilingHeightM:2.4});
     const targetRoom = project.rooms.find((room) => room.centroid.x > 4);
     const installationId = project.installations.find(item => item.type === 'ducted').id;
     project = assignInstallationRooms(project, installationId, 'ducted', project.rooms.map(room => room.id));
     project = saveTerminalOnPlan(project, { ...guidedTerminalPoint(), roomId: targetRoom.id, systemId: null, use: 'supply', mounting: 'ceiling', lengthMm: 1000, color: 'RAL9016' }, { x: 6, y: 2 });
     project = placeDuctedDraft(project, installationId, targetRoom.id, { x: 6, y: 5 }, 'machine');
+    if (${connected}) {
+      project = connectTerminalOnPlan(project, project.airTerminals[0].id, project.hvacSystems[0].id);
+      const machine = project.ductedDrafts[0];
+      project = placeDuctedDraft(project, installationId, targetRoom.id, {x:7,y:4}, 'terminal');
+      project = connectDraftOnPlan(project, project.ductedDrafts.at(-1).id, machine.id);
+    }
     console.log(JSON.stringify(project));
   `,
       ],
@@ -66,6 +74,18 @@ async function load3D(page: Page, project: Project) {
       ),
     )
     .toBeGreaterThan(8);
+  await expect
+    .poll(async () =>
+      Number(
+        (await canvas.getAttribute("data-camera-quaternion"))!.split(",")[0],
+      ),
+    )
+    .toBeCloseTo(-Math.SQRT1_2, 3);
+  await page
+    .getByTestId("viewer-3d")
+    .locator("summary")
+    .filter({ hasText: "Vista 3D" })
+    .click();
   return canvas;
 }
 
@@ -112,7 +132,7 @@ async function exported(page: Page) {
 test("3D click opens configured and draft machine dialogs without a second inspector", async ({
   page,
 }) => {
-  const project = fixture();
+  const project = fixture(true);
   const canvas = await load3D(page, project);
   await pick3D(page, canvas, 2, 2.525, 4);
   const dialog = page.getByRole("dialog", {
@@ -133,9 +153,9 @@ test("3D click opens configured and draft machine dialogs without a second inspe
   );
 });
 
-test("3D Collega serves the terminal room automatically and keeps its route visible", async ({
+test("3D Collega saves the served room and shows hoses after adding physical plenums", async ({
   page,
-}) => {
+}, testInfo) => {
   const project = fixture();
   const canvas = await load3D(page, project);
   await page
@@ -144,6 +164,10 @@ test("3D Collega serves the terminal room automatically and keeps its route visi
     .click();
   await pick3D(page, canvas, 2, 2.525, 4);
   const terminal = project.airTerminals[0];
+  await expect(canvas).toHaveAttribute(
+    "data-selection",
+    project.hvacSystems[0].indoorUnits[0].id,
+  );
   await pick3D(
     page,
     canvas,
@@ -151,12 +175,95 @@ test("3D Collega serves the terminal room automatically and keeps its route visi
     terminal.elevationM! + (terminal.depthMm ?? 0) / 2000,
     terminal.position.y,
   );
+  await expect(canvas).toHaveAttribute(
+    "data-selection",
+    project.hvacSystems[0].indoorUnits[0].id,
+  );
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await expect(canvas).toHaveAttribute("data-air-connections", "1");
+  await expect(canvas).toHaveAttribute("data-air-connections", "0");
   const saved = await exported(page);
   expect(saved.hvacSystems[0].roomIds).toEqual([terminal.roomId]);
   expect(saved.airTerminals[0].systemId).toBe(saved.hvacSystems[0].id);
   expect(saved.hvacSystems[0].indoorUnits[0].roomId).not.toBe(terminal.roomId);
+  const viewer = page.getByTestId("viewer-3d");
+  await openDisclosure(viewer, "Aggiungi apparecchio");
+  await viewer.getByRole("button", { name: "Plenum", exact: true }).click();
+  await viewer
+    .locator("summary")
+    .filter({ hasText: "Aggiungi apparecchio" })
+    .click();
+  const properties = page.getByRole("dialog", {
+    name: "Configura elemento 3D",
+  });
+  await pick3D(page, canvas, 2, 2.525, 4);
+  await expect(properties).toBeVisible();
+  await properties
+    .getByRole("button", { name: "Chiudi configurazione", exact: true })
+    .click();
+  await pick3D(
+    page,
+    canvas,
+    terminal.position.x,
+    terminal.elevationM! + (terminal.depthMm ?? 0) / 2000,
+    terminal.position.y,
+  );
+  await expect(properties).toBeVisible();
+  await properties
+    .getByRole("button", { name: "Chiudi configurazione", exact: true })
+    .click();
+  await expect(canvas).toHaveAttribute("data-plenum-count", "2");
+  const withPlenums = await exported(page);
+  const savedPath = testInfo.outputPath("project-with-plenums.hvacproj");
+  writeFileSync(savedPath, JSON.stringify(withPlenums, null, 2), "utf8");
+  await testInfo.attach("project-with-plenums", {
+    path: savedPath,
+    contentType: "application/json",
+  });
+  const body = withPlenums.plenums.find((p) => p.attachmentId === terminal.id)!;
+  expect(body).toBeDefined();
+  expect(body.portCount).toBeGreaterThan(0);
+  expect(withPlenums.ducts).toHaveLength(body.portCount!);
+  expect(
+    withPlenums.ducts!.every(
+      (duct) =>
+        duct.kind === "flexible" &&
+        duct.terminalId === terminal.id &&
+        duct.plenumId === body.id,
+    ),
+  ).toBe(true);
+  const lengths: number[] = JSON.parse(
+    execFileSync(
+      process.execPath,
+      [
+        "--import",
+        "tsx",
+        "--input-type=module",
+        "-e",
+        `
+    import {readFileSync} from 'node:fs';
+    import {ductScenePaths} from './src/domain/ducted/collisions.ts';
+    import {flexibleDuctCurve} from './src/domain/ducted/flexible-curve.ts';
+    const p=JSON.parse(readFileSync(0,'utf8'));
+    console.log(JSON.stringify(ductScenePaths(p).map(path=>flexibleDuctCurve(path.points,path.diameterMm)?.curve.getLength()??null)));
+  `,
+      ],
+      { input: JSON.stringify(withPlenums), encoding: "utf8" },
+    ),
+  );
+  expect(lengths).toHaveLength(body.portCount!);
+  expect(lengths.every((length) => Number.isFinite(length) && length > 0)).toBe(
+    true,
+  );
+  await expect(canvas).toHaveAttribute(
+    "data-duct-count",
+    String(body.portCount),
+  );
+  await page.reload();
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await expect(page.getByTestId("viewer-3d").locator("canvas")).toHaveAttribute(
+    "data-duct-count",
+    String(body.portCount),
+  );
 });
 
 test("3D selected wall creates a visible measured door and saves it", async ({

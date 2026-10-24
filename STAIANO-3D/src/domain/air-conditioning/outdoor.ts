@@ -2,7 +2,9 @@ import type { Point, Project } from "@/schemas/project";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
+  splitOutdoorAtVersion,
 } from "@/domain/catalogs/splits";
+import type { SplitOutdoor } from "@/domain/catalogs/split-schema";
 import { vrvOutdoorAtVersion } from "@/domain/catalogs/vrv";
 import {
   initialOutdoorPose,
@@ -18,12 +20,17 @@ import { roomCeilingHeightM } from "./elevation";
 export type HvacOutdoorDimensions = Pick<
   OutdoorUnitLike,
   "widthMm" | "heightMm" | "depthMm"
-> & { model: string; manufacturer: string };
+> & {
+  model: string;
+  manufacturer: string;
+  dimensionStatus: "published" | "indicative";
+  sourceMetadata?: SplitOutdoor["sourceMetadata"];
+  dimensionNote?: string;
+};
 export type RefrigerantRoutePoint = Point & { elevationM: number };
 
 /**
- * shortcut: split catalogue combinations do not publish outdoor-unit dimensions;
- * indicative footprints by total capacity until the source tables are imported.
+ * Historic revisions without outdoor tables retain their indicative footprint.
  */
 function splitOutdoorDimensions(
   coolingCapacityW: number,
@@ -58,6 +65,9 @@ export function hvacOutdoorDimensions(
           widthMm: outdoor.widthMm,
           heightMm: outdoor.heightMm,
           depthMm: outdoor.depthMm,
+          dimensionStatus: "published",
+          sourceMetadata: outdoor.sourceMetadata,
+          dimensionNote: outdoor.dimensionNote,
         }
       : null;
   }
@@ -67,10 +77,24 @@ export function hvacOutdoorDimensions(
     system.catalogVersion,
   );
   if (!combination) return null;
+  const published = splitOutdoorAtVersion(
+    combination.outdoorModel,
+    combination.manufacturer,
+    system.catalogVersion,
+  );
   return {
     model: combination.outdoorModel,
     manufacturer: combination.manufacturer,
-    ...splitOutdoorDimensions(combination.coolingCapacityW),
+    ...(published
+      ? {
+          widthMm: published.widthMm,
+          heightMm: published.heightMm,
+          depthMm: published.depthMm,
+          sourceMetadata: published.sourceMetadata,
+          dimensionNote: published.dimensionNote,
+        }
+      : splitOutdoorDimensions(combination.coolingCapacityW)),
+    dimensionStatus: published ? "published" : "indicative",
   };
 }
 

@@ -209,3 +209,26 @@ export function assignInstallationRooms(
     ),
   };
 }
+
+/** Remove only definitions that lost their last member, retaining unrelated empty installations. */
+export function removeEmptiedInstallations(
+  project: Project,
+  previous: Project,
+): Project {
+  const used = (value: Project) =>
+    new Set(
+      [
+        ...value.radiators,
+        ...(value.fanCoils ?? []),
+        ...value.hvacSystems,
+        ...value.airTerminals,
+        ...(value.ductedDrafts ?? []),
+      ].flatMap((member) =>
+        member.installationId ? [member.installationId] : [],
+      ),
+    );
+  const remaining = used(project);
+  for (const id of used(previous))
+    if (!remaining.has(id)) project = removeInstallation(project, id);
+  return project;
+}

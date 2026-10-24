@@ -1,27 +1,9 @@
 "use client";
-import { Component, Suspense, useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Bounds, OrbitControls } from "@react-three/drei";
+import { ModelAssetBoundary } from "./ModelAssetBoundary";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-
-class AssetError extends Component<
-  { children: React.ReactNode },
-  { failed: boolean }
-> {
-  state = { failed: false };
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-  render() {
-    return this.state.failed ? (
-      <p role="alert">
-        Anteprima non disponibile. Il file GLB resta scaricabile.
-      </p>
-    ) : (
-      this.props.children
-    );
-  }
-}
 
 function Model({ url }: { url: string }) {
   const gltf = useLoader(GLTFLoader, url);
@@ -36,7 +18,14 @@ function Model({ url }: { url: string }) {
 
 export default function ModelPreview({ url }: { url: string }) {
   return (
-    <AssetError key={url}>
+    <ModelAssetBoundary
+      key={url}
+      fallback={
+        <p role="alert">
+          Anteprima non disponibile. Il file GLB resta scaricabile.
+        </p>
+      }
+    >
       <div className="anteprima-modello" data-testid="model-preview">
         <Canvas
           frameloop="demand"
@@ -56,6 +45,6 @@ export default function ModelPreview({ url }: { url: string }) {
           <OrbitControls makeDefault minDistance={0.2} maxDistance={15} />
         </Canvas>
       </div>
-    </AssetError>
+    </ModelAssetBoundary>
   );
 }

@@ -58,6 +58,8 @@ describe("Readable complete PDF contract", () => {
         );
       }
       const text = pages.join(" ");
+      expect(text).toContain("6350 W caldo / 3810 W freddo");
+      expect(text).toContain("potenze massime dichiarate");
       for (const item of [
         ...project.plenums,
         ...project.airTerminals,
@@ -143,6 +145,9 @@ describe("Readable complete PDF contract", () => {
       }
       const text = texts.join(" ");
       expect(text).toContain("Dossier sintetico");
+      expect(text).toContain(
+        "Potenze massime dichiarate: 6350 W caldo / 3810 W freddo",
+      );
       expect(text).toContain("Metri richiesti / installati e capacita reale");
       expect(text).toContain("Vista frontale - tutti gli attacchi");
       expect(text).toContain("4 attacchi richiesti / 4 disegnabili");

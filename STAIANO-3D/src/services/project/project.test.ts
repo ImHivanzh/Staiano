@@ -19,6 +19,20 @@ const fixture = () => {
   });
 };
 describe("formato e archivio", () => {
+  it("conserva la finitura del pavimento per progetto e accetta i progetti precedenti", () => {
+    const project = fixture();
+    project.floorFinish = "stone";
+    const saved = decodeProject(encodeProject(project));
+    expect(saved.floorFinish).toBe("stone");
+    useProjectStore.getState().load(saved);
+    useProjectStore.getState().setView("3d");
+    useProjectStore.getState().setView("2d");
+    expect(useProjectStore.getState().project?.floorFinish).toBe("stone");
+    expect(decodeProject(encodeProject(fixture())).floorFinish).toBeUndefined();
+    expect(() =>
+      parseProject({ ...project, floorFinish: "invalid" }),
+    ).toThrow();
+  });
   it("roundtrip ricalcola valori derivati", () => {
     const p = fixture();
     p.rooms[0].designLoadW = 1;

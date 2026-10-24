@@ -408,7 +408,7 @@ if (process.argv.includes("--apply")) {
     }
   if (existsSync(target))
     await copyFile(target, path.join(output, "hvac.previous.json"));
-  history[catalog.version] = catalog;
+  delete history[catalog.version];
   await writeFile(historyPath, JSON.stringify(history, null, 2));
   await copyFile(staging, target);
 } else console.log("Staged only. Review then --apply.");

@@ -1,10 +1,9 @@
 import { expect, test } from "./browser-test";
+import { openDisclosure } from "./ui-helpers";
 
 test("archive opens before creating a project", async ({ page }) => {
   await page.goto("/");
-  await page
-    .getByRole("button", { name: "Progetti", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Progetti", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Progetti sul dispositivo" }),
   ).toBeVisible();
@@ -12,6 +11,58 @@ test("archive opens before creating a project", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "Progetti", exact: true }),
   ).toHaveAttribute("aria-current", "page");
+});
+
+test.describe("phone plan toolbar", () => {
+  test.use({ hasTouch: true });
+  for (const width of [320, 390])
+    test(`scrolls to every tool and opens unclipped menus at ${width}px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await page.goto("/");
+      await page.getByRole("button", { name: "Disegna manualmente" }).tap();
+      await page
+        .getByRole("dialog")
+        .getByRole("button", { name: "Crea stanza", exact: true })
+        .tap();
+      const plan = page.getByRole("region", {
+        name: "Configurazione grafica canalizzato",
+      });
+      const toolbar = plan.getByRole("toolbar", {
+        name: "Strumenti della planimetria",
+      });
+      for (const name of ["Seleziona", "Canale", "Macchina", "Collega"]) {
+        const tool = toolbar.getByRole("button", { name, exact: true });
+        await tool.tap();
+        await expect(tool).toHaveAttribute("aria-pressed", "true");
+        const box = (await tool.boundingBox())!;
+        expect(box.width).toBeGreaterThanOrEqual(44);
+        expect(box.height).toBeGreaterThanOrEqual(44);
+        expect(box.x).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width).toBeLessThanOrEqual(width);
+      }
+      await openDisclosure(plan, "Disegno e misure");
+      const measure = plan.getByRole("button", { name: "Misura", exact: true });
+      await expect(measure).toBeVisible();
+      const box = (await measure.boundingBox())!;
+      expect(box.x).toBeGreaterThanOrEqual(0);
+      expect(box.x + box.width).toBeLessThanOrEqual(width);
+      expect(box.y + box.height).toBeLessThan(844);
+      await measure.tap();
+      await openDisclosure(plan, "Altre azioni");
+      await expect(
+        plan.getByRole("button", {
+          name: "Annulla ultima modifica",
+          exact: true,
+        }),
+      ).toBeVisible();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      ).toBe(true);
+    });
 });
 
 test("workspace remains usable at desktop, tablet and phone sizes", async ({

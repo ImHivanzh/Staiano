@@ -15,10 +15,12 @@ test("Plenum richiede un clic sulla macchina e nasce collegato", async ({
   await expect(tool).toHaveAttribute("aria-pressed", "true");
   await page.getByTestId("split-2d").first().click();
   await expect(page.getByTestId("plenum-2d")).toHaveCount(2);
-  await expect(tool).toHaveAttribute("aria-pressed", "false");
+  await expect(tool).toHaveAttribute("aria-pressed", "true");
   await expect(
     page.getByText("Plenum creato e collegato alla macchina."),
   ).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(tool).toHaveAttribute("aria-pressed", "false");
   const after = await exportPlenumFixture(page);
   const created = after.plenums.find(
     (p) => !before.plenums.some((old) => old.id === p.id),

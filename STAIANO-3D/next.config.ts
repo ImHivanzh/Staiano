@@ -5,7 +5,18 @@ const config: NextConfig = {
   allowedDevOrigins: ["hvac.internal.staianopoint.com"],
   poweredByHeader: false,
   outputFileTracingExcludes: {
-    "/*": [".cache/**/*", ".env*", "catalog-data/sources/**/*", "native/**/*"],
+    "/*": [
+      ".cache/**/*",
+      ".env*",
+      "catalog-data/sources/**/*",
+      "native/**/*",
+      "dist-exe/**/*",
+      "output/**/*",
+      "test-results*/**/*",
+      "tests/**/*",
+      "src/**/*.test.*",
+      ".impeccable/**/*",
+    ],
   },
 };
 export default config;

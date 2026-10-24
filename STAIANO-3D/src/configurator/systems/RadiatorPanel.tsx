@@ -8,6 +8,7 @@ import {
   radiatorProductPhoto,
 } from "@/domain/catalogs/radiators";
 import {
+  radiatorHeightUpperBoundMm,
   type RadiatorSolution,
   type RadiatorProgress,
 } from "@/domain/radiators/size";
@@ -90,9 +91,16 @@ export function RadiatorPanel({
     () => () => {
       searchController.current?.abort();
     },
-    [room.id, room.designLoadW, room.heightM, room.geometryStatus],
+    [
+      room.id,
+      room.designLoadW,
+      room.heightM,
+      room.geometryStatus,
+      room.ceilingHeightM,
+      room.roof?.ridgeHeightM,
+    ],
   );
-  const roomSignature = `${room.id}|${room.designLoadW}|${room.heightM}|${room.geometryStatus}`;
+  const roomSignature = `${room.id}|${room.designLoadW}|${room.heightM}|${room.geometryStatus}|${room.ceilingHeightM}|${room.roof?.ridgeHeightM}`;
   const visibleSolutions =
     solutionSignature === roomSignature ? solutions : null;
   const { commit, setError } = useProjectStore();
@@ -213,7 +221,7 @@ export function RadiatorPanel({
           maxWidthMm: optional("maxWidth"),
           maxHeightMm: Math.min(
             optional("maxHeight") ?? Infinity,
-            room.heightM * 1000 - 100,
+            radiatorHeightUpperBoundMm(room),
           ),
           maxDepthMm: optional("maxDepth"),
           minElements: optional("minElements"),
@@ -597,7 +605,8 @@ export function RadiatorPanel({
                   required
                 />
                 <small className="nota">
-                  Differenza di temperatura mandata/ritorno usata nel calcolo.
+                  Sovratemperatura acqua/ambiente della resa di catalogo.
+                  Esempio nominale 75/65/20 °C: (75 + 65) / 2 − 20 = 50 K.
                 </small>
               </label>
             </div>

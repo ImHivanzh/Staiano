@@ -1,11 +1,20 @@
+import { indoorUnitFitsBelowCeiling } from "../air-conditioning/elevation";
 import type { Point, Project } from "@/schemas/project";
 import { placeEquipmentDraft } from "./equipment-draft";
 import { distance, projection, pointInPolygon } from "./primitives";
-import { footprintInsideRoom } from "./footprint";
-import { positionAlongRoomWall, roomWallSpan } from "./placement";
+import { footprintInsideRoom, footprintCorners } from "./footprint";
+import {
+  positionAlongRoomWall,
+  positionRecessedAlongRoomWall,
+  roomWallSpan,
+} from "./placement";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { snapTerminalPose } from "./terminal-snap";
-import { ceilingFrontPose, ceilingHeightAt } from "./ceilings";
+import {
+  ceilingFrontPose,
+  ceilingHeightAt,
+  minimumCeilingHeightM,
+} from "./ceilings";
 import type { SnapOptions } from "./primitives";
 import { moveSystemObject } from "@/domain/ducted/placement";
 import {
@@ -13,6 +22,14 @@ import {
   placeHeatPumpDraft,
 } from "@/domain/hydronic/apply";
 import { moveHvacOutdoorUnit } from "@/domain/air-conditioning/outdoor";
+import {
+  fanCoilProductAtVersion,
+  isRecessedFanCoil,
+} from "@/domain/catalogs/fan-coils";
+import {
+  fanCoilCeilingRange,
+  fanCoilPlacementValid,
+} from "@/domain/fan-coils/placement";
 import {
   layoutLinearRun,
   linearRunMembers,
@@ -136,6 +153,11 @@ export function movePlacedDevice(
     };
   }
   const fanCoil = project.fanCoils?.find((t) => t.id === deviceId);
+  const fanCoilProduct = fanCoil
+    ? fanCoilProductAtVersion(fanCoil.productId, fanCoil.catalogVersion)
+    : null;
+  const recessedFanCoil =
+    !!fanCoil && fanCoil.mounting === "wall" && isRecessedFanCoil(fanCoilProduct);
   if (item.locked)
     throw new Error("Sbloccare l’apparecchio prima di spostarlo.");
   if (terminal && needsTerminalReconfiguration(terminal))
@@ -189,19 +211,75 @@ export function movePlacedDevice(
       )
     )
       throw new Error("Il ventilconvettore non rientra nella stanza.");
+    const product = fanCoilProductAtVersion(
+      fanCoil.productId,
+      fanCoil.catalogVersion,
+    );
+    if (!product)
+      throw new Error(
+        "Modello ventilconvettore non verificabile nel catalogo originale.",
+      );
+    const dimensions = {
+      ...fanCoil,
+      family: product.family,
+      features: product.features,
+      ceilingInstallation: product.ceilingInstallation,
+    };
+    const range = fanCoilCeilingRange(
+      project,
+      room,
+      dimensions,
+      target,
+      fanCoil.rotation,
+    );
+    if (!range)
+      throw new Error(
+        "Quota o vuoto tecnico insufficienti per il ventilconvettore.",
+      );
+    const before = project.rooms.find((item) => item.id === fanCoil.roomId);
+    const previous =
+      before &&
+      fanCoilCeilingRange(
+        project,
+        before,
+        dimensions,
+        fanCoil.position,
+        fanCoil.rotation,
+      );
+    const beforeZone = previous?.ranges.find(
+      (zone) =>
+        fanCoil.elevationM >= zone.minM - 1e-7 &&
+        fanCoil.elevationM <= zone.maxM + 1e-7,
+    );
+    const afterZone = range.ranges.find(
+      (zone) => zone.reference === beforeZone?.reference,
+    );
+    const beforeDatum = beforeZone
+      ? beforeZone.reference === "below"
+        ? beforeZone.maxM
+        : beforeZone.minM
+      : previous?.defaultM;
+    const afterDatum = afterZone
+      ? afterZone.reference === "below"
+        ? afterZone.maxM
+        : afterZone.minM
+      : range.defaultM;
+    const moved = {
+      ...fanCoil,
+      roomId: room.id,
+      position: target,
+      wallId: null,
+      elevationM:
+        afterDatum +
+        (beforeDatum !== undefined ? fanCoil.elevationM - beforeDatum : 0),
+    };
+    if (!fanCoilPlacementValid(project, moved, product))
+      throw new Error(
+        "Quota o posizione non valide: verifica soffitto, vuoto tecnico e altri apparecchi.",
+      );
     return {
       ...project,
-      fanCoils: project.fanCoils!.map((u) =>
-        u.id === deviceId
-          ? {
-              ...u,
-              roomId: room.id,
-              position: target,
-              wallId: null,
-              elevationM: ceilingHeightAt(project, room, target),
-            }
-          : u,
-      ),
+      fanCoils: project.fanCoils!.map((u) => (u.id === deviceId ? moved : u)),
     };
   }
   if (terminal?.mounting === "ceiling") {
@@ -240,7 +318,7 @@ export function movePlacedDevice(
               ...t,
               roomId: room.id,
               position: target,
-              elevationM: room.heightM,
+              elevationM: ceilingHeightAt(project, room, target),
               wallId: null,
             }
           : t,
@@ -255,6 +333,16 @@ export function movePlacedDevice(
         .map((wall) => ({ room, wall, span: roomWallSpan(room, wall) })),
     )
     .filter((c) => c.span && c.span.lengthM >= item.widthMm / 1000 + 0.2)
+    .filter(
+      (c) =>
+        !recessedFanCoil ||
+        c.wall.thickness +
+          (c.wall.drywall?.roomId === c.room.id
+            ? (c.wall.drywall.offsetM ?? 0)
+            : 0) +
+          1e-6 >=
+          (item.depthMm ?? 0) / 1000 - 0.002,
+    )
     .map((c) => ({
       ...c,
       nearest: projection(target, c.span!.start, c.span!.end),
@@ -263,7 +351,9 @@ export function movePlacedDevice(
   const chosen = candidates[0];
   if (!chosen)
     throw new Error(
-      "Nessuna parete offre lo spazio necessario all'apparecchio.",
+      recessedFanCoil
+        ? "Nessuna parete abbastanza spessa per l’incasso: serve spazio per tutto il corpo."
+        : "Nessuna parete offre lo spazio necessario all'apparecchio.",
     );
   if (
     terminal?.systemId &&
@@ -289,14 +379,62 @@ export function movePlacedDevice(
   const moved = {
     roomId: chosen.room.id,
     wallId: chosen.wall.id,
-    position: positionAlongRoomWall(
-      chosen.room,
-      chosen.wall,
-      offset,
-      (item.depthMm ?? 0) / 1000,
-    ),
+    position: recessedFanCoil
+      ? positionRecessedAlongRoomWall(
+          chosen.room,
+          chosen.wall,
+          offset,
+          (item.depthMm ?? 0) / 1000,
+        )
+      : positionAlongRoomWall(
+          chosen.room,
+          chosen.wall,
+          offset,
+          (item.depthMm ?? 0) / 1000,
+        ),
     rotation: Math.atan2(span.end.y - span.start.y, span.end.x - span.start.x),
   };
+  const radiator = project.radiators.find((unit) => unit.id === deviceId);
+  if (
+    radiator &&
+    (!footprintInsideRoom(
+      chosen.room,
+      moved.position,
+      radiator.widthMm / 1000,
+      radiator.depthMm / 1000,
+      moved.rotation,
+    ) ||
+      0.1 + radiator.heightMm / 1000 >
+        minimumCeilingHeightM(
+          project,
+          chosen.room,
+          footprintCorners(
+            moved.position,
+            radiator.widthMm / 1000,
+            radiator.depthMm / 1000,
+            moved.rotation,
+          ),
+        ) +
+          1e-7)
+  )
+    throw new Error(
+      "La posizione non contiene il radiatore sotto soffitto, fasce o falde.",
+    );
+  if (fanCoil && !fanCoilPlacementValid(project, { ...fanCoil, ...moved }))
+    throw new Error(
+      "Quota o posizione non valide: verifica soffitto, vuoto tecnico e altri apparecchi.",
+    );
+  const airUnit = project.hvacSystems
+    .filter((system) => system.type === "split" || system.type === "vrv")
+    .flatMap((system) => system.indoorUnits)
+    .find((unit) => unit.id === deviceId);
+  if (
+    airUnit &&
+    !indoorUnitFitsBelowCeiling(project, chosen.room, { ...airUnit, ...moved })
+  )
+    throw new Error(
+      "Lo spazio sotto soffitto, fascia o falda non contiene l’apparecchio.",
+    );
   return {
     ...project,
     radiators: project.radiators.map((d) =>

@@ -159,6 +159,36 @@ function clusterWalls(walls: WallCandidate[]) {
   return result.map((wall, index) => ({ ...wall, id: `raster-${index}` }));
 }
 
+function connectLocalJunctions(walls: WallCandidate[]) {
+  // Connect only local junctions. Never fill a door-sized gap automatically.
+  for (const a of walls)
+    for (const key of ["start", "end"] as const) {
+      const hits = walls
+        .filter((b) => b !== a)
+        .map((b) => ({
+          b,
+          p: lineIntersection(a.start, a.end, b.start, b.end),
+        }))
+        .filter(
+          (v): v is { b: WallCandidate; p: Point } =>
+            v.p !== null &&
+            distance(a[key], v.p) <=
+              Math.max(
+                6,
+                Math.min(
+                  20,
+                  Math.max(a.thicknessUnits ?? 2, v.b.thicknessUnits ?? 2) *
+                    1.2,
+                ),
+              ) &&
+            distance(v.p, projection(v.p, v.b.start, v.b.end)) <=
+              Math.max(6, Math.min(20, (a.thicknessUnits ?? 2) * 1.2)),
+        )
+        .sort((x, y) => distance(a[key], x.p) - distance(a[key], y.p));
+      if (hits[0]) a[key] = hits[0].p;
+    }
+}
+
 /** Local line evidence, not semantic segmentation. Thin outlines stay reviewable.
  * ponytail: straight walls only; curved walls need a dedicated segmenter.
  */
@@ -733,33 +763,7 @@ export function recognizeRaster(
       reason,
     });
   }
-  // Connect only local junctions. Never fill a door-sized gap automatically.
-  for (const a of walls)
-    for (const key of ["start", "end"] as const) {
-      const hits = walls
-        .filter((b) => b !== a)
-        .map((b) => ({
-          b,
-          p: lineIntersection(a.start, a.end, b.start, b.end),
-        }))
-        .filter(
-          (v): v is { b: WallCandidate; p: Point } =>
-            v.p !== null &&
-            distance(a[key], v.p) <=
-              Math.max(
-                6,
-                Math.min(
-                  20,
-                  Math.max(a.thicknessUnits ?? 2, v.b.thicknessUnits ?? 2) *
-                    1.2,
-                ),
-              ) &&
-            distance(v.p, projection(v.p, v.b.start, v.b.end)) <=
-              Math.max(6, Math.min(20, (a.thicknessUnits ?? 2) * 1.2)),
-        )
-        .sort((x, y) => distance(a[key], x.p) - distance(a[key], y.p));
-      if (hits[0]) a[key] = hits[0].p;
-    }
+  connectLocalJunctions(walls);
   const joined = (a: WallCandidate, end: Point) =>
     walls.some(
       (b) =>
@@ -893,6 +897,34 @@ export function recognizeRaster(
       ];
     });
     finalWalls = clusterWalls([...deduplicated, ...kept]);
+    connectLocalJunctions(finalWalls);
+    // Omitted image evidence stays separate and unconfirmed, without shifting the AI axes.
+    for (const wall of heuristic.walls) {
+      if (
+        finalWalls.some(
+          (candidate) =>
+            distance(
+              wall.start,
+              projection(wall.start, candidate.start, candidate.end),
+            ) < 1.5 &&
+            distance(
+              wall.end,
+              projection(wall.end, candidate.start, candidate.end),
+            ) < 1.5,
+        )
+      )
+        continue;
+      finalWalls.push({
+        ...wall,
+        id: `image-review-${wall.id}`,
+        layer: "Contorni da verificare",
+        confidence: Math.min(0.5, wall.confidence),
+        reason:
+          wall.reason +
+          " Contorno originale non confermato dall’AI: verificare prima di includerlo.",
+      });
+      if (finalWalls.length > 5000) return denseResult;
+    }
   }
   return {
     walls: finalWalls,

@@ -2,6 +2,7 @@
 import { LengthInput } from "../LengthInput";
 import type { Project } from "@/schemas/project";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
+import { radiatorSectionFor } from "@/domain/catalogs/radiator-sections";
 import { useProjectStore } from "@/stores/project-store";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import {
@@ -64,6 +65,7 @@ export function DeviceProperties({
   const room = project.rooms.find((r) => r.id === device.roomId),
     product = radiatorProductAtVersion(device.productId, device.catalogVersion);
   if (!room) return null;
+  const section = radiatorSectionFor(device, product);
   return (
     <div className="corpo-proprieta">
       <h3>{product?.model ?? device.productId}</h3>
@@ -144,10 +146,26 @@ export function DeviceProperties({
           {device.manufacturer} · {device.family}
           <br />
           Catalogo {device.catalogVersion}
+          <br /> {product?.widthNote}
           <br />
           {device.elements} elementi · {device.outputW} W a ΔT {device.deltaTK}{" "}
           K
         </p>
+        {section && (
+          <p className="nota">
+            Corpo 3D ricostruito dal profilo originale Cordivari: testate
+            conservate, lunghezza dei tubi adattata all’altezza scelta. Tappi e
+            accessori illustrativi.{" "}
+            <a
+              className="fonte-catalogo"
+              href={section.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Geometria originale
+            </a>
+          </p>
+        )}
         {product && (
           <a
             className="fonte-catalogo"

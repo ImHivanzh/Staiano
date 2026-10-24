@@ -36,6 +36,28 @@ export function fanCoilControlAtVersion(id: string, version: string) {
 
 export type FanCoilCategory = "ducted" | "ambient";
 
+export function isConcealedFanCoil(
+  product: Pick<FanCoilProduct, "family"> | null | undefined,
+) {
+  return ["AirLeaf SLI", "FCZ P", "FCZ PO"].includes(product?.family ?? "");
+}
+
+/**
+ * Prodotti che il costruttore dichiara per installazione ad incasso: il corpo
+ * resta nella parete o nel vuoto tecnico e non va posato a vista. Le famiglie
+ * Innova SLI e Aermec FCZ P/PO riportano la voce nelle caratteristiche.
+ */
+export function isRecessedFanCoil(
+  product: Pick<FanCoilProduct, "family" | "features"> | null | undefined,
+) {
+  return (
+    isConcealedFanCoil(product) ||
+    (product?.features ?? []).some((feature) =>
+      /installazione ad incasso/i.test(feature),
+    )
+  );
+}
+
 /**
  * Serie pubblicate come canalizzabili: Aermec FCZ, FCZ P e FCZ PO (scheda
  * FCZ-P_I_UN50_16, «canalizzabile con motore potenziato e prevalenza utile»).

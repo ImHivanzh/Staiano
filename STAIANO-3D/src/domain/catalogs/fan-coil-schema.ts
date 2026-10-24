@@ -35,6 +35,14 @@ export const fanCoilProductSchema = z.object({
     )
     .min(1),
   sourceMetadata: sourceMetadataSchema,
+  ceilingInstallation: z
+    .object({
+      minFaceHeightM: positive,
+      note: z.string().min(1),
+      sourceMetadata: sourceMetadataSchema,
+    })
+    .nullable()
+    .optional(),
 });
 export const controlProductSchema = z.object({
   id: z.string().min(1),

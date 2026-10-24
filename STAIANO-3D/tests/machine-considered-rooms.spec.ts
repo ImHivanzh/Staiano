@@ -4,6 +4,7 @@ import { test, expect } from "./browser-test";
 import { assignInstallationRooms } from "../src/domain/installations";
 import { addRectangle } from "../src/domain/project";
 import { projectSchema } from "../src/schemas/project";
+import { decodeProject } from "../src/services/project/format";
 import { formatNumber } from "../src/utils/format";
 
 for (const width of [1920, 1366, 1024, 768, 390])
@@ -14,10 +15,8 @@ for (const width of [1920, 1366, 1024, 768, 390])
       width,
       height: width === 1366 || width === 1024 ? 768 : 900,
     });
-    let project = projectSchema.parse(
-      JSON.parse(
-        readFileSync("tests/fixtures/unconfigured-connections.json", "utf8"),
-      ),
+    let project = decodeProject(
+      readFileSync("tests/fixtures/unconfigured-connections.json", "utf8"),
     );
     for (const name of ["Camera", "Studio"])
       project = addRectangle(project, project.floors[0].id, {

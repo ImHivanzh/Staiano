@@ -2,6 +2,15 @@ import { z } from "zod";
 import { sourceMetadataSchema } from "./radiator-schema";
 const manufacturer = z.enum(["Daikin", "Mitsubishi Electric", "Gree"]);
 const capacity = z.number().finite().positive();
+export const splitOutdoorSchema = z.object({
+  manufacturer,
+  model: z.string().min(1),
+  widthMm: capacity,
+  heightMm: capacity,
+  depthMm: capacity,
+  dimensionNote: z.string().min(1),
+  sourceMetadata: sourceMetadataSchema,
+});
 export const splitIndoorSchema = z.object({
   id: z.string().min(1),
   manufacturer,
@@ -71,15 +80,29 @@ export const splitCatalogSchema = z
   .object({
     version: z.string().min(1),
     indoorUnits: z.array(splitIndoorSchema).min(1),
+    outdoorUnits: z.array(splitOutdoorSchema).default([]),
     combinations: z.array(splitCombinationSchema).min(1),
   })
   .superRefine((c, ctx) => {
     const units = new Map(c.indoorUnits.map((u) => [u.id, u]));
+    const outdoors = new Set(
+      c.outdoorUnits.map((u) => `${u.manufacturer}:${u.model}`),
+    );
     if (
       units.size !== c.indoorUnits.length ||
-      new Set(c.combinations.map((v) => v.id)).size !== c.combinations.length
+      new Set(c.combinations.map((v) => v.id)).size !== c.combinations.length ||
+      outdoors.size !== c.outdoorUnits.length
     )
       ctx.addIssue({ code: "custom", message: "ID split duplicati" });
+    for (const combo of c.combinations)
+      if (
+        c.outdoorUnits.length &&
+        !outdoors.has(`${combo.manufacturer}:${combo.outdoorModel}`)
+      )
+        ctx.addIssue({
+          code: "custom",
+          message: "Misure dell'unità esterna mancanti nella revisione",
+        });
     for (const combo of c.combinations)
       if (
         combo.indoorProductIds.some(
@@ -93,4 +116,5 @@ export const splitCatalogSchema = z
   });
 export type SplitCatalog = z.infer<typeof splitCatalogSchema>;
 export type SplitIndoor = z.infer<typeof splitIndoorSchema>;
+export type SplitOutdoor = z.infer<typeof splitOutdoorSchema>;
 export type SplitCombination = z.infer<typeof splitCombinationSchema>;

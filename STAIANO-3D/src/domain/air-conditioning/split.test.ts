@@ -15,7 +15,8 @@ import { refreshSplitBindings } from "./refresh";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { pointInPolygon } from "@/domain/geometry/primitives";
 import { encodeProject, decodeProject } from "@/services/project/format";
-import { refrigerantRoute } from "./outdoor";
+import { hvacOutdoorDimensions, refrigerantRoute } from "./outdoor";
+import { buildDossier } from "@/services/pdf/dossier";
 function fixture() {
   let p = createProject();
   p = addRectangle(p, p.floors[0].id, {
@@ -27,6 +28,24 @@ function fixture() {
   return p;
 }
 describe("split con combinazioni originali", () => {
+  it("checks published outdoor dimensions and includes them in the dossier", () => {
+    const p = fixture();
+    const installed = applySplitSystem(p, [p.rooms[0].id], "Daikin", null);
+    const system = installed.hvacSystems[0];
+    expect(hvacOutdoorDimensions(system)?.dimensionStatus).toBe("published");
+    expect(validateSplitSystem(installed, system)).toContainEqual(
+      expect.objectContaining({
+        code: "split-outdoor-dimensions",
+        status: "valid",
+        entityId: system.outdoorUnit!.id,
+      }),
+    );
+    expect(
+      buildDossier(installed).materials.some((item) =>
+        item.details?.includes("ingombro esterno indicativo"),
+      ),
+    ).toBe(false);
+  });
   it("salva l'unità esterna fuori dagli ambienti e traccia il refrigerante", () => {
     let p = fixture();
     p = applySplitSystem(p, [p.rooms[0].id], "Daikin", null);
@@ -35,9 +54,7 @@ describe("split con combinazioni originali", () => {
     expect(outdoor).not.toBeNull();
     expect(outdoor!.widthMm).toBeGreaterThan(0);
     expect(
-      p.rooms.some((room) =>
-        pointInPolygon(outdoor!.position, room.polygon),
-      ),
+      p.rooms.some((room) => pointInPolygon(outdoor!.position, room.polygon)),
     ).toBe(false);
     expect(
       refrigerantRoute(p, system, system.indoorUnits[0].id).length,

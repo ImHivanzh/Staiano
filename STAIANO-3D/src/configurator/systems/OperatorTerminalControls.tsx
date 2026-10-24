@@ -172,20 +172,29 @@ export function OperatorTerminalControls({
   if (faceVariant !== solution.variant.id) {
     setFaceVariant(solution.variant.id);
     if (family.isLinearPerMeter) {
-      const nextLength =
-        recommendedLength ?? solution.variant.commercialLengthsMm[0];
-      setLength(nextLength?.toString() ?? "");
-      setCustomLength(false);
-      setModuleLengths(
-        recommendedSolution &&
-          continuityModuleLengths(family.familyCode, solution.variant).length
-          ? Array.from(
-              { length: recommendedSolution.quantityPerPoint - 1 },
-              () => String(nextLength),
-            )
-          : [],
-      );
-      setActiveModule(0);
+      const available = moduleLengths.length
+        ? continuityModuleLengths(family.familyCode, solution.variant)
+        : solution.variant.commercialLengthsMm;
+      if (
+        !customLength &&
+        ![length, ...moduleLengths].every((value) =>
+          available.includes(numberFromForm(value)),
+        )
+      ) {
+        const nextLength =
+          recommendedLength ?? solution.variant.commercialLengthsMm[0];
+        setLength(nextLength?.toString() ?? "");
+        setModuleLengths(
+          recommendedSolution &&
+            continuityModuleLengths(family.familyCode, solution.variant).length
+            ? Array.from(
+                { length: recommendedSolution.quantityPerPoint - 1 },
+                () => String(nextLength),
+              )
+            : [],
+        );
+        setActiveModule(0);
+      }
     }
     if (!family.isLinearPerMeter && missingFace) {
       // Le misure dichiarate appartengono alla taglia, non all’intera famiglia.

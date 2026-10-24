@@ -167,18 +167,16 @@ test("lo zoom CAD conserva aggancio ai vertici e selezione durante il trasciname
     ),
   });
   const preview = dialog.getByRole("img", { name: /Anteprima planimetria/ });
-  await expect(preview.locator("line")).toHaveCount(2);
+  const cad = preview.locator("line").filter({ hasText: /^MURI ·/ });
+  await expect(cad).toHaveCount(2);
   for (let i = 0; i < 13; i++)
     await dialog
       .getByRole("button", { name: "Aumenta zoom anteprima" })
       .click();
-  const endpoint = await preview
-    .locator("line")
-    .nth(1)
-    .evaluate((line) => ({
-      x: Number(line.getAttribute("x2")),
-      y: Number(line.getAttribute("y2")),
-    }));
+  const endpoint = await cad.nth(1).evaluate((line) => ({
+    x: Number(line.getAttribute("x2")),
+    y: Number(line.getAttribute("y2")),
+  }));
   const target = await screenPoint(preview, endpoint.x, endpoint.y);
   await page.mouse.click(target.x + 2, target.y);
   await expect(preview.locator("circle")).toHaveAttribute(

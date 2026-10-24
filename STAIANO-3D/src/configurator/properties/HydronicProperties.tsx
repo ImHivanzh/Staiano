@@ -253,7 +253,8 @@ export function HydronicProperties({
       <p className="formula">
         Stima ambienti {formatNumber(report.designLoadW / 1000)} kW
         <br />
-        Pompa {formatNumber(report.heatingW / 1000)} kW caldo ·{" "}
+        Pompa: potenze {report.capacityBasis}.{" "}
+        {formatNumber(report.heatingW / 1000)} kW caldo ·{" "}
         {formatNumber(report.coolingW / 1000)} kW freddo
         <br />
         Terminali con temperatura compatibile{" "}

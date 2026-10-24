@@ -14,6 +14,7 @@ import {
 } from "./selection";
 import { validateProject } from "@/domain/validation";
 import { decodeProject, encodeProject } from "@/services/project/format";
+import { createInstallation } from "../installations";
 
 function fixture() {
   let p = createProject();
@@ -36,6 +37,25 @@ function fixture() {
 }
 
 describe("selection geometry and data preservation", () => {
+  it("removes an installation only after its last member is deleted, preserving unrelated empty definitions", () => {
+    let project = recomputeProject(fixture());
+    const installationId = project.radiators[0].installationId!;
+    project = createInstallation(project, "radiator", project.rooms[0].id);
+    const emptyId = project.installations.at(-1)!.id;
+    const first = removeSelection(project, [
+      { kind: "device", id: project.radiators[0].id },
+    ]);
+    expect(first.installations.some((item) => item.id === installationId)).toBe(
+      true,
+    );
+    const last = removeSelection(first, [
+      { kind: "device", id: first.radiators[0].id },
+    ]);
+    expect(last.installations.some((item) => item.id === installationId)).toBe(
+      false,
+    );
+    expect(last.installations.some((item) => item.id === emptyId)).toBe(true);
+  });
   it("preserves opening metadata on copy and round-trip and validates impossible dimensions", () => {
     const p = fixture();
     p.openings = [

@@ -38,7 +38,7 @@ import { SceneEffects } from "./SceneEffects";
 import { RoomLabelProjection } from "./RoomLabels";
 import { RoomCeiling3D } from "./RoomCeiling3D";
 import { CeilingReference } from "./CeilingReference";
-import { ProductTools } from "./ProductTools";
+import { ProductTools, type ProductTool } from "./ProductTools";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { installationLabels } from "@/domain/installations";
 import { sceneFrame, type SceneFrame } from "./scene-layout";
@@ -71,8 +71,6 @@ import { LoadMap } from "./LoadMap";
 import { PillarDialog } from "@/configurator/PillarDialog";
 import { roomMeasuredSides } from "@/domain/geometry/dimensions";
 import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
-import { HydronicPanel } from "@/configurator/systems/HydronicPanel";
-import { FanCoilPanel } from "@/configurator/systems/FanCoilPanel";
 import { ComfortFlows } from "./ComfortFlows";
 import type { ComfortMode } from "./comfort-fields";
 
@@ -137,6 +135,7 @@ export default function Viewer3D({
     activeFloorId,
     selection,
     select,
+    commit,
     revision,
     setError,
     setView,
@@ -152,14 +151,12 @@ export default function Viewer3D({
   const [suspendedCeiling, setSuspendedCeiling] = useState(true);
   const [ceilingTransparent, setCeilingTransparent] = useState(true);
   const labelElements = useRef(new Map<string, HTMLButtonElement>());
-  const [floorFinish, setFloorFinish] = useState<"oak" | "stone">("oak");
+  const floorFinish = p?.floorFinish ?? "oak";
   const [cutWallIds, setCutWallIds] = useState<Set<string>>(new Set());
   const [fitNonce, setFitNonce] = useState(0);
   const [focused, setFocused] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
-  const [productTool, setProductTool] = useState<
-    "radiator" | "split" | "terminal" | "machine" | null
-  >(null);
+  const [productTool, setProductTool] = useState<ProductTool | null>(null);
   const [configurationTarget, setConfigurationTarget] = useState<{
     id: string;
     nonce: number;
@@ -170,9 +167,6 @@ export default function Viewer3D({
   // I canali fanno parte del risultato: visibili subito, disattivabili.
   const [channelView, setChannelView] = useState(true);
   const [channelPanel, setChannelPanel] = useState(false);
-  const [hydronicPanel, setHydronicPanel] = useState(false);
-  const [fanCoilPanel, setFanCoilPanel] = useState(false);
-  const [fanCoilRoomId, setFanCoilRoomId] = useState("");
   const [loadMap, setLoadMap] = useState(false);
   const [tour, setTour] = useState(false);
   const [comfortMode, setComfortMode] = useState<ComfortMode | "off">("cool");
@@ -501,9 +495,14 @@ export default function Viewer3D({
       } else if (
         "productId" in chosenDevice &&
         !("elements" in chosenDevice) &&
-        selectedRoom
+        selectedRoom &&
+        sceneProject
       )
-        elevation = splitCenterElevationM(selectedRoom, chosenDevice);
+        elevation = splitCenterElevationM(
+          selectedRoom,
+          chosenDevice,
+          sceneProject,
+        );
       const radius =
         Math.max(chosenDevice.widthMm, chosenDevice.heightMm) / 2000 + 0.15;
       const halfHeight =
@@ -541,6 +540,7 @@ export default function Viewer3D({
     frame,
     chosenDevice,
     selectedRoom,
+    sceneProject,
     walls,
     rooms,
     selectedId,
@@ -687,8 +687,6 @@ export default function Viewer3D({
                         });
                         setProductTool(null);
                         setChannelPanel(false);
-                        setHydronicPanel(false);
-                        setFanCoilPanel(false);
                         setTransformMode(null);
                         if (!presentation && !fullscreen)
                           void toggleFullscreen();
@@ -861,7 +859,10 @@ export default function Viewer3D({
                     aria-label="Finitura pavimento"
                     value={floorFinish}
                     onChange={(e) =>
-                      setFloorFinish(e.target.value as "oak" | "stone")
+                      commit((project) => ({
+                        ...project,
+                        floorFinish: e.target.value as "oak" | "stone",
+                      }))
                     }
                   >
                     <option value="oak">Rovere chiaro</option>
@@ -953,24 +954,11 @@ export default function Viewer3D({
                         <EquipmentIcon type="plenum" />
                         Plenum
                       </button>
-                      <button
-                        onClick={() => {
-                          setHydronicPanel(!hydronicPanel);
-                          setFanCoilPanel(false);
-                          setProductTool(null);
-                        }}
-                      >
+                      <button onClick={() => setProductTool("heatPump")}>
                         <EquipmentIcon type="heatPump" />
                         Pompa di calore
                       </button>
-                      <button
-                        onClick={() => {
-                          setFanCoilPanel(!fanCoilPanel);
-                          setFanCoilRoomId(selectedRoom?.id ?? "");
-                          setHydronicPanel(false);
-                          setProductTool(null);
-                        }}
-                      >
+                      <button onClick={() => setProductTool("fanCoil")}>
                         <EquipmentIcon type="fanCoil" />
                         Ventilconvettori
                       </button>
@@ -1168,64 +1156,9 @@ export default function Viewer3D({
             </div>
           )}
           {!readOnly && <PillarDialog />}
-          {p && (hydronicPanel || fanCoilPanel) && !presentation && (
-            <FullscreenDialog
-              open
-              title={
-                hydronicPanel
-                  ? "Impianto idronico · macchina esterna"
-                  : "Ventilconvettori e comandi"
-              }
-              closeLabel="Chiudi impianto idronico"
-              onClose={() => {
-                setHydronicPanel(false);
-                setFanCoilPanel(false);
-              }}
-            >
-              <div className={styles.systemConfiguration}>
-                {!hydronicPanel && (
-                  <label className="campo">
-                    <span>Ambiente ventilconvettore</span>
-                    <select
-                      value={fanCoilRoomId}
-                      onChange={(event) => setFanCoilRoomId(event.target.value)}
-                    >
-                      <option value="">Scegli un ambiente</option>
-                      {p.rooms
-                        .filter(
-                          (room) =>
-                            room.floorId === activeFloorId &&
-                            !room.conditioningExclusion,
-                        )
-                        .map((room) => (
-                          <option key={room.id} value={room.id}>
-                            {room.name}
-                          </option>
-                        ))}
-                    </select>
-                  </label>
-                )}
-                {hydronicPanel ? (
-                  <HydronicPanel project={p} floorId={activeFloorId} />
-                ) : p.rooms.find((room) => room.id === fanCoilRoomId) ? (
-                  <FanCoilPanel
-                    key={fanCoilRoomId}
-                    project={p}
-                    room={p.rooms.find((room) => room.id === fanCoilRoomId)!}
-                  />
-                ) : (
-                  <p>Scegli l’ambiente in cui inserire i ventilconvettori.</p>
-                )}
-              </div>
-            </FullscreenDialog>
-          )}
           {productTool && p && (
             <ProductTools
               type={productTool}
-              project={p}
-              activeFloorId={activeFloorId}
-              selectedRoom={selectedRoom}
-              selectedWall={p.walls.find((w) => w.id === selectedId)}
               onClose={() => setProductTool(null)}
             />
           )}
@@ -1593,15 +1526,19 @@ export default function Viewer3D({
                         ? "Pompa di calore"
                         : "family" in chosenDevice
                           ? chosenDevice.family
-                          : (p?.hvacSystems ?? []).some(
-                                (system) =>
-                                  system.type === "vrv" &&
-                                  system.indoorUnits.some(
-                                    (unit) => unit.id === chosenDevice.id,
-                                  ),
+                          : (p?.fanCoils ?? []).some(
+                                (unit) => unit.id === chosenDevice.id,
                               )
-                            ? "VRV/VRF"
-                            : "Split"
+                            ? "Ventilconvettore"
+                            : (p?.hvacSystems ?? []).some(
+                                  (system) =>
+                                    system.type === "vrv" &&
+                                    system.indoorUnits.some(
+                                      (unit) => unit.id === chosenDevice.id,
+                                    ),
+                                )
+                              ? "VRV/VRF"
+                              : "Split"
                     }`
                   : `${floorName} · ${rooms.length} ${rooms.length === 1 ? "ambiente" : "ambienti"}`}
               </strong>
@@ -1620,6 +1557,8 @@ export default function Viewer3D({
             </div>
             <div className={styles.hint}>
               Trascina per orbitare · destro per spostare
+              <br />
+              WASD per muoverti · Q/E su e giù
               <br />
               Rotella per zoom · clic per selezionare
             </div>

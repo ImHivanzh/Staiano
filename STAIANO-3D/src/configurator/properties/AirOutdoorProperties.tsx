@@ -32,6 +32,32 @@ export function AirOutdoorProperties({
         Ingombro L×H×P {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm.
         L’intero ingombro deve restare fuori da ambienti e muri.
       </p>
+      {dimensions?.sourceMetadata && (
+        <p className="nota">
+          <a
+            href={dimensions.sourceMetadata.sourceUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Dimensioni pubblicate · fonte produttore
+            {dimensions.sourceMetadata.page
+              ? ` · pagina ${dimensions.sourceMetadata.page}`
+              : ""}
+          </a>
+          {dimensions.dimensionNote && (
+            <>
+              <br />
+              {dimensions.dimensionNote}
+            </>
+          )}
+        </p>
+      )}
+      {dimensions?.dimensionStatus !== "published" && (
+        <p className="nota" role="status">
+          Ingombro indicativo per fascia di potenza. Verifica le quote e le
+          distanze di servizio sul disegno del modello prima della posa.
+        </p>
+      )}
       <details className="azione-inspector" open>
         <summary>Posizione all’esterno delle mura</summary>
         <button

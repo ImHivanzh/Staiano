@@ -1,14 +1,10 @@
 "use client";
-import type { Project, Room, Wall } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import styles from "./ProductTools.module.css";
-export type ProductTool = "radiator" | "split" | "terminal" | "machine";
+export type ProductTool =
+  "radiator" | "split" | "terminal" | "machine" | "fanCoil" | "heatPump";
 export type ProductToolsProps = {
   type: ProductTool;
-  project: Project;
-  activeFloorId: string;
-  selectedRoom?: Room;
-  selectedWall?: Wall;
   onClose: () => void;
 };
 export function ProductTools({ type, onClose }: ProductToolsProps) {

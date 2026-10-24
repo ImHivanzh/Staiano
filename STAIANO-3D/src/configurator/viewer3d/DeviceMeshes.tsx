@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, lazy, Suspense } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
@@ -20,12 +20,16 @@ import {
 import { terminalBodyDepthMm } from "@/domain/air-terminals/geometry";
 import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
 import { RadiatorHardware } from "./RadiatorHardware";
+import { Parts } from "./Parts";
+import { ModelAssetBoundary } from "./ModelAssetBoundary";
+import { radiatorSectionFor } from "@/domain/catalogs/radiator-sections";
+const ArdesiaBody = lazy(() => import("./ArdesiaBody"));
 import { SystemMeshes } from "./SystemMeshes";
 import { FanCoilMeshes } from "./FanCoilMeshes";
 import { HydronicMeshes } from "./HydronicMeshes";
 import { AirOutdoorMeshes } from "./AirOutdoorMeshes";
 import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
-import { Html, Line } from "@react-three/drei";
+import { Html, Line, MeshReflectorMaterial } from "@react-three/drei";
 import { pendingConnections } from "@/domain/ducted/plan-connections";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
@@ -84,49 +88,6 @@ const outlineMaterial = new THREE.LineBasicMaterial({
   opacity: 0.85,
 });
 
-/** Each repeated section/fin is a GPU instance, not a separate React mesh. */
-function Parts({
-  parts,
-  geometry,
-  material,
-}: {
-  parts: DetailPart[];
-  geometry: THREE.BufferGeometry;
-  material: THREE.Material;
-}) {
-  const ref = useRef<THREE.InstancedMesh>(null);
-  useEffect(() => {
-    const mesh = ref.current;
-    return () => {
-      mesh?.dispose();
-    };
-  }, [parts.length]);
-  useLayoutEffect(() => {
-    const mesh = ref.current;
-    if (!mesh) return;
-    const transform = new THREE.Object3D();
-    parts.forEach((part, index) => {
-      transform.position.set(...part.position);
-      transform.scale.set(...part.scale);
-      transform.rotation.set(...(part.rotation ?? [0, 0, 0]));
-      transform.updateMatrix();
-      mesh.setMatrixAt(index, transform.matrix);
-    });
-    mesh.instanceMatrix.needsUpdate = true;
-    mesh.computeBoundingSphere();
-  }, [parts]);
-  if (!parts.length) return null;
-  return (
-    <instancedMesh
-      ref={ref}
-      args={[geometry, material, parts.length]}
-      castShadow
-      receiveShadow
-      dispose={null}
-    />
-  );
-}
-
 function SelectionOutline({
   dimensions,
 }: {
@@ -175,7 +136,11 @@ function RadiatorMesh({
       ),
     [item],
   );
-  return (
+  const section = radiatorSectionFor(
+    item,
+    radiatorProductAtVersion(item.productId, item.catalogVersion),
+  );
+  const sketchBody = (
     <>
       <Parts parts={detail.tubes} geometry={cylinder} material={bodyMaterial} />
       <Parts parts={detail.caps} geometry={sphere} material={bodyMaterial} />
@@ -186,10 +151,43 @@ function RadiatorMesh({
       />
       <Parts
         parts={detail.sections}
-        geometry={rounded}
+        geometry={detail.mirrors.length ? box : rounded}
         material={bodyMaterial}
       />
+      {detail.mirrors.map((part, index) => (
+        <mesh
+          key={index}
+          geometry={plane}
+          position={part.position}
+          scale={part.scale}
+        >
+          <MeshReflectorMaterial
+            resolution={256}
+            mirror={1}
+            roughness={0.05}
+            color="#dce3e6"
+          />
+        </mesh>
+      ))}
       <Parts parts={detail.fins} geometry={box} material={bodyMaterial} />
+    </>
+  );
+  return (
+    <>
+      {section ? (
+        <ModelAssetBoundary key={section.localUrl} fallback={sketchBody}>
+          <Suspense fallback={sketchBody}>
+            <ArdesiaBody
+              section={section}
+              heightMm={item.heightMm}
+              elements={item.elements}
+              material={bodyMaterial}
+            />
+          </Suspense>
+        </ModelAssetBoundary>
+      ) : (
+        sketchBody
+      )}
       <Parts parts={detail.plugs} geometry={cylinder} material={aluminium} />
       <RadiatorHardware item={item} />
       {selected && (
@@ -596,7 +594,7 @@ export function DeviceMeshes({
                 key={item.id}
                 position={[
                   item.position.x,
-                  splitCenterElevationM(room, item),
+                  splitCenterElevationM(room, item, project),
                   item.position.y,
                 ]}
                 rotation={[0, -item.rotation, 0]}

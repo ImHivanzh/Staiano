@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import type { Page } from "@playwright/test";
 import { expect, test } from "./browser-test";
-import { dragPlanDevice, openDisclosure, pickPlanPoint } from "./ui-helpers";
+import { dragPlanDevice, openDisclosure, pickPlanPoint, chooseFanCoilModel } from "./ui-helpers";
 import { projectSchema } from "../src/schemas/project";
 
 async function saved(page: Page) {
@@ -117,6 +117,11 @@ for (const width of [1920, 1024]) {
         ).toBeEnabled();
       }
       await chooseRadiator();
+      if (type === "fanCoil")
+        await chooseFanCoilModel(popup, {
+          manufacturer: "Aermec",
+          model: "FCZ",
+        });
       await popup.screenshot({ path: info.outputPath(`${type}-popup.png`) });
       await popup
         .locator("footer")
@@ -129,6 +134,11 @@ for (const width of [1920, 1024]) {
       await device.locator("rect").first().click();
       await expect(popup).toBeVisible();
       await chooseRadiator();
+      if (type === "fanCoil")
+        await chooseFanCoilModel(popup, {
+          manufacturer: "Aermec",
+          model: "FCZ",
+        });
       await popup
         .locator("footer")
         .getByRole("button", { name: "Salva", exact: true })

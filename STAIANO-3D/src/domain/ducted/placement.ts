@@ -3,6 +3,7 @@ import { newId } from "@/domain/project";
 import { hvacProductAtVersion } from "@/domain/catalogs/hvac";
 import { pointInPolygon } from "@/domain/geometry/primitives";
 import { calculatePlenum } from "./plenum";
+import { ductedMachineElevationM, ductedMachineForDevice } from "./machine";
 
 export function placeDuctedMachine(
   project: Project,
@@ -108,15 +109,13 @@ export function placeSupplyPlenum(project: Project, systemId: string) {
 
 /** The insertion tool accepts a configured machine, never an arbitrary plan point. */
 export function addMachinePlenum(project: Project, machineId: string): Project {
-  const system = project.hvacSystems.find(
-    (s) => s.type === "ducted" && s.indoorUnits.some((u) => u.id === machineId),
-  );
-  const machine = system?.indoorUnits.find((u) => u.id === machineId);
-  if (!system || !machine)
+  const resolved = ductedMachineForDevice(project, machineId);
+  if (!resolved)
     throw new Error(
       "Clicca una macchina configurata per aggiungere il suo plenum.",
     );
-  if (machine.locked)
+  const { system } = resolved;
+  if (resolved.locked)
     throw new Error("Sblocca la macchina prima di aggiungere il plenum.");
   const existing = machinePlenums(project, system.id);
   if (existing.length >= 2)
@@ -176,7 +175,7 @@ export function moveSystemObject(
 export function placedPlenumGeometry(project: Project, plenum: Plenum) {
   if (
     !plenum.systemId ||
-    (plenum.attachmentId !== undefined &&
+    (plenum.attachmentId != null &&
       !project.hvacSystems.some(
         (s) =>
           s.id === plenum.systemId &&
@@ -189,7 +188,13 @@ export function placedPlenumGeometry(project: Project, plenum: Plenum) {
     plenum.systemId,
     plenum.use,
   ).machineGeometry;
-  if (!calculated) return null;
+  if (
+    !calculated?.inlet ||
+    !calculated.bodyWidthMm ||
+    !calculated.bodyHeightMm ||
+    !calculated.totalDepthMm
+  )
+    return null;
   const transition = Math.min(
     calculated.transitionDepthMm ?? 0,
     plenum.depthMm,
@@ -249,7 +254,6 @@ export function machinePlenum(
       ? { x: -Math.sin(machine.rotation), y: Math.cos(machine.rotation) }
       : { x: Math.sin(machine.rotation), y: -Math.cos(machine.rotation) };
   const gap = (machine.depthMm + geometry.totalDepthMm) / 2000;
-  const room = project.rooms.find((r) => r.id === machine.roomId)!;
   const plenum: Plenum = {
     id: `machine-plenum:${systemId}:${use}`,
     systemId,
@@ -264,7 +268,7 @@ export function machinePlenum(
     widthMm: geometry.bodyWidthMm,
     heightMm: geometry.bodyHeightMm,
     depthMm: geometry.totalDepthMm,
-    elevationM: room.heightM - machine.heightMm / 2000 - 0.05,
+    elevationM: ductedMachineElevationM(project, system!, machine),
     model: `${use === "supply" ? "Mandata" : "Ripresa"} su misura / ${result.machineModel ?? system.productId}`,
     status: "proposed",
     locked: false,

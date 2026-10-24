@@ -303,7 +303,7 @@ async function renderView(
             project={project}
             floorId={floorId}
             room={room}
-            floorFinish={options.floorFinish}
+            floorFinish={options.floorFinish ?? project.floorFinish ?? "oak"}
             onCapture={succeed}
             onError={fail}
           />

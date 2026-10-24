@@ -5,7 +5,10 @@ import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import type { Project, Selection } from "@/schemas/project";
-import { fanCoilProductAtVersion } from "@/domain/catalogs/fan-coils";
+import {
+  fanCoilProductAtVersion,
+  isConcealedFanCoil,
+} from "@/domain/catalogs/fan-coils";
 import type { FanCoilPlacement } from "@/domain/fan-coils/placement";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
@@ -44,9 +47,7 @@ function FanCoilBody({
     d = unit.depthMm / 1000;
   const ceiling = unit.mounting === "ceiling";
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const concealed = ["AirLeaf SLI", "FCZ P", "FCZ PO"].includes(
-    product?.family ?? "",
-  );
+  const concealed = isConcealedFanCoil(product);
   const shell = concealed ? concealedShell : coating;
   const body = useMemo(
     () =>
@@ -72,8 +73,7 @@ function FanCoilBody({
     },
     [body, edges],
   );
-  const face = ceiling ? -1 : 1;
-  const grilleZ = face * (d / 2 + 0.0003);
+  const grilleZ = d / 2 + 0.0003;
   const returnHeight = h * (ceiling ? 0.24 : 0.19);
   const returnY = -h * (ceiling ? 0.29 : 0.31);
   const finCount = Math.min(12, Math.max(4, Math.round(returnHeight / 0.017)));

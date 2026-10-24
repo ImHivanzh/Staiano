@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-20T06:08:42.828Z",
+  "generatedAt": "2026-10-23T13:25:39.461Z",
   "documents": [
     {
       "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
@@ -115,6 +115,12 @@
       "manufacturer": "Daikin",
       "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/catalogo-generale-2025/202501%20Catalogo%20Residenziale%2020250429.pdf",
       "page": 117
+    },
+    {
+      "sha256": "b212d6c42b69b0e16eae42d9653be9410ba6f26040cd73f6b2d8a2bd48dce28a",
+      "manufacturer": "Daikin",
+      "sourceUrl": "https://www.daikin.it/content/dam/DACI-Internet/Download/residenziale/20250319%20Leaflet%20Perfera%202025.pdf",
+      "page": 6
     },
     {
       "sha256": "b64d191043def7bd9c7aa0334bacb46cbfe1647d922ab1a35f703254428c6a38",
@@ -1953,6 +1959,12 @@
       "page": 15
     },
     {
+      "sha256": "e85089b47fd99a9f1f63150454ad2e07de863afabffd331316fb59990f8d4fcb",
+      "manufacturer": "Gree",
+      "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/Documents/SER/service%20manual%20for%20new%20free%20match%2014-28K_rev01.pdf",
+      "page": 8
+    },
+    {
       "sha256": "fab85621ae99c968fb2e34ad79ae7e63116185f518648b4d77ca38d9c991e7f7",
       "manufacturer": "Gree",
       "sourceUrl": "https://service.argoonline.it/area_riservata/WebDocTec/gree.argoclima.com/Brochure_RESIDENZIALE_Gree_2026_web.pdf",
@@ -1965,16 +1977,34 @@
       "page": null
     },
     {
+      "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+      "manufacturer": "Innova",
+      "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+      "page": 20
+    },
+    {
       "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
       "manufacturer": "Innova",
       "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
       "page": null
     },
     {
+      "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+      "manufacturer": "Innova",
+      "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+      "page": 24
+    },
+    {
       "sha256": "96a699b5b47da4e51f319129b6e985cc1e0c7fe04ba857288e2b727700c0d277",
       "manufacturer": "Innova",
       "sourceUrl": "https://rep.innova.it/downloads/manuali/N420927A_Manuale%20installazione%20Comandi%20AirLeaf_NEW%20RS_Rev.10_%20IT.pdf",
       "page": 6
+    },
+    {
+      "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+      "manufacturer": "Innova",
+      "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+      "page": 43
     },
     {
       "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
@@ -2017,6 +2047,12 @@
       "manufacturer": "Mitsubishi Electric",
       "sourceUrl": "https://library.mitsubishielectric.co.uk/pdf/download_full/5518",
       "page": 49
+    },
+    {
+      "sha256": "b884f56e6bb976073a43c268469643e56a59986f38eac13f037b0d4c2af0e58b",
+      "manufacturer": "Mitsubishi Electric",
+      "sourceUrl": "https://climatizzazione.mitsubishielectric.it/sites/default/files/2024-11/Scheda%20tecnica%20MXZ-F%20-%20191124.pdf",
+      "page": 2
     },
     {
       "sha256": "dda8969e5a6cca55fac8ab9174cb2539dabd01032097c6eae102c13bc49a6f0a",

@@ -16,6 +16,15 @@ import {
 } from "@/domain/geometry/primitives";
 import { reconcileRooms, overlappingPolygons } from "@/domain/geometry/rooms";
 import { followWallTransforms } from "@/domain/geometry/follow-walls";
+import {
+  positionRecessedAlongRoomWall,
+  roomWallSpan,
+} from "@/domain/geometry/placement";
+import { fanCoilProductAtVersion, isRecessedFanCoil } from "@/domain/catalogs/fan-coils";
+import {
+  wallRun,
+  wallRunMeasuredLength,
+} from "@/domain/geometry/wall-runs";
 import { calculateRoomThermal } from "./geometry/ceilings";
 import { calculateThermal } from "@/domain/thermal/calculate";
 import { pillarFootprint } from "@/domain/geometry/pillars";
@@ -261,13 +270,48 @@ export function recomputeProject(project: Project): Project {
       ? { ...w, drywall: undefined }
       : w,
   );
-  p.fanCoils = reassociate(p.fanCoils ?? []).map((u) => ({
-    ...u,
-    elevationM:
-      u.mounting === "ceiling"
-        ? p.rooms.find((r) => r.id === u.roomId)!.heightM
-        : u.elevationM,
-  }));
+  p.fanCoils = reassociate(p.fanCoils ?? []).map((unit) => {
+    if (unit.locked || unit.mounting !== "wall") return unit;
+    const product = fanCoilProductAtVersion(
+      unit.productId,
+      unit.catalogVersion,
+    );
+    if (!isRecessedFanCoil(product)) return unit;
+    const room = p.rooms.find(
+      (r) => r.id === unit.roomId && r.floorId === unit.floorId,
+    );
+    const wall = p.walls.find(
+      (w) => w.id === unit.wallId && w.floorId === unit.floorId,
+    );
+    if (!room || !wall) return unit;
+    const span = roomWallSpan(room, wall);
+    if (!span || span.lengthM + 1e-6 < unit.widthMm / 1000) return unit;
+    const available =
+      wall.thickness +
+      (wall.drywall?.roomId === room.id ? (wall.drywall.offsetM ?? 0) : 0);
+    if (available + 1e-6 < unit.depthMm / 1000 - 0.002) return unit;
+    const along = Math.min(
+      Math.max(
+        distance(
+          span.start,
+          projection(unit.position, span.start, span.end),
+        ),
+        unit.widthMm / 2000,
+      ),
+      span.lengthM - unit.widthMm / 2000,
+    );
+    if (!Number.isFinite(along)) return unit;
+    const position = positionRecessedAlongRoomWall(
+      room,
+      wall,
+      along,
+      unit.depthMm / 1000,
+    );
+    return Math.abs(position.x - unit.position.x) < 1e-4 &&
+      Math.abs(position.y - unit.position.y) < 1e-4
+      ? unit
+      : { ...unit, position };
+  });
   p.airTerminals = reassociate(p.airTerminals);
   p.ductedDrafts = p.ductedDrafts?.filter(
     (draft) =>
@@ -559,6 +603,58 @@ export function resizeWall(
       ),
     ),
   );
+}
+
+/**
+ * Porta la misura INTERNA della fila di muri collineari al valore indicato.
+ * La fila è una sola misura: si sposta l'estremo finale, non la giunzione
+ * interna. L'asse viene così dimensionato aggiungendo la differenza fra la
+ * misura richiesta e quella interna attuale.
+ */
+export function resizeWallRunInternal(
+  p: Project,
+  wallId: string,
+  internalM: number,
+): Project {
+  if (!Number.isFinite(internalM) || internalM < 0.05 || internalM > 100)
+    throw new Error("Lunghezza interna muro da 0,05 a 100 m.");
+  const run = wallRun(p, wallId);
+  if (!run) return p;
+  const current = wallRunMeasuredLength(p, wallId, "internal");
+  const moved = (delta: number): Project => {
+    const axis = distance(run.start, run.end);
+    if (!Number.isFinite(axis) || axis < 1e-9 || axis + delta < 0.05)
+      throw new Error("Lunghezza muro da 0,05 a 100 m.");
+    const end = add(run.end, scale(subtract(run.end, run.start), delta / axis));
+    return recomputeProject(
+      followWallTransforms(
+        p,
+        p.walls.map((w) =>
+          w.floorId !== run.floorId
+            ? w
+            : {
+                ...w,
+                start: samePoint(w.start, run.end) ? end : w.start,
+                end: samePoint(w.end, run.end) ? end : w.end,
+              },
+        ),
+      ),
+    );
+  };
+  // Spostando un solo estremo la parete collegata può inclinarsi: la misura
+  // interna non è esattamente lineare nella lunghezza d'asse. Si corregge per
+  // iterazioni successive finché il campo salvato coincide con il valore
+  // digitato.
+  let delta = internalM - current;
+  let result = moved(delta);
+  for (let i = 0; i < 16; i++) {
+    const measured = wallRunMeasuredLength(result, wallId, "internal");
+    const error = internalM - measured;
+    if (Math.abs(error) < 1e-5) break;
+    delta += error;
+    result = moved(delta);
+  }
+  return result;
 }
 export function resizeRectangularRoom(
   p: Project,

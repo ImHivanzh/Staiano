@@ -26,7 +26,7 @@ class CircularBend extends Curve<Vector3> {
   }
 }
 
-/** Circular fillets: prefer R=2D (Lindab); never below R=D (ADC installation guidance).
+/** Circular fillets: drawing preference R=2D, geometric floor R=D (ADC installation guidance).
  * https://flexibleduct.org/images/ADC~IR5E.pdf, section 4.4. Product-specific limits still apply.
  */
 export function flexibleDuctCurve(points: RoutePoint[], diameterMm: number) {

@@ -7,22 +7,33 @@ import {
   fanCoilProductAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
+  isConcealedFanCoil,
+  isRecessedFanCoil,
 } from "@/domain/catalogs/fan-coils";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
+import { fanCoilCeilingRange } from "@/domain/fan-coils/placement";
 import {
   ensureFanCoilAirSystem,
   fanCoilAirSystem,
   removeFanCoilAirSystem,
   setFanCoilAirDischarge,
 } from "@/domain/fan-coils/air";
+import { MachinePlenumDetails } from "../systems/MachinePlenumDetails";
 import { DuctPanel } from "../systems/DuctPanel";
 import {
   positionAlongRoomWall,
+  positionRecessedAlongRoomWall,
   roomWallSpan,
 } from "@/domain/geometry/placement";
 import { distance, projection } from "@/domain/geometry/primitives";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber, numberFromForm } from "@/utils/format";
+
+const formatElevation = (value: number) =>
+  value.toLocaleString("it-IT", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 7,
+  });
 
 export function FanCoilProperties({
   project,
@@ -35,9 +46,31 @@ export function FanCoilProperties({
   const unit = project.fanCoils?.find((u) => u.id === id);
   if (!unit) return null;
   const room = project.rooms.find((r) => r.id === unit.roomId);
+  if (!room) return null;
   const model = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
   const catalog = fanCoilCatalogAtVersion(unit.catalogVersion);
-  if (!room) return null;
+  const recessed = isRecessedFanCoil(model);
+  const wallFitsRecess = (wall: (typeof project.walls)[number]) =>
+    wall.thickness +
+      (wall.drywall?.roomId === room.id ? (wall.drywall.offsetM ?? 0) : 0) +
+      1e-6 >=
+    unit.depthMm / 1000 - 0.002;
+  const ceilingRange = model
+    ? fanCoilCeilingRange(
+        project,
+        room,
+        {
+          ...unit,
+          family: model.family,
+          features: model.features,
+          ceilingInstallation: model.ceilingInstallation,
+        },
+        unit.position,
+        unit.rotation,
+        unit.mounting,
+      )
+    : null;
+  const datumOffset = unit.mounting === "wall" ? unit.heightMm / 2000 : 0;
   const point = model?.operatingPoints[unit.operatingPointIndex];
   const airSystem = fanCoilAirSystem(project, id);
   const airVents = project.airTerminals.filter(
@@ -129,6 +162,13 @@ export function FanCoilProperties({
           {unit.mounting === "wall" ? "centro" : "faccia inferiore"}{" "}
           {formatNumber(unit.elevationM)} m dal pavimento.
         </p>
+        {recessed && unit.mounting === "wall" && (
+          <p className="nota" data-testid="fan-coil-recess-note">
+            Modello ad incasso: il corpo resta nella parete e la faccia
+            anteriore è a filo. Serve una parete o controparete di almeno{" "}
+            {unit.depthMm} mm; la posizione non sporge nella stanza.
+          </p>
+        )}
         <form
           key={`${unit.id}-${unit.mounting}-${unit.position.x}-${unit.position.y}-${unit.elevationM}`}
           onSubmit={(e) => {
@@ -138,12 +178,19 @@ export function FanCoilProperties({
               const wall = project.walls.find((w) => w.id === data.get("wall"));
               const span = wall && roomWallSpan(room, wall);
               if (!wall || !span) return;
-              const position = positionAlongRoomWall(
-                room,
-                wall,
-                numberFromForm(data.get("offset")),
-                unit.depthMm / 1000,
-              );
+              const position = recessed
+                ? positionRecessedAlongRoomWall(
+                    room,
+                    wall,
+                    numberFromForm(data.get("offset")),
+                    unit.depthMm / 1000,
+                  )
+                : positionAlongRoomWall(
+                    room,
+                    wall,
+                    numberFromForm(data.get("offset")),
+                    unit.depthMm / 1000,
+                  );
               commit((p) =>
                 updateFanCoil(p, id, {
                   position,
@@ -177,7 +224,9 @@ export function FanCoilProperties({
                     {project.walls
                       .filter(
                         (w) =>
-                          room.wallIds.includes(w.id) && roomWallSpan(room, w),
+                          room.wallIds.includes(w.id) &&
+                          roomWallSpan(room, w) &&
+                          (!recessed || wallFitsRecess(w)),
                       )
                       .map((w, i) => (
                         <option key={w.id} value={w.id}>
@@ -191,8 +240,7 @@ export function FanCoilProperties({
                   baseUnit="m"
                   name="offset"
                   min="0"
-                  step="0.01"
-                  defaultValue={Math.round(currentOffset * 1000) / 1000}
+                  defaultValue={currentOffset}
                   required
                 />
               </>
@@ -202,7 +250,6 @@ export function FanCoilProperties({
                   label="Posizione X"
                   baseUnit="m"
                   name="x"
-                  step="0.01"
                   defaultValue={unit.position.x}
                   required
                 />
@@ -210,7 +257,6 @@ export function FanCoilProperties({
                   label="Posizione Y"
                   baseUnit="m"
                   name="y"
-                  step="0.01"
                   defaultValue={unit.position.y}
                   required
                 />
@@ -225,12 +271,51 @@ export function FanCoilProperties({
                 type="number"
                 name="elevation"
                 min="0.01"
-                max={room.heightM}
-                step="0.01"
+                max={Math.max(room.heightM, room.roof?.ridgeHeightM ?? 0)}
+                step="any"
                 defaultValue={unit.elevationM}
                 required
               />
             </label>
+            {ceilingRange && (
+              <p className="nota" data-testid="fan-coil-elevation-ranges">
+                Quote {unit.mounting === "wall" ? "centro" : "faccia inferiore"}{" "}
+                consentite:{" "}
+                {ceilingRange.ranges
+                  .map(
+                    (zone) =>
+                      `${formatElevation(zone.minM + datumOffset)}–${formatElevation(zone.maxM + datumOffset)} m (${zone.reference === "below" ? "sotto soffitto" : zone.reference === "band" ? "vuoto fascia" : "vuoto superiore"})`,
+                  )
+                  .join("; ")}
+              </p>
+            )}
+            {unit.mounting === "ceiling" && (
+              <>
+                <p className="nota">
+                  {recessed
+                    ? "Modello ad incasso: la posa a soffitto è ammessa solo dentro un controsoffitto o un vuoto tecnico; non viene appeso a vista. Verifica pannelli e accessori del modello."
+                    : isConcealedFanCoil(model)
+                      ? "Modello senza mobile: il corpo può stare nel vuoto tecnico o sotto il soffitto, secondo la quota scelta. Verifica pannelli e accessori del modello."
+                      : "Posa a vista: tutto il corpo resta sotto il soffitto."}{" "}
+                  {model?.ceilingInstallation?.note}
+                </p>
+                <button
+                  type="button"
+                  className="bottone chiara"
+                  disabled={!ceilingRange}
+                  onClick={() => {
+                    if (ceilingRange)
+                      commit((p) =>
+                        updateFanCoil(p, id, {
+                          elevationM: ceilingRange.defaultM,
+                        }),
+                      );
+                  }}
+                >
+                  Allinea al soffitto
+                </button>
+              </>
+            )}
             <button type="submit" className="bottone chiara">
               Aggiorna posizione
             </button>
@@ -315,6 +400,11 @@ export function FanCoilProperties({
                 </button>
               </fieldset>
             </form>
+            <MachinePlenumDetails
+              key={airSystem.id}
+              project={project}
+              systemId={airSystem.id}
+            />
             <DuctPanel project={project} systemId={airSystem.id} />
             <button
               type="button"

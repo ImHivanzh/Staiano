@@ -25,6 +25,7 @@ test("saved legacy steps resume in the matching simplified phase", async ({
         JSON.stringify({
           ...fixture,
           id: `legacy-wizard-${step}`,
+          name: `Ripresa passo ${step}`,
           floors: fixture.floors.map((floor) => ({
             ...floor,
             configurationWizard: {
@@ -36,6 +37,9 @@ test("saved legacy steps resume in the matching simplified phase", async ({
         }),
       ),
     });
+    await expect(
+      page.getByRole("heading", { name: `Ripresa passo ${step}`, exact: true }),
+    ).toBeVisible();
     await expect(
       page.getByRole("region", { name: "Configurazione guidata" }),
     ).toContainText(`Passo ${phase} di 5`);
@@ -213,7 +217,10 @@ test("manual projects can start the wizard and 3D tools stay inside task menus",
   await openDisclosure(viewer, "Aggiungi apparecchio");
   await viewer.getByRole("button", { name: "Radiatori", exact: true }).click();
   await expect(
-    page.getByRole("dialog", { name: "Catalogo radiatori" }),
+    page.getByRole("complementary", { name: "Inserisci apparecchio" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Inserisci sulla pianta", exact: true }),
   ).toBeVisible();
   await expect(
     viewer.locator('details[name="viewer-menus"][open]'),

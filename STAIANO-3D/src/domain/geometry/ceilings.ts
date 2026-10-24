@@ -101,6 +101,27 @@ export function ceilingHeightAt(project: Project, room: Room, point: Point) {
   return height;
 }
 
+/** Quota finita minima sull’intero ingombro convesso, anche sopra fasce interne. */
+export function minimumCeilingHeightM(
+  project: Project,
+  room: Room,
+  footprint: Point[],
+) {
+  if (footprint.length < 3 || area(footprint) <= 1e-8) return 0;
+  const roofPoints = roofPlanes(project, room, footprint).flat();
+  if (!roofPoints.length) return 0;
+  let height = Math.min(
+    room.ceilingHeightM ?? Infinity,
+    ...roofPoints.map((point) => roofHeightAt(project, room, point)),
+  );
+  for (const band of room.ceilingBands ?? []) {
+    const polygon = ceilingBandPolygon(project, room, band);
+    if (polygon.length >= 3 && area(clipToConvex(footprint, polygon)) > 1e-8)
+      height = Math.min(height, band.elevationM);
+  }
+  return height;
+}
+
 export function validateCeilingBand(
   project: Project,
   room: Room,
@@ -227,7 +248,10 @@ export function syncCeilingTerminals(project: Project): Project {
 /** Integrate each planar roof face, subtract measured lowered bands and pillar footprints. */
 export function calculateRoomThermal(project: Project, room: Room) {
   if (!room.roof && !room.ceilingBands?.length)
-    return calculateThermal(room.netAreaM2, room.heightM);
+    return calculateThermal(
+      room.netAreaM2,
+      room.ceilingHeightM ?? room.heightM,
+    );
   const topVolume = (polygon: Point[]) => {
     if (polygon.length < 3) return 0;
     if (room.ceilingHeightM !== null)

@@ -1,5 +1,5 @@
 {
-  "version": "fan-coils-b244c72c5197bef0",
+  "version": "fan-coils-743c6dffcc1581be",
   "products": [
     {
       "id": "innova-airleaf-sl-200-2t",
@@ -28,25 +28,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 910.0,
           "heatingW": 1020.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 146.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -76,25 +90,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2120.0,
           "heatingW": 2210.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 294.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -124,25 +152,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2810.0,
           "heatingW": 3020.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 438.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -172,25 +214,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 3300.0,
           "heatingW": 3810.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 567.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -220,25 +276,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 3710.0,
           "heatingW": 4320.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 663.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -268,25 +338,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 840.0,
           "heatingW": 450.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 132.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 41
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -316,25 +400,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 1930.0,
           "heatingW": 1100.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 260.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 41
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -364,25 +462,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2500.0,
           "heatingW": 1510.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 370.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 41
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -412,25 +524,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2920.0,
           "heatingW": 2210.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 476.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 41
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -460,25 +586,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 3210.0,
           "heatingW": 2540.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 542.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sl/",
-        "sourceType": "html",
-        "sha256": "e2187d369e77766d2e6b3d6a093a0e115e34013917ff50aae6cb9b33dbbe9d42",
-        "retrievedAt": "2026-10-07T09:11:17.851832+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.851832+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 41
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SL orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore almeno 2500 mm dal pavimento.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421097a_manuale_dinstallazione_airleaf_a_vista_rev__05_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "6bfca9ab505b3361f409f08ce065ba3434eab6cc584ffa2d93e8a64213668b62",
+          "retrievedAt": "2026-10-23T12:41:20.273850+00:00",
+          "documentRevision": "N421097A Rev.06 03-2026",
+          "page": 20,
+          "importedAt": "2026-10-23T12:41:20.273850+00:00"
+        }
       }
     },
     {
@@ -507,25 +647,25 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 510.0,
           "heatingW": 610.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 113.0,
+          "noiseDbA": 39.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
-        "sourceType": "html",
-        "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
-        "retrievedAt": "2026-10-07T09:11:17.913304+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.913304+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
       }
     },
     {
@@ -554,25 +694,25 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 1210.0,
           "heatingW": 1510.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 228.0,
+          "noiseDbA": 40.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
-        "sourceType": "html",
-        "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
-        "retrievedAt": "2026-10-07T09:11:17.913304+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.913304+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
       }
     },
     {
@@ -601,25 +741,25 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 1620.0,
           "heatingW": 2029.9999999999998,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 331.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
-        "sourceType": "html",
-        "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
-        "retrievedAt": "2026-10-07T09:11:17.913304+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.913304+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
       }
     },
     {
@@ -648,25 +788,25 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2120.0,
           "heatingW": 2620.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 440.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
-        "sourceType": "html",
-        "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
-        "retrievedAt": "2026-10-07T09:11:17.913304+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.913304+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
       }
     },
     {
@@ -695,25 +835,25 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2600.0,
           "heatingW": 3110.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 489.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
-        "sourceType": "html",
-        "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
-        "retrievedAt": "2026-10-07T09:11:17.913304+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:11:17.913304+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 40
       }
     },
     {
@@ -743,25 +883,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 910.0,
           "heatingW": 1020.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 146.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -791,25 +945,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2120.0,
           "heatingW": 2210.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 294.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -839,25 +1007,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2810.0,
           "heatingW": 3020.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 438.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -887,25 +1069,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 3300.0,
           "heatingW": 3810.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 567.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -935,25 +1131,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 3710.0,
           "heatingW": 4320.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 45/40 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 663.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -983,25 +1193,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 840.0,
           "heatingW": 450.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 132.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 43
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -1031,25 +1255,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 1930.0,
           "heatingW": 1100.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 260.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 43
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -1079,25 +1317,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 1970.0,
           "heatingW": 1510.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 370.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 43
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -1127,25 +1379,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 2920.0,
           "heatingW": 2210.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 476.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 43
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {
@@ -1175,25 +1441,39 @@
       },
       "operatingPoints": [
         {
-          "label": "Punto nominale pubblicato",
+          "label": "Massima · 0 Pa",
           "coolingW": 3210.0,
           "heatingW": 2540.0,
-          "airflowM3h": null,
-          "noiseDbA": null,
-          "coolingConditions": "Acqua 7/12 °C; aria ambiente 27 °C",
-          "heatingConditions": "Acqua 65/55 °C; aria ambiente 20 °C",
-          "noiseConditions": "Rumore non pubblicato in questa fonte; non dedotto dalla potenza."
+          "airflowM3h": 542.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 65/55 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
         }
       ],
       "sourceMetadata": {
         "manufacturer": "Innova",
-        "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
-        "sourceType": "html",
-        "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
-        "retrievedAt": "2026-10-07T09:16:41.664554+00:00",
-        "documentRevision": "Pagina prodotto acquisita 07/10/2026",
-        "importedAt": "2026-10-07T09:16:41.664554+00:00",
-        "page": null
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 43
+      },
+      "ceilingInstallation": {
+        "minFaceHeightM": 2.5,
+        "note": "Per la posa a soffitto serve la versione SLI orizzontale a 2 o 4 tubi; verificare il codice sulla targa. Faccia inferiore dell’apparecchio almeno 2500 mm dal pavimento; pannelli e cassaforma da specificare.",
+        "sourceMetadata": {
+          "manufacturer": "Innova",
+          "sourceUrl": "https://rep.innova.it/downloads/manuali/n421098a_manuale_dinstallazione_airleaf_incasso_rev_06_-_it.pdf",
+          "sourceType": "pdf",
+          "sha256": "8b390134968004d1bba2cac000708a070c24b580dbd93f1e18947908e8800d71",
+          "retrievedAt": "2026-10-23T13:07:52.951497+00:00",
+          "documentRevision": "N421098A Rev.06 03-2026",
+          "page": 24,
+          "importedAt": "2026-10-23T13:07:52.951497+00:00"
+        }
       }
     },
     {

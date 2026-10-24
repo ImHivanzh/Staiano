@@ -1,8 +1,8 @@
+import { indoorUnitFitsBelowCeiling } from "./elevation";
 import type { Project } from "@/schemas/project";
 import { assignInstallationRooms } from "../installations";
 import { splitCatalog } from "@/domain/catalogs/splits";
 import type { SplitCatalog } from "@/domain/catalogs/split-schema";
-import { positionAlongRoomWall } from "@/domain/geometry/placement";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import { sizeSplitSystems, usableSplitWall, type SplitSolution } from "./size";
 import { withHvacOutdoorUnit } from "./outdoor";
@@ -27,6 +27,11 @@ export function splitSystemFromSolution(
         const preserve =
           old &&
           room.wallIds.includes(old.wallId ?? "") &&
+          indoorUnitFitsBelowCeiling(project, room, {
+            ...unit,
+            position: old.position,
+            rotation: old.rotation,
+          }) &&
           footprintInsideRoom(
             room,
             old.position,
@@ -35,25 +40,15 @@ export function splitSystemFromSolution(
             old.rotation,
           );
         const wall = preserve
-            ? project.walls.find((w) => w.id === old.wallId)!
-            : candidate.wall,
-          span = candidate.span!;
+          ? project.walls.find((w) => w.id === old.wallId)!
+          : candidate.wall;
         return {
           id: old?.id ?? crypto.randomUUID(),
           roomId: room.id,
           floorId: room.floorId,
           wallId: wall.id,
-          position: preserve
-            ? old.position
-            : positionAlongRoomWall(
-                room,
-                wall,
-                span.lengthM / 2,
-                unit.depthMm / 1000,
-              ),
-          rotation: preserve
-            ? old.rotation
-            : Math.atan2(span.end.y - span.start.y, span.end.x - span.start.x),
+          position: preserve ? old.position : candidate.position,
+          rotation: preserve ? old.rotation : candidate.rotation,
           widthMm: unit.widthMm,
           heightMm: unit.heightMm,
           depthMm: unit.depthMm,

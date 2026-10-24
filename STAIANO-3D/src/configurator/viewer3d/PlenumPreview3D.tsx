@@ -24,7 +24,10 @@ import {
 } from "./plenum-layout";
 import styles from "./PlenumPreview3D.module.css";
 import { plenumTransitionGeometry } from "./plenum-transition";
-import { placedPlenumGeometry } from "@/domain/ducted/placement";
+import {
+  machinePlenums,
+  placedPlenumGeometry,
+} from "@/domain/ducted/placement";
 import { deviceCodes } from "@/services/export/device-codes";
 import {
   plenumBranchGroups,
@@ -360,8 +363,8 @@ export function PlenumPreview3D({
   const product = system
     ? hvacProductAtVersion(system.productId, system.catalogVersion)
     : null;
-  const savedPlenum = project.plenums.find(
-    (pl) => pl.systemId === systemId && pl.use === "supply",
+  const savedPlenum = machinePlenums(project, systemId).find(
+    (pl) => pl.use === "supply",
   );
   const codes = deviceCodes(project);
   const dimensions = system?.genericMachine ?? product;

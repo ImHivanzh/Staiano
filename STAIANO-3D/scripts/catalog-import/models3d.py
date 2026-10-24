@@ -29,17 +29,22 @@ def get(url):
     return data
 
 
-def convert(data, name):
+def parse_obj(data):
     vertices, normals, faces = [], [], []
+    blocks, previous = [], None
     for line in data.decode('utf-8-sig').splitlines():
         parts = line.split()
         if not parts:
             continue
+        if parts[0] == 'v' and previous != 'v':
+            blocks.append([])
         if parts[0] in ('v', 'vn'):
             point = tuple(map(float, parts[1:4]))
             if len(point) != 3 or not all(math.isfinite(n) for n in point):
                 raise ValueError('Non-finite vertex')
             (vertices if parts[0] == 'v' else normals).append(point)
+            if parts[0] == 'v':
+                blocks[-1].append(len(vertices) - 1)
         elif parts[0] == 'f':
             face = []
             for token in parts[1:]:
@@ -54,8 +59,18 @@ def convert(data, name):
                 raise ValueError('Invalid face')
             for i in range(1, len(face) - 1):
                 faces.extend((face[0], face[i], face[i + 1]))
+        previous = parts[0]
     if not vertices or not normals or not faces:
         raise ValueError('OBJ lacks geometry / normals')
+    return vertices, normals, faces, blocks
+
+
+def convert(data, name):
+    vertices, normals, faces, _ = parse_obj(data)
+    return encode_glb(vertices, normals, faces, name)
+
+
+def encode_glb(vertices, normals, faces, name):
     low = [min(p[i] for p in vertices) for i in range(3)]
     high = [max(p[i] for p in vertices) for i in range(3)]
     center = [(a + b) / 2 for a, b in zip(low, high)]

@@ -1,5 +1,6 @@
 "use client";
 import { OutdoorBrackets } from "./OutdoorBrackets";
+import { OutdoorCabinet } from "./OutdoorCabinet";
 import { Line } from "@react-three/drei";
 import type { Project, Selection } from "@/schemas/project";
 import { refrigerantRoute } from "@/domain/air-conditioning/outdoor";
@@ -45,39 +46,12 @@ export function AirOutdoorMeshes({
                 {unit.mounting === "brackets" && (
                   <OutdoorBrackets widthM={w} heightM={h} depthM={d} />
                 )}
-                <mesh castShadow receiveShadow>
-                  <boxGeometry args={[w, h - 0.06, d]} />
-                  <meshStandardMaterial
-                    color={selected ? "#bfdde0" : "#f0f0ed"}
-                    metalness={0.22}
-                    roughness={0.42}
-                  />
-                </mesh>
-                <mesh position={[-w * 0.18, 0, d / 2 + 0.002]}>
-                  <circleGeometry args={[Math.min(w * 0.28, h * 0.34), 40]} />
-                  <meshStandardMaterial color="#374047" />
-                </mesh>
-                {Array.from({ length: 8 }, (_, index) => (
-                  <mesh
-                    key={index}
-                    position={[-w * 0.18, 0, d / 2 + 0.006]}
-                    rotation={[0, 0, (index * Math.PI) / 4]}
-                  >
-                    <boxGeometry
-                      args={[Math.min(w * 0.56, h * 0.68), 0.008, 0.008]}
-                    />
-                    <meshStandardMaterial color="#d2d5d4" metalness={0.45} />
-                  </mesh>
-                ))}
-                {[-1, 1].map((sign) => (
-                  <mesh
-                    key={sign}
-                    position={[sign * w * 0.32, -h / 2 + 0.015, 0]}
-                  >
-                    <boxGeometry args={[0.08, 0.03, d]} />
-                    <meshStandardMaterial color="#252e35" roughness={0.65} />
-                  </mesh>
-                ))}
+                <OutdoorCabinet
+                  widthM={w}
+                  heightM={h}
+                  depthM={d}
+                  selected={selected}
+                />
               </group>
               {showPipes &&
                 system.indoorUnits

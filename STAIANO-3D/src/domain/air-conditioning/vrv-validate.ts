@@ -3,6 +3,7 @@ import type { Check } from "@/domain/validation";
 import { vrvCatalogAtVersion } from "@/domain/catalogs/vrv";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
 import { roomWallSpan } from "@/domain/geometry/placement";
+import { indoorUnitFitsBelowCeiling } from "./elevation";
 
 export function vrvConnectedW(
   project: Project,
@@ -66,15 +67,12 @@ export function validateVrvSystem(
     ratio = (connected / outdoor.coolingW) * 100;
   emit(
     "vrv-capacity",
-    outdoor.coolingW >= load && outdoor.heatingW >= load
-      ? "valid"
-      : "invalid",
+    outdoor.coolingW >= load && outdoor.heatingW >= load ? "valid" : "invalid",
     `VRV: capacità esterna ${outdoor.coolingW / 1000}/${outdoor.heatingW / 1000} kW contro ${load / 1000} kW richiesti.`,
   );
   emit(
     "vrv-ratio",
-    ratio >= outdoor.minConnectionRatio &&
-      ratio <= outdoor.maxConnectionRatio
+    ratio >= outdoor.minConnectionRatio && ratio <= outdoor.maxConnectionRatio
       ? "valid"
       : "invalid",
     `VRV: rapporto di connessione ${ratio.toFixed(0)}% entro ${outdoor.minConnectionRatio}–${outdoor.maxConnectionRatio}%.`,
@@ -92,9 +90,7 @@ export function validateVrvSystem(
   for (const unit of system.indoorUnits) {
     used.set(unit.productId, (used.get(unit.productId) ?? 0) + 1);
     const room = rooms.find((item) => item.id === unit.roomId),
-      indoor = catalog.indoorUnits.find(
-        (model) => model.id === unit.productId,
-      );
+      indoor = catalog.indoorUnits.find((model) => model.id === unit.productId);
     if (!room || !indoor) {
       emit(
         "vrv-indoor",
@@ -130,7 +126,7 @@ export function validateVrvSystem(
       "vrv-placement",
       span &&
         span.lengthM >= unit.widthMm / 1000 + 0.2 &&
-        unit.heightMm / 1000 + 0.1 <= room.heightM &&
+        indoorUnitFitsBelowCeiling(project, room, unit) &&
         footprintInsideRoom(
           room,
           unit.position,

@@ -32,6 +32,7 @@ export type RadiatorDetail = {
   headers: DetailPart[];
   fins: DetailPart[];
   plugs: DetailPart[];
+  mirrors: DetailPart[];
 };
 
 /** Visual construction only. Installed catalogue dimensions remain authoritative. */
@@ -54,18 +55,60 @@ export function radiatorDetail(
       headers: [],
       fins: [],
       plugs: [],
+      mirrors: [],
     };
   if (variant?.construction === "fixed") {
-    if (
-      variant.visualShape === "towel" ||
-      variant.visualShape === "decorative"
-    ) {
+    const empoliProfiles =
+      variant.manufacturer === "Lazzarini" &&
+      variant.family.startsWith("Empoli ")
+        ? variant.pitchMm === 600
+          ? 4
+          : variant.pitchMm === 750
+            ? 6
+            : 0
+        : 0;
+    if (empoliProfiles) {
+      // Empoli sheet p.2: 70×11 mm profiles, Ø35 collectors, 4/6 elements; mirror gaps are illustrative.
+      const profileWidth = 0.07,
+        profileDepth = 0.011,
+        gap = 0.005;
+      const sideCount = empoliProfiles / 2;
+      for (const side of [-1, 1])
+        for (let i = 0; i < sideCount; i++)
+          result.sections.push({
+            position: [
+              side * (w / 2 - profileWidth / 2 - i * (profileWidth + gap)),
+              0,
+              d / 2 - profileDepth / 2,
+            ],
+            scale: [profileWidth, h, profileDepth],
+          });
+      const radius = 0.0175;
+      for (const y of [-h / 2 + radius, h / 2 - radius])
+        result.headers.push({
+          position: [0, y, d / 2 - profileDepth - radius],
+          scale: [radius, w - profileWidth, radius],
+          rotation: [0, 0, Math.PI / 2],
+        });
+      result.mirrors.push({
+        position: [0, 0, d / 2 - 0.001],
+        scale: [w - empoliProfiles * (profileWidth + gap), h - gap * 2, 1],
+      });
+      return result;
+    }
+    if (variant.visualShape === "towel") {
       const radius = Math.min(d * 0.22, w * 0.025, 0.018);
-      for (const x of [-w / 2 + radius, w / 2 - radius])
+      for (const x of [-w / 2 + radius, w / 2 - radius]) {
         result.tubes.push({
           position: [x, 0, 0],
           scale: [radius, h - 2 * radius, radius],
         });
+        for (const y of [-h / 2 + radius, h / 2 - radius])
+          result.caps.push({
+            position: [x, y, 0],
+            scale: [radius, radius, radius],
+          });
+      }
       const bars = Math.max(4, Math.round(h / 0.055));
       for (let i = 0; i < bars; i++)
         result.tubes.push({
@@ -88,23 +131,34 @@ export function radiatorDetail(
       });
     return result;
   }
-  const tubular =
-    radiator.family.toLowerCase().includes("ardesia") ||
-    variant?.visualShape === "tubular";
+  const ardesia = radiator.family.toLowerCase().includes("ardesia");
+  const tubular = ardesia || variant?.visualShape === "tubular";
   // A missing historic column count is never inferred from the product identifier.
   const columns = tubular ? variant?.columns : null;
-  const radius = Math.min(pitch * 0.24, d / ((columns ?? 1) * 2), h / 8);
+  // Schede Cordivari Ardesia 2–6 colonne, p.1: tubi Ø25 mm.
+  const radius = Math.min(
+    ardesia && radiator.manufacturer === "Cordivari" ? 0.0125 : pitch * 0.24,
+    pitch / 2,
+    d / ((columns ?? 1) * 2),
+    h / 8,
+  );
   const headerRadius = Math.min(h * 0.03, d / 2, pitch * 0.35);
-  for (const y of [-h / 2 + headerRadius, h / 2 - headerRadius])
+  const headerY =
+    ardesia && variant ? variant.interaxisMm / 2000 : h / 2 - headerRadius;
+  for (const y of [-headerY, headerY])
     result.headers.push({
       position: [0, y, 0],
       scale: [headerRadius, w, Math.min(d / 2, headerRadius * 1.5)],
       rotation: [0, 0, Math.PI / 2],
     });
   // Visible end plugs stay inside the source envelope; no invented external piping.
-  for (const x of [-w / 2 + headerRadius / 4, w / 2 - headerRadius / 4])
+  const plugX =
+    ardesia && variant
+      ? Math.min((count * pitch) / 2, w / 2 - headerRadius / 4)
+      : w / 2 - headerRadius / 4;
+  for (const x of [-plugX, plugX])
     result.plugs.push({
-      position: [x, h / 2 - headerRadius, 0],
+      position: [x, headerY, 0],
       scale: [headerRadius * 0.7, headerRadius / 2, headerRadius * 0.7],
       rotation: [0, 0, Math.PI / 2],
     });

@@ -1,4 +1,5 @@
 import type { Project } from "@/schemas/project";
+import { ductedMachineForDevice } from "@/domain/ducted/machine";
 import { fanCoilAirSystem } from "@/domain/fan-coils/air";
 
 export type PlanConnection = {
@@ -20,12 +21,8 @@ export function connectionSelection(
 ): PlanConnection {
   const ids = [firstId, secondId];
   const plenum = project.plenums.find((p) => ids.includes(p.id));
-  const owner = [
-    ...project.airTerminals.filter((t) => t.use === "supply"),
-    ...project.hvacSystems
-      .filter((s) => s.type === "ducted")
-      .flatMap((s) => s.indoorUnits),
-  ].find((o) => ids.includes(o.id));
+  const owner = project.airTerminals.find((t) => t.use === "supply" && ids.includes(t.id))
+    ?? ids.map((id) => id ? ductedMachineForDevice(project, id)?.unit : undefined).find(Boolean);
   if (plenum && owner)
     return {
       plenumId: plenum.id,

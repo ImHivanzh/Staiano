@@ -1,3 +1,4 @@
+import { exportPlenumFixture } from "./plenum-ui-fixture";
 import { test, expect } from "./browser-test";
 import { PDFDocument, rgb } from "pdf-lib";
 import { readFileSync } from "node:fs";
@@ -39,7 +40,7 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
   });
   await expect(
     dialog.getByLabel("Analisi automatica planimetria"),
-  ).toContainText("4 ad alta affidabilità");
+  ).toContainText("4 muri candidati · 0 ad alta affidabilità");
   await dialog
     .getByRole("button", { name: "Seleziona area da riconoscere" })
     .click();
@@ -61,7 +62,7 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
   await dialog.getByRole("button", { name: "Analizza pagina intera" }).click();
   await expect(
     dialog.getByLabel("Analisi automatica planimetria"),
-  ).toContainText("4 ad alta affidabilità");
+  ).toContainText("4 muri candidati · 0 ad alta affidabilità");
   await dialog.getByRole("button", { name: "Seleziona punti scala" }).click();
   await preview.click({
     position: { x: box.width * 0.2, y: box.height * 0.5 },
@@ -73,13 +74,34 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
   await dialog
     .getByRole("button", { name: "Calibra scala", exact: true })
     .click();
+  const importWalls = dialog.getByRole("button", {
+    name: "Importa muri selezionati",
+    exact: true,
+  });
+  await expect(importWalls).toBeDisabled();
   await dialog
-    .getByRole("button", { name: "Importa muri selezionati" })
-    .click();
+    .getByLabel(
+      "Ho verificato e confermo i muri proposti in arancione (affidabilità media)",
+    )
+    .check();
+  await expect(importWalls).toBeEnabled();
+  await importWalls.click();
   await expect(page.getByTestId("wall")).toHaveCount(4);
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await expect(page.getByTestId("wall")).toHaveCount(4);
+  const imported = await exportPlenumFixture(page);
+  expect(imported.rooms).toHaveLength(1);
+  expect(imported.rooms[0].geometryStatus).toBe("closed");
+  expect(imported.floors[0].importAnalysis).toMatchObject({
+    algorithmVersion: "local-lines-8",
+    sourceType: "pdf",
+    wallsAutoCreated: 0,
+    wallsConfirmedByOperator: 4,
+  });
+  expect(imported.sourceFilesMetadata[0].originalDataUrl).toMatch(
+    /^data:application\/pdf;base64,/,
+  );
   await page.getByRole("button", { name: "3D", exact: true }).click();
   await expect(page.getByTestId("viewer-3d").locator("canvas")).toHaveAttribute(
     "data-rendered",
@@ -122,7 +144,27 @@ for (const viewport of [
     await expect(
       page.getByRole("button", { name: "Dossier PDF", exact: true }),
     ).toBeVisible();
-    await page.locator("summary").filter({ hasText: "File" }).click();
+    const fileMenu = page
+      .locator(".azioni-testata details[open]")
+      .filter({ has: page.locator("summary").filter({ hasText: "File" }) });
+    if (viewport.width <= 640) {
+      for (const width of [viewport.width, 320, viewport.width]) {
+        await page.setViewportSize({ width, height: viewport.height });
+        await expect
+          .poll(async () => {
+            const trigger = (await fileMenu.locator("summary").boundingBox())!;
+            const panel = (await fileMenu
+              .locator(".comandi-progetto")
+              .boundingBox())!;
+            return (
+              panel.y >= trigger.y + trigger.height &&
+              panel.y + panel.height <= viewport.height
+            );
+          })
+          .toBe(true);
+      }
+    }
+    await fileMenu.locator("summary").click();
     const size = await page.evaluate(() => ({
       height: innerHeight,
       width: innerWidth,
@@ -131,12 +173,20 @@ for (const viewport of [
     }));
     expect(size.scrollHeight).toBeLessThanOrEqual(size.height + 1);
     expect(size.scrollWidth).toBeLessThanOrEqual(size.width + 1);
+    await page.locator(".area-editor").scrollIntoViewIfNeeded();
     const editor = await page.locator(".area-editor").boundingBox();
     if (!editor) throw new Error("Editor mancante");
     expect(editor.height).toBeGreaterThanOrEqual(
       viewport.width > 900 ? 400 : 175,
     );
-    expect(editor.y + editor.height).toBeLessThanOrEqual(viewport.height);
+    expect(editor.y + editor.height).toBeLessThanOrEqual(viewport.height + 1);
+    if (viewport.width <= 640) {
+      const scrollport = (await page.locator(".configuratore").boundingBox())!;
+      expect(editor.y).toBeGreaterThanOrEqual(scrollport.y - 1);
+      expect(editor.y + editor.height).toBeLessThanOrEqual(
+        scrollport.y + scrollport.height + 1,
+      );
+    }
     await page.locator(".pannello-progetto").hover();
     await page.mouse.wheel(0, 2000);
     expect(await page.evaluate(() => window.scrollY)).toBe(0);

@@ -1,6 +1,6 @@
 import { decryptDossier, readLimited } from "./decrypt";
 
-export default {
+const worker = {
   async fetch(
     request: Request,
     env: {
@@ -62,3 +62,4 @@ export default {
     return response;
   },
 };
+export default worker;

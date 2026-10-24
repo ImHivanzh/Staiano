@@ -737,7 +737,7 @@ if (process.argv.includes("--apply")) {
       throw new Error("Removed variants detected. Review before applying.");
     await copyFile(target, path.join(output, "ecoclima.previous.json"));
   }
-  history[catalog.version] = catalog;
+  delete history[catalog.version];
   await writeFile(historyPath, JSON.stringify(history, null, 2));
   await copyFile(staging, target);
   console.log("Applied official Ecoclima snapshot.");

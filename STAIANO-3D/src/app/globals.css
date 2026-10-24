@@ -1355,6 +1355,11 @@ input[type="checkbox"] {
     width: auto;
     max-height: calc(100dvh - 120px);
   }
+  .azioni-testata .menu-progetto > .comandi-progetto {
+    top: var(--header-menu-top, 128px);
+    bottom: auto;
+    max-height: calc(100dvh - var(--header-menu-top, 128px) - 12px);
+  }
   .configuratore {
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -1384,8 +1389,19 @@ input[type="checkbox"] {
   .hvac-app .barra-lato {
     height: auto;
     flex: none;
-    padding: 8px 12px;
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 10px;
     gap: 6px;
+  }
+  .hvac-app .barra-lato .marchio {
+    flex: none;
+  }
+  .hvac-app .barra-lato .marchio > span + span {
+    display: none;
+  }
+  .hvac-app .barra-lato .voce-nav {
+    min-height: 44px;
   }
   .hvac-app .barra-lato .piede-lato {
     display: none;
@@ -1440,9 +1456,15 @@ input[type="checkbox"] {
     justify-content: flex-end;
   }
   .testata-hvac {
-    padding: 12px;
-    gap: 10px;
+    padding: 6px 10px;
+    gap: 4px;
     min-height: 0;
+  }
+  .testata-hvac > .comando-icona,
+  .testata-hvac .comandi-rapidi,
+  .testata-hvac .stato-salvataggio > span + span,
+  .testata-hvac .comando-condivisione > span {
+    display: none;
   }
   .testata-hvac .occhiello {
     font-size: 9px;
@@ -1452,16 +1474,35 @@ input[type="checkbox"] {
   }
   .titolo-progetto h1 {
     font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .azioni-testata {
     gap: 5px;
     width: 100%;
   }
   .azioni-testata .bottone {
-    height: 32px;
-    font-size: 11px;
+    min-height: 44px;
+    font-size: 13px;
     gap: 4px;
     padding-inline: 8px;
+  }
+  .azioni-testata .avvio-wizard,
+  .azioni-testata .nuovo-progetto,
+  .azioni-testata .comando-condivisione {
+    width: 44px;
+    min-width: 44px;
+    padding: 0;
+    justify-content: center;
+    font-size: 0;
+    gap: 0;
+  }
+  .azioni-testata .avvio-wizard svg,
+  .azioni-testata .nuovo-progetto svg,
+  .azioni-testata .comando-condivisione svg {
+    width: 20px;
+    height: 20px;
   }
   .menu-progetto {
     margin-left: 0;

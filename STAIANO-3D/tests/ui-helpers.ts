@@ -44,6 +44,35 @@ export async function pickPlanPoint(scope: Locator, x: number, y: number) {
   await svg.click({ position });
 }
 
+/**
+ * Sceglie marca, modello e (se serve) taglia nel pannello ventilconvettori.
+ * Dopo la scelta del modello la taglia consigliata è già selezionata; quando
+ * nessuna taglia copre il fabbisogno si sceglie esplicitamente la prima.
+ */
+export async function chooseFanCoilModel(
+  scope: Page | Locator,
+  options: { manufacturer?: string; model?: string; taglia?: string } = {},
+) {
+  await scope
+    .getByLabel("Marca ventilconvettore", { exact: true })
+    .selectOption(options.manufacturer ?? "Aermec");
+  await scope
+    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
+    .selectOption(options.model ?? "FCZ");
+  const taglia = scope.getByRole("combobox", {
+    name: "Taglia ventilconvettore",
+    exact: true,
+  });
+  if (options.taglia) {
+    await taglia.selectOption(options.taglia);
+    return;
+  }
+  if (!(await taglia.inputValue())) {
+    const value = await taglia.locator("option").nth(1).getAttribute("value");
+    if (value) await taglia.selectOption(value);
+  }
+}
+
 export async function addPlanTerminal(
   page: Page,
   x: number,
@@ -65,8 +94,26 @@ export async function addPlanTerminal(
     .click();
   await plan.getByRole("button", { name: "Bocchetta", exact: true }).click();
   await pickPlanPoint(plan, x, y);
-  await plan.getByRole("button", { name: "Seleziona", exact: true }).click();
+  await plan.getByRole("button", { name: "Collega", exact: true }).click();
   await plan.getByTestId("draft-terminal").last().click();
+  await plan
+    .getByRole("button", { name: /^Macchina UI/ })
+    .nth(machineIndex)
+    .locator("rect")
+    .first()
+    .click();
+  await page.keyboard.press("Escape");
+  await plan.getByTestId("draft-terminal").last().click();
+  await configurePlanTerminal(page, code, lengths);
+  return plan;
+}
+
+/** Completa la bozza nel popup già aperto. */
+export async function configurePlanTerminal(
+  page: Page,
+  code: string,
+  lengths: number[] = [],
+) {
   const popup = page.getByRole("dialog", {
     name: "Scegli bocchetta sul punto",
   });
@@ -95,20 +142,14 @@ export async function addPlanTerminal(
     .getByRole("button", { name: "Salva", exact: true })
     .click();
   await expect(popup).toHaveCount(0);
-  await plan.getByRole("button", { name: "Collega", exact: true }).click();
-  await plan.getByTestId(`terminal-${use}`).last().focus();
-  await page.keyboard.press("Enter");
-  await plan
-    .getByRole("button", { name: /^Macchina UI/ })
-    .nth(machineIndex)
-    .click();
-  await page.keyboard.press("Escape");
-  return plan;
 }
 
 /** Exercise the real disclosure control; do not force hidden inputs visible. */
 export async function openDisclosure(scope: Page | Locator, name: string) {
-  const summary = scope.locator("summary").filter({ hasText: name }).first();
+  const summary = scope
+    .locator(`summary[aria-label=${JSON.stringify(name)}]`)
+    .or(scope.locator("summary").filter({ hasText: name }))
+    .first();
   const open = await summary.evaluate(
     (node) => (node.parentElement as HTMLDetailsElement).open,
   );
@@ -117,7 +158,12 @@ export async function openDisclosure(scope: Page | Locator, name: string) {
 
 export async function openInspector(
   page: Page,
-  name: "Modifica stanza" | "Configura impianto" | "Posizione",
+  name:
+    | "Modifica stanza"
+    | "Configura impianto"
+    | "Posizione"
+    | "Dettagli tecnici"
+    | "Colori e finiture",
 ) {
   await openDisclosure(page.locator(".proprieta"), name);
   if (name === "Configura impianto")

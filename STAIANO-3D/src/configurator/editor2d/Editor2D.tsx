@@ -4,6 +4,7 @@ import { DrywallLayer } from "./DrywallLayer";
 import { useWaypointDelete } from "../useWaypointDelete";
 import {
   useEffect,
+  useEffectEvent,
   useMemo,
   useRef,
   useState,
@@ -29,7 +30,10 @@ import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { translateSelection } from "@/domain/geometry/selection";
 import { deviceCodes } from "@/services/export/device-codes";
 import { ArrowsOut, Minus, Plus } from "@phosphor-icons/react";
-import { wallMeasuredLength } from "@/domain/geometry/dimensions";
+import {
+  wallRun,
+  wallRunMeasuredLength,
+} from "@/domain/geometry/wall-runs";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import {
@@ -208,6 +212,7 @@ export function Editor2D({
   const [delta, setDelta] = useState<Point | null>(null),
     [exact, setExact] = useState("");
   const exactInput = useRef<HTMLInputElement>(null);
+  const finishExactWall = useEffectEvent((end: Point) => finishWall(end));
   useEffect(() => {
     if (tool !== "wall" || readOnly || presentation) return;
     const handle = (event: KeyboardEvent) => {
@@ -248,7 +253,7 @@ export function Editor2D({
             );
           return;
         }
-        finishWall(
+        finishExactWall(
           add(
             anchor,
             scale(
@@ -1063,6 +1068,33 @@ export function Editor2D({
             chosen = selection.some((s) => s.id === w.id);
           const x = (a.x + b.x) / 2,
             y = (a.y + b.y) / 2;
+          const run = project && !w.curveId ? wallRun(project, w.id) : null;
+          let quota: { x: number; y: number; value: number } | null = null;
+          if (showDimensions) {
+            const members = w.curveId ? curveGroups.get(w.curveId) : undefined;
+            if (members) {
+              if (members[Math.floor(members.length / 2)].id === w.id)
+                quota = {
+                  x,
+                  y: y - w.thickness / 2 - u * 30,
+                  value: members.reduce(
+                    (sum, wall) => sum + distance(wall.start, wall.end),
+                    0,
+                  ),
+                };
+            } else if (run && run.walls[0].id === w.id && project) {
+              const from = previewPoint(run.start),
+                to = previewPoint(run.end);
+              quota = {
+                x: (from.x + to.x) / 2,
+                y:
+                  (from.y + to.y) / 2 -
+                  Math.max(...run.walls.map((item) => item.thickness)) / 2 -
+                  u * 10,
+                value: wallRunMeasuredLength(project, w.id, "internal"),
+              };
+            }
+          }
           return (
             <g
               key={w.id}
@@ -1139,34 +1171,17 @@ export function Editor2D({
                     strokeWidth={u}
                   />
                 ))}
-              {showDimensions &&
-                (!w.curveId ||
-                  curveGroups.get(w.curveId)?.[
-                    Math.floor(curveGroups.get(w.curveId)!.length / 2)
-                  ].id === w.id) && (
-                  <text
-                    x={x}
-                    y={y - w.thickness / 2 - u * (w.curveId ? 30 : 10)}
-                    textAnchor="middle"
-                    fontSize={u * 11}
-                    className="quota-pianta"
-                  >
-                    {formatNumber(
-                      w.curveId
-                        ? curveGroups
-                            .get(w.curveId)!
-                            .reduce(
-                              (sum, wall) =>
-                                sum + distance(wall.start, wall.end),
-                              0,
-                            )
-                        : project
-                          ? wallMeasuredLength(project, w, "internal")
-                          : 0,
-                    )}{" "}
-                    m
-                  </text>
-                )}
+              {quota && (
+                <text
+                  x={quota.x}
+                  y={quota.y}
+                  textAnchor="middle"
+                  fontSize={u * 11}
+                  className="quota-pianta"
+                >
+                  {formatNumber(quota.value)} m
+                </text>
+              )}
             </g>
           );
         })}

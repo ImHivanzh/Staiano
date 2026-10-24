@@ -8,6 +8,9 @@ import type { Room, Wall } from "@/schemas/project";
 import { cameraCutWalls, type SceneFrame } from "./scene-layout";
 import { useCustomerCamera } from "./customer-camera";
 import { bounds, pointInPolygon } from "@/domain/geometry/primitives";
+import { cameraMoveVector } from "./camera-move";
+
+const MOVE_CODES = new Set(["KeyW", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyE"]);
 
 export function CameraRig({
   frame,
@@ -66,6 +69,30 @@ export function CameraRig({
     apply();
     return useCustomerCamera.subscribe(apply);
   }, [follow, sync?.projectId, sync?.floorId, camera, invalidate]);
+  const pressed = useRef(new Set<string>());
+  useEffect(() => {
+    const typing = (target: EventTarget | null) =>
+      target instanceof HTMLElement &&
+      (target.isContentEditable ||
+        ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+    const down = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || typing(event.target))
+        return;
+      if (!MOVE_CODES.has(event.code)) return;
+      pressed.current.add(event.code);
+      invalidate();
+    };
+    const up = (event: KeyboardEvent) => pressed.current.delete(event.code);
+    const clear = () => pressed.current.clear();
+    window.addEventListener("keydown", down);
+    window.addEventListener("keyup", up);
+    window.addEventListener("blur", clear);
+    return () => {
+      window.removeEventListener("keydown", down);
+      window.removeEventListener("keyup", up);
+      window.removeEventListener("blur", clear);
+    };
+  }, [invalidate]);
   const lastCutPosition = useRef(new THREE.Vector2(NaN, NaN));
   useEffect(() => {
     lastCutPosition.current.set(NaN, NaN);
@@ -203,7 +230,39 @@ export function CameraRig({
     interiorRoom,
     preserveView,
   ]);
-  useFrame(() => {
+  useFrame((_, delta) => {
+    if (
+      !follow &&
+      !motion.current &&
+      controls.current &&
+      pressed.current.size > 0 &&
+      camera instanceof THREE.PerspectiveCamera
+    ) {
+      const keys = pressed.current;
+      const speed = Math.max(
+        1,
+        Math.min(20, camera.position.distanceTo(controls.current.target) * 0.8),
+      );
+      const offset = cameraMoveVector(
+        camera,
+        controls.current.target,
+        {
+          forward: keys.has("KeyW"),
+          back: keys.has("KeyS"),
+          left: keys.has("KeyA"),
+          right: keys.has("KeyD"),
+          up: keys.has("KeyQ"),
+          down: keys.has("KeyE"),
+        },
+        Math.min(delta, 0.1) * speed,
+      );
+      if (offset.lengthSq() > 0) {
+        camera.position.add(offset);
+        controls.current.target.add(offset);
+        controls.current.update();
+        invalidate();
+      }
+    }
     if (motion.current && controls.current) {
       const m = motion.current;
       const t = Math.min(1, (performance.now() - m.started) / 1200);

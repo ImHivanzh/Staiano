@@ -570,7 +570,3 @@
 .presentation .toolbar .group {
   flex-wrap: wrap;
 }
-
-.systemConfiguration {
-  max-width: 1000px;
-}

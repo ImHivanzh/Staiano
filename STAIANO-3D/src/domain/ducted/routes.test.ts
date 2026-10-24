@@ -11,6 +11,7 @@ import {
   terminalPlenum,
   plenumConnectionSide,
   syncAttachedPlenums,
+  attachedPlenumPorts,
 } from "./attached-plenums";
 import { machinePlenum, placeSupplyPlenum } from "./placement";
 import { flexibleDuctCurve } from "./flexible-curve";
@@ -19,6 +20,7 @@ import {
   addDuctWaypoint,
   createDuctFromEndpoints,
   ductRoute,
+  ductLength,
   moveDuctWaypoint,
   removeDuctWaypoint,
 } from "./routes";
@@ -40,9 +42,33 @@ function fixture(mounting: "wall" | "ceiling" = "ceiling") {
   return placeSupplyPlenum(p, p.hvacSystems[0].id);
 }
 
+it("measures flexible centreline arcs instead of the longer control polygon, and rejects impossible lengths", () => {
+  const points = [
+    { x: 0, y: 0, elevationM: 2.5 },
+    { x: 2, y: 0, elevationM: 2.5 },
+    { x: 2, y: 2, elevationM: 2.5 },
+  ];
+  expect(ductLength(points, 160)).toBeCloseTo(4 - 0.64 + (Math.PI * 0.32) / 2);
+  expect(ductLength(points)).toBe(4);
+  expect(ductLength([], 160)).toBeNull();
+  expect(
+    ductLength(
+      [
+        { x: 0, y: 0, elevationM: 2 },
+        { x: 0.1, y: 0, elevationM: 2 },
+        { x: 0.1, y: 1, elevationM: 2 },
+      ],
+      160,
+    ),
+  ).toBeNull();
+});
+
 it.each(
   [0, Math.PI / 2, Math.PI].flatMap((rotation) =>
-    (["lateral", "upper"] as const).map((position) => ({ rotation, position })),
+    (["rear", "upper", "lower", "left", "right"] as const).map((position) => ({
+      rotation,
+      position,
+    })),
   ),
 )(
   "manual flexible routes enter the visible $position collar from outside at rotation $rotation",
@@ -111,10 +137,7 @@ it("uses a different side for each collar of the same plenum", () => {
         ? {
             ...plenum,
             portCount: 2,
-            connectionPositions: ["left", "right"] as (
-              | "left"
-              | "right"
-            )[],
+            connectionPositions: ["left", "right"] as ("left" | "right")[],
           }
         : plenum,
     ),
@@ -136,6 +159,60 @@ it("uses a different side for each collar of the same plenum", () => {
   expect(Math.abs(tangents[1].x)).toBeGreaterThan(0.99);
   expect(Math.sign(tangents[0].x)).toBe(-Math.sign(tangents[1].x));
 });
+
+it.each(["upper", "lower", "left", "right", "rear"] as const)(
+  "leaves a manually declared machine plenum through its %s collar",
+  (connectionPosition) => {
+    const p = fixture();
+    const machine = p.hvacSystems[0].indoorUnits[0];
+    delete p.hvacSystems[0].genericMachine!.dischargeConnection;
+    const source = p.plenums.find((plenum) => !plenum.attachmentId)!;
+    Object.assign(source, {
+      attachmentId: machine.id,
+      status: "manual",
+      connectionPosition,
+      portCount: 1,
+      portDiameterMm: 160,
+      rotation: Math.PI / 3,
+    });
+    const duct = { ...p.ducts![0], routing: "manual" as const, waypoints: [] };
+    const route = ductRoute(p, duct);
+    const start = attachedPlenumPorts(p, source)[0];
+    expect(route[0]).toMatchObject({
+      x: start.x,
+      y: start.y,
+      elevationM: start.elevationM,
+    });
+    const direction = new Vector3(
+      route[1].x - start.x,
+      route[1].elevationM - start.elevationM,
+      route[1].y - start.y,
+    ).normalize();
+    const outward =
+      connectionPosition === "upper"
+        ? new Vector3(0, 1, 0)
+        : connectionPosition === "lower"
+          ? new Vector3(0, -1, 0)
+          : connectionPosition === "left"
+            ? new Vector3(
+                -Math.cos(source.rotation),
+                0,
+                -Math.sin(source.rotation),
+              )
+            : connectionPosition === "right"
+              ? new Vector3(
+                  Math.cos(source.rotation),
+                  0,
+                  Math.sin(source.rotation),
+                )
+              : new Vector3(
+                  Math.sin(source.rotation),
+                  0,
+                  -Math.cos(source.rotation),
+                );
+    expect(direction.dot(outward)).toBeGreaterThan(0.999);
+  },
+);
 
 it("creates the predefined route from the plenum collar to the machine, fully editable", () => {
   const p = fixture();

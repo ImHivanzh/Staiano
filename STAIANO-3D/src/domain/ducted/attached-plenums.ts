@@ -9,6 +9,7 @@ import {
   placedPlenumGeometry,
 } from "./placement";
 import { calculatePlenum } from "./plenum";
+import { ductedMachineElevationM, ductedMachineForDevice } from "./machine";
 
 export function insertPlenum(
   project: Project,
@@ -86,10 +87,9 @@ export function connectPlenum(
 ): Project {
   const plenum = project.plenums.find((p) => p.id === plenumId);
   const terminal = project.airTerminals.find((t) => t.id === ownerId);
-  const system = project.hvacSystems.find(
-    (s) => s.type === "ducted" && s.indoorUnits.some((u) => u.id === ownerId),
-  );
-  const owner = terminal ?? system?.indoorUnits.find((u) => u.id === ownerId);
+  const machine = ductedMachineForDevice(project, ownerId);
+  const system = machine?.system;
+  const owner = terminal ?? machine?.unit;
   if (
     !plenum ||
     !owner ||
@@ -99,7 +99,7 @@ export function connectPlenum(
     throw new Error(
       "Collega il plenum a una bocchetta di mandata o a una macchina di ripresa sullo stesso piano.",
     );
-  if (plenum.locked || owner.locked)
+  if (plenum.locked || owner.locked || machine?.locked)
     throw new Error("Sblocca gli elementi prima di collegarli.");
   const attached = project.plenums.filter(
     (p) => p.id !== plenumId && p.attachmentId === ownerId,
@@ -129,7 +129,7 @@ export function connectPlenum(
       p.id === plenumId
         ? {
             ...p,
-            attachmentId: ownerId,
+            attachmentId: owner.id,
             systemId: terminal ? terminal.systemId : system!.id,
             use,
             ...(!terminal
@@ -151,6 +151,7 @@ export function connectPlenum(
 }
 
 type AttachmentOwner = {
+  elevationM?: number | null;
   position: Point;
   rotation: number;
   roomId: string;
@@ -167,14 +168,22 @@ function attachmentOwner(
       (t) => t.id === plenum.attachmentId,
     );
     if (terminal) return terminal;
-    const unit = project.hvacSystems
-      .flatMap((s) => s.indoorUnits)
-      .find((u) => u.id === plenum.attachmentId);
-    if (unit) return unit;
+    const system = project.hvacSystems.find((s) =>
+      s.indoorUnits.some((u) => u.id === plenum.attachmentId),
+    );
+    const unit = system?.indoorUnits.find((u) => u.id === plenum.attachmentId);
+    if (unit)
+      return {
+        ...unit,
+        elevationM: ductedMachineElevationM(project, system!, unit),
+      };
   }
   if (plenum.attachmentId !== undefined || !plenum.systemId) return undefined;
-  return project.hvacSystems.find((s) => s.id === plenum.systemId)
-    ?.indoorUnits[0];
+  const system = project.hvacSystems.find((s) => s.id === plenum.systemId);
+  const unit = system?.indoorUnits[0];
+  return unit
+    ? { ...unit, elevationM: ductedMachineElevationM(project, system!, unit) }
+    : undefined;
 }
 
 /** Posa del plenum che segue il titolare conservando il distacco salvato. */
@@ -250,6 +259,16 @@ export function syncAttachedPlenums(
           roomId: owner.roomId,
           floorId: owner.floorId,
           ...(already ? {} : followed),
+          // Una quota modificata esplicitamente nel comando prevale sul seguito.
+          ...(saved.elevationM != null &&
+          plenum.elevationM === saved.elevationM &&
+          oldOwner.elevationM != null &&
+          owner.elevationM != null
+            ? {
+                elevationM:
+                  saved.elevationM + owner.elevationM - oldOwner.elevationM,
+              }
+            : {}),
         },
       ];
     }
@@ -300,9 +319,7 @@ export function syncAttachedPlenums(
   }
   const ducts = (project.ducts ?? [])
     .filter((d) => {
-      const terminal = project.airTerminals.find(
-        (t) => t.id === d.terminalId,
-      );
+      const terminal = project.airTerminals.find((t) => t.id === d.terminalId);
       if (
         terminal?.systemId &&
         removed.has(`${terminal.systemId}:${terminal.use}`)
@@ -421,22 +438,11 @@ export function syncAttachedPlenums(
   };
 }
 
-export type PlenumConnectionSide =
-  | "left"
-  | "right"
-  | "rear"
-  | "top"
-  | "bottom";
+export type PlenumConnectionSide = "left" | "right" | "rear" | "top" | "bottom";
 
 function normalizedSide(
   position:
-    | "lateral"
-    | "upper"
-    | "lower"
-    | "rear"
-    | "left"
-    | "right"
-    | "custom",
+    "lateral" | "upper" | "lower" | "rear" | "left" | "right" | "custom",
 ): PlenumConnectionSide {
   return position === "upper"
     ? "top"
@@ -620,7 +626,11 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
         x: owner.position.x - Math.sin(rotation) * gap,
         y: owner.position.y + Math.cos(rotation) * gap,
       },
-      elevationM: room.heightM - owner.heightMm / 2000 - 0.05,
+      elevationM: ductedMachineElevationM(
+        project,
+        system,
+        system.indoorUnits.find((u) => u.id === plenum.attachmentId)!,
+      ),
     };
   }
   const face = terminal?.elevationM ?? roomCeilingHeightM(room);

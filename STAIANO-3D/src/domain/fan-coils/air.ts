@@ -24,6 +24,14 @@ export function fanCoilAirData(project: Project, fanCoilId: string) {
   return product && point ? { unit, product, point } : null;
 }
 
+function airMachineDimensions(unit: FanCoil) {
+  return {
+    widthMm: unit.widthMm,
+    heightMm: unit.mounting === "ceiling" ? unit.depthMm : unit.heightMm,
+    depthMm: unit.mounting === "ceiling" ? unit.heightMm : unit.depthMm,
+  };
+}
+
 function mirrorUnit(
   unit: FanCoil,
   productId: string,
@@ -35,9 +43,7 @@ function mirrorUnit(
     wallId: unit.wallId,
     position: { ...unit.position },
     rotation: unit.rotation,
-    widthMm: unit.widthMm,
-    heightMm: unit.heightMm,
-    depthMm: unit.depthMm,
+    ...airMachineDimensions(unit),
     productId,
     catalogVersion: unit.catalogVersion,
     locked: unit.locked,
@@ -103,9 +109,7 @@ export function ensureFanCoilAirSystem(
       maxAirflowM3h: point.airflowM3h,
       coolingCapacityW: point.coolingW,
       heatingCapacityW: point.heatingW,
-      widthMm: unit.widthMm,
-      heightMm: unit.heightMm,
-      depthMm: unit.depthMm,
+      ...airMachineDimensions(unit),
     },
     dataOrigin: "fanCoil",
     compatibilityStatus: "unverifiable",
@@ -210,9 +214,7 @@ export function syncFanCoilAirSystems(project: Project): Project {
       wallId: unit.wallId,
       position: { ...unit.position },
       rotation: unit.rotation,
-      widthMm: unit.widthMm,
-      heightMm: unit.heightMm,
-      depthMm: unit.depthMm,
+      ...airMachineDimensions(unit),
       productId: product?.id ?? unit.productId,
       catalogVersion: unit.catalogVersion,
       locked: mirror?.locked ?? false,
@@ -241,9 +243,7 @@ export function syncFanCoilAirSystems(project: Project): Project {
         maxAirflowM3h: point.airflowM3h,
         coolingCapacityW: point.coolingW,
         heatingCapacityW: point.heatingW,
-        widthMm: unit.widthMm,
-        heightMm: unit.heightMm,
-        depthMm: unit.depthMm,
+        ...airMachineDimensions(unit),
         ...(previousDischarge
           ? { dischargeConnection: previousDischarge }
           : {}),
