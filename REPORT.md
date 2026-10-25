@@ -535,8 +535,8 @@ Un pacchetto si chiude quando comportamento, dati, prove ed eventuale distribuzi
 | Suite corrente dopo catalogo LG | **895/895 test, 138/138 file passati**; include split, outdoor e presentazioni LG |
 | E2E finale dopo LG, immagini e timeout OCR | **245 passati, 8 saltati, 0 falliti**; 13,2 min con 2 worker, Next dev isolato (`127.0.0.1:4027`) |
 | EXE attivo installato | `APOSavOxDSuJVV4dYCcXB`, SHA-256 `eeae7f60…ee32ddbe`; task `Running`, `/accedi` e `/licenza` HTTP 200, header build concorde, rollback precedente presente |
-| EXE locale finale | `nn1FeG7j0I0kV2wtGxEDW`, 275.890.176 B, SHA-256 `db8d27c8…dad23a3c`; `--version`, hash e manifest concordi; include fix hash/cached catalog docs, non installato dopo annullamento UAC |
-| Installazione/pubblicazione | Installazione locale eseguita; aggiornamento finale in attesa di elevazione Windows. Nessuna pubblicazione GitLab |
+| EXE pubblicato | `6JpHgTFcRmMtDX1dUiAG3`, 275.890.176 B, SHA-256 `3b59fc2d…a185bcfee30f`; `dirty: false`, commit `5ae3ab161480`, GitLab package/release e canale aggiornamenti verificati |
+| Installazione locale | Rimane attiva `APOSavOxDSuJVV4dYCcXB`; la release GitLab non è stata installata qui. Il cache locale può ancora mostrare 8 falsi mancanti fino al prossimo aggiornamento |
 
 Il primo run generale, sequenziale, è stato interrotto: era partito prima delle correzioni e conteneva i fallimento geometrico della fixture ETF10 e quello della posa a parete successivamente risolti. Non viene presentato come gate finale. La suite conclusiva ha usato quattro worker sul codice stabilizzato ed è terminata con tutti i test superati. Il reporter agent di Vitest riporta il riepilogo alla fine, per questo durante il run non erano visibili righe di avanzamento.
 
@@ -552,4 +552,4 @@ npm run catalog:sources:check
 
 La sessione ha usato cartelle TEMP/TMP dedicate sotto `.cache/audit-2026-10-25/`. In sandbox i processi figli possono richiedere esecuzione autorizzata fuori dal contenitore. La build usa `STAIANO_BUILD_DIR=.next-update` e `NODE_OPTIONS=--max-old-space-size=8192`, limitati al comando.
 
-**Stato della consegna:** correzioni sorgente e installazione locale verificate; resta da attivare il pacchetto finale `nn1FeG7j0I0kV2wtGxEDW`, che corregge la cache documenti LG. La build installata risponde regolarmente, ma finché non si aggiorna conserva un avviso documenti obsoleto nonostante i 547 hash presenti. Nessuna pubblicazione GitLab.
+**Stato della consegna:** sorgente `5ae3ab1` e EXE `6JpHgTFcRmMtDX1dUiAG3` pubblicati su GitLab; il Worker ha registrato il pacchetto. La build installata localmente resta `APOSavOxDSuJVV4dYCcXB`: risponde regolarmente con licenza attiva, ma conserva l’avviso cache obsoleto degli 8 documenti LG fino a quando non verrà installata la release pubblicata.
