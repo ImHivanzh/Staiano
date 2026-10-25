@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { execFileSync } from "node:child_process";
+import { pruneExecutablePackages } from "./prune-executable-packages.mjs";
 
 // I segreti stanno in .env.local (escluso dal repository) quando la pubblicazione
 // avviene da questa postazione; in CI arrivano dalle variabili d'ambiente.
@@ -154,3 +155,13 @@ if (!registered?.ok) {
 console.log(
   `Pacchetto pubblicato per ${metadata.commit}; firma e autorizzazione sono emesse dal Worker.`,
 );
+try {
+  const removed = await pruneExecutablePackages(request, metadata.commit);
+  console.log(
+    `Registro EXE: conservate le ultime due versioni, rimossi ${removed} pacchetti obsoleti.`,
+  );
+} catch (error) {
+  console.warn(
+    `Pacchetto pubblicato; pulizia EXE da ripetere: ${error.message}`,
+  );
+}

@@ -339,6 +339,7 @@ export function Configurator() {
         closeMenus();
     };
     const handler = (e: KeyboardEvent) => {
+      if (e.defaultPrevented) return;
       if (
         e.key === "Escape" &&
         document.querySelector(

@@ -47,4 +47,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Repository sorgente canonico: https://gitlab.com/imhivanzh/Staiano3D, ramo `main`, progetto nella sottocartella `STAIANO-3D/`. Eseguire npm e gli script da questa sottocartella. GitHub resta sospeso e non viene usato per la distribuzione.
 - `origin` punta a GitLab; sorgenti, release e pacchetti EXE usano esclusivamente questo progetto.
+- Dopo la registrazione della release, `scripts/publish-executable.mjs` conserva nel registro pacchetti solo gli ultimi due EXE `staiano-hvac`, come autorizzato dall'utente. I pacchetti più vecchi vengono eliminati definitivamente; commit e tag Git restano disponibili.
 - Pubblicazione EXE: `compila.bat`; accesso GitLab (scope `api`) per il canale EXE tramite Git Credential Manager oppure `GITLAB_TOKEN`. `LICENSE_PUBLISH_TOKEN` resta locale e corrisponde al segreto `PUBLISH_TOKEN` del Worker. Il server di sviluppo resta gestito da Next; il pacchetto EXE viene collaudato su una porta separata.

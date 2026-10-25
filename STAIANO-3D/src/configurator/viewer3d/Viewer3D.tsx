@@ -1564,7 +1564,7 @@ export default function Viewer3D({
             <div className={styles.hint}>
               Trascina per orbitare · destro per spostare
               <br />
-              WASD per muoverti · Q/E su e giù
+              WASD per muoverti · Shift per accelerare · Q/E su e giù
               <br />
               Rotella per zoom · clic per selezionare
             </div>

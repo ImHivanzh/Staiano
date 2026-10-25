@@ -49,6 +49,7 @@ it.each([false, true])(
           return json({ tag_name: `exe-${commit}` }, 201);
         if (input === "https://licenses.ivanbuonocore.dev/publish")
           return json({ status: "published" });
+        if (input.startsWith(`${base}/packages?`)) return json([]);
         throw new Error(`Richiesta inattesa: ${input}`);
       });
     vi.stubGlobal("fetch", fetchMock);

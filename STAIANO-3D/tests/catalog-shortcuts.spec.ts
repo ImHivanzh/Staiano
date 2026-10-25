@@ -49,6 +49,34 @@ test("equipment shortcuts preserve inputs and work across 2D and 3D", async ({
     ).toHaveAttribute("aria-pressed", "true");
   }
   await page.getByRole("button", { name: "3D", exact: true }).click();
+  const canvas = page.getByTestId("viewer-3d").locator("canvas");
+  await expect(canvas).toHaveAttribute("data-rendered", "true");
+  await page.locator("body").click({ position: { x: 2, y: 2 } });
+  const position = async () =>
+    (await canvas.getAttribute("data-camera-position"))!.split(",").map(Number);
+  const travel = async (shift: boolean) => {
+    const start = await position();
+    if (shift) await page.keyboard.down("Shift");
+    await page.keyboard.down("s");
+    // Measure continuous movement over a fixed time, including the released key state.
+    await page.waitForTimeout(600);
+    await page.keyboard.up("s");
+    if (shift) await page.keyboard.up("Shift");
+    const end = await position();
+    return Math.hypot(...end.map((value, index) => value - start[index]));
+  };
+  const normal = await travel(false);
+  expect(normal).toBeGreaterThan(0.15);
+  expect(normal).toBeLessThan(0.8);
+  await expect(
+    page.getByRole("button", { name: "3D", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  const fast = await travel(true);
+  expect(fast).toBeGreaterThan(normal * 2);
+  expect(fast).toBeLessThan(normal * 6);
+  const stopped = await position();
+  await page.waitForTimeout(150);
+  expect(await position()).toEqual(stopped);
   await page.keyboard.press("c");
   await expect(
     page.getByRole("button", { name: "3D", exact: true }),

@@ -76,19 +76,29 @@ export function CameraRig({
       (target.isContentEditable ||
         ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
     const down = (event: KeyboardEvent) => {
-      if (event.ctrlKey || event.metaKey || event.altKey || typing(event.target))
+      if (
+        event.ctrlKey ||
+        event.metaKey ||
+        event.altKey ||
+        typing(event.target)
+      )
         return;
-      if (!MOVE_CODES.has(event.code)) return;
+      const shift = event.code === "ShiftLeft" || event.code === "ShiftRight";
+      if (!MOVE_CODES.has(event.code) && !shift) return;
+      if (!shift) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       pressed.current.add(event.code);
       invalidate();
     };
     const up = (event: KeyboardEvent) => pressed.current.delete(event.code);
     const clear = () => pressed.current.clear();
-    window.addEventListener("keydown", down);
+    window.addEventListener("keydown", down, true);
     window.addEventListener("keyup", up);
     window.addEventListener("blur", clear);
     return () => {
-      window.removeEventListener("keydown", down);
+      window.removeEventListener("keydown", down, true);
       window.removeEventListener("keyup", up);
       window.removeEventListener("blur", clear);
     };
@@ -239,10 +249,7 @@ export function CameraRig({
       camera instanceof THREE.PerspectiveCamera
     ) {
       const keys = pressed.current;
-      const speed = Math.max(
-        1,
-        Math.min(20, camera.position.distanceTo(controls.current.target) * 0.8),
-      );
+      const speed = keys.has("ShiftLeft") || keys.has("ShiftRight") ? 3.2 : 0.8;
       const offset = cameraMoveVector(
         camera,
         controls.current.target,
