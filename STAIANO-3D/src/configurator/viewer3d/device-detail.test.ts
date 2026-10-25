@@ -3,7 +3,11 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { radiatorProducts } from "@/domain/catalogs/radiators";
 import type { Project } from "@/schemas/project";
-import { radiatorDetail, type DetailPart } from "./device-detail";
+import {
+  radiatorConnectionXs,
+  radiatorDetail,
+  type DetailPart,
+} from "./device-detail";
 
 const geometries = {
   tubes: new THREE.CylinderGeometry(1, 1, 1, 12),
@@ -35,6 +39,96 @@ function boundsOf(parts: DetailPart[], geometry: THREE.BufferGeometry) {
 }
 
 describe("mesh dei radiatori e ingombri di catalogo", () => {
+  it("distinguishes Charleston welded heads and Global flat fronts with rounded Oscar Tondo ends", () => {
+    for (const variant of radiatorProducts.filter(
+      (p) =>
+        p.manufacturer === "Global" ||
+        (p.manufacturer === "Zehnder" && p.columns),
+    )) {
+      const item = {
+        ...variant,
+        elements: 10,
+        widthMm: variant.pitchMm * 10 + variant.widthAdditionMm,
+      };
+      const detail = radiatorDetail(item, variant);
+      if (variant.manufacturer === "Zehnder") {
+        expect(detail.sections, variant.id).toHaveLength(20);
+        expect(detail.tubes).toHaveLength(10 * variant.columns!);
+      } else {
+        expect(detail.fins).toHaveLength(20);
+        expect(detail.caps.length > 0).toBe(variant.family === "OSCAR TONDO");
+        const fronts = detail.sections.filter((p) => p.scale[2] === 0.016);
+        expect(fronts).toHaveLength(10);
+        expect(
+          fronts.every((p) => p.scale[0] >= (variant.pitchMm - 2) / 1000),
+        ).toBe(true);
+      }
+    }
+  });
+  it("reconstructs every Nova with its documented profile count, double rows and fins", () => {
+    const products = radiatorProducts.filter(
+      (p) => p.manufacturer === "Zehnder" && p.family.startsWith("Nova Easy"),
+    );
+    expect(products).toHaveLength(32);
+    for (const variant of products) {
+      const item = {
+        ...variant,
+        elements: 1,
+        widthMm: variant.pitchMm,
+      };
+      const detail = radiatorDetail(item, variant);
+      const count = Number(variant.widthNote.match(/(\d+) tubi verticali/)![1]);
+      const double = /ZNVV|ZNVLV/.test(variant.code!);
+      expect(detail.sections, variant.id).toHaveLength(
+        count * (double ? 2 : 1),
+      );
+      expect(new Set(detail.sections.map((p) => p.position[0])).size).toBe(
+        count,
+      );
+      expect(new Set(detail.sections.map((p) => p.position[2])).size).toBe(
+        double ? 2 : 1,
+      );
+      expect(detail.fins.length > 0).toBe(/ZNVL/.test(variant.code!));
+      expect(detail.headers).toHaveLength(2);
+    }
+  });
+  it("reconstructs Lazzarini tube counts and the reversible Garda side collector pair", () => {
+    const counts: Record<number, number> = {
+      700: 17,
+      1132: 25,
+      1708: 35,
+      690: 14,
+      803: 17,
+      1110: 22,
+      1230: 25,
+      1420: 28,
+      1703: 35,
+    };
+    const products = radiatorProducts.filter(
+      (p) =>
+        p.manufacturer === "Lazzarini" && /^(Garda|Sanremo) /.test(p.family),
+    );
+    expect(products).toHaveLength(57);
+    for (const variant of products) {
+      const item = {
+        ...variant,
+        elements: 1,
+        widthMm: variant.pitchMm,
+      };
+      const detail = radiatorDetail(item, variant);
+      expect(
+        detail.tubes.filter((p) => !!p.rotation),
+        variant.id,
+      ).toHaveLength(counts[variant.heightMm]);
+      expect(detail.tubes).toHaveLength(counts[variant.heightMm] + 2);
+      if (variant.family.startsWith("Garda ")) {
+        const xs = radiatorConnectionXs(item, variant);
+        expect(xs[1] - xs[0]).toBeCloseTo(0.05, 8);
+        expect(xs[0]).toBeGreaterThan(0);
+        expect(detail.tubes.slice(0, 2).map((p) => p.position[0])).toEqual(xs);
+      }
+    }
+  });
   it.each([2, 3, 4, 5, 6])(
     "Ardesia %i colonne uses the documented 25 mm tubes and 46 mm element pitch",
     (columns) => {

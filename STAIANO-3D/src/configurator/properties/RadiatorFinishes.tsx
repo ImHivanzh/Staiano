@@ -3,7 +3,9 @@ import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import {
   getRadiatorFinishOptions,
-  resolveRadiatorFinish,
+  genericRadiatorAccessoryFinishes,
+  resolveInstalledRadiatorFinish,
+  isRadiatorFinishSupported,
   radiatorFinishCatalogVersion,
   radiatorFinishPreviewDisclaimer,
 } from "@/domain/catalogs/radiator-finishes";
@@ -20,21 +22,31 @@ export function RadiatorFinishes({
   device: Project["radiators"][number];
 }) {
   const { commit } = useProjectStore();
+  const bodyFinish = resolveInstalledRadiatorFinish(device, "body");
   return (
     <details className="azione-inspector">
       <summary>Colori e finiture</summary>
       {roles.map(({ role, field, label }) => {
-        const options = getRadiatorFinishOptions(
-          device.manufacturer,
-          device.family,
-          role,
-        );
-        const chosen = resolveRadiatorFinish(
-          device.manufacturer,
-          device.family,
-          role,
-          device.finishes?.[field],
-        );
+        const options = [
+          ...(role === "valve" || role === "lockshield"
+            ? genericRadiatorAccessoryFinishes
+            : []),
+          ...getRadiatorFinishOptions(device.manufacturer, device.family, role),
+        ];
+        const chosen = resolveInstalledRadiatorFinish(device, role);
+        const automaticMatch =
+          (role === "valve" || role === "lockshield") &&
+          !device.finishes?.[field] &&
+          !!bodyFinish &&
+          bodyFinish.kind !== "metal";
+        const documented =
+          chosen &&
+          isRadiatorFinishSupported(
+            device.manufacturer,
+            device.family,
+            role,
+            chosen.id,
+          );
         return (
           <label className="campo" key={role}>
             <span>
@@ -71,7 +83,7 @@ export function RadiatorFinishes({
             >
               <option value="">
                 {options.length
-                  ? `Standard${chosen ? ` · ${chosen.label}` : ""}`
+                  ? `${automaticMatch ? "In tinta radiatore" : "Standard"}${chosen ? ` · ${chosen.label}` : ""}`
                   : "Finitura ufficiale non disponibile"}
               </option>
               {options.map((option) => (
@@ -80,7 +92,13 @@ export function RadiatorFinishes({
                 </option>
               ))}
             </select>
-            {chosen && (
+            {automaticMatch && !documented && (
+              <span className="nota">
+                In tinta corpo: disponibilità della finitura accessorio da
+                verificare.
+              </span>
+            )}
+            {chosen?.sourceUrl && (
               <a
                 className="nota"
                 href={chosen.sourceUrl}

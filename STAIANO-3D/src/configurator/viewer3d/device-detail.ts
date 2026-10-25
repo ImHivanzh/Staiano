@@ -35,9 +35,32 @@ export type RadiatorDetail = {
   mirrors: DetailPart[];
 };
 
+/** Garda's reversible collector pair is shown on the right in its standard installation. */
+export function radiatorConnectionXs(
+  item: Pick<
+    Project["radiators"][number],
+    "widthMm" | "manufacturer" | "family"
+  >,
+  variant: RadiatorVariant | null,
+): [number, number] {
+  const edge = Math.max(0, item.widthMm / 2000 - 0.025);
+  if (
+    variant?.manufacturer === "Lazzarini" &&
+    item.manufacturer === "Lazzarini" &&
+    variant.family.startsWith("Garda ") &&
+    item.family === variant.family &&
+    item.widthMm === variant.pitchMm
+  )
+    return [edge - variant.interaxisMm / 1000, edge];
+  return [-edge, edge];
+}
+
 /** Visual construction only. Installed catalogue dimensions remain authoritative. */
 export function radiatorDetail(
-  radiator: Project["radiators"][number],
+  radiator: Pick<
+    Project["radiators"][number],
+    "widthMm" | "heightMm" | "depthMm" | "elements" | "manufacturer" | "family"
+  >,
   variant: RadiatorVariant | null,
 ): RadiatorDetail {
   const w = radiator.widthMm / 1000,
@@ -58,6 +81,100 @@ export function radiatorDetail(
       mirrors: [],
     };
   if (variant?.construction === "fixed") {
+    const nova =
+      variant.manufacturer === "Zehnder"
+        ? variant.code?.match(/^ZNV(LV|V|L)?-\d{3}-(\d{3})-/)
+        : null;
+    if (nova) {
+      const profiles = Number(nova[2]);
+      const double = nova[1] === "V" || nova[1] === "LV";
+      const finned = nova[1] === "L" || nova[1] === "LV";
+      const profileWidth = Math.min(0.07, (w - 0.004) / profiles);
+      const profileDepth = Math.min(0.008, d / 4);
+      const rows = double
+        ? [d / 2 - profileDepth / 2, -d / 2 + profileDepth / 2]
+        : [d / 2 - profileDepth / 2];
+      for (const z of rows) {
+        for (let i = 0; i < profiles; i++)
+          result.sections.push({
+            position: [
+              (i / (profiles - 1) - 0.5) * (w - profileWidth - 0.004),
+              0,
+              z,
+            ],
+            scale: [profileWidth, h - 0.004, profileDepth],
+          });
+      }
+      for (const y of [-h / 2 + 0.019, h / 2 - 0.019])
+        result.headers.push({
+          position: [0, y, 0],
+          scale: [Math.min(0.019, d / 2), w, Math.min(0.019, d / 2)],
+          rotation: [0, 0, Math.PI / 2],
+        });
+      if (finned)
+        for (let i = 0; i < profiles * 4; i++)
+          result.fins.push({
+            position: [
+              ((i + 0.5) / (profiles * 4) - 0.5) * w,
+              0,
+              -profileDepth / 2,
+            ],
+            scale: [0.001, h - 0.08, Math.max(0.001, d - profileDepth * 2)],
+          });
+      return result;
+    }
+    const garda =
+      variant.manufacturer === "Lazzarini" &&
+      variant.family.startsWith("Garda ");
+    const sanremo =
+      variant.manufacturer === "Lazzarini" &&
+      variant.family.startsWith("Sanremo ");
+    const barCounts: Record<number, number> = garda
+      ? { 700: 17, 1132: 25, 1708: 35 }
+      : { 690: 14, 803: 17, 1110: 22, 1230: 25, 1420: 28, 1703: 35 };
+    const bars = barCounts[variant.heightMm];
+    if ((garda || sanremo) && bars) {
+      const radius = garda ? 0.0175 : 0.02;
+      const xs = garda
+        ? radiatorConnectionXs(radiator, variant)
+        : [-w / 2 + 0.025, w / 2 - 0.025];
+      for (const x of xs)
+        result.tubes.push({
+          position: [x, 0, 0],
+          scale: [radius, h, garda ? radius : 0.015],
+        });
+      const tubeRadius = garda ? 0.0125 : 0.011;
+      const groups = garda
+        ? (
+            { 700: [9, 8], 1132: [9, 7, 9], 1708: [10, 5, 5, 5, 10] } as Record<
+              number,
+              number[]
+            >
+          )[variant.heightMm]
+        : [Math.ceil(bars * 0.65), bars - Math.ceil(bars * 0.65)];
+      // shortcut: tube counts and diameters are documented; gap spacing is illustrative until pitch drawings are available.
+      const gap = Math.min(0.09, h * 0.09);
+      const spacing =
+        (h - 0.05 - tubeRadius * 2 - gap * (groups.length - 1)) / (bars - 1);
+      let ordinal = 0;
+      groups.forEach((size, group) => {
+        for (let i = 0; i < size; i++, ordinal++) {
+          const y =
+            -h / 2 + 0.025 + tubeRadius + ordinal * spacing + group * gap;
+          result.tubes.push({
+            position: [0, y, 0],
+            scale: [tubeRadius, w - tubeRadius * 2, tubeRadius],
+            rotation: [0, 0, Math.PI / 2],
+          });
+          for (const x of [-w / 2 + tubeRadius, w / 2 - tubeRadius])
+            result.caps.push({
+              position: [x, y, 0],
+              scale: [tubeRadius, tubeRadius, tubeRadius],
+            });
+        }
+      });
+      return result;
+    }
     const empoliProfiles =
       variant.manufacturer === "Lazzarini" &&
       variant.family.startsWith("Empoli ")
@@ -131,20 +248,64 @@ export function radiatorDetail(
       });
     return result;
   }
+  if (
+    variant?.manufacturer === "Global" &&
+    ["VIP", "OSCAR", "OSCAR TONDO"].includes(variant.family)
+  ) {
+    const headHeight = Math.min(0.04, h * 0.08);
+    for (const y of [-h / 2 + headHeight / 2, h / 2 - headHeight / 2])
+      result.headers.push({
+        position: [0, y, 0],
+        scale: [headHeight / 2, w, d / 2],
+        rotation: [0, 0, Math.PI / 2],
+      });
+    for (let i = 0; i < count; i++) {
+      const x = (i - (count - 1) / 2) * pitch;
+      result.sections.push({
+        position: [x, 0, d / 2 - 0.008],
+        scale: [pitch - 0.0015, h - headHeight, 0.016],
+      });
+      for (const y of [-h / 2 + headHeight / 2, h / 2 - headHeight / 2]) {
+        if (variant.family === "OSCAR TONDO")
+          result.caps.push({
+            position: [x, y, 0],
+            scale: [pitch / 2 - 0.001, headHeight / 2, d / 2],
+          });
+        else
+          result.sections.push({
+            position: [x, y, 0],
+            scale: [pitch - 0.0015, headHeight, d],
+          });
+      }
+      for (const side of [-1, 1])
+        result.fins.push({
+          position: [x + side * pitch * 0.3, 0, -0.004],
+          scale: [0.003, h - headHeight * 2, d - 0.008],
+        });
+    }
+    return result;
+  }
   const ardesia = radiator.family.toLowerCase().includes("ardesia");
+  const charleston =
+    variant?.manufacturer === "Zehnder" &&
+    variant.family.startsWith("Charleston ");
   const tubular = ardesia || variant?.visualShape === "tubular";
   // A missing historic column count is never inferred from the product identifier.
   const columns = tubular ? variant?.columns : null;
   // Schede Cordivari Ardesia 2–6 colonne, p.1: tubi Ø25 mm.
   const radius = Math.min(
-    ardesia && radiator.manufacturer === "Cordivari" ? 0.0125 : pitch * 0.24,
+    (ardesia && radiator.manufacturer === "Cordivari") || charleston
+      ? 0.0125
+      : pitch * 0.24,
     pitch / 2,
     d / ((columns ?? 1) * 2),
     h / 8,
   );
   const headerRadius = Math.min(h * 0.03, d / 2, pitch * 0.35);
   const headerY =
-    ardesia && variant ? variant.interaxisMm / 2000 : h / 2 - headerRadius;
+    (ardesia || charleston) && variant
+      ? variant.interaxisMm / 2000
+      : h / 2 - headerRadius;
   for (const y of [-headerY, headerY])
     result.headers.push({
       position: [0, y, 0],
@@ -165,6 +326,12 @@ export function radiatorDetail(
   for (let i = 0; i < count; i++) {
     const x = (i - (count - 1) / 2) * pitch;
     if (columns) {
+      if (charleston)
+        for (const y of [-h / 2 + 0.0225, h / 2 - 0.0225])
+          result.sections.push({
+            position: [x, y, 0],
+            scale: [pitch * 0.78, 0.045, d],
+          });
       for (let j = 0; j < columns; j++) {
         const z =
           columns === 1

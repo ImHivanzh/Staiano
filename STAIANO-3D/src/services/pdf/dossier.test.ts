@@ -11,8 +11,54 @@ import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
 import { validateProject } from "@/domain/validation";
 import { applyFanCoil } from "@/domain/fan-coils/apply";
 import { fanCoilCatalog } from "@/domain/catalogs/fan-coils";
+import {
+  radiatorProducts,
+  radiatorCatalogs,
+} from "@/domain/catalogs/radiators";
 
 describe("Dossier tecnico locale", () => {
+  it("lists generic accessory colours without calling them matching body or official finishes", () => {
+    const project = dossierFixture();
+    project.radiators[0].finishes = {
+      bodyColorId: "cordivari-r01",
+      valveColorId: "generic-white",
+      lockshieldColorId: "generic-chrome",
+    };
+    const rows = buildDossier(project).accessories;
+    for (const label of ["Bianco (generico)", "Cromo (generico)"]) {
+      const row = rows.find((row) => row.details.includes(label));
+      expect(row?.details).toContain("finitura generica");
+      expect(row?.details).not.toContain("in tinta corpo");
+    }
+  });
+  it("lists matching valve and lockshield finishes and flags undocumented accessory colours", () => {
+    const project = dossierFixture();
+    const product = radiatorProducts.find(
+      (p) => p.family === "Empoli antracite",
+    )!;
+    project.radiators = [
+      {
+        ...project.radiators[0],
+        productId: product.id,
+        manufacturer: product.manufacturer,
+        family: product.family,
+        catalogVersion: radiatorCatalogs.find((c) =>
+          c.products.some((p) => p.id === product.id),
+        )!.version,
+        finishes: undefined,
+      },
+    ];
+    const rows = buildDossier(project).accessories.filter((row) =>
+      /^(Valvola|Detentore) /.test(row.description),
+    );
+    expect(rows).toHaveLength(2);
+    for (const row of rows) {
+      expect(row.details).toContain(
+        "in tinta corpo, disponibilità della finitura accessorio da verificare",
+      );
+      expect(row.details).toContain("VOV12");
+    }
+  });
   it("riporta kit SLI RASOMURO e scheda richiesta dal comando separato", () => {
     const base = dossierFixture();
     const room = base.rooms.find((item) => item.name === "Soggiorno")!;

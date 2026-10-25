@@ -51,6 +51,7 @@ export function createFanCoilGrilleBars({
   returnY,
   grilleZ,
   material,
+  longitudinal = false,
 }: {
   faceW: number;
   faceH: number;
@@ -61,11 +62,12 @@ export function createFanCoilGrilleBars({
   returnY: number;
   grilleZ: number;
   material: THREE.Material;
+  longitudinal?: boolean;
 }) {
   const result = new THREE.InstancedMesh(
     box,
     material,
-    finCount + (ceiling ? 3 : 18),
+    finCount + (ceiling ? 3 : longitudinal ? 6 : 18),
   );
   result.castShadow = true;
   const transform = new THREE.Object3D();
@@ -95,6 +97,12 @@ export function createFanCoilGrilleBars({
         [0, faceH * (0.292 + i * 0.034), grilleZ],
         [faceW * 0.86, faceH * 0.012, 0.003],
       );
+  else if (longitudinal)
+    for (let i = 0; i < 6; i++)
+      addBar(
+        [0, faceH / 2 + 0.0003, faceD * (-0.26 + i * 0.104)],
+        [faceW * 0.86, 0.002, faceD * 0.035],
+      );
   else
     for (let i = 0; i < 18; i++)
       addBar(
@@ -120,6 +128,8 @@ function FanCoilBody({
   const ceiling = unit.mounting === "ceiling";
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
   const concealed = isConcealedFanCoil(product);
+  const aermec = product?.manufacturer === "Aermec" && !concealed;
+  const innova = product?.manufacturer === "Innova";
   const shell = concealed ? concealedShell : coating;
   const panel = product
     ? fanCoilPanelDimensions(
@@ -138,9 +148,11 @@ function FanCoilBody({
         h,
         d,
         3,
-        concealed ? 0.003 : Math.min(0.018, h / 14, d / 6),
+        concealed
+          ? 0.003
+          : Math.min(aermec ? 0.055 : innova ? 0.006 : 0.018, h / 8, d / 4),
       ),
-    [w, h, d, concealed],
+    [w, h, d, concealed, aermec, innova],
   );
   const edges = useMemo(() => {
     const geometry = new THREE.BoxGeometry(faceW, faceH, faceD);
@@ -161,8 +173,8 @@ function FanCoilBody({
     [body, edges, cover],
   );
   const grilleZ = d / 2 + 0.0003;
-  const returnHeight = faceH * (ceiling ? 0.24 : 0.19);
-  const returnY = -faceH * (ceiling ? 0.29 : 0.31);
+  const returnHeight = faceH * (ceiling ? 0.24 : aermec ? 0.08 : 0.19);
+  const returnY = -faceH * (ceiling ? 0.29 : aermec ? 0.42 : 0.31);
   const finCount = Math.min(12, Math.max(4, Math.round(returnHeight / 0.017)));
   const bars = useMemo(
     () =>
@@ -176,6 +188,7 @@ function FanCoilBody({
         returnY,
         grilleZ,
         material: shell,
+        longitudinal: aermec,
       }),
     [
       ceiling,
@@ -187,6 +200,7 @@ function FanCoilBody({
       returnHeight,
       returnY,
       shell,
+      aermec,
     ],
   );
   useEffect(

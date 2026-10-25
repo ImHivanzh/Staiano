@@ -99,7 +99,7 @@ export function HydronicMeshes({
             h = u.heightMm / 1000,
             d = u.depthMm / 1000;
           const selected = selection.some((item) => item.id === u.id),
-            gree = m?.manufacturer === "Gree";
+            gree = m?.family === "VERSATI V";
           return (
             <group key={s.id}>
               <group
@@ -121,6 +121,7 @@ export function HydronicMeshes({
                   depthM={d}
                   selected={selected}
                   dark={gree}
+                  family={m?.family}
                 />
                 {m && (
                   <HeatPumpIdentification

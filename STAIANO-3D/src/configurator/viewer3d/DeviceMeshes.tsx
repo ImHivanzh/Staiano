@@ -12,11 +12,7 @@ import {
   roomCeilingHeightM,
 } from "@/domain/air-conditioning/elevation";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
-import {
-  linearTerminalSlots,
-  radiatorDetail,
-  type DetailPart,
-} from "./device-detail";
+import { radiatorDetail, type DetailPart } from "./device-detail";
 import {
   airTerminalFaceWidthMm,
   terminalBodyDepthMm,
@@ -32,12 +28,16 @@ import { FanCoilMeshes } from "./FanCoilMeshes";
 import { HydronicMeshes } from "./HydronicMeshes";
 import { AirOutdoorMeshes } from "./AirOutdoorMeshes";
 import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
+import { vrvIndoorAtVersion } from "@/domain/catalogs/vrv";
+import { cassetteDetail, roundCassetteGrille } from "./cassette-detail";
+import { terminalFaceDetail } from "./terminal-detail";
 import { Html, Line, MeshReflectorMaterial } from "@react-three/drei";
 import { pendingConnections } from "@/domain/ducted/plan-connections";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
 const rounded = new RoundedBoxGeometry(1, 1, 1, 2, 0.12);
 const cylinder = new THREE.CylinderGeometry(1, 1, 1, 12);
+const cassetteCylinder = new THREE.CylinderGeometry(1, 1, 1, 64);
 const sphere = new THREE.SphereGeometry(1, 12, 8);
 const plane = new THREE.PlaneGeometry(1, 1);
 const circle = new THREE.CircleGeometry(1, 48);
@@ -67,11 +67,6 @@ const whiteFace = new THREE.MeshStandardMaterial({
   polygonOffsetFactor: -2,
   polygonOffsetUnits: -2,
 });
-const faceBacking = new THREE.MeshStandardMaterial({
-  color: "#f4f3ee",
-  roughness: 0.4,
-  side: THREE.DoubleSide,
-});
 const recess = new THREE.MeshStandardMaterial({
   color: "#242c31",
   roughness: 0.82,
@@ -79,6 +74,11 @@ const recess = new THREE.MeshStandardMaterial({
   polygonOffset: true,
   polygonOffsetFactor: -1,
   polygonOffsetUnits: -1,
+});
+const deepRecess = new THREE.MeshStandardMaterial({
+  color: "#242c31",
+  roughness: 0.82,
+  side: THREE.DoubleSide,
 });
 const accent = new THREE.MeshStandardMaterial({
   color: "#627578",
@@ -266,13 +266,24 @@ function SplitMesh({
   const w = item.widthMm / 1000,
     h = item.heightMm / 1000,
     d = item.depthMm / 1000;
-  const family = splitIndoorAtVersion(
-    item.productId,
-    item.catalogVersion,
-  )?.family;
-  const roundCassette = splitIndoorAtVersion(item.productId, item.catalogVersion)?.shape === "round";
+  const product =
+    splitIndoorAtVersion(item.productId, item.catalogVersion) ??
+    vrvIndoorAtVersion(item.productId, item.catalogVersion);
+  const family = product?.family;
+  const ceiling =
+    (product && "mounting" in product && product.mounting === "ceiling") ||
+    item.mounting === "ceiling";
+  const roundCassette =
+    ceiling && product && "shape" in product && product.shape === "round";
+  const cassette = useMemo(
+    () => cassetteDetail(item.widthMm, item.heightMm, item.depthMm),
+    [item.widthMm, item.heightMm, item.depthMm],
+  );
   const emura = family === "Emura";
-  const flat = family === "Stylish" || family === "MSZ-EF";
+  const mirrored = family === "Mirror";
+  const dualVane = family === "MSZ-LN";
+  const flat =
+    family === "Stylish" || family === "MSZ-EF" || dualVane || mirrored;
   // Missing OEM mesh: documentary family cues within the saved metric envelope.
   const body = useMemo(
     () =>
@@ -302,100 +313,149 @@ function SplitMesh({
   const fins = useMemo<DetailPart[]>(
     () =>
       Array.from({ length: 18 }, (_, i) => ({
-        position: [(-0.42 + (i * 0.84) / 17) * w, -h * 0.32, d * 0.465],
-        scale: [0.003, h * 0.16, 0.004],
+        position: [(-0.42 + (i * 0.84) / 17) * w, -h * 0.32, d / 2 + 0.0015],
+        scale: [0.003, h * 0.16, 0.002],
       })),
     [w, h, d],
   );
   const topFins = useMemo<DetailPart[]>(
     () =>
       Array.from({ length: 25 }, (_, i) => ({
-        position: [(-0.43 + (i * 0.86) / 24) * w, h * 0.487, -d * 0.08],
+        position: [(-0.43 + (i * 0.86) / 24) * w, h / 2 + 0.0005, -d * 0.08],
         scale: [0.005, 0.001, d * 0.55],
       })),
     [w, h, d],
+  );
+  const roundGrille = useMemo(
+    () => roundCassetteGrille(item.widthMm, item.heightMm, item.depthMm),
+    [item.widthMm, item.heightMm, item.depthMm],
   );
   return (
     <>
       {roundCassette ? (
         <>
-          <mesh geometry={cylinder} material={plastic} scale={[w / 2, h, w / 2]} castShadow receiveShadow />
-          <mesh geometry={cylinder} material={recess} position={[0, -h * 0.49, 0]} scale={[w * 0.38, 0.006, w * 0.38]} />
-          {selected && <SelectionOutline dimensions={[w, h, w]} />}
+          <mesh
+            geometry={cassetteCylinder}
+            material={plastic}
+            scale={[w / 2, h, d / 2]}
+            castShadow
+            receiveShadow
+          />
+          <mesh
+            geometry={cassetteCylinder}
+            material={deepRecess}
+            position={[0, -h / 2 - 0.0003, 0]}
+            scale={[w * 0.45, 0.0005, d * 0.45]}
+          />
+          <mesh
+            geometry={ring}
+            material={plastic}
+            position={[0, -h / 2 - 0.0007, 0]}
+            rotation={[Math.PI / 2, 0, 0]}
+            scale={[w / 2, d / 2, 1]}
+          />
+          <mesh
+            geometry={cassetteCylinder}
+            material={plastic}
+            position={[0, -h / 2 - 0.0008, 0]}
+            scale={[w * 0.27, 0.0005, d * 0.27]}
+          />
+          <Parts parts={roundGrille} geometry={box} material={deepRecess} />
+          {selected && <SelectionOutline dimensions={[w, h, d]} />}
         </>
-      ) : <>
-      <mesh
-        geometry={body}
-        material={plastic}
-        position={[0, 0, emura ? -d * 0.08 : 0]}
-        castShadow
-        receiveShadow
-      />
-      {curvedFront && (
-        <mesh
-          geometry={curvedFront}
-          material={plastic}
-          position={[0, h * 0.14, d * 0.38]}
-          castShadow
-          receiveShadow
-        />
+      ) : ceiling ? (
+        <>
+          <Parts parts={[cassette.body]} geometry={box} material={aluminium} />
+          <Parts parts={cassette.frame} geometry={rounded} material={plastic} />
+          <Parts
+            parts={[cassette.intake, ...cassette.outlets]}
+            geometry={box}
+            material={deepRecess}
+          />
+          <Parts
+            parts={[...cassette.grille, ...cassette.vanes]}
+            geometry={box}
+            material={plastic}
+          />
+          {selected && <SelectionOutline dimensions={[w, h, d]} />}
+        </>
+      ) : (
+        <>
+          <mesh
+            geometry={body}
+            material={plastic}
+            position={[0, 0, emura ? -d * 0.08 : 0]}
+            castShadow
+            receiveShadow
+          />
+          {mirrored && (
+            <mesh
+              geometry={plane}
+              position={[0, h * 0.07, d / 2 + 0.0005]}
+              scale={[w * 0.96, h * 0.7, 1]}
+            >
+              <MeshReflectorMaterial
+                resolution={128}
+                mirror={0.9}
+                roughness={0.08}
+                color="#777f86"
+              />
+            </mesh>
+          )}
+          {dualVane && (
+            <mesh
+              geometry={box}
+              material={plastic}
+              position={[0, -h * 0.35, d / 2 + 0.002]}
+              scale={[0.007, h * 0.18, 0.004]}
+            />
+          )}
+          {curvedFront && (
+            <mesh
+              geometry={curvedFront}
+              material={plastic}
+              position={[0, h * 0.14, d * 0.38]}
+              castShadow
+              receiveShadow
+            />
+          )}
+          <mesh
+            geometry={rounded}
+            material={deepRecess}
+            position={[0, -h * 0.31, d / 2 + 0.0002]}
+            scale={[w * 0.89, h * 0.18, 0.001]}
+          />
+          <Parts parts={fins} geometry={box} material={aluminium} />
+          <Parts parts={topFins} geometry={box} material={recess} />
+          <mesh
+            geometry={rounded}
+            material={plastic}
+            position={[0, -h * 0.405, d / 2 + 0.0015]}
+            scale={[w * 0.88, h * 0.035, d * 0.025]}
+            rotation={[-0.18, 0, 0]}
+          />
+          <mesh
+            geometry={plane}
+            material={accent}
+            position={[w * 0.35, -h * 0.11, d / 2 + 0.0003]}
+            scale={[w * 0.025, h * 0.018, 1]}
+          />
+          <BrandMark
+            name={
+              family === "Emura"
+                ? "DAIKIN EMURA"
+                : family === "Stylish"
+                  ? "DAIKIN STYLISH"
+                  : manufacturer
+            }
+            width={Math.min(0.12, w * 0.2)}
+            position={[0, h * 0.06, d / 2 + 0.0004]}
+          />
+          {selected && <SelectionOutline dimensions={[w, h, d]} />}
+        </>
       )}
-      <mesh
-        geometry={rounded}
-        material={recess}
-        position={[0, -h * 0.31, d * 0.475]}
-        scale={[w * 0.89, h * 0.18, d * 0.025]}
-      />
-      <Parts parts={fins} geometry={box} material={aluminium} />
-      <Parts parts={topFins} geometry={box} material={recess} />
-      <mesh
-        geometry={rounded}
-        material={plastic}
-        position={[0, -h * 0.405, d * 0.478]}
-        scale={[w * 0.88, h * 0.035, d * 0.025]}
-        rotation={[-0.18, 0, 0]}
-      />
-      <mesh
-        geometry={plane}
-        material={accent}
-        position={[w * 0.35, -h * 0.11, d / 2 + 0.0003]}
-        scale={[w * 0.025, h * 0.018, 1]}
-      />
-      <BrandMark
-        name={
-          family === "Emura"
-            ? "DAIKIN EMURA"
-            : family === "Stylish"
-              ? "DAIKIN STYLISH"
-              : manufacturer
-        }
-        width={Math.min(0.12, w * 0.2)}
-        position={[0, h * 0.06, d / 2 + 0.0004]}
-      />
-      {selected && <SelectionOutline dimensions={[w, h, d]} />}
-      </>}
     </>
   );
-}
-
-function rectangularFrame(
-  w: number,
-  h: number,
-  thickness: number,
-  z: number,
-): DetailPart[] {
-  return [
-    { position: [0, h / 2 - thickness / 2, z], scale: [w, thickness, 1] },
-    { position: [0, -h / 2 + thickness / 2, z], scale: [w, thickness, 1] },
-    {
-      position: [-w / 2 + thickness / 2, 0, z],
-      scale: [thickness, Math.max(0.001, h - thickness * 2), 1],
-    },
-    {
-      position: [w / 2 - thickness / 2, 0, z],
-      scale: [thickness, Math.max(0.001, h - thickness * 2), 1],
-    },
-  ];
 }
 
 function TerminalMesh({
@@ -418,46 +478,17 @@ function TerminalMesh({
     return material;
   }, [item.color, item.finish]);
   useEffect(() => () => faceMaterial.dispose(), [faceMaterial]);
-  const z = d / 2;
-  const detail = useMemo(() => {
-    const frame = Math.min(0.012, h * 0.1, w * 0.1);
-    const white = rectangularFrame(w, h, frame, z);
-    const dark: DetailPart[] = [];
-    if (variant?.slotCount) {
-      dark.push(...linearTerminalSlots(variant, w, h, z));
-    } else if (family?.familyCode === "EADD") {
-      dark.push({
-        position: [0, 0, z],
-        scale: [w - frame * 2, h - frame * 2, 1],
-      });
-      for (const factor of [0.78, 0.54, 0.3])
-        white.push(...rectangularFrame(w * factor, h * factor, frame * 0.8, z));
-      white.push({
-        position: [0, 0, z],
-        scale: [w * 0.17, h * 0.17, 1],
-      });
-    } else {
-      dark.push({
-        position: [0, 0, z],
-        scale: [w - frame * 2, h - frame * 2, 1],
-      });
-      const count = Math.min(32, Math.max(3, Math.round(h / 0.018)));
-      for (let i = 1; i < count; i++)
-        white.push({
-          position: [0, -h / 2 + frame + ((h - 2 * frame) * i) / count, z],
-          scale: [w - frame * 2, Math.min(0.004, (h / count) * 0.3), 1],
-        });
-      if (family?.familyCode === "EGQ") {
-        const columns = Math.min(32, Math.max(3, Math.round(w / 0.025)));
-        for (let i = 1; i < columns; i++)
-          white.push({
-            position: [-w / 2 + frame + ((w - frame * 2) * i) / columns, 0, z],
-            scale: [0.003, h - frame * 2, 1],
-          });
-      }
-    }
-    return { white, dark };
-  }, [w, h, z, family, variant]);
+  const plateMaterial = useMemo(() => {
+    const material = faceMaterial.clone();
+    material.polygonOffset = false;
+    return material;
+  }, [faceMaterial]);
+  useEffect(() => () => plateMaterial.dispose(), [plateMaterial]);
+  const z = d / 2 + 0.001;
+  const detail = useMemo(
+    () => terminalFaceDetail(family, variant, w, h, z, item.shape === "circle"),
+    [w, h, z, family, variant, item.shape],
+  );
   return (
     <>
       {d > 0 &&
@@ -479,45 +510,27 @@ function TerminalMesh({
             receiveShadow
           />
         ))}
-      {item.shape === "circle" ? (
-        <>
-          <mesh
-            geometry={circle}
-            material={recess}
-            position={[0, 0, z]}
-            scale={[w / 2, h / 2, 1]}
-          />
-          <mesh
-            geometry={ring}
-            material={faceMaterial}
-            position={[0, 0, z]}
-            scale={[w / 2, h / 2, 1]}
-          />
-          <mesh
-            geometry={circle}
-            material={faceMaterial}
-            position={[0, 0, z]}
-            scale={[w * 0.31, h * 0.31, 1]}
-          />
-        </>
-      ) : (
-        <>
-          {variant?.slotCount && (
-            <mesh
-              geometry={plane}
-              material={faceBacking}
-              position={[0, 0, z]}
-              scale={[w, h, 1]}
-            />
-          )}
-          <Parts parts={detail.dark} geometry={plane} material={recess} />
-          <Parts
-            parts={detail.white}
-            geometry={plane}
-            material={faceMaterial}
-          />
-        </>
+      {item.shape === "circle" && !detail.plate && (
+        <mesh
+          geometry={circle}
+          material={recess}
+          position={[0, 0, z]}
+          scale={[w / 2, h / 2, 1]}
+        />
       )}
+      {detail.plate && (
+        <mesh
+          geometry={item.shape === "circle" ? circle : plane}
+          material={plateMaterial}
+          position={[0, 0, z - 0.0005]}
+          scale={item.shape === "circle" ? [w / 2, h / 2, 1] : [w, h, 1]}
+        />
+      )}
+      <Parts parts={detail.dark} geometry={plane} material={recess} />
+      <Parts parts={detail.holes} geometry={circle} material={recess} />
+      <Parts parts={detail.rings} geometry={ring} material={faceMaterial} />
+      <Parts parts={detail.discs} geometry={circle} material={faceMaterial} />
+      <Parts parts={detail.white} geometry={plane} material={faceMaterial} />
       {selected && <SelectionOutline dimensions={[w, h, d || 0.001]} />}
     </>
   );

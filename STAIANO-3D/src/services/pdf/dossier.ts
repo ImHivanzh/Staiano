@@ -2,7 +2,10 @@ import type { Project } from "@/schemas/project";
 import { projectSchema } from "@/schemas/project";
 import { validateProject } from "@/domain/validation";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
-import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
+import {
+  resolveInstalledRadiatorFinish,
+  isRadiatorFinishSupported,
+} from "@/domain/catalogs/radiator-finishes";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import {
   hvacProductAtVersion,
@@ -155,33 +158,29 @@ export function buildDossier(project: Project) {
       "kit",
       "Fissaggio a muro: numero di staffe e inclusione nella confezione da verificare sul catalogo del produttore.",
     );
-    for (const { role, field, noun, unit } of [
-      { role: "valve", field: "valveColorId", noun: "Valvola", unit: "pezzi" },
+    for (const { role, noun, unit } of [
+      { role: "valve", noun: "Valvola", unit: "pezzi" },
       {
         role: "lockshield",
-        field: "lockshieldColorId",
         noun: "Detentore",
         unit: "pezzi",
       },
       {
         role: "pipeCover",
-        field: "pipeCoverColorId",
         noun: "Kit copritubo",
         unit: "kit",
       },
     ] as const) {
-      const finish = resolveRadiatorFinish(
-        d.manufacturer,
-        d.family,
-        role,
-        d.finishes?.[field],
-      );
+      const finish = resolveInstalledRadiatorFinish(d, role);
+      const documented =
+        finish &&
+        isRadiatorFinishSupported(d.manufacturer, d.family, role, finish.id);
       accessory(
         `${role}:${finish?.id ?? "non-documentata"}`,
         `${noun} ${model}`,
         unit,
         finish
-          ? `Finitura ${finish.label}${finish.ralCode ? `, RAL ${finish.ralCode}` : ""}; scelta grafica separata dalla vendita, codice articolo da verificare sul listino del produttore.`
+          ? `Finitura ${finish.label}${finish.ralCode ? `, RAL ${finish.ralCode}` : ""}; ${!finish.sourceUrl ? "finitura generica" : documented ? "scelta grafica separata dalla vendita" : "in tinta corpo, disponibilità della finitura accessorio da verificare"}, codice articolo da verificare sul listino del produttore.`
           : "Finitura non documentata per questo modello; disponibilita e codice articolo da verificare sul catalogo del produttore.",
       );
     }

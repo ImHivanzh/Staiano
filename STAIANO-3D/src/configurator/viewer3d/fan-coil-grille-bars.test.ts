@@ -2,6 +2,31 @@ import { expect, it } from "vitest";
 import * as THREE from "three";
 import { createFanCoilGrilleBars } from "./FanCoilMeshes";
 
+it("reconstructs the six longitudinal discharge slats of the Aermec-style cover", () => {
+  const material = new THREE.MeshStandardMaterial();
+  const bars = createFanCoilGrilleBars({
+    faceW: 0.8,
+    faceH: 0.5,
+    faceD: 0.22,
+    ceiling: false,
+    finCount: 4,
+    returnHeight: 0.04,
+    returnY: -0.21,
+    grilleZ: 0.1103,
+    material,
+    longitudinal: true,
+  });
+  expect(bars.count).toBe(10);
+  const matrix = new THREE.Matrix4();
+  bars.getMatrixAt(9, matrix);
+  expect(new THREE.Vector3().setFromMatrixPosition(matrix).x).toBe(0);
+  expect(new THREE.Vector3().setFromMatrixScale(matrix).x).toBeCloseTo(
+    0.8 * 0.86,
+  );
+  bars.dispose();
+  material.dispose();
+});
+
 it("instances wall return and discharge bars in one mesh", () => {
   const material = new THREE.MeshStandardMaterial();
   const bars = createFanCoilGrilleBars({

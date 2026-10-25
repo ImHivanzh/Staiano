@@ -1,6 +1,8 @@
 import data from "../../../catalog-data/generated/radiator-finishes.json" with { type: "json" };
+import type { Project } from "@/schemas/project";
 import {
   radiatorFinishCatalogSchema,
+  type RadiatorFinish,
   type RadiatorFinishRole,
 } from "./radiator-finish-schema";
 
@@ -13,6 +15,26 @@ export const radiatorFinishes = radiatorFinishCatalog.finishes;
 export const radiatorFinishCatalogVersion = radiatorFinishCatalog.version;
 export const radiatorFinishPreviewDisclaimer =
   radiatorFinishCatalog.previewDisclaimer;
+
+type FinishChoice = Pick<
+  RadiatorFinish,
+  "id" | "label" | "colorHex" | "kind" | "ralCode"
+> & { sourceUrl?: string };
+
+export const genericRadiatorAccessoryFinishes: FinishChoice[] = [
+  {
+    id: "generic-white",
+    label: "Bianco (generico)",
+    colorHex: "#ffffff",
+    kind: "paint",
+  },
+  {
+    id: "generic-chrome",
+    label: "Cromo (generico)",
+    colorHex: "#c6cbd0",
+    kind: "metal",
+  },
+];
 
 function normalized(value: string) {
   return value
@@ -76,4 +98,44 @@ export function resolveRadiatorFinish(
       (finish) => finish.id === selectedId,
     ) ?? null
   );
+}
+
+/** Automatic matching is a design choice; it does not extend official accessory availability. */
+export function resolveInstalledRadiatorFinish(
+  item: Pick<
+    Project["radiators"][number],
+    "manufacturer" | "family" | "finishes"
+  >,
+  role: RadiatorFinishRole,
+): FinishChoice | null {
+  const field = {
+    body: "bodyColorId",
+    valve: "valveColorId",
+    lockshield: "lockshieldColorId",
+    pipeCover: "pipeCoverColorId",
+  } as const;
+  const id = item.finishes?.[field[role]];
+  if (role === "valve" || role === "lockshield") {
+    const generic = genericRadiatorAccessoryFinishes.find(
+      (finish) => finish.id === id,
+    );
+    if (generic) return generic;
+  }
+  if (!id && (role === "valve" || role === "lockshield")) {
+    const body = resolveRadiatorFinish(
+      item.manufacturer,
+      item.family,
+      "body",
+      item.finishes?.bodyColorId,
+    );
+    if (body && body.kind !== "metal")
+      return (
+        getRadiatorFinishOptions(item.manufacturer, item.family, role).find(
+          (finish) =>
+            finish.kind === body.kind &&
+            finish.colorHex.toLowerCase() === body.colorHex.toLowerCase(),
+        ) ?? body
+      );
+  }
+  return resolveRadiatorFinish(item.manufacturer, item.family, role, id);
 }

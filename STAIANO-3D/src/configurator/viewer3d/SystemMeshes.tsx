@@ -10,6 +10,7 @@ import {
 } from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
+import { DuctedMachineBody } from "./DuctedMachineBody";
 
 function NumberLabel({
   label,
@@ -357,29 +358,7 @@ export function SystemMeshes({
                   onSelect({ kind: "device", id: u.id });
                 }}
               >
-                <mesh castShadow>
-                  <boxGeometry
-                    args={[
-                      u.widthMm / 1000,
-                      u.heightMm / 1000,
-                      u.depthMm / 1000,
-                    ]}
-                  />
-                  <meshStandardMaterial
-                    color={chosen(u.id) ? "#73b5ce" : "#bac7ca"}
-                    roughness={0.3}
-                    metalness={0.55}
-                  />
-                </mesh>
-                <mesh position={[0, 0, u.depthMm / 2000 + 0.001]}>
-                  <planeGeometry
-                    args={[
-                      (u.widthMm / 1000) * 0.9,
-                      (u.heightMm / 1000) * 0.65,
-                    ]}
-                  />
-                  <meshStandardMaterial color="#335a6b" />
-                </mesh>
+                <DuctedMachineBody item={u} selected={chosen(u.id)} />
                 {/* Fronte visibile dall'alto: distingue 0° da 180°. */}
                 <mesh
                   position={[

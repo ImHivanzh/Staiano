@@ -5,6 +5,47 @@ import { splitCatalog } from "@/domain/catalogs/splits";
 import { vrvCatalog } from "@/domain/catalogs/vrv";
 import { heatPumpCatalog } from "@/domain/catalogs/heat-pumps";
 import { OutdoorCabinet } from "./OutdoorCabinet";
+import { OutdoorFan } from "./OutdoorFan";
+
+it("reconstructs screened Altherma fronts and single/double fan Versati casings", () => {
+  const countFans = (element: unknown): number => {
+    if (!isValidElement<{ children?: unknown }>(element)) return 0;
+    if (element.type === OutdoorFan) return 1;
+    return Children.toArray(
+      element.props.children as import("react").ReactNode,
+    ).reduce<number>((sum, child) => sum + countFans(child), 0);
+  };
+  expect(
+    countFans(
+      OutdoorCabinet({
+        widthM: 1.003,
+        heightM: 1.27,
+        depthM: 0.533,
+        family: "Altherma 3 H HT",
+      }),
+    ),
+  ).toBe(0);
+  expect(
+    countFans(
+      OutdoorCabinet({
+        widthM: 1.206,
+        heightM: 0.88,
+        depthM: 0.445,
+        family: "VERSATI V",
+      }),
+    ),
+  ).toBe(1);
+  expect(
+    countFans(
+      OutdoorCabinet({
+        widthM: 0.943,
+        heightM: 1.615,
+        depthM: 0.445,
+        family: "VERSATI V",
+      }),
+    ),
+  ).toBe(2);
+});
 
 it("keeps the physical casing and feet inside the complete published enclosure for all 162 outdoor units", () => {
   const products = [
