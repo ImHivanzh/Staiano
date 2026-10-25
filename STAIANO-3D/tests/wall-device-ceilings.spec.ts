@@ -132,8 +132,8 @@ test("le quote di fascia e vuoto superiore sono distinte e non permettono di att
   await importFixture(page, project);
   const inspector = await fanInspector(page, unit.id);
   const ranges = inspector.getByTestId("fan-coil-elevation-ranges");
-  await expect(ranges).toContainText("2,50–2,674 m (vuoto fascia)");
-  await expect(ranges).toContainText("2,80–3,074 m (vuoto superiore)");
+  await expect(ranges).toContainText("2,50–2,658 m (vuoto fascia)");
+  await expect(ranges).toContainText("2,80–3,058 m (vuoto superiore)");
   const elevation = inspector.getByRole("spinbutton", {
     name: /Quota faccia inferiore/,
   });

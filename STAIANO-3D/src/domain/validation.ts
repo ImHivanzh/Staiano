@@ -11,6 +11,7 @@ import { roomWallSpan } from "./geometry/placement";
 import {
   validateCeilingBand,
   minimumCeilingHeightM,
+  roofHeightAt,
 } from "./geometry/ceilings";
 import {
   fanCoilCeilingRange,
@@ -46,12 +47,20 @@ import {
 } from "./geometry/footprint";
 import { ductRoute } from "./ducted/routes";
 import { flexibleDuctCurve } from "./ducted/flexible-curve";
+import {
+  flexibleDuctMinimumRadiusFactor,
+  flexibleDuctProducts,
+} from "./catalogs/flexible-ducts";
+import { ductAirVelocityMs } from "./ducted/airflow";
+import { formatNumber } from "@/utils/format";
 import { wallCavityPolygons } from "./ducted/wall-cavity";
 import { ductScenePaths, findDuctCollisions } from "./ducted/collisions";
 import { validateHydronicSystem } from "./hydronic/validation";
 import {
+  fanCoilDefaultPanelType,
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
+  fanCoilPanelDimensions,
   controllerBoardFor,
   isRecessedFanCoil,
 } from "./catalogs/fan-coils";
@@ -196,6 +205,12 @@ export function validateProject(p: Project): Check[] {
     });
     {
       const room = p.rooms.find((item) => item.id === unit.roomId);
+      const panel = product
+        ? fanCoilPanelDimensions(
+            product,
+            unit.panelType ?? fanCoilDefaultPanelType(product, unit.mounting),
+          )
+        : null;
       const range =
         room && product
           ? fanCoilCeilingRange(
@@ -204,18 +219,23 @@ export function validateProject(p: Project): Check[] {
               {
                 ...unit,
                 family: product.family,
+                model: product.model,
+                pipes: product.pipes,
+                widthMm: panel?.widthMm ?? product.widthMm,
+                heightMm: panel?.heightMm ?? product.heightMm,
                 features: product.features,
                 ceilingInstallation: product.ceilingInstallation,
               },
               unit.position,
               unit.rotation,
               unit.mounting,
+              unit.panelType,
             )
           : null;
       const bottom =
         unit.mounting === "ceiling"
           ? unit.elevationM
-          : unit.elevationM - unit.heightMm / 2000;
+          : unit.elevationM - (panel?.heightMm ?? unit.heightMm) / 2000;
       checks.push({
         code: "fanCoilCeiling",
         entityId: unit.id,
@@ -1035,17 +1055,42 @@ export function validateProject(p: Project): Check[] {
       });
   }
   for (const duct of p.ducts ?? []) {
+    if (duct.kind === "flexible") {
+      const product = flexibleDuctProducts.find(
+        (item) => item.id === duct.flexibleProductId,
+      );
+      const velocity = ductAirVelocityMs(p, duct);
+      if (
+        product &&
+        duct.diameterMm &&
+        product.diametersMm.includes(duct.diameterMm)
+      )
+        checks.push({
+          code: "ductAirVelocity",
+          status:
+            velocity === null
+              ? "warning"
+              : velocity > product.maxAirVelocityMs
+                ? "invalid"
+                : "valid",
+          entityId: duct.id,
+          message:
+            velocity === null
+              ? `${codes.get(duct.id)}: velocità non determinata; manca una portata di ramo univoca. Nessuna ripartizione implicita fra tubi.`
+              : `${codes.get(duct.id)}: velocità media ${formatNumber(velocity)} m/s; limite ${product.familyCode} ${product.maxAirVelocityMs} m/s.`,
+        });
+    }
     const route = ductRoute(p, duct);
     if (
       duct.kind === "flexible" &&
       route.length > 1 &&
-      !flexibleDuctCurve(route, duct.diameterMm ?? 160)
+      !flexibleDuctCurve(route, duct.diameterMm ?? 160, duct.flexibleProductId)
     )
       checks.push({
         code: "ductBendRadius",
         status: "invalid",
         entityId: duct.id,
-        message: `${codes.get(duct.id)}: curva troppo stretta per Ø ${duct.diameterMm ?? 160} mm; spostare i punti del percorso per avere un raggio almeno pari al diametro.`,
+        message: `${codes.get(duct.id)}: curva troppo stretta per Ø ${duct.diameterMm ?? 160} mm; spostare i punti del percorso per avere un raggio minimo di ${formatNumber((duct.diameterMm ?? 160) * flexibleDuctMinimumRadiusFactor(duct.flexibleProductId, duct.diameterMm ?? 160))} mm.`,
       });
     if (route.length < 2)
       checks.push({
@@ -1067,7 +1112,7 @@ export function validateProject(p: Project): Check[] {
               (pointInPolygon(point, r.polygon) ||
                 (r.id === terminal?.roomId &&
                   cavities.some((cavity) => pointInPolygon(point, cavity)))) &&
-              point.elevationM <= r.heightM,
+              point.elevationM <= roofHeightAt(p, r, point),
           ),
       )
     )
@@ -1142,6 +1187,13 @@ export function resolveCheckTarget(
   if (wall)
     return { floorId: wall.floorId, selection: { kind: "wall", id: wall.id } };
   const duct = project.ducts?.find((item) => item.id === entityId);
+  if (duct) {
+    const floorId =
+      project.plenums.find((item) => item.id === duct.plenumId)?.floorId ??
+      project.hvacSystems.find((item) => item.id === duct.systemId)
+        ?.indoorUnits[0]?.floorId;
+    if (floorId) return { floorId, selection: { kind: "device", id: duct.id } };
+  }
   const system = project.hvacSystems.find(
     (item) => item.id === entityId || item.id === duct?.systemId,
   );

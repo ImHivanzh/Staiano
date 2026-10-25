@@ -32,7 +32,7 @@ function roomProject() {
 }
 
 it("covers every combination with one exact manufacturer/model outdoor record", () => {
-  expect(splitCatalog.outdoorUnits).toHaveLength(83);
+  expect(splitCatalog.outdoorUnits).toHaveLength(91);
   for (const combination of splitCatalog.combinations)
     expect(
       splitOutdoorAtVersion(

@@ -10,18 +10,20 @@ import type { DuctCollision } from "@/domain/ducted/collisions";
 export function FlexibleDuct({
   points,
   diameterMm,
+  flexibleProductId,
   color,
   fallbackPoint,
   collision,
 }: {
   points: RoutePoint[];
   diameterMm: number;
+  flexibleProductId?: string;
   color: string;
   fallbackPoint?: RoutePoint;
   collision?: DuctCollision;
 }) {
   const shape = useMemo(() => {
-    const path = flexibleDuctCurve(points, diameterMm);
+    const path = flexibleDuctCurve(points, diameterMm, flexibleProductId);
     if (!path) return null;
     const { curve } = path;
     const length = curve.getLength();
@@ -46,7 +48,7 @@ export function FlexibleDuct({
     texture.wrapS = THREE.RepeatWrapping;
     texture.repeat.set(length / 0.025, 1);
     return { geometry, texture };
-  }, [points, diameterMm]);
+  }, [points, diameterMm, flexibleProductId]);
   useEffect(
     () => () => {
       shape?.geometry.dispose();

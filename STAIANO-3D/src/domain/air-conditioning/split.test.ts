@@ -9,7 +9,7 @@ import { splitCatalog } from "@/domain/catalogs/splits";
 import { splitCatalogSchema } from "@/domain/catalogs/split-schema";
 import { projectSchema } from "@/schemas/project";
 import { applySplitSystem } from "./apply";
-import { sizeSplitSystems } from "./size";
+import { sizeSplitSystems, usableSplitPlacement } from "./size";
 import { validateSplitSystem } from "./validate";
 import { refreshSplitBindings } from "./refresh";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
@@ -133,7 +133,62 @@ describe("split con combinazioni originali", () => {
     expect(c.indoorCoolingW).toEqual([1760, 2340]);
     expect(c.indoorHeatingW).toEqual([1890, 2510]);
   });
-  it.each(["Daikin", "Gree", "Mitsubishi Electric"])(
+  it("colloca UT36F round come cassetta a soffitto, senza richiedere una parete", () => {
+    const p = fixture(),
+      base = splitCatalog.indoorUnits[0],
+      sourceMetadata = {
+        ...base.sourceMetadata,
+        manufacturer: "LG" as const,
+        sourceUrl:
+          "https://www.lg.com/gr/business/download/airsolution/Single_Split_Round_Cassette_Leaflet%5B20230321_193842507%5D.pdf",
+        sha256: "3490DC9F2F3CC60BF192771C008CA6F7FD9E3F004CEE281C64B2746D6DEA4C6B",
+      },
+      indoor = {
+        ...base,
+        id: "lg-ut36f-ny0",
+        manufacturer: "LG" as const,
+        family: "Round Cassette",
+        model: "UT36F.NY0",
+        mounting: "ceiling" as const,
+        shape: "round" as const,
+        sizeClass: "36",
+        nominalCoolingW: 11000,
+        nominalHeatingW: 12200,
+        widthMm: 1050,
+        heightMm: 330,
+        depthMm: 1050,
+        sourceMetadata,
+      },
+      baseCombination = splitCatalog.combinations.find((c) => c.mode === "mono")!,
+      combination = {
+        ...baseCombination,
+        id: "lg-ut36f-uud1-u30",
+        manufacturer: "LG",
+        outdoorModel: "UUD1.U30",
+        indoorProductIds: [indoor.id],
+        coolingCapacityW: 11000,
+        heatingCapacityW: 12200,
+        indoorCoolingW: [11000],
+        indoorHeatingW: [12200],
+        minIndoorUnits: 1,
+        maxIndoorUnits: 1,
+        maxConnectedCapacityW: null,
+        sourceMetadata,
+      },
+      catalog = splitCatalogSchema.parse({
+        ...splitCatalog,
+        version: "test-lg-round",
+        indoorUnits: [indoor],
+        outdoorUnits: [],
+        combinations: [combination],
+      }),
+      placement = usableSplitPlacement(p, p.rooms[0], indoor),
+      solution = sizeSplitSystems(p, [p.rooms[0].id], "LG", catalog)[0];
+    expect(solution?.combination.id).toBe(combination.id);
+    expect(placement?.wall).toBeNull();
+    expect(placement?.position).toEqual(p.rooms[0].centroid);
+  });
+  it.each(["Daikin", "Gree", "Mitsubishi Electric", "LG"])(
     "%s mono salva e ricarica con ID e posa invariati",
     (brand) => {
       let p = fixture();
@@ -150,6 +205,18 @@ describe("split con combinazioni originali", () => {
       ).toEqual([]);
     },
   );
+  it("LG non propone multisplit senza capacità simultanee per ogni stanza", () => {
+    let p = fixture();
+    p = addRectangle(p, p.floors[0].id, {
+      width: 4,
+      length: 3.5,
+      height: 2.7,
+      name: "Camera2",
+    });
+    expect(
+      sizeSplitSystems(p, p.rooms.map((room) => room.id), "LG", splitCatalog),
+    ).toEqual([]);
+  });
   it("esclude matrice insufficiente in una stanza pur con potenza totale sufficiente", () => {
     let p = fixture();
     p = addRectangle(p, p.floors[0].id, {

@@ -9,6 +9,7 @@ export const sketchupModelSchema = z
       .array(
         z.object({
           name: z.string().max(200),
+          groupId: z.uuid().optional(),
           vertices: z
             .array(z.number().finite().min(-1e6).max(1e6))
             .min(9)

@@ -203,6 +203,19 @@ def linear_families(r):
             if base=="EDFLB" and config in [10,30]: continue
             f=family(r,f"{base}-{config}",linear=True,use=["return"] if config in [10,30] else ["supply"])
             f["modelCodes"]=[f"{base}-{config}",f"{base} {config}"]
+            if base in ["EDFL", "EDFLB"]:
+                f["linearFaceLengthOffsetMm"] = 50
+                f["geometryNote"] = "Il disegno EDFL/EDFL-B 2024 indica lunghezza frontale L+50 mm; profondità di sezione 52 mm. A/B/C sono quote del profilo riportate nella variante."
+                f["supportingSources"] = [{"sourceMetadata": {
+                    "manufacturer": "Ecoclima",
+                    "sourceUrl": r["documents"][0]["sourceUrl"],
+                    "sourceType": "pdf",
+                    "documentRevision": r["documents"][0].get("label"),
+                    "retrievedAt": r["documents"][0].get("retrievedAt"),
+                    "importedAt": datetime.now(timezone.utc).isoformat(),
+                    "sha256": r["documents"][0]["sha256"],
+                    "page": 2,
+                }}]
             for slots,rows in sizes.items():
                 v=variant(f["familyCode"],f"{slots}f",width=number(rows[0][2]),original=original(rows[0],headers,2))
                 v.update(slotCount=slots,faceHeightMm=number(rows[0][3]),commercialLengthsMm=sorted(set(number(x[1]) for x in rows)))
@@ -230,6 +243,21 @@ def normalize(r):
             if not all(wh): continue
             v=variant(code,key,width=wh[0],height=wh[1],face=wh,original=original(row,table[0],2)); f["variants"].append(v); keys.append(key)
         attach(f,data,keys)
+        if code in ["EDE1", "EDE2"]:
+            sheet = next(
+                document
+                for document in r["documents"]
+                if f"scheda tecnica {code.lower()}" in document["label"].lower()
+            )
+            f["supportingSources"] = [{"sourceMetadata": metadata(sheet)}]
+            if code == "EDE1":
+                f["operatingConditions"] += (
+                    " La scheda PDF 01/2021 riporta sezioni efficaci circa il 20% "
+                    "inferiori alla tabella HTML corrente; i valori HTML sono "
+                    "coerenti con Q/(3600*Vk) entro gli arrotondamenti pubblicati. "
+                    "Si mantengono i valori della tabella HTML e si conserva il PDF "
+                    "per confronto."
+                )
         if code in ["EDE1","EDE2"]:
             # Circular versions have their own PDF geometry and PDF performance revision.
             text=(DEST/r["documents"][0]["filename"]).with_suffix(".txt").read_text(encoding="utf8")
@@ -244,7 +272,29 @@ def normalize(r):
                 if t["heading"]=="Listino Prezzi" and any("/600" in x for x in t["grid"][0]):
                     for key in t["grid"][0][1:]:
                         if "/600" not in key: continue
-                        f["variants"].append(variant(code,key,width=None,height=None))
+                        nominal, panel = map(int, key.split("/"))
+                        insert = next(v for v in f["variants"] if v["id"] == f"ecoclima-{slug(code)}-{nominal}")
+                        panel_variant = next(v for v in f["variants"] if v["id"] == f"ecoclima-{slug(code)}-{panel}")
+                        v = variant(
+                            code,
+                            key,
+                            width=insert["widthMm"],
+                            height=insert["heightMm"],
+                            face=(panel_variant["faceWidthMm"], panel_variant["faceHeightMm"]),
+                            original=dict(
+                                nominalDiffuserMm=nominal,
+                                nominalPanelMm=panel,
+                                panelAMm=panel_variant["faceWidthMm"],
+                                panelBMm=panel_variant["faceHeightMm"],
+                            ),
+                        )
+                        v["modelCode"] = key
+                        v["dimensionNote"] = (
+                            f"Diffusore nominale {nominal} mm su pannello quadro "
+                            f"nominale {panel} mm; A×B {panel_variant['faceWidthMm']}×"
+                            f"{panel_variant['faceHeightMm']} mm come da scheda tecnica, pagina 2."
+                        )
+                        f["variants"].append(v)
         return result
     if code in ["EDRA","EDCS","EDRC","EDRCS"]:
         table=tables[0]["grid"]; headers=table[1]

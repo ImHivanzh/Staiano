@@ -400,15 +400,7 @@ test("measured window creation, sill edit, save/reload and removal update real 3
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await expect(page.getByTestId("opening-2d")).toHaveCount(1);
-  const wallEdge = await page
-    .getByTestId("wall")
-    .first()
-    .locator("line")
-    .first()
-    .boundingBox();
-  if (!wallEdge) throw new Error("Missing wall edge after reload");
-  // Select the solid left portion, not the window gap drawn over the wall midpoint.
-  await page.mouse.click(wallEdge.x + wallEdge.width * 0.12, wallEdge.y);
+  await page.getByTestId("wall").first().click();
   await page.getByText("Porte e finestre", { exact: true }).click();
   await expect(page.locator(".apertura-parete")).toContainText("1,45 × 1,15 m");
   await expect(page.locator(".apertura-parete")).toContainText(

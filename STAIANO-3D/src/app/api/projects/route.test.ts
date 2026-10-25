@@ -27,6 +27,7 @@ vi.mock("@/server/project-sharing", async (original) => {
     await original<typeof import("@/server/project-sharing")>();
   return {
     ...routeModule,
+    readSharedProjects: () => routeModule.readSharedProjects(state.file),
     sharedTransaction: (
       operation: Parameters<typeof routeModule.sharedTransaction>[0],
     ) => routeModule.sharedTransaction(operation, state.file),

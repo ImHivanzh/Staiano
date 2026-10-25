@@ -4,7 +4,7 @@ import { assignInstallationRooms } from "../installations";
 import { splitCatalog } from "@/domain/catalogs/splits";
 import type { SplitCatalog } from "@/domain/catalogs/split-schema";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
-import { sizeSplitSystems, usableSplitWall, type SplitSolution } from "./size";
+import { sizeSplitSystems, usableSplitPlacement, type SplitSolution } from "./size";
 import { withHvacOutdoorUnit } from "./outdoor";
 export function splitSystemFromSolution(
   project: Project,
@@ -19,14 +19,15 @@ export function splitSystemFromSolution(
         const room = project.rooms.find((r) => r.id === assignment.roomId)!,
           unit = assignment.indoor,
           old = previous?.indoorUnits.find((u) => u.roomId === room.id),
-          candidate = usableSplitWall(project, room, unit);
+          candidate = usableSplitPlacement(project, room, unit);
         if (!candidate)
           throw new Error(
-            "Nessuna parete contiene l'unità interna selezionata.",
+            "Nessuna posizione contiene l'unità interna selezionata.",
           );
         const preserve =
           old &&
-          room.wallIds.includes(old.wallId ?? "") &&
+          (old.mounting ?? "wall") === unit.mounting &&
+          (unit.mounting === "ceiling" || room.wallIds.includes(old.wallId ?? "")) &&
           indoorUnitFitsBelowCeiling(project, room, {
             ...unit,
             position: old.position,
@@ -39,14 +40,15 @@ export function splitSystemFromSolution(
             unit.depthMm / 1000,
             old.rotation,
           );
-        const wall = preserve
+        const wall = preserve && old.wallId
           ? project.walls.find((w) => w.id === old.wallId)!
           : candidate.wall;
         return {
           id: old?.id ?? crypto.randomUUID(),
           roomId: room.id,
           floorId: room.floorId,
-          wallId: wall.id,
+          wallId: unit.mounting === "ceiling" ? null : wall!.id,
+          mounting: unit.mounting,
           position: preserve ? old.position : candidate.position,
           rotation: preserve ? old.rotation : candidate.rotation,
           widthMm: unit.widthMm,

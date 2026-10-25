@@ -1,5 +1,10 @@
 import { test, expect } from "./browser-test";
 import { addRectangle, createProject } from "../src/domain/project";
+import {
+  fanCoilInstallationAccessories,
+  fanCoilProductAtVersion,
+} from "../src/domain/catalogs/fan-coils";
+import { exportPlenumFixture } from "./plenum-ui-fixture";
 import { pickPlanPoint, openDisclosure } from "./ui-helpers";
 
 test("FCZ P e PO sono selezionabili con prestazioni e prevalenza distinte", async ({
@@ -58,7 +63,19 @@ test("FCZ P e PO sono selezionabili con prestazioni e prevalenza distinte", asyn
       })
       .locator("option"),
   ).toHaveText([/Bassa.*0,89.*1/, /Media.*1,28.*1,46/, /Alta.*1,6.*1,84/]);
+  const cover = popup.getByLabel("Mobile di copertura Aermec");
+  await expect(cover.locator("option")).toHaveText([
+    "Senza mobile",
+    "MZA200 · alette fisse",
+    "MZU200 · alette orientabili",
+  ]);
+  await cover.selectOption("adjustable");
+  await expect(cover).toHaveValue("adjustable");
+  await expect(
+    popup.getByText(/non è quotato nella fonte acquisita/),
+  ).toBeVisible();
   await models.selectOption("FCZ PO");
+  await expect(cover).toHaveCount(0);
   await sizes.selectOption("aermec-fcz201po");
   await expect(sizes).toHaveValue("aermec-fcz201po");
   await expect(
@@ -75,7 +92,67 @@ test("FCZ P e PO sono selezionabili con prestazioni e prevalenza distinte", asyn
   ).toBeVisible();
 });
 
-test("dopo Marca e Modello il sistema consiglia la taglia", async ({ page }) => {
+test("MZU200 scelto sul FCZ P resta nel progetto e nella distinta", async ({
+  page,
+}) => {
+  const project = createProject();
+  const fixture = addRectangle(project, project.floors[0].id, {
+    width: 8,
+    length: 6,
+    height: 2.7,
+    name: "Salone",
+  });
+  await page.goto("/");
+  await page.getByTestId("project-file").setInputFiles({
+    name: "fcz-mzu.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(fixture)),
+  });
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan
+    .getByRole("button", { name: "Ventilconvettore", exact: true })
+    .click();
+  await pickPlanPoint(plan, 3, 0.4);
+  await plan.getByTestId("draft-fanCoil").click();
+  const popup = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+    exact: true,
+  });
+  await popup.getByLabel("Marca ventilconvettore").selectOption("Aermec");
+  await popup
+    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
+    .selectOption("FCZ P");
+  await popup
+    .getByRole("combobox", { name: "Taglia ventilconvettore", exact: true })
+    .selectOption("aermec-fcz200p");
+  await popup
+    .getByLabel("Mobile di copertura Aermec")
+    .selectOption("adjustable");
+  await popup
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+  const saved = await exportPlenumFixture(page);
+  expect(saved.fanCoils).toHaveLength(1);
+  const unit = saved.fanCoils![0];
+  expect(unit.coverType).toBe("adjustable");
+  const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
+  expect(product).not.toBeNull();
+  expect(
+    fanCoilInstallationAccessories(
+      product!,
+      unit.mounting,
+      unit.panelType,
+      unit.coverType,
+    ).map((item) => item.code),
+  ).toContain("MZU200");
+});
+
+test("dopo Marca e Modello il sistema consiglia la taglia", async ({
+  page,
+}) => {
   const empty = createProject();
   const project = addRectangle(empty, empty.floors[0].id, {
     width: 4,

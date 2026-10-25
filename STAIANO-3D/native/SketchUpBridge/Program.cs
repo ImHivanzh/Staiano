@@ -27,37 +27,93 @@ try
         }
         finally { SU.SUTypedValueRelease(ref unitValue); }
         var totalFaces = 0;
-        foreach (var mesh in input.Meshes)
+        var walls = 0;
+        var wallChildGroups = 0;
+        var logicalGroups = input.Meshes
+            .Select((mesh, index) => (mesh, key: mesh.GroupId ?? $"mesh:{index}"))
+            .GroupBy(item => item.key)
+            .ToArray();
+        foreach (var logicalGroup in logicalGroups)
         {
+            var meshes = logicalGroup.Select(item => item.mesh).ToArray();
             var group = new Ref(); SU.Check(SU.SUGroupCreate(ref group));
             SU.Check(SU.SUEntitiesAddGroup(root, group));
-            SU.Check(SU.SUGroupSetName(group, mesh.Name));
+            SU.Check(SU.SUGroupSetName(group, meshes[0].Name));
             SU.Check(SU.SUGroupGetEntities(group, out var entities));
-            var geometry = new Ref(); SU.Check(SU.SUGeometryInputCreate(ref geometry));
-            try
+            if (meshes.Length > 1 && meshes[0].Name.StartsWith("Muro ", StringComparison.Ordinal))
             {
-                var points = Enumerable.Range(0, mesh.Vertices.Length / 3).Select(i => new Point(mesh.Vertices[i * 3] / 0.0254, mesh.Vertices[i * 3 + 1] / 0.0254, mesh.Vertices[i * 3 + 2] / 0.0254)).ToArray();
-                SU.Check(SU.SUGeometryInputSetVertices(geometry, (nuint)points.Length, points));
-                for (nuint i = 0; i < (nuint)points.Length; i += 3)
+                var geometry = new Ref(); SU.Check(SU.SUGeometryInputCreate(ref geometry));
+                try
                 {
-                    var loop = new Ref(); SU.Check(SU.SULoopInputCreate(ref loop));
-                    try
+                    var points = meshes.SelectMany(mesh => Enumerable.Range(0, mesh.Vertices.Length / 3)
+                        .Select(i => new Point(mesh.Vertices[i * 3] / 0.0254, mesh.Vertices[i * 3 + 1] / 0.0254, mesh.Vertices[i * 3 + 2] / 0.0254)))
+                        .ToArray();
+                    SU.Check(SU.SUGeometryInputSetVertices(geometry, (nuint)points.Length, points));
+                    nuint offset = 0;
+                    foreach (var mesh in meshes)
                     {
-                        for (nuint j = 0; j < 3; j++) SU.Check(SU.SULoopInputAddVertexIndex(loop, i + j));
-                        SU.Check(SU.SUGeometryInputAddFace(geometry, ref loop, out _));
-                        totalFaces++;
+                        var material = MaterialFactory.Create(model, mesh.Color);
+                        for (nuint i = 0; i < (nuint)(mesh.Vertices.Length / 3); i += 3)
+                        {
+                            var loop = new Ref(); SU.Check(SU.SULoopInputCreate(ref loop));
+                            try
+                            {
+                                for (nuint j = 0; j < 3; j++) SU.Check(SU.SULoopInputAddVertexIndex(loop, offset + i + j));
+                                SU.Check(SU.SUGeometryInputAddFace(geometry, ref loop, out var face));
+                                var materialInput = new MaterialInput { Material = material };
+                                SU.Check(SU.SUGeometryInputFaceSetFrontMaterial(geometry, face, ref materialInput));
+                                SU.Check(SU.SUGeometryInputFaceSetBackMaterial(geometry, face, ref materialInput));
+                                totalFaces++;
+                            }
+                            finally { if (loop.Ptr != IntPtr.Zero) SU.SULoopInputRelease(ref loop); }
+                        }
+                        offset += (nuint)(mesh.Vertices.Length / 3);
                     }
-                    finally { if (loop.Ptr != IntPtr.Zero) SU.SULoopInputRelease(ref loop); }
+                    SU.Check(SU.SUEntitiesFill(entities, geometry, true));
                 }
-                SU.Check(SU.SUEntitiesFill(entities, geometry, true));
+                finally { SU.SUGeometryInputRelease(ref geometry); }
             }
-            finally { SU.SUGeometryInputRelease(ref geometry); }
-            var material = new Ref(); SU.Check(SU.SUMaterialCreate(ref material));
-            var color = new Color((byte)mesh.Color[0], (byte)mesh.Color[1], (byte)mesh.Color[2], 255);
-            SU.Check(SU.SUMaterialSetColor(material, ref color));
-            SU.Check(SU.SUMaterialSetOpacity(material, mesh.Color[3] / 255.0));
-            SU.Check(SU.SUModelAddMaterials(model, 1, [material]));
-            SU.Check(SU.SUDrawingElementSetMaterial(SU.SUGroupToDrawingElement(group), material));
+            else for (var partIndex = 0; partIndex < meshes.Length; partIndex++)
+            {
+                var mesh = meshes[partIndex];
+                var targetGroup = group;
+                var targetEntities = entities;
+                if (meshes.Length > 1)
+                {
+                    targetGroup = new Ref(); SU.Check(SU.SUGroupCreate(ref targetGroup));
+                    SU.Check(SU.SUEntitiesAddGroup(entities, targetGroup));
+                    SU.Check(SU.SUGroupSetName(targetGroup, $"{mesh.Name} · parte {partIndex + 1}"));
+                    SU.Check(SU.SUGroupGetEntities(targetGroup, out targetEntities));
+                }
+                var geometry = new Ref(); SU.Check(SU.SUGeometryInputCreate(ref geometry));
+                try
+                {
+                    var points = Enumerable.Range(0, mesh.Vertices.Length / 3).Select(i => new Point(mesh.Vertices[i * 3] / 0.0254, mesh.Vertices[i * 3 + 1] / 0.0254, mesh.Vertices[i * 3 + 2] / 0.0254)).ToArray();
+                    SU.Check(SU.SUGeometryInputSetVertices(geometry, (nuint)points.Length, points));
+                    for (nuint i = 0; i < (nuint)points.Length; i += 3)
+                    {
+                        var loop = new Ref(); SU.Check(SU.SULoopInputCreate(ref loop));
+                        try
+                        {
+                            for (nuint j = 0; j < 3; j++) SU.Check(SU.SULoopInputAddVertexIndex(loop, i + j));
+                            SU.Check(SU.SUGeometryInputAddFace(geometry, ref loop, out _));
+                            totalFaces++;
+                        }
+                        finally { if (loop.Ptr != IntPtr.Zero) SU.SULoopInputRelease(ref loop); }
+                    }
+                    SU.Check(SU.SUEntitiesFill(targetEntities, geometry, true));
+                }
+                finally { SU.SUGeometryInputRelease(ref geometry); }
+                var material = MaterialFactory.Create(model, mesh.Color);
+                SU.Check(SU.SUDrawingElementSetMaterial(SU.SUGroupToDrawingElement(targetGroup), material));
+            }
+            if (meshes[0].Name.StartsWith("Muro ", StringComparison.Ordinal))
+            {
+                SU.Check(SU.SUEntitiesGetNumGroups(entities, out var children));
+                walls++;
+                wallChildGroups += (int)children;
+                if (children != 0) throw new Exception("Un muro deve restare un solo gruppo SketchUp.");
+            }
         }
         if (input.Background is { } background)
         {
@@ -88,8 +144,8 @@ try
             SU.Check(SU.SUModelGetEntities(verified, out var entities));
             SU.Check(SU.SUEntitiesGetNumGroups(entities, out var groups));
             SU.Check(SU.SUEntitiesGetNumImages(entities, out var images));
-            if (groups != (nuint)input.Meshes.Length || images != (nuint)(input.Background == null ? 0 : 1)) throw new Exception("Verifica del modello SKP non superata.");
-            File.WriteAllText(args[2] + ".info.json", JsonSerializer.Serialize(new { groups = (ulong)groups, images = (ulong)images, faces = totalFaces }));
+            if (groups != (nuint)logicalGroups.Length || images != (nuint)(input.Background == null ? 0 : 1)) throw new Exception("Verifica del modello SKP non superata.");
+            File.WriteAllText(args[2] + ".info.json", JsonSerializer.Serialize(new { groups = (ulong)groups, images = (ulong)images, faces = totalFaces, walls, wallChildGroups }));
         }
         finally { if (verified.Ptr != IntPtr.Zero) SU.SUModelRelease(ref verified); }
     }
@@ -99,13 +155,27 @@ try
 catch (Exception error) { Console.Error.WriteLine("Esportazione SketchUp non riuscita: " + error.Message); return 1; }
 
 record ModelData(string Name, MeshData[] Meshes, BackgroundData? Background);
-record MeshData(string Name, double[] Vertices, int[] Color);
+record MeshData(string Name, double[] Vertices, int[] Color, string? GroupId = null);
 record BackgroundData(string File, double WidthM, double HeightM, double X, double Y);
 [StructLayout(LayoutKind.Sequential)] struct Ref { public IntPtr Ptr; }
 [StructLayout(LayoutKind.Sequential)] struct Point(double x, double y, double z) { public double X = x, Y = y, Z = z; }
+[StructLayout(LayoutKind.Sequential)] struct Point2D { public double X, Y; }
+[StructLayout(LayoutKind.Sequential)] struct MaterialInput { public nuint NumUvCoords; public Point2D Uv0, Uv1, Uv2, Uv3; public nuint Vertex0, Vertex1, Vertex2, Vertex3; public Ref Material; }
 [StructLayout(LayoutKind.Sequential)] struct Bounds { public Point Min, Max; }
 [StructLayout(LayoutKind.Sequential)] struct Color(byte r, byte g, byte b, byte a) { public byte R = r, G = g, B = b, A = a; }
 [StructLayout(LayoutKind.Sequential)] struct Transform { [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)] public double[] Values; }
+static class MaterialFactory
+{
+    public static Ref Create(Ref model, int[] rgba)
+    {
+        var material = new Ref(); SU.Check(SU.SUMaterialCreate(ref material));
+        var color = new Color((byte)rgba[0], (byte)rgba[1], (byte)rgba[2], 255);
+        SU.Check(SU.SUMaterialSetColor(material, ref color));
+        SU.Check(SU.SUMaterialSetOpacity(material, rgba[3] / 255.0));
+        SU.Check(SU.SUModelAddMaterials(model, 1, [material]));
+        return material;
+    }
+}
 static class SU
 {
     public static void Check(int result) { if (result != 0) throw new Exception("SketchUp API: " + result); }
@@ -141,6 +211,8 @@ static class SU
     [DllImport("SketchUpAPI")] public static extern int SUGeometryInputRelease(ref Ref geometry);
     [DllImport("SketchUpAPI")] public static extern int SUGeometryInputSetVertices(Ref geometry, nuint count, [In] Point[] points);
     [DllImport("SketchUpAPI")] public static extern int SUGeometryInputAddFace(Ref geometry, ref Ref loop, out nuint index);
+    [DllImport("SketchUpAPI")] public static extern int SUGeometryInputFaceSetFrontMaterial(Ref geometry, nuint face, ref MaterialInput material);
+    [DllImport("SketchUpAPI")] public static extern int SUGeometryInputFaceSetBackMaterial(Ref geometry, nuint face, ref MaterialInput material);
     [DllImport("SketchUpAPI")] public static extern int SULoopInputCreate(ref Ref loop);
     [DllImport("SketchUpAPI")] public static extern int SULoopInputRelease(ref Ref loop);
     [DllImport("SketchUpAPI")] public static extern int SULoopInputAddVertexIndex(Ref loop, nuint index);

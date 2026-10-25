@@ -249,9 +249,10 @@ it.each([0, Math.PI / 4, Math.PI / 2])(
 
 it("saves wall terminals without any plenum data through edits and export", () => {
   const base = fixture();
+  const wallPoint = guidedTerminalPoint("EDLH");
   const saved = saveTerminalOnPlan(
     base,
-    { ...input(base), mounting: "wall" },
+    { ...input(base), ...wallPoint, mounting: "wall" },
     { x: 4, y: 0 },
   );
   const first = saved.airTerminals[0];
@@ -262,12 +263,12 @@ it("saves wall terminals without any plenum data through edits and export", () =
   expect(saved.plenums).toEqual([]);
   const two = saveTerminalOnPlan(
     saved,
-    { ...input(saved), mounting: "wall" },
+    { ...input(saved), ...wallPoint, mounting: "wall" },
     { x: 4, y: 2 },
   );
   const edited = saveTerminalOnPlan(
     two,
-    { ...input(two, [2000]), mounting: "wall" },
+    { ...input(two, [2000]), ...wallPoint, mounting: "wall" },
     first.position,
     first.id,
   );

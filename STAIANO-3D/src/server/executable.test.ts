@@ -1,6 +1,14 @@
 import { createRequire } from "node:module";
 import { createHash, generateKeyPairSync, sign } from "node:crypto";
-import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import {
+  mkdir,
+  mkdtemp,
+  readdir,
+  readFile,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -15,6 +23,7 @@ const {
   ensureCatalogDocuments,
   pruneVersions,
   requireCurrentVersion,
+  fingerprint,
 } = createRequire(import.meta.url)("../../deploy/executable.cjs");
 const { publicKey, privateKey } = generateKeyPairSync("ed25519");
 const machineId = `mch_${"a".repeat(32)}`,
@@ -37,9 +46,36 @@ const signed = (value: object) => {
   const body = Buffer.from(JSON.stringify(value)).toString("base64url");
   return `${body}.${sign(null, Buffer.from(`staiano-update-v1.${body}`), privateKey).toString("base64url")}`;
 };
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
 
 describe("aggiornamenti EXE", () => {
+  it("keeps a signed seat fingerprint only while its adapter remains on this Windows host", () => {
+    const adapter = (mac: string) => [
+      {
+        mac,
+        address: "192.0.2.1",
+        netmask: "255.255.255.0",
+        family: "IPv4" as const,
+        internal: false,
+        cidr: "192.0.2.1/24",
+      },
+    ];
+    const network = vi
+      .spyOn(os, "networkInterfaces")
+      .mockReturnValue({ physical: adapter("22:33:44:55:66:77") });
+    const old = fingerprint();
+    network.mockReturnValue({
+      physical: adapter("22:33:44:55:66:77"),
+      virtual: adapter("11:22:33:44:55:66"),
+    });
+    expect(fingerprint()).not.toBe(old);
+    expect(fingerprint(old)).toBe(old);
+    network.mockReturnValue({ virtual: adapter("11:22:33:44:55:66") });
+    expect(fingerprint(old)).not.toBe(old);
+  });
   it("avvia soltanto la revisione corrente firmata e si blocca senza verifica online", async () => {
     const directory = await mkdtemp(
       path.join(tmpdir(), "staiano-current-version-"),
@@ -196,7 +232,13 @@ describe("documenti tecnici dell'EXE", () => {
         await writeFile(path.join(root, name), "documento");
       expect(catalogDocuments(root)).toEqual({
         total: 6,
-        byExtension: { ".pdf": 2, ".html": 1, ".json": 1, ".xlsx": 1, ".xls": 1 },
+        byExtension: {
+          ".pdf": 2,
+          ".html": 1,
+          ".json": 1,
+          ".xlsx": 1,
+          ".xls": 1,
+        },
       });
     } finally {
       await rm(root, { recursive: true, force: true });
@@ -235,7 +277,10 @@ describe("documenti tecnici dell'EXE", () => {
     });
     const documents = [
       {
-        sha256: createHash("sha256").update("listino").digest("hex"),
+        sha256: createHash("sha256")
+          .update("listino")
+          .digest("hex")
+          .toUpperCase(),
         manufacturer: "Ecoclima",
         sourceUrl: "https://ecoclima.example/listino.pdf",
       },
@@ -286,6 +331,26 @@ describe("documenti tecnici dell'EXE", () => {
       byExtension: { ".pdf": 2 },
     });
     await expect(readFile(instructions, "utf8")).rejects.toThrow();
+    const complete = await status();
+    await writeFile(instructions, "stale");
+    await writeFile(
+      path.join(root, ".cache", "catalog-documents.json"),
+      JSON.stringify({
+        ...complete,
+        fingerprint: complete.fingerprint.replace("sha256-casefold-v2:", ""),
+        missing: [documents[0]],
+        instructions,
+      }),
+    );
+    ensureCatalogDocuments(root);
+    await vi.waitFor(async () => {
+      expect(await status()).toMatchObject({
+        expected: 2,
+        missing: [],
+        instructions: null,
+      });
+    });
+    await expect(readFile(instructions, "utf8")).rejects.toThrow();
   });
 });
 
@@ -306,6 +371,17 @@ describe("pulizia delle versioni EXE", () => {
       pruneVersions(install, keep);
       expect((await readdir(path.join(install, "versions"))).sort()).toEqual([
         keep,
+      ]);
+      for (const name of [old, older])
+        await mkdir(path.join(install, "versions", name));
+      await writeFile(
+        path.join(install, "active.json"),
+        JSON.stringify({ previousSha256: old }),
+      );
+      pruneVersions(install, keep);
+      expect((await readdir(path.join(install, "versions"))).sort()).toEqual([
+        keep,
+        old,
       ]);
     } finally {
       await rm(install, { recursive: true, force: true });

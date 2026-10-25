@@ -25,8 +25,17 @@ function savedPlenumIsCatalogue(
   specification: TerminalAccessorySpecification | null,
 ) {
   const spec = specification?.plenum;
+  const expectedSide = spec?.connectionPosition === "upper" ? "upper" : "rear";
+  const sidesMatch = Array.from(
+    { length: plenum.portCount ?? 1 },
+    (_, index) =>
+      plenum.connectionPositions?.[index] ??
+      plenum.connectionPosition ??
+      spec?.connectionPosition,
+  ).every((side) => (side === "lateral" ? "rear" : side) === expectedSide);
   return (
     !!spec &&
+    sidesMatch &&
     plenum.model === spec.modelCode &&
     plenum.widthMm === spec.lengthMm &&
     plenum.heightMm === spec.heightMm &&
@@ -391,6 +400,7 @@ function priceLine(
     upper: "superiore",
     lower: "inferiore",
     rear: "posteriore",
+    front: "anteriore",
     left: "sinistro",
     right: "destro",
     custom: "personalizzato",

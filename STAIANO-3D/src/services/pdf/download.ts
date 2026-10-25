@@ -19,7 +19,12 @@ export async function generateDossier(
   const logoSvg = await response.text();
   const renderImages = await (
     await import("@/services/render3d/export")
-  ).renderProjectPanoramas(snapshot, options);
+  ).renderProjectPanoramas(snapshot, {
+    ...options,
+    floorId: undefined,
+    roomId: undefined,
+    includeRooms: true,
+  });
   if (!renderImages.length)
     throw new Error(
       "Il dossier richiede un render 3D. Inserisci la geometria del progetto prima di esportare.",

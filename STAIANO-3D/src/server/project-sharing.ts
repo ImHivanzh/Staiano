@@ -84,6 +84,20 @@ export function audit(record: SharedRecord, username: string, action: string) {
     revision: record.revision,
   });
 }
+// Atomic rename publishes a complete snapshot; readers need no writer lock.
+export async function readSharedProjects(
+  file = resolve(process.cwd(), ".cache/shared-projects.json"),
+): Promise<Record<string, SharedRecord>> {
+  try {
+    return Object.assign(
+      Object.create(null),
+      JSON.parse(await readFile(file, "utf8")),
+    );
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    return Object.create(null);
+  }
+}
 // An atomic filesystem lock also serializes requests across overlapping server builds.
 export async function sharedTransaction<T>(
   operation: (records: Record<string, SharedRecord>) => T | Promise<T>,
@@ -137,15 +151,7 @@ export async function sharedTransaction<T>(
   if (!acquired) throw new SharingError("Archivio occupato. Riprova.", 503);
   const temporary = `${file}.${randomUUID()}.tmp`;
   try {
-    let records: Record<string, SharedRecord> = Object.create(null);
-    try {
-      records = Object.assign(
-        Object.create(null),
-        JSON.parse(await readFile(file, "utf8")),
-      );
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    }
+    const records = await readSharedProjects(file);
     const result = await operation(records);
     await writeFile(temporary, JSON.stringify(records), { mode: 0o600 });
     await rename(temporary, file);

@@ -398,5 +398,258 @@
       "sha256": "d2bbb478cd0a0e5548af9182378caf138f095c2e7db22319ec310bf1112efc10",
       "caption": "MSZ-AY, immagine originale della brochure italiana"
     }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Standard Plus",
+    "title": "LG Standard Plus",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Dual Inverter Compressor",
+      "Classe Standard Plus"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:45.247788+00:00",
+      "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
+      "importedAt": "2026-10-25T16:49:45.247788+00:00",
+      "documentRevision": "LG Greece 2021 Multi Split Leaflet, R32",
+      "page": 12
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-standard-plus.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sha256": "93117947360e14eda7bfb322b59dbb57e02abd1fb36c9614dc2a20609ea9e3b5",
+      "caption": "LG Standard Plus, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "4 Way Cassette",
+    "title": "LG 4 Way Cassette",
+    "tier": 1,
+    "features": [
+      "Cassetta a 4 vie R32",
+      "Modelli MT06R e CT09F"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:45.247788+00:00",
+      "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
+      "importedAt": "2026-10-25T16:49:45.247788+00:00",
+      "documentRevision": "LG Greece 2021 Multi Split Leaflet, R32",
+      "page": 14
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-4-way-cassette.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sha256": "835ce2df2f7f9dd968b27ec303c59ea33a7a38258bf3a65ca1c6605ea0f1c54c",
+      "caption": "LG 4 Way Cassette, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Round Cassette",
+    "title": "LG Round Cassette",
+    "tier": 1,
+    "features": [
+      "Cassetta circolare R32",
+      "Flusso circolare senza zone cieche",
+      "Palette regolabili in 6 posizioni"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Single_Split_Round_Cassette_Leaflet%5B20230321_193842507%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:14.961229+00:00",
+      "sha256": "3490DC9F2F3CC60BF192771C008CA6F7FD9E3F004CEE281C64B2746D6DEA4C6B",
+      "importedAt": "2026-10-25T16:49:14.961229+00:00",
+      "documentRevision": "LG Greece 2023 Round Cassette Leaflet, R32",
+      "page": 3
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-round-cassette.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Single_Split_Round_Cassette_Leaflet%5B20230321_193842507%5D.pdf",
+      "sha256": "7cbaeae758a4dabb0f469fa9581a4f3f0b3145b7c62b3c2a75ad57dd8b2faea0",
+      "caption": "LG Round Cassette UT36F, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Mirror",
+    "title": "LG ARTCOOL Mirror",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Finitura Mirror",
+      "Gamma multisplit"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:45.247788+00:00",
+      "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
+      "importedAt": "2026-10-25T16:49:45.247788+00:00",
+      "documentRevision": "LG Greece 2021 Multi Split Leaflet, R32",
+      "page": 10
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-mirror.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sha256": "f63e9e387aa27df29174d57fb672e6430b31a6fa5b16f4e8fb5c6b961ed1a68d",
+      "caption": "LG ARTCOOL Mirror, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Air Purification",
+    "title": "LG Air Purification",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Funzione di purificazione",
+      "Gamma multisplit"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:45.247788+00:00",
+      "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
+      "importedAt": "2026-10-25T16:49:45.247788+00:00",
+      "documentRevision": "LG Greece 2021 Multi Split Leaflet, R32",
+      "page": 11
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-air-purification.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sha256": "f435ce89e73335bf7d4ca5000b3e2cf9ef674832d6fe5c813b58475b2277ae1c",
+      "caption": "LG Air Purification, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Deluxe",
+    "title": "LG Deluxe",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Linea Deluxe",
+      "Gamma multisplit"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:45.247788+00:00",
+      "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
+      "importedAt": "2026-10-25T16:49:45.247788+00:00",
+      "documentRevision": "LG Greece 2021 Multi Split Leaflet, R32",
+      "page": 11
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-deluxe.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sha256": "eba8cab775628f9ed0d3f35719527ff71802fd58ea358e0fb372dccbf4d89253",
+      "caption": "LG Deluxe, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Standard 2",
+    "title": "LG Standard 2",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Linea Standard 2",
+      "Gamma multisplit"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sourceType": "pdf",
+      "retrievedAt": "2026-10-25T16:49:45.247788+00:00",
+      "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
+      "importedAt": "2026-10-25T16:49:45.247788+00:00",
+      "documentRevision": "LG Greece 2021 Multi Split Leaflet, R32",
+      "page": 13
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-standard-2.png",
+      "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
+      "sha256": "1ef4e51e71fa5a91aaf5748de47b96e17ca24795bc5efe5b3b865ecc2ac60064",
+      "caption": "LG Standard 2, immagine originale del leaflet"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "DUALCOOL AI Deluxe",
+    "title": "LG DUALCOOL AI Deluxe",
+    "tier": 1,
+    "features": [
+      "R32",
+      "AI Air",
+      "DUAL Vane",
+      "LG ThinQ"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/it/condizionatori/monosplit/h18s1da/",
+      "sourceType": "html",
+      "documentRevision": "LG Italia H18S1DA, pagina prodotto acquisita 2026-10-25",
+      "retrievedAt": "2026-10-25T18:17:37+00:00",
+      "importedAt": "2026-10-25T18:17:37+00:00",
+      "sha256": "5AF239BD2434A1E1282520D8D9ADDB0642C9EBB590F660C20B0F3F4C2D7BB494",
+      "page": null
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-dualcool-ai-deluxe.jpg",
+      "sourceUrl": "https://www.lg.com/content/dam/channel/wcms/it/rac_italy/dualcool-ai-air/deluxe/gallery/AS_DualcoolDeluxe_450x450px.jpg",
+      "sha256": "2b2926cd862f9525fdd7f7a37eba1f8e684bc67075f8220237f42719bb6da65f",
+      "caption": "LG DUALCOOL AI Deluxe, immagine originale della serie"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "DUALCOOL AI Premium",
+    "title": "LG DUALCOOL AI Premium",
+    "tier": 1,
+    "features": [
+      "R32",
+      "AI Air",
+      "DUAL Vane",
+      "LG ThinQ"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.lg.com/it/condizionatori/monosplit/h12s1pa/",
+      "sourceType": "html",
+      "documentRevision": "LG Italia H12S1PA, pagina prodotto acquisita 2026-10-25",
+      "retrievedAt": "2026-10-25T18:17:37+00:00",
+      "importedAt": "2026-10-25T18:17:37+00:00",
+      "sha256": "C1CC82A7231F727BC7EF4F62B8FE8EC073B59E3A7F52640713F12523A6582F70",
+      "page": null
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-dualcool-ai-premium.jpg",
+      "sourceUrl": "https://www.lg.com/content/dam/channel/wcms/it/rac_italy/dualcool-ai-air/premium/gallery/AS_DualcoolPremium_450x450px.jpg",
+      "sha256": "994dfe451fe1c3d27169229dd2e195cf59828f4cc7bd5763c118ff3dc7ac0a6d",
+      "caption": "LG DUALCOOL AI Premium, immagine originale della serie"
+    }
   }
 ]

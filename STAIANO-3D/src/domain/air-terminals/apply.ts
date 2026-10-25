@@ -1,4 +1,4 @@
-import { terminalBodyDepthMm } from "./geometry";
+import { airTerminalFaceWidthMm, terminalBodyDepthMm } from "./geometry";
 import type { Point, Project } from "@/schemas/project";
 import {
   airTerminalCatalog,
@@ -71,6 +71,9 @@ export function applyAirTerminalSolution(
     heightMm = dimensions?.heightMm ?? variant.faceHeightMm;
   if (!widthMm || !heightMm || !family.shape)
     throw new Error("Ingombro frontale non disponibile dal catalogo.");
+  const faceWidthMm = dimensions
+    ? widthMm
+    : widthMm + (family.linearFaceLengthOffsetMm ?? 0);
   const depthMm = dimensions
       ? dimensions.depthMm
       : terminalBodyDepthMm(family, variant),
@@ -85,7 +88,7 @@ export function applyAirTerminalSolution(
   const footprint = (t: AirTerminal) =>
     footprintCorners(
       t.position,
-      t.widthMm / 1000,
+      airTerminalFaceWidthMm(t) / 1000,
       (t.mounting === "ceiling" ? t.heightMm : (t.depthMm ?? 0)) / 1000,
       t.rotation,
     );
@@ -123,8 +126,8 @@ export function applyAirTerminalSolution(
         span.end.x - span.start.x,
       );
       for (
-        let offset = widthMm / 2000 + 0.1;
-        offset <= span.lengthM - widthMm / 2000 - 0.1;
+        let offset = faceWidthMm / 2000 + 0.1;
+        offset <= span.lengthM - faceWidthMm / 2000 - 0.1;
         offset += 0.1
       )
         candidates.push({
@@ -154,7 +157,7 @@ export function applyAirTerminalSolution(
           !footprintInsideRoom(
             room,
             c.position,
-            widthMm / 1000,
+            faceWidthMm / 1000,
             heightMm / 1000,
             c.rotation,
           )
@@ -162,7 +165,7 @@ export function applyAirTerminalSolution(
           return false;
         const target = footprintCorners(
           c.position,
-          widthMm / 1000 + 0.05,
+          faceWidthMm / 1000 + 0.05,
           (mounting === "ceiling" ? heightMm : (depthMm ?? 0)) / 1000 + 0.05,
           c.rotation,
         );

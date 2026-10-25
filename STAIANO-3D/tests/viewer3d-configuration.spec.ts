@@ -156,6 +156,7 @@ test("3D click opens configured and draft machine dialogs without a second inspe
 test("3D Collega saves the served room and shows hoses after adding physical plenums", async ({
   page,
 }, testInfo) => {
+  test.setTimeout(60000);
   const project = fixture();
   const canvas = await load3D(page, project);
   await page

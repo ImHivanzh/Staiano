@@ -89,6 +89,30 @@ describe("ingombri dispositivi con quota verticale", () => {
       deviceEnvelopesOverlap(r, { ...t, minZ: r.maxZ, maxZ: r.maxZ + 0.1 }),
     ).toBe(false);
   });
+  it("uses the complete EDFL front length for placement and collision envelopes", () => {
+    const p = fixture(),
+      room = p.rooms[0],
+      family = airTerminalCatalog.families.find(
+        (item) => item.familyCode === "EDFL-20",
+      )!,
+      solution = sizeAirTerminal(100, 1, family, "supply")[0],
+      placed = applyAirTerminalSolution(
+        p,
+        room.id,
+        null,
+        "supply",
+        family.familyCode,
+        solution,
+        "ceiling",
+      ),
+      terminal = placed.airTerminals.at(-1)!,
+      envelope = deviceEnvelope(placed, terminal.id)!;
+    expect(terminal.widthMm).toBe(solution.commercialLengthM! * 1000);
+    expect(
+      Math.max(...envelope.cornersXY.map((point) => point.x)) -
+        Math.min(...envelope.cornersXY.map((point) => point.x)),
+    ).toBeCloseTo((terminal.widthMm + 50) / 1000);
+  });
   it("il centro interno alla stanza non nasconde larghezza sporgente o altezza eccessiva", () => {
     const p = fixture(),
       radiator = p.radiators[0],

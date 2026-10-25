@@ -36,7 +36,7 @@ export function archivedDocument(sha256: string, legacyPath: string) {
   for (const file of archivedFiles()) {
     if (!basename(file).includes(suffix)) continue;
     try {
-      if (sha256File(file) === sha256) return file;
+      if (sha256File(file) === sha256.toLowerCase()) return file;
     } catch {
       // voce che non è un file leggibile: si prosegue
     }

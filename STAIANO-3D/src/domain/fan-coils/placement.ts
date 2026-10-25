@@ -1,7 +1,11 @@
 import type { Point, Project, Room, Wall } from "@/schemas/project";
 import {
+  fanCoilDefaultPanelType,
+  fanCoilPanelDimensions,
+  fanCoilRecessDepthMm,
   fanCoilProductAtVersion,
   isRecessedFanCoil,
+  type FanCoilPanelType,
   type FanCoilProduct,
 } from "@/domain/catalogs/fan-coils";
 import { footprintCorners } from "@/domain/geometry/footprint";
@@ -28,6 +32,7 @@ import {
 import { clipToConvex, pillarFootprint } from "@/domain/geometry/pillars";
 import { ceilingBandPolygon, roofHeightAt } from "@/domain/geometry/ceilings";
 import { convexFootprintsOverlap } from "@/domain/geometry/footprint";
+import { drywallSideForRoom } from "@/domain/geometry/drywall-sides";
 
 export type FanCoilPlacement = NonNullable<Project["fanCoils"]>[number];
 export type FanCoilPose = Pick<
@@ -43,10 +48,7 @@ type FanCoilHeightZone = {
 
 /** Spazio disponibile dietro la faccia interna: muratura più controparete. */
 function availableWallDepthM(wall: Wall, roomId: string): number {
-  return (
-    wall.thickness +
-    (wall.drywall?.roomId === roomId ? (wall.drywall.offsetM ?? 0) : 0)
-  );
+  return wall.thickness + (drywallSideForRoom(wall, roomId)?.offsetM ?? 0);
 }
 /** Ceiling poses retain a lower-face datum: exposed bodies hang below, concealed bodies occupy the technical void. */
 export function fanCoilCeilingRange(
@@ -57,18 +59,42 @@ export function fanCoilCeilingRange(
     | "widthMm"
     | "heightMm"
     | "depthMm"
+    | "recessDepthMm"
     | "family"
     | "features"
     | "ceilingInstallation"
-  >,
+  > &
+    Partial<Pick<FanCoilProduct, "model" | "pipes">>,
   position: Point,
   rotation = 0,
   mounting: FanCoilPlacement["mounting"] = "ceiling",
+  panelType: FanCoilPanelType | null = null,
 ): { ranges: FanCoilHeightZone[]; defaultM: number } | null {
+  const resolvedPanelType =
+    panelType ??
+    (product.pipes
+      ? fanCoilDefaultPanelType(
+          { family: product.family, pipes: product.pipes },
+          mounting,
+        )
+      : null);
+  const panel =
+    product.model && product.pipes
+      ? fanCoilPanelDimensions(
+          {
+            family: product.family,
+            model: product.model,
+            pipes: product.pipes,
+          },
+          resolvedPanelType,
+        )
+      : null;
+  const widthMm = panel?.widthMm ?? product.widthMm;
+  const heightMm = panel?.heightMm ?? product.heightMm;
   const corners = footprintCorners(
     position,
-    product.widthMm / 1000,
-    (mounting === "ceiling" ? product.heightMm : product.depthMm) / 1000,
+    widthMm / 1000,
+    (mounting === "ceiling" ? heightMm : product.depthMm) / 1000,
     rotation,
   );
   const structural = Math.min(
@@ -81,7 +107,11 @@ export function fanCoilCeilingRange(
     return areaM2 > 1e-8 ? [{ elevationM: band.elevationM, areaM2 }] : [];
   });
   const depth =
-    (mounting === "ceiling" ? product.depthMm : product.heightMm) / 1000;
+    (mounting === "ceiling"
+      ? isRecessedFanCoil(product)
+        ? fanCoilRecessDepthMm(product, resolvedPanelType)
+        : product.depthMm
+      : heightMm) / 1000;
   const minimum =
     mounting === "ceiling"
       ? Math.max(0.01, product.ceilingInstallation?.minFaceHeightM ?? 0)
@@ -131,22 +161,36 @@ export function fanCoilCeilingRange(
   return ranges.length ? { ranges, defaultM: defaultM ?? below } : null;
 }
 
-export function fanCoilEnvelope(unit: FanCoilPlacement): DeviceEnvelope {
+export function fanCoilEnvelope(
+  unit: FanCoilPlacement,
+  selectedProduct?: Pick<FanCoilProduct, "family" | "model" | "pipes"> | null,
+): DeviceEnvelope {
   const ceiling = unit.mounting === "ceiling";
+  const product =
+    selectedProduct ??
+    fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
+  const panel = product
+    ? fanCoilPanelDimensions(
+        product,
+        unit.panelType ?? fanCoilDefaultPanelType(product, unit.mounting),
+      )
+    : null;
+  const widthMm = panel?.widthMm ?? unit.widthMm;
+  const heightMm = panel?.heightMm ?? unit.heightMm;
   return {
     deviceId: unit.id,
     floorId: unit.floorId,
     roomId: unit.roomId,
     cornersXY: footprintCorners(
       unit.position,
-      unit.widthMm / 1000,
-      (ceiling ? unit.heightMm : unit.depthMm) / 1000,
+      widthMm / 1000,
+      (ceiling ? heightMm : unit.depthMm) / 1000,
       unit.rotation,
     ),
-    minZ: ceiling ? unit.elevationM : unit.elevationM - unit.heightMm / 2000,
+    minZ: ceiling ? unit.elevationM : unit.elevationM - heightMm / 2000,
     maxZ: ceiling
       ? unit.elevationM + unit.depthMm / 1000
-      : unit.elevationM + unit.heightMm / 2000,
+      : unit.elevationM + heightMm / 2000,
   };
 }
 /**
@@ -160,7 +204,15 @@ export function fanCoilRecessedWallValid(
   unit: FanCoilPlacement,
   product: Pick<
     FanCoilProduct,
-    "family" | "features" | "ceilingInstallation"
+    | "family"
+    | "model"
+    | "pipes"
+    | "widthMm"
+    | "heightMm"
+    | "features"
+    | "ceilingInstallation"
+    | "depthMm"
+    | "recessDepthMm"
   >,
 ): boolean {
   const wall = project.walls.find(
@@ -168,17 +220,25 @@ export function fanCoilRecessedWallValid(
   );
   if (!wall) return false;
   const span = roomWallSpan(room, wall);
-  if (!span || span.lengthM + 1e-6 < unit.widthMm / 1000) return false;
+  const panelType =
+    unit.panelType ?? fanCoilDefaultPanelType(product, unit.mounting);
+  const panel = fanCoilPanelDimensions(product, panelType);
+  const visibleWidthMm = panel?.widthMm ?? unit.widthMm;
+  const visibleHeightMm = panel?.heightMm ?? unit.heightMm;
+  if (!span || span.lengthM + 1e-6 < visibleWidthMm / 1000) return false;
   const depthM = unit.depthMm / 1000;
-  if (availableWallDepthM(wall, room.id) + 1e-6 < depthM - 0.002)
+  if (
+    availableWallDepthM(wall, room.id) + 1e-6 <
+    fanCoilRecessDepthMm(product, panelType) / 1000 - 0.002
+  )
     return false;
   const along = distance(
     span.start,
     projection(unit.position, span.start, span.end),
   );
   if (
-    along - unit.widthMm / 2000 < -1e-6 ||
-    along + unit.widthMm / 2000 > span.lengthM + 1e-6
+    along - visibleWidthMm / 2000 < -1e-6 ||
+    along + visibleWidthMm / 2000 > span.lengthM + 1e-6
   )
     return false;
   const expected = positionRecessedAlongRoomWall(room, wall, along, depthM);
@@ -188,10 +248,10 @@ export function fanCoilRecessedWallValid(
   const frontCenter = add(unit.position, scale(normal, depthM / 2));
   // Solo la faccia a vista deve stare nella stanza: il corpo è nella parete.
   const frontEnvelope = {
-    ...fanCoilEnvelope(unit),
+    ...fanCoilEnvelope(unit, product),
     cornersXY: footprintCorners(
       frontCenter,
-      unit.widthMm / 1000,
+      visibleWidthMm / 1000,
       0.002,
       unit.rotation,
     ),
@@ -203,15 +263,22 @@ export function fanCoilRecessedWallValid(
     room,
     {
       ...unit,
+      widthMm: visibleWidthMm,
+      heightMm: visibleHeightMm,
       family: product.family,
+      model: product.model,
+      pipes: product.pipes,
       features: product.features,
+      depthMm: product.depthMm,
+      recessDepthMm: product.recessDepthMm,
       ceilingInstallation: product.ceilingInstallation,
     },
     frontCenter,
     unit.rotation,
     unit.mounting,
+    panelType,
   );
-  const bottom = unit.elevationM - unit.heightMm / 2000;
+  const bottom = unit.elevationM - visibleHeightMm / 2000;
   return !!range?.ranges.some(
     (zone) => bottom >= zone.minM - 1e-7 && bottom <= zone.maxM + 1e-7,
   );
@@ -222,17 +289,24 @@ export function fanCoilPlacementValid(
   unit: FanCoilPlacement,
   product: Pick<
     FanCoilProduct,
-    "family" | "features" | "ceilingInstallation"
+    | "family"
+    | "model"
+    | "pipes"
+    | "widthMm"
+    | "heightMm"
+    | "features"
+    | "ceilingInstallation"
+    | "depthMm"
+    | "recessDepthMm"
   > | null = fanCoilProductAtVersion(unit.productId, unit.catalogVersion),
 ): boolean {
   const room = project.rooms.find(
     (r) => r.id === unit.roomId && r.floorId === unit.floorId,
   );
   if (!room) return false;
-  const envelope = fanCoilEnvelope(unit);
+  const envelope = fanCoilEnvelope(unit, product);
   if (unit.mounting === "ceiling" && !product) return false;
-  const recessedWall =
-    unit.mounting === "wall" && isRecessedFanCoil(product);
+  const recessedWall = unit.mounting === "wall" && isRecessedFanCoil(product);
   if (recessedWall) {
     if (!product || !fanCoilRecessedWallValid(project, room, unit, product))
       return false;
@@ -244,12 +318,17 @@ export function fanCoilPlacementValid(
       {
         ...unit,
         family: product?.family ?? "",
+        model: product?.model ?? "",
+        pipes: product?.pipes ?? "2",
         features: product?.features ?? [],
+        depthMm: product?.depthMm ?? unit.depthMm,
+        recessDepthMm: product?.recessDepthMm,
         ceilingInstallation: product?.ceilingInstallation,
       },
       unit.position,
       unit.rotation,
       unit.mounting,
+      unit.panelType,
     );
     const bottom =
       unit.mounting === "ceiling"
@@ -267,7 +346,7 @@ export function fanCoilPlacementValid(
   if (
     [
       ...projectDeviceEnvelopes(project),
-      ...(project.fanCoils ?? []).map(fanCoilEnvelope),
+      ...(project.fanCoils ?? []).map((item) => fanCoilEnvelope(item)),
     ].some((other) => deviceEnvelopesOverlap(envelope, other))
   )
     return false;
@@ -283,6 +362,13 @@ export function fanCoilPlacementValid(
   if (unit.mounting === "wall") {
     const wall = project.walls.find((w) => w.id === unit.wallId);
     if (!wall || !roomWallSpan(room, wall)) return false;
+    const visibleWidthMm =
+      (product &&
+        fanCoilPanelDimensions(
+          product,
+          unit.panelType ?? fanCoilDefaultPanelType(product, unit.mounting),
+        )?.widthMm) ??
+      unit.widthMm;
     const centerAlong = distance(
       wall.start,
       projection(unit.position, wall.start, wall.end),
@@ -291,8 +377,8 @@ export function fanCoilPlacementValid(
       project.openings.some(
         (o) =>
           o.wallId === wall.id &&
-          centerAlong + unit.widthMm / 2000 > o.offsetM &&
-          centerAlong - unit.widthMm / 2000 < o.offsetM + o.widthM &&
+          centerAlong + visibleWidthMm / 2000 > o.offsetM &&
+          centerAlong - visibleWidthMm / 2000 < o.offsetM + o.widthM &&
           envelope.maxZ > (o.sillHeightM ?? 0) &&
           envelope.minZ < (o.sillHeightM ?? 0) + o.heightM,
       )
@@ -307,8 +393,15 @@ export function initialFanCoilPose(
   room: Room,
   product: FanCoilProduct,
   mounting: FanCoilPlacement["mounting"],
+  panelType: FanCoilPanelType | null = fanCoilDefaultPanelType(
+    product,
+    mounting,
+  ),
 ): FanCoilPose | null {
   if (!product.mountings.includes(mounting)) return null;
+  const panel = fanCoilPanelDimensions(product, panelType);
+  const visibleWidthMm = panel?.widthMm ?? product.widthMm;
+  const visibleHeightMm = panel?.heightMm ?? product.heightMm;
   const base = {
     id: "candidate",
     roomId: room.id,
@@ -321,6 +414,8 @@ export function initialFanCoilPose(
     operatingPointIndex: 0,
     controllerId: null,
     controllerBoard: null,
+    panelType,
+    coverType: null,
     locked: false,
   };
   const poses: FanCoilPose[] = [];
@@ -330,11 +425,11 @@ export function initialFanCoilPose(
       room.wallIds.includes(w.id),
     )) {
       const span = roomWallSpan(room, wall);
-      if (!span || span.lengthM < product.widthMm / 1000 + 0.08) continue;
+      if (!span || span.lengthM < visibleWidthMm / 1000 + 0.08) continue;
       if (
         recessed &&
         availableWallDepthM(wall, room.id) + 1e-6 <
-          product.depthMm / 1000 - 0.002
+          fanCoilRecessDepthMm(product, panelType) / 1000 - 0.002
       )
         continue;
       const rotation = Math.atan2(
@@ -343,8 +438,8 @@ export function initialFanCoilPose(
       );
       const offsets = [span.lengthM / 2];
       for (
-        let offset = product.widthMm / 2000 + 0.04;
-        offset <= span.lengthM - product.widthMm / 2000 - 0.04;
+        let offset = visibleWidthMm / 2000 + 0.04;
+        offset <= span.lengthM - visibleWidthMm / 2000 - 0.04;
         offset += 0.2
       )
         offsets.push(offset);
@@ -359,32 +454,35 @@ export function initialFanCoilPose(
                 offset,
                 product.depthMm / 1000,
               )
-            : positionAlongRoomWall(
-                room,
-                wall,
-                offset,
-                product.depthMm / 1000,
-              ),
+            : positionAlongRoomWall(room, wall, offset, product.depthMm / 1000),
           rotation,
-          elevationM: 0.1 + product.heightMm / 2000,
+          elevationM: 0.1 + visibleHeightMm / 2000,
         });
     }
   } else {
     const box = bounds(room.polygon);
     const positions: Point[] = [room.centroid];
     for (
-      let x = box.minX + product.widthMm / 2000 + 0.02;
+      let x = box.minX + visibleWidthMm / 2000 + 0.02;
       x < box.maxX;
       x += 0.35
     )
       for (
-        let y = box.minY + product.heightMm / 2000 + 0.02;
+        let y = box.minY + visibleHeightMm / 2000 + 0.02;
         y < box.maxY;
         y += 0.35
       )
         positions.push({ x, y });
     for (const position of positions) {
-      const range = fanCoilCeilingRange(project, room, product, position);
+      const range = fanCoilCeilingRange(
+        project,
+        room,
+        product,
+        position,
+        0,
+        mounting,
+        panelType,
+      );
       if (!range) continue;
       const pose: FanCoilPose = {
         position,

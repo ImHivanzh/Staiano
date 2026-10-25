@@ -17,7 +17,9 @@ import {
   type WallPanel,
 } from "./architecture-geometry";
 import { useSurfaceMaterials } from "./use-surface-materials";
-import { drywallGeometry } from "@/domain/geometry/drywall";
+import { drywallGeometries } from "@/domain/geometry/drywall";
+import { drywallSides } from "@/domain/geometry/drywall-sides";
+import { doorThresholdGeometry } from "./door-threshold-geometry";
 
 export type ArchitectureMeshesProps = {
   walls: readonly Wall[];
@@ -163,6 +165,63 @@ function RoomFloor({
         />
       </mesh>
       {chosen && <Line points={line} color="#159bbb" lineWidth={1.7} />}
+    </group>
+  );
+}
+
+function DoorThreshold({
+  wall,
+  opening,
+  rooms,
+  defaultHeightM,
+  textures,
+  floorFinish,
+}: {
+  wall: Wall;
+  opening: ArchitecturalOpening;
+  rooms: readonly Room[];
+  defaultHeightM: number;
+  textures: ReturnType<typeof useSurfaceMaterials>;
+  floorFinish?: "oak" | "stone";
+}) {
+  const tiled = floorFinish === "stone",
+    period = tiled ? 1.5 : 1.7;
+  const aperture = useMemo(
+    () =>
+      measuredOpenings(
+        wall,
+        [opening],
+        architecturalWallHeight(wall, rooms, defaultHeightM),
+      ).find((item) => item.type === "door"),
+    [wall, opening, rooms, defaultHeightM],
+  );
+  const geometry = useMemo(() => {
+    if (!aperture) return null;
+    return doorThresholdGeometry(wall, aperture, period);
+  }, [aperture, wall, period]);
+  useEffect(() => () => geometry?.dispose(), [geometry]);
+  if (!aperture || !geometry) return null;
+  return (
+    <group
+      position={[wall.start.x, 0, wall.start.y]}
+      rotation={[
+        0,
+        -Math.atan2(wall.end.y - wall.start.y, wall.end.x - wall.start.x),
+        0,
+      ]}
+    >
+      <mesh geometry={geometry} receiveShadow>
+        <meshPhysicalMaterial
+          map={tiled ? textures.stone : textures.wood}
+          normalMap={tiled ? textures.stoneNormal : textures.woodNormal}
+          roughnessMap={
+            tiled ? textures.stoneRoughness : textures.woodRoughness
+          }
+          roughness={tiled ? 0.82 : 0.65}
+          clearcoat={tiled ? 0 : 0.12}
+          clearcoatRoughness={0.5}
+        />
+      </mesh>
     </group>
   );
 }
@@ -485,7 +544,7 @@ export function ArchitectureMeshes({
   useEffect(() => {
     gl.domElement.setAttribute(
       "data-drywall-count",
-      String(walls.filter((w) => w.drywall).length),
+      String(walls.reduce((sum, wall) => sum + drywallSides(wall).length, 0)),
     );
     return () => {
       gl.domElement.removeAttribute("data-drywall-count");
@@ -513,8 +572,32 @@ export function ArchitectureMeshes({
           floorFinish={floorFinish}
         />
       ))}
-      {walls.map((wall) => {
-        const hollow = drywallGeometry({ walls, rooms }, wall);
+      {openings.flatMap((opening) => {
+        if (opening.type !== "door") return [];
+        const wall = walls.find(
+          (item) =>
+            item.id === opening.wallId && item.floorId === opening.floorId,
+        );
+        return wall
+          ? [
+              <DoorThreshold
+                key={opening.id}
+                wall={wall}
+                opening={opening}
+                rooms={rooms}
+                defaultHeightM={defaultHeightM}
+                textures={textures}
+                floorFinish={floorFinish}
+              />,
+            ]
+          : [];
+      })}
+      {walls.map((wall, wallIndex) => {
+        const hollows = drywallGeometries({ walls, rooms }, wall);
+        const sketchupGroup = {
+          name: `Muro ${wallIndex + 1}`,
+          userData: { sketchupGroup: true },
+        };
         const renderWall = (
           copy: Wall,
           key: string,
@@ -540,12 +623,21 @@ export function ArchitectureMeshes({
             fixtures={fixtures}
           />
         );
-        if (!hollow) return renderWall(wall, wall.id);
+        if (!hollows.length)
+          return (
+            <group key={wall.id} {...sketchupGroup}>
+              {renderWall(wall, wall.id)}
+            </group>
+          );
         const tangent = {
           x: (wall.end.x - wall.start.x) / distance(wall.start, wall.end),
           y: (wall.end.y - wall.start.y) / distance(wall.start, wall.end),
         };
-        const layer = (face: typeof hollow.front, thickness: number) => {
+        const layer = (
+          hollow: (typeof hollows)[number],
+          face: (typeof hollows)[number]["front"],
+          thickness: number,
+        ) => {
           const forward =
             (face.end.x - face.start.x) * tangent.x +
               (face.end.y - face.start.y) * tangent.y >=
@@ -565,8 +657,6 @@ export function ArchitectureMeshes({
             },
           };
         };
-        const front = layer(hollow.front, 0.0125),
-          back = layer(hollow.back, wall.thickness);
         const apertures = (copy: Wall) =>
           openings.map((opening) =>
             opening.wallId === wall.id
@@ -580,25 +670,48 @@ export function ArchitectureMeshes({
               : opening,
           );
         return (
-          <group key={wall.id} name="Cartongesso con intercapedine vuota">
-            {renderWall(back, "back", false, false, apertures(back))}
-            {renderWall(front, "front", true, true, apertures(front))}
-            {(["start", "end"] as const).map((end) =>
-              hollow[end === "start" ? "joinedStart" : "joinedEnd"]
-                ? null
-                : renderWall(
-                    {
-                      ...wall,
-                      thickness: 0.0125,
-                      start: hollow.back[end],
-                      end: hollow.front[end],
-                    },
-                    end,
+          <group key={wall.id} {...sketchupGroup}>
+            {hollows.map((hollow, index) => {
+              const front = layer(hollow, hollow.front, 0.0125);
+              return (
+                <group key={hollow.roomId}>
+                  {index === 0 &&
+                    (() => {
+                      const back = layer(hollow, hollow.back, wall.thickness);
+                      return renderWall(
+                        back,
+                        "back",
+                        false,
+                        false,
+                        apertures(back),
+                      );
+                    })()}
+                  {renderWall(
+                    front,
+                    `front-${hollow.roomId}`,
                     true,
-                    false,
-                    [],
-                  ),
-            )}
+                    true,
+                    apertures(front),
+                  )}
+                  {(["start", "end"] as const).map((end) =>
+                    hollow[end === "start" ? "joinedStart" : "joinedEnd"]
+                      ? null
+                      : renderWall(
+                          {
+                            ...wall,
+                            thickness: 0.0125,
+                            start: hollow.back[end],
+                            end: hollow.front[end],
+                          },
+                          `${hollow.roomId}-${end}`,
+                          true,
+                          false,
+                          [],
+                        ),
+                  )}
+                </group>
+              );
+            })}
           </group>
         );
       })}

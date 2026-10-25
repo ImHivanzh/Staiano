@@ -1,0 +1,274 @@
+{
+  "files": {
+    "radiators": "radiator-history.json",
+    "airTerminals": "ecoclima-history.json",
+    "hvac": "hvac-history.json",
+    "fanCoils": "fan-coils-history.json",
+    "heatPumps": "heat-pumps-history.json",
+    "splits": "splits-history.json",
+    "vrv": "vrv-history.json"
+  },
+  "catalogs": {
+    "radiators": {
+      "2026-10-03-cordivari-1": {
+        "file": "de06d40fdab41da1938a78a498bc27558d631635bc97fa1cbdfb6fa8f5fc42e7.json",
+        "sha256": "de06d40fdab41da1938a78a498bc27558d631635bc97fa1cbdfb6fa8f5fc42e7"
+      },
+      "2026-10-03-cordivari-900f5cc1068a": {
+        "file": "4c37af3fc74ff508c78c4263599917b1ff189c5fc00e8d655d0dac947dd99586.json",
+        "sha256": "4c37af3fc74ff508c78c4263599917b1ff189c5fc00e8d655d0dac947dd99586"
+      },
+      "2026-10-03-global-1": {
+        "file": "90d57af75fb72030410243fb1f7ffda83c97b2750b2993fdf033a9a6dcf33dcf.json",
+        "sha256": "90d57af75fb72030410243fb1f7ffda83c97b2750b2993fdf033a9a6dcf33dcf"
+      },
+      "2026-10-03-global-b1a71df9b284": {
+        "file": "c3fb275f935c46fc17b20ce7cad78cb82b94a8a07f8acfefb3caf9d3deacf626.json",
+        "sha256": "c3fb275f935c46fc17b20ce7cad78cb82b94a8a07f8acfefb3caf9d3deacf626"
+      },
+      "2026-10-03-global-1c10523537ee": {
+        "file": "e9aa852df7957295bb45ad35a0da5be6a9fea1e6ad6e6bb808fb8e4d72045751.json",
+        "sha256": "e9aa852df7957295bb45ad35a0da5be6a9fea1e6ad6e6bb808fb8e4d72045751"
+      },
+      "2026-10-04-cordivari-comfort-d75f39170e58": {
+        "file": "631506d753f90a5d66f39c87ced7275601cab224b2a94dd19ac9fb1dc07abf18.json",
+        "sha256": "631506d753f90a5d66f39c87ced7275601cab224b2a94dd19ac9fb1dc07abf18"
+      },
+      "2026-10-04-zehnder-a920dfbca736": {
+        "file": "27379324f4913ec8ae689cd9abeee7bec35b401f0c399439fc04c91972e3901d.json",
+        "sha256": "27379324f4913ec8ae689cd9abeee7bec35b401f0c399439fc04c91972e3901d"
+      },
+      "2026-10-04-lazzarini-d89694f428a9": {
+        "file": "ce9ccf53695040f37c30660893ad74f7cb6b96c00024dbd40b1ea31511789dd6.json",
+        "sha256": "ce9ccf53695040f37c30660893ad74f7cb6b96c00024dbd40b1ea31511789dd6"
+      }
+    },
+    "airTerminals": {
+      "2026-10-03-ecoclima-6de07095251b": {
+        "file": "0970c3142c9086571be036fc7aa3c8b590a1e3c0999f7ba73ccb7f15e68d3637.json",
+        "sha256": "0970c3142c9086571be036fc7aa3c8b590a1e3c0999f7ba73ccb7f15e68d3637"
+      },
+      "2026-10-03-ecoclima-6c55b3153b62": {
+        "file": "94422f72e6df2af3b7b533b3134b5e567f05eac34f9cba93a2ae45a02be7224c.json",
+        "sha256": "94422f72e6df2af3b7b533b3134b5e567f05eac34f9cba93a2ae45a02be7224c"
+      },
+      "2026-10-03-ecoclima-f18f034c165c": {
+        "file": "f12a93a58555c6a309c8c73f4dd4580d6ecd04a05f8e544ff96eebe07fe84015.json",
+        "sha256": "f12a93a58555c6a309c8c73f4dd4580d6ecd04a05f8e544ff96eebe07fe84015"
+      },
+      "2026-10-04-ecoclima-44e8c2174094": {
+        "file": "9e449a4e2474a6ed8a64cfdffae06e2b82cdb1730b6f72eb0a4da695fe433e99.json",
+        "sha256": "9e449a4e2474a6ed8a64cfdffae06e2b82cdb1730b6f72eb0a4da695fe433e99"
+      },
+      "2026-10-04-ecoclima-f01779a46f65": {
+        "file": "592265c736dda9fa24edd56f7b516545ddcae900ffdfd34a6f611eac29d61101.json",
+        "sha256": "592265c736dda9fa24edd56f7b516545ddcae900ffdfd34a6f611eac29d61101"
+      },
+      "2026-10-07-ecoclima-ebf9e1e5a329": {
+        "file": "50c163e41374cf10f2e97c7bfda0b3e34d9d8d603bc061f5200062608b21808d.json",
+        "sha256": "50c163e41374cf10f2e97c7bfda0b3e34d9d8d603bc061f5200062608b21808d"
+      },
+      "2026-10-18-ecoclima-0f1cd7f5bc9d": {
+        "file": "e1519b5baa6cd639a38d09a32e0d5d7b21d840d95685e020bc6ee560273337c5.json",
+        "sha256": "e1519b5baa6cd639a38d09a32e0d5d7b21d840d95685e020bc6ee560273337c5"
+      },
+      "2026-10-18-ecoclima-f258e79720fb": {
+        "file": "440442d6cc2ea2600d9350d9c8834ed4fe9c44b421543bd63a41af84bfdbc415.json",
+        "sha256": "440442d6cc2ea2600d9350d9c8834ed4fe9c44b421543bd63a41af84bfdbc415"
+      },
+      "2026-10-24-ecoclima-1cc3ecbe4ba0": {
+        "file": "29fd9b362a1b416e6b2f7e28ba3287cf336ee116bd9caac1c68f3b544cf8ed8c.json",
+        "sha256": "29fd9b362a1b416e6b2f7e28ba3287cf336ee116bd9caac1c68f3b544cf8ed8c"
+      },
+      "2026-10-24-ecoclima-4f27532c2b44": {
+        "file": "4fc273c08020413fc644f7e795a263b5bfc14aa3a77413475be20946f0d545af.json",
+        "sha256": "4fc273c08020413fc644f7e795a263b5bfc14aa3a77413475be20946f0d545af"
+      },
+      "2026-10-24-ecoclima-7eec6a9c9f86": {
+        "file": "8c49b694bf47538c82101e9ed049b96a381ddf5d8298472fd1b797ec096d261f.json",
+        "sha256": "8c49b694bf47538c82101e9ed049b96a381ddf5d8298472fd1b797ec096d261f"
+      },
+      "2026-10-24-ecoclima-83ea962523a4": {
+        "file": "e93ff06ea2023ef661ed32412386480a585606817cdfd4d00adf4d2e03ef9adf.json",
+        "sha256": "e93ff06ea2023ef661ed32412386480a585606817cdfd4d00adf4d2e03ef9adf"
+      },
+      "2026-10-24-ecoclima-31835f1d06b7": {
+        "file": "2f1e1e695eaac9dcb133e04c8d6b6323a95296988b0988eb6794e52e7ff4ef0d.json",
+        "sha256": "2f1e1e695eaac9dcb133e04c8d6b6323a95296988b0988eb6794e52e7ff4ef0d"
+      },
+      "2026-10-24-ecoclima-fff55dbbb38b": {
+        "file": "d3532f89b3cbe3f3138b94cd14c29b80ccf7562576d46474cdaba2bc6119337c.json",
+        "sha256": "d3532f89b3cbe3f3138b94cd14c29b80ccf7562576d46474cdaba2bc6119337c"
+      },
+      "2026-10-24-ecoclima-60409df88026": {
+        "file": "64a018b0c48f451e421bb36f9391e71793968a9ec69fde453a4559d120cf0704.json",
+        "sha256": "64a018b0c48f451e421bb36f9391e71793968a9ec69fde453a4559d120cf0704"
+      },
+      "2026-10-24-ecoclima-1304ecf3182e": {
+        "file": "29057737cf42baf9aa95c1cfa9b1b8f883d09708723113522694b8277c25b422.json",
+        "sha256": "29057737cf42baf9aa95c1cfa9b1b8f883d09708723113522694b8277c25b422"
+      },
+      "2026-10-24-ecoclima-70479a8c4a08": {
+        "file": "189e0e3ccdb8b3e75c2138ee92958863067d749fa95569a6d62926208820a476.json",
+        "sha256": "189e0e3ccdb8b3e75c2138ee92958863067d749fa95569a6d62926208820a476"
+      },
+      "2026-10-24-ecoclima-6a1140d67bc0": {
+        "file": "6a7c6d9306e58e368389468649a56c2749de0d00214d4f6dc7e23a949693ff7b.json",
+        "sha256": "6a7c6d9306e58e368389468649a56c2749de0d00214d4f6dc7e23a949693ff7b"
+      },
+      "2026-10-24-ecoclima-e9415029b22e": {
+        "file": "585e5cad6846dba2d4431b280f37dc5cc9192fd5a2723ed1d448a97ddb687f5b.json",
+        "sha256": "585e5cad6846dba2d4431b280f37dc5cc9192fd5a2723ed1d448a97ddb687f5b"
+      },
+      "2026-10-24-ecoclima-6bdc64a2997b": {
+        "file": "ce6b3c19e0a5c875900e96a56dfae2a5d307f945d358d1ea307f3a117f9feaea.json",
+        "sha256": "ce6b3c19e0a5c875900e96a56dfae2a5d307f945d358d1ea307f3a117f9feaea"
+      },
+      "2026-10-24-ecoclima-e625131beb7a": {
+        "file": "247d8d4b6b50353cf5e193c2a285202b1bae7741e3cb6bcb7ee044c27cb750d9.json",
+        "sha256": "247d8d4b6b50353cf5e193c2a285202b1bae7741e3cb6bcb7ee044c27cb750d9"
+      },
+      "2026-10-24-ecoclima-3409c44d2ebf": {
+        "file": "1912e7e46dc1fad37896d5f838add3a25b00e4758ae864e0eb55bf8eea0754c5.json",
+        "sha256": "1912e7e46dc1fad37896d5f838add3a25b00e4758ae864e0eb55bf8eea0754c5"
+      },
+      "2026-10-24-ecoclima-8cd7abf1685b": {
+        "file": "1022533014a8b2be32c2e1081858ecda621c5464e2fd43fe1bcb554d204feb95.json",
+        "sha256": "1022533014a8b2be32c2e1081858ecda621c5464e2fd43fe1bcb554d204feb95"
+      },
+      "2026-10-24-ecoclima-3b8704bafed5": {
+        "file": "9f85e1a2f2f6ee297b6af0d704df3db6bddc2b9f6ae8fabb62ffcf7a2c0edb6b.json",
+        "sha256": "9f85e1a2f2f6ee297b6af0d704df3db6bddc2b9f6ae8fabb62ffcf7a2c0edb6b"
+      },
+      "2026-10-24-ecoclima-6de2a0989265": {
+        "file": "a8c5b98d13d07aa83d2d7f65f9c8d0db8370f2591a5f66e8d0e9864053257cc1.json",
+        "sha256": "a8c5b98d13d07aa83d2d7f65f9c8d0db8370f2591a5f66e8d0e9864053257cc1"
+      },
+      "2026-10-24-ecoclima-c7893eac1d37": {
+        "file": "20db25e3f958dcae409395c62772d3ad39b0bed0c2a48a3024cf674cd394fc0c.json",
+        "sha256": "20db25e3f958dcae409395c62772d3ad39b0bed0c2a48a3024cf674cd394fc0c"
+      },
+      "2026-10-24-ecoclima-fbaca6b7da7e": {
+        "file": "85775497059abe1ea0b86a3d42c7e0de1b4200c3dcbba2565d7410ce4115cb9e.json",
+        "sha256": "85775497059abe1ea0b86a3d42c7e0de1b4200c3dcbba2565d7410ce4115cb9e"
+      }
+    },
+    "hvac": {
+      "2026-10-03-hvac-ffad7298b808": {
+        "file": "5feb8f9947077a6001298b395589f21cc42dbf14dec87225a1c0e24d8fd1feef.json",
+        "sha256": "5feb8f9947077a6001298b395589f21cc42dbf14dec87225a1c0e24d8fd1feef"
+      },
+      "2026-10-03-hvac-723ad292ebef": {
+        "file": "5f0486a01bc36fa2146d1150db4d8a14acbf73b318fcb7ac062c41e608ba1d58.json",
+        "sha256": "5f0486a01bc36fa2146d1150db4d8a14acbf73b318fcb7ac062c41e608ba1d58"
+      },
+      "2026-10-03-hvac-9505613a27bb": {
+        "file": "3a4b3e1ddaae06f26c10da08027938dd533dd6988f6cbff96a99fdd0175c420e.json",
+        "sha256": "3a4b3e1ddaae06f26c10da08027938dd533dd6988f6cbff96a99fdd0175c420e"
+      },
+      "2026-10-03-hvac-b3fd117050bb": {
+        "file": "c47cfe2d8faf524ab4391b47958f1a0a6a1b0751bebccad1c2b6a0a3b02e3596.json",
+        "sha256": "c47cfe2d8faf524ab4391b47958f1a0a6a1b0751bebccad1c2b6a0a3b02e3596"
+      }
+    },
+    "fanCoils": {
+      "fan-coils-f94b84fe5db91241": {
+        "file": "e00a43a32d9abdd5b0335ecce159ccedcbdbfd5c0e63112d706b9cb7d719896c.json",
+        "sha256": "e00a43a32d9abdd5b0335ecce159ccedcbdbfd5c0e63112d706b9cb7d719896c"
+      },
+      "fan-coils-211ce7f343b9c3dd": {
+        "file": "550650da351d478fe1b99baa2894a4706775d51fc492a907b8f3dd50a032b93e.json",
+        "sha256": "550650da351d478fe1b99baa2894a4706775d51fc492a907b8f3dd50a032b93e"
+      },
+      "fan-coils-b244c72c5197bef0": {
+        "file": "09122dc15f0303e7004e5daa4ea3ae10ecde38cda1b1232dc0cc92a2e5009810.json",
+        "sha256": "09122dc15f0303e7004e5daa4ea3ae10ecde38cda1b1232dc0cc92a2e5009810"
+      },
+      "fan-coils-d073b172b15846c0": {
+        "file": "bd2129309f9d0e6006fb0e1f58c6c1e0613670afb083c5df340fd35bfdd7c121.json",
+        "sha256": "bd2129309f9d0e6006fb0e1f58c6c1e0613670afb083c5df340fd35bfdd7c121"
+      },
+      "fan-coils-9ead4c89dc2d7baf": {
+        "file": "d0993168fc4d21d13b9eacc1103a28ccd7ecff22291982a8646bcfb20357506b.json",
+        "sha256": "d0993168fc4d21d13b9eacc1103a28ccd7ecff22291982a8646bcfb20357506b"
+      },
+      "fan-coils-743c6dffcc1581be": {
+        "file": "d0304a4c80e3ec4338933ad19f135e4f85a37145cc2067bd53006b99eb71ba52.json",
+        "sha256": "d0304a4c80e3ec4338933ad19f135e4f85a37145cc2067bd53006b99eb71ba52"
+      },
+      "fan-coils-136db868d639c2c7": {
+        "file": "5305e0703791b4032eb8b5ba06dc299025cc6ff655b7a313702daf72e6a1d977.json",
+        "sha256": "5305e0703791b4032eb8b5ba06dc299025cc6ff655b7a313702daf72e6a1d977"
+      },
+      "fan-coils-3b6ef4b6a0f5599e": {
+        "file": "d3d240bbf9844b64b20e97b9cb2a2330b76f37338ac30883351a39e6940e3198.json",
+        "sha256": "d3d240bbf9844b64b20e97b9cb2a2330b76f37338ac30883351a39e6940e3198"
+      },
+      "fan-coils-859d5d37169b5ac8": {
+        "file": "27209fb1ff06a32a99759171a8168e07d575a4e3895bc00f95d430294fde1f40.json",
+        "sha256": "27209fb1ff06a32a99759171a8168e07d575a4e3895bc00f95d430294fde1f40"
+      },
+      "fan-coils-4f9fb4797e20ad07": {
+        "file": "901ca89a069a74f359961a213ea814132c0e301a8bea3e003e3083cb3811b1c3.json",
+        "sha256": "901ca89a069a74f359961a213ea814132c0e301a8bea3e003e3083cb3811b1c3"
+      }
+    },
+    "heatPumps": {
+      "heat-pumps-dd01394cdc900d50": {
+        "file": "c8fff35274985ef46c1b0f78c0d983ff4cdd1701d96db35b49db7ed1f225aee8.json",
+        "sha256": "c8fff35274985ef46c1b0f78c0d983ff4cdd1701d96db35b49db7ed1f225aee8"
+      },
+      "heat-pumps-6b5487027be7da66": {
+        "file": "4c05446327d775706d247d6be502ae3a04c0f1089487bbbc3d87b502c4ba1562.json",
+        "sha256": "4c05446327d775706d247d6be502ae3a04c0f1089487bbbc3d87b502c4ba1562"
+      },
+      "heat-pumps-02e321c6c1440ea8": {
+        "file": "b50f108ea3a9ce3e990b43aed4071a631b48a45a52ae4cca91dec91507137199.json",
+        "sha256": "b50f108ea3a9ce3e990b43aed4071a631b48a45a52ae4cca91dec91507137199"
+      },
+      "heat-pumps-7c78dec889812c6f": {
+        "file": "5b23ecfc7c7ca2eaabae6c19c0161077cc7bf4936fbe861ee295055fc8dd4ae6.json",
+        "sha256": "5b23ecfc7c7ca2eaabae6c19c0161077cc7bf4936fbe861ee295055fc8dd4ae6"
+      },
+      "heat-pumps-9e3730348d934831": {
+        "file": "74a6c83e6808391d785461f0d558643abf2f37595f58bf1067a337d60dd14290.json",
+        "sha256": "74a6c83e6808391d785461f0d558643abf2f37595f58bf1067a337d60dd14290"
+      }
+    },
+    "splits": {
+      "split-9f15b7321a1cf3e0": {
+        "file": "3575ec2e2be0a4cd46b0be74e608b1d97c69da5a5389e80f383daf6fd00cfafa.json",
+        "sha256": "3575ec2e2be0a4cd46b0be74e608b1d97c69da5a5389e80f383daf6fd00cfafa"
+      },
+      "split-4de65f13c1550db9": {
+        "file": "ea7652b2c5515765aea19e9be65d7e64f108d349847d941d3fbe2cd643c7e491.json",
+        "sha256": "ea7652b2c5515765aea19e9be65d7e64f108d349847d941d3fbe2cd643c7e491"
+      },
+      "split-53035a43d1e114cd": {
+        "file": "61e54512506e45efc1b17af1f8ec345a9e7f0566561bf079504a5b6b2a2e511c.json",
+        "sha256": "61e54512506e45efc1b17af1f8ec345a9e7f0566561bf079504a5b6b2a2e511c"
+      },
+      "split-5fca5af2b8c15f02": {
+        "file": "c8a85a10ef6361a297ddb02c79cdf0d91cc69e0ce7d1c25c5ba4824e4fd6b72d.json",
+        "sha256": "c8a85a10ef6361a297ddb02c79cdf0d91cc69e0ce7d1c25c5ba4824e4fd6b72d"
+      },
+      "split-a1e83e0e95f5315f": {
+        "file": "7f0803bbdbdd11bce34701287644aa629e24d2e0b2ac4cd8b178812e9a215abf.json",
+        "sha256": "7f0803bbdbdd11bce34701287644aa629e24d2e0b2ac4cd8b178812e9a215abf"
+      },
+      "split-3f7ba4d2353eac54": {
+        "file": "d458bd950fb758b5cd2a5890ccab0c3de5fd2668d0e4bd5a8f338a290c49d152.json",
+        "sha256": "d458bd950fb758b5cd2a5890ccab0c3de5fd2668d0e4bd5a8f338a290c49d152"
+      },
+      "split-b8d518544ff1ef35": {
+        "file": "828767890888122472f38bed7b47edbbec2f0fffdcf1d8cf4d0dfcda90bfa5b2.json",
+        "sha256": "828767890888122472f38bed7b47edbbec2f0fffdcf1d8cf4d0dfcda90bfa5b2"
+      },
+      "split-4f956350e804f2a6": {
+        "file": "6e72cb86029324d5e0a489bafd7618d9b02157bedd61fbd044e96b51d74f315c.json",
+        "sha256": "6e72cb86029324d5e0a489bafd7618d9b02157bedd61fbd044e96b51d74f315c"
+      }
+    },
+    "vrv": {}
+  }
+}

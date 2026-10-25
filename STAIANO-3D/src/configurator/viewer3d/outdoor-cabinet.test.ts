@@ -12,7 +12,7 @@ it("keeps the physical casing and feet inside the complete published enclosure f
     ...vrvCatalog.outdoorUnits,
     ...heatPumpCatalog.products,
   ];
-  expect(products).toHaveLength(162);
+  expect(products).toHaveLength(170);
   for (const product of products) {
     const w = product.widthMm / 1000,
       h = product.heightMm / 1000,

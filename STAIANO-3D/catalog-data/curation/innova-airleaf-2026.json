@@ -258,6 +258,106 @@
       "airflowM3h": 542.0,
       "noiseDbA": 47.0,
       "page": 43
+    },
+    "innova-airleaf-rsi-200-2t": {
+      "widthMm": 525.0,
+      "heightMm": 576.0,
+      "depthMm": 126.0,
+      "coolingW": 910.0,
+      "heatingW": 1020.0,
+      "airflowM3h": 146.0,
+      "noiseDbA": 41.0,
+      "page": 42
+    },
+    "innova-airleaf-rsi-400-2t": {
+      "widthMm": 725.0,
+      "heightMm": 576.0,
+      "depthMm": 126.0,
+      "coolingW": 2120.0,
+      "heatingW": 2210.0,
+      "airflowM3h": 294.0,
+      "noiseDbA": 42.0,
+      "page": 42
+    },
+    "innova-airleaf-rsi-600-2t": {
+      "widthMm": 925.0,
+      "heightMm": 576.0,
+      "depthMm": 126.0,
+      "coolingW": 2810.0,
+      "heatingW": 3020.0,
+      "airflowM3h": 438.0,
+      "noiseDbA": 44.0,
+      "page": 42
+    },
+    "innova-airleaf-rsi-800-2t": {
+      "widthMm": 1125.0,
+      "heightMm": 576.0,
+      "depthMm": 126.0,
+      "coolingW": 3300.0,
+      "heatingW": 3810.0,
+      "airflowM3h": 567.0,
+      "noiseDbA": 46.0,
+      "page": 42
+    },
+    "innova-airleaf-rsi-1000-2t": {
+      "widthMm": 1325.0,
+      "heightMm": 576.0,
+      "depthMm": 126.0,
+      "coolingW": 3710.0,
+      "heatingW": 4320.0,
+      "airflowM3h": 663.0,
+      "noiseDbA": 47.0,
+      "page": 42
+    },
+    "innova-airleaf-slsi-200-2t": {
+      "widthMm": 525,
+      "heightMm": 376,
+      "depthMm": 126,
+      "coolingW": 510,
+      "heatingW": 610,
+      "airflowM3h": 113,
+      "noiseDbA": 39,
+      "page": 42
+    },
+    "innova-airleaf-slsi-400-2t": {
+      "widthMm": 725,
+      "heightMm": 376,
+      "depthMm": 126,
+      "coolingW": 1210,
+      "heatingW": 1510,
+      "airflowM3h": 228,
+      "noiseDbA": 40,
+      "page": 42
+    },
+    "innova-airleaf-slsi-600-2t": {
+      "widthMm": 925,
+      "heightMm": 376,
+      "depthMm": 126,
+      "coolingW": 1620,
+      "heatingW": 2030,
+      "airflowM3h": 331,
+      "noiseDbA": 41,
+      "page": 42
+    },
+    "innova-airleaf-slsi-800-2t": {
+      "widthMm": 1125,
+      "heightMm": 376,
+      "depthMm": 126,
+      "coolingW": 2120,
+      "heatingW": 2620,
+      "airflowM3h": 440,
+      "noiseDbA": 42,
+      "page": 42
+    },
+    "innova-airleaf-slsi-1000-2t": {
+      "widthMm": 1325,
+      "heightMm": 376,
+      "depthMm": 126,
+      "coolingW": 2600,
+      "heatingW": 3110,
+      "airflowM3h": 489,
+      "noiseDbA": 43,
+      "page": 42
     }
   },
   "horizontalSlInstallation": {

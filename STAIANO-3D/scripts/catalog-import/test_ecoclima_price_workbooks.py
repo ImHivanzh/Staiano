@@ -36,6 +36,23 @@ class OfficialPriceExtractionTests(unittest.TestCase):
             self.assertEqual(kits[0]["unitPriceCents"], kit_cents)
             self.assertFalse(any(kits[0]["dimensions"].values()))
 
+    def test_erdr_flow_ranges_and_emtd_diameters_are_distinct_prices(self):
+        erdr = [price for price in self.data["prices"]
+                if price["familyCode"] == "ERDR" and price["dimensions"]["diameterMm"] == 250]
+        self.assertEqual({price["catalogSizeCode"]: price["unitPriceCents"] for price in erdr}, {
+            "250 · 50 - 100 m³/h": 10870,
+            "250 · 100 - 180 m³/h": 10870,
+            "250 · 180 - 300 m³/h": 10870,
+            "250 · 300 - 500 m³/h": 10870,
+            "250 · 450 - 700 m³/h": 12456,
+        })
+        emtd = sorted((price["dimensions"]["diameterMm"], price["unitPriceCents"])
+                     for price in self.find("EVALI", "EMTD"))
+        self.assertEqual(emtd, [(80, 1814), (125, 1631)])
+        self.assertFalse(any(issue["familyCode"] in ("ERDR", "EVALI") and
+                             "Conflicting published SKU prices" in issue["reason"]
+                             for issue in self.data["issues"]))
+
     def test_official_html_fills_exporter_plenum_omissions(self):
         for family in ("EGA1-4", "EGA6", "EGQ-PUSH"):
             upper = [price for price in self.find(family, "EPI", widthMm=200, heightMm=200) if price["connectionPosition"] == "upper"]

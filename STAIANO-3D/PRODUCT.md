@@ -191,7 +191,7 @@ salvato e quelli storici senza coefficiente restano a 35. Il valore scelto si sa
 nel progetto e si modifica anche da File > Impostazioni progetto e piani.
 Il fabbisogno usa il volume netto effettivo, comprese falde e ribassamenti.
 Il ricalcolo conserva geometria, apparecchi ed esclusioni dalla climatizzazione;
-controlli, dimensionamento e PDF usano i nuovi carichi. I file dello schema 9
+controlli, dimensionamento e PDF usano i nuovi carichi. I file dello schema 11
 richiedono una versione aggiornata sugli altri client.
 
 I nuovi progetti usano 50 cm come preset dei muri esterni. Impostazioni progetto

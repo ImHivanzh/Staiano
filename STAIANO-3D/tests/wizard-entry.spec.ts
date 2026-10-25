@@ -52,6 +52,9 @@ test("wizard has room to read and its controls fit laptop and phone screens", as
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Avvia wizard", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Avvia procedura guidata", exact: true })
+    .click();
   const wizard = page.getByRole("region", {
     name: "Configurazione guidata",
     exact: true,
@@ -98,7 +101,7 @@ test("wizard has room to read and its controls fit laptop and phone screens", as
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await expect(wizard.getByLabel(/^Altezza /)).toHaveValue("3.1");
-  await wizard.getByRole("button", { name: /^Modifica / }).click();
+  await wizard.getByRole("button", { name: /^Quote e vuoti / }).click();
   await expect(
     page.locator(".proprieta").getByRole("heading", { level: 2 }),
   ).toBeVisible();
@@ -123,6 +126,9 @@ test("wizard starts from the home page and resumes saved progress", async ({
 }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Avvia wizard", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Avvia procedura guidata", exact: true })
+    .click();
   const wizard = page.getByRole("region", {
     name: "Configurazione guidata",
     exact: true,

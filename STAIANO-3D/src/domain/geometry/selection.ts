@@ -5,6 +5,7 @@ import { followWallTransforms } from "./follow-walls";
 import { movePlacedDevice } from "./move-device";
 import { overlappingPolygons } from "./rooms";
 import { removeEmptiedInstallations } from "../installations";
+import { drywallSides, withDrywallSides } from "./drywall-sides";
 
 function selectedGeometry(project: Project, selection: Selection[]) {
   const roomIds = new Set(
@@ -317,10 +318,14 @@ export function duplicateSelection(
     id: wallMap.get(wall.id)!,
     start: add(wall.start, offset),
     end: add(wall.end, offset),
-    drywall:
-      wall.drywall && roomMap.has(wall.drywall.roomId)
-        ? { ...wall.drywall, roomId: roomMap.get(wall.drywall.roomId)! }
-        : undefined,
+    drywall: withDrywallSides(
+      wall,
+      drywallSides(wall).flatMap((side) =>
+        roomMap.has(side.roomId)
+          ? [{ ...side, roomId: roomMap.get(side.roomId)! }]
+          : [],
+      ),
+    ).drywall,
   }));
   const allDevices = [
     ...project.radiators,

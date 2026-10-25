@@ -9,6 +9,29 @@ import {
 } from "@/server/project-sharing";
 
 afterEach(() => vi.unstubAllGlobals());
+it("distinguishes an unavailable shared list from an empty one and keeps local projects usable", async () => {
+  const { project } = server();
+  const repository = new SharedProjectRepository(
+    `sharing-list-${crypto.randomUUID()}`,
+  );
+  const local = createProject("Local");
+  await repository.save(local);
+  await repository.get(project.id);
+  expect((await repository.list()).map((item) => item.id)).toContain(
+    project.id,
+  );
+  expect(repository.listError).toBeNull();
+  vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("offline")));
+  expect((await repository.list()).map((item) => item.id)).toEqual([local.id]);
+  expect(repository.listError).toContain("Archivio condiviso non disponibile");
+  expect((await repository.get(local.id))?.id).toBe(local.id);
+  vi.stubGlobal(
+    "fetch",
+    vi.fn().mockResolvedValue(Response.json({ projects: [], users: [] })),
+  );
+  expect((await repository.list()).map((item) => item.id)).toEqual([local.id]);
+  expect(repository.listError).toBeNull();
+});
 function server() {
   const project = createProject("Shared");
   const item: SharedRecord = {

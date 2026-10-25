@@ -2,6 +2,7 @@
 import Image from "next/image";
 import type { AirTerminalFamily } from "@/domain/catalogs/air-terminal-schema";
 import styles from "./TerminalFamilyPicker.module.css";
+import { airTerminalCoverage } from "@/domain/air-terminals/data-quality";
 
 export function TerminalFamilyPicker({
   options,
@@ -20,6 +21,7 @@ export function TerminalFamilyPicker({
   );
   function modelButton({ family, compatible }: (typeof options)[number]) {
     const supportedUse = family.use.includes(use);
+    const coverage = airTerminalCoverage(family);
     return (
       <button
         type="button"
@@ -47,6 +49,16 @@ export function TerminalFamilyPicker({
               : family.familyCode}
         </strong>
         <span>{family.name}</span>
+        <small>
+          Prestazioni: {coverage.validPoints} punti utilizzabili ·{" "}
+          {coverage.reviewPoints} in revisione
+        </small>
+        <small>
+          Geometria: {coverage.faces}/{coverage.variants} facce e{" "}
+          {coverage.depths}/{coverage.variants} profondità risolte
+        </small>
+        <small>Prezzo: verifica la configurazione nel listino separato</small>
+        {family.mountings?.length ? <small>{family.mountingType}</small> : null}
         {primary.some((item) => item.family.familyCode === family.familyCode) &&
           compatible && (
             <small className={styles.recommended}>Consigliata</small>

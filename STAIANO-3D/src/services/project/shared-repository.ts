@@ -1,5 +1,6 @@
 import type { Project } from "@/schemas/project";
 import { IndexedDbProjectRepository, ProjectConflictError } from "./repository";
+import { prepareProject } from "./format";
 export type SharedDetails = {
   project: Project;
   previous?: Project | null;
@@ -29,9 +30,14 @@ export async function sharedRequest(path = "", body?: object) {
     error.message = result.message ?? "Archivio condiviso non disponibile.";
     throw error;
   }
+  if (result.project) result.project = await prepareProject(result.project);
+  if (result.previous) result.previous = await prepareProject(result.previous);
+  if (Array.isArray(result.projects))
+    result.projects = await Promise.all(result.projects.map(prepareProject));
   return result;
 }
 export class SharedProjectRepository extends IndexedDbProjectRepository {
+  listError: string | null = null;
   readonly token = crypto.randomUUID();
   private shared = new Map<string, SharedDetails>();
   private readonlyIds = new Set<string>();
@@ -133,11 +139,14 @@ export class SharedProjectRepository extends IndexedDbProjectRepository {
     const local = await super.list();
     try {
       const { projects } = await sharedRequest();
+      this.listError = null;
       const ids = new Set(projects.map((p: Project) => p.id));
       return [...projects, ...local.filter((p) => !ids.has(p.id))].toSorted(
         (a: Project, b: Project) => b.updatedAt.localeCompare(a.updatedAt),
       );
     } catch {
+      this.listError =
+        "Archivio condiviso non disponibile. Sono visibili solo i progetti locali; quelli condivisi non sono stati cancellati.";
       return local.filter((p) => !this.isShared(p.id));
     }
   }

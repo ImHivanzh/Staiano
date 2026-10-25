@@ -20,6 +20,29 @@ it("preserves published model sizes instead of silently ordering by face envelop
   expect(airTerminalModelDescription(valve, "ecoclima-evvmc-80")).toContain(
     "nominale 80 mm",
   );
+  const square = airTerminalCatalog.families.find(
+    (family) => family.familyCode === "EDE1",
+  )!;
+  expect(
+    airTerminalModelDescription(square, "ecoclima-ede1-300-600"),
+  ).toContain("modello 300/600 · fronte 595×595 mm");
+  const linearGrille = airTerminalCatalog.families.find(
+    (family) => family.familyCode === "EBL",
+  )!;
+  expect(
+    airTerminalModelDescription(
+      linearGrille,
+      "ecoclima-ebl-600x75",
+      "EBL-20/0°",
+    ),
+  ).toContain("modello EBL-20/0° · fronte 635×110 mm");
+  expect(
+    airTerminalModelDescription(
+      linearGrille,
+      "ecoclima-ebl-600x75",
+      "EBL-22/0°",
+    ),
+  ).toContain("modello EBL-22/0° · fronte 599×74 mm");
   const linear = airTerminalCatalog.families.find(
     (family) => family.familyCode === "EDLS",
   )!;

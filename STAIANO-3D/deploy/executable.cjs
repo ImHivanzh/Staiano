@@ -58,7 +58,7 @@ function verifyManifest(
   return value;
 }
 
-function fingerprint() {
+function fingerprint(preferred) {
   const guid = execFileSync(
     "reg.exe",
     ["query", "HKLM\\SOFTWARE\\Microsoft\\Cryptography", "/v", "MachineGuid"],
@@ -81,8 +81,9 @@ function fingerprint() {
     )
     .map((x) => x.mac)
     .sort();
-  if (macs.length) parts.push(`mac:${macs[0]}`);
-  return `mch_${crypto.createHash("sha256").update(parts.join("|")).digest("hex").slice(0, 32)}`;
+  const candidates = macs.length ? [...new Set(macs)].map((mac) => [...parts, `mac:${mac}`]) : [parts];
+  const fingerprints = candidates.map((components) => `mch_${crypto.createHash("sha256").update(components.join("|")).digest("hex").slice(0, 32)}`);
+  return fingerprints.includes(preferred) ? preferred : fingerprints[0];
 }
 
 function atomicJson(file, value) {
@@ -91,18 +92,20 @@ function atomicJson(file, value) {
   fs.renameSync(temp, file);
 }
 
-/** Rimuove gli exe delle versioni precedenti, tranne quella attiva e quella in esecuzione. */
+/** Conserva la versione attiva, quella in esecuzione e il rollback dichiarato. */
 function pruneVersions(install, keepSha) {
   const root = path.join(install, "versions"),
     running = path.basename(path.dirname(process.execPath));
   let names = [];
+  let previous;
+  try { previous = JSON.parse(fs.readFileSync(path.join(install, "active.json"), "utf8")).previousSha256; } catch { /* Prima installazione. */ }
   try {
     names = fs.readdirSync(root);
   } catch {
     return;
   }
   for (const name of names) {
-    if (name === keepSha || name === running) continue;
+    if (name === keepSha || name === running || name === previous) continue;
     try {
       fs.rmSync(path.join(root, name), {
         recursive: true,
@@ -204,9 +207,13 @@ async function catalogMissing(directory, manifest) {
     } catch {
       continue;
     }
-    present.add(crypto.createHash("sha256").update(content).digest("hex"));
+    present.add(
+      crypto.createHash("sha256").update(content).digest("hex").toLowerCase(),
+    );
   }
-  return manifest.filter((document) => !present.has(document.sha256));
+  return manifest.filter(
+    (document) => !present.has(document.sha256.toLowerCase()),
+  );
 }
 
 function catalogStatus(dataRoot) {
@@ -368,7 +375,7 @@ function catalogState(dataRoot) {
     scan,
     sourceHint: process.env.STAIANO_CATALOG_SOURCE || "",
     checkedAt: new Date().toISOString(),
-    fingerprint: `${scan.total}:${scan.bytes}:${Math.round(scan.newest)}`,
+    fingerprint: `sha256-casefold-v2:${scan.total}:${scan.bytes}:${Math.round(scan.newest)}`,
   };
 }
 
@@ -472,7 +479,7 @@ async function authorization(dataRoot, config, sequence, versionOnly = false) {
     : JSON.parse(
         fs.readFileSync(path.join(dataRoot, ".cache", "license.json"), "utf8"),
       );
-  const machineId = fingerprint();
+  const machineId = fingerprint(state?.machineId);
   if (state && state.machineId !== machineId)
     throw new Error("Licenza appartenente a un'altra postazione.");
   const nonce = crypto.randomBytes(32).toString("hex");
@@ -576,7 +583,7 @@ async function update(dataRoot, config) {
     );
     await download(release, temporary, {
       licenseKey: state.key,
-      machineId: fingerprint(),
+      machineId: release.machineId,
       nonce: release.nonce,
     });
     fs.renameSync(temporary, target);
@@ -641,6 +648,7 @@ async function update(dataRoot, config) {
       sequence: release.sequence,
       commit: release.commit,
       sha256: release.sha256,
+      previousSha256: current.sha256,
     });
     console.log(`Aggiornamento installato: ${release.commit}`);
   } catch (error) {

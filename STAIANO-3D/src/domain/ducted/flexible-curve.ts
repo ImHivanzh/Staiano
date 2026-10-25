@@ -1,5 +1,77 @@
 import { Curve, CurvePath, LineCurve3, Vector3 } from "three";
+import { flexibleDuctMinimumRadiusFactor } from "@/domain/catalogs/flexible-ducts";
 import type { RoutePoint } from "./routes";
+import { segmentDistance } from "../geometry/segment-distance";
+
+function selfSegment(
+  a: Vector3,
+  b: Vector3,
+  error: number,
+  start: number,
+  end: number,
+) {
+  return {
+    a,
+    b,
+    error,
+    start,
+    end,
+    minX: Math.min(a.x, b.x),
+    maxX: Math.max(a.x, b.x),
+    minY: Math.min(a.y, b.y),
+    maxY: Math.max(a.y, b.y),
+    minZ: Math.min(a.z, b.z),
+    maxZ: Math.max(a.z, b.z),
+  };
+}
+
+function selfSegmentsOverlap(
+  a: ReturnType<typeof selfSegment>,
+  b: ReturnType<typeof selfSegment>,
+  diameter: number,
+  tolerance: number,
+): boolean {
+  // Ignore neighbouring portions of one bend, not entire long runs near that bend.
+  if (b.end - a.start <= 2 * diameter) return false;
+  const limit = diameter + a.error + b.error - 1e-5;
+  if (
+    a.minX - b.maxX > limit ||
+    b.minX - a.maxX > limit ||
+    a.minY - b.maxY > limit ||
+    b.minY - a.maxY > limit ||
+    a.minZ - b.maxZ > limit ||
+    b.minZ - a.maxZ > limit
+  )
+    return false;
+  if (
+    b.start - a.end >= 2 * diameter ||
+    Math.max(a.end - a.start, b.end - b.start) <= tolerance
+  )
+    return segmentDistance(a.a, a.b, b.a, b.b) < limit ** 2;
+  const splitA = a.end - a.start >= b.end - b.start;
+  const segment = splitA ? a : b;
+  const middle = segment.a.clone().add(segment.b).multiplyScalar(0.5);
+  const along = (segment.start + segment.end) / 2;
+  const first = selfSegment(
+    segment.a,
+    middle,
+    segment.error,
+    segment.start,
+    along,
+  );
+  const second = selfSegment(
+    middle,
+    segment.b,
+    segment.error,
+    along,
+    segment.end,
+  );
+  return splitA
+    ? selfSegmentsOverlap(first, b, diameter, tolerance) ||
+        selfSegmentsOverlap(second, b, diameter, tolerance)
+    : selfSegmentsOverlap(a, first, diameter, tolerance) ||
+        selfSegmentsOverlap(a, second, diameter, tolerance);
+}
 
 class CircularBend extends Curve<Vector3> {
   constructor(
@@ -26,15 +98,35 @@ class CircularBend extends Curve<Vector3> {
   }
 }
 
-/** Circular fillets: drawing preference R=2D, geometric floor R=D (ADC installation guidance).
- * https://flexibleduct.org/images/ADC~IR5E.pdf, section 4.4. Product-specific limits still apply.
- */
-export function flexibleDuctCurve(points: RoutePoint[], diameterMm: number) {
-  return attempt(points, diameterMm, 2) ?? attempt(points, diameterMm, 1);
+/** Circular fillets: prefer R=2D and respect the selected tube's published minimum. */
+export function flexibleDuctCurve(
+  points: RoutePoint[],
+  diameterMm: number,
+  productId?: string | null,
+) {
+  const minimumRadiusFactor = flexibleDuctMinimumRadiusFactor(
+    productId,
+    diameterMm,
+  );
+  if (
+    !Number.isFinite(minimumRadiusFactor) ||
+    minimumRadiusFactor <= 0 ||
+    minimumRadiusFactor > 2
+  )
+    return null;
+  return (
+    attempt(points, diameterMm, 2, minimumRadiusFactor) ??
+    attempt(points, diameterMm, minimumRadiusFactor, minimumRadiusFactor)
+  );
 }
 
-/** `target` è il raggio in diametri: 2 ideale, 1 minimo ammesso all'attacco. */
-function attempt(points: RoutePoint[], diameterMm: number, target: 1 | 2) {
+/** `target` e `minimum` sono raggi espressi come multipli del diametro. */
+function attempt(
+  points: RoutePoint[],
+  diameterMm: number,
+  target: number,
+  minimum: number,
+) {
   if (!Number.isFinite(diameterMm) || diameterMm <= 0) return null;
   const vertices: Vector3[] = [];
   for (const point of points) {
@@ -74,7 +166,7 @@ function attempt(points: RoutePoint[], diameterMm: number, target: 1 | 2) {
   const radii = angles.map((angle, i) =>
     angle ? target * diameter * Math.min(factors[i - 1], factors[i]) : 0,
   );
-  if (radii.some((r, i) => angles[i] > 1e-6 && r < diameter - 1e-8))
+  if (radii.some((r, i) => angles[i] > 1e-6 && r < diameter * minimum - 1e-8))
     return null;
   const curve = new CurvePath<Vector3>();
   let cursor = vertices[0];
@@ -103,13 +195,40 @@ function attempt(points: RoutePoint[], diameterMm: number, target: 1 | 2) {
   }
   if (cursor.distanceTo(vertices.at(-1)!) > 1e-7)
     curve.add(new LineCurve3(cursor, vertices.at(-1)!));
-  const length = curve.getLength();
-  const count = Math.min(1024, Math.max(8, Math.ceil(length / (diameter / 2))));
-  const samples = curve.getSpacedPoints(count);
-  const adjacent = Math.ceil((2 * diameter) / (length / count));
-  for (let i = 0; i < samples.length; i++)
-    for (let j = i + adjacent + 1; j < samples.length; j++)
-      if (samples[i].distanceToSquared(samples[j]) < (diameter - 1e-5) ** 2)
+  // Straight runs stay exact; arc chords have at most 1 mm sagitta, added conservatively to the clearance.
+  const tolerance = Math.min(0.001, diameter / 100);
+  let distance = 0;
+  const segments = curve.curves.flatMap((part) => {
+    const length = part.getLength();
+    const error = part instanceof CircularBend ? tolerance : 0;
+    const count =
+      part instanceof CircularBend
+        ? Math.max(
+            1,
+            Math.ceil(
+              part.angle /
+                (2 * Math.acos(1 - tolerance / part.radial.length())),
+            ),
+          )
+        : 1;
+    const result = Array.from({ length: count }, (_, index) => {
+      const a = part.getPoint(index / count),
+        b = part.getPoint((index + 1) / count);
+      return selfSegment(
+        a,
+        b,
+        error,
+        distance + (length * index) / count,
+        distance + (length * (index + 1)) / count,
+      );
+    });
+    distance += length;
+    return result;
+  });
+  for (let i = 0; i < segments.length; i++) {
+    for (let j = i + 2; j < segments.length; j++)
+      if (selfSegmentsOverlap(segments[i], segments[j], diameter, tolerance))
         return null;
+  }
   return { curve, minimumRadiusM: Math.min(...radii.filter((r) => r > 0)) };
 }

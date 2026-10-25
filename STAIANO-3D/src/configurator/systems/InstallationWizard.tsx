@@ -1,6 +1,9 @@
 "use client";
 import type { Project, Room } from "@/schemas/project";
-import { useProjectStore } from "@/stores/project-store";
+import {
+  useProjectStore,
+  type PlanPlacementTool,
+} from "@/stores/project-store";
 
 export function InstallationWizard({
   project,
@@ -28,7 +31,7 @@ export function InstallationWizard({
       radiators.some((device) => device.roomId === room.id) ||
       fanCoils.some((device) => device.roomId === room.id),
   );
-  function place(planPlacementTool: "machine" | "radiator") {
+  function place(planPlacementTool: PlanPlacementTool) {
     useProjectStore.getState().setView("2d");
     useProjectStore.setState({
       planPlacementTool,
@@ -39,24 +42,28 @@ export function InstallationWizard({
   return (
     <section aria-label="Impianti del progetto">
       <p>
-        Macchine, radiatori e ventilconvettori sono gli impianti del progetto.
-        Inseriscili sulla pianta e cliccali per configurarli.
+        Scegli un apparecchio e inseriscilo sulla pianta. Il clic su un
+        apparecchio esistente apre la sua configurazione.
       </p>
       <div className="scelta-partenza">
-        <button
-          className="bottone pieno"
-          disabled={!rooms.length}
-          onClick={() => place("machine")}
-        >
-          Inserisci macchina sulla pianta
-        </button>
-        <button
-          className="bottone"
-          disabled={!rooms.length}
-          onClick={() => place("radiator")}
-        >
-          Inserisci radiatore sulla pianta
-        </button>
+        <label className="campo">
+          <span>Aggiungi apparecchio</span>
+          <select
+            value=""
+            disabled={!rooms.length}
+            onChange={(event) => place(event.target.value as PlanPlacementTool)}
+          >
+            <option value="" disabled>
+              Scegli e inserisci sulla pianta
+            </option>
+            <option value="machine">Macchina canalizzata</option>
+            <option value="radiator">Radiatore</option>
+            <option value="fanCoil">Ventilconvettore</option>
+            <option value="split">Split</option>
+            <option value="vrv">VRV / VRF</option>
+            <option value="heatPump">Pompa di calore</option>
+          </select>
+        </label>
       </div>
       {machines.map((machine) => (
         <div className="formula" key={machine.id}>

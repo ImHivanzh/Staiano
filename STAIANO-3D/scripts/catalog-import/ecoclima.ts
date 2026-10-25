@@ -2,6 +2,7 @@ import { readFile, mkdir, writeFile, copyFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
+import { isDeepStrictEqual } from "node:util";
 import {
   airTerminalCatalogSchema,
   type AirTerminalFamily,
@@ -642,29 +643,83 @@ const imageSources = JSON.parse(
 ) as Record<string, { path: string }>;
 for (const family of catalog.families)
   family.image = imageSources[family.familyCode]?.path ?? family.image;
-catalog.version = `${now.slice(0, 10)}-ecoclima-${createHash("sha256")
-  .update(
-    JSON.stringify(
-      catalog.families.map((f) => ({
-        ...f,
-        sourceMetadata: {
-          sourceUrl: f.sourceMetadata.sourceUrl,
-          sha256: f.sourceMetadata.sha256,
-          documentRevision: f.sourceMetadata.documentRevision,
-        },
-      })),
-    ),
-  )
-  .digest("hex")
-  .slice(0, 12)}`;
-const output = path.join(root, "catalog-data/generated");
-await mkdir(output, { recursive: true });
-const target = path.join(output, "ecoclima.json"),
-  staging = path.join(output, "ecoclima.staging.json");
-await writeFile(staging, JSON.stringify(catalog, null, 2));
-const oldCatalog = existsSync(target)
+const target = path.join(root, "catalog-data/generated/ecoclima.json");
+const previousCatalog = existsSync(target)
   ? airTerminalCatalogSchema.parse(JSON.parse(await readFile(target, "utf8")))
   : null;
+const sourceKey = ({
+  sourceUrl,
+  sha256,
+}: {
+  sourceUrl: string;
+  sha256: string;
+}) => `${sourceUrl}\0${sha256}`;
+const importedAtBySource = new Map<string, string>();
+for (const family of previousCatalog?.families ?? []) {
+  importedAtBySource.set(
+    sourceKey(family.sourceMetadata),
+    family.sourceMetadata.importedAt,
+  );
+  for (const { sourceMetadata } of family.supportingSources ?? [])
+    importedAtBySource.set(
+      sourceKey(sourceMetadata),
+      sourceMetadata.importedAt,
+    );
+}
+for (const family of catalog.families) {
+  const preserveImportTime = (sourceMetadata: typeof family.sourceMetadata) => {
+    const previous = importedAtBySource.get(sourceKey(sourceMetadata));
+    if (previous) sourceMetadata.importedAt = previous;
+  };
+  preserveImportTime(family.sourceMetadata);
+  for (const { sourceMetadata } of family.supportingSources ?? [])
+    preserveImportTime(sourceMetadata);
+}
+const fingerprintData = (families: AirTerminalFamily[]) =>
+  families.map((f) => ({
+    ...f,
+    sourceMetadata: {
+      sourceUrl: f.sourceMetadata.sourceUrl,
+      sha256: f.sourceMetadata.sha256,
+      documentRevision: f.sourceMetadata.documentRevision,
+    },
+    supportingSources: f.supportingSources?.map(({ sourceMetadata }) => ({
+      sourceUrl: sourceMetadata.sourceUrl,
+      sha256: sourceMetadata.sha256,
+      documentRevision: sourceMetadata.documentRevision,
+      sourceType: sourceMetadata.sourceType,
+      page: sourceMetadata.page,
+    })),
+  }));
+const stableStringify = (value: unknown) =>
+  JSON.stringify(value, (_key, item) =>
+    item && typeof item === "object" && !Array.isArray(item)
+      ? Object.fromEntries(
+          Object.entries(item).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
+        )
+      : item,
+  );
+const fingerprint = (families: AirTerminalFamily[]) =>
+  createHash("sha256")
+    .update(stableStringify(fingerprintData(families)))
+    .digest("hex")
+    .slice(0, 12);
+const currentFingerprintData = fingerprintData(catalog.families);
+const previousFingerprintData = previousCatalog
+  ? fingerprintData(previousCatalog.families)
+  : null;
+const sameCatalogData =
+  previousFingerprintData !== null &&
+  isDeepStrictEqual(previousFingerprintData, currentFingerprintData);
+catalog.version =
+  sameCatalogData && previousCatalog
+    ? previousCatalog.version
+    : `${now.slice(0, 10)}-ecoclima-${fingerprint(catalog.families)}`;
+const output = path.join(root, "catalog-data/generated");
+await mkdir(output, { recursive: true });
+const staging = path.join(output, "ecoclima.staging.json");
+await writeFile(staging, JSON.stringify(catalog, null, 2));
+const oldCatalog = previousCatalog;
 const oldVariants = new Map(
   oldCatalog?.families.flatMap((family) =>
     family.variants.map((v) => [v.id, v] as const),
@@ -716,29 +771,30 @@ console.log(
   }),
 );
 if (process.argv.includes("--apply")) {
-  const historyPath = path.join(output, "ecoclima-history.json");
-  const history = existsSync(historyPath)
-    ? JSON.parse(await readFile(historyPath, "utf8"))
-    : {};
-  if (existsSync(target)) {
-    const previous = airTerminalCatalogSchema.parse(
-      JSON.parse(await readFile(target, "utf8")),
-    );
-    history[previous.version] = previous;
-    const oldIds = previous.families.flatMap((f) =>
-        f.variants.map((v) => v.id),
-      ),
-      newIds = new Set(
-        catalog.families.flatMap((f) => f.variants.map((v) => v.id)),
-      );
-    const removed = oldIds.filter((id) => !newIds.has(id));
-    console.log(JSON.stringify({ removed }));
-    if (removed.length && !process.argv.includes("--allow-removal"))
-      throw new Error("Removed variants detected. Review before applying.");
-    await copyFile(target, path.join(output, "ecoclima.previous.json"));
+  if (oldCatalog && isDeepStrictEqual(oldCatalog, catalog)) {
+    console.log("Catalog unchanged; history and current snapshot preserved.");
+  } else {
+    const historyPath = path.join(output, "ecoclima-history.json");
+    const history = existsSync(historyPath)
+      ? JSON.parse(await readFile(historyPath, "utf8"))
+      : {};
+    if (oldCatalog) {
+      history[oldCatalog.version] = oldCatalog;
+      const oldIds = oldCatalog.families.flatMap((f) =>
+          f.variants.map((v) => v.id),
+        ),
+        newIds = new Set(
+          catalog.families.flatMap((f) => f.variants.map((v) => v.id)),
+        );
+      const removed = oldIds.filter((id) => !newIds.has(id));
+      console.log(JSON.stringify({ removed }));
+      if (removed.length && !process.argv.includes("--allow-removal"))
+        throw new Error("Removed variants detected. Review before applying.");
+      await copyFile(target, path.join(output, "ecoclima.previous.json"));
+    }
+    delete history[catalog.version];
+    await writeFile(historyPath, JSON.stringify(history) + "\n");
+    await copyFile(staging, target);
+    console.log("Applied official Ecoclima snapshot.");
   }
-  delete history[catalog.version];
-  await writeFile(historyPath, JSON.stringify(history, null, 2));
-  await copyFile(staging, target);
-  console.log("Applied official Ecoclima snapshot.");
 } else console.log("Staged only. Review, then use --apply.");

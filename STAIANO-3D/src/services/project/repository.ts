@@ -1,5 +1,5 @@
 import type { Project } from "@/schemas/project";
-import { parseProject } from "./format";
+import { prepareProject } from "./format";
 export class ProjectConflictError extends Error {
   constructor() {
     super(
@@ -70,9 +70,9 @@ export class IndexedDbProjectRepository implements ProjectRepository {
     const raw = await request(
       db.transaction("projects").objectStore("projects").getAll(),
     );
-    return raw
-      .map(parseProject)
-      .toSorted((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    return (await Promise.all(raw.map(prepareProject))).toSorted((a, b) =>
+      b.updatedAt.localeCompare(a.updatedAt),
+    );
   }
   async get(id: string) {
     const db = await this.db();
@@ -86,14 +86,14 @@ export class IndexedDbProjectRepository implements ProjectRepository {
         revision: revision ?? null,
         updatedAt: raw?.updatedAt ?? null,
       });
-    return raw ? parseProject(raw) : null;
+    return raw ? prepareProject(raw) : null;
   }
   async previous(id: string) {
     const db = await this.db();
     const raw = await request(
       db.transaction("previous").objectStore("previous").get(id),
     );
-    return raw ? parseProject(raw) : null;
+    return raw ? prepareProject(raw) : null;
   }
   async save(project: Project) {
     const expected = this.versions.get(project.id) ?? {
@@ -102,7 +102,7 @@ export class IndexedDbProjectRepository implements ProjectRepository {
     };
     const revision = crypto.randomUUID();
     let conflict = false;
-    const p = parseProject(project),
+    const p = await prepareProject(project),
       db = await this.db(),
       tx = db.transaction(["projects", "previous", "meta"], "readwrite"),
       done = completed(tx);

@@ -62,8 +62,7 @@ function flexibleProject(
   );
 }
 
-async function importProject(page: Page) {
-  const project = flexibleProject();
+async function importProject(page: Page, project = flexibleProject()) {
   await page.goto("/");
   await page.getByTestId("project-file").setInputFiles({
     name: "flessibili.hvacproj",
@@ -78,6 +77,39 @@ async function importProject(page: Page) {
   await expect(page.getByTestId("plenum-2d")).toHaveCount(2);
   return project;
 }
+
+test("ETF10 applica dati OEM solo allo SKU e non interpola portate assenti", async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  const project = flexibleProject();
+  project.plenums = project.plenums.map((plenum) => ({
+    ...plenum,
+    portDiameterMm: 160,
+  }));
+  project.ducts = project.ducts?.map((duct) => ({ ...duct, diameterMm: 160 }));
+  await importProject(page, project);
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await page.getByRole("button", { name: "Configura percorsi" }).click();
+  const channels = page.getByRole("dialog", {
+    name: "Canalizzazione collegata",
+  });
+  await channels.locator("details > summary").first().click();
+  await channels.locator("details details > summary").first().click();
+  await channels
+    .getByLabel(/SKU del flessibile/)
+    .selectOption("ecoclima-etf10");
+  await expect(channels.getByLabel(/Diametro OEM del flessibile/)).toHaveValue(
+    "160",
+  );
+  await expect(channels.getByText(/Raggio minimo 0,60 × Ø/)).toBeVisible();
+  await expect(
+    channels.getByText(/Interasse dei sostegni non pubblicato/),
+  ).toBeVisible();
+  await expect(
+    channels.getByText(/Perdita di carico non calcolata/),
+  ).toContainText("nessuna interpolazione");
+});
 
 async function exported(page: Page) {
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
@@ -351,7 +383,7 @@ test("Flessibili nella vista 3D salva le curve", async ({ page }) => {
   ).toHaveAttribute("aria-pressed", "false");
 });
 
-test("l’avviso di un flessibile irrealizzabile si smonta senza errori React", async ({
+test("l’avviso di collisione del flessibile si smonta senza errori React", async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -375,8 +407,8 @@ test("l’avviso di un flessibile irrealizzabile si smonta senza errori React", 
     );
     await expect(
       viewer
-        .locator("[role=status]")
-        .filter({ hasText: "Percorso non realizzabile" }),
+        .locator('[role="alert"]')
+        .filter({ hasText: "Collisione con plenum" }),
     ).toHaveCount(1);
     await page.getByRole("button", { name: "2D", exact: true }).click();
   }
@@ -570,13 +602,11 @@ test("un flessibile vicino al fronte della fascia usa il raggio reale nei contro
   const project = flexibleProject(false, "band");
   await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto("/");
-  await page
-    .getByTestId("project-file")
-    .setInputFiles({
-      name: "fascia-flessibile.hvacproj",
-      mimeType: "application/json",
-      buffer: Buffer.from(JSON.stringify(project)),
-    });
+  await page.getByTestId("project-file").setInputFiles({
+    name: "fascia-flessibile.hvacproj",
+    mimeType: "application/json",
+    buffer: Buffer.from(JSON.stringify(project)),
+  });
   await expect(
     page.locator('[data-testid="duct-2d"][data-collision="true"]').first(),
   ).toBeVisible();

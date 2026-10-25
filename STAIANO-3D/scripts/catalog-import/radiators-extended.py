@@ -195,4 +195,4 @@ for filename,manufacturer in [("cordivari-comfort","Cordivari"),("zehnder","Zehn
         target.write_text(json.dumps(final,ensure_ascii=False,indent=2),encoding="utf8")
     print(filename,len(selected),"models;",len(report["families"]),"families")
 if "--apply" in sys.argv:
-    history_file.write_text(json.dumps(history,ensure_ascii=False,indent=2),encoding="utf8")
+    history_file.write_text(json.dumps(history,ensure_ascii=False,separators=(",", ":"))+"\n",encoding="utf8")

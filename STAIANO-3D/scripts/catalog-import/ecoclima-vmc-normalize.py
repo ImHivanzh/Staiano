@@ -141,7 +141,7 @@ for record in records:
             if code=="EAG-AL":v.update(nominalDiameterMm=number(r[1]),connectionDiameterMm=number(r[1]),faceWidthMm=number(r[2]),faceHeightMm=number(r[2]),effectiveAreaM2=number(r[5]),originalDimensionsMm=dict(zip(["d","A","B","C"],map(number,r[1:5]))))
             elif code=="EMV-PFS":v.update(nominalDiameterMm=number(r[2]),connectionDiameterMm=number(r[2]),faceWidthMm=number(r[1]),faceHeightMm=number(r[1]),bodyDepthMm=number(r[3]),effectiveAreaM2=number(r[4]))
             elif code=="EMV-BVS":v.update(nominalDiameterMm=number(r[3]),connectionDiameterMm=number(r[3]),faceWidthMm=number(r[1]),faceHeightMm=number(r[1]),originalDimensionsMm={"interasseFori":number(r[2])})
-            elif code in {"EMV-S","EMV-J"}:v.update(faceWidthMm=number(r[1]),faceHeightMm=number(r[1]),bodyDepthMm=number(r[3]),effectiveAreaM2=number(r[4]),originalDimensionsMm={"B":number(r[1]),"H":number(r[2]),"L":number(r[3])})
+            elif code in {"EMV-S","EMV-J"}:v.update(faceWidthMm=number(r[1]),faceHeightMm=number(r[2]),bodyDepthMm=number(r[3]),effectiveAreaM2=number(r[4]),originalDimensionsMm={"B":number(r[1]),"H":number(r[2]),"L":number(r[3])})
             elif code=="EMV-350":
                 w,h=map(number,re.findall(r"[\d,]+",r[1]));v.update(widthMm=w,heightMm=h,faceWidthMm=w,faceHeightMm=h)
             variants.append(v)

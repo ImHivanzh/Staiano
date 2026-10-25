@@ -1,5 +1,13 @@
 {
   "added": [],
-  "changed": [],
+  "changed": [
+    "ecoclima-emv-s-emv-100-s",
+    "ecoclima-emv-s-emv-120-s",
+    "ecoclima-emv-s-emv-150-s",
+    "ecoclima-emv-s-emv-250-s",
+    "ecoclima-emv-j-emv-100-j",
+    "ecoclima-emv-j-emv-120-j",
+    "ecoclima-emv-j-emv-250-j"
+  ],
   "removed": []
 }

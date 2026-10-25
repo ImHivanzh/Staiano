@@ -438,11 +438,19 @@ export function syncAttachedPlenums(
   };
 }
 
-export type PlenumConnectionSide = "left" | "right" | "rear" | "top" | "bottom";
+export type PlenumConnectionSide =
+  "left" | "right" | "rear" | "front" | "top" | "bottom";
 
 function normalizedSide(
   position:
-    "lateral" | "upper" | "lower" | "rear" | "left" | "right" | "custom",
+    | "lateral"
+    | "upper"
+    | "lower"
+    | "rear"
+    | "front"
+    | "left"
+    | "right"
+    | "custom",
 ): PlenumConnectionSide {
   return position === "upper"
     ? "top"
@@ -452,7 +460,9 @@ function normalizedSide(
         ? "left"
         : position === "right"
           ? "right"
-          : "rear";
+          : position === "front"
+            ? "front"
+            : "rear";
 }
 
 /** Lato del corpo su cui arriva lo stacco numero portIndex. */
@@ -507,11 +517,17 @@ export function plenumPortLocal(
               y: fraction * (plenum.depthMm / 1000),
               z: 0,
             }
-          : {
-              x: fraction * (plenum.widthMm / 1000),
-              y: -halfDepth - lead,
-              z: 0,
-            };
+          : side === "front"
+            ? {
+                x: fraction * (plenum.widthMm / 1000),
+                y: halfDepth + lead,
+                z: 0,
+              }
+            : {
+                x: fraction * (plenum.widthMm / 1000),
+                y: -halfDepth - lead,
+                z: 0,
+              };
 }
 
 export function attachedPlenumPorts(project: Project, plenum: Plenum) {

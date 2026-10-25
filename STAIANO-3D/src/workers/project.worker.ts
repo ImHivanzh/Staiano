@@ -1,7 +1,9 @@
-import { decodeProject } from "@/services/project/format";
-self.onmessage = (event: MessageEvent<{ text: string }>) => {
+import { decodeProjectBuffer } from "@/services/project/parse";
+self.onmessage = (event: MessageEvent<{ buffer: ArrayBuffer }>) => {
   try {
-    self.postMessage({ project: decodeProject(event.data.text) });
+    self.postMessage({
+      project: decodeProjectBuffer(event.data.buffer),
+    });
   } catch (e) {
     self.postMessage({
       error: e instanceof Error ? e.message : "Importazione progetto fallita.",

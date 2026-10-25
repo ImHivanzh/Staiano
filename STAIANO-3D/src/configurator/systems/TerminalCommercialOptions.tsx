@@ -2,6 +2,7 @@
 import type { Project } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { commercialChoicesForTerminal } from "@/domain/air-terminals/commercial-bom";
+import { applyCommercialModelFace } from "@/domain/air-terminals/face-dimensions";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import {
   terminalFinishLabel,
@@ -30,22 +31,27 @@ export function TerminalCommercialOptions({
   const update = (
     patch: Partial<NonNullable<typeof terminal.commercialOptions>>,
     individual = false,
+    modelCode?: string,
   ) =>
     commit((p) => ({
       ...p,
-      airTerminals: p.airTerminals.map((t) =>
-        (individual ? t.id === terminalId : memberIds.has(t.id)) && !t.locked
-          ? {
-              ...t,
-              commercialOptions: {
-                fixingBridges: true,
-                continuityKit: true,
-                ...t.commercialOptions,
-                ...patch,
-              },
-            }
-          : t,
-      ),
+      airTerminals: p.airTerminals.map((t) => {
+        if (
+          !(individual ? t.id === terminalId : memberIds.has(t.id)) ||
+          t.locked
+        )
+          return t;
+        const updated = modelCode ? applyCommercialModelFace(t, modelCode) : t;
+        return {
+          ...updated,
+          commercialOptions: {
+            fixingBridges: true,
+            continuityKit: true,
+            ...updated.commercialOptions,
+            ...patch,
+          },
+        };
+      }),
     }));
   return (
     <details className="azione-inspector">
@@ -58,13 +64,17 @@ export function TerminalCommercialOptions({
           onChange={(e) => {
             const choice = choices.find((p) => p.id === e.target.value);
             if (choice)
-              update({
-                profileCode: choice.modelCode,
-                colorCode: choice.colorCode ?? undefined,
-                ...(terminal.family === "EBCV" && choice.dimensions.diameterMm
-                  ? { mountingDuctDiameterMm: choice.dimensions.diameterMm }
-                  : {}),
-              });
+              update(
+                {
+                  profileCode: choice.modelCode,
+                  colorCode: choice.colorCode ?? undefined,
+                  ...(terminal.family === "EBCV" && choice.dimensions.diameterMm
+                    ? { mountingDuctDiameterMm: choice.dimensions.diameterMm }
+                    : {}),
+                },
+                false,
+                choice.modelCode,
+              );
           }}
         >
           <option value="">Scegli modello e finitura</option>

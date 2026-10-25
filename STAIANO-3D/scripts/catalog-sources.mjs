@@ -61,7 +61,9 @@ async function buildManifest() {
     generatedAt: new Date().toISOString(),
     documents: await manifestDocuments(),
   };
-  await writeFile(MANIFEST, `${JSON.stringify(value, null, 2)}\n`);
+  const temporary = `${MANIFEST}.tmp`;
+  await writeFile(temporary, `${JSON.stringify(value, null, 2)}\n`);
+  await rename(temporary, MANIFEST);
   console.log(
     `${value.documents.length} documenti distinti da ${names.length} file di catalogo → ${MANIFEST}`,
   );
@@ -125,7 +127,10 @@ async function archived() {
       } catch {
         continue;
       }
-      index.set(createHash("sha256").update(content).digest("hex"), file);
+      index.set(
+        createHash("sha256").update(content).digest("hex").toLowerCase(),
+        file,
+      );
     }
   }
   return index;
@@ -192,7 +197,7 @@ if (command === "check") {
 const manifest = await readManifest();
 const present = await archived();
 const missing = manifest.documents.filter(
-  (document) => !present.has(document.sha256),
+  (document) => !present.has(document.sha256.toLowerCase()),
 );
 console.log(
   `Documenti attesi: ${manifest.documents.length} · archiviati: ${manifest.documents.length - missing.length} · mancanti: ${missing.length}`,

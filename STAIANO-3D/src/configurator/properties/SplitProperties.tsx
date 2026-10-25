@@ -90,9 +90,11 @@ export function SplitProperties({
           </span>
         </summary>
         <p className="nota">
-          Trascina lo split in pianta oppure inserisci la posizione esatta. La
-          compatibilità viene verificata sul nuovo ambiente.
+          {unit.mounting === "ceiling"
+            ? "Trascina la cassetta circolare in pianta; verifica ingombro e soffitto della stanza servita."
+            : "Trascina lo split in pianta oppure inserisci la posizione esatta. La compatibilità viene verificata sul nuovo ambiente."}
         </p>
+        {unit.mounting !== "ceiling" && (
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -134,6 +136,7 @@ export function SplitProperties({
             Sposta split
           </button>
         </form>
+        )}
       </details>
       <details className="azione-inspector dettagli-inspector">
         <summary>
@@ -147,8 +150,9 @@ export function SplitProperties({
           <br />
           Catalogo {unit.catalogVersion}
           <br />
-          Sommità a 0,10 m sotto il soffitto: scelta iniziale di disegno.
-          Verificare le distanze nel manuale del modello.
+          {unit.mounting === "ceiling"
+            ? "Montaggio a soffitto. Posizione e ingombro a pianta sono schematici; verificare distanze nel manuale del modello."
+            : "Sommità a 0,10 m sotto il soffitto: scelta iniziale di disegno. Verificare le distanze nel manuale del modello."}
         </p>
         {model && (
           <a

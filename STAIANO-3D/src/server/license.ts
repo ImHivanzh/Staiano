@@ -162,25 +162,32 @@ function unixMachineId(): string | null {
   return null;
 }
 
+function machineMacs(): string[] {
+  const addresses = Object.values(networkInterfaces()).flatMap(
+    (entries) => entries ?? [],
+  );
+  return [
+    ...new Set(
+      addresses
+        .filter(
+          (entry) =>
+            !entry.internal &&
+            entry.mac &&
+            entry.mac !== "00:00:00:00:00:00" &&
+            !entry.mac.startsWith("00:00:00"),
+        )
+        .map((entry) => entry.mac),
+    ),
+  ].sort();
+}
+
 /** Componenti stabili della macchina: sistema, nome host, identificativo e MAC. */
 export function machineComponents(): string[] {
   const parts = [`platform:${platform()}`, `host:${hostname()}`];
   const identifier =
     platform() === "win32" ? windowsMachineGuid() : unixMachineId();
   if (identifier) parts.push(`id:${identifier}`);
-  const addresses = Object.values(networkInterfaces()).flatMap(
-    (entries) => entries ?? [],
-  );
-  const macs = addresses
-    .filter(
-      (entry) =>
-        !entry.internal &&
-        entry.mac &&
-        entry.mac !== "00:00:00:00:00:00" &&
-        !entry.mac.startsWith("00:00:00"),
-    )
-    .map((entry) => entry.mac)
-    .sort();
+  const macs = machineMacs();
   if (macs.length) parts.push(`mac:${macs[0]}`);
   return parts;
 }
@@ -197,6 +204,20 @@ export function machineFingerprint(
 
 export function machineId(): string {
   return machineFingerprint();
+}
+
+/** A new virtual adapter must not invalidate a signed token for an adapter still on this host. */
+export function machineFingerprintMatches(
+  machineId: string,
+  components = machineComponents(),
+  macs = machineMacs(),
+): boolean {
+  if (machineId === machineFingerprint(components)) return true;
+  if (!components.some((part) => part.startsWith("id:"))) return false;
+  const stable = components.filter((part) => !part.startsWith("mac:"));
+  return macs.some(
+    (mac) => machineId === machineFingerprint([...stable, `mac:${mac}`]),
+  );
 }
 
 function isLicenseFileState(value: unknown): value is LicenseFileState {
@@ -335,7 +356,8 @@ async function refreshLicense(
   options: { blocking: boolean },
 ): Promise<LicenseStatus> {
   const status = baseStatus();
-  const machineId = status.machineId;
+  const machineId = state.machineId;
+  status.machineId = machineId;
   const info = fileStatus(state, null);
   try {
     const response = await callServer("/verify", {
@@ -455,7 +477,8 @@ async function evaluate(): Promise<LicenseStatus> {
     : null;
   if (
     !payload ||
-    payload.machineId !== status.machineId ||
+    !machineFingerprintMatches(payload.machineId) ||
+    payload.machineId !== state.machineId ||
     (payload.productId ?? "staiano-hvac") !== "staiano-hvac"
   )
     return {
@@ -464,6 +487,7 @@ async function evaluate(): Promise<LicenseStatus> {
       state: "invalid",
       message: "Licenza locale non valida per questa postazione.",
     };
+  status.machineId = payload.machineId;
   if (payload.licenseId !== state.licenseId)
     return {
       ...status,
@@ -546,7 +570,7 @@ export async function licenseSetup(): Promise<{
     enforced: licenseEnforced(),
     serverUrl: licenseServerUrl(),
     publicKey: (await licensePublicKey()) !== null,
-    machineId: machineFingerprint(),
+    machineId: (await licenseStatus()).machineId,
     filePath: licenseFilePath(),
     filePresent: (await readLicenseFile()) !== null,
     toleranceMinutes: Math.round(licenseToleranceMs() / 60_000),

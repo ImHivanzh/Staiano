@@ -1,5 +1,6 @@
 import type { Project } from "@/schemas/project";
-import { MAX_PROJECT_BYTES, decodeProject } from "@/services/project/format";
+import { MAX_PROJECT_BYTES, prepareProject } from "@/services/project/format";
+import { decodeProjectBuffer } from "@/services/project/parse";
 export async function importProjectFile(file: File): Promise<Project> {
   if (!file.name.toLowerCase().endsWith(".hvacproj"))
     throw new Error("Selezionare un file .hvacproj.");
@@ -12,8 +13,9 @@ export async function importProjectFile(file: File): Promise<Project> {
     )
   )
     throw new Error("Tipo file progetto non valido.");
-  const text = await file.text();
-  if (typeof Worker === "undefined") return decodeProject(text);
+  const buffer = await file.arrayBuffer();
+  if (typeof Worker === "undefined")
+    return prepareProject(decodeProjectBuffer(buffer));
   return new Promise<Project>((resolve, reject) => {
     const worker = new Worker("/workers/project.worker.js");
     const timeout = setTimeout(() => {
@@ -32,13 +34,18 @@ export async function importProjectFile(file: File): Promise<Project> {
       event: MessageEvent<{ project?: Project; error?: string }>,
     ) => {
       finish();
-      if (event.data.project) resolve(event.data.project);
-      else reject(new Error(event.data.error ?? "Importazione fallita."));
+      if (event.data.project) {
+        try {
+          resolve(prepareProject(event.data.project));
+        } catch (error) {
+          reject(error);
+        }
+      } else reject(new Error(event.data.error ?? "Importazione fallita."));
     };
     worker.onerror = () => {
       finish();
       reject(new Error("Non è stato possibile analizzare il progetto."));
     };
-    worker.postMessage({ text });
+    worker.postMessage({ buffer }, [buffer]);
   });
 }

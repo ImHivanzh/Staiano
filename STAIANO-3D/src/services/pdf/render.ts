@@ -1123,6 +1123,15 @@ export async function renderDossierPdf(
         muted,
       );
     }
+    if (data.dataQuality.length) {
+      heading("Stato dei dati dei terminali");
+      for (const quality of data.dataQuality)
+        paragraph(
+          `${quality.code}: Prestazioni — ${quality.performance}. Geometria — ${quality.geometry}. Prezzo — ${quality.price}.`,
+          9,
+          muted,
+        );
+    }
     for (const unresolved of data.unresolved) paragraph(unresolved, 9, muted);
     paragraph(
       `${data.sources.length} fonti tecniche risolte. Versioni: ${
@@ -2178,6 +2187,14 @@ export async function renderDossierPdf(
       data.unresolved.forEach((s) => paragraph(s, 9));
     }
     newPage("Provenienze e versioni");
+    if (data.dataQuality.length) {
+      heading("Stato dei dati dei terminali");
+      for (const quality of data.dataQuality)
+        paragraph(
+          `${quality.code}: Prestazioni — ${quality.performance}. Geometria — ${quality.geometry}. Prezzo — ${quality.price}.`,
+          9,
+        );
+    }
     paragraph(
       `Progetto ${p.id}; schema ${p.schemaVersion}. Versioni registrate: ${
         Object.entries(p.catalogVersions)
@@ -2518,6 +2535,7 @@ export async function renderDossierPdf(
           const length = ductLength(
             ductRoute(p, d),
             d.kind === "flexible" ? (d.diameterMm ?? 160) : undefined,
+            d.flexibleProductId,
           );
           return [
             data.codes.get(d.id) ?? d.id,

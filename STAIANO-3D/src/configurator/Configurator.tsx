@@ -153,6 +153,7 @@ export function Configurator() {
     >("editor"),
     [projects, setProjects] = useState<Project[]>([]);
   const [projectSearch, setProjectSearch] = useState("");
+  const [archiveError, setArchiveError] = useState<string | null>(null);
   const [projectOrder, setProjectOrder] = useState("recent");
   const [checkStatus, setCheckStatus] = useState<CheckFilterStatus>("problems");
   const [checkFloor, setCheckFloor] = useState("");
@@ -187,6 +188,10 @@ export function Configurator() {
   const [inspectorOpen, setInspectorOpen] = useState(true);
   const [navigationOpen, setNavigationOpen] = useState(true);
   const revealedCheck = useRef<Check | null>(null);
+  const [wizardReturn, setWizardReturn] = useState<{
+    projectId: string;
+    floorId: string;
+  } | null>(null);
   const [pdfProgress, setPdfProgress] = useState("");
   const [pdfPreview, setPdfPreview] = useState<{
     blob: Blob;
@@ -299,7 +304,7 @@ export function Configurator() {
     panel.focus({ preventScroll: true });
     panel.scrollIntoView({ block: "nearest" });
     revealedCheck.current = null;
-  }, [page]);
+  }, [page, s.selection]);
   useEffect(() => {
     const closeMenus = () => {
       document
@@ -572,11 +577,15 @@ export function Configurator() {
   async function showProjects() {
     try {
       await flushSave();
-      setProjects(await repository.list());
+      await refreshProjects();
       setPage("projects");
     } catch (e) {
       s.setError(e instanceof Error ? e.message : "Archivio non disponibile.");
     }
+  }
+  async function refreshProjects() {
+    setProjects(await repository.list());
+    setArchiveError(repository.listError);
   }
   async function importFile(file: File) {
     try {
@@ -759,7 +768,12 @@ export function Configurator() {
   function showCheck(check: Check) {
     if (!p) return;
     const target = resolveCheckTarget(p, check.entityId);
-    if (!target) return;
+    if (!target) {
+      s.setError(
+        "Elemento non più disponibile. Ricalcola i controlli del progetto.",
+      );
+      return;
+    }
     s.setFloor(target.floorId);
     s.select(target.selection);
     s.setTool(
@@ -769,7 +783,9 @@ export function Configurator() {
         : "select",
     );
     s.setView("2d");
-    useProjectStore.setState({ presentation: false });
+    if (p.ducts?.some((duct) => duct.id === check.entityId))
+      setFlexibleOpen(true);
+    useProjectStore.setState({ presentation: false, installationPlanId: null });
     setInspectorOpen(true);
     revealedCheck.current = check;
     setPage("editor");
@@ -797,7 +813,8 @@ export function Configurator() {
     inspectorOpen &&
     s.view === "2d" &&
     ((propertySelection.length > 0 && !ductedSelection) ||
-      floor?.configurationWizard?.status === "active");
+      floor?.configurationWizard?.status === "active" ||
+      wizardReturn?.projectId === p?.id);
   const ActiveDrawingIcon =
     tools.find((tool) => tool.id === s.tool && tool.id !== "select")?.icon ??
     PencilSimple;
@@ -1511,7 +1528,7 @@ export function Configurator() {
         ) : page === "projects" ? (
           <main className="pagina archivio">
             <div className="titolo-archivio">
-              <h2>Progetti sul dispositivo</h2>
+              <h2>Archivio progetti</h2>
               <button
                 className="bottone chiara"
                 onClick={() => setNewDialog("choose")}
@@ -1521,9 +1538,17 @@ export function Configurator() {
               </button>
             </div>
             <p className="nota">
-              Archivio di questo browser, separato dagli altri dispositivi.
-              Esporta i progetti in .hvacproj per conservarne una copia.
+              Progetti condivisi e progetti locali di questo browser. Esporta i
+              progetti in .hvacproj per conservarne una copia.
             </p>
+            {archiveError && (
+              <div role="alert" className="warning">
+                <p>{archiveError}</p>
+                <button className="bottone" onClick={() => void showProjects()}>
+                  Riprova
+                </button>
+              </div>
+            )}
             <div
               className="filtri-progetto"
               role="search"
@@ -1603,7 +1628,7 @@ export function Configurator() {
                               await flushSave();
                               const copy = duplicateProject(item, name.trim());
                               await repository.save(copy);
-                              setProjects(await repository.list());
+                              await refreshProjects();
                             } catch {
                               s.setError("Duplicazione fallita.");
                             }
@@ -1670,7 +1695,7 @@ export function Configurator() {
                                   selection: [],
                                   dirty: false,
                                 });
-                              setProjects(await repository.list());
+                              await refreshProjects();
                             } catch {
                               s.setError("Eliminazione progetto fallita.");
                             }
@@ -2139,13 +2164,38 @@ export function Configurator() {
                 tabIndex={-1}
                 hidden={!showInspector || !!s.installationPlanId}
               >
-                <ConfigurationWizard
-                  onDrawRoom={() => setRectangleOpen(true)}
-                  onImportPlan={() => {
-                    setPlanFile(undefined);
-                    setPlanOpen(true);
-                  }}
-                />
+                {wizardReturn?.projectId === p.id ? (
+                  <button
+                    className="bottone piccolo"
+                    onClick={() => {
+                      if (
+                        p.floors.some(
+                          (item) => item.id === wizardReturn.floorId,
+                        )
+                      )
+                        s.setFloor(wizardReturn.floorId);
+                      s.select(null);
+                      setWizardReturn(null);
+                    }}
+                  >
+                    Torna alla verifica guidata
+                  </button>
+                ) : (
+                  <ConfigurationWizard
+                    onShowCheck={(check) => {
+                      setWizardReturn({
+                        projectId: p.id,
+                        floorId: s.activeFloorId,
+                      });
+                      showCheck(check);
+                    }}
+                    onDrawRoom={() => setRectangleOpen(true)}
+                    onImportPlan={() => {
+                      setPlanFile(undefined);
+                      setPlanOpen(true);
+                    }}
+                  />
+                )}
                 {propertySelection.length > 0 && <Properties />}
               </div>
             </div>

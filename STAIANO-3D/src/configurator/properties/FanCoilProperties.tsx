@@ -9,9 +9,17 @@ import {
   controllerBoardFor,
   isConcealedFanCoil,
   isRecessedFanCoil,
+  fanCoilDefaultPanelType,
+  fanCoilInstallationAccessories,
+  fanCoilCoverAccessory,
+  fanCoilPanelOptions,
+  fanCoilPanelTypeLabel,
+  fanCoilRecessDepthMm,
+  fanCoilPanelDimensions,
 } from "@/domain/catalogs/fan-coils";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
 import { fanCoilCeilingRange } from "@/domain/fan-coils/placement";
+import { drywallSideForRoom } from "@/domain/geometry/drywall-sides";
 import {
   ensureFanCoilAirSystem,
   fanCoilAirSystem,
@@ -48,13 +56,23 @@ export function FanCoilProperties({
   const room = project.rooms.find((r) => r.id === unit.roomId);
   if (!room) return null;
   const model = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
+  const panel = model
+    ? fanCoilPanelDimensions(
+        model,
+        unit.panelType ?? fanCoilDefaultPanelType(model, unit.mounting),
+      )
+    : null;
+  const visibleHeightMm = panel?.heightMm ?? unit.heightMm;
   const catalog = fanCoilCatalogAtVersion(unit.catalogVersion);
   const recessed = isRecessedFanCoil(model);
   const wallFitsRecess = (wall: (typeof project.walls)[number]) =>
-    wall.thickness +
-      (wall.drywall?.roomId === room.id ? (wall.drywall.offsetM ?? 0) : 0) +
-      1e-6 >=
-    unit.depthMm / 1000 - 0.002;
+    wall.thickness + (drywallSideForRoom(wall, room.id)?.offsetM ?? 0) + 1e-6 >=
+    fanCoilRecessDepthMm(
+      model!,
+      unit.panelType ?? fanCoilDefaultPanelType(model!, unit.mounting),
+    ) /
+      1000 -
+      0.002;
   const ceilingRange = model
     ? fanCoilCeilingRange(
         project,
@@ -62,15 +80,22 @@ export function FanCoilProperties({
         {
           ...unit,
           family: model.family,
+          model: model.model,
+          pipes: model.pipes,
+          widthMm: panel?.widthMm ?? model.widthMm,
+          heightMm: visibleHeightMm,
           features: model.features,
+          depthMm: model.depthMm,
+          recessDepthMm: model.recessDepthMm,
           ceilingInstallation: model.ceilingInstallation,
         },
         unit.position,
         unit.rotation,
         unit.mounting,
+        unit.panelType,
       )
     : null;
-  const datumOffset = unit.mounting === "wall" ? unit.heightMm / 2000 : 0;
+  const datumOffset = unit.mounting === "wall" ? visibleHeightMm / 2000 : 0;
   const point = model?.operatingPoints[unit.operatingPointIndex];
   const airSystem = fanCoilAirSystem(project, id);
   const airVents = project.airTerminals.filter(
@@ -80,6 +105,14 @@ export function FanCoilProperties({
   const controls =
     model && catalog ? compatibleFanCoilControls(model, catalog) : [];
   const controller = controls.find((c) => c.id === unit.controllerId);
+  const panelOptions = model ? fanCoilPanelOptions(model, unit.mounting) : [];
+  const panelType =
+    model &&
+    panelOptions.includes(unit.panelType as NonNullable<typeof unit.panelType>)
+      ? unit.panelType
+      : model
+        ? fanCoilDefaultPanelType(model, unit.mounting)
+        : null;
   const currentWall = project.walls.find((w) => w.id === unit.wallId);
   const currentSpan = currentWall && roomWallSpan(room, currentWall);
   const currentOffset = currentSpan
@@ -113,6 +146,11 @@ export function FanCoilProperties({
         {point?.noiseDbA == null
           ? "Rumore non pubblicato / non verificabile"
           : `${formatNumber(point.noiseDbA)} dB(A) alla velocità selezionata`}
+      </p>
+      <p className="nota" data-testid="fan-coil-geometry-disclosure">
+        Geometria 3D orientativa: corpo e griglie sono schematici. Le quote
+        seguono il dato catalogo disponibile; verificare sulla scheda ufficiale
+        attacchi e spazi di manutenzione.
       </p>
       <label className="campo">
         <span>Velocità / punto di funzionamento</span>
@@ -155,18 +193,97 @@ export function FanCoilProperties({
           ))}
         </select>
       </label>
+      {model && panelOptions.length > 0 && (
+        <label className="campo">
+          <span>
+            {model.family.startsWith("AirLeaf")
+              ? "Finitura incasso"
+              : "Configurazione incasso"}
+          </span>
+          <select
+            disabled={unit.locked || model.pipes !== "2"}
+            value={panelType ?? ""}
+            onChange={(e) =>
+              commit((p) =>
+                updateFanCoil(p, id, {
+                  panelType: e.target.value as NonNullable<
+                    typeof unit.panelType
+                  >,
+                }),
+              )
+            }
+          >
+            {panelOptions.map((option) => (
+              <option key={option} value={option}>
+                {fanCoilPanelTypeLabel(option)}
+              </option>
+            ))}
+          </select>
+          <small>
+            {unit.mounting === "wall" && recessed
+              ? `${fanCoilRecessDepthMm(model, panelType ?? fanCoilDefaultPanelType(model, unit.mounting))} mm di profondità installata · `
+              : ""}
+            {fanCoilInstallationAccessories(
+              model,
+              unit.mounting,
+              panelType,
+              unit.coverType,
+            )
+              .filter((item) => item.code)
+              .map((item) => item.code)
+              .join(" · ")}
+          </small>
+          {model.family.startsWith("Bi2 Naked") &&
+            panelType?.startsWith("grilles") && (
+              <small>Il pannello di copertura va realizzato in cantiere.</small>
+            )}
+        </label>
+      )}
+      {model?.family === "FCZ P" && (
+        <label className="campo">
+          <span>Mobile di copertura Aermec</span>
+          <select
+            disabled={unit.locked}
+            value={unit.coverType ?? ""}
+            onChange={(event) =>
+              commit((p) =>
+                updateFanCoil(p, id, {
+                  coverType: event.target.value
+                    ? (event.target.value as "fixed" | "adjustable")
+                    : null,
+                }),
+              )
+            }
+          >
+            <option value="">Senza mobile</option>
+            <option value="fixed">
+              {fanCoilCoverAccessory(model, "fixed")?.code} · alette fisse
+            </option>
+            <option value="adjustable">
+              {fanCoilCoverAccessory(model, "adjustable")?.code} · alette
+              orientabili
+            </option>
+          </select>
+          <small>
+            La quota del mobile non è pubblicata: non cambia mesh e collisioni.
+          </small>
+        </label>
+      )}
       <details className="azione-inspector">
         <summary>Posizione · misure interne</summary>
         <p className="nota">
-          Ingombro {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm. Quota{" "}
-          {unit.mounting === "wall" ? "centro" : "faccia inferiore"}{" "}
+          Ingombro macchina {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm
+          {panel &&
+            ` · pannello ${panel.widthMm}×${panel.heightMm}×${panel.depthMm} mm`}
+          . Quota {unit.mounting === "wall" ? "centro" : "faccia inferiore"}{" "}
           {formatNumber(unit.elevationM)} m dal pavimento.
         </p>
         {recessed && unit.mounting === "wall" && (
           <p className="nota" data-testid="fan-coil-recess-note">
             Modello ad incasso: il corpo resta nella parete e la faccia
             anteriore è a filo. Serve una parete o controparete di almeno{" "}
-            {unit.depthMm} mm; la posizione non sporge nella stanza.
+            {model ? fanCoilRecessDepthMm(model, unit.panelType) : unit.depthMm}{" "}
+            mm; la posizione non sporge nella stanza.
           </p>
         )}
         <form

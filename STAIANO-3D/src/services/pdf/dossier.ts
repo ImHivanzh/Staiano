@@ -12,6 +12,8 @@ import {
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
   controllerBoardFor,
+  fanCoilDefaultPanelType,
+  fanCoilInstallationAccessories,
 } from "@/domain/catalogs/fan-coils";
 import {
   heatPumpProductAtVersion,
@@ -22,12 +24,15 @@ import type { sourceMetadataSchema } from "@/domain/catalogs/radiator-schema";
 import { deviceCodes } from "@/services/export/device-codes";
 import { airTerminalModelDescription } from "@/domain/air-terminals/description";
 import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
 } from "@/domain/catalogs/splits";
 import { vrvIndoorAtVersion, vrvOutdoorAtVersion } from "@/domain/catalogs/vrv";
 import { hvacOutdoorDimensions } from "@/domain/air-conditioning/outdoor";
+import { terminalDataQuality } from "@/domain/air-terminals/data-quality";
+import { calculateEcoclimaBom } from "@/domain/air-terminals/commercial-bom";
 
 export const TECHNICAL_NOTE =
   "Dimensionamento convenzionale preliminare: Q = volume netto x coefficiente termico scelto nel progetto (W/m³). Non sostituisce un calcolo delle dispersioni dell'edificio o un progetto esecutivo. Il fabbisogno indicato deve essere verificato da un tecnico qualificato prima dell’esecuzione dell’impianto. Il coefficiente scelto non determina automaticamente clima, involucro, ricambi d'aria, apporti solari e condizioni di esercizio. Potenze e portate provengono dai cataloghi indicati; verificare condizioni nominali, installazione e disponibilità commerciale prima dell'ordine. I prezzi di listino Ecoclima, quando riportati, sono separati dal dimensionamento tecnico.";
@@ -52,6 +57,32 @@ export type MaterialRow = {
 export function buildDossier(project: Project) {
   const p = projectSchema.parse(project),
     codes = deviceCodes(p);
+  const roomIdsByCode = new Map<string, string[]>();
+  const assignRooms = (id: string, roomIds: string[]) => {
+    const code = codes.get(id);
+    if (code) roomIdsByCode.set(code, roomIds);
+  };
+  for (const system of p.hvacSystems) {
+    assignRooms(system.id, system.roomIds);
+    for (const unit of system.indoorUnits) assignRooms(unit.id, [unit.roomId]);
+  }
+  for (const system of p.hydronicSystems ?? [])
+    assignRooms(system.id, system.roomIds);
+  for (const device of [
+    ...p.radiators,
+    ...p.airTerminals,
+    ...(p.fanCoils ?? []),
+  ])
+    assignRooms(device.id, [device.roomId]);
+  const localesByCode = new Map(
+    [...roomIdsByCode].map(([code, roomIds]) => {
+      const roomSet = new Set(roomIds);
+      return [
+        code,
+        p.rooms.filter((room) => roomSet.has(room.id)).map((room) => room.name),
+      ];
+    }),
+  );
   const sources = new Map<string, Source>(),
     unresolved: string[] = [];
   const addSource = (s: Source | undefined | null, description: string) => {
@@ -68,22 +99,7 @@ export function buildDossier(project: Project) {
       code: string,
       step = 1,
     ) => {
-      const deviceId = [...codes.entries()].find(
-        ([, value]) => value === code,
-      )?.[0];
-      const system =
-        p.hvacSystems.find((s) => s.id === deviceId) ??
-        p.hydronicSystems?.find((s) => s.id === deviceId);
-      const device = [
-        ...p.radiators,
-        ...p.airTerminals,
-        ...(p.fanCoils ?? []),
-        ...p.hvacSystems.flatMap((s) => s.indoorUnits),
-      ].find((d) => d.id === deviceId);
-      const roomIds = system?.roomIds ?? (device ? [device.roomId] : []);
-      const locales = p.rooms
-        .filter((r) => roomIds.includes(r.id))
-        .map((r) => r.name);
+      const locales = localesByCode.get(code) ?? [];
       const existing = target.get(key);
       if (existing) {
         existing.quantity += step;
@@ -177,19 +193,19 @@ export function buildDossier(project: Project) {
       `${codes.get(d.id)}: catalogo terminali ${d.catalogVersion} non disponibile`,
     );
     material(
-      `air:${d.productId}:${d.widthMm}:${d.heightMm}:${d.use}:${d.availableAirflowM3h}`,
+      `air:${d.productId}:${airTerminalFaceWidthMm(d)}:${d.heightMm}:${d.use}:${d.availableAirflowM3h}`,
       {
-        description: `Ecoclima ${airTerminalModelDescription(family, d.productId)} - ${d.use === "supply" ? "mandata" : "ripresa"}`,
+        description: `Ecoclima ${airTerminalModelDescription(family, d.productId, d.commercialOptions?.profileCode)} - ${d.use === "supply" ? "mandata" : "ripresa"}`,
         unit: "pezzi",
-        dimensions: `Faccia ${display(d.widthMm)} x ${display(d.heightMm)} mm; profondità ${d.depthMm === null ? "non pubblicata" : display(d.depthMm) + " mm"}`,
+        dimensions: `Faccia ${display(airTerminalFaceWidthMm(d))} x ${display(d.heightMm)} mm; profondità ${d.depthMm === null ? "non pubblicata" : display(d.depthMm) + " mm"}`,
         details: `${display(d.availableAirflowM3h)} m³/h per unità`,
       },
       codes.get(d.id)!,
     );
   }
   for (const s of p.hvacSystems) {
-    // Plenum, canali e bocchette della distribuzione aeraulica sono documentati
-    // dal ventilconvettore: la riga dell'unità esiste già e non va duplicata.
+    // La macchina è già nella riga del ventilconvettore; plenum, percorsi e
+    // bilanci hanno sezioni dedicate nel PDF.
     if (s.fanCoilId) continue;
     const outdoorDimensions = hvacOutdoorDimensions(s);
     const product = hvacProductAtVersion(s.productId, s.catalogVersion);
@@ -275,10 +291,28 @@ export function buildDossier(project: Project) {
           : unit.productId,
         unit: "pezzi",
         dimensions: `${unit.widthMm} x ${unit.heightMm} x ${unit.depthMm} mm`,
-        details: `${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}${unit.mounting === "ceiling" && product?.ceilingInstallation ? `; ${product.ceilingInstallation.note}` : ""}`,
+        details: `${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}; geometria 3D orientativa: corpo e griglie schematici; verificare attacchi e spazi di manutenzione sulla scheda ufficiale${unit.mounting === "ceiling" && product?.ceilingInstallation ? `; ${product.ceilingInstallation.note}` : ""}`,
       },
       code,
     );
+    if (product)
+      for (const accessory of fanCoilInstallationAccessories(
+        product,
+        unit.mounting,
+        unit.panelType ?? fanCoilDefaultPanelType(product, unit.mounting),
+        unit.coverType,
+      ))
+        accessoryMaterial(
+          `fan-coil-accessory:${accessory.code || accessory.description}`,
+          {
+            description: accessory.description,
+            unit: "pezzi",
+            details: accessory.code
+              ? `Codice produttore ${accessory.code}; accessorio da ordinare separatamente; prezzo non presente nei dati di catalogo.`
+              : "Pannello previsto dal manuale per la configurazione a griglie; da realizzare in cantiere, senza codice o prezzo di listino.",
+          },
+          code,
+        );
     if (unit.controllerId) {
       addSource(
         control?.sourceMetadata,
@@ -297,6 +331,16 @@ export function buildDossier(project: Project) {
         },
         code,
       );
+      if (expectedBoard)
+        accessoryMaterial(
+          `fan-coil-board:${expectedBoard}`,
+          {
+            description: `Scheda interfaccia comando Innova ${expectedBoard}`,
+            unit: "pezzi",
+            details: `Scheda richiesta per il comando ${control?.model ?? unit.controllerId}; codice produttore ${expectedBoard}; verificare inclusione nella fornitura prima dell'ordine.`,
+          },
+          code,
+        );
     }
   }
   for (const system of p.hydronicSystems ?? []) {
@@ -324,11 +368,16 @@ export function buildDossier(project: Project) {
     );
   }
   const openingIds = new Set(p.openings.map((opening) => opening.id));
+  const commercialBom = calculateEcoclimaBom(p);
   return {
     project: p,
     codes,
     sources: [...sources.values()],
     unresolved,
+    dataQuality: p.airTerminals.map((terminal) => ({
+      code: codes.get(terminal.id) ?? terminal.family,
+      ...terminalDataQuality(p, terminal, commercialBom),
+    })),
     materials: [...materialMap.values()],
     accessories: [...accessoryMap.values()],
     checks: validateProject(p).filter(

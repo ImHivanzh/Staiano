@@ -291,6 +291,12 @@ def normalize_workbook(cells, source, familyCode):
                         inline_diameter = re.search(r"[Øø]\s*(\d+)", inline_value)
                         if inline_diameter:
                             local_dimensions["diameterMm"] = int(inline_diameter[1])
+                    description = " ".join(text(get(r, dc)) for dc in range(1, c)
+                                            if dc != inline_model_column)
+                    if re.search(r"manicotto|raccordo|collare|prolunga", description, re.I):
+                        diameter = re.search(r"[Øø]\s*(\d+)\s*mm", description, re.I)
+                        if diameter:
+                            local_dimensions["diameterMm"] = int(diameter[1])
                     if dimensions:
                         if not model and model_label(first, familyCode)[0]:
                             model, label = model_label(first, familyCode) if rectangle(first) else (first, first)
@@ -304,7 +310,8 @@ def normalize_workbook(cells, source, familyCode):
                             model, label = first, first
                     elif numeric_model and circular:
                         local_dimensions["diameterMm"] = numeric_model
-                        size_code = first
+                        size_code = (f"{first} · {text(get(r, 2))} m³/h"
+                                     if familyCode == "ERDR" else first)
                         if not model and (text(headers[0]).lower() == "modello" or text(get(currency_row, 1)).lower() == "modello" or "ø" in text(get(currency_row, 1)).lower()):
                             model, label = familyCode, familyCode
                     elif numeric_model and model:

@@ -4,7 +4,7 @@ import { pickPlanPoint } from "./ui-helpers";
 for (const width of [1920, 1024]) {
   test(`radiator catalog exposes sorted verified Ardesia sizes at ${width}`, async ({
     page,
-  }) => {
+  }, info) => {
     await page.setViewportSize({ width, height: width === 1920 ? 1080 : 768 });
     await page.goto("/");
     await page.getByRole("button", { name: "Disegna manualmente" }).click();
@@ -43,7 +43,7 @@ for (const width of [1920, 1024]) {
       ),
     ).toBe(true);
     await popup.screenshot({
-      path: `output/verification/radiator-buttons-${width}.png`,
+      path: info.outputPath(`radiator-buttons-${width}.png`),
     });
   });
 }

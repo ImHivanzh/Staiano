@@ -258,7 +258,7 @@ if (process.argv.includes("--apply")) {
     await copyFile(target, target.replace(".json", ".previous.json"));
   }
   history[catalog.version] = catalog;
-  await writeFile(historyPath, JSON.stringify(history, null, 2));
+  await writeFile(historyPath, JSON.stringify(history) + "\n");
   await copyFile(staging, target);
   console.log(`Applied ${target}`);
 } else console.log("Staged only. Review report, then run with --apply.");

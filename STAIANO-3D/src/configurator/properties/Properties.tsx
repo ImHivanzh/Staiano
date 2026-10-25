@@ -48,6 +48,7 @@ export function selectionWithProperties(
     ),
     ...project.airTerminals,
     ...project.plenums,
+    ...(project.ducts ?? []),
     ...(project.pillars ?? []),
     ...project.hvacSystems.flatMap((system) => system.indoorUnits),
   ];
@@ -102,7 +103,7 @@ export function Properties() {
           {selection.length > 1
             ? `${selection.length} elementi selezionati`
             : r
-              ? r.name
+              ? r.name || "Stanza senza nome"
               : w
                 ? "Parete"
                 : deviceId
@@ -119,7 +120,7 @@ export function Properties() {
                 : "Il tuo progetto"}
         </p>
       </div>
-      {deviceId && (
+      {deviceId && !p.ducts?.some((duct) => duct.id === deviceId) && (
         <button
           className="bottone piccolo"
           onClick={() => commit((p) => rotateDevice90(p, deviceId))}
@@ -615,9 +616,11 @@ export function Properties() {
               Applica parete{walls.length > 1 ? " a tutti" : ""}
             </button>
           </form>
-          {walls.length === 1 && <DrywallProperties project={p} wall={w} />}
           {walls.length === 1 && (
-            <WallOpenings key={w.id} project={p} wall={w} />
+            <DrywallProperties key={`${w.id}-drywall`} project={p} wall={w} />
+          )}
+          {walls.length === 1 && (
+            <WallOpenings key={`${w.id}-openings`} project={p} wall={w} />
           )}
           {walls.length === 1 && (
             <details className="azione-inspector">

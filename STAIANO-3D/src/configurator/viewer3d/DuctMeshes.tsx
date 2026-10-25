@@ -18,17 +18,19 @@ function FlowParticles({
   animated,
   color,
   diameterMm,
+  flexibleProductId,
 }: {
   points: RoutePoint[];
   animated: boolean;
   color: string;
   diameterMm?: number;
+  flexibleProductId?: string;
 }) {
   const ref = useRef<THREE.InstancedMesh>(null);
   const curve = useMemo(() => {
     if (diameterMm)
       return (
-        flexibleDuctCurve(points, diameterMm)?.curve ??
+        flexibleDuctCurve(points, diameterMm, flexibleProductId)?.curve ??
         new THREE.CurvePath<THREE.Vector3>()
       );
     const curve = new THREE.CurvePath<THREE.Vector3>();
@@ -51,7 +53,7 @@ function FlowParticles({
       );
     }
     return curve;
-  }, [points, diameterMm]);
+  }, [points, diameterMm, flexibleProductId]);
   const transform = useMemo(() => new THREE.Object3D(), []);
   useFrame(({ clock, invalidate }) => {
     if (!animated || !ref.current || curve.getLength() < 0.001) return;
@@ -270,6 +272,7 @@ export function DuctMeshes({
               <FlexibleDuct
                 points={points}
                 diameterMm={duct.diameterMm ?? 160}
+                flexibleProductId={duct.flexibleProductId}
                 color={
                   collisions.has(duct.id)
                     ? "#dc2626"
@@ -316,6 +319,7 @@ export function DuctMeshes({
               diameterMm={
                 duct.kind === "flexible" ? (duct.diameterMm ?? 160) : undefined
               }
+              flexibleProductId={duct.flexibleProductId}
               animated={animated && !reducedMotion}
               color={flowMode === "heat" ? "#ffe1b6" : "#d5faff"}
             />

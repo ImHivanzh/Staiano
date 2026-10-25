@@ -192,6 +192,12 @@ export function installedTechnicalSheets(project: Project) {
       `Ecoclima ${family?.familyCode ?? unit.family}`,
       family?.sourceMetadata,
     );
+    for (const source of family?.supportingSources ?? [])
+      add(
+        unit.id,
+        `Ecoclima ${family?.familyCode ?? unit.family} · dimensioni`,
+        source.sourceMetadata,
+      );
   }
   for (const plenum of project.plenums)
     add(plenum.id, `Plenum ${plenum.model} su misura`);

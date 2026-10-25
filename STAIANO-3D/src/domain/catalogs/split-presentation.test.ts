@@ -34,8 +34,8 @@ describe("documented split series", () => {
     expect(splitPresentation("Emura", "Gree")).toBeNull();
   });
 
-  it("ties all acquired series facts to the exact original PDF bytes", () => {
-    const pdfs: Record<string, string> = {
+  it("ties all acquired series facts to exact archived source bytes", () => {
+    const documents: Record<string, string> = {
       "Catalogo residenziale 2025":
         "catalog-data/sources/hvac/daikin-residential-2025.pdf",
       "Catalogo residenziale Gree 2026":
@@ -44,16 +44,25 @@ describe("documented split series", () => {
         "catalog-data/sources/splits/mitsubishi-uk-residential-2025.pdf",
       "Brochure MSZ-AY 2025 Italia":
         "catalog-data/sources/splits/mitsubishi-ay-2025.pdf",
+      "LG Italia H18S1DA, pagina prodotto acquisita 2026-10-25":
+        "catalog-data/sources/splits/lg-italy/h18s1da.html",
+      "LG Italia H12S1PA, pagina prodotto acquisita 2026-10-25":
+        "catalog-data/sources/splits/lg-italy/h12s1pa.html",
     };
     const unarchived = new Set<string>();
     for (const series of splitSeriesPresentations) {
-      expect(series.sourceMetadata.page).toBeGreaterThan(0);
+      if (series.sourceMetadata.sourceType === "pdf")
+        expect(series.sourceMetadata.page).toBeGreaterThan(0);
+      else expect(series.sourceMetadata.page).toBeNull();
       const revision = series.sourceMetadata.documentRevision!;
       const archived = archivedDocument(
         series.sourceMetadata.sha256,
-        pdfs[revision]!,
+        documents[revision] ?? "",
       );
-      if (archived) expect(hash(archived)).toBe(series.sourceMetadata.sha256);
+      if (archived)
+        expect(hash(archived).toLowerCase()).toBe(
+          series.sourceMetadata.sha256.toLowerCase(),
+        );
       else unarchived.add(revision);
     }
     reportUnarchived([...unarchived]);

@@ -1,6 +1,18 @@
 import { expect, test } from "./browser-test";
 import { importPlenumFixture, exportPlenumFixture } from "./plenum-ui-fixture";
 
+test("imposta il collare frontale del plenum e lo conserva nel progetto", async ({
+  page,
+}) => {
+  await importPlenumFixture(page);
+  await page.getByTestId("plenum-2d").click();
+  await page.getByLabel("Direzione stacchi").selectOption("front");
+  await page.getByRole("button", { name: "Applica plenum" }).click();
+  const saved = await exportPlenumFixture(page);
+  expect(saved.plenums[0].connectionPosition).toBe("front");
+  expect(saved.plenums[0].connectionPositions).toEqual(["front"]);
+});
+
 test("Collega associa il plenum separato alla bocchetta e salva i flessibili", async ({
   page,
 }) => {
@@ -41,7 +53,7 @@ test("Collega associa il plenum separato alla bocchetta e salva i flessibili", a
   const ducts = dialog.getByRole("region", {
     name: "Canalizzazione collegata",
   });
-  await ducts.locator("details").first().locator("summary").click();
+  await ducts.locator("details").first().locator("summary").first().click();
   await ducts
     .getByRole("button", { name: "Modifica percorso in 3D" })
     .first()

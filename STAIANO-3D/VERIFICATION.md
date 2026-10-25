@@ -1,5 +1,7 @@
 # Verifica del rilascio — 4 ottobre 2026
 
+Archivio delle prove per data e build. Per l’audit corrente e i gate della working tree del 25 ottobre 2026 consultare [REPORT.md](../REPORT.md). Gli esiti sotto non certificano automaticamente il codice successivo o l’app installata.
+
 Produzione: https://hvac.internal.staianopoint.com. Build `G6T81v8TT_frZV_5OSgpC`.
 Certificato wildcard Let's Encrypt, SAN `*.internal.staianopoint.com`; rinnovo Caddy DNS-01.
 Node 24.14, Next 16.3.8, React 19.3, TypeScript strict.

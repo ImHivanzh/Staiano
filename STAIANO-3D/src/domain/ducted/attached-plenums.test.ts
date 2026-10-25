@@ -39,7 +39,12 @@ import { flexibleDuctCurve } from "./flexible-curve";
 function fixture(mounting: "ceiling" | "wall" = "ceiling") {
   let p = guidedProjectFixture();
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
-  p = addGuidedTerminal(p, 1000, "EDLS", mounting);
+  p = addGuidedTerminal(
+    p,
+    1000,
+    mounting === "wall" ? "EDLH" : "EDLS",
+    mounting,
+  );
   p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
   return connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
 }
@@ -69,7 +74,7 @@ it("retains machine geometry and saved hoses when the historic attachment is nul
 it("salva il percorso tracciato in pianta come tubi flessibili fra i due plenum", () => {
   let p = guidedProjectFixture();
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
-  p = addGuidedTerminal(p, 2000, "EDLS", "wall");
+  p = addGuidedTerminal(p, 2000, "EDLH", "wall");
   const terminal = p.airTerminals[0];
   expect(p.plenums).toHaveLength(0);
   const points = [
@@ -430,6 +435,7 @@ it("does not invent a terminal plenum: only the saved connected body exists", ()
 
 it.each([
   ["rear", 0, -0.16, 0],
+  ["front", 0, 0.16, 0],
   ["upper", 0, 0, 0.21],
   ["lower", 0, 0, -0.21],
   ["left", -0.36, 0, 0],
@@ -438,21 +444,28 @@ it.each([
   "places the %s collar on the chosen side of the plenum",
   (side, dx, dy, dz) => {
     const p = fixture();
-    const plenum = {
-      ...p.plenums[0],
-      position: { x: 2, y: 2 },
-      rotation: 0,
-      elevationM: 2,
-      widthMm: 600,
-      depthMm: 200,
-      heightMm: 300,
-      portCount: 1,
-      connectionPosition: side,
-    };
-    const [port] = attachedPlenumPorts(p, plenum);
-    expect(port.x).toBeCloseTo(2 + dx);
-    expect(port.y).toBeCloseTo(2 + dy);
-    expect(port.elevationM).toBeCloseTo(2 + dz);
+    for (const rotation of [0, Math.PI / 2, 0.7])
+      for (const elevationM of [1.7, 2.5]) {
+        const plenum = {
+          ...p.plenums[0],
+          position: { x: 2, y: 2 },
+          rotation,
+          elevationM,
+          widthMm: 600,
+          depthMm: 200,
+          heightMm: 300,
+          portCount: 1,
+          connectionPosition: side,
+        };
+        const [port] = attachedPlenumPorts(p, plenum);
+        expect(port.x).toBeCloseTo(
+          2 + dx * Math.cos(rotation) - dy * Math.sin(rotation),
+        );
+        expect(port.y).toBeCloseTo(
+          2 + dx * Math.sin(rotation) + dy * Math.cos(rotation),
+        );
+        expect(port.elevationM).toBeCloseTo(elevationM + dz);
+      }
   },
 );
 

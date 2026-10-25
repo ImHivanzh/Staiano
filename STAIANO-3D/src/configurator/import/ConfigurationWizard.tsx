@@ -2,7 +2,11 @@
 import { useRef } from "react";
 import { ArrowLeft, ArrowRight, Check } from "@phosphor-icons/react";
 import { useProjectStore } from "@/stores/project-store";
-import { validateProject } from "@/domain/validation";
+import {
+  validateProject,
+  resolveCheckTarget,
+  type Check as ProjectCheck,
+} from "@/domain/validation";
 import { updateRoom } from "@/domain/project";
 import { InstallationWizard } from "@/configurator/systems/InstallationWizard";
 import { WallOpenings } from "@/configurator/properties/WallOpenings";
@@ -27,9 +31,11 @@ const PHASES = [
 export function ConfigurationWizard({
   onImportPlan,
   onDrawRoom,
+  onShowCheck,
 }: {
   onImportPlan: () => void;
   onDrawRoom: () => void;
+  onShowCheck: (check: ProjectCheck) => void;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   const { project, activeFloorId, commit, select, setTool } = useProjectStore();
@@ -289,11 +295,21 @@ export function ConfigurationWizard({
                       commit((p) => updateRoom(p, room.id, { heightM }));
                   }}
                 />
+                <p className="nota">
+                  Struttura alla gronda {formatNumber(room.heightM)} m
+                  {room.roof &&
+                    ` · colmo ${formatNumber(room.roof.ridgeHeightM)} m`}
+                  {room.ceilingHeightM !== null
+                    ? ` · quota finita generale ${formatNumber(room.ceilingHeightM)} m · vuoto minimo ${formatNumber((room.heightM - room.ceilingHeightM) * 100)} cm`
+                    : " · nessun controsoffitto generale dichiarato"}
+                  .
+                  {` ${room.ceilingBands?.length ?? 0} fasce ribassate · volume utile ${formatNumber(room.volumeM3)} m³.`}
+                </p>
                 <button
                   className="bottone piccolo tenue"
                   onClick={() => select({ kind: "room", id: room.id })}
                 >
-                  Modifica {room.name}
+                  Quote e vuoti · {room.name}
                 </button>
               </div>
             ))}
@@ -343,6 +359,14 @@ export function ConfigurationWizard({
                         {issue.status === "invalid" ? "Errore" : "Avviso"}
                       </strong>
                       <span>{issue.message}</span>
+                      {resolveCheckTarget(project, issue.entityId) && (
+                        <button
+                          className="bottone piccolo tenue"
+                          onClick={() => onShowCheck(issue)}
+                        >
+                          Mostra nel progetto
+                        </button>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -353,7 +377,9 @@ export function ConfigurationWizard({
               </p>
             )}
             <p className="nota">
-              Concludere registra la tua revisione, anche in presenza di avvisi.
+              Concludere registra la revisione della guida. Restano {errors}{" "}
+              errori e {issues.length - errors} avvisi; la guida completata non
+              certifica il progetto.
             </p>
           </>
         )}

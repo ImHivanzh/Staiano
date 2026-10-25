@@ -20,7 +20,7 @@ import {
 import { installedTechnicalSheets } from "@/services/export/technical-sheets";
 import rows from "../../../catalog-data/curation/innova-airleaf-2026.json" with { type: "json" };
 
-it("imports all 25 maximum-speed AirLeaf points from the acquired 2026 source", () => {
+it("imports all 35 maximum-speed AirLeaf points from the acquired 2026 source", () => {
   expect(
     createHash("sha256")
       .update(
@@ -31,7 +31,7 @@ it("imports all 25 maximum-speed AirLeaf points from the acquired 2026 source", 
   const products = fanCoilCatalog.products.filter(
     (p) => p.manufacturer === "Innova",
   );
-  expect(products).toHaveLength(25);
+  expect(products).toHaveLength(35);
   for (const product of products) {
     const row = rows.products[product.id as keyof typeof rows.products];
     const point = product.operatingPoints[0];
@@ -60,14 +60,36 @@ it("imports all 25 maximum-speed AirLeaf points from the acquired 2026 source", 
     products.find((p) => p.id === "innova-airleaf-sli-600-4-tubi-4t")!
       .operatingPoints[0].coolingW,
   ).toBe(1970);
+  expect(products.find((p) => p.id === "innova-airleaf-rsi-400-2t")).toMatchObject({
+    family: "AirLeaf RSI",
+    widthMm: 725,
+    heightMm: 576,
+    depthMm: 126,
+    mountings: ["wall"],
+  });
+  expect(products.find((p) => p.id === "innova-airleaf-slsi-400-2t")).toMatchObject({
+    family: "AirLeaf SLSI",
+    widthMm: 725,
+    heightMm: 376,
+    depthMm: 126,
+    mountings: ["wall"],
+    operatingPoints: [
+      { coolingW: 1210, heatingW: 1510, airflowM3h: 228, noiseDbA: 40 },
+    ],
+  });
 });
 
 it("leaves other manufacturers and controls unchanged in the new revision", () => {
   const old = fanCoilCatalogAtVersion("fan-coils-b244c72c5197bef0")!;
   expect(fanCoilCatalog.controls).toEqual(old.controls);
   expect(
-    fanCoilCatalog.products.filter((p) => p.manufacturer !== "Innova"),
+    fanCoilCatalog.products.filter(
+      (p) => p.manufacturer !== "Innova" && !p.family.startsWith("Bi2 Naked"),
+    ),
   ).toEqual(old.products.filter((p) => p.manufacturer !== "Innova"));
+  expect(
+    fanCoilCatalog.products.filter((p) => p.family.startsWith("Bi2 Naked")),
+  ).toHaveLength(14);
 });
 
 it("uses the published pressure at maximum speed in noise filtering", () => {

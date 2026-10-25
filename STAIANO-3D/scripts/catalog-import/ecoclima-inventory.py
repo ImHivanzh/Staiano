@@ -23,7 +23,21 @@ for record in discovery["records"]:
         families=[f for f in catalog["families"] if f["familyCode"]==record["code"]]
     points=[p for f in families for v in f["variants"] for p in v["operatingPoints"]]
     eligible=[p for p in points if p.get("quality","valid")=="valid" and (p["noiseDbA"] is not None or p["noiseUpperBoundDbA"] is not None)]
-    missing_geometry=[v["id"] for f in families for v in f["variants"] if v.get("faceWidthMm") is None or v.get("faceHeightMm") is None]
+    missing_geometry=[]
+    model_code_geometry=[]
+    for f in families:
+        offsets=f.get("modelCodeFaceOffsetsMm",{})
+        model_codes=f.get("modelCodes",[])
+        conditional_geometry=bool(model_codes) and all(code in offsets for code in model_codes)
+        for v in f["variants"]:
+            if v.get("faceWidthMm") is not None and v.get("faceHeightMm") is not None:
+                continue
+            if f.get("isLinearPerMeter") and f.get("linearFaceLengthOffsetMm") is not None and v.get("faceHeightMm") is not None and v.get("commercialLengthsMm"):
+                continue
+            if conditional_geometry and v.get("widthMm") and v.get("heightMm"):
+                model_code_geometry.append(v["id"])
+            else:
+                missing_geometry.append(v["id"])
     missing_noise=sum(p["noiseDbA"] is None and p["noiseUpperBoundDbA"] is None for p in points)
     if record["code"] in accessories:status="outside-terminal-scope"; reason="Accessorio, plenum, raccordo, canale o regolatore: inventariato, non importato come terminale."
     elif not families:status="pending-normalization";reason="Pagina ufficiale acquisita, dati non ancora normalizzati con associazione tecnica verificabile."
@@ -31,7 +45,7 @@ for record in discovery["records"]:
     elif not eligible:status="performance-pending";reason="Portate e/o pressioni disponibili. Rumore assente o punti quarantinati; selezione automatica esclusa."
     elif missing_geometry or missing_noise or len(eligible)!=len(points):status="partial";reason="Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite."
     else:status="verified-published-tables";reason="Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle."
-    entries.append({"code":record["code"],"name":record["name"],"pageUrl":record["pageUrl"],"categories":record["categories"],"status":status,"reason":reason,"identicalTablePageUrls":duplicate_urls,"familyCodes":[f["familyCode"] for f in families],"variantCount":sum(len(f["variants"]) for f in families),"publishedOperatingPoints":len(points),"validAcousticPoints":len(eligible),"unknownNoisePoints":missing_noise,"quarantinedPoints":sum(p.get("quality")=="review" for p in points),"missingFrontGeometryVariantIds":missing_geometry,"htmlSource":source,"documents":record["documents"],"images":record["images"],"acquisitionErrors":record["errors"]})
+    entries.append({"code":record["code"],"name":record["name"],"pageUrl":record["pageUrl"],"categories":record["categories"],"status":status,"reason":reason,"identicalTablePageUrls":duplicate_urls,"familyCodes":[f["familyCode"] for f in families],"variantCount":sum(len(f["variants"]) for f in families),"publishedOperatingPoints":len(points),"validAcousticPoints":len(eligible),"unknownNoisePoints":missing_noise,"quarantinedPoints":sum(p.get("quality")=="review" for p in points),"missingFrontGeometryVariantIds":missing_geometry,"modelCodeDependentFrontGeometryVariantIds":model_code_geometry,"htmlSource":source,"documents":record["documents"],"images":record["images"],"acquisitionErrors":record["errors"]})
 output={"catalogVersion":catalog["version"],"scope":"Tutte le pagine prodotto presenti nelle quattro categorie ufficiali Ecoclima: diffusori, bocchette, griglie e bocchette/griglie/plenum VMC. Duplicati fra categorie preservati come provenienza; accessori esclusi dal dimensionamento terminali.","categorySources":discovery["categories"],"totals":{"officialPages":len(entries),"terminalPages":sum(e["status"]!="outside-terminal-scope" for e in entries),"outsideScopePages":sum(e["status"]=="outside-terminal-scope" for e in entries),"pendingNormalizationPages":sum(e["status"]=="pending-normalization" for e in entries),"normalizedFamilies":len(catalog["families"]),"normalizedVariants":sum(len(f["variants"]) for f in catalog["families"]),"statusCounts":{status:sum(e["status"]==status for e in entries) for status in sorted({e["status"] for e in entries})}},"requestedNameResolution":{"EDLS":"EDLS / EDLSB","EDSC-C/Q":["EDSC-C","EDSC-CC","EDSC-Q"],"EGA PUSH":{"officialFamilyCode":"EGA6","closure":"push-pull su richiesta; nessuna famiglia autonoma EGA-PUSH pubblicata nelle categorie acquisite","otherPublishedPushFamilies":["EGQ-PUSH","EGQR-PUSH","EGF-PUSH","EGFR-PUSH"]}},"entries":entries}
 (ROOT/"catalog-data/generated/ecoclima.inventory.json").write_text(json.dumps(output,ensure_ascii=False,indent=2),encoding="utf8")
 print(json.dumps(output["totals"]))

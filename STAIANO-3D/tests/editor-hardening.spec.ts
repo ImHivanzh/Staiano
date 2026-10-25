@@ -8,6 +8,9 @@ test("smartphone consultation and simple room edits remain usable", async ({
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
+  await page
+    .getByRole("spinbutton", { name: "Coefficiente termico (W/m³)" })
+    .fill("35");
   await page.getByRole("button", { name: "Disegna manualmente" }).click();
   await page
     .getByRole("dialog")

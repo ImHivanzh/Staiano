@@ -264,7 +264,7 @@ if out.exists():
     if previous["version"] != catalog["version"]:
         history[previous["version"]] = previous
 out.write_text(json.dumps(catalog, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
-history_path.write_text(json.dumps(history, indent=2, ensure_ascii=False)+"\n", encoding="utf8")
+history_path.write_text(json.dumps(history, ensure_ascii=False, separators=(",", ":"))+"\n", encoding="utf8")
 def doc_manufacturer(name):
     return "Chaffoteaux" if name.startswith("chaffoteaux") else "Daikin" if name.startswith("daikin") else "Gree"
 

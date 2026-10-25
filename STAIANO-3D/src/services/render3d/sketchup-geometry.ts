@@ -67,13 +67,18 @@ export function sketchupMeshes(root: THREE.Object3D): SketchupModel["meshes"] {
             "Modello troppo complesso per SKP. Esporta un piano più piccolo.",
           );
         const color = material.color.clone().convertLinearToSRGB();
-        let parent: THREE.Object3D | null = object;
+        let parent: THREE.Object3D | null = object,
+          device: THREE.Object3D | null = object;
         while (parent && !parent.name) parent = parent.parent;
+        while (device && device.userData.sketchupGroup !== true)
+          device = device.parent;
         meshes.push({
-          name: (parent?.name || `Geometria ${meshes.length + 1}`).slice(
-            0,
-            200,
-          ),
+          name: (
+            device?.name ||
+            parent?.name ||
+            `Geometria ${meshes.length + 1}`
+          ).slice(0, 200),
+          ...(device ? { groupId: device.uuid } : {}),
           vertices,
           color: [
             Math.round(color.r * 255),

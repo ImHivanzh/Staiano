@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "es2023"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2023"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
@@ -19,7 +23,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -31,5 +37,11 @@
     ".next-update/types/**/*.ts",
     ".next-update/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "tmp", ".cache", "catalog-data", "dist-exe"]
+  "exclude": [
+    "node_modules",
+    "tmp",
+    ".cache",
+    "catalog-data",
+    "dist-exe"
+  ]
 }

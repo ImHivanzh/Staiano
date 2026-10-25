@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { terminalCommercialOptionsSchema } from "@/domain/catalogs/ecoclima-price-schema";
 
-export const CURRENT_SCHEMA_VERSION = 9;
+export const CURRENT_SCHEMA_VERSION = 11;
 export const DIMENSION_MODES = ["internal", "axis", "external"] as const;
 export const DECISION_ORIGINS = [
   "calculated",
@@ -48,6 +48,16 @@ export const pointSchema = z.object({
   x: finite.min(-10000).max(10000),
   y: finite.min(-10000).max(10000),
 });
+const drywallSideSchema = z.object({
+  roomId: id,
+  offsetM: finite
+    .min(-2)
+    .max(2)
+    .refine((value) => Math.abs(value) >= 0.01),
+});
+const drywallSchema = drywallSideSchema
+  .extend({ otherSide: drywallSideSchema.optional() })
+  .refine((value) => value.otherSide?.roomId !== value.roomId);
 export const wallSchema = z.object({
   id,
   floorId: id,
@@ -58,15 +68,7 @@ export const wallSchema = z.object({
   height: finite.positive().max(30).nullable(),
   locked: z.boolean().default(false),
   curveId: id.optional(),
-  drywall: z
-    .object({
-      roomId: id,
-      offsetM: finite
-        .min(-2)
-        .max(2)
-        .refine((value) => Math.abs(value) >= 0.01),
-    })
-    .optional(),
+  drywall: drywallSchema.optional(),
   recognition: z
     .object({
       confidence: finite.min(0).max(1),
@@ -185,6 +187,7 @@ const placement = z.object({
   roomId: id,
   floorId: id,
   wallId: id.nullable(),
+  mounting: z.enum(["wall", "ceiling"]).optional(),
   position: pointSchema,
   rotation: finite,
   widthMm: finite.positive(),
@@ -245,12 +248,30 @@ export const plenumSchema = z.object({
   material: z.enum(["insulated", "galvanized"]).optional(),
   /** Direzione degli stacchi reali: dato del corpo, mai della bocchetta. */
   connectionPosition: z
-    .enum(["lateral", "upper", "lower", "rear", "left", "right", "custom"])
+    .enum([
+      "lateral",
+      "upper",
+      "lower",
+      "rear",
+      "front",
+      "left",
+      "right",
+      "custom",
+    ])
     .optional(),
   /** Lato di ogni singolo stacco; se manca vale connectionPosition. */
   connectionPositions: z
     .array(
-      z.enum(["lateral", "upper", "lower", "rear", "left", "right", "custom"]),
+      z.enum([
+        "lateral",
+        "upper",
+        "lower",
+        "rear",
+        "front",
+        "left",
+        "right",
+        "custom",
+      ]),
     )
     .max(24)
     .optional(),
@@ -301,6 +322,7 @@ export const ductSchema = z.object({
   branchId: z.string().max(250).nullable(),
   /** Flessibile = tubo corrugato verso il terminale, non condotto rigido. */
   kind: z.enum(["rigid", "flexible"]).default("rigid"),
+  flexibleProductId: z.literal("ecoclima-etf10").optional(),
   shape: z.enum(["circle", "rectangle"]),
   diameterMm: finite.positive().nullable(),
   widthMm: finite.positive().nullable(),
@@ -488,6 +510,11 @@ export const projectSchema = z
           operatingPointIndex: z.number().int().nonnegative().max(100),
           controllerId: id.nullable().default(null),
           controllerBoard: z.string().max(100).nullable().default(null),
+          panelType: z
+            .enum(["traditional", "rasomuro", "grilles-top", "grilles-90"])
+            .nullable()
+            .default(null),
+          coverType: z.enum(["fixed", "adjustable"]).nullable().default(null),
         }),
       )
       .max(2000)
@@ -602,14 +629,14 @@ export const projectSchema = z
     const walls = new Map(p.walls.map((w) => [w.id, w]));
     const rooms = new Map(p.rooms.map((r) => [r.id, r]));
     for (const wall of p.walls)
-      if (
-        wall.drywall &&
-        !rooms.get(wall.drywall.roomId)?.wallIds.includes(wall.id)
-      )
-        ctx.addIssue({
-          code: "custom",
-          message: "Cartongesso senza una stanza adiacente coerente",
-        });
+      for (const side of [wall.drywall, wall.drywall?.otherSide].filter(
+        (value) => value !== undefined,
+      ))
+        if (!rooms.get(side.roomId)?.wallIds.includes(wall.id))
+          ctx.addIssue({
+            code: "custom",
+            message: "Cartongesso senza una stanza adiacente coerente",
+          });
     for (const draft of p.equipmentDrafts ?? []) {
       if (rooms.get(draft.roomId)?.floorId !== draft.floorId)
         ctx.addIssue({

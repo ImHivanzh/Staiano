@@ -85,3 +85,145 @@ test("split reale: salva, ricarica e sincronizza selezione2D/3D", async ({
     }),
   ).toBeVisible();
 });
+
+test("LG Standard Plus a parete è configurabile e persiste", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  await page.getByRole("button", { name: /^Disegna manualmente/ }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Crea stanza", exact: true })
+    .click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: "Split", exact: true }).click();
+  await pickPlanPoint(plan, 2, 0.4);
+  await plan.getByTestId("draft-split").click();
+  const popup = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+    exact: true,
+  });
+  await popup
+    .getByRole("combobox", { name: "Marca split", exact: true })
+    .selectOption("LG");
+  const wallCatalog = popup.getByText(/Catalogo LG a parete · 37 modelli/);
+  await expect(wallCatalog).toBeVisible();
+  await wallCatalog.click();
+  await expect(popup.getByText(/Mirror · AM07BH\.NSJ/)).toBeVisible();
+  await expect(popup.getByText(/Air Purification · AP09RT\.NSJ/)).toBeVisible();
+  await expect(popup.getByText(/Deluxe · DC09RH\.NSJ/)).toBeVisible();
+  await expect(popup.getByText(/Standard 2 · S09ET\.NSJ/)).toBeVisible();
+  await expect(
+    popup
+      .getByRole("listitem")
+      .filter({ hasText: /DUALCOOL AI Deluxe · H09S1DA/ }),
+  ).toBeVisible();
+  const model = popup.getByRole("combobox", {
+    name: "Serie e modello split",
+    exact: true,
+  });
+  await expect(
+    model.locator("option").filter({ hasText: "MJ12PC.NSJ" }),
+  ).toHaveCount(1);
+  await expect(
+    model.locator("option").filter({ hasText: "UT36F.NY0" }),
+  ).toHaveCount(1);
+  await model.selectOption("lg-mu2r15-mj12-single");
+  await popup
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+  await expect(plan.getByTestId("split-2d")).toHaveCount(1);
+  const wallSaved = await exportPlenumFixture(page),
+    wallSystem = wallSaved.hvacSystems[0];
+  expect(wallSystem.manufacturer).toBe("LG");
+  expect(wallSystem.productId).toBe("lg-mu2r15-mj12-single");
+  expect(wallSystem.indoorUnits[0].mounting).toBe("wall");
+  await expect(page.getByAltText(/LG Standard Plus/)).toBeVisible();
+  await page.reload();
+  await expect(plan.getByTestId("split-2d")).toHaveCount(1);
+  expect((await exportPlenumFixture(page)).hvacSystems).toEqual(
+    wallSaved.hvacSystems,
+  );
+  await plan.getByTestId("split-2d").click();
+  const monoModel = popup.getByRole("combobox", {
+    name: "Serie e modello split",
+    exact: true,
+  });
+  await expect(
+    monoModel.locator("option").filter({ hasText: "H18S1DA" }),
+  ).toHaveCount(1);
+  await monoModel.selectOption("lg-h18s1da-mono");
+  await popup
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+  const monoSaved = await exportPlenumFixture(page);
+  expect(monoSaved.hvacSystems[0].productId).toBe("lg-h18s1da-mono");
+  expect(monoSaved.hvacSystems[0].outdoorUnit).toMatchObject({
+    widthMm: 770,
+    heightMm: 545,
+    depthMm: 288,
+  });
+});
+
+test("LG Round Cassette resta circolare in pianta dopo il reload", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  await page.getByRole("button", { name: /^Disegna manualmente/ }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Crea stanza", exact: true })
+    .click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: "Split", exact: true }).click();
+  await pickPlanPoint(plan, 2.1, 1.9);
+  await plan.getByTestId("draft-split").click();
+  const popup = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+    exact: true,
+  });
+  await popup
+    .getByRole("combobox", { name: "Marca split", exact: true })
+    .selectOption("LG");
+  const model = popup.getByRole("combobox", {
+    name: "Serie e modello split",
+    exact: true,
+  });
+  await expect(
+    model.locator("option").filter({ hasText: "MJ12PC.NSJ" }),
+  ).toHaveCount(1);
+  await expect(
+    model.locator("option").filter({ hasText: "UT36F.NY0" }),
+  ).toHaveCount(1);
+  await model.selectOption("lg-round-ut36f-uud1-u30-mono");
+  await popup
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+
+  await expect(plan.getByTestId("split-cassette-circle")).toHaveCount(1);
+  const saved = await exportPlenumFixture(page),
+    system = saved.hvacSystems[0],
+    unit = system.indoorUnits[0];
+  expect(system.manufacturer).toBe("LG");
+  expect(unit).toMatchObject({
+    productId: "lg-round-cassette-ut36f-ny0",
+    mounting: "ceiling",
+    wallId: null,
+  });
+  await expect(page.getByAltText(/LG Round Cassette UT36F/)).toBeVisible();
+
+  await page.reload();
+  await expect(plan.getByTestId("split-cassette-circle")).toHaveCount(1);
+  expect((await exportPlenumFixture(page)).hvacSystems).toEqual(
+    saved.hvacSystems,
+  );
+});

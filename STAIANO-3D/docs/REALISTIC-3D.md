@@ -73,3 +73,14 @@ restano in anteprima; le geometrie procedurali rispettano gli ingombri di catalo
 Le finestre storiche senza quota davanzale non ricevono un falso foro in 3D;
 l'operatore può impostare la quota nelle proprietà. I soffitti in sezione sono
 riferimenti alla quota misurata, non controsoffitti aggiunti artificialmente.
+
+I flessibili si raccordano ora su tutte le sei facce dei plenums manuali; ogni
+stacco conserva il proprio lato. Curve e collisioni verificano raggi geometrici
+R≥D e i volumi reali dei collari, senza dichiararli conformi a uno SKU di tubo.
+Per il tubo generico resta il criterio geometrico R≥D; per ETF10 selezionato con
+diametro pubblicato si applica il minimo della scheda acquisita. Sostegni e freccia
+restano legati al prodotto e al rilievo. Stato corrente e piano: [REPORT.md](../../REPORT.md).
+
+Schema 11 conserva una controparete distinta su ciascun lato di una parete
+condivisa. Pianta, 3D, superfici nette e cavità di routing usano il lato della
+stanza interessata; l'export conserva entrambe le configurazioni.

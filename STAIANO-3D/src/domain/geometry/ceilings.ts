@@ -12,6 +12,8 @@ import { clipToConvex, pillarFootprint } from "./pillars";
 import { calculateThermal } from "../thermal/calculate";
 import { roomWallSpan } from "./placement";
 import { drywallGeometry } from "./drywall";
+import { drywallSideForRoom } from "./drywall-sides";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 
 export function ceilingBandPolygon(
   project: Project,
@@ -187,12 +189,13 @@ export function ceilingFrontPose(
         distance(target, projection(target, b.a, b.b)),
     );
   const edge = edges[0];
-  if (!edge || distance(edge.a, edge.b) < terminal.widthMm / 1000 + 0.01)
+  const faceWidthMm = airTerminalFaceWidthMm(terminal);
+  if (!edge || distance(edge.a, edge.b) < faceWidthMm / 1000 + 0.01)
     throw new Error("Il fronte non ha spazio per questa bocchetta.");
   const length = distance(edge.a, edge.b),
     dx = (edge.b.x - edge.a.x) / length,
     dy = (edge.b.y - edge.a.y) / length;
-  const half = terminal.widthMm / 2000 + 0.005;
+  const half = faceWidthMm / 2000 + 0.005;
   const along = Math.max(
     half,
     Math.min(
@@ -284,12 +287,11 @@ export function calculateRoomThermal(project: Project, room: Room) {
         sum + topVolume(intersection) - area(intersection) * band.elevationM
       );
     }, 0);
-  const linings = project.walls
-    .filter((w) => w.drywall?.roomId === room.id && w.drywall.offsetM > 0)
-    .flatMap((w) => {
-      const lining = drywallGeometry(project, w);
-      return lining ? [lining.polygon] : [];
-    });
+  const linings = project.walls.flatMap((w) => {
+    if ((drywallSideForRoom(w, room.id)?.offsetM ?? 0) <= 0) return [];
+    const lining = drywallGeometry(project, w, room.id);
+    return lining ? [lining.polygon] : [];
+  });
   const outsideLinings = (polygon: Point[]) =>
     clearVolume(polygon) -
     linings.reduce(

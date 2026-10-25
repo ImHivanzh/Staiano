@@ -251,7 +251,7 @@ def main():
         versions = json.loads(history.read_text(encoding='utf-8')) if history.exists() else {}
         if OUTPUT.exists():
             versions[previous['version']] = previous
-        history.write_text(json.dumps(versions, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        history.write_text(json.dumps(versions, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
         OUTPUT.write_bytes(staging.read_bytes())
     print(json.dumps({key: value for key, value in report.items() if key not in ('issues', 'added', 'removed', 'changed')} |
                      {'added': len(report['added']), 'removed': len(report['removed']), 'changed': len(report['changed'])}))

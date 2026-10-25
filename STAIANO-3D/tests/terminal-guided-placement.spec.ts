@@ -10,7 +10,7 @@ import {
 for (const width of [1920, 1024])
   test(`terminal catalog on the plan: available models, supply and return at ${width}`, async ({
     page,
-  }) => {
+  }, info) => {
     await page.setViewportSize({ width, height: width === 1920 ? 1080 : 768 });
     const fixture = JSON.parse(
       execFileSync(
@@ -114,10 +114,12 @@ for (const width of [1920, 1024])
     await expect(
       slotWidth.getByRole("button", { name: "30 mm", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
+    const mounting = popup.getByRole("group", { name: "Montaggio terminale" });
     await expect(
-      popup
-        .getByRole("group", { name: "Montaggio terminale" })
-        .getByRole("button", { name: "Parete", exact: true }),
+      mounting.getByRole("button", { name: "Parete", exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      mounting.getByRole("button", { name: "Soffitto", exact: true }),
     ).toBeVisible();
     await expect(
       popup.getByRole("tab", { name: "Plenum", exact: true }),
@@ -234,20 +236,24 @@ for (const width of [1920, 1024])
     );
     await edit
       .getByRole("group", { name: "Montaggio terminale" })
-      .getByRole("button", { name: "Parete", exact: true })
+      .getByRole("button", { name: "Soffitto", exact: true })
       .click();
     await edit
       .locator("footer")
       .getByRole("button", { name: "Salva", exact: true })
       .click();
     await plan.getByTestId("terminal-supply").click();
+    const editMounting = edit.getByRole("group", {
+      name: "Montaggio terminale",
+    });
     await expect(
-      edit
-        .getByRole("group", { name: "Montaggio terminale" })
-        .getByRole("button", { name: "Parete", exact: true }),
+      editMounting.getByRole("button", { name: "Parete", exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      editMounting.getByRole("button", { name: "Soffitto", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
     await page.screenshot({
-      path: `output/verification/terminal-bocchetta-${width}.png`,
+      path: info.outputPath(`terminal-bocchetta-${width}.png`),
       animations: "disabled",
     });
     await expect(edit.getByLabel("Descrizione stacco")).toHaveCount(0);

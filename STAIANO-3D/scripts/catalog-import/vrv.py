@@ -150,7 +150,7 @@ if out.exists():
     if previous["version"] != catalog["version"]:
         history[previous["version"]] = previous
 out.write_text(json.dumps(catalog, indent=2, ensure_ascii=False) + "\n", encoding="utf8")
-history_path.write_text(json.dumps(history, indent=2, ensure_ascii=False) + "\n", encoding="utf8")
+history_path.write_text(json.dumps(history, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf8")
 manifest_path = ROOT / "catalog-data/sources/vrv/manifest.json"
 manifest_path.parent.mkdir(parents=True, exist_ok=True)
 manifest_path.write_text(

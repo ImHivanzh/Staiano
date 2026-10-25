@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#catalog-history-data": {
+      "browser": "./src/domain/catalogs/history-browser.ts",
+      "default": "./src/domain/catalogs/history-node.ts"
+    }
+  },
   "engines": {
     "node": ">=22.13.0"
   },

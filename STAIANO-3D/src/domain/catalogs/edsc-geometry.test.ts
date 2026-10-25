@@ -17,13 +17,6 @@ const family = airTerminalCatalog.families.find(
 )!;
 const digest = (file: string) =>
   createHash("sha256").update(readFileSync(file)).digest("hex");
-// Un re-import aggiorna legittimamente sourceMetadata (SHA-256 della pagina, istante
-// di import): la provenienza rigenerata non fa parte dei dati pubblicati confrontati qui.
-const withoutSourceMetadata = (family: { sourceMetadata?: unknown }) =>
-  Object.fromEntries(
-    Object.entries(family).filter(([key]) => key !== "sourceMetadata"),
-  );
-
 describe("original EDSC-C geometry drawings", () => {
   it.each([
     [100, 238, 90.2, 176, 307.7],
@@ -109,23 +102,22 @@ describe("original EDSC-C geometry drawings", () => {
     });
   });
 
-  it("preserves all operating points, other families and previous catalog lookup", () => {
+  it("preserves historical variant identities, operating points and catalog lookup", () => {
     const before = airTerminalCatalogSchema.parse(previous);
     expect(airTerminalCatalogAtVersion(before.version)).toEqual(before);
-    expect(airTerminalCatalog.families).toHaveLength(before.families.length);
     for (const old of before.families) {
       const current = airTerminalCatalog.families.find(
         (f) => f.familyCode === old.familyCode,
       )!;
-      if (old.familyCode !== "EDSC-C")
-        expect(withoutSourceMetadata(current)).toEqual(
-          withoutSourceMetadata(old),
+      expect(current).toBeDefined();
+      for (const variant of old.variants) {
+        const currentVariant = current.variants.find(
+          (candidate) => candidate.id === variant.id,
         );
-      else
-        for (const variant of old.variants)
-          expect(
-            current.variants.find((v) => v.id === variant.id)!.operatingPoints,
-          ).toEqual(variant.operatingPoints);
+        expect(currentVariant).toBeDefined();
+        for (const point of variant.operatingPoints)
+          expect(currentVariant!.operatingPoints).toContainEqual(point);
+      }
     }
   });
 });

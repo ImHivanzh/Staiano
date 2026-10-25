@@ -149,6 +149,20 @@ function installedFamily(
 }
 
 describe("official Ecoclima list-price BOM", () => {
+  it("never prices a relocated collar as the OEM plenum, including per-port side overrides", () => {
+    const item = terminal();
+    for (const change of [
+      { connectionPosition: "left" as const },
+      { connectionPositions: ["lower" as const] },
+    ]) {
+      const custom = { ...cataloguePlenumFor(item)!, ...change };
+      expect(
+        quote([item], [custom]).lines.find(
+          (line) => line.kind === "insulated-plenum",
+        )?.status,
+      ).toBe("unknown");
+    }
+  });
   it("quotes the separate plenum only when its body is connected and catalogue-sized", () => {
     const item = terminal();
     const withoutBody = calculateEcoclimaBom({

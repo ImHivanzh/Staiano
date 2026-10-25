@@ -96,7 +96,7 @@ it("models the lower band and higher central ceiling and rejects overlapping or 
 });
 
 it("places and moves a real grille on the vertical front and follows changes to its height", () => {
-  let project = addGuidedTerminal(guidedProjectFixture(), 1000, "EDLS", "wall");
+  let project = addGuidedTerminal(guidedProjectFixture(), 1000, "EDLH", "wall");
   const room = project.rooms[0],
     terminal = project.airTerminals[0];
   const wall = project.walls.find((w) => w.id === room.wallIds[1])!;

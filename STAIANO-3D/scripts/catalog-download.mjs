@@ -50,7 +50,7 @@ export async function downloadCatalogSource(document) {
       continue;
     }
     const hash = createHash("sha256").update(content).digest("hex");
-    if (hash !== document.sha256)
+    if (hash !== document.sha256.toLowerCase())
       throw new Error(
         `contenuto diverso da quello del catalogo (atteso ${document.sha256.slice(0, 8)}, ricevuto ${hash.slice(0, 8)})`,
       );

@@ -1,5 +1,6 @@
 import type { Point, Room, Wall } from "@/schemas/project";
 import { add, distance, projection, scale, subtract } from "./primitives";
+import { drywallSideForRoom } from "./drywall-sides";
 /** Net usable face, independent of wall axis and neighboring wall thickness. */
 export function roomWallSpan(
   room: Room,
@@ -23,9 +24,8 @@ export function roomWallSpan(
     segments
       .map((e) => ({ ...e, lengthM: distance(e.start, e.end) }))
       .sort((a, b) => b.lengthM - a.lengthM)[0] ?? null;
-  if (!span || wall.drywall?.roomId !== room.id || wall.drywall.offsetM <= 0)
-    return span;
-  const offset = wall.drywall.offsetM;
+  const offset = drywallSideForRoom(wall, room.id)?.offsetM ?? 0;
+  if (!span || offset <= 0) return span;
   const dx = (-(span.end.y - span.start.y) / span.lengthM) * offset;
   const dy = ((span.end.x - span.start.x) / span.lengthM) * offset;
   return {

@@ -12,6 +12,7 @@ import { heatPumpCatalog } from "@/domain/catalogs/heat-pumps";
 import { vrvCatalog } from "@/domain/catalogs/vrv";
 import { CommercialCatalog } from "./CommercialCatalog";
 import { StoveCatalog } from "./StoveCatalog";
+import { airTerminalCoverage } from "@/domain/air-terminals/data-quality";
 export function CatalogAdmin() {
   return (
     <main className="pagina cataloghi">
@@ -506,6 +507,52 @@ export function CatalogAdmin() {
           varianti. Punti discordanti conservati e non selezionabili
           automaticamente.
         </p>
+        <details>
+          <summary>
+            Stato dei dati per famiglia · {airTerminalCatalog.families.length}{" "}
+            famiglie
+          </summary>
+          <p className="nota">
+            Prestazioni: conteggi di punti. Geometria: conteggi di varianti,
+            compresi i fallback quotati e le lunghezze commerciali. Prezzi e
+            configurazioni restano separati; nessun dato in revisione viene
+            promosso.
+          </p>
+          {airTerminalCatalog.families.map((family) => {
+            const coverage = airTerminalCoverage(family);
+            const source = family.sourceMetadata;
+            return (
+              <details key={family.familyCode}>
+                <summary>
+                  {family.familyCode} · {coverage.variants} varianti ·{" "}
+                  {family.selectionStatus ?? "stato non classificato"}
+                </summary>
+                <p className="nota">
+                  Prestazioni: {coverage.validPoints} punti utilizzabili,{" "}
+                  {coverage.reviewPoints} in revisione;{" "}
+                  {coverage.acousticMissing} senza dato acustico.
+                </p>
+                <p className="nota">
+                  Geometria: faccia risolta per {coverage.faces}/
+                  {coverage.variants} varianti; profondità per {coverage.depths}
+                  /{coverage.variants}. Le misure mancanti richiedono una
+                  dichiarazione esplicita.
+                </p>
+                <p className="nota">
+                  Prezzi: listino separato; una riga di famiglia non prova la
+                  quotazione di ogni configurazione.
+                </p>
+                <a href={source.sourceUrl} target="_blank" rel="noreferrer">
+                  Fonte · revisione {source.documentRevision ?? "non indicata"}{" "}
+                  · pagina {source.page ?? "non indicata"}
+                </a>
+                <p className="nota" style={{ overflowWrap: "anywhere" }}>
+                  SHA-256 {source.sha256}
+                </p>
+              </details>
+            );
+          })}
+        </details>
         <AirTerminalCalculator />
       </section>
       {radiatorCatalogs.map((catalog) => (
@@ -520,7 +567,9 @@ export function CatalogAdmin() {
                 Versione {catalog.version} · {catalog.products.length} varianti
               </p>
             </div>
-            <span className="etichetta buona">Schema valido</span>
+            <span className="etichetta">
+              Formato valido · verifica tecnica distinta
+            </span>
           </div>
           <table className="tabella">
             <thead>
@@ -541,7 +590,27 @@ export function CatalogAdmin() {
                   return (
                     <tr key={family}>
                       <td>{family}</td>
-                      <td>{products.length}</td>
+                      <td>
+                        {products.length}
+                        <br />
+                        <small>
+                          Geometria:{" "}
+                          {
+                            products.filter(
+                              (p) => p.geometryAccuracy === "published",
+                            ).length
+                          }{" "}
+                          quotate ·{" "}
+                          {
+                            products.filter(
+                              (p) => p.geometryAccuracy === "schematic",
+                            ).length
+                          }{" "}
+                          schematiche ·{" "}
+                          {products.filter((p) => !p.geometryAccuracy).length}{" "}
+                          non classificate. Prezzi non acquisiti.
+                        </small>
+                      </td>
                       <td>
                         <a
                           className="fonte-catalogo"

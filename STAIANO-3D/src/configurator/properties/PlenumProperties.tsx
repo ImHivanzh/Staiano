@@ -42,6 +42,10 @@ export function PlenumProperties({
             ? `Collegato alla macchina ${codes.get(plenum.attachmentId!) ?? "elemento"}. Elemento autonomo: spostalo e ruotalo in pianta o in 3D.`
             : "Plenum libero: usa Collega e seleziona una bocchetta o una macchina."}
       </p>
+      <p className="nota">
+        Modificare quote o facce degli stacchi dichiara un plenum su misura. Una
+        connessione diversa dalla fonte OEM richiede una quotazione separata.
+      </p>
       <form
         key={JSON.stringify(plenum)}
         onSubmit={(e) => {
@@ -87,6 +91,7 @@ export function PlenumProperties({
                 | "upper"
                 | "lower"
                 | "rear"
+                | "front"
                 | "left"
                 | "right"
                 | "custom",
@@ -131,6 +136,7 @@ export function PlenumProperties({
                     </span>
                     <select name={`port-position-${i}`} defaultValue={position}>
                       <option value="rear">Dietro · orizzontali</option>
+                      <option value="front">Davanti</option>
                       <option value="upper">Sopra · verso l’alto</option>
                       <option value="lower">Sotto · verso il basso</option>
                       <option value="left">Sinistra</option>

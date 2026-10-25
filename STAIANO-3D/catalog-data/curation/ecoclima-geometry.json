@@ -49,6 +49,45 @@
     "note": "Faccia diametroA verificata. Ingombro assiale complessivo variabile con aperturaS: non normalizzato; dimensioniA..E conservate.",
     "sourceSha256": "dbb60155c748325de10b263df50d374eade56a7c2992cece5486800913e22cb4"
   },
+  "EVVAIR-C": {
+    "sourceSha256": "d262eab35591e290bd74ba25cb06965a31f4af673c0918a5324488bc606c59db",
+    "mountings": ["wall", "ceiling"],
+    "shape": "circle",
+    "bodyDepthMm": null,
+    "note": "Faccia circolare Ø228 mm e attacco nominale Ø125 mm. La profondità assiale resta non assegnata: la tavola non chiarisce il piano di riferimento rispetto al corpo.",
+    "variantsByNominalDiameterMm": {
+      "125": {
+        "faceWidthMm": 228,
+        "faceHeightMm": 228,
+        "bodyDepthMm": null,
+        "originalDimensionsMm": {
+          "faceDiameterMm": 228,
+          "connectionDiameterMm": 125
+        },
+        "dimensionNote": "Pannello circolare Ø228 mm dal disegno dimensionale Ecoclima EVVAIR. Connessione nominale Ø125 mm; profondità del corpo non normalizzata."
+      }
+    }
+  },
+  "EVVAIR-Q": {
+    "sourceSha256": "d262eab35591e290bd74ba25cb06965a31f4af673c0918a5324488bc606c59db",
+    "mountings": ["wall", "ceiling"],
+    "shape": "rectangle",
+    "bodyDepthMm": null,
+    "note": "Faccia quadrata 230×230 mm e attacco nominale Ø125 mm. La profondità assiale resta non assegnata: la tavola non chiarisce il piano di riferimento rispetto al corpo.",
+    "variantsByNominalDiameterMm": {
+      "125": {
+        "faceWidthMm": 230,
+        "faceHeightMm": 230,
+        "bodyDepthMm": null,
+        "originalDimensionsMm": {
+          "faceWidthMm": 230,
+          "faceHeightMm": 230,
+          "connectionDiameterMm": 125
+        },
+        "dimensionNote": "Pannello quadrato 230×230 mm dal disegno dimensionale Ecoclima EVVAIR. Connessione nominale Ø125 mm; profondità del corpo non normalizzata."
+      }
+    }
+  },
   "EDSC-C": {
     "sourceSha256": "bfccbd1b62a0e94f2120f6b42a216b3a1164fdde6e7722db1549f39b55d5947e",
     "mountings": [

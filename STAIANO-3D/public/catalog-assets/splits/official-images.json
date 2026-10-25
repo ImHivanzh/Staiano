@@ -3,35 +3,49 @@
     "localPath": "/catalog-assets/splits/daikin-stylish-official.jpg",
     "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXA-C(W_B_S)/FTXA-CW%20Right.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     "sourcePageUrl": "https://www.daikin.it/it_IT/cerca-prodotto/product.html/FTXA-CW.html",
-    "retrievedAt": "2026-10-07T09:30:34.413406+00:00",
+    "retrievedAt": "2026-10-07T11:30:34.413406+02:00",
     "sha256": "4f1971dfc4cffae9a16881f9c687ca1917bb9b9b4b259c06cdaeecf3104811de"
   },
   "daikin-emura": {
     "localPath": "/catalog-assets/splits/daikin-emura-official.jpg",
     "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXJ-AW/FTXJ-AW_right.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     "sourcePageUrl": "https://www.daikin.it/it_IT/cerca-prodotto/product.html/FTXJ-AW.html",
-    "retrievedAt": "2026-10-07T09:30:34.413406+00:00",
+    "retrievedAt": "2026-10-07T11:30:34.413406+02:00",
     "sha256": "9edf10ba63abd345f32e0902889299617a1679f64d0166fbd868498720db2ed3"
   },
   "daikin-perfera-all-seasons": {
     "localPath": "/catalog-assets/splits/daikin-perfera-all-seasons-official.jpg",
     "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXM-A/correct/FTXM-A_R.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     "sourcePageUrl": "https://www.daikin.it/it_IT/cerca-prodotto/product.html/FTXM-A.html",
-    "retrievedAt": "2026-10-07T09:30:34.413406+00:00",
+    "retrievedAt": "2026-10-07T11:30:34.413406+02:00",
     "sha256": "a32b9ae2ccede296c31c92ddcea2c35b071f0fe8a234b1daed8aefdd5d67ef1c"
   },
   "daikin-comfora": {
     "localPath": "/catalog-assets/splits/daikin-comfora-official.jpg",
     "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXP-N9_R.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     "sourcePageUrl": "https://www.daikin.it/it_IT/cerca-prodotto/product.html/FTXP-N9.html",
-    "retrievedAt": "2026-10-07T09:30:34.413406+00:00",
+    "retrievedAt": "2026-10-07T11:30:34.413406+02:00",
     "sha256": "315002f799326e6d9d2fcfe1fb12cdc65fd0a5515df67d639166d77ebbb3950b"
   },
   "daikin-sensira": {
     "localPath": "/catalog-assets/splits/daikin-sensira-official.jpg",
     "sourceUrl": "https://www.daikin.it/content/dam/MDM/Pictures/Split/IndoorUnits/Packshots/FTXF-E/FTXF-E_R.tif/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
     "sourcePageUrl": "https://www.daikin.it/it_IT/cerca-prodotto/product.html/FTXF-E.html",
-    "retrievedAt": "2026-10-07T09:30:34.413406+00:00",
+    "retrievedAt": "2026-10-07T11:30:34.413406+02:00",
     "sha256": "7c086022b17595085cc696a6cf3aef8f87d21c57097c6bb442e686ffa43b816d"
+  },
+  "lg-dualcool-ai-deluxe": {
+    "localPath": "/catalog-assets/splits/lg-dualcool-ai-deluxe.jpg",
+    "sourceUrl": "https://www.lg.com/content/dam/channel/wcms/it/rac_italy/dualcool-ai-air/deluxe/gallery/AS_DualcoolDeluxe_450x450px.jpg",
+    "sourcePageUrl": "https://www.lg.com/it/condizionatori/monosplit/h18s1da/",
+    "retrievedAt": "2026-10-25T18:38:07+00:00",
+    "sha256": "2b2926cd862f9525fdd7f7a37eba1f8e684bc67075f8220237f42719bb6da65f"
+  },
+  "lg-dualcool-ai-premium": {
+    "localPath": "/catalog-assets/splits/lg-dualcool-ai-premium.jpg",
+    "sourceUrl": "https://www.lg.com/content/dam/channel/wcms/it/rac_italy/dualcool-ai-air/premium/gallery/AS_DualcoolPremium_450x450px.jpg",
+    "sourcePageUrl": "https://www.lg.com/it/condizionatori/monosplit/h12s1pa/",
+    "retrievedAt": "2026-10-25T18:38:07+00:00",
+    "sha256": "994dfe451fe1c3d27169229dd2e195cf59828f4cc7bd5763c118ff3dc7ac0a6d"
   }
 }

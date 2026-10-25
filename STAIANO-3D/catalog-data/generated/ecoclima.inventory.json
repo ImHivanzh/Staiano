@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "2026-10-18-ecoclima-f258e79720fb",
+  "catalogVersion": "2026-10-24-ecoclima-318094c60565",
   "scope": "Tutte le pagine prodotto presenti nelle quattro categorie ufficiali Ecoclima: diffusori, bocchette, griglie e bocchette/griglie/plenum VMC. Duplicati fra categorie preservati come provenienza; accessori esclusi dal dimensionamento terminali.",
   "categorySources": [
     {
@@ -44,10 +44,10 @@
     "normalizedVariants": 1778,
     "statusCounts": {
       "outside-terminal-scope": 12,
-      "partial": 46,
+      "partial": 39,
       "performance-pending": 9,
       "published-models-only": 12,
-      "verified-published-tables": 30
+      "verified-published-tables": 37
     }
   },
   "requestedNameResolution": {
@@ -76,8 +76,8 @@
       "categories": [
         "diffusione/diffusori"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EDE1",
@@ -88,11 +88,8 @@
       "validAcousticPoints": 30,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-ede1-300-600",
-        "ecoclima-ede1-400-600",
-        "ecoclima-ede1-500-600"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ede1-4991da38.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede1-ede1r-diffusori-a-getto-elicoidale-regolabile",
@@ -129,8 +126,8 @@
       "categories": [
         "diffusione/diffusori"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EDE2",
@@ -141,11 +138,8 @@
       "validAcousticPoints": 30,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-ede2-300-600",
-        "ecoclima-ede2-400-600",
-        "ecoclima-ede2-500-600"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ede2-628cefd2.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede2-ede2r-diffusori-a-getto-elicoidale-regolabile",
@@ -194,6 +188,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ede2s-38fa3f46.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede2s-diffusori-a-getto-elicoidale-regolabile",
@@ -242,6 +237,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ede5-7f940c92.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede5-diffusori-a-getto-elicoidale-regolabile",
@@ -288,6 +284,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-epsp-a5a66e50.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/epsp-plenum-realizzato-in-polistirolo-stampato",
@@ -343,6 +340,7 @@
         "ecoclima-edls-3f-20",
         "ecoclima-edls-3f-30"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edls-42ab2d1f.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edls-edlsb-diffusori-lineari-multiferitoia-a-scomparsa",
@@ -406,6 +404,7 @@
         "ecoclima-edlh-3f-20",
         "ecoclima-edlh-3f-30"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edlh-12ecbf8b.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edlh-edlhb-diffusori-lineari-multiferitoia-a-scomparsa",
@@ -450,8 +449,8 @@
       "categories": [
         "diffusione/diffusori"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EDFL-10",
@@ -468,56 +467,8 @@
       "validAcousticPoints": 96,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-edfl-10-1f",
-        "ecoclima-edfl-10-2f",
-        "ecoclima-edfl-10-3f",
-        "ecoclima-edfl-10-4f",
-        "ecoclima-edfl-10-5f",
-        "ecoclima-edfl-10-6f",
-        "ecoclima-edfl-20-1f",
-        "ecoclima-edfl-20-2f",
-        "ecoclima-edfl-20-3f",
-        "ecoclima-edfl-20-4f",
-        "ecoclima-edfl-20-5f",
-        "ecoclima-edfl-20-6f",
-        "ecoclima-edfl-30-1f",
-        "ecoclima-edfl-30-2f",
-        "ecoclima-edfl-30-3f",
-        "ecoclima-edfl-30-4f",
-        "ecoclima-edfl-30-5f",
-        "ecoclima-edfl-30-6f",
-        "ecoclima-edfl-40-1f",
-        "ecoclima-edfl-40-2f",
-        "ecoclima-edfl-40-3f",
-        "ecoclima-edfl-40-4f",
-        "ecoclima-edfl-40-5f",
-        "ecoclima-edfl-40-6f",
-        "ecoclima-edfl-50-1f",
-        "ecoclima-edfl-50-2f",
-        "ecoclima-edfl-50-3f",
-        "ecoclima-edfl-50-4f",
-        "ecoclima-edfl-50-5f",
-        "ecoclima-edfl-50-6f",
-        "ecoclima-edflb-20-1f",
-        "ecoclima-edflb-20-2f",
-        "ecoclima-edflb-20-3f",
-        "ecoclima-edflb-20-4f",
-        "ecoclima-edflb-20-5f",
-        "ecoclima-edflb-20-6f",
-        "ecoclima-edflb-40-1f",
-        "ecoclima-edflb-40-2f",
-        "ecoclima-edflb-40-3f",
-        "ecoclima-edflb-40-4f",
-        "ecoclima-edflb-40-5f",
-        "ecoclima-edflb-40-6f",
-        "ecoclima-edflb-50-1f",
-        "ecoclima-edflb-50-2f",
-        "ecoclima-edflb-50-3f",
-        "ecoclima-edflb-50-4f",
-        "ecoclima-edflb-50-5f",
-        "ecoclima-edflb-50-6f"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edfl-5bdf5679.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
@@ -566,6 +517,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edflb-fl-e3db5d52.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflb-fl-diffusori-lineari-di-ripresa-a-feritoie-con-filtro",
@@ -645,6 +597,7 @@
         "ecoclima-edflbna-50-3f",
         "ecoclima-edflbna-50-4f"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edflna-04628549.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
@@ -691,6 +644,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-etim-ba093a2c.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/etim-tubo-a-induzione",
@@ -748,6 +702,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edra-90b29d07.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edra-edra-pq-diffusori-circolari-a-coni-regolabili",
@@ -797,6 +752,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edcs-0025fa83.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcs-edcs-pq-diffusori-circolari-a-singolo-cono-regolabile",
@@ -845,6 +801,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edea-sd-e564c219.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edea-sd-diffusori-circolari-a-coni-fissi-con-serranda",
@@ -893,6 +850,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edcf-0ce36e75.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcf-diffusori-circolari-forellinati",
@@ -941,6 +899,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edcc-0bc40027.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edcc-diffusori-circolari-con-piastra-di-fondo-chiusa",
@@ -989,6 +948,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edqf1-ea0e04e1.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqf1-diffusori-quadrati-forellinati",
@@ -1037,6 +997,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edqc1-57793333.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqc1-diffusore-quadrato-con-piastra-di-fondo-chiusa",
@@ -1092,6 +1053,7 @@
         "ecoclima-edsc-q-100",
         "ecoclima-edsc-q-125"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edsc-c-96ed3c92.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
@@ -1148,6 +1110,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edqf3-345b40d2.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqf3-diffusori-quadrati-forellinati",
@@ -1199,6 +1162,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 300,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edrc-57846358.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrc-edrcs-edrc-pqr-edrcs-pqr-diffusori-a-geometria-variabile",
@@ -1248,6 +1212,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 130,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edrcs-6bb5bdc1.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrcs-therm-edrcs-pqr-therm-diffusori-termostatici-a-geometria-variabile",
@@ -1297,6 +1262,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edrf-91af43f6.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrf-edrfq-diffusori-a-geometria-fissa",
@@ -1346,6 +1312,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edrfb-fd67b8d4.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edrfb-edrfqb-diffusori-a-geometria-fissa",
@@ -1394,6 +1361,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ede-fb-cd5d52f9.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/ede-fb-diffusori-a-getto-elicoidale-a-geometria-fissa",
@@ -1442,6 +1410,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edqmq-70a836ec.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmq-diffusori-multi-ugello-a-geometria-quadrata",
@@ -1490,6 +1459,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edqmc-72f3a18f.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqmc-diffusori-multi-ugello-a-geometria-circolare",
@@ -1547,6 +1517,7 @@
         "ecoclima-edmf-s-1200x100",
         "ecoclima-edmf-s-1200x150"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edmf-s-c12080bf.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmf-s-diffusori-a-microugelli-orientabili-su-pannello",
@@ -1641,6 +1612,7 @@
         "ecoclima-edmp-p-1000x300",
         "ecoclima-edmp-p-1200x300"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edmp-p-f694e191.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmp-p-diffusori-a-microugelli-orientabili-su-pannello-rettangolare",
@@ -1735,6 +1707,7 @@
         "ecoclima-edmp-c-1000x300",
         "ecoclima-edmp-c-1200x300"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edmp-c-ba091999.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edmp-c-diffusori-a-microugelli-orientabili-per-canali-circolari",
@@ -1784,6 +1757,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edqv-b3ec9cbf.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edqv-edqv-pq-diffusori-quadrati-a-4-vie",
@@ -1940,6 +1914,7 @@
         "ecoclima-edc6-500x500",
         "ecoclima-edc6-600x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edc-3cce0fb7.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edc-1-6-diffusori-multidirezionali-ad-alette-curve",
@@ -1995,6 +1970,7 @@
         "ecoclima-edu-m-200",
         "ecoclima-edu-m-230"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edu-7ca6e6d6.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-edu-m-diffusori-a-ugello-orientabili-a-lunga-gittata",
@@ -2039,6 +2015,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edub-67f21c59.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edub-diffusori-a-ugello-orientabili-a-lunga-gittata",
@@ -2087,6 +2064,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edu-f-1f517e43.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-f-diffusori-a-ugello-orientabili-a-lunga-gittata-con-attacco-per-canale-circolare-o-flessibile",
@@ -2139,6 +2117,7 @@
         "ecoclima-edu-sm-250",
         "ecoclima-edu-sm-300"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edu-s-381f4e08.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-s-edu-sm-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda",
@@ -2187,6 +2166,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edu-lfs-2c313c0f.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edu-lfs-diffusori-a-ugello-orientabili-a-lunga-gittata-con-serranda-ed-attacco-per-canale-circolare-o-flessibile",
@@ -2231,6 +2211,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edfds-bfb886c1.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfds-diffusori-circolari-da-pavimento",
@@ -2279,6 +2260,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evvmc-2bb5f55f.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
@@ -2327,6 +2309,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evvrc-83d74ae5.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
@@ -2375,6 +2358,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evpmc-f85b3854.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs",
@@ -2423,6 +2407,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eam-vrfn-3a8012d5.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox",
@@ -2505,6 +2490,7 @@
         "ecoclima-eba-800x400",
         "ecoclima-eba-1000x400"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eba-c073fea7.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eba-bocchette-di-mandata-in-alluminio-passo-20-mm",
@@ -2566,6 +2552,7 @@
         "ecoclima-ebcv-600x300",
         "ecoclima-ebcv-800x300"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebcv-557346ea.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebcv-bocchette-di-mandata-per-canali-circolari",
@@ -2637,6 +2624,7 @@
         "ecoclima-ebv-800x400",
         "ecoclima-ebv-1000x400"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebv-d3a32466.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebv-bocchette-di-mandata-in-acciaio-passo-20-mm",
@@ -2715,6 +2703,7 @@
         "ecoclima-ebia-1200x600",
         "ecoclima-ebia-1500x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebia-ec8b8c9c.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebia-bocchette-industriali-in-alluminio-passo-40-mm",
@@ -2762,7 +2751,8 @@
       "validAcousticPoints": 82,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 2,
-      "missingFrontGeometryVariantIds": [
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [
         "ecoclima-ebl-400x75",
         "ecoclima-ebl-500x75",
         "ecoclima-ebl-600x75",
@@ -2831,8 +2821,8 @@
       "categories": [
         "diffusione/bocchette"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EBLR"
@@ -2842,23 +2832,8 @@
       "validAcousticPoints": 45,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-eblr-400x75",
-        "ecoclima-eblr-500x75",
-        "ecoclima-eblr-600x75",
-        "ecoclima-eblr-400x100",
-        "ecoclima-eblr-500x100",
-        "ecoclima-eblr-600x100",
-        "ecoclima-eblr-400x125",
-        "ecoclima-eblr-500x125",
-        "ecoclima-eblr-600x125",
-        "ecoclima-eblr-400x150",
-        "ecoclima-eblr-500x150",
-        "ecoclima-eblr-600x150",
-        "ecoclima-eblr-400x200",
-        "ecoclima-eblr-500x200",
-        "ecoclima-eblr-600x200"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eblr-ddd14192.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblr-bocchette-lineari-a-barre-orizzontali-fisse-con-cornice-da-15-mm",
@@ -2895,8 +2870,8 @@
       "categories": [
         "diffusione/bocchette"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EBLS"
@@ -2906,33 +2881,8 @@
       "validAcousticPoints": 100,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-ebls-400x75",
-        "ecoclima-ebls-500x75",
-        "ecoclima-ebls-600x75",
-        "ecoclima-ebls-800x75",
-        "ecoclima-ebls-1000x75",
-        "ecoclima-ebls-400x100",
-        "ecoclima-ebls-500x100",
-        "ecoclima-ebls-600x100",
-        "ecoclima-ebls-800x100",
-        "ecoclima-ebls-1000x100",
-        "ecoclima-ebls-400x125",
-        "ecoclima-ebls-500x125",
-        "ecoclima-ebls-600x125",
-        "ecoclima-ebls-800x125",
-        "ecoclima-ebls-1000x125",
-        "ecoclima-ebls-400x150",
-        "ecoclima-ebls-500x150",
-        "ecoclima-ebls-600x150",
-        "ecoclima-ebls-800x150",
-        "ecoclima-ebls-1000x150",
-        "ecoclima-ebls-400x200",
-        "ecoclima-ebls-500x200",
-        "ecoclima-ebls-600x200",
-        "ecoclima-ebls-800x200",
-        "ecoclima-ebls-1000x200"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebls-afa50e77.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/ebls-bocchette-lineari-a-barre-orizzontali-fisse-con-corpo-centrale-removibile-e-cornice-a-scomparsa",
@@ -2989,6 +2939,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 6,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eblf-f82eef53.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/bocchette/eblf-bocchette-lineari-a-barre-orizzontali-fisse-senza-cornice",
@@ -3126,6 +3077,7 @@
         "ecoclima-ega-1000x1000",
         "ecoclima-ega-1200x1000"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega-fae69031.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-griglie-di-ripresa-in-alluminio-passo-25-mm",
@@ -3217,6 +3169,7 @@
         "ecoclima-ega1-4-800x800",
         "ecoclima-ega1-4-1000x800"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega-52b2b5ac.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega-1-4-griglie-di-ripresa-in-alluminio-passo-25-mm-con-filtro",
@@ -3315,6 +3268,7 @@
         "ecoclima-ega6-800x1000",
         "ecoclima-ega6-1000x1000"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega6-f8d6b190.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro",
@@ -3370,6 +3324,7 @@
         "ecoclima-ebl3-800x300",
         "ecoclima-ebl3-1000x300"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebl3-18e2ff40.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebl3-200-griglie-lineari-a-barre-orizzontali-fisse-con-filtro",
@@ -3413,64 +3368,8 @@
       "validAcousticPoints": 167,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 1,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-ega50-400x400",
-        "ecoclima-ega50-600x400",
-        "ecoclima-ega50-800x400",
-        "ecoclima-ega50-1000x400",
-        "ecoclima-ega50-1200x400",
-        "ecoclima-ega50-1400x400",
-        "ecoclima-ega50-1600x400",
-        "ecoclima-ega50-1800x400",
-        "ecoclima-ega50-400x500",
-        "ecoclima-ega50-600x500",
-        "ecoclima-ega50-800x500",
-        "ecoclima-ega50-1000x500",
-        "ecoclima-ega50-1200x500",
-        "ecoclima-ega50-1400x500",
-        "ecoclima-ega50-1600x500",
-        "ecoclima-ega50-1800x500",
-        "ecoclima-ega50-400x600",
-        "ecoclima-ega50-600x600",
-        "ecoclima-ega50-800x600",
-        "ecoclima-ega50-1000x600",
-        "ecoclima-ega50-1200x600",
-        "ecoclima-ega50-1400x600",
-        "ecoclima-ega50-1600x600",
-        "ecoclima-ega50-1800x600",
-        "ecoclima-ega50-400x800",
-        "ecoclima-ega50-600x800",
-        "ecoclima-ega50-800x800",
-        "ecoclima-ega50-1000x800",
-        "ecoclima-ega50-1200x800",
-        "ecoclima-ega50-1400x800",
-        "ecoclima-ega50-1600x800",
-        "ecoclima-ega50-1800x800",
-        "ecoclima-ega50-400x1000",
-        "ecoclima-ega50-600x1000",
-        "ecoclima-ega50-800x1000",
-        "ecoclima-ega50-1000x1000",
-        "ecoclima-ega50-1200x1000",
-        "ecoclima-ega50-1400x1000",
-        "ecoclima-ega50-1600x1000",
-        "ecoclima-ega50-1800x1000",
-        "ecoclima-ega50-400x1200",
-        "ecoclima-ega50-600x1200",
-        "ecoclima-ega50-800x1200",
-        "ecoclima-ega50-1000x1200",
-        "ecoclima-ega50-1200x1200",
-        "ecoclima-ega50-1400x1200",
-        "ecoclima-ega50-1600x1200",
-        "ecoclima-ega50-1800x1200",
-        "ecoclima-ega50-400x1500",
-        "ecoclima-ega50-600x1500",
-        "ecoclima-ega50-800x1500",
-        "ecoclima-ega50-1000x1500",
-        "ecoclima-ega50-1200x1500",
-        "ecoclima-ega50-1400x1500",
-        "ecoclima-ega50-1600x1500",
-        "ecoclima-ega50-1800x1500"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega50-fc2f9df8.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-griglie-di-ripresa-in-alluminio-passo-50-mm",
@@ -3507,8 +3406,8 @@
       "categories": [
         "diffusione/griglie"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EGA50-3F"
@@ -3518,64 +3417,8 @@
       "validAcousticPoints": 112,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-ega50-3f-400x400",
-        "ecoclima-ega50-3f-600x400",
-        "ecoclima-ega50-3f-800x400",
-        "ecoclima-ega50-3f-1000x400",
-        "ecoclima-ega50-3f-1200x400",
-        "ecoclima-ega50-3f-1400x400",
-        "ecoclima-ega50-3f-1600x400",
-        "ecoclima-ega50-3f-1800x400",
-        "ecoclima-ega50-3f-400x500",
-        "ecoclima-ega50-3f-600x500",
-        "ecoclima-ega50-3f-800x500",
-        "ecoclima-ega50-3f-1000x500",
-        "ecoclima-ega50-3f-1200x500",
-        "ecoclima-ega50-3f-1400x500",
-        "ecoclima-ega50-3f-1600x500",
-        "ecoclima-ega50-3f-1800x500",
-        "ecoclima-ega50-3f-400x600",
-        "ecoclima-ega50-3f-600x600",
-        "ecoclima-ega50-3f-800x600",
-        "ecoclima-ega50-3f-1000x600",
-        "ecoclima-ega50-3f-1200x600",
-        "ecoclima-ega50-3f-1400x600",
-        "ecoclima-ega50-3f-1600x600",
-        "ecoclima-ega50-3f-1800x600",
-        "ecoclima-ega50-3f-400x800",
-        "ecoclima-ega50-3f-600x800",
-        "ecoclima-ega50-3f-800x800",
-        "ecoclima-ega50-3f-1000x800",
-        "ecoclima-ega50-3f-1200x800",
-        "ecoclima-ega50-3f-1400x800",
-        "ecoclima-ega50-3f-1600x800",
-        "ecoclima-ega50-3f-1800x800",
-        "ecoclima-ega50-3f-400x1000",
-        "ecoclima-ega50-3f-600x1000",
-        "ecoclima-ega50-3f-800x1000",
-        "ecoclima-ega50-3f-1000x1000",
-        "ecoclima-ega50-3f-1200x1000",
-        "ecoclima-ega50-3f-1400x1000",
-        "ecoclima-ega50-3f-1600x1000",
-        "ecoclima-ega50-3f-1800x1000",
-        "ecoclima-ega50-3f-400x1200",
-        "ecoclima-ega50-3f-600x1200",
-        "ecoclima-ega50-3f-800x1200",
-        "ecoclima-ega50-3f-1000x1200",
-        "ecoclima-ega50-3f-1200x1200",
-        "ecoclima-ega50-3f-1400x1200",
-        "ecoclima-ega50-3f-1600x1200",
-        "ecoclima-ega50-3f-1800x1200",
-        "ecoclima-ega50-3f-400x1500",
-        "ecoclima-ega50-3f-600x1500",
-        "ecoclima-ega50-3f-800x1500",
-        "ecoclima-ega50-3f-1000x1500",
-        "ecoclima-ega50-3f-1200x1500",
-        "ecoclima-ega50-3f-1400x1500",
-        "ecoclima-ega50-3f-1600x1500",
-        "ecoclima-ega50-3f-1800x1500"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega50-3f-494d8236.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3f-ega50-4f-griglie-di-ripresa-in-alluminio-passo-50-mm-con-filtro-spessore-48-mm",
@@ -3623,64 +3466,8 @@
       "validAcousticPoints": 167,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 1,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-ega50-3s-400x400",
-        "ecoclima-ega50-3s-600x400",
-        "ecoclima-ega50-3s-800x400",
-        "ecoclima-ega50-3s-1000x400",
-        "ecoclima-ega50-3s-1200x400",
-        "ecoclima-ega50-3s-1400x400",
-        "ecoclima-ega50-3s-1600x400",
-        "ecoclima-ega50-3s-1800x400",
-        "ecoclima-ega50-3s-400x500",
-        "ecoclima-ega50-3s-600x500",
-        "ecoclima-ega50-3s-800x500",
-        "ecoclima-ega50-3s-1000x500",
-        "ecoclima-ega50-3s-1200x500",
-        "ecoclima-ega50-3s-1400x500",
-        "ecoclima-ega50-3s-1600x500",
-        "ecoclima-ega50-3s-1800x500",
-        "ecoclima-ega50-3s-400x600",
-        "ecoclima-ega50-3s-600x600",
-        "ecoclima-ega50-3s-800x600",
-        "ecoclima-ega50-3s-1000x600",
-        "ecoclima-ega50-3s-1200x600",
-        "ecoclima-ega50-3s-1400x600",
-        "ecoclima-ega50-3s-1600x600",
-        "ecoclima-ega50-3s-1800x600",
-        "ecoclima-ega50-3s-400x800",
-        "ecoclima-ega50-3s-600x800",
-        "ecoclima-ega50-3s-800x800",
-        "ecoclima-ega50-3s-1000x800",
-        "ecoclima-ega50-3s-1200x800",
-        "ecoclima-ega50-3s-1400x800",
-        "ecoclima-ega50-3s-1600x800",
-        "ecoclima-ega50-3s-1800x800",
-        "ecoclima-ega50-3s-400x1000",
-        "ecoclima-ega50-3s-600x1000",
-        "ecoclima-ega50-3s-800x1000",
-        "ecoclima-ega50-3s-1000x1000",
-        "ecoclima-ega50-3s-1200x1000",
-        "ecoclima-ega50-3s-1400x1000",
-        "ecoclima-ega50-3s-1600x1000",
-        "ecoclima-ega50-3s-1800x1000",
-        "ecoclima-ega50-3s-400x1200",
-        "ecoclima-ega50-3s-600x1200",
-        "ecoclima-ega50-3s-800x1200",
-        "ecoclima-ega50-3s-1000x1200",
-        "ecoclima-ega50-3s-1200x1200",
-        "ecoclima-ega50-3s-1400x1200",
-        "ecoclima-ega50-3s-1600x1200",
-        "ecoclima-ega50-3s-1800x1200",
-        "ecoclima-ega50-3s-400x1500",
-        "ecoclima-ega50-3s-600x1500",
-        "ecoclima-ega50-3s-800x1500",
-        "ecoclima-ega50-3s-1000x1500",
-        "ecoclima-ega50-3s-1200x1500",
-        "ecoclima-ega50-3s-1400x1500",
-        "ecoclima-ega50-3s-1600x1500",
-        "ecoclima-ega50-3s-1800x1500"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega50-3s-85d10ce8.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega50-3s-griglie-di-aspirazione-o-espulsione-in-alluminio-passo-50-mm-con-serranda-di-sovrapressione",
@@ -3719,64 +3506,8 @@
       "validAcousticPoints": 167,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 1,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-egz50-400x400",
-        "ecoclima-egz50-600x400",
-        "ecoclima-egz50-800x400",
-        "ecoclima-egz50-1000x400",
-        "ecoclima-egz50-1200x400",
-        "ecoclima-egz50-1400x400",
-        "ecoclima-egz50-1600x400",
-        "ecoclima-egz50-1800x400",
-        "ecoclima-egz50-400x500",
-        "ecoclima-egz50-600x500",
-        "ecoclima-egz50-800x500",
-        "ecoclima-egz50-1000x500",
-        "ecoclima-egz50-1200x500",
-        "ecoclima-egz50-1400x500",
-        "ecoclima-egz50-1600x500",
-        "ecoclima-egz50-1800x500",
-        "ecoclima-egz50-400x600",
-        "ecoclima-egz50-600x600",
-        "ecoclima-egz50-800x600",
-        "ecoclima-egz50-1000x600",
-        "ecoclima-egz50-1200x600",
-        "ecoclima-egz50-1400x600",
-        "ecoclima-egz50-1600x600",
-        "ecoclima-egz50-1800x600",
-        "ecoclima-egz50-400x800",
-        "ecoclima-egz50-600x800",
-        "ecoclima-egz50-800x800",
-        "ecoclima-egz50-1000x800",
-        "ecoclima-egz50-1200x800",
-        "ecoclima-egz50-1400x800",
-        "ecoclima-egz50-1600x800",
-        "ecoclima-egz50-1800x800",
-        "ecoclima-egz50-400x1000",
-        "ecoclima-egz50-600x1000",
-        "ecoclima-egz50-800x1000",
-        "ecoclima-egz50-1000x1000",
-        "ecoclima-egz50-1200x1000",
-        "ecoclima-egz50-1400x1000",
-        "ecoclima-egz50-1600x1000",
-        "ecoclima-egz50-1800x1000",
-        "ecoclima-egz50-400x1200",
-        "ecoclima-egz50-600x1200",
-        "ecoclima-egz50-800x1200",
-        "ecoclima-egz50-1000x1200",
-        "ecoclima-egz50-1200x1200",
-        "ecoclima-egz50-1400x1200",
-        "ecoclima-egz50-1600x1200",
-        "ecoclima-egz50-1800x1200",
-        "ecoclima-egz50-400x1500",
-        "ecoclima-egz50-600x1500",
-        "ecoclima-egz50-800x1500",
-        "ecoclima-egz50-1000x1500",
-        "ecoclima-egz50-1200x1500",
-        "ecoclima-egz50-1400x1500",
-        "ecoclima-egz50-1600x1500",
-        "ecoclima-egz50-1800x1500"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egz50-501adef2.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz50-griglie-di-ripresa-in-acciaio-passo-50-mm",
@@ -3813,8 +3544,8 @@
       "categories": [
         "diffusione/griglie"
       ],
-      "status": "partial",
-      "reason": "Prestazioni pubblicate utilizzabili solo per punti validi con rumore noto; quote o configurazioni mancanti restano esplicite.",
+      "status": "verified-published-tables",
+      "reason": "Quote frontali e punti acustici delle tabelle pubblicate normalizzati; profondità e configurazioni aggiuntive non dichiarate restano nulle.",
       "identicalTablePageUrls": [],
       "familyCodes": [
         "EGZ100"
@@ -3824,64 +3555,8 @@
       "validAcousticPoints": 112,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-egz100-600x600",
-        "ecoclima-egz100-800x600",
-        "ecoclima-egz100-1000x600",
-        "ecoclima-egz100-1200x600",
-        "ecoclima-egz100-1400x600",
-        "ecoclima-egz100-1600x600",
-        "ecoclima-egz100-1800x600",
-        "ecoclima-egz100-2000x600",
-        "ecoclima-egz100-600x800",
-        "ecoclima-egz100-800x800",
-        "ecoclima-egz100-1000x800",
-        "ecoclima-egz100-1200x800",
-        "ecoclima-egz100-1400x800",
-        "ecoclima-egz100-1600x800",
-        "ecoclima-egz100-1800x800",
-        "ecoclima-egz100-2000x800",
-        "ecoclima-egz100-600x1000",
-        "ecoclima-egz100-800x1000",
-        "ecoclima-egz100-1000x1000",
-        "ecoclima-egz100-1200x1000",
-        "ecoclima-egz100-1400x1000",
-        "ecoclima-egz100-1600x1000",
-        "ecoclima-egz100-1800x1000",
-        "ecoclima-egz100-2000x1000",
-        "ecoclima-egz100-600x1200",
-        "ecoclima-egz100-800x1200",
-        "ecoclima-egz100-1000x1200",
-        "ecoclima-egz100-1200x1200",
-        "ecoclima-egz100-1400x1200",
-        "ecoclima-egz100-1600x1200",
-        "ecoclima-egz100-1800x1200",
-        "ecoclima-egz100-2000x1200",
-        "ecoclima-egz100-600x1400",
-        "ecoclima-egz100-800x1400",
-        "ecoclima-egz100-1000x1400",
-        "ecoclima-egz100-1200x1400",
-        "ecoclima-egz100-1400x1400",
-        "ecoclima-egz100-1600x1400",
-        "ecoclima-egz100-1800x1400",
-        "ecoclima-egz100-2000x1400",
-        "ecoclima-egz100-600x1600",
-        "ecoclima-egz100-800x1600",
-        "ecoclima-egz100-1000x1600",
-        "ecoclima-egz100-1200x1600",
-        "ecoclima-egz100-1400x1600",
-        "ecoclima-egz100-1600x1600",
-        "ecoclima-egz100-1800x1600",
-        "ecoclima-egz100-2000x1600",
-        "ecoclima-egz100-600x1800",
-        "ecoclima-egz100-800x1800",
-        "ecoclima-egz100-1000x1800",
-        "ecoclima-egz100-1200x1800",
-        "ecoclima-egz100-1400x1800",
-        "ecoclima-egz100-1600x1800",
-        "ecoclima-egz100-1800x1800",
-        "ecoclima-egz100-2000x1800"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egz100-68b55783.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egz100-griglie-di-ripresa-in-acciaio-passo-100-mm",
@@ -3930,6 +3605,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 6,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egq-2f7375f8.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-griglie-a-maglia-quadra",
@@ -3977,43 +3653,8 @@
       "validAcousticPoints": 68,
       "unknownNoisePoints": 35,
       "quarantinedPoints": 2,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-egqr-200x100",
-        "ecoclima-egqr-300x100",
-        "ecoclima-egqr-400x100",
-        "ecoclima-egqr-500x100",
-        "ecoclima-egqr-600x100",
-        "ecoclima-egqr-200x150",
-        "ecoclima-egqr-300x150",
-        "ecoclima-egqr-400x150",
-        "ecoclima-egqr-500x150",
-        "ecoclima-egqr-600x150",
-        "ecoclima-egqr-200x200",
-        "ecoclima-egqr-300x200",
-        "ecoclima-egqr-400x200",
-        "ecoclima-egqr-500x200",
-        "ecoclima-egqr-600x200",
-        "ecoclima-egqr-200x300",
-        "ecoclima-egqr-300x300",
-        "ecoclima-egqr-400x300",
-        "ecoclima-egqr-500x300",
-        "ecoclima-egqr-600x300",
-        "ecoclima-egqr-200x400",
-        "ecoclima-egqr-300x400",
-        "ecoclima-egqr-400x400",
-        "ecoclima-egqr-500x400",
-        "ecoclima-egqr-600x400",
-        "ecoclima-egqr-200x500",
-        "ecoclima-egqr-300x500",
-        "ecoclima-egqr-400x500",
-        "ecoclima-egqr-500x500",
-        "ecoclima-egqr-600x500",
-        "ecoclima-egqr-200x600",
-        "ecoclima-egqr-300x600",
-        "ecoclima-egqr-400x600",
-        "ecoclima-egqr-500x600",
-        "ecoclima-egqr-600x600"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egqr-9cd6b0d5.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-griglie-a-maglia-quadra-con-cornice-da-15-mm",
@@ -4061,50 +3702,8 @@
       "validAcousticPoints": 84,
       "unknownNoisePoints": 0,
       "quarantinedPoints": 42,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-egqif-400x75",
-        "ecoclima-egqif-500x75",
-        "ecoclima-egqif-600x75",
-        "ecoclima-egqif-800x75",
-        "ecoclima-egqif-1000x75",
-        "ecoclima-egqif-1200x75",
-        "ecoclima-egqif-400x100",
-        "ecoclima-egqif-500x100",
-        "ecoclima-egqif-600x100",
-        "ecoclima-egqif-800x100",
-        "ecoclima-egqif-1000x100",
-        "ecoclima-egqif-1200x100",
-        "ecoclima-egqif-400x125",
-        "ecoclima-egqif-500x125",
-        "ecoclima-egqif-600x125",
-        "ecoclima-egqif-800x125",
-        "ecoclima-egqif-1000x125",
-        "ecoclima-egqif-1200x125",
-        "ecoclima-egqif-400x150",
-        "ecoclima-egqif-500x150",
-        "ecoclima-egqif-600x150",
-        "ecoclima-egqif-800x150",
-        "ecoclima-egqif-1000x150",
-        "ecoclima-egqif-1200x150",
-        "ecoclima-egqif-400x200",
-        "ecoclima-egqif-500x200",
-        "ecoclima-egqif-600x200",
-        "ecoclima-egqif-800x200",
-        "ecoclima-egqif-1000x200",
-        "ecoclima-egqif-1200x200",
-        "ecoclima-egqif-400x300",
-        "ecoclima-egqif-500x300",
-        "ecoclima-egqif-600x300",
-        "ecoclima-egqif-800x300",
-        "ecoclima-egqif-1000x300",
-        "ecoclima-egqif-1200x300",
-        "ecoclima-egqif-400x400",
-        "ecoclima-egqif-500x400",
-        "ecoclima-egqif-600x400",
-        "ecoclima-egqif-800x400",
-        "ecoclima-egqif-1000x400",
-        "ecoclima-egqif-1200x400"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egqif-d0774fcc.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqif-griglie-a-maglia-quadra-inclinata-senza-cornice",
@@ -4203,6 +3802,7 @@
         "ecoclima-egq1-4-800x1000",
         "ecoclima-egq1-4-1000x1000"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egq1-4-60d8c91b.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq1-4-griglie-a-maglia-quadra-con-filtro",
@@ -4287,6 +3887,7 @@
         "ecoclima-egq-push-800x600",
         "ecoclima-egq-push-1000x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egq-push-5aa04e92.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egq-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro",
@@ -4335,6 +3936,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egqr-push-d7e849e1.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egqr-push-griglia-di-ripresa-a-maglia-quadra-13x13-mm-con-filtro-e-cornice-interna-da-15-mm",
@@ -4414,6 +4016,7 @@
         "ecoclima-egf-800x600",
         "ecoclima-egf-1000x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egf-d3ca77e7.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-griglie-forellinate",
@@ -4479,6 +4082,7 @@
         "ecoclima-egfr-500x600",
         "ecoclima-egfr-600x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egfr-dfc7c014.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-griglie-forellinate-con-cornice-da-15-mm",
@@ -4570,6 +4174,7 @@
         "ecoclima-egff-1000x400",
         "ecoclima-egff-1200x400"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egff-2fe3d348.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egff-griglie-forellinate-senza-cornice",
@@ -4678,6 +4283,7 @@
         "ecoclima-egf-push-800x1000",
         "ecoclima-egf-push-1000x1000"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egf-push-37f87618.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-push-griglia-forellinata-con-filtro",
@@ -4726,6 +4332,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egfr-push-484da106.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egfr-push-griglia-forellinata-con-filtro-e-cornice-interna-da-15-mm",
@@ -4793,6 +4400,7 @@
         "ecoclima-eta-600x400",
         "ecoclima-eta-600x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eta-cbe3edeb.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/eta-griglie-di-transito-in-alluminio",
@@ -4866,6 +4474,7 @@
         "ecoclima-ebp-500x600",
         "ecoclima-ebp-600x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebp-8a34c73c.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebp-ebp-r-griglie-pedonabili",
@@ -4948,6 +4557,7 @@
         "ecoclima-ebp-t-1000x600",
         "ecoclima-ebp-t-1200x600"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebp-t-e8054039.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ebp-t-ebp-tr-griglie-pedonabili",
@@ -4987,6 +4597,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 4,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egs-3f882c13.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egs-griglie-stampate-di-aspirazione",
@@ -5035,6 +4646,7 @@
         "ecoclima-edsc-q-100",
         "ecoclima-edsc-q-125"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edsc-c-29c7607a.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edsc-c-edsc-cc-edsc-q-diffusori-a-scomparsa-per-controsoffitto-in-cartongesso",
@@ -5104,6 +4716,7 @@
         "ecoclima-ege-11",
         "ecoclima-ege-12"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ege-27a78c0a.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ege-griglie-di-distribuzione-aria-per-easy-box",
@@ -5150,6 +4763,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-easy-fc30baa1.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/easy-box-plenum-in-abs-per-distribuzione-dellaria",
@@ -5198,6 +4812,7 @@
       "unknownNoisePoints": 26,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-egfc-9b32e3c9.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/egfc-griglia-forellinata-a-scomparsa-per-cartongesso",
@@ -5237,6 +4852,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edlsv-f8af1f05.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edlsv-edlsvb-diffusori-lineari-a-scomparsa",
@@ -5276,6 +4892,7 @@
       "unknownNoisePoints": 34,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ega-one-c364f74a.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ega-one-griglia-per-plenum-one-box",
@@ -5313,6 +4930,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-one-box-7bf1d5df.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/one-box-box-di-distribuzione-in-epp",
@@ -5352,6 +4970,7 @@
       "unknownNoisePoints": 26,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eagf-53d3ad84.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eagf-griglia-forellinata",
@@ -5391,6 +5010,7 @@
       "unknownNoisePoints": 26,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eag-ed59904a.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-griglia-di-ripresa",
@@ -5430,6 +5050,7 @@
       "unknownNoisePoints": 18,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eal-f30c3f6e.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eal-griglia-a-barre-orizzontali-fisse",
@@ -5467,6 +5088,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-epl-7ed3f635.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/epl-epp-plenum-in-acciaio-zincato-con-attacchi-laterali-o-posteriori",
@@ -5504,6 +5126,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eapro-e6bb0262.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eapro-prolunga-telescopica",
@@ -5541,6 +5164,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ebox-n-8bd4450e.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ebox-n-box-di-distribuzione-in-acciaio-zincato-o-verniciato-ral-9016",
@@ -5578,6 +5202,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-ears-pn-61b3bd7d.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/ears-pn-raccordo-per-attraversamento-solaio",
@@ -5615,6 +5240,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eatm-28483b28.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eatm-tubo-telescopico",
@@ -5652,6 +5278,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-edr-0cbd5275.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/edr-serrande-di-regolazione-leggere",
@@ -5706,6 +5333,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-erdr-1151004a.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/erdr-regolatore-di-portata-in-abs-per-canale-circolare",
@@ -5752,6 +5380,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eab9063-3af7132e.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eab9063-curva-a-90-in-acciaio-zincato",
@@ -5791,6 +5420,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eag-al-12eb0dcc.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-al-griglia-in-alluminio-con-rete-verniciata-bianca",
@@ -5830,6 +5460,7 @@
       "unknownNoisePoints": 10,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eag-inox-5a5c2158.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eag-inox-griglia-con-protezione-antipioggia",
@@ -5869,6 +5500,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eamv-v-0da616b8.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eamv-v-bocchette-di-mandata-o-di-ripresa-in-plastica",
@@ -5908,6 +5540,7 @@
       "unknownNoisePoints": 3,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evrea-37663445.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evrea-diffusore-daria-in-abs",
@@ -5953,6 +5586,7 @@
         "ecoclima-eadd-160",
         "ecoclima-eadd-200"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eadd-51ad082d.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eadd-diffusore-daria-in-abs",
@@ -5992,10 +5626,8 @@
       "validAcousticPoints": 0,
       "unknownNoisePoints": 432,
       "quarantinedPoints": 0,
-      "missingFrontGeometryVariantIds": [
-        "ecoclima-evvair-c-125",
-        "ecoclima-evvair-q-125"
-      ],
+      "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evvair-0404c5b2.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvair-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
@@ -6035,6 +5667,7 @@
       "unknownNoisePoints": 2,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evvbor-c564feff.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvbor-valvole-regolabili-per-la-mandata-e-estrazione-dellaria",
@@ -6083,6 +5716,7 @@
         "ecoclima-evali-120",
         "ecoclima-evali-150"
       ],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evali-52500197.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evali-bocchette-di-estrazione-autoregolabili",
@@ -6122,6 +5756,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evvmc-842be3bd.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvmc-evvmb-valvole-di-ventilazione-per-la-mandata-dellaria",
@@ -6172,6 +5807,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evvrc-43b3a241.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evvrc-evvrb-valvole-di-ventilazione-per-lestrazione-dellaria",
@@ -6222,6 +5858,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-evpmc-5cb0f75f.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/evpmc-valvole-di-mandata-e-estrazione-dellaria-in-abs",
@@ -6272,6 +5909,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-eam-vrfn-7e29636f.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/eam-vrfn-valvole-di-mandata-e-ripresa-in-acciaio-inox",
@@ -6320,6 +5958,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-emv-pfs-2c744a55.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-pfs-diffusore-a-coni-fissi-in-abs",
@@ -6359,6 +5998,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-emv-s-910f7357.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-s-emv-vs-griglia-piana",
@@ -6398,6 +6038,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-emv-j-41de5453.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-j-griglia-di-sovrapressione",
@@ -6437,6 +6078,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-emv-bvs-d4050dee.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-bvs-griglia-circolare-con-collare",
@@ -6476,6 +6118,7 @@
       "unknownNoisePoints": 0,
       "quarantinedPoints": 0,
       "missingFrontGeometryVariantIds": [],
+      "modelCodeDependentFrontGeometryVariantIds": [],
       "htmlSource": {
         "filename": "complete-emv-350-8e23e379.html",
         "sourceUrl": "https://www.ecoclima.com/catalogo-generale/vmc-ventilazione-meccanica-controllata/bocchette-griglie-e-plenum/emv-350-griglie-di-transito",

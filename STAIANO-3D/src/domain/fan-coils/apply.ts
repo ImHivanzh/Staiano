@@ -8,6 +8,9 @@ import {
   fanCoilCatalogAtVersion,
   fanCoilProductAtVersion,
   controllerBoardFor,
+  fanCoilDefaultPanelType,
+  fanCoilPanelTypeValid,
+  fanCoilCoverTypeValid,
 } from "@/domain/catalogs/fan-coils";
 import {
   fanCoilPlacementValid,
@@ -44,6 +47,8 @@ export function applyFanCoil(
   options: {
     mounting?: FanCoilPlacement["mounting"];
     controllerId?: string | null;
+    panelType?: FanCoilPlacement["panelType"];
+    coverType?: FanCoilPlacement["coverType"];
     installationId?: string;
   } = {},
 ): Project {
@@ -69,11 +74,20 @@ export function applyFanCoil(
     throw new Error(
       "Selezionare un modello e una velocità presenti nel catalogo.",
     );
+  const panelType =
+    options.panelType ??
+    fanCoilDefaultPanelType(product, options.mounting ?? "wall");
+  if (!fanCoilPanelTypeValid(product, options.mounting ?? "wall", panelType))
+    throw new Error("Kit di incasso non compatibile con montaggio e modello.");
+  const coverType = options.coverType ?? null;
+  if (!fanCoilCoverTypeValid(product, coverType))
+    throw new Error("Mobile di copertura non compatibile con il modello.");
   const pose = initialFanCoilPose(
     project,
     room,
     product,
     options.mounting ?? "wall",
+    panelType,
   );
   if (!pose)
     throw new Error(
@@ -97,6 +111,8 @@ export function applyFanCoil(
       locked: false,
       controllerId: null,
       controllerBoard: null,
+      panelType,
+      coverType,
     },
     options.controllerId ?? null,
   );
@@ -117,7 +133,14 @@ export function updateFanCoil(
   id: string,
   patch: Partial<
     FanCoilPose &
-      Pick<FanCoilPlacement, "operatingPointIndex" | "controllerId" | "locked">
+      Pick<
+        FanCoilPlacement,
+        | "operatingPointIndex"
+        | "controllerId"
+        | "panelType"
+        | "coverType"
+        | "locked"
+      >
   >,
 ): Project {
   const unit = project.fanCoils?.find((u) => u.id === id);
@@ -140,6 +163,13 @@ export function updateFanCoil(
       "Modello ventilconvettore non verificabile nel catalogo originale.",
     );
   let next = { ...unit, ...patch };
+  if (!fanCoilPanelTypeValid(product, next.mounting, next.panelType))
+    next = {
+      ...next,
+      panelType: fanCoilDefaultPanelType(product, next.mounting),
+    };
+  if (!fanCoilCoverTypeValid(product, next.coverType))
+    next = { ...next, coverType: null };
   if (
     !Number.isInteger(next.operatingPointIndex) ||
     !product.operatingPoints[next.operatingPointIndex] ||
@@ -153,6 +183,7 @@ export function updateFanCoil(
       room,
       product,
       patch.mounting,
+      next.panelType,
     );
     if (!pose)
       throw new Error("Nessuna posizione libera per il montaggio scelto.");

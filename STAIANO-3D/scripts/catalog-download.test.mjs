@@ -45,13 +45,32 @@ test("verifies official JSON source records against their pinned digest", async 
     sourceUrl: "https://manufacturer.example/api/articles/3010340",
     sha256: createHash("sha256").update(data).digest("hex"),
   };
-  mock.method(globalThis, "fetch", async () =>
-    new Response(data, { headers: { "Content-Type": "application/json" } }),
+  mock.method(
+    globalThis,
+    "fetch",
+    async () =>
+      new Response(data, { headers: { "Content-Type": "application/json" } }),
   );
   assert.deepEqual(await downloadCatalogSource(document), {
     content: data,
     contentType: "application/json",
   });
+});
+
+test("accepts uppercase hexadecimal SHA-256 metadata", async () => {
+  mock.method(
+    globalThis,
+    "fetch",
+    async () =>
+      new Response(content, { headers: { "Content-Type": "application/pdf" } }),
+  );
+  assert.deepEqual(
+    await downloadCatalogSource({
+      ...document,
+      sha256: document.sha256.toUpperCase(),
+    }),
+    { content, contentType: "application/pdf" },
+  );
 });
 
 test("stops after three transient failures", async () => {

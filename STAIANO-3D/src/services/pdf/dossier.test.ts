@@ -9,8 +9,138 @@ import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { sizeAirTerminal } from "@/domain/air-terminals/size";
 import { applyAirTerminalSolution } from "@/domain/air-terminals/apply";
 import { validateProject } from "@/domain/validation";
+import { applyFanCoil } from "@/domain/fan-coils/apply";
+import { fanCoilCatalog } from "@/domain/catalogs/fan-coils";
 
 describe("Dossier tecnico locale", () => {
+  it("riporta kit SLI RASOMURO e scheda richiesta dal comando separato", () => {
+    const base = dossierFixture();
+    const room = base.rooms.find((item) => item.name === "Soggiorno")!;
+    const sli = fanCoilCatalog.products.find(
+      (item) => item.family === "AirLeaf SLI" && item.model === "SLI 200",
+    )!;
+    const project = applyFanCoil(base, room.id, sli.id, 0, {
+      mounting: "wall",
+      panelType: "rasomuro",
+      controllerId: "innova-eeb749ii",
+    });
+    const dossier = buildDossier(project);
+    const accessories = dossier.accessories;
+    expect(
+      dossier.materials.find((item) => item.description.includes("SLI 200"))
+        ?.details,
+    ).toContain("geometria 3D orientativa: corpo e griglie schematici");
+    expect(accessories.map((item) => item.description)).toContain(
+      "Cassaforma RASOMURO Innova AirLeaf SLI",
+    );
+    expect(accessories.map((item) => item.description)).toContain(
+      "Pannello estetico RASOMURO Innova AirLeaf SLI verticale",
+    );
+    expect(
+      accessories.find((item) => item.description.includes("ESE745II"))
+        ?.quantity,
+    ).toBe(1);
+  });
+  it("riporta i kit RASOMURO RSI e tradizionale SLSI con le relative taglie", () => {
+    const base = dossierFixture();
+    const room = base.rooms.find((item) => item.name === "Soggiorno")!;
+    const rsi = fanCoilCatalog.products.find(
+      (item) => item.id === "innova-airleaf-rsi-400-2t",
+    )!;
+    const rsiAccessories = buildDossier(
+      applyFanCoil(base, room.id, rsi.id, 0, {
+        mounting: "wall",
+        panelType: "rasomuro",
+        controllerId: "innova-eeb749ii",
+      }),
+    ).accessories;
+    expect(rsiAccessories.map((item) => item.details)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("L01041II"),
+        expect.stringContaining("LC1082II"),
+        expect.stringContaining("ESE745II"),
+      ]),
+    );
+    const slsi = fanCoilCatalog.products.find(
+      (item) => item.id === "innova-airleaf-slsi-400-2t",
+    )!;
+    const slsiAccessories = buildDossier(
+      applyFanCoil(base, room.id, slsi.id, 0, {
+        mounting: "wall",
+        panelType: "traditional",
+      }),
+    ).accessories;
+    expect(slsiAccessories.map((item) => item.details)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("L00701II"),
+        expect.stringContaining("LC0693II"),
+      ]),
+    );
+  });
+  it("riporta in distinta cassaforma, pannello o kit a griglie del Bi2 Naked", () => {
+    const base = dossierFixture();
+    const room = base.rooms.find((item) => item.name === "Soggiorno")!;
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "olimpia-01513",
+    )!;
+    const traditional = buildDossier(
+      applyFanCoil(base, room.id, product.id, 0, {
+        mounting: "wall",
+        panelType: "traditional",
+      }),
+    ).accessories;
+    expect(traditional.map((item) => item.description)).toContain(
+      "Cassaforma Olimpia Splendid Bi2 Naked",
+    );
+    expect(
+      traditional.find((item) => item.description.startsWith("Cassaforma"))
+        ?.details,
+    ).toContain("B0568");
+    expect(
+      traditional.find((item) =>
+        item.description.includes("Pannello metallico di chiusura"),
+      ),
+    ).toMatchObject({ quantity: 1, details: expect.stringContaining("B0955") });
+    const grilles = buildDossier(
+      applyFanCoil(base, room.id, product.id, 0, {
+        mounting: "wall",
+        panelType: "grilles-90",
+      }),
+    ).accessories;
+    expect(grilles.map((item) => item.description)).toContain(
+      "Plenum di mandata 90° coibentato Olimpia Splendid Bi2 Naked",
+    );
+    expect(
+      grilles.find((item) => item.description.startsWith("Kit di aspirazione"))
+        ?.details,
+    ).toContain("B0194");
+    expect(
+      grilles.find((item) => item.description.startsWith("Griglia di mandata"))
+        ?.details,
+    ).toContain("B0550");
+    expect(grilles.map((item) => item.description)).toContain(
+      "Pannello di copertura da realizzare in cantiere",
+    );
+  });
+  it("riporta i mobili Aermec MZA/MZU scelti per FCZ P", () => {
+    const base = dossierFixture();
+    const room = base.rooms.find((item) => item.name === "Soggiorno")!;
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "aermec-fcz400p",
+    )!;
+    const project = applyFanCoil(base, room.id, product.id, 0, {
+      mounting: "wall",
+      coverType: "adjustable",
+    });
+    expect(buildDossier(project).accessories).toContainEqual(
+      expect.objectContaining({
+        description: "Mobile di copertura Aermec FCZ P · alette orientabili",
+        quantity: 1,
+        details: expect.stringContaining("MZU500"),
+      }),
+    );
+  });
+
   it("esclude i problemi di porte e finestre solo dal dossier", async () => {
     const project = dossierFixture();
     const terminal = project.airTerminals[0];

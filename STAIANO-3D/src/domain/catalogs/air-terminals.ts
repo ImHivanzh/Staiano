@@ -1,5 +1,4 @@
 import raw from "../../../catalog-data/generated/ecoclima.json" with { type: "json" };
-import history from "../../../catalog-data/generated/ecoclima-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import {
   airTerminalCatalogSchema,
@@ -7,14 +6,16 @@ import {
 } from "./air-terminal-schema";
 
 export function airTerminalMountings(family: AirTerminalFamily) {
-  return family.isLinearPerMeter
-    ? (["ceiling", "wall"] as const)
-    : family.mountings;
+  return family.mountings?.length
+    ? family.mountings
+    : family.isLinearPerMeter
+      ? (["ceiling", "wall"] as const)
+      : family.mountings;
 }
 export const airTerminalCatalog = airTerminalCatalogSchema.parse(raw);
 export const airTerminalCatalogAtVersion = catalogHistory(
   [airTerminalCatalog],
-  history,
+  "airTerminals",
   airTerminalCatalogSchema.parse,
 );
 export function airTerminalFamilyAtVersion(code: string, version: string) {

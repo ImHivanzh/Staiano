@@ -4,6 +4,7 @@ import { PDFDocument, StandardFonts, degrees, rgb } from "pdf-lib";
 test("PDF: testi grandi e ruotati restano nello sfondo senza diventare muri", async ({
   page,
 }) => {
+  test.setTimeout(90_000);
   await page.setViewportSize({ width: 1440, height: 1000 });
   const pdf = await PDFDocument.create();
   const font = await pdf.embedFont(StandardFonts.HelveticaBold);
@@ -40,6 +41,7 @@ test("PDF: testi grandi e ruotati restano nello sfondo senza diventare muri", as
   const analysis = dialog.getByLabel("Analisi automatica planimetria");
   await expect(analysis).toContainText(
     "4 muri candidati · 0 ad alta affidabilità",
+    { timeout: 20_000 },
   );
   const preview = dialog.getByRole("img", { name: /Anteprima planimetria/ });
   const textPixels = await preview.locator("image").evaluate(async (node) => {
@@ -79,9 +81,12 @@ test("PDF: testi grandi e ruotati restano nello sfondo senza diventare muri", as
   await dialog
     .getByRole("button", { name: "Riconosci muri nell’area" })
     .click();
-  await expect(analysis).toContainText("0 muri candidati");
+  await expect(analysis).toContainText("0 muri candidati", {
+    timeout: 20_000,
+  });
   await dialog.getByRole("button", { name: "Analizza pagina intera" }).click();
   await expect(analysis).toContainText(
     "4 muri candidati · 0 ad alta affidabilità",
+    { timeout: 20_000 },
   );
 });

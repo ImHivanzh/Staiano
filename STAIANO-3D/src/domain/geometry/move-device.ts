@@ -9,6 +9,7 @@ import {
   roomWallSpan,
 } from "./placement";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { snapTerminalPose } from "./terminal-snap";
 import {
   ceilingFrontPose,
@@ -16,6 +17,7 @@ import {
   minimumCeilingHeightM,
 } from "./ceilings";
 import type { SnapOptions } from "./primitives";
+import { drywallSideForRoom } from "./drywall-sides";
 import { moveSystemObject } from "@/domain/ducted/placement";
 import {
   moveHydronicOutdoorUnit,
@@ -23,6 +25,8 @@ import {
 } from "@/domain/hydronic/apply";
 import { moveHvacOutdoorUnit } from "@/domain/air-conditioning/outdoor";
 import {
+  fanCoilDefaultPanelType,
+  fanCoilPanelDimensions,
   fanCoilProductAtVersion,
   isRecessedFanCoil,
 } from "@/domain/catalogs/fan-coils";
@@ -157,7 +161,9 @@ export function movePlacedDevice(
     ? fanCoilProductAtVersion(fanCoil.productId, fanCoil.catalogVersion)
     : null;
   const recessedFanCoil =
-    !!fanCoil && fanCoil.mounting === "wall" && isRecessedFanCoil(fanCoilProduct);
+    !!fanCoil &&
+    fanCoil.mounting === "wall" &&
+    isRecessedFanCoil(fanCoilProduct);
   if (item.locked)
     throw new Error("Sbloccare l’apparecchio prima di spostarlo.");
   if (terminal && needsTerminalReconfiguration(terminal))
@@ -219,9 +225,17 @@ export function movePlacedDevice(
       throw new Error(
         "Modello ventilconvettore non verificabile nel catalogo originale.",
       );
+    const panel = fanCoilPanelDimensions(
+      product,
+      fanCoil.panelType ?? fanCoilDefaultPanelType(product, fanCoil.mounting),
+    );
     const dimensions = {
       ...fanCoil,
       family: product.family,
+      model: product.model,
+      pipes: product.pipes,
+      widthMm: panel?.widthMm ?? product.widthMm,
+      heightMm: panel?.heightMm ?? product.heightMm,
       features: product.features,
       ceilingInstallation: product.ceilingInstallation,
     };
@@ -231,6 +245,8 @@ export function movePlacedDevice(
       dimensions,
       target,
       fanCoil.rotation,
+      fanCoil.mounting,
+      fanCoil.panelType,
     );
     if (!range)
       throw new Error(
@@ -245,6 +261,8 @@ export function movePlacedDevice(
         dimensions,
         fanCoil.position,
         fanCoil.rotation,
+        fanCoil.mounting,
+        fanCoil.panelType,
       );
     const beforeZone = previous?.ranges.find(
       (zone) =>
@@ -292,7 +310,7 @@ export function movePlacedDevice(
       !footprintInsideRoom(
         room,
         target,
-        terminal.widthMm / 1000,
+        airTerminalFaceWidthMm(terminal) / 1000,
         terminal.heightMm / 1000,
         terminal.rotation,
       )
@@ -325,6 +343,33 @@ export function movePlacedDevice(
       ),
     };
   }
+  const ceilingSplit = project.hvacSystems
+    .filter((system) => system.type === "split")
+    .flatMap((system) => system.indoorUnits.map((unit) => ({ system, unit })))
+    .find(({ unit }) => unit.id === deviceId && unit.mounting === "ceiling");
+  if (ceilingSplit) {
+    const room = project.rooms.find(
+      (r) => r.floorId === ceilingSplit.unit.floorId && pointInPolygon(target, r.polygon),
+    );
+    if (
+      !room || !ceilingSplit.system.roomIds.includes(room.id) ||
+      !indoorUnitFitsBelowCeiling(project, room, { ...ceilingSplit.unit, position: target }) ||
+      !footprintInsideRoom(room, target, ceilingSplit.unit.widthMm / 1000, ceilingSplit.unit.depthMm / 1000, ceilingSplit.unit.rotation)
+    )
+      throw new Error("La cassetta non rientra nel soffitto della stanza servita.");
+    return {
+      ...project,
+      hvacSystems: project.hvacSystems.map((system) => ({
+        ...system,
+        indoorUnits: system.indoorUnits.map((unit) => unit.id === deviceId
+          ? { ...unit, roomId: room.id, wallId: null, position: target }
+          : unit),
+      })),
+    };
+  }
+  const faceWidthMm = terminal
+    ? airTerminalFaceWidthMm(terminal)
+    : item.widthMm;
   const candidates = project.rooms
     .filter((r) => r.floorId === item.floorId)
     .flatMap((room) =>
@@ -332,14 +377,12 @@ export function movePlacedDevice(
         .filter((w) => room.wallIds.includes(w.id))
         .map((wall) => ({ room, wall, span: roomWallSpan(room, wall) })),
     )
-    .filter((c) => c.span && c.span.lengthM >= item.widthMm / 1000 + 0.2)
+    .filter((c) => c.span && c.span.lengthM >= faceWidthMm / 1000 + 0.2)
     .filter(
       (c) =>
         !recessedFanCoil ||
         c.wall.thickness +
-          (c.wall.drywall?.roomId === c.room.id
-            ? (c.wall.drywall.offsetM ?? 0)
-            : 0) +
+          (drywallSideForRoom(c.wall, c.room.id)?.offsetM ?? 0) +
           1e-6 >=
           (item.depthMm ?? 0) / 1000 - 0.002,
     )
@@ -370,9 +413,9 @@ export function movePlacedDevice(
     throw new Error("La stanza non è servita dal sistema di questo terminale.");
   const span = chosen.span!,
     offset = Math.max(
-      item.widthMm / 2000 + 0.1,
+      faceWidthMm / 2000 + 0.1,
       Math.min(
-        span.lengthM - item.widthMm / 2000 - 0.1,
+        span.lengthM - faceWidthMm / 2000 - 0.1,
         distance(chosen.nearest, span.start),
       ),
     );

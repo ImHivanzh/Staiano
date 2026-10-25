@@ -156,8 +156,10 @@ export function validateSplitSystem(
     );
     emit(
       "split-placement",
-      span &&
-        span.lengthM >= unit.widthMm / 1000 + 0.2 &&
+      (unit.mounting ?? "wall") === model.mounting &&
+        (model.mounting === "ceiling"
+          ? !unit.wallId
+          : !!span && span.lengthM >= unit.widthMm / 1000 + 0.2) &&
         indoorUnitFitsBelowCeiling(project, room, unit) &&
         footprintInsideRoom(
           room,

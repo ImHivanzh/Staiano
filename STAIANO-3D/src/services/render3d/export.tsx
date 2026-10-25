@@ -13,6 +13,7 @@ import { createRoot } from "react-dom/client";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Project, Room } from "@/schemas/project";
+import { projectPanoramaViews, type PanoramaSelection } from "./panorama-views";
 import { ArchitectureMeshes } from "@/configurator/viewer3d/ArchitectureMeshes";
 import { DeviceMeshes } from "@/configurator/viewer3d/DeviceMeshes";
 import { SceneLighting } from "@/configurator/viewer3d/SceneLighting";
@@ -31,13 +32,12 @@ export type ProjectPanorama = {
   width: number;
   height: number;
 };
-export type PanoramaOptions = {
-  floorId?: string;
-  roomId?: string;
+export type PanoramaOptions = PanoramaSelection & {
   floorFinish?: "oak" | "stone";
   signal?: AbortSignal;
   onProgress?: (message: string) => void;
 };
+export type { PanoramaSelection, PanoramaView } from "./panorama-views";
 
 const WIDTH = 1600;
 const HEIGHT = 900;
@@ -321,7 +321,7 @@ async function renderView(
   }
 }
 
-/** Local project snapshot; one panorama per populated floor and optional selected room. */
+/** Local snapshot; floor views plus optional views for each room. */
 export async function renderProjectPanoramas(
   project: Project,
   options: PanoramaOptions = {},
@@ -330,32 +330,7 @@ export async function renderProjectPanoramas(
     throw new Error("I render 3D richiedono un browser con WebGL.");
   options.signal?.throwIfAborted();
   const snapshot = structuredClone(project);
-  const selectedRoom = options.roomId
-    ? snapshot.rooms.find((r) => r.id === options.roomId)
-    : undefined;
-  if (options.roomId && !selectedRoom)
-    throw new Error("Ambiente per il render non disponibile.");
-  const requestedFloor = options.floorId ?? selectedRoom?.floorId;
-  if (requestedFloor && !snapshot.floors.some((f) => f.id === requestedFloor))
-    throw new Error("Piano per il render non disponibile.");
-  if (selectedRoom && selectedRoom.floorId !== requestedFloor)
-    throw new Error("Ambiente e piano del render non corrispondono.");
-  const floors = snapshot.floors.filter(
-    (f) =>
-      (!requestedFloor || f.id === requestedFloor) &&
-      snapshot.walls.some((w) => w.floorId === f.id),
-  );
-  const views = floors.map((floor) => ({
-    floorId: floor.id,
-    title: `${floor.name} - panoramica 3D`,
-    room: undefined as Room | undefined,
-  }));
-  if (selectedRoom && floors.some((f) => f.id === selectedRoom.floorId))
-    views.push({
-      floorId: selectedRoom.floorId,
-      title: `${selectedRoom.name || "Ambiente"} - vista 3D`,
-      room: selectedRoom,
-    });
+  const views = projectPanoramaViews(snapshot, options);
   const images: ProjectPanorama[] = [];
   for (const [index, view] of views.entries()) {
     options.signal?.throwIfAborted();

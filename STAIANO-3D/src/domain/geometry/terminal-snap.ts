@@ -9,6 +9,7 @@ import {
 } from "./primitives";
 import { positionAlongRoomWall, roomWallSpan } from "./placement";
 import { ceilingFrontPose } from "./ceilings";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 
 export function snapTerminalPose(
   project: Project,
@@ -74,7 +75,8 @@ export function snapTerminalPose(
   const tangent = scale(subtract(span.end, span.start), 1 / span.lengthM);
   const relative = subtract(target, span.start);
   let offset = relative.x * tangent.x + relative.y * tangent.y;
-  const half = item.widthMm / 2000;
+  const itemWidth = airTerminalFaceWidthMm(item);
+  const half = itemWidth / 2000;
   const safeStart = half + 0.02,
     safeEnd = span.lengthM - half - 0.02;
   const reference: { offset: number; label: string }[] = [
@@ -90,11 +92,17 @@ export function snapTerminalPose(
     reference.push(
       { offset: along, label: "Allineamento altra bocchetta" },
       {
-        offset: along + (other.widthMm + item.widthMm) / 2000 + options.stepM,
+        offset:
+          along +
+          (airTerminalFaceWidthMm(other) + itemWidth) / 2000 +
+          options.stepM,
         label: "Distanza da altra bocchetta",
       },
       {
-        offset: along - (other.widthMm + item.widthMm) / 2000 - options.stepM,
+        offset:
+          along -
+          (airTerminalFaceWidthMm(other) + itemWidth) / 2000 -
+          options.stepM,
         label: "Distanza da altra bocchetta",
       },
     );

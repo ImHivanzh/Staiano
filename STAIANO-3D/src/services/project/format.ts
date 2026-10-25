@@ -1,190 +1,31 @@
-import {
-  projectSchema,
-  CURRENT_SCHEMA_VERSION,
-  type Project,
-} from "@/schemas/project";
+import { projectSchema, type Project } from "@/schemas/project";
 import { recomputeProject } from "@/domain/project";
 import { refreshDuctedBindings } from "@/domain/ducted/refresh";
 import { refreshSplitBindings } from "@/domain/air-conditioning/refresh";
-
-// Retained original plan + raster preview can exceed the original 32 MB upload.
-export const MAX_PROJECT_BYTES = 128 * 1024 * 1024;
-export function migrateProject(data: unknown): unknown {
-  if (typeof data !== "object" || data === null || !("schemaVersion" in data))
-    throw new Error("Formato progetto non riconosciuto.");
-  const version = (data as { schemaVersion: unknown }).schemaVersion;
-  if (typeof version !== "number" || version > CURRENT_SCHEMA_VERSION)
-    throw new Error(
-      "Versione progetto non supportata. Aggiornare l'applicazione.",
-    );
-  if (version === 0) {
-    const old = data as Record<string, unknown>;
-    // v0 stored the same geometry; v1 introduced separate supply/return counts.
-    return migrateProject({
-      ...old,
-      schemaVersion: 1,
-      rooms: Array.isArray(old.rooms)
-        ? old.rooms.map((r: Record<string, unknown>) => ({
-            ...r,
-            supplyPoints: r.supplyPoints ?? 1,
-            returnPoints: r.returnPoints ?? 1,
-          }))
-        : old.rooms,
-    });
-  }
-  if (version === 1) {
-    const old = data as Record<string, unknown>;
-    return migrateProject({
-      ...old,
-      schemaVersion: 2,
-      airTerminals: Array.isArray(old.airTerminals)
-        ? old.airTerminals.map((item: Record<string, unknown>) => ({
-            ...item,
-            systemId: item.systemId ?? null,
-            mounting: item.mounting ?? "unknown",
-            shape: item.shape ?? "unknown",
-            elevationM: item.elevationM ?? null,
-            operatingPointIndex: item.operatingPointIndex ?? null,
-            noiseUpperBoundDbA: item.noiseUpperBoundDbA ?? null,
-            noiseLabel:
-              item.noiseLabel ??
-              (item.noiseDbA == null
-                ? "Dato non disponibile"
-                : String(item.noiseDbA)),
-            pressureDropPa: item.pressureDropPa ?? null,
-            throwM: item.throwM ?? null,
-            openingMm: item.openingMm ?? null,
-            pointIndex: item.pointIndex ?? null,
-            unitIndex: item.unitIndex ?? null,
-            legacyUnverified: true,
-          }))
-        : [],
-    });
-  }
-  if (version === 2) {
-    const old = data as Record<string, unknown>;
-    const asArray = (v: unknown) => (Array.isArray(v) ? v : []);
-    // Additive only: v3 readers fill the same defaults, so rollback is key
-    // removal and no v2 information is altered or dropped.
-    return migrateProject({
-      ...old,
-      schemaVersion: 3,
-      floors: asArray(old.floors).map((f: Record<string, unknown>) => ({
-        ...f,
-        importAnalysis: f.importAnalysis ?? null,
-      })),
-      walls: asArray(old.walls).map((w: Record<string, unknown>) => ({
-        ...w,
-        locked: w.locked ?? false,
-      })),
-      rooms: asArray(old.rooms).map((r: Record<string, unknown>) => ({
-        ...r,
-        usage: r.usage ?? "",
-      })),
-      hvacSystems: asArray(old.hvacSystems).map(
-        (s: Record<string, unknown>) => ({
-          ...s,
-          linearPlan: s.linearPlan ?? null,
-          decisionOrigin: s.decisionOrigin ?? "confirmed",
-          indoorUnits: asArray(s.indoorUnits).map(
-            (u: Record<string, unknown>) => ({
-              ...u,
-              locked: u.locked ?? false,
-            }),
-          ),
-        }),
-      ),
-      plenums: asArray(old.plenums),
-      pillars: asArray(old.pillars),
-      ducts: asArray(old.ducts),
-      fanCoils: asArray(old.fanCoils),
-      hydronicSystems: asArray(old.hydronicSystems),
-      radiators: asArray(old.radiators).map((d: Record<string, unknown>) => ({
-        ...d,
-        locked: d.locked ?? false,
-      })),
-      airTerminals: asArray(old.airTerminals).map(
-        (t: Record<string, unknown>) => ({
-          ...t,
-          locked: t.locked ?? false,
-          decisionOrigin:
-            t.decisionOrigin ?? (t.legacyUnverified ? "manual" : "calculated"),
-          style: t.style ?? "",
-          color: t.color ?? "",
-          finish: t.finish ?? "",
-          productCode: t.productCode ?? "",
-          plenumId: t.plenumId ?? null,
-        }),
-      ),
-      projectSettings: {
-        ...((old.projectSettings as Record<string, unknown>) ?? {}),
-        dimensionMode:
-          (old.projectSettings as Record<string, unknown> | undefined)
-            ?.dimensionMode ?? "internal",
-      },
-    });
-  }
-  if ([3, 4, 5, 6, 7, 8].includes(version)) {
-    const old = data as Record<string, unknown>;
-    const settings = (old.projectSettings ?? {}) as Record<string, unknown>;
-    return migrateProject({
-      ...old,
-      schemaVersion: CURRENT_SCHEMA_VERSION,
-      projectSettings: {
-        ...settings,
-        coefficientWm3: settings.coefficientWm3 ?? 35,
-        externalWallThicknessM: settings.externalWallThicknessM ?? 0.3,
-      },
-    });
-  }
-  if (version !== CURRENT_SCHEMA_VERSION)
-    throw new Error("Migration mancante per questa versione progetto.");
-  const old = data as Record<string, unknown>;
-  if (!Array.isArray(old.plenums) || !Array.isArray(old.airTerminals))
-    return data;
-  const terminals = old.airTerminals;
-  return {
-    ...old,
-    // Le scelte storiche passano al corpo già salvato; nessun plenum implicito.
-    plenums: old.plenums.map((plenum) => {
-      if (!plenum || typeof plenum !== "object" || !plenum.attachmentId)
-        return plenum;
-      const options = terminals.find(
-        (terminal) => terminal?.id === plenum.attachmentId,
-      )?.commercialOptions;
-      if (!options || typeof options !== "object") return plenum;
-      return {
-        ...plenum,
-        model: plenum.model ?? options.plenumModelCode,
-        material: plenum.material ?? options.plenumMaterial,
-        shape: plenum.shape ?? options.plenumShape,
-        connectionPosition:
-          plenum.connectionPosition ?? options.connectionPosition,
-        connectionNote: plenum.connectionNote ?? options.connectionNote,
-      };
-    }),
-  };
+import { loadProjectCatalogs } from "./catalogs";
+import {
+  MAX_PROJECT_BYTES,
+  parseProject as parseProjectData,
+  decodeProject as decodeProjectData,
+  decodeProjectBuffer as decodeProjectBufferData,
+} from "./parse";
+export { MAX_PROJECT_BYTES, migrateProject } from "./parse";
+function refreshProject(project: Project): Project {
+  return refreshSplitBindings(refreshDuctedBindings(recomputeProject(project)));
 }
 export function parseProject(data: unknown): Project {
-  const parsed = projectSchema.safeParse(migrateProject(data));
-  if (!parsed.success)
-    throw new Error(
-      `Progetto non valido: ${parsed.error.issues[0]?.message ?? "schema errato"}.`,
-    );
-  return refreshSplitBindings(
-    refreshDuctedBindings(recomputeProject(parsed.data)),
-  );
+  return refreshProject(parseProjectData(data));
+}
+export async function prepareProject(data: unknown): Promise<Project> {
+  const project = parseProjectData(data);
+  await loadProjectCatalogs(project);
+  return refreshProject(project);
 }
 export function decodeProject(text: string): Project {
-  if (new TextEncoder().encode(text).byteLength > MAX_PROJECT_BYTES)
-    throw new Error("Progetto troppo grande. Limite 128 MB.");
-  let data: unknown;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    throw new Error("Il file non contiene un progetto JSON valido.");
-  }
-  return parseProject(data);
+  return refreshProject(decodeProjectData(text));
+}
+export function decodeProjectBuffer(buffer: ArrayBuffer): Project {
+  return refreshProject(decodeProjectBufferData(buffer));
 }
 export function encodeProject(p: Project): string {
   const text = JSON.stringify(

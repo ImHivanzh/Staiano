@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { sourceMetadataSchema } from "./radiator-schema";
-const manufacturer = z.enum(["Daikin", "Mitsubishi Electric", "Gree"]);
+const manufacturer = z.enum(["Daikin", "Mitsubishi Electric", "Gree", "LG"]);
 const capacity = z.number().finite().positive();
 export const splitOutdoorSchema = z.object({
   manufacturer,
@@ -16,6 +16,8 @@ export const splitIndoorSchema = z.object({
   manufacturer,
   family: z.string().min(1),
   model: z.string().min(1),
+  mounting: z.enum(["wall", "ceiling"]).default("wall"),
+  shape: z.enum(["rectangular", "round"]).default("rectangular"),
   sizeClass: z.string().min(1),
   nominalCoolingW: capacity.nullable(),
   nominalHeatingW: capacity.nullable(),

@@ -36,6 +36,8 @@ export function AirOutdoorMeshes({
           return (
             <group key={system.id}>
               <group
+                name={`Unità esterna ${system.productId}`}
+                userData={{ sketchupGroup: true }}
                 position={[unit.position.x, unit.elevationM, unit.position.y]}
                 rotation={[0, -unit.rotation, 0]}
                 onClick={(event) => {

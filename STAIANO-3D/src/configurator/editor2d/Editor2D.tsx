@@ -1,5 +1,6 @@
 "use client";
 import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { DrywallLayer } from "./DrywallLayer";
 import { useWaypointDelete } from "../useWaypointDelete";
 import {
@@ -30,10 +31,7 @@ import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { translateSelection } from "@/domain/geometry/selection";
 import { deviceCodes } from "@/services/export/device-codes";
 import { ArrowsOut, Minus, Plus } from "@phosphor-icons/react";
-import {
-  wallRun,
-  wallRunMeasuredLength,
-} from "@/domain/geometry/wall-runs";
+import { wallRun, wallRunMeasuredLength } from "@/domain/geometry/wall-runs";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import {
@@ -51,6 +49,7 @@ import { refrigerantRoute } from "@/domain/air-conditioning/outdoor";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { pendingConnections } from "@/domain/ducted/plan-connections";
 import { followAttachmentPose } from "@/domain/ducted/attached-plenums";
+import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
 
 type View = { x: number; y: number; w: number; h: number };
 type Drag = {
@@ -693,7 +692,11 @@ export function Editor2D({
       : [];
   const ductWarning =
     editingFlexible && selectedDuct
-      ? !flexibleDuctCurve(selectedDuctRoute, selectedDuct.diameterMm ?? 160)
+      ? !flexibleDuctCurve(
+          selectedDuctRoute,
+          selectedDuct.diameterMm ?? 160,
+          selectedDuct.flexibleProductId,
+        )
         ? "Percorso non realizzabile: sposta curve o plenum."
         : ductCollisions.get(selectedDuct.id)?.message
       : undefined;
@@ -1278,7 +1281,11 @@ export function Editor2D({
             const raw = ductRoute(project, d);
             const curve =
               d.kind === "flexible"
-                ? flexibleDuctCurve(raw, d.diameterMm ?? 160)?.curve
+                ? flexibleDuctCurve(
+                    raw,
+                    d.diameterMm ?? 160,
+                    d.flexibleProductId,
+                  )?.curve
                 : null;
             const route =
               d.kind === "flexible"
@@ -1374,6 +1381,7 @@ export function Editor2D({
           .map((t) => {
             const runPose = runPreview.find((item) => item.id === t.id);
             const pos = runPose?.position ?? previewDevice(t),
+              faceWidth = airTerminalFaceWidthMm(t),
               faceDepth =
                 t.mounting === "ceiling" ? t.heightMm : (t.depthMm ?? 0),
               code = codes.get(t.id);
@@ -1403,15 +1411,15 @@ export function Editor2D({
               >
                 {t.shape === "circle" && t.mounting === "ceiling" ? (
                   <circle
-                    r={t.widthMm / 2000}
+                    r={faceWidth / 2000}
                     className={`terminale-pianta ${t.use} ${selection.some((s) => s.id === t.id) ? "scelto" : ""}`}
                     strokeWidth={u * 1.5}
                   />
                 ) : (
                   <rect
-                    x={-t.widthMm / 2000}
+                    x={-faceWidth / 2000}
                     y={-faceDepth / 2000}
-                    width={t.widthMm / 1000}
+                    width={faceWidth / 1000}
                     height={Math.max(faceDepth / 1000, u * 3)}
                     className={`terminale-pianta ${t.use} ${selection.some((s) => s.id === t.id) ? "scelto" : ""}`}
                     strokeWidth={u * 1.5}
@@ -1448,6 +1456,7 @@ export function Editor2D({
           .filter(({ d }) => d.floorId === activeFloorId)
           .map(({ d, system }) => {
             const pos = previewDevice(d);
+            const roundCassette = system.type === "split" && splitIndoorAtVersion(d.productId, d.catalogVersion)?.shape === "round";
             const maximum = ductedMaximumAirflow(system);
             const balance =
               system.type === "ducted"
@@ -1480,18 +1489,41 @@ export function Editor2D({
                 transform={`translate(${pos.x} ${pos.y}) rotate(${(d.rotation * 180) / Math.PI})`}
                 onPointerDown={(e) => beginDeviceDrag(e, d.id)}
               >
-                <rect
-                  x={-d.widthMm / 2000}
-                  y={-d.depthMm / 2000}
-                  width={d.widthMm / 1000}
-                  height={d.depthMm / 1000}
-                  rx={0.025}
-                  strokeWidth={u * 1.5}
-                  fill={
-                    selection.some((s) => s.id === d.id) ? "#b3ddef" : "#ffffff"
-                  }
-                  stroke="#365aa8"
-                />
+                {roundCassette ? (
+                  <circle
+                    data-testid="split-cassette-circle"
+                    cx={0}
+                    cy={0}
+                    r={d.widthMm / 2000}
+                    fill="#eef2e7"
+                    stroke={selection.some((s) => s.id === d.id) ? "#00aeef" : "#7a8966"}
+                    strokeWidth={u * 1.5}
+                  />
+                ) : (
+                  <rect
+                    x={-d.widthMm / 2000}
+                    y={-d.depthMm / 2000}
+                    width={d.widthMm / 1000}
+                    height={d.depthMm / 1000}
+                    rx={0.025}
+                    strokeWidth={u * 1.5}
+                    fill={
+                      selection.some((s) => s.id === d.id) ? "#b3ddef" : "#ffffff"
+                    }
+                    stroke="#365aa8"
+                  />
+                )}
+                {roundCassette ? (
+                  <circle
+                    cx={0}
+                    cy={0}
+                    r={d.widthMm * 0.36 / 1000}
+                    fill="none"
+                    stroke="#7a8966"
+                    strokeWidth={u}
+                    pointerEvents="none"
+                  />
+                ) : <>
                 <line
                   x1={-d.widthMm / 2000 + 0.04}
                   x2={d.widthMm / 2000 - 0.04}
@@ -1506,6 +1538,7 @@ export function Editor2D({
                   fill="#00aeef"
                   pointerEvents="none"
                 />
+                </>}
                 {balance && (
                   <text
                     data-testid="machine-airflow"
@@ -2075,6 +2108,7 @@ export function Editor2D({
               const curve = flexibleDuctCurve(
                 raw,
                 duct.diameterMm ?? 160,
+                duct.flexibleProductId,
               )?.curve;
               const path = curve
                 ? curve

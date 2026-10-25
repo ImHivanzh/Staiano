@@ -59,16 +59,22 @@ if (Test-Path -LiteralPath $catalog) {
 }
 
 # First exercise the actual EXE on a separate port, with production data copied above.
-$env:STAIANO_EXE_TEST_PORT = '3016'
-$testProcess = Start-Process -FilePath $exe -ArgumentList @('--serve','--data-dir',('"' + $dataRoot + '"')) -WorkingDirectory $versionRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $dataRoot '.cache\exe-test.stdout.log') -RedirectStandardError (Join-Path $dataRoot '.cache\exe-test.stderr.log')
-Remove-Item Env:STAIANO_EXE_TEST_PORT
+$portProbe = [Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback, 0)
+try {
+  $portProbe.Start()
+  $testPort = $portProbe.LocalEndpoint.Port
+} finally { $portProbe.Stop() }
+$env:STAIANO_EXE_TEST_PORT = [string]$testPort
+try {
+  $testProcess = Start-Process -FilePath $exe -ArgumentList @('--serve','--data-dir',('"' + $dataRoot + '"')) -WorkingDirectory $versionRoot -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $dataRoot '.cache\exe-test.stdout.log') -RedirectStandardError (Join-Path $dataRoot '.cache\exe-test.stderr.log')
+} finally { Remove-Item Env:STAIANO_EXE_TEST_PORT }
 try {
   $ready = $false
   for ($attempt=0; $attempt -lt 90; $attempt++) {
     Start-Sleep -Seconds 1
     if ($testProcess.HasExited) { throw 'EXE terminato durante il collaudo. Consultare exe-test.stderr.log.' }
     try {
-      $response = Invoke-WebRequest 'http://127.0.0.1:3016/accedi' -UseBasicParsing -TimeoutSec 3
+      $response = Invoke-WebRequest ('http://127.0.0.1:' + $testPort + '/accedi') -UseBasicParsing -TimeoutSec 3
       $ready = $response.StatusCode -eq 200 -and $response.Headers['X-Staiano-Build'] -eq $release.buildId -and $response.Content -match 'Staiano'
       if ($ready) { break }
     } catch { }
@@ -114,12 +120,10 @@ try {
     } catch { }
   }
   if (-not $ready) { throw 'Nuova produzione non verificata: ripristino dell attivita precedente.' }
-  $activeJson = @{ executable=$exe; sequence=0; commit=$release.commit; sha256=$release.sha256 } | ConvertTo-Json
+  $previousSha256 = Split-Path -Leaf (Split-Path -Parent $previousRecord.executable)
+  $activeJson = @{ executable=$exe; sequence=0; commit=$release.commit; sha256=$release.sha256; previousSha256=$previousSha256 } | ConvertTo-Json
   [IO.File]::WriteAllText((Join-Path $InstallRoot 'active.json'), $activeJson, [Text.UTF8Encoding]::new($false))
-  # Rimuove gli EXE delle versioni precedenti; quella attiva e quella in esecuzione restano.
-  Get-ChildItem -LiteralPath (Join-Path $InstallRoot 'versions') -Directory -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -ne $release.sha256 } |
-    ForEach-Object { Remove-Item -LiteralPath $_.FullName -Recurse -Force -ErrorAction SilentlyContinue }
+  # Conserva le versioni precedenti per il rollback.
   # The authoritative record lives with the installed data; the development copy is only a convenience.
   try { Copy-Item -LiteralPath (Join-Path $dataRoot '.cache\production-server.json') -Destination (Join-Path $sourceRoot '.cache\production-server.json') -Force } catch { Write-Warning 'Record della copia sviluppo non aggiornato; usare il record nella cartella application\data.' }
   $updateAction = New-ScheduledTaskAction -Execute $exe -Argument ('--update --data-dir "' + $dataRoot + '"') -WorkingDirectory $versionRoot

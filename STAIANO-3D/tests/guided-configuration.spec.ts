@@ -100,6 +100,25 @@ test("dragging the actual 3D X handle commits one move and 2D reload retains it"
   ).toHaveAttribute("aria-pressed", "true");
   const box = await canvas.boundingBox();
   if (!box) throw new Error("Missing rendered GPU surface");
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  let previousCamera = "",
+    stableFrames = 0;
+  for (let attempt = 0; attempt < 40 && stableFrames < 3; attempt++) {
+    const cameraState = await canvas.evaluate((element) =>
+      [element.dataset.cameraPosition, element.dataset.cameraQuaternion]
+        .map((value) =>
+          value
+            ?.split(",")
+            .map((number) => Number(number).toFixed(3))
+            .join(","),
+        )
+        .join("|"),
+    );
+    stableFrames = cameraState === previousCamera ? stableFrames + 1 : 0;
+    previousCamera = cameraState;
+    if (stableFrames < 3) await page.waitForTimeout(50);
+  }
+  expect(stableFrames).toBeGreaterThanOrEqual(3);
   const camera = new PerspectiveCamera(
     Number(await canvas.getAttribute("data-camera-fov")),
     box.width / box.height,
@@ -115,17 +134,24 @@ test("dragging the actual 3D X handle commits one move and 2D reload retains it"
       .map(Number),
   );
   camera.updateMatrixWorld();
+  const cameraPosition = camera.position;
   const t = initial.airTerminals[0];
   const origin = new Vector3(t.position.x, t.elevationM!, t.position.y);
-  // three-stdlib TransformControls: unit = distance * min(1.9 tan(fov/2), 7) * size / 7,
-  // and the X picker spans local 0.1..1.1, so grab it at 0.8.
+  // three-stdlib TransformControls: picker X spans local 0.1..1.1; use its center.
   const unit =
-    (origin.distanceTo(camera.position) *
-      Math.min(1.9 * Math.tan((Math.PI * camera.fov) / 360), 7) *
+    (origin.distanceTo(cameraPosition) *
+      Math.min(
+        1.9 *
+          Math.tan(
+            (Math.PI * Number(await canvas.getAttribute("data-camera-fov"))) /
+              360,
+          ),
+        7,
+      ) *
       0.8) /
     7;
-  const sign = Math.sign(camera.position.x - origin.x);
-  const start = origin.clone().add(new Vector3(sign * 0.8 * unit, 0, 0));
+  const sign = Math.sign(cameraPosition.x - origin.x);
+  const start = origin.clone().add(new Vector3(sign * 0.6 * unit, 0, 0));
   const end = start.clone().add(new Vector3(0.4, 0, 0));
   const screen = (v: Vector3) => {
     const p = v.project(camera);

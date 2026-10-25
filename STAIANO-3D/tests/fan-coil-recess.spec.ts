@@ -1,9 +1,6 @@
 import { expect, test } from "./browser-test";
 import { addRectangle, createProject } from "../src/domain/project";
-import {
-  chooseFanCoilModel,
-  pickPlanPoint,
-} from "./ui-helpers";
+import { chooseFanCoilModel, pickPlanPoint } from "./ui-helpers";
 import { exportPlenumFixture } from "./plenum-ui-fixture";
 import {
   distance,
@@ -47,14 +44,22 @@ test("l’Innova SLI ad incasso resta dentro la parete con la faccia a filo", as
     model: "AirLeaf SLI",
     taglia: "innova-airleaf-sli-200-2t",
   });
-  await expect(
-    popup.getByTestId("fan-coil-recess-panel-note"),
-  ).toContainText("ad incasso");
+  await expect(popup.getByTestId("fan-coil-recess-panel-note")).toContainText(
+    "ad incasso",
+  );
   await popup
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
     .click();
   await expect(popup).toHaveCount(0);
+  await plan.getByTestId("fan-coil-2d").click();
+  await expect(page.getByTestId("fan-coil-geometry-disclosure")).toContainText(
+    "corpo e griglie sono schematici",
+  );
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("dialog", { name: "Configura apparecchio" }),
+  ).toHaveCount(0);
 
   const saved = await exportPlenumFixture(page);
   const unit = saved.fanCoils![0];

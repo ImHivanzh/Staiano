@@ -1,5 +1,4 @@
 import raw from "../../../catalog-data/generated/vrv.json" with { type: "json" };
-import history from "../../../catalog-data/generated/vrv-history.json" with { type: "json" };
 import { catalogHistory } from "./catalog-history";
 import { vrvCatalogSchema } from "./vrv-schema";
 export {
@@ -11,7 +10,7 @@ export type { VrvCatalog, VrvIndoor, VrvOutdoor } from "./vrv-schema";
 export const vrvCatalog = vrvCatalogSchema.parse(raw);
 export const vrvCatalogAtVersion = catalogHistory(
   [vrvCatalog],
-  history,
+  "vrv",
   vrvCatalogSchema.parse,
 );
 export const vrvOutdoorAtVersion = (id: string, version: string) =>

@@ -7,6 +7,15 @@ import {
   fanCoilCatalogAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
+  fanCoilPanelDimensions,
+  airLeafRecessedAccessories,
+  fanCoilDefaultPanelType,
+  fanCoilPanelOptions,
+  fanCoilPanelTypeLabel,
+  fanCoilInstallationAccessories,
+  fanCoilCoverAccessory,
+  fanCoilRecessDepthMm,
+  isRecessedFanCoil,
   fanCoilCategory,
   fanCoilCategories,
   fanCoilCategoryLabels,
@@ -30,6 +39,214 @@ function fixture() {
 }
 
 describe("ventilconvettori originali", () => {
+  it("usa le prestazioni e i kit ufficiali del Bi2 Naked per taglia e posa", () => {
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "olimpia-01514",
+    )!;
+    expect(product).toMatchObject({
+      family: "Bi2 Naked SLI",
+      model: "SLI 400",
+      widthMm: 725,
+      heightMm: 576,
+      depthMm: 126,
+      recessDepthMm: 142,
+      mountings: ["wall", "ceiling"],
+    });
+    expect(product.operatingPoints[0]).toMatchObject({
+      coolingW: 910,
+      heatingW: 1060,
+      airflowM3h: 190,
+      noiseDbA: 30,
+    });
+    expect(isRecessedFanCoil(product)).toBe(true);
+    expect(fanCoilDefaultPanelType(product, "wall")).toBe("traditional");
+    expect(fanCoilDefaultPanelType(product, "ceiling")).toBe("grilles-top");
+    expect(fanCoilRecessDepthMm(product, "traditional")).toBe(142);
+    expect(fanCoilRecessDepthMm(product, "grilles-90")).toBe(126);
+    expect(
+      fanCoilInstallationAccessories(product, "wall", "traditional").map(
+        (item) => item.code,
+      ),
+    ).toEqual(["B0569", "B0956"]);
+    expect(
+      fanCoilInstallationAccessories(product, "ceiling", "grilles-top").map(
+        (item) => item.code,
+      ),
+    ).toEqual(["B0195", "B0161", "B0551", "B0560", ""]);
+    const slir = fanCoilCatalog.products.find(
+      (item) => item.id === "olimpia-01640",
+    )!;
+    expect(slir.mountings).toEqual(["wall"]);
+    expect(
+      fanCoilInstallationAccessories(slir, "wall", "traditional").map(
+        (item) => item.code,
+      ),
+    ).toEqual(["B0569", "B0951"]);
+    const slim = fanCoilCatalog.products.find(
+      (item) => item.id === "olimpia-02056",
+    )!;
+    expect(slim).toMatchObject({
+      family: "Bi2 Naked SLI",
+      model: "SLI 1400",
+      widthMm: 1110,
+      heightMm: 599,
+      depthMm: 198,
+      mountings: ["wall", "ceiling"],
+    });
+    expect(slim.operatingPoints[0]).toMatchObject({
+      coolingW: 3050,
+      heatingW: 3070,
+      airflowM3h: 460,
+      noiseDbA: 30,
+    });
+    expect(
+      fanCoilInstallationAccessories(slim, "ceiling", "grilles-top").map(
+        (item) => item.code,
+      ),
+    ).toEqual(["B0888", "B0890", "B0880", "B0882", ""]);
+  });
+
+  it("richiede tutta la cassaforma BI2 Naked ma non aggiunge profondità ai kit a griglie", () => {
+    let thinWalls = createProject("Parete sottile", 35);
+    thinWalls.projectSettings.externalWallThicknessM = 0.13;
+    thinWalls = addRectangle(thinWalls, thinWalls.floors[0].id, {
+      width: 8,
+      length: 6,
+      height: 2.7,
+      name: "Room",
+    });
+    const room = thinWalls.rooms[0];
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "olimpia-01513",
+    )!;
+    expect(() => applyFanCoil(thinWalls, room.id, product.id, 0)).toThrow(
+      /Nessuna posizione libera/,
+    );
+    expect(
+      applyFanCoil(thinWalls, room.id, product.id, 0, {
+        mounting: "wall",
+        panelType: "grilles-90",
+      }).fanCoils,
+    ).toHaveLength(1);
+  });
+
+  it("controlla la profondità della cassaforma RASOMURO sulla parete", () => {
+    let project = createProject("Parete sottile", 35);
+    project.projectSettings.externalWallThicknessM = 0.15;
+    project = addRectangle(project, project.floors[0].id, {
+      width: 8,
+      length: 6,
+      height: 2.7,
+      name: "Room",
+    });
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "innova-airleaf-sli-200-2t",
+    )!;
+    expect(() =>
+      applyFanCoil(project, project.rooms[0].id, product.id, 0, {
+        mounting: "wall",
+        panelType: "rasomuro",
+      }),
+    ).toThrow(/Nessuna posizione libera/);
+    expect(
+      applyFanCoil(project, project.rooms[0].id, product.id, 0, {
+        mounting: "wall",
+        panelType: "traditional",
+      }).fanCoils,
+    ).toHaveLength(1);
+  });
+
+  it("seleziona accessori SLI distinti per finitura, taglia, tubi e posa", () => {
+    expect(fanCoilPanelTypeLabel("traditional")).toContain(
+      "Incasso tradizionale",
+    );
+    expect(fanCoilPanelTypeLabel("rasomuro")).toContain("filomuro");
+    const sli2 = fanCoilCatalog.products.find(
+      (p) => p.family === "AirLeaf SLI" && p.model === "SLI 400",
+    )!;
+    const sli4 = fanCoilCatalog.products.find(
+      (p) =>
+        p.family === "AirLeaf SLI" &&
+        p.model.includes("400") &&
+        p.pipes === "4",
+    )!;
+    expect(
+      airLeafRecessedAccessories(sli2, "wall", "traditional").map(
+        (a) => a.code,
+      ),
+    ).toEqual(["L00569II", "LC0579II"]);
+    expect(
+      airLeafRecessedAccessories(sli2, "ceiling", "rasomuro").map(
+        (a) => a.code,
+      ),
+    ).toEqual(["L01041II", "LC1087II"]);
+    expect(airLeafRecessedAccessories(sli4, "wall", "rasomuro")).toEqual([]);
+    expect(
+      airLeafRecessedAccessories(sli4, "ceiling", "traditional").map(
+        (a) => a.code,
+      ),
+    ).toEqual(["L01065II", "LC0765II"]);
+    const rsi = fanCoilCatalog.products.find(
+      (p) => p.family === "AirLeaf RSI",
+    )!;
+    expect(fanCoilRecessDepthMm(rsi, "traditional")).toBe(142);
+    expect(fanCoilRecessDepthMm(rsi, "rasomuro")).toBe(162);
+    expect(
+      airLeafRecessedAccessories(rsi, "wall", "rasomuro").map((a) => a.code),
+    ).toEqual(["L01040II", "LC1081II"]);
+    const slsi = fanCoilCatalog.products.find(
+      (p) => p.family === "AirLeaf SLSI",
+    )!;
+    expect(fanCoilPanelOptions(slsi, "ceiling")).toEqual([]);
+    expect(fanCoilRecessDepthMm(slsi, "rasomuro")).toBe(142);
+    expect(
+      airLeafRecessedAccessories(slsi, "wall", "rasomuro").map((a) => a.code),
+    ).toEqual(["L01049II", "LC1095II"]);
+    expect(
+      airLeafRecessedAccessories(slsi, "wall", "traditional").map(
+        (a) => a.code,
+      ),
+    ).toEqual(["L00700II", "LC0692II"]);
+  });
+  it("usa l'ingombro OEM del pannello per anteprima e collisioni", () => {
+    const sli = fanCoilCatalog.products.find(
+      (p) => p.id === "innova-airleaf-sli-200-2t",
+    )!;
+    const slsi = fanCoilCatalog.products.find(
+      (p) => p.id === "innova-airleaf-slsi-200-2t",
+    )!;
+    expect(fanCoilPanelDimensions(sli, "traditional")).toEqual({
+      widthMm: 772,
+      heightMm: 754,
+      depthMm: 30,
+    });
+    expect(fanCoilPanelDimensions(sli, "rasomuro")).toEqual({
+      widthMm: 707,
+      heightMm: 723,
+      depthMm: 30,
+    });
+    expect(fanCoilPanelDimensions(slsi, "rasomuro")).toEqual({
+      widthMm: 707,
+      heightMm: 523,
+      depthMm: 30,
+    });
+    const base = fixture();
+    const project = applyFanCoil(base, base.rooms[0].id, sli.id, 0, {
+      mounting: "wall",
+      panelType: "traditional",
+    });
+    const envelope = fanCoilEnvelope(project.fanCoils![0]);
+    const [a, b, c, d] = envelope.cornersXY;
+    expect(
+      Math.max(
+        Math.hypot(a.x - b.x, a.y - b.y),
+        Math.hypot(b.x - c.x, b.y - c.y),
+        Math.hypot(c.x - d.x, c.y - d.y),
+        Math.hypot(d.x - a.x, d.y - a.y),
+      ),
+    ).toBeCloseTo(0.772);
+    expect(envelope.maxZ - envelope.minZ).toBeCloseTo(0.754);
+  });
   it("tiene i canalizzabili in una categoria a parte, dentro i ventilconvettori", () => {
     const ducted = fanCoilCatalog.products.filter(
       (p) => fanCoilCategory(p) === "ducted",
@@ -292,6 +509,38 @@ describe("ventilconvettori originali", () => {
       updateFanCoil(p, second.id, { position: { x: 100, y: 100 } }),
     ).toThrow("fuori");
     expect(p.fanCoils![0]).toEqual(first);
+  });
+
+  it("mappa i mobili Aermec MZA/MZU solo sulle taglie FCZ P compatibili", () => {
+    const concealed = fanCoilCatalog.products.filter(
+      (item) => item.family === "FCZ P",
+    );
+    expect(concealed.length).toBeGreaterThan(0);
+    expect(
+      new Set(
+        concealed.map((item) => fanCoilCoverAccessory(item, "fixed")?.code),
+      ),
+    ).toEqual(
+      new Set(["MZA100", "MZA200", "MZA300", "MZA500", "MZA800", "MZA900"]),
+    );
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "aermec-fcz400p",
+    )!;
+    expect(fanCoilCoverAccessory(product, "fixed")).toMatchObject({
+      code: "MZA500",
+    });
+    expect(fanCoilCoverAccessory(product, "adjustable")).toMatchObject({
+      code: "MZU500",
+    });
+    expect(
+      fanCoilInstallationAccessories(product, "wall", null, "fixed"),
+    ).toContainEqual(expect.objectContaining({ code: "MZA500" }));
+    expect(
+      fanCoilCoverAccessory(
+        fanCoilCatalog.products.find((item) => item.id === "aermec-fcz200po")!,
+        "fixed",
+      ),
+    ).toBeNull();
   });
 
   it("preserva blocchi operatore e ripristina tipo stanza rimuovendo l’ultimo apparecchio", () => {

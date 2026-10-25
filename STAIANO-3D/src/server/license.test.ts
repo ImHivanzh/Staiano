@@ -17,6 +17,7 @@ import {
   licenseSetup,
   licenseStatus,
   machineFingerprint,
+  machineFingerprintMatches,
   readLicenseFile,
 } from "./license";
 
@@ -29,6 +30,11 @@ const publicKeyPem = publicKey.export({
   type: "spki",
   format: "pem",
 }) as string;
+const network = vi.hoisted(() => ({ entries: null as ReturnType<typeof import("node:os").networkInterfaces> | null }));
+vi.mock("node:os", async (original) => {
+  const actual = await original<typeof import("node:os")>();
+  return { ...actual, networkInterfaces: () => network.entries ?? actual.networkInterfaces() };
+});
 
 let directory = "";
 const saved = { ...process.env };
@@ -69,6 +75,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+  network.entries = null;
   vi.unstubAllGlobals();
   vi.unstubAllEnvs();
   invalidateLicenseCache();
@@ -110,6 +117,58 @@ async function writeToken(
 }
 
 describe("impronta macchina", () => {
+  it("refreshes an existing signed seat after adding an adapter and rejects it when its original adapter disappears", async () => {
+    const adapter = (mac: string) => [{ mac, address: "192.0.2.1", netmask: "255.255.255.0", family: "IPv4" as const, internal: false, cidr: "192.0.2.1/24" }];
+    network.entries = { physical: adapter("22:33:44:55:66:77") };
+    const signed = payload();
+    const token = await signLicenseToken(signed, privateKeyPem);
+    await writeToken(token, { lastVerifiedAt: Date.now() - 60 * 60_000 });
+    network.entries.virtual = adapter("11:22:33:44:55:66");
+    expect(machineFingerprint()).not.toBe(signed.machineId);
+    const request = vi.fn().mockResolvedValue(jsonResponse({ token }));
+    vi.stubGlobal("fetch", request);
+    expect(await licenseStatus({ force: true })).toMatchObject({ ok: true, machineId: signed.machineId });
+    expect(JSON.parse(request.mock.calls[0][1].body).machineId).toBe(signed.machineId);
+    expect((await licenseSetup()).machineId).toBe(signed.machineId);
+    network.entries = { virtual: adapter("11:22:33:44:55:66") };
+    expect(await licenseStatus({ force: true })).toMatchObject({ ok: false, state: "invalid" });
+    expect(request).toHaveBeenCalledTimes(1);
+  });
+  it("keeps signed fingerprints for present adapters only on the same identified host", () => {
+    const stable = ["platform:win32", "host:PC", "id:stable-guid"];
+    const old = machineFingerprint([...stable, "mac:22:33:44:55:66:77"]);
+    const current = [...stable, "mac:11:22:33:44:55:66"];
+    expect(
+      machineFingerprintMatches(old, current, [
+        "11:22:33:44:55:66",
+        "22:33:44:55:66:77",
+      ]),
+    ).toBe(true);
+    expect(machineFingerprintMatches(old, current, ["11:22:33:44:55:66"])).toBe(
+      false,
+    );
+    expect(
+      machineFingerprintMatches(
+        old,
+        ["platform:win32", "host:PC", "id:other-guid"],
+        ["22:33:44:55:66:77"],
+      ),
+    ).toBe(false);
+    expect(
+      machineFingerprintMatches(
+        old,
+        ["platform:win32", "host:OTHER", "id:stable-guid"],
+        ["22:33:44:55:66:77"],
+      ),
+    ).toBe(false);
+    expect(
+      machineFingerprintMatches(
+        old,
+        ["platform:win32", "host:PC"],
+        ["22:33:44:55:66:77"],
+      ),
+    ).toBe(false);
+  });
   it("è stabile, distinta e nel formato atteso", () => {
     const first = machineFingerprint(["platform:win32", "host:PC"]);
     const second = machineFingerprint(["platform:win32", "host:PC"]);

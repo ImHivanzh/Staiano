@@ -15,7 +15,7 @@ importare la planimetria. Il fabbisogno è il volume netto × il coefficiente
 scelto; puoi modificarlo anche da **File > Impostazioni progetto e piani**.
 Il valore predefinito dei nuovi progetti è 37 W/m³ e lo spessore esterno è
 50 cm. I progetti esistenti conservano il coefficiente salvato; quelli storici
-senza il campo mantengono 35 W/m³. I nuovi salvataggi usano lo schema 9.
+senza il campo mantengono 35 W/m³. I nuovi salvataggi usano lo schema 11.
 
 Accesso interno: <https://hvac.internal.staianopoint.com>. Il login richiede
 la password amministrativa impostata sul server. Progetti e cataloghi restano
@@ -184,11 +184,13 @@ La ricalibrazione mostra un’anteprima di superficie, carico e nuove anomalie;
 la modifica viene applicata solo dopo conferma. **Anteprima PDF** visualizza le
 pagine nell’app e permette di scaricare lo stesso documento già generato.
 
-Il formato corrente è v5. I progetti v0–v4 vengono importati automaticamente;
-gli esistenti vengono riscritti al successivo salvataggio. Le versioni precedenti
-dell’app non aprono i file v5, evitando di perdere la separazione degli impianti.
-Conservare un export originale prima del passaggio se serve un ritorno alla
-versione precedente. Riaprire le schede dopo l’aggiornamento dell’app.
+Lo schema corrente è la versione 11. I progetti dalla versione 0 alla 10 vengono
+migrati automaticamente e salvati nello schema corrente al successivo salvataggio.
+I progetti storici che non contengono il coefficiente termico o lo spessore dei
+muri esterni mantengono i default della loro revisione; i nuovi progetti usano
+37 W/m³ e 50 cm. Le versioni precedenti dell’app potrebbero non aprire i file
+migrati. Conservare un export originale prima del passaggio se serve un ritorno
+alla versione precedente. Riaprire le schede dopo l’aggiornamento dell’app.
 Il wizard aggiunge un impianto per volta: nome, tipo e stanze sono indipendenti.
 La stessa stanza può appartenere a impianti distinti, mostrati insieme nella vista
 complessiva. EDLS, EDFL ed EDSC-C sono le scelte principali per le bocchette;
@@ -221,7 +223,8 @@ npm test
 npm run test:e2e
 ```
 
-Stato verificato: `VERIFICATION.md`. Architettura: `ARCHITECTURE.md`.
+Audit corrente e piano operativo: [REPORT.md](../REPORT.md).
+Prove storiche per data/build: `VERIFICATION.md`. Architettura: `ARCHITECTURE.md`.
 DWG: `docs/DWG.md`. HTTPS interno e avvio: `deploy/caddy/README.md`.
 L'importatore dati produce staging/report; `--apply` salva la revisione dopo
 aver controllato la differenza. Fonti riacquisibili in `scripts/catalog-import`.

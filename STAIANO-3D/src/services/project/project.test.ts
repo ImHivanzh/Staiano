@@ -5,10 +5,17 @@ import {
   createProject,
   duplicateProject,
 } from "@/domain/project";
-import { decodeProject, encodeProject, parseProject } from "./format";
+import {
+  decodeProject,
+  decodeProjectBuffer,
+  encodeProject,
+  parseProject,
+} from "./format";
 import { IndexedDbProjectRepository } from "./repository";
 import { useProjectStore } from "@/stores/project-store";
 import { CURRENT_SCHEMA_VERSION } from "@/schemas/project";
+import { decodeProjectBuffer as decodeWorkerBuffer } from "./parse";
+import { readFileSync } from "node:fs";
 const fixture = () => {
   const p = createProject("Casa Rossi");
   return addRectangle(p, p.floors[0].id, {
@@ -19,6 +26,27 @@ const fixture = () => {
   });
 };
 describe("formato e archivio", () => {
+  it("keeps worker parsing plus main-thread refresh equivalent for current and historical projects", () => {
+    const current = fixture();
+    current.rooms[0].designLoadW = 1;
+    const historical = readFileSync(
+      "tests/fixtures/realistic-home.hvacproj",
+      "utf8",
+    );
+    for (const text of [JSON.stringify(current), historical]) {
+      const parsed = decodeWorkerBuffer(new TextEncoder().encode(text).buffer);
+      expect(parseProject(parsed)).toEqual(decodeProject(text));
+    }
+    expect(() =>
+      decodeWorkerBuffer(new TextEncoder().encode("invalid").buffer),
+    ).toThrow("JSON");
+  });
+  it("decodifica il buffer UTF-8 senza ricodificarlo per il controllo dimensione", () => {
+    const text = encodeProject(fixture());
+    expect(decodeProjectBuffer(new TextEncoder().encode(text).buffer)).toEqual(
+      decodeProject(text),
+    );
+  });
   it("conserva la finitura del pavimento per progetto e accetta i progetti precedenti", () => {
     const project = fixture();
     project.floorFinish = "stone";
@@ -42,7 +70,9 @@ describe("formato e archivio", () => {
   });
   it("rifiuta JSON, versioni future e riferimenti mancanti", () => {
     expect(() => decodeProject("<html>")).toThrow();
-    expect(() => parseProject({ schemaVersion: 10 })).toThrow(/Versione/);
+    expect(() =>
+      parseProject({ schemaVersion: CURRENT_SCHEMA_VERSION + 1 }),
+    ).toThrow(/Versione/);
     const p = fixture();
     p.walls[0].floorId = "missing";
     expect(() => parseProject(p)).toThrow(/Piano/);
@@ -208,4 +238,13 @@ it("upgrades v6 projects without stripping the declared drywall cavity", () => {
   expect(() =>
     parseProject({ ...restored, schemaVersion: CURRENT_SCHEMA_VERSION + 1 }),
   ).toThrow(/Aggiornare/);
+});
+
+it("upgrades v10 projects while preserving the coefficient and exterior thickness", () => {
+  const project = createProject("Schema 10", 37);
+  project.projectSettings.externalWallThicknessM = 0.5;
+  const restored = parseProject({ ...project, schemaVersion: 10 });
+  expect(restored.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
+  expect(restored.projectSettings.coefficientWm3).toBe(37);
+  expect(restored.projectSettings.externalWallThicknessM).toBe(0.5);
 });

@@ -28,6 +28,7 @@ import { EquipmentIcon } from "../EquipmentIcon";
 import { bounds } from "@/domain/geometry/primitives";
 import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
 import { projectOutdoorUnits } from "@/domain/hydronic/placement";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { formatNumber } from "@/utils/format";
 import { deviceCodes } from "@/services/export/device-codes";
 import { ArchitectureMeshes } from "./ArchitectureMeshes";
@@ -353,6 +354,9 @@ export default function Viewer3D({
     p?.hydronicSystems?.find((s) => s.outdoorUnit.id === selectedId)
       ?.outdoorUnit ??
     p?.hvacSystems.find((s) => s.outdoorUnit?.id === selectedId)?.outdoorUnit;
+  const chosenTerminal = p?.airTerminals.find(
+    (terminal) => terminal.id === chosenDevice?.id,
+  );
   const outdoorEditable = !!selectedOutdoor && !selectedOutdoor.locked;
   const transformMode =
     transformChoice && transformChoice.id === selectedId
@@ -477,7 +481,7 @@ export default function Viewer3D({
     if (!focused || !p) return frame;
     if (chosenDevice) {
       let elevation = 0.1 + chosenDevice.heightMm / 2000;
-      if ("mounting" in chosenDevice) {
+      if ("mounting" in chosenDevice && "elevationM" in chosenDevice) {
         if (
           chosenDevice.elevationM === null ||
           chosenDevice.mounting === "unknown"
@@ -1359,6 +1363,7 @@ export default function Viewer3D({
                     ))}
                 {chosenDevice &&
                   "mounting" in chosenDevice &&
+                  "elevationM" in chosenDevice &&
                   chosenDevice.elevationM !== null && (
                     <Line
                       points={[
@@ -1544,7 +1549,7 @@ export default function Viewer3D({
                   : `${floorName} · ${rooms.length} ${rooms.length === 1 ? "ambiente" : "ambienti"}`}
               </strong>
               {chosenDevice
-                ? `${formatNumber(chosenDevice.widthMm, 0)} × ${formatNumber(chosenDevice.heightMm, 0)}${chosenDevice.depthMm !== null ? ` × ${formatNumber(chosenDevice.depthMm, 0)}` : " · profondità da verificare"} mm`
+                ? `${formatNumber(chosenTerminal ? airTerminalFaceWidthMm(chosenTerminal) : chosenDevice.widthMm, 0)} × ${formatNumber(chosenDevice.heightMm, 0)}${chosenDevice.depthMm !== null ? ` × ${formatNumber(chosenDevice.depthMm, 0)}` : " · profondità da verificare"} mm`
                 : "Dimensioni di progetto · finiture illustrative · soffitti in sezione"}
               {unknownWindows > 0 && (
                 <span>

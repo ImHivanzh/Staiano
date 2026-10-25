@@ -12,6 +12,7 @@ import {
   audit,
   requireAccess,
   requireLease,
+  readSharedProjects,
   sharedTransaction,
   SharingError,
   type SharedRecord,
@@ -45,19 +46,23 @@ export async function GET(request: NextRequest) {
   try {
     const { user, config } = await identity(request);
     const id = request.nextUrl.searchParams.get("id");
-    const result = await sharedTransaction((records) => {
-      if (!id)
-        return {
+    const records = await readSharedProjects();
+    if (!id)
+      return NextResponse.json(
+        {
           projects: Object.values(records)
             .filter((r) => accessible(r, user.username))
             .map((r) => r.project),
           users: managedUsers(config)
             .filter((u) => !u.disabled)
             .map((u) => ({ username: u.username, displayName: u.displayName })),
-        };
-      const record = records[id];
-      requireAccess(record, user.username);
-      return {
+        },
+        { headers },
+      );
+    const record = records[id];
+    requireAccess(record, user.username);
+    return NextResponse.json(
+      {
         project: record.project,
         previous: record.previous,
         owner: record.owner,
@@ -68,9 +73,9 @@ export async function GET(request: NextRequest) {
           record.lease && record.lease.expires > Date.now()
             ? record.lease.username
             : null,
-      };
-    });
-    return NextResponse.json(result, { headers });
+      },
+      { headers },
+    );
   } catch (error) {
     return failure(error);
   }

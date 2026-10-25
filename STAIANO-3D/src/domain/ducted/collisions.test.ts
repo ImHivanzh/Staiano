@@ -118,6 +118,31 @@ it("keeps an unobstructed hose clear and checks its full radius against a thin r
   expect(findDuctCollisions(p, [path]).size).toBe(0);
 });
 
+it("still checks obstacles along a flexible route whose bend radius is invalid", () => {
+  const p = fixture(),
+    path = hose(p, "tight-hose", [
+      point(1, 2),
+      point(1.1, 2),
+      point(1.1, 2.1),
+    ]);
+  p.pillars = [
+    {
+      id: "pillar",
+      floorId: p.floors[0].id,
+      position: { x: 1.1, y: 2.05 },
+      widthMm: 100,
+      depthMm: 100,
+      heightMm: 4000,
+      rotation: 0,
+      locked: false,
+    },
+  ];
+  expect(flexibleDuctCurve(path.points, path.diameterMm)).toBeNull();
+  expect(findDuctCollisions(p, [path]).get(path.id)?.withIds).toContain(
+    "pillar",
+  );
+});
+
 it("marks both crossing hoses, clears them after separation, and respects their vertical separation", () => {
   const p = fixture(),
     a = hose(p),

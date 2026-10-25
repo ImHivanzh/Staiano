@@ -3,6 +3,12 @@
   color: var(--testo-tenue);
   margin: 5px 0 0;
 }
+[data-testid="drywall-properties"] > fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
 .proprieta > .titolo-pannello:has(.tipo-selezione) {
   background: var(--carta-2);
 }

@@ -105,6 +105,7 @@ def normalize(record):
     provenance = {}
     model_codes = set()
     warnings = []
+    supporting_sources = []
 
     def variant(dims, evidence):
         if dims not in variants:
@@ -330,6 +331,49 @@ def normalize(record):
         source = document
         extra_documents.append(record["htmlSource"])
 
+    # EGA50-3F/4F page 2 explicitly gives the external frame as L+60 × H+60.
+    # Keep those proven front dimensions separate from the nominal grille size;
+    # the drawing does not establish a single body-depth value.
+    if code == "EGA50-3F":
+        document = next(
+            (item for item in record["documents"] if item["filename"].endswith("-0.pdf")),
+            None,
+        )
+        if not document:
+            raise ValueError("EGA50-3F dimension drawing is missing")
+        digest = hashlib.sha256((SOURCE / document["filename"]).read_bytes()).hexdigest()
+        if digest != document["sha256"] or digest != "a0cf28881ef67e23e097c2bfafc0fd16b1da64b0a96880c51e3cf0a27610ab69":
+            raise ValueError("EGA50-3F dimension drawing revision changed")
+        for dims, v in variants.items():
+            width, height = dims
+            v["faceWidthMm"], v["faceHeightMm"] = width + 60, height + 60
+            v["originalDimensionsMm"] = {
+                "L": width,
+                "H": height,
+                "externalFrameL": width + 60,
+                "externalFrameH": height + 60,
+            }
+            v["dimensionNote"] = (
+                "L×H nominali; ingombro esterno cornice L+60 × H+60 mm "
+                "pubblicato nella scheda tecnica, pagina 2. "
+                "Profondità complessiva non assegnata."
+            )
+            provenance.setdefault(dims, set()).add(
+                "PDF pagina 2: esterno cornice L+60 × H+60 mm"
+            )
+        supporting_sources.append({
+            "sourceMetadata": dict(
+                manufacturer="Ecoclima",
+                sourceUrl=document["sourceUrl"],
+                sourceType="pdf",
+                documentRevision=document["label"],
+                retrievedAt=document["retrievedAt"],
+                importedAt=datetime.now(timezone.utc).isoformat(),
+                sha256=document["sha256"],
+                page=2,
+            )
+        })
+
     # Flag printed anomalies without replacing any manufacturer's number.
     for dims, v in variants.items():
         groups = {}
@@ -370,6 +414,109 @@ def normalize(record):
                                       documentRevision=source.get("label"), retrievedAt=source.get("retrievedAt"),
                                       importedAt=now, sha256=source["sha256"], page=3 if code == "EGA" else None),
                   shape="rectangle", geometryNote="Dimensioni nominali o esterno cornice come indicato su ciascuna variante; profondità non pubblicate come dati tabellari restano null.")
+    if code == "EGA":
+        document = next(item for item in record["documents"] if item["filename"].endswith("-0.pdf"))
+        variant((560, 560), "Scheda tecnica EGA 2024, pagina 2: esecuzione controsoffitto 595×595 mm esterno cornice")
+        variants[(560, 560)]["dimensionNote"] += " Scheda tecnica EGA 2024, pagina 2: fronte esterno cornice 595×595 mm."
+        supporting_sources.append({"sourceMetadata": dict(
+            manufacturer="Ecoclima", sourceUrl=document["sourceUrl"], sourceType="pdf",
+            documentRevision=document["label"], retrievedAt=document["retrievedAt"],
+            importedAt=now, sha256=document["sha256"], page=2,
+        )})
+    if code == "EGQR":
+        document = next(item for item in record["documents"] if item["filename"].endswith("-0.pdf"))
+        for item in family["variants"]:
+            width, height = item["widthMm"], item["heightMm"]
+            item["faceWidthMm"], item["faceHeightMm"] = width + 15, height + 15
+            item["bodyDepthMm"] = 22
+            item["originalDimensionsMm"] = {
+                "L": width, "H": height,
+                "installationWidth": width - 5, "installationHeight": height - 5,
+                "faceWidth": width + 15, "faceHeight": height + 15,
+                "profileDepth": 22,
+            }
+            item["dimensionNote"] = (
+                "Modello nominale L×H; foro di installazione (L−5)×(H−5) mm; "
+                "fronte esterno cornice (L+15)×(H+15) mm; profondità di sezione 22 mm. "
+                "Scheda tecnica EGQR 2025, pagina 2."
+            )
+        supporting_sources.append({"sourceMetadata": dict(
+            manufacturer="Ecoclima", sourceUrl=document["sourceUrl"], sourceType="pdf",
+            documentRevision=document["label"], retrievedAt=document["retrievedAt"],
+            importedAt=now, sha256=document["sha256"], page=2,
+        )})
+    if code == "EGA50":
+        document = next(
+            item for item in record["documents"] if item["filename"].endswith("-0.pdf")
+        )
+        for item in family["variants"]:
+            width, height = item["widthMm"], item["heightMm"]
+            item["faceWidthMm"], item["faceHeightMm"] = width + 60, height + 60
+            item["originalDimensionsMm"] = {
+                "L": width, "H": height,
+                "installationWidth": width - 20, "installationHeight": height - 20,
+                "faceWidth": width + 60, "faceHeight": height + 60,
+            }
+            item["dimensionNote"] = (
+                "Ingombro esterno cornice L+60×H+60 mm e foro (L−20)×(H−20) mm, "
+                "scheda tecnica EGA50 2023, pagina 2. Profondità non assegnata."
+            )
+        family["geometryNote"] += (
+            " Fronte EGA50 L+60×H+60 mm; vano L−20×H−20 mm, pagina 2."
+        )
+        supporting_sources.append({"sourceMetadata": dict(
+            manufacturer="Ecoclima", sourceUrl=document["sourceUrl"], sourceType="pdf",
+            documentRevision=document["label"], retrievedAt=document["retrievedAt"],
+            importedAt=now, sha256=document["sha256"], page=2,
+        )})
+    if code == "EGA50-3S":
+        document = record["htmlSource"]
+        for item in family["variants"]:
+            width, height = item["widthMm"], item["heightMm"]
+            item["faceWidthMm"], item["faceHeightMm"] = width + 60, height + 60
+            item["originalDimensionsMm"] = {
+                "L": width, "H": height,
+                "faceWidth": width + 60, "faceHeight": height + 60,
+            }
+            item["dimensionNote"] = (
+                "Fronte esterno cornice L+60×H+60 mm, disegno tecnico frontale "
+                "della pagina prodotto EGA50-3S. Profondità dipendente dal modello."
+            )
+        family["geometryNote"] += (
+            " Fronte comune EGA50-3SA/3SE L+60×H+60 mm; la profondità "
+            "dipende dal codice di aspirazione/espulsione."
+        )
+        supporting_sources.append({"sourceMetadata": dict(
+            manufacturer="Ecoclima", sourceUrl=document["sourceUrl"], sourceType="html",
+            documentRevision=document["label"], retrievedAt=document["retrievedAt"],
+            importedAt=now, sha256=document["sha256"], page=None,
+        )})
+    if code in ["EGZ50", "EGZ100"]:
+        document = next(
+            item for item in record["documents"] if item["filename"].endswith("-0.pdf")
+        )
+        for item in family["variants"]:
+            width, height = item["widthMm"], item["heightMm"]
+            item["faceWidthMm"], item["faceHeightMm"] = width + 60, height + 60
+            item["originalDimensionsMm"] = {
+                "L": width, "H": height,
+                "installationWidth": width - 20, "installationHeight": height - 20,
+                "faceWidth": width + 60, "faceHeight": height + 60,
+            }
+            item["dimensionNote"] = (
+                f"Ingombro esterno L+60×H+60 mm e vano (L−20)×(H−20) mm, "
+                f"scheda tecnica {code} 2023, pagina 2. Profondità non assegnata."
+            )
+        family["geometryNote"] += (
+            f" Fronte {code} L+60×H+60 mm; vano L−20×H−20 mm, pagina 2."
+        )
+        supporting_sources.append({"sourceMetadata": dict(
+            manufacturer="Ecoclima", sourceUrl=document["sourceUrl"], sourceType="pdf",
+            documentRevision=document["label"], retrievedAt=document["retrievedAt"],
+            importedAt=now, sha256=document["sha256"], page=2,
+        )})
+    if supporting_sources:
+        family["supportingSources"] = supporting_sources
     if code == "EGA1-4":
         model_codes = {"EGA1", "EGA2", "EGA3", "EGA4"}
         family["closureOptions"] = ["EGA1/EGA2: chiusura mediante magnete; solo parete", "EGA3/EGA4: cerniera e chiusura con vite; calamite o pomelli a richiesta"]
@@ -403,12 +550,117 @@ def normalize(record):
     if code in ["EBP", "EBP-T"]:
         family["mountingType"] = "Pavimento, griglia pedonabile"
     family["modelCodes"] = sorted(model_codes or {code})
+    if code == "EBLR":
+        document = next(
+            item for item in record["documents"]
+            if item["filename"].endswith("-0.pdf")
+        )
+        family["supportingSources"] = [{"sourceMetadata": dict(
+            manufacturer="Ecoclima",
+            sourceUrl=document["sourceUrl"],
+            sourceType="pdf",
+            documentRevision=document["label"],
+            retrievedAt=document["retrievedAt"],
+            importedAt=now,
+            sha256=document["sha256"],
+            page=None,
+        )}]
+        for variant in family["variants"]:
+            width, height = variant["widthMm"], variant["heightMm"]
+            variant["faceWidthMm"], variant["faceHeightMm"] = width + 15, height + 15
+            variant["originalDimensionsMm"] = dict(
+                L=width, H=height, faceWidth=width + 15, faceHeight=height + 15
+            )
+            variant["dimensionNote"] = (
+                "Ingombro frontale esterno cornice L+15 × H+15 mm, pubblicato "
+                "nella scheda tecnica EBLR 2025, pagina 2. Profondità non assegnata."
+            )
+        family["geometryNote"] += " EBLR con cornice da 15 mm: ingombro frontale L+15×H+15 mm."
+    if code == "EBL":
+        document = next(
+            item for item in record["documents"]
+            if item["filename"].endswith("-0.pdf")
+        )
+        family["supportingSources"] = [{"sourceMetadata": dict(
+            manufacturer="Ecoclima",
+            sourceUrl=document["sourceUrl"],
+            sourceType="pdf",
+            documentRevision=document["label"],
+            retrievedAt=document["retrievedAt"],
+            importedAt=now,
+            sha256=document["sha256"],
+            page=None,
+        )}]
+        family["modelCodeFaceOffsetsMm"] = {
+            modelCode: dict(widthMm=-1, heightMm=-1)
+            if "EBL-22/" in modelCode
+            else dict(widthMm=35, heightMm=35)
+            for modelCode in family["modelCodes"]
+        }
+        family["geometryNote"] += (
+            " EBL-20/21 con cornice: fronte L+35×H+35 mm; EBL-22 senza "
+            "cornice: L-1×H-1 mm, da applicare dopo la scelta del codice articolo."
+        )
+    if code == "EGQIF":
+        document = next(
+            item for item in record["documents"] if item["filename"].endswith("-0.pdf")
+        )
+        family["mountings"] = ["wall"]
+        family["mountingType"] = "Parete, muratura o cartongesso"
+        family["geometryNote"] += (
+            " Installazione a filo parete; kit piastra specifico per muratura o "
+            "cartongesso necessario e non fornito. In muratura non disponibili "
+            "le altezze 75 e 100 mm."
+        )
+        family["supportingSources"] = [{"sourceMetadata": dict(
+            manufacturer="Ecoclima",
+            sourceUrl=document["sourceUrl"],
+            sourceType="pdf",
+            documentRevision=document["label"],
+            retrievedAt=document["retrievedAt"],
+            importedAt=now,
+            sha256=document["sha256"],
+            page=3,
+        )}]
+        for variant in family["variants"]:
+            variant["faceWidthMm"] = variant["widthMm"]
+            variant["faceHeightMm"] = variant["heightMm"]
+            variant["originalDimensionsMm"] = {
+                "L": variant["widthMm"], "H": variant["heightMm"],
+                "faceWidth": variant["widthMm"], "faceHeight": variant["heightMm"],
+            }
+            variant["dimensionNote"] = (
+                "Dimensione frontale L×H indicata nella tavola EGQIF 2025, pagina 3."
+            )
     for v in family["variants"]:
         if not v.get("modelCodes"):
             v["modelCodes"] = family["modelCodes"]
         if v.get("connectionDiametersMm"):
             v["dimensionNote"] += " Diametri canale circolare pubblicati: " + ", ".join(map(str, v["connectionDiametersMm"])) + " mm."
     if code == "EBLS":
+        document = next(
+            item for item in record.get("documents", [])
+            if item["filename"].endswith("-0.pdf")
+        )
+        family["supportingSources"] = [{"sourceMetadata": dict(
+            manufacturer="Ecoclima",
+            sourceUrl=document["sourceUrl"],
+            sourceType="pdf",
+            documentRevision=document["label"],
+            retrievedAt=document["retrievedAt"],
+            importedAt=now,
+            sha256=document["sha256"],
+            page=None,
+        )}]
+        for variant in family["variants"]:
+            variant["faceWidthMm"] = variant["widthMm"] + 35
+            variant["faceHeightMm"] = variant["heightMm"] + 35
+            variant["dimensionNote"] += " EBLS 2026, pagine 6–7: fronte cornice L+35 × H+35 mm."
+            variant["originalDimensionsMm"] = {
+                "L": variant["widthMm"], "H": variant["heightMm"],
+                "faceWidth": variant["faceWidthMm"], "faceHeight": variant["faceHeightMm"],
+            }
+        family["geometryNote"] += " La scheda 2026 indica per EBLS-20/21 con cornice fronte L+35×H+35 mm."
         family["operatingConditions"] += " Vk 1,5 m/s: ripresa con filtro EFEBLS pulito. Vk 3/4/5 m/s: mandata, lancio Vt 0,25 m/s in prossimità del soffitto."
     if code in ["EBL", "EBLR"]:
         family["operatingConditions"] += " Mandata: lancio isotermo Vt 0,25 m/s."

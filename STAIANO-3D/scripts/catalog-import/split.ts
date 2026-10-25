@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { splitCatalogSchema } from "../../src/domain/catalogs/split-schema";
-const names = ["daikin", "mitsubishi", "gree", "series-extra"];
+const names = ["daikin", "mitsubishi", "gree", "lg", "series-extra"];
 const inputs = names
   .filter((name) => existsSync(`catalog-data/curation/split-${name}.json`))
   .map((name) =>
@@ -99,5 +99,5 @@ const history = existsSync(historyFile)
   : {};
 if (previous) history[previous.version] = previous;
 delete history[version];
-writeFileSync(historyFile, JSON.stringify(history, null, 2) + "\n");
+writeFileSync(historyFile, JSON.stringify(history) + "\n");
 writeFileSync(file, JSON.stringify(catalog, null, 2) + "\n");

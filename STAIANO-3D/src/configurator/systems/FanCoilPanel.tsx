@@ -10,8 +10,15 @@ import {
   fanCoilCategories,
   fanCoilCategory,
   fanCoilCategoryLabels,
+  fanCoilDefaultPanelType,
+  fanCoilCoverAccessory,
+  fanCoilPanelOptions,
+  fanCoilPanelTypeLabel,
+  fanCoilRecessDepthMm,
   isConcealedFanCoil,
   isRecessedFanCoil,
+  type FanCoilCoverType,
+  type FanCoilPanelType,
 } from "@/domain/catalogs/fan-coils";
 import { applyFanCoil, removeFanCoil } from "@/domain/fan-coils/apply";
 import {
@@ -66,6 +73,18 @@ export function FanCoilPanel({
   const [controllerId, setControllerId] = useState(
     existingDevice?.controllerId ?? "",
   );
+  const [panelType, setPanelType] = useState<FanCoilPanelType | null>(
+    existingDevice?.panelType ??
+      (existingProduct
+        ? fanCoilDefaultPanelType(
+            existingProduct,
+            existingDevice?.mounting ?? "wall",
+          )
+        : null),
+  );
+  const [coverType, setCoverType] = useState<FanCoilCoverType | null>(
+    existingDevice?.coverType ?? null,
+  );
   const brandProducts = fanCoilCatalog.products.filter(
     (p) => p.manufacturer === manufacturer,
   );
@@ -78,6 +97,12 @@ export function FanCoilPanel({
     ? (product.operatingPoints[operatingPointIndex] ??
       product.operatingPoints[0])
     : undefined;
+  const panelOptions = product ? fanCoilPanelOptions(product, mounting) : [];
+  const selectedPanelType = panelOptions.includes(panelType as FanCoilPanelType)
+    ? panelType
+    : product
+      ? fanCoilDefaultPanelType(product, mounting)
+      : null;
   const controls = product ? compatibleFanCoilControls(product) : [];
   const controller = controls.find((c) => c.id === controllerId);
   const installed = (project.fanCoils ?? []).filter(
@@ -110,7 +135,13 @@ export function FanCoilPanel({
     ...new Set(familyProducts.flatMap((item) => item.mountings)),
   ];
   const pose = product
-    ? initialFanCoilPose(sizingProject, room, product, mounting)
+    ? initialFanCoilPose(
+        sizingProject,
+        room,
+        product,
+        mounting,
+        selectedPanelType,
+      )
     : null;
   function chooseManufacturer(next: string) {
     setManufacturer(next);
@@ -118,6 +149,8 @@ export function FanCoilPanel({
     setProductId("");
     setOperatingPointIndex(0);
     setControllerId("");
+    setPanelType(null);
+    setCoverType(null);
   }
   function chooseFamily(next: string) {
     const nextProducts = fanCoilCatalog.products.filter(
@@ -141,6 +174,12 @@ export function FanCoilPanel({
     setControllerId("");
     setProductId(recommended?.product.id ?? "");
     setOperatingPointIndex(recommended?.operatingPointIndex ?? 0);
+    setPanelType(
+      recommended
+        ? fanCoilDefaultPanelType(recommended.product, nextMounting)
+        : null,
+    );
+    setCoverType(null);
   }
   function chooseMounting(next: "wall" | "ceiling") {
     const recommended = family
@@ -159,6 +198,11 @@ export function FanCoilPanel({
     setOperatingPointIndex(
       kept ? operatingPointIndex : (recommended?.operatingPointIndex ?? 0),
     );
+    const nextProduct = kept ?? recommended?.product;
+    setPanelType(
+      nextProduct ? fanCoilDefaultPanelType(nextProduct, next) : null,
+    );
+    if (nextProduct?.family !== "FCZ P") setCoverType(null);
   }
   function chooseTaglia(next: string) {
     const nextProduct = familyProducts.find((item) => item.id === next);
@@ -167,6 +211,17 @@ export function FanCoilPanel({
     setProductId(next);
     setOperatingPointIndex(0);
     setControllerId("");
+    setPanelType(
+      nextProduct
+        ? fanCoilDefaultPanelType(
+            nextProduct,
+            nextProduct.mountings.includes(mounting)
+              ? mounting
+              : nextProduct.mountings[0],
+          )
+        : null,
+    );
+    if (nextProduct?.family !== "FCZ P") setCoverType(null);
   }
   function useSuggestion() {
     if (!suggestion) return;
@@ -174,6 +229,8 @@ export function FanCoilPanel({
     setProductId(suggestion.product.id);
     setOperatingPointIndex(suggestion.operatingPointIndex);
     setControllerId("");
+    setPanelType(fanCoilDefaultPanelType(suggestion.product, mounting));
+    setCoverType(null);
   }
   return (
     <section
@@ -183,11 +240,11 @@ export function FanCoilPanel({
       <header className={styles.heading}>
         <h3>Ventilconvettori</h3>
         <p className="nota">
-          Scegli la marca e il modello: il sistema indica poi la taglia che copre
-          il fabbisogno residuo, con velocità e rumore del punto scelto. Puoi
-          aggiungere più apparecchi nello stesso ambiente: il consiglio considera
-          la potenza già installata da tutti i ventilconvettori presenti, anche
-          di impianti diversi.
+          Scegli la marca e il modello: il sistema indica poi la taglia che
+          copre il fabbisogno residuo, con velocità e rumore del punto scelto.
+          Puoi aggiungere più apparecchi nello stesso ambiente: il consiglio
+          considera la potenza già installata da tutti i ventilconvettori
+          presenti, anche di impianti diversi.
         </p>
       </header>
       {existingDevice && (
@@ -354,6 +411,12 @@ export function FanCoilPanel({
                   </option>
                 ))}
               </select>
+              {product.family.startsWith("Bi2 Naked") &&
+                selectedPanelType?.startsWith("grilles") && (
+                  <small>
+                    Il pannello di copertura va realizzato in cantiere.
+                  </small>
+                )}
             </label>
           )}
           {family && (
@@ -373,10 +436,61 @@ export function FanCoilPanel({
               </select>
             </label>
           )}
+          {product && panelOptions.length > 0 && (
+            <label className="campo">
+              <span>
+                {product.family.startsWith("AirLeaf")
+                  ? "Finitura incasso"
+                  : "Configurazione incasso"}
+              </span>
+              <select
+                value={selectedPanelType ?? ""}
+                onChange={(e) =>
+                  setPanelType(e.target.value as FanCoilPanelType)
+                }
+              >
+                {panelOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {fanCoilPanelTypeLabel(option)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
+          {product?.family === "FCZ P" && (
+            <label className="campo">
+              <span>Mobile di copertura Aermec</span>
+              <select
+                value={coverType ?? ""}
+                onChange={(event) =>
+                  setCoverType(
+                    event.target.value
+                      ? (event.target.value as FanCoilCoverType)
+                      : null,
+                  )
+                }
+              >
+                <option value="">Senza mobile</option>
+                <option value="fixed">
+                  {fanCoilCoverAccessory(product, "fixed")?.code} · alette fisse
+                </option>
+                <option value="adjustable">
+                  {fanCoilCoverAccessory(product, "adjustable")?.code} · alette
+                  orientabili
+                </option>
+              </select>
+              <small>
+                L’ingombro del mobile non è quotato nella fonte acquisita: la
+                scelta compare in distinta, ma non modifica la mesh né le
+                collisioni.
+              </small>
+            </label>
+          )}
           {product && isRecessedFanCoil(product) && (
             <p className="nota" data-testid="fan-coil-recess-panel-note">
               Modello ad incasso: il corpo non va a vista. A parete serve una
-              muratura o controparete di almeno {product.depthMm} mm (faccia
+              muratura o controparete di almeno{" "}
+              {fanCoilRecessDepthMm(product, selectedPanelType)} mm (faccia
               anteriore a filo); a soffitto serve un controsoffitto o un vuoto
               tecnico.
             </p>
@@ -459,11 +573,9 @@ export function FanCoilPanel({
                       <p className="nota">
                         {controller.features.join(" · ")}
                         <br />
-                        Scheda richiesta: {controllerBoardFor(
-                          product,
-                          controller,
-                        )}{" "}
-                        · {product.pipes} tubi.
+                        Scheda richiesta:{" "}
+                        {controllerBoardFor(product, controller)} ·{" "}
+                        {product.pipes} tubi.
                       </p>
                     </>
                   )}
@@ -507,7 +619,11 @@ export function FanCoilPanel({
                 : "Scegli marca e modello: poi indico la taglia che copre il fabbisogno residuo."}
             </p>
           )}
-          <h4>Apparecchio da aggiungere</h4>
+          <h4>
+            {existingDevice
+              ? "Apparecchio da modificare"
+              : "Apparecchio da aggiungere"}
+          </h4>
           {product && point ? (
             <>
               <div className={styles.product}>
@@ -529,8 +645,9 @@ export function FanCoilPanel({
                     {fanCoilCategoryLabels[fanCoilCategory(product)]}
                   </p>
                   <p>
-                    {point.label} · {mounting === "wall" ? "Parete" : "Soffitto"}{" "}
-                    · {product.pipes} tubi
+                    {point.label} ·{" "}
+                    {mounting === "wall" ? "Parete" : "Soffitto"} ·{" "}
+                    {product.pipes} tubi
                   </p>
                 </div>
               </div>
@@ -546,6 +663,8 @@ export function FanCoilPanel({
                     applyFanCoil(p, room.id, product.id, operatingPointIndex, {
                       mounting,
                       controllerId: controller?.id ?? null,
+                      panelType: selectedPanelType,
+                      coverType,
                       installationId,
                     }),
                   )
@@ -576,7 +695,7 @@ export function FanCoilPanel({
                   {product && isRecessedFanCoil(product)
                     ? mounting === "ceiling"
                       ? "Modello ad incasso: serve un controsoffitto o un vuoto tecnico abbastanza profondo; non viene appeso a vista. Aggiungi il controsoffitto o scegli un altro montaggio."
-                      : `Modello ad incasso: nessuna parete ha i ${product.depthMm} mm necessari per il corpo. Ispessisci la parete o aggiungi una controparete.`
+                      : `Modello ad incasso: nessuna parete ha i ${fanCoilRecessDepthMm(product, selectedPanelType)} mm necessari. Ispessisci la parete o aggiungi una controparete.`
                     : `Nessuno spazio libero per questo ingombro. ${
                         mounting === "ceiling"
                           ? "Controlla quota del soffitto, vuoto tecnico e vincoli di posa, oppure cambia montaggio."
@@ -593,10 +712,10 @@ export function FanCoilPanel({
                 <summary>Condizioni dei dati e fonte</summary>
                 <p className="nota">{product.features.join(" · ")}</p>
                 <p className="nota">
-                  Suggerimento conservativo: capacità freddo e caldo dello stesso
-                  punto devono coprire separatamente il fabbisogno residuo. Le
-                  potenze valgono alle condizioni originali, senza correzioni
-                  inventate per altre temperature dell’acqua.
+                  Suggerimento conservativo: capacità freddo e caldo dello
+                  stesso punto devono coprire separatamente il fabbisogno
+                  residuo. Le potenze valgono alle condizioni originali, senza
+                  correzioni inventate per altre temperature dell’acqua.
                 </p>
                 <p className="nota">
                   Freddo: {point.coolingConditions}

@@ -39,10 +39,16 @@ official_photos = json.loads(PHOTO_MANIFEST.read_text(encoding="utf8")) if PHOTO
 
 
 def source(folder, name, brand, page, revision):
-    manifest = json.loads((ROOT / folder / "manifest.json").read_text(encoding="utf8")) if folder.endswith("hvac") else json.loads((ROOT / folder / ("gree-manifest.json" if brand == "Gree" else "mitsubishi-manifest.json")).read_text(encoding="utf8"))
+    manifest_name = (
+        "manifest.json" if folder.endswith("hvac") else
+        "gree-manifest.json" if brand == "Gree" else
+        "mitsubishi-manifest.json" if brand == "Mitsubishi Electric" else
+        "lg-manifest.json"
+    )
+    manifest = json.loads((ROOT / folder / manifest_name).read_text(encoding="utf8"))
     item = next(m for m in manifest if m["name"] == name)
     file = ROOT / folder / f"{name}.pdf"
-    if hashlib.sha256(file.read_bytes()).hexdigest() != item["sha256"]: raise ValueError("Source changed: " + name)
+    if hashlib.sha256(file.read_bytes()).hexdigest().lower() != item["sha256"].lower(): raise ValueError("Source changed: " + name)
     return {"manufacturer": brand, **{k:item[k] for k in ["sourceUrl","sourceType","retrievedAt","sha256"]}, "importedAt":item["retrievedAt"], "documentRevision":revision, "page":page}
 
 
@@ -166,6 +172,38 @@ meta=source(SPLITS,"mitsubishi-ay-2025","Mitsubishi Electric",2,"Brochure MSZ-AY
 describe("Mitsubishi Electric","MSZ-AY","Linea Plus / MSZ-AY",2,["Plasma Quad Plus (VGKP)","Wi-Fi integrato","Self Clean Mode","Dual Barrier Coating","Timer settimanale"],
          ["Rispetto a Classic: Plasma Quad Plus nella versione VGKP, Wi-Fi integrato, Self Clean e timer settimanale."],meta,
          photo("mitsubishi-msz-ay",SPLITS+"/mitsubishi-ay-2025.pdf",2,"Im0.jp2",meta,"MSZ-AY, immagine originale della brochure italiana"))
+
+lg_multi = source(SPLITS,"lg-multi","LG",12,"LG Greece 2021 Multi Split Leaflet, R32")
+describe("LG","Standard Plus","LG Standard Plus",1,
+         ["Pompa di calore R32","Dual Inverter Compressor","Classe Standard Plus"],[],lg_multi,
+         photo("lg-standard-plus",SPLITS+"/lg-multi.pdf",12,"Im0.jpg",lg_multi,"LG Standard Plus, immagine originale del leaflet"))
+lg_cassette = source(SPLITS,"lg-multi","LG",14,"LG Greece 2021 Multi Split Leaflet, R32")
+describe("LG","4 Way Cassette","LG 4 Way Cassette",1,
+         ["Cassetta a 4 vie R32","Modelli MT06R e CT09F"],[],lg_cassette,
+         photo("lg-4-way-cassette",SPLITS+"/lg-multi.pdf",14,"Im0.jpg",lg_cassette,"LG 4 Way Cassette, immagine originale del leaflet"))
+lg_round = source(SPLITS,"lg-round","LG",3,"LG Greece 2023 Round Cassette Leaflet, R32")
+describe("LG","Round Cassette","LG Round Cassette",1,
+         ["Cassetta circolare R32","Flusso circolare senza zone cieche","Palette regolabili in 6 posizioni"],[],lg_round,
+         photo("lg-round-cassette",SPLITS+"/lg-round.pdf",3,"Im2.jpg",lg_round,"LG Round Cassette UT36F, immagine originale del leaflet"))
+
+for family,title,page,image_name,features in [
+    ("Mirror","LG ARTCOOL Mirror",10,"Im1.jpg",["Pompa di calore R32","Finitura Mirror","Gamma multisplit"]),
+    ("Air Purification","LG Air Purification",11,"Im0.jpg",["Pompa di calore R32","Funzione di purificazione","Gamma multisplit"]),
+    ("Deluxe","LG Deluxe",11,"Im1.jpg",["Pompa di calore R32","Linea Deluxe","Gamma multisplit"]),
+    ("Standard 2","LG Standard 2",13,"Im1.jpg",["Pompa di calore R32","Linea Standard 2","Gamma multisplit"]),
+]:
+    meta=source(SPLITS,"lg-multi","LG",page,"LG Greece 2021 Multi Split Leaflet, R32")
+    describe("LG",family,title,1,features,[],meta,
+             photo("lg-"+family.lower().replace(" ","-"),SPLITS+"/lg-multi.pdf",page,image_name,meta,title+", immagine originale del leaflet"))
+
+lg_curated=json.loads((ROOT/"catalog-data/curation/split-lg.json").read_text(encoding="utf8"))
+for model,family,key,features in [
+    ("H18S1DA","DUALCOOL AI Deluxe","lg-dualcool-ai-deluxe",["R32","AI Air","DUAL Vane","LG ThinQ"]),
+    ("H12S1PA","DUALCOOL AI Premium","lg-dualcool-ai-premium",["R32","AI Air","DUAL Vane","LG ThinQ"]),
+]:
+    meta=next(unit["sourceMetadata"] for unit in lg_curated["indoorUnits"] if unit["model"]==model)
+    describe("LG",family,"LG "+family,1,features,[],meta,
+             photo(key,"",1,"",meta,f"LG {family}, immagine originale della serie"))
 
 (ROOT/"catalog-data/curation/split-series-extra.json").write_text(json.dumps({"indoorUnits":units,"combinations":combinations},ensure_ascii=False,indent=2)+"\n",encoding="utf8")
 (ROOT/"catalog-data/generated/split-series-presentation.json").write_text(json.dumps(series,ensure_ascii=False,indent=2)+"\n",encoding="utf8")

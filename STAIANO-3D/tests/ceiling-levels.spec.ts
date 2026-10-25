@@ -49,7 +49,9 @@ test("flat suspended ceiling updates finished height, technical void and thermal
   await expect(page.locator(".dati-stanza")).toContainText("Altezza finita");
   const saved = await exportPlenumFixture(page);
   expect(saved.rooms[0].volumeM3).toBeCloseTo(240);
-  expect(saved.rooms[0].designLoadW).toBeCloseTo(8400);
+  expect(saved.rooms[0].designLoadW).toBeCloseTo(
+    saved.rooms[0].volumeM3 * saved.projectSettings.coefficientWm3,
+  );
   await page.reload();
   await page.getByRole("button", { name: /Sala/ }).click();
   if ((await show.getAttribute("aria-expanded")) !== "true") await show.click();

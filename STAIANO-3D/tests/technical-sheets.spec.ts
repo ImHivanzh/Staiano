@@ -4,7 +4,7 @@ import { openDisclosure } from "./ui-helpers";
 
 test("project downloads an archive of original technical sheets and their index", async ({
   page,
-}) => {
+}, info) => {
   test.setTimeout(60000);
   await page.goto("/");
   await page
@@ -16,7 +16,7 @@ test("project downloads an archive of original technical sheets and their index"
     .getByRole("button", { name: "Scarica schede tecniche", exact: true })
     .click();
   const download = await downloading;
-  await download.saveAs("output/verification/installed-technical-sheets.zip");
+  await download.saveAs(info.outputPath("installed-technical-sheets.zip"));
   expect(download.suggestedFilename()).toMatch(/-schede-tecniche\.zip$/);
   const archive = readFileSync((await download.path())!);
   expect(archive.readUInt32LE(0)).toBe(0x04034b50);

@@ -34,7 +34,7 @@ test("complete and summary dossiers always include the real 3D render and identi
     buffer: Buffer.from(JSON.stringify(project)),
   });
   await expect(page.locator(".nome-stanza")).toHaveCount(4);
-  await mkdir("output/pdf", { recursive: true });
+  await mkdir(".cache/report-fixes", { recursive: true });
   for (const variant of ["complete", "summary"] as const) {
     await openDisclosure(page, "File");
     await expect(
@@ -57,7 +57,12 @@ test("complete and summary dossiers always include the real 3D render and identi
           Math.abs(p.getWidth() - 841.89) < 0.1 &&
           Math.abs(p.getHeight() - 595.28) < 0.1,
       );
-    expect(renders.length).toBeGreaterThan(0);
+    expect(renders).toHaveLength(
+      project.rooms.length +
+        project.floors.filter((floor) =>
+          project.walls.some((wall) => wall.floorId === floor.id),
+        ).length,
+    );
     for (const render of renders)
       expect(
         render.node.Resources()!.lookup(PDFName.of("XObject"), PDFDict).values()
@@ -75,11 +80,11 @@ test("complete and summary dossiers always include the real 3D render and identi
       );
     expect(texts.join(" ")).toContain("Mitsubishi Electric");
     expect(texts.join(" ")).toContain("Daikin");
+    for (const room of project.rooms)
+      expect(texts.join(" ")).toContain(room.name);
     expect(texts.join(" ")).not.toMatch(/\bMACCHINA\b/);
     await task.destroy();
-    await download.saveAs(
-      `output/pdf/staiano-guided-dossier${variant === "summary" ? "-sintetico" : ""}.pdf`,
-    );
+    await download.saveAs(`.cache/report-fixes/dossier-${variant}.pdf`);
   }
 });
 
@@ -126,6 +131,46 @@ test("operator downloads a native SKP with the imported plan, architecture and d
     .click();
   const download = await downloaded;
   const payload = (await request).postDataJSON();
+  const applianceMeshes = payload.meshes.filter(
+    (mesh: { groupId?: string }) => mesh.groupId,
+  );
+  const terminalGroups = new Map<string, string>();
+  for (const mesh of applianceMeshes) {
+    if (mesh.name.startsWith("Bocchetta "))
+      terminalGroups.set(mesh.groupId, mesh.name);
+  }
+  expect(terminalGroups.size).toBe(project.airTerminals.length);
+  for (const groupId of terminalGroups.keys())
+    expect(
+      applianceMeshes.filter(
+        (mesh: { groupId?: string }) => mesh.groupId === groupId,
+      ).length,
+    ).toBeGreaterThan(1);
+  const wallMeshes = payload.meshes.filter(
+    (mesh: { groupId?: string; name: string }) =>
+      mesh.groupId && /^Muro \d+$/.test(mesh.name),
+  );
+  const wallGroupIds = new Set(
+    wallMeshes.map((mesh: { groupId?: string }) => mesh.groupId),
+  );
+  expect(wallGroupIds.size).toBe(
+    project.walls.filter((wall) => wall.floorId === project.floors[0].id)
+      .length,
+  );
+  for (const groupId of wallGroupIds)
+    expect(
+      wallMeshes.filter(
+        (mesh: { groupId?: string }) => mesh.groupId === groupId,
+      ).length,
+    ).toBeGreaterThan(1);
+  const fanCoilGroups = new Set(
+    applianceMeshes
+      .filter((mesh: { name: string }) =>
+        mesh.name.startsWith("Ventilconvettore "),
+      )
+      .map((mesh: { groupId: string }) => mesh.groupId),
+  );
+  expect(fanCoilGroups.size).toBe(project.fanCoils?.length ?? 0);
   const ceilings = payload.meshes.filter((mesh: { name: string }) =>
     mesh.name.startsWith("Controsoffitto "),
   );
@@ -140,8 +185,8 @@ test("operator downloads a native SKP with the imported plan, architecture and d
   expect(download.suggestedFilename()).toMatch(/\.skp$/);
   const bytes = await readFile((await download.path())!);
   expect(bytes.length).toBeGreaterThan(5000);
-  await mkdir("output/verification", { recursive: true });
-  await download.saveAs("output/verification/staiano-modello.skp");
+  await mkdir(".cache/report-fixes", { recursive: true });
+  await download.saveAs(".cache/report-fixes/staiano-modello.skp");
   await expect(page.locator("[data-staiano-skp-export]")).toHaveCount(0);
   await expect(page.locator('.notifica-toast[data-tone="error"]')).toHaveCount(
     0,

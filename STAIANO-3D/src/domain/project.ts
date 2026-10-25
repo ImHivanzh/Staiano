@@ -32,6 +32,11 @@ import { ensureInstallations } from "./installations";
 import { roomCeilingHeightM } from "./air-conditioning/elevation";
 import { refreshDuctedBindings } from "./ducted/refresh";
 import { drywallGeometry } from "./geometry/drywall";
+import {
+  drywallSideForRoom,
+  drywallSides,
+  withDrywallSides,
+} from "./geometry/drywall-sides";
 import { clipToConvex } from "./geometry/pillars";
 
 export const newId = () => crypto.randomUUID();
@@ -177,12 +182,11 @@ export function recomputeProject(project: Project): Project {
     ),
   );
   p.rooms = p.rooms.map((room) => {
-    const liningPolygons = p.walls
-      .filter((w) => w.drywall?.roomId === room.id && w.drywall.offsetM > 0)
-      .flatMap((w) => {
-        const lining = drywallGeometry(p, w);
-        return lining ? [lining.polygon] : [];
-      });
+    const liningPolygons = p.walls.flatMap((w) => {
+      if ((drywallSideForRoom(w, room.id)?.offsetM ?? 0) <= 0) return [];
+      const lining = drywallGeometry(p, w, room.id);
+      return lining ? [lining.polygon] : [];
+    });
     const linings = liningPolygons.reduce(
       (sum, polygon) => sum + area(clipToConvex(room.polygon, polygon)),
       0,
@@ -275,12 +279,16 @@ export function recomputeProject(project: Project): Project {
       })
       .filter((item) => p.rooms.some((r) => r.id === item.roomId));
   p.radiators = reassociate(p.radiators);
-  p.walls = p.walls.map((w) =>
-    w.drywall &&
-    !p.rooms.some((r) => r.id === w.drywall!.roomId && r.wallIds.includes(w.id))
-      ? { ...w, drywall: undefined }
-      : w,
-  );
+  p.walls = p.walls.map((wall) => {
+    const sides = drywallSides(wall).filter((side) =>
+      p.rooms.some(
+        (room) => room.id === side.roomId && room.wallIds.includes(wall.id),
+      ),
+    );
+    return sides.length === drywallSides(wall).length
+      ? wall
+      : withDrywallSides(wall, sides);
+  });
   p.fanCoils = reassociate(p.fanCoils ?? []).map((unit) => {
     if (unit.locked || unit.mounting !== "wall") return unit;
     const product = fanCoilProductAtVersion(
@@ -298,8 +306,7 @@ export function recomputeProject(project: Project): Project {
     const span = roomWallSpan(room, wall);
     if (!span || span.lengthM + 1e-6 < unit.widthMm / 1000) return unit;
     const available =
-      wall.thickness +
-      (wall.drywall?.roomId === room.id ? (wall.drywall.offsetM ?? 0) : 0);
+      wall.thickness + (drywallSideForRoom(wall, room.id)?.offsetM ?? 0);
     if (available + 1e-6 < unit.depthMm / 1000 - 0.002) return unit;
     const along = Math.min(
       Math.max(

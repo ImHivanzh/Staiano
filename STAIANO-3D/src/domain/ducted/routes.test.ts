@@ -23,11 +23,13 @@ import {
   ductLength,
   moveDuctWaypoint,
   removeDuctWaypoint,
+  setDuctKind,
 } from "./routes";
 import { projectSchema } from "@/schemas/project";
 import { movePlacedDevice } from "../geometry/move-device";
-import { validateProject } from "../validation";
+import { validateProject, resolveCheckTarget } from "../validation";
 import { decodeProject, encodeProject } from "@/services/project/format";
+import { ductAirVelocityMs } from "./airflow";
 
 /** Bocchetta e macchina con i rispettivi plenum salvati, macchina posizionata in pianta. */
 function fixture(mounting: "wall" | "ceiling" = "ceiling") {
@@ -36,11 +38,56 @@ function fixture(mounting: "wall" | "ceiling" = "ceiling") {
     x: 3,
     y: 3,
   });
-  p = addGuidedTerminal(p, 2000, "EDLS", mounting);
+  p = addGuidedTerminal(
+    p,
+    2000,
+    mounting === "wall" ? "EDLH" : "EDLS",
+    mounting,
+  );
   p = insertPlenum(p, p.rooms[0].id, { x: 2, y: 2 });
   p = connectPlenum(p, p.plenums[0].id, p.airTerminals[0].id);
   return placeSupplyPlenum(p, p.hvacSystems[0].id);
 }
+
+it("removes an OEM flexible-tube choice when converting the duct to rigid", () => {
+  const p = fixture();
+  const duct = p.ducts![0];
+  p.ducts![0].flexibleProductId = "ecoclima-etf10";
+  const rigid = setDuctKind(p, duct.id, "rigid");
+  expect(rigid.ducts![0].flexibleProductId).toBeUndefined();
+  expect(setDuctKind(rigid, duct.id, "flexible").ducts![0].kind).toBe(
+    "flexible",
+  );
+});
+
+it("checks OEM air speed independently of loss-table coverage and never splits an unknown branch flow", () => {
+  const p = fixture();
+  const duct = p.ducts!.find(
+    (item) => item.terminalId === p.airTerminals[0].id,
+  )!;
+  duct.kind = "flexible";
+  duct.shape = "circle";
+  duct.diameterMm = 160;
+  duct.flexibleProductId = "ecoclima-etf10";
+  expect(resolveCheckTarget(p, duct.id)).toEqual({
+    floorId: p.plenums.find((item) => item.id === duct.plenumId)!.floorId,
+    selection: { kind: "device", id: duct.id },
+  });
+  const check = () =>
+    validateProject(p).find(
+      (item) => item.code === "ductAirVelocity" && item.entityId === duct.id,
+    );
+  p.airTerminals[0].requiredAirflowM3h = 2500;
+  expect(ductAirVelocityMs(p, duct)).toBeCloseTo(34.5388, 3);
+  expect(check()?.status).toBe("invalid");
+  p.airTerminals[0].requiredAirflowM3h = 1000;
+  expect(check()?.status).toBe("valid");
+  p.ducts!.push({ ...duct, id: "second-branch" });
+  expect(ductAirVelocityMs(p, duct)).toBeNull();
+  expect(check()?.status).toBe("warning");
+  duct.diameterMm = 100;
+  expect(check()).toBeUndefined();
+});
 
 it("measures flexible centreline arcs instead of the longer control polygon, and rejects impossible lengths", () => {
   const points = [
@@ -63,12 +110,59 @@ it("measures flexible centreline arcs instead of the longer control polygon, and
   ).toBeNull();
 });
 
+it("checks duct height against the local pitched roof, including after reload", () => {
+  const p = fixture();
+  const room = p.rooms[0];
+  room.ceilingHeightM = null;
+  room.roof = { ridgeWallId: room.wallIds[0], ridgeHeightM: 4 };
+  const duct = p.ducts![0];
+  duct.routing = "manual";
+  duct.waypoints = [{ ...room.centroid, elevationM: 3.5 }];
+  const envelopeWarning = (project: typeof p) =>
+    validateProject(project).find(
+      (check) => check.code === "ductEnvelope" && check.entityId === duct.id,
+    );
+  expect(ductRoute(p, duct).some((point) => point.elevationM === 3.5)).toBe(
+    true,
+  );
+  expect(envelopeWarning(p)).toBeUndefined();
+  expect(envelopeWarning(decodeProject(encodeProject(p)))).toBeUndefined();
+  duct.waypoints[0].elevationM = 4.1;
+  expect(envelopeWarning(p)?.status).toBe("warning");
+});
+
+it("does not describe the generic R=D rule as the selected OEM minimum", () => {
+  const p = fixture();
+  const duct = p.ducts![0];
+  duct.diameterMm = 160;
+  duct.flexibleProductId = "ecoclima-etf10";
+  duct.routing = "manual";
+  duct.waypoints = [
+    { ...p.rooms[0].centroid, elevationM: 2 },
+    { ...p.rooms[0].centroid, elevationM: 2.001 },
+  ];
+  const check = validateProject(p).find(
+    (item) => item.code === "ductBendRadius" && item.entityId === duct.id,
+  );
+  expect(check).toBeDefined();
+  expect(check!.message).toContain("raggio minimo di 96,00 mm");
+  expect(check!.message).not.toContain("raggio almeno pari al diametro");
+  duct.flexibleProductId = undefined;
+  expect(
+    validateProject(p).find(
+      (item) => item.code === "ductBendRadius" && item.entityId === duct.id,
+    )?.message,
+  ).toContain("raggio minimo di 160,00 mm");
+});
+
 it.each(
   [0, Math.PI / 2, Math.PI].flatMap((rotation) =>
-    (["rear", "upper", "lower", "left", "right"] as const).map((position) => ({
-      rotation,
-      position,
-    })),
+    (["rear", "front", "upper", "lower", "left", "right"] as const).map(
+      (position) => ({
+        rotation,
+        position,
+      }),
+    ),
   ),
 )(
   "manual flexible routes enter the visible $position collar from outside at rotation $rotation",
@@ -100,11 +194,17 @@ it.each(
                   0,
                   Math.sin(target.rotation),
                 )
-              : new Vector3(
-                  Math.sin(target.rotation),
-                  0,
-                  -Math.cos(target.rotation),
-                );
+              : side === "front"
+                ? new Vector3(
+                    -Math.sin(target.rotation),
+                    0,
+                    Math.cos(target.rotation),
+                  )
+                : new Vector3(
+                    Math.sin(target.rotation),
+                    0,
+                    -Math.cos(target.rotation),
+                  );
     for (const id of result.ductIds) {
       const duct = result.project.ducts!.find((d) => d.id === id)!;
       const path = flexibleDuctCurve(
@@ -160,7 +260,7 @@ it("uses a different side for each collar of the same plenum", () => {
   expect(Math.sign(tangents[0].x)).toBe(-Math.sign(tangents[1].x));
 });
 
-it.each(["upper", "lower", "left", "right", "rear"] as const)(
+it.each(["upper", "lower", "left", "right", "rear", "front"] as const)(
   "leaves a manually declared machine plenum through its %s collar",
   (connectionPosition) => {
     const p = fixture();
@@ -205,11 +305,17 @@ it.each(["upper", "lower", "left", "right", "rear"] as const)(
                   0,
                   Math.sin(source.rotation),
                 )
-              : new Vector3(
-                  Math.sin(source.rotation),
-                  0,
-                  -Math.cos(source.rotation),
-                );
+              : connectionPosition === "front"
+                ? new Vector3(
+                    -Math.sin(source.rotation),
+                    0,
+                    Math.cos(source.rotation),
+                  )
+                : new Vector3(
+                    Math.sin(source.rotation),
+                    0,
+                    -Math.cos(source.rotation),
+                  );
     expect(direction.dot(outward)).toBeGreaterThan(0.999);
   },
 );

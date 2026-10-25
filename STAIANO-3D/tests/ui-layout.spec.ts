@@ -5,7 +5,7 @@ test("archive opens before creating a project", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Progetti", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Progetti sul dispositivo" }),
+    page.getByRole("heading", { name: "Archivio progetti" }),
   ).toBeVisible();
   await expect(page.getByText("Nessun progetto salvato.")).toBeVisible();
   await expect(

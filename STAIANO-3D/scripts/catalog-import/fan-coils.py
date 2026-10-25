@@ -13,6 +13,7 @@ import re
 import sys
 import urllib.request
 from pypdf import PdfReader
+from fan_coil_olimpia_naked import bi2_naked_products
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "catalog-data/sources/fan-coils"
@@ -22,11 +23,28 @@ MANIFEST = json.loads((SOURCE / "manifest.json").read_text(encoding="utf8"))
 NOW = datetime.now(timezone.utc).isoformat()
 
 
+def source_file(name, manufacturer):
+    source = next(item for item in MANIFEST if item["name"] == name)
+    extension = ".pdf" if source["sourceType"] == "pdf" else ".html"
+    direct = SOURCE / (name + extension)
+    if direct.exists():
+        path = direct
+    else:
+        folder = re.sub(r"[^a-z0-9]+", "-", manufacturer.lower()).strip("-")
+        matches = list((ROOT / "catalog-data/sources" / folder).glob(
+            f"*{source['sha256'][:8]}{extension}"
+        ))
+        if len(matches) != 1:
+            raise FileNotFoundError(f"Cannot resolve archived source {name} ({source['sha256']})")
+        path = matches[0]
+    if hashlib.sha256(path.read_bytes()).hexdigest() != source["sha256"]:
+        raise ValueError(f"Source changed: review {name}")
+    return path
+
+
 def metadata(name, manufacturer, page=None):
     m = next(v for v in MANIFEST if v["name"] == name)
-    path = SOURCE / (name + (".pdf" if m["sourceType"] == "pdf" else ".html"))
-    if hashlib.sha256(path.read_bytes()).hexdigest() != m["sha256"]:
-        raise ValueError(f"Source changed: review {name}")
+    source_file(name, manufacturer)
     return {"manufacturer": manufacturer, **{k: m[k] for k in ("sourceUrl", "sourceType", "sha256", "retrievedAt")},
             "documentRevision": "AirLeaf comandi RS Rev.10" if name == "innova-m7" else
             "Catalogo gennaio 2026" if name == "olimpia-bi2" else
@@ -36,7 +54,9 @@ def metadata(name, manufacturer, page=None):
 
 
 def embedded_photo(name, source_name, page, image_name, caption):
-    image = next(i for i in PdfReader(SOURCE / f"{source_name}.pdf").pages[page - 1].images if i.name == image_name)
+    source = next(v for v in MANIFEST if v["name"] == source_name)
+    manufacturer = "Olimpia Splendid" if source_name == "olimpia-bi2" else "Aermec" if source_name.startswith("aermec") else "Innova"
+    image = next(i for i in PdfReader(source_file(source_name, manufacturer)).pages[page - 1].images if i.name == image_name)
     path = ASSETS / f"{name}.png"
     image.image.save(path)
     m = next(v for v in MANIFEST if v["name"] == source_name)
@@ -70,7 +90,7 @@ class ProductText(HTMLParser):
 
 def innova_products(name, prefix, photo):
     parser = ProductText()
-    parser.feed((SOURCE / f"{name}.html").read_text(encoding="utf8"))
+    parser.feed(source_file(name, "Innova").read_text(encoding="utf8"))
     text = re.sub(r"\s+", " ", " ".join(parser.parts))
     matches = list(re.finditer(rf"\b({prefix} (?:200|400|600|800|1000)(?: C)?(?: 4 tubi)?)\b(?= Resa totale)", text))
     if not matches:
@@ -112,11 +132,38 @@ else:
         "SLI": acquired_photo("innova-sli", "https://www.innova.it/site/assets/files/1374/panoramica_sli.640x0.jpg", "Innova AirLeaf SLI, immagine ufficiale della famiglia"),
     }
     products = []
+    airleaf = json.loads((ROOT / "catalog-data/curation/innova-airleaf-2026.json").read_text(encoding="utf8"))
+    airleaf_rows = airleaf["products"]
     for prefix, name in [("SL", "innova-sl-page"), ("SLS", "innova-sls-page"), ("SLI", "innova-sli-page")]:
         products.extend(innova_products(name, prefix, photos[prefix]))
 
+    for prefix, sizes, height in [("RSI", [200, 400, 600, 800, 1000], 576), ("SLSI", [200, 400, 600, 800, 1000], 376)]:
+        for size in sizes:
+            product_id = f"innova-airleaf-{prefix.lower()}-{size}-2t"
+            row = airleaf_rows[product_id]
+            products.append({
+                "id": product_id, "manufacturer": "Innova", "family": f"AirLeaf {prefix}",
+                "model": f"{prefix} {size}", "pipes": "2", "widthMm": row["widthMm"],
+                "heightMm": height, "depthMm": row["depthMm"], "recessDepthMm": 142,
+                "mountings": ["wall"],
+                "dimensionNote": f"Unità da incasso {row['widthMm']}×{height}×{row['depthMm']} mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+                "features": ["Installazione ad incasso", "Motore DC inverter", *( ["Pannello frontale radiante"] if prefix == "RSI" else ["Profilo ribassato"] )],
+                "productPhoto": None,
+                "operatingPoints": [{
+                    "label": "Massima · 0 Pa", "coolingW": row["coolingW"], "heatingW": row["heatingW"],
+                    "airflowM3h": row["airflowM3h"], "noiseDbA": row["noiseDbA"],
+                    "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+                    "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+                    "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora.",
+                }],
+                "sourceMetadata": {**airleaf["sourceMetadata"], "page": row["page"]},
+            })
+
     # Published tables have three distinct speeds, not one maximum reused for noise.
-    olimpia_pages = json.loads((SOURCE / "olimpia-bi2.pages.json").read_text(encoding="utf8"))
+    olympia_pages_path = SOURCE / "olimpia-bi2.pages.json"
+    if hashlib.sha256(olympia_pages_path.read_bytes()).hexdigest() != "37a8518bf5ff05a5f5b52492df8cc447a43033d08c20b8dd0338387d2d24ae41":
+        raise ValueError("Olimpia BI2 extracted pages changed; review before import.")
+    olimpia_pages = json.loads(olympia_pages_path.read_text(encoding="utf8"))
     olimpia_photo = embedded_photo("olimpia-bi2-air", "olimpia-bi2", 12, "Im0.jpg", "Olimpia Splendid Bi2 Air, immagine ufficiale della famiglia")
     for family, page_number, width_start, codes in [("Bi2 Air", 12, 695, ["01851", "01852", "01853", "01854"]),
                                                   ("Bi2 Smart S1", 20, 759, ["02122", "02123", "02124", "02125"])]:
@@ -146,6 +193,13 @@ else:
                                  "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
                                  "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, 1/4 sfera, distanza 3 m."} for j,label in enumerate(["Bassa", "Media", "Alta"])],
                              "sourceMetadata": metadata("olimpia-bi2", "Olimpia Splendid", page_number)})
+
+    products.extend(
+        bi2_naked_products(
+            olimpia_pages,
+            lambda page: metadata("olimpia-bi2", "Olimpia Splendid", page),
+        )
+    )
 
     aermec = json.loads((SOURCE / "aermec-fcz.pages.json").read_text(encoding="utf8"))[13]
     aermec_photo = embedded_photo("aermec-fcz", "aermec-fcz", 1, "Im0.jp2", "Aermec FCZ, versioni a vista nella scheda ufficiale")
@@ -249,7 +303,6 @@ else:
                          "productPhoto": m7_photo, "sourceMetadata": metadata("innova-m7", "Innova",6)})
 
 # Supplement only the matching maximum-speed point; no capacities exist for lower speeds.
-airleaf = json.loads((ROOT / "catalog-data/curation/innova-airleaf-2026.json").read_text(encoding="utf8"))
 airleaf_source = airleaf["sourceMetadata"]
 airleaf_pdf = SOURCE / "innova-airleaf-2026.pdf"
 if hashlib.sha256(airleaf_pdf.read_bytes()).hexdigest() != airleaf_source["sha256"]:
@@ -295,6 +348,6 @@ history = dest.with_name("fan-coils-history.json")
 old = json.loads(dest.read_text(encoding="utf8")) if dest.exists() else None
 versions = json.loads(history.read_text(encoding="utf8")) if history.exists() else {}
 if old and old["version"] != version: versions[old["version"]] = old
-history.write_text(json.dumps(versions, indent=2, ensure_ascii=False) + "\n", encoding="utf8")
+history.write_text(json.dumps(versions, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf8")
 dest.write_text(json.dumps({"version": version, **data}, indent=2, ensure_ascii=False) + "\n", encoding="utf8")
 print(json.dumps({"version": version, "products": len(products), "controls": len(controls)}))

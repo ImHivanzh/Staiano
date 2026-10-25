@@ -20,6 +20,7 @@ import { FanCoilProperties } from "./FanCoilProperties";
 import { HydronicProperties } from "./HydronicProperties";
 import { AirOutdoorProperties } from "./AirOutdoorProperties";
 import { configurationBlock } from "@/domain/ducted/plan-connections";
+import { DuctPanel } from "../systems/DuctPanel";
 export function DeviceProperties({
   project,
   id,
@@ -30,6 +31,15 @@ export function DeviceProperties({
   const device = project.radiators.find((r) => r.id === id),
     { commit } = useProjectStore();
   const blocked = configurationBlock(project, id);
+  const duct = project.ducts?.find((item) => item.id === id);
+  if (duct)
+    return (
+      <DuctPanel
+        project={project}
+        systemId={duct.systemId}
+        selectedDuctId={duct.id}
+      />
+    );
   if (blocked)
     return (
       <p role="status" className="nota">
@@ -82,6 +92,13 @@ export function DeviceProperties({
       <p className="nota">
         Ingombro {device.widthMm} × {device.heightMm} × {device.depthMm} mm
       </p>
+      {product?.geometryAccuracy === "schematic" && (
+        <p className="nota" data-testid="radiator-geometry-note">
+          Geometria 3D schematica:{" "}
+          {product.geometryNote ??
+            "forma e dettagli visivi non rappresentano un disegno costruttivo."}
+        </p>
+      )}
       <RadiatorFinishes device={device} />
       <details className="azione-inspector">
         <summary>

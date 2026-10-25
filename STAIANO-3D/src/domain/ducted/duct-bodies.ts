@@ -5,7 +5,7 @@ import {
   type DeviceEnvelope,
 } from "../geometry/device-envelope";
 import { footprintCorners } from "../geometry/footprint";
-import { drywallGeometry } from "../geometry/drywall";
+import { drywallGeometries } from "../geometry/drywall";
 import { projectOutdoorUnits } from "../hydronic/placement";
 import {
   architecturalWallHeight,
@@ -192,8 +192,8 @@ export function bodies(
     }
   };
   for (const wall of project.walls.filter((w) => floors.has(w.floorId))) {
-    const cavity = drywallGeometry(project, wall);
-    if (!cavity) {
+    const cavities = drywallGeometries(project, wall);
+    if (!cavities.length) {
       wallBody(wall);
       continue;
     }
@@ -201,49 +201,55 @@ export function bodies(
     const dx = wall.end.x - wall.start.x,
       dy = wall.end.y - wall.start.y,
       length = Math.hypot(dx, dy);
-    for (const [face, thickness] of [
-      [cavity.front, 0.0125],
-      [cavity.back, wall.thickness],
-    ] as const) {
-      const forward =
-        (face.end.x - face.start.x) * dx + (face.end.y - face.start.y) * dy >=
-        0;
-      const start = forward ? face.start : face.end,
-        end = forward ? face.end : face.start;
-      const copy = {
-        ...wall,
-        thickness,
-        start: {
-          x: start.x - (cavity.normal.x * thickness) / 2,
-          y: start.y - (cavity.normal.y * thickness) / 2,
-        },
-        end: {
-          x: end.x - (cavity.normal.x * thickness) / 2,
-          y: end.y - (cavity.normal.y * thickness) / 2,
-        },
-      };
-      const shift =
-        ((copy.start.x - wall.start.x) * dx +
-          (copy.start.y - wall.start.y) * dy) /
-        length;
-      wallBody(
-        copy,
-        project.openings.map((o) =>
-          o.wallId === wall.id ? { ...o, offsetM: o.offsetM - shift } : o,
-        ),
-      );
-    }
-    for (const end of ["start", "end"] as const)
-      if (!cavity[end === "start" ? "joinedStart" : "joinedEnd"])
-        wallBody(
-          {
-            ...wall,
-            thickness: 0.0125,
-            start: cavity.back[end],
-            end: cavity.front[end],
+    for (const [index, cavity] of cavities.entries()) {
+      const faces =
+        index === 0
+          ? ([
+              [cavity.front, 0.0125],
+              [cavity.back, wall.thickness],
+            ] as const)
+          : ([[cavity.front, 0.0125]] as const);
+      for (const [face, thickness] of faces) {
+        const forward =
+          (face.end.x - face.start.x) * dx + (face.end.y - face.start.y) * dy >=
+          0;
+        const start = forward ? face.start : face.end,
+          end = forward ? face.end : face.start;
+        const copy = {
+          ...wall,
+          thickness,
+          start: {
+            x: start.x - (cavity.normal.x * thickness) / 2,
+            y: start.y - (cavity.normal.y * thickness) / 2,
           },
-          [],
+          end: {
+            x: end.x - (cavity.normal.x * thickness) / 2,
+            y: end.y - (cavity.normal.y * thickness) / 2,
+          },
+        };
+        const shift =
+          ((copy.start.x - wall.start.x) * dx +
+            (copy.start.y - wall.start.y) * dy) /
+          length;
+        wallBody(
+          copy,
+          project.openings.map((o) =>
+            o.wallId === wall.id ? { ...o, offsetM: o.offsetM - shift } : o,
+          ),
         );
+      }
+      for (const end of ["start", "end"] as const)
+        if (!cavity[end === "start" ? "joinedStart" : "joinedEnd"])
+          wallBody(
+            {
+              ...wall,
+              thickness: 0.0125,
+              start: cavity.back[end],
+              end: cavity.front[end],
+            },
+            [],
+          );
+    }
   }
   return result;
 }
@@ -292,54 +298,4 @@ export function segmentBodyDistance(a: Vector3, b: Vector3, body: Body) {
   return best;
 }
 
-export function segmentDistance(
-  a: Vector3,
-  b: Vector3,
-  c: Vector3,
-  d: Vector3,
-) {
-  const u = b.clone().sub(a),
-    v = d.clone().sub(c),
-    w = a.clone().sub(c);
-  const uu = u.lengthSq(),
-    vv = v.lengthSq(),
-    uv = u.dot(v),
-    uw = u.dot(w),
-    vw = v.dot(w),
-    det = uu * vv - uv * uv;
-  const pointDistance = (
-    p: Vector3,
-    q: Vector3,
-    direction: Vector3,
-    length: number,
-  ) =>
-    p.distanceToSquared(
-      q
-        .clone()
-        .addScaledVector(
-          direction,
-          length
-            ? Math.max(0, Math.min(1, p.clone().sub(q).dot(direction) / length))
-            : 0,
-        ),
-    );
-  let best = Math.min(
-    pointDistance(a, c, v, vv),
-    pointDistance(b, c, v, vv),
-    pointDistance(c, a, u, uu),
-    pointDistance(d, a, u, uu),
-  );
-  if (det > 1e-12) {
-    const s = (uv * vw - vv * uw) / det,
-      t = (uu * vw - uv * uw) / det;
-    if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
-      best = Math.min(
-        best,
-        a
-          .clone()
-          .addScaledVector(u, s)
-          .distanceToSquared(c.clone().addScaledVector(v, t)),
-      );
-  }
-  return best;
-}
+export { segmentDistance } from "../geometry/segment-distance";

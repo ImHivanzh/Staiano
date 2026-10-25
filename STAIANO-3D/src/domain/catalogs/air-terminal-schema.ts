@@ -59,14 +59,27 @@ export const airTerminalFamilySchema = z.object({
   mountingType: z.string(),
   use: z.array(z.enum(["supply", "return", "transfer"])).min(1),
   isLinearPerMeter: z.boolean(),
+  linearFaceLengthOffsetMm: z.number().nonnegative().optional(),
   image: z.string().nullable(),
   operatingConditions: z.string(),
   variants: z.array(airTerminalVariantSchema).min(1),
   sourceMetadata: sourceMetadataSchema,
+  supportingSources: z
+    .array(z.object({ sourceMetadata: sourceMetadataSchema }))
+    .optional(),
   mountings: z.array(z.enum(["wall", "ceiling"])).optional(),
   shape: z.enum(["rectangle", "circle"]).optional(),
   geometryNote: z.string().optional(),
   modelCodes: z.array(z.string().min(1)).optional(),
+  modelCodeFaceOffsetsMm: z
+    .record(
+      z.string().min(1),
+      z.object({
+        widthMm: z.number().finite(),
+        heightMm: z.number().finite(),
+      }),
+    )
+    .optional(),
   finishes: z.array(z.string().min(1)).optional(),
   frameOptions: z.array(z.string().min(1)).optional(),
   closureOptions: z.array(z.string().min(1)).optional(),
@@ -85,7 +98,12 @@ export const airTerminalCatalogSchema = z
       ctx.addIssue({ code: "custom", message: "Varianti terminali duplicate" });
     if (new Set(c.families.map((f) => f.familyCode)).size !== c.families.length)
       ctx.addIssue({ code: "custom", message: "Famiglie terminali duplicate" });
-    for (const f of c.families)
+    for (const f of c.families) {
+      if (f.linearFaceLengthOffsetMm !== undefined && !f.isLinearPerMeter)
+        ctx.addIssue({
+          code: "custom",
+          message: "Lo sbordo del fronte è valido solo per terminali lineari.",
+        });
       for (const v of f.variants)
         if (
           f.isLinearPerMeter &&
@@ -96,6 +114,7 @@ export const airTerminalCatalogSchema = z
             code: "custom",
             message: "Dati lineari per metro mancanti",
           });
+    }
   });
 export type OperatingPoint = z.infer<typeof operatingPointSchema>;
 export type AirTerminalVariant = z.infer<typeof airTerminalVariantSchema>;

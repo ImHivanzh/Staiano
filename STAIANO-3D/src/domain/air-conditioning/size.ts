@@ -69,6 +69,22 @@ export function usableSplitWall(
       .sort((a, b) => b.span.lengthM - a.span.lengthM)[0] ?? null
   );
 }
+export function usableSplitPlacement(project: Project, room: Room, unit: SplitIndoor) {
+  if (unit.mounting === "wall") return usableSplitWall(project, room, unit);
+  const candidate = { position: room.centroid, rotation: 0 };
+  return (
+    indoorUnitFitsBelowCeiling(project, room, { ...unit, ...candidate }) &&
+    footprintInsideRoom(
+      room,
+      candidate.position,
+      unit.widthMm / 1000,
+      unit.depthMm / 1000,
+      0,
+    )
+  )
+    ? { ...candidate, wall: null, span: null }
+    : null;
+}
 /** Uses exact approved combinations and simultaneous capacity published for every indoor unit. */
 export function sizeSplitSystems(
   project: Project,
@@ -102,7 +118,7 @@ export function sizeSplitSystems(
           .filter(
             (unit) =>
               unit.manufacturer === manufacturer &&
-              usableSplitWall(project, room, unit),
+              usableSplitPlacement(project, room, unit),
           )
           .map((unit) => unit.id),
       ),

@@ -324,7 +324,11 @@ export function GraphicalDuctedConfigurator({
     const route = ductRoute(project, duct);
     const curve =
       duct.kind === "flexible"
-        ? flexibleDuctCurve(route, duct.diameterMm ?? 160)?.curve
+        ? flexibleDuctCurve(
+            route,
+            duct.diameterMm ?? 160,
+            duct.flexibleProductId,
+          )?.curve
         : null;
     const points =
       duct.kind === "flexible"

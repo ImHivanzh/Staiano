@@ -131,7 +131,11 @@ test("unconditioned room remains explicit after reopening and PDF preview downlo
   page,
 }, info) => {
   await page.setViewportSize({ width: 1440, height: 950 });
-  await start(page);
+  await page.goto("/");
+  await page
+    .getByRole("spinbutton", { name: "Coefficiente termico (W/m³)" })
+    .fill("35");
+  await page.getByRole("button", { name: "Disegna manualmente" }).click();
   await page
     .getByRole("dialog")
     .getByRole("spinbutton", { name: "Altezza (m)", exact: true })

@@ -17,7 +17,10 @@ import {
   radiatorDetail,
   type DetailPart,
 } from "./device-detail";
-import { terminalBodyDepthMm } from "@/domain/air-terminals/geometry";
+import {
+  airTerminalFaceWidthMm,
+  terminalBodyDepthMm,
+} from "@/domain/air-terminals/geometry";
 import { resolveRadiatorFinish } from "@/domain/catalogs/radiator-finishes";
 import { RadiatorHardware } from "./RadiatorHardware";
 import { Parts } from "./Parts";
@@ -267,6 +270,7 @@ function SplitMesh({
     item.productId,
     item.catalogVersion,
   )?.family;
+  const roundCassette = splitIndoorAtVersion(item.productId, item.catalogVersion)?.shape === "round";
   const emura = family === "Emura";
   const flat = family === "Stylish" || family === "MSZ-EF";
   // Missing OEM mesh: documentary family cues within the saved metric envelope.
@@ -313,6 +317,13 @@ function SplitMesh({
   );
   return (
     <>
+      {roundCassette ? (
+        <>
+          <mesh geometry={cylinder} material={plastic} scale={[w / 2, h, w / 2]} castShadow receiveShadow />
+          <mesh geometry={cylinder} material={recess} position={[0, -h * 0.49, 0]} scale={[w * 0.38, 0.006, w * 0.38]} />
+          {selected && <SelectionOutline dimensions={[w, h, w]} />}
+        </>
+      ) : <>
       <mesh
         geometry={body}
         material={plastic}
@@ -362,6 +373,7 @@ function SplitMesh({
         position={[0, h * 0.06, d / 2 + 0.0004]}
       />
       {selected && <SelectionOutline dimensions={[w, h, d]} />}
+      </>}
     </>
   );
 }
@@ -393,7 +405,7 @@ function TerminalMesh({
   item: Project["airTerminals"][number];
   selected: boolean;
 }) {
-  const w = item.widthMm / 1000,
+  const w = airTerminalFaceWidthMm(item) / 1000,
     h = item.heightMm / 1000;
   const family = airTerminalFamilyAtVersion(item.family, item.catalogVersion);
   const variant = family?.variants.find((v) => v.id === item.productId);
@@ -573,6 +585,8 @@ export function DeviceMeshes({
       {project.radiators.filter(visible).map((item) => (
         <group
           key={item.id}
+          name={`Radiatore ${item.family}`}
+          userData={{ sketchupGroup: true }}
           position={[
             item.position.x,
             0.1 + item.heightMm / 2000,
@@ -592,6 +606,8 @@ export function DeviceMeshes({
             return room ? (
               <group
                 key={item.id}
+                name={`Unità interna ${item.productId}`}
+                userData={{ sketchupGroup: true }}
                 position={[
                   item.position.x,
                   splitCenterElevationM(room, item, project),
@@ -690,6 +706,8 @@ export function DeviceMeshes({
         .map((item) => (
           <group
             key={item.id}
+            name={`Bocchetta ${item.family}`}
+            userData={{ sketchupGroup: true }}
             position={[
               item.position.x,
               item.elevationM! +

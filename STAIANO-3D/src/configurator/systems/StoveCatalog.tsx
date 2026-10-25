@@ -8,7 +8,9 @@ import {
 } from "@/domain/catalogs/stoves";
 import styles from "./StoveCatalog.module.css";
 
-const formatPower = (value: { minW: number; maxW: number } | null | undefined) =>
+const formatPower = (
+  value: { minW: number; maxW: number } | null | undefined,
+) =>
   value
     ? value.minW === value.maxW
       ? `${(value.minW / 1000).toLocaleString("it-IT")} kW`
@@ -23,7 +25,10 @@ export function StoveCatalog() {
   const [query, setQuery] = useState("");
   const technical = product?.technical ?? null;
   const officialSources = technical
-    ? [technical.sourceMetadata, ...technical.supportingSources.map((item) => item.sourceMetadata)]
+    ? [
+        technical.sourceMetadata,
+        ...technical.supportingSources.map((item) => item.sourceMetadata),
+      ]
     : [];
   const products = stoveCatalog.products.filter((item) => item.brand === brand);
   const technologies = [
@@ -181,7 +186,11 @@ export function StoveCatalog() {
                   />
                 )}
                 <strong>{item.name}</strong>
-                <span>{formatPower(item.technical?.nominalPowerW) ?? item.power ?? "Potenza nella scheda ufficiale"}</span>
+                <span>
+                  {formatPower(item.technical?.nominalPowerW) ??
+                    item.power ??
+                    "Potenza nella scheda ufficiale"}
+                </span>
               </button>
             ))}
           </div>
@@ -206,22 +215,33 @@ export function StoveCatalog() {
               {product.brand} · {product.fuel} · {product.technology}
             </p>
             <p>
-              <strong>{formatPower(technical?.nominalPowerW) ?? product.power}</strong>
+              <strong>
+                {formatPower(technical?.nominalPowerW) ?? product.power}
+              </strong>
             </p>
             {technical && (
               <section aria-label="Dati tecnici verificati">
                 <h5>Dati tecnici verificati</h5>
                 <dl className={styles.technical}>
+                  {formatPower(technical.nominalPowerW) && (
+                    <div>
+                      <dt>Potenza nominale</dt>
+                      <dd>{formatPower(technical.nominalPowerW)}</dd>
+                    </div>
+                  )}
                   {technical.dimensionsMm && (
                     <div>
                       <dt>Ingombro nominale (L × H × P)</dt>
-                      <dd>{[
-                        technical.dimensionsMm.widthMm,
-                        technical.dimensionsMm.heightMm,
-                        technical.dimensionsMm.depthMm,
-                      ]
-                        .map((value) => value.toLocaleString("it-IT"))
-                        .join(" × ")} mm</dd>
+                      <dd>
+                        {[
+                          technical.dimensionsMm.widthMm,
+                          technical.dimensionsMm.heightMm,
+                          technical.dimensionsMm.depthMm,
+                        ]
+                          .map((value) => value.toLocaleString("it-IT"))
+                          .join(" × ")}{" "}
+                        mm
+                      </dd>
                     </div>
                   )}
                   {technical.weightKg != null && (
@@ -239,24 +259,47 @@ export function StoveCatalog() {
                   {technical.partLoadPowerW != null && (
                     <div>
                       <dt>Potenza a carico parziale</dt>
-                      <dd>{technical.partLoadPowerW.toLocaleString("it-IT")} W</dd>
+                      <dd>
+                        {technical.partLoadPowerW.toLocaleString("it-IT")} W
+                      </dd>
                     </div>
                   )}
                   {technical.flueDiameterMm != null && (
                     <div>
                       <dt>Diametro scarico fumi</dt>
-                      <dd>Ø {technical.flueDiameterMm.toLocaleString("it-IT")} mm</dd>
+                      <dd>
+                        Ø {technical.flueDiameterMm.toLocaleString("it-IT")} mm
+                      </dd>
                     </div>
                   )}
                 </dl>
-                {technical.articleCode && <p className="nota">Articolo {technical.articleCode} · Revisione {technical.sourceMetadata.documentRevision}</p>}
+                {technical.articleCode && (
+                  <p className="nota">
+                    Articolo {technical.articleCode} · Revisione{" "}
+                    {technical.sourceMetadata.documentRevision}
+                  </p>
+                )}
                 <details className={styles.sources}>
-                  <summary>Fonti del produttore · {officialSources.length}</summary>
+                  <summary>
+                    Fonti del produttore · {officialSources.length}
+                  </summary>
                   <ul>
                     {officialSources.map((source) => (
                       <li key={source.sha256}>
-                        <a href={source.sourceType === "pdf" && source.page ? `${source.sourceUrl}#page=${source.page}` : source.sourceUrl} target="_blank" rel="noreferrer">
-                          {source.sourceType === "pdf" ? `Scheda tecnica PDF · pagina ${source.page}` : source.sourceType === "json" ? "Dati del prodotto dal produttore (JSON)" : "Pagina ufficiale del modello"}
+                        <a
+                          href={
+                            source.sourceType === "pdf" && source.page
+                              ? `${source.sourceUrl}#page=${source.page}`
+                              : source.sourceUrl
+                          }
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {source.sourceType === "pdf"
+                            ? `Scheda tecnica PDF · pagina ${source.page}`
+                            : source.sourceType === "json"
+                              ? "Dati del prodotto dal produttore (JSON)"
+                              : "Pagina ufficiale del modello"}
                         </a>
                       </li>
                     ))}

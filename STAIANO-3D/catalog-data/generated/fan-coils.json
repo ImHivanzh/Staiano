@@ -1,5 +1,5 @@
 {
-  "version": "fan-coils-743c6dffcc1581be",
+  "version": "fan-coils-f2d8b9148e421ecb",
   "products": [
     {
       "id": "innova-airleaf-sl-200-2t",
@@ -1477,6 +1477,436 @@
       }
     },
     {
+      "id": "innova-airleaf-rsi-200-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf RSI",
+      "model": "RSI 200",
+      "pipes": "2",
+      "widthMm": 525.0,
+      "heightMm": 576,
+      "depthMm": 126.0,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 525.0×576×126.0 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Pannello frontale radiante"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 910.0,
+          "heatingW": 1020.0,
+          "airflowM3h": 146.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-rsi-400-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf RSI",
+      "model": "RSI 400",
+      "pipes": "2",
+      "widthMm": 725.0,
+      "heightMm": 576,
+      "depthMm": 126.0,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 725.0×576×126.0 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Pannello frontale radiante"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 2120.0,
+          "heatingW": 2210.0,
+          "airflowM3h": 294.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-rsi-600-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf RSI",
+      "model": "RSI 600",
+      "pipes": "2",
+      "widthMm": 925.0,
+      "heightMm": 576,
+      "depthMm": 126.0,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 925.0×576×126.0 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Pannello frontale radiante"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 2810.0,
+          "heatingW": 3020.0,
+          "airflowM3h": 438.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-rsi-800-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf RSI",
+      "model": "RSI 800",
+      "pipes": "2",
+      "widthMm": 1125.0,
+      "heightMm": 576,
+      "depthMm": 126.0,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 1125.0×576×126.0 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Pannello frontale radiante"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 3300.0,
+          "heatingW": 3810.0,
+          "airflowM3h": 567.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-rsi-1000-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf RSI",
+      "model": "RSI 1000",
+      "pipes": "2",
+      "widthMm": 1325.0,
+      "heightMm": 576,
+      "depthMm": 126.0,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 1325.0×576×126.0 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Pannello frontale radiante"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 3710.0,
+          "heatingW": 4320.0,
+          "airflowM3h": 663.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-slsi-200-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf SLSI",
+      "model": "SLSI 200",
+      "pipes": "2",
+      "widthMm": 525,
+      "heightMm": 376,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 525×376×126 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Profilo ribassato"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 510,
+          "heatingW": 610,
+          "airflowM3h": 113,
+          "noiseDbA": 39,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-slsi-400-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf SLSI",
+      "model": "SLSI 400",
+      "pipes": "2",
+      "widthMm": 725,
+      "heightMm": 376,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 725×376×126 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Profilo ribassato"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 1210,
+          "heatingW": 1510,
+          "airflowM3h": 228,
+          "noiseDbA": 40,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-slsi-600-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf SLSI",
+      "model": "SLSI 600",
+      "pipes": "2",
+      "widthMm": 925,
+      "heightMm": 376,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 925×376×126 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Profilo ribassato"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 1620,
+          "heatingW": 2030,
+          "airflowM3h": 331,
+          "noiseDbA": 41,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-slsi-800-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf SLSI",
+      "model": "SLSI 800",
+      "pipes": "2",
+      "widthMm": 1125,
+      "heightMm": 376,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 1125×376×126 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Profilo ribassato"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 2120,
+          "heatingW": 2620,
+          "airflowM3h": 440,
+          "noiseDbA": 42,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
+      "id": "innova-airleaf-slsi-1000-2t",
+      "manufacturer": "Innova",
+      "family": "AirLeaf SLSI",
+      "model": "SLSI 1000",
+      "pipes": "2",
+      "widthMm": 1325,
+      "heightMm": 376,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Unità da incasso 1325×376×126 mm; posa a parete con cassaforma da verificare per finitura e ingombro.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC inverter",
+        "Profilo ribassato"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima · 0 Pa",
+          "coolingW": 2600,
+          "heatingW": 3110,
+          "airflowM3h": 489,
+          "noiseDbA": 43,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.; velocità massima, prevalenza utile 0 Pa (EN 1397).",
+          "noiseConditions": "Pressione sonora alla massima portata; distanza 1 m, ISO 7779. Non è potenza sonora."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://rep.innova.it/downloads/cataloghi/INNOVA_CATALOGO%20AIRLEAF_2026_260515170522.pdf",
+        "sourceType": "pdf",
+        "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",
+        "retrievedAt": "2026-10-23T08:17:26.246272+00:00",
+        "documentRevision": "Catalogo AirLeaf 2026, file 260515170522",
+        "importedAt": "2026-10-23T08:17:26.246272+00:00",
+        "page": 42
+      }
+    },
+    {
       "id": "olimpia-01851",
       "manufacturer": "Olimpia Splendid",
       "family": "Bi2 Air",
@@ -2026,6 +2456,895 @@
         "documentRevision": "Catalogo gennaio 2026",
         "importedAt": "2026-10-07T09:09:36.905836+00:00",
         "page": 20
+      }
+    },
+    {
+      "id": "olimpia-01513",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 200",
+      "pipes": "2",
+      "widthMm": 525,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 525×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 380.0,
+          "heatingW": 540.0,
+          "airflowM3h": 100.0,
+          "noiseDbA": 29.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 710.0,
+          "heatingW": 700.0,
+          "airflowM3h": 130.0,
+          "noiseDbA": 36.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 820.0,
+          "heatingW": 880.0,
+          "airflowM3h": 160.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01514",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 400",
+      "pipes": "2",
+      "widthMm": 725,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 725×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 910.0,
+          "heatingW": 1060.0,
+          "airflowM3h": 190.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 1340.0,
+          "heatingW": 1390.0,
+          "airflowM3h": 250.0,
+          "noiseDbA": 37.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1740.0,
+          "heatingW": 1940.0,
+          "airflowM3h": 320.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01515",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 600",
+      "pipes": "2",
+      "widthMm": 925,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 925×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1500.0,
+          "heatingW": 1460.0,
+          "airflowM3h": 280.0,
+          "noiseDbA": 32.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2100.0,
+          "heatingW": 2140.0,
+          "airflowM3h": 360.0,
+          "noiseDbA": 38.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 2540.0,
+          "heatingW": 2600.0,
+          "airflowM3h": 460.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01516",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 800",
+      "pipes": "2",
+      "widthMm": 1125,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 1125×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1980.0,
+          "heatingW": 1850.0,
+          "airflowM3h": 350.0,
+          "noiseDbA": 33.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2690.0,
+          "heatingW": 2600.0,
+          "airflowM3h": 450.0,
+          "noiseDbA": 39.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3290.0,
+          "heatingW": 3440.0,
+          "airflowM3h": 575.0,
+          "noiseDbA": 45.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01639",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 200",
+      "pipes": "2",
+      "widthMm": 525,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 525×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 380.0,
+          "heatingW": 540.0,
+          "airflowM3h": 100.0,
+          "noiseDbA": 29.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 710.0,
+          "heatingW": 700.0,
+          "airflowM3h": 130.0,
+          "noiseDbA": 36.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 820.0,
+          "heatingW": 880.0,
+          "airflowM3h": 160.0,
+          "noiseDbA": 43.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01640",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 400",
+      "pipes": "2",
+      "widthMm": 725,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 725×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 910.0,
+          "heatingW": 1060.0,
+          "airflowM3h": 190.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 1340.0,
+          "heatingW": 1390.0,
+          "airflowM3h": 250.0,
+          "noiseDbA": 37.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 1740.0,
+          "heatingW": 1940.0,
+          "airflowM3h": 320.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01641",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 600",
+      "pipes": "2",
+      "widthMm": 925,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 925×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1500.0,
+          "heatingW": 1460.0,
+          "airflowM3h": 280.0,
+          "noiseDbA": 32.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2100.0,
+          "heatingW": 2140.0,
+          "airflowM3h": 360.0,
+          "noiseDbA": 38.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 2540.0,
+          "heatingW": 2600.0,
+          "airflowM3h": 460.0,
+          "noiseDbA": 44.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-01642",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 800",
+      "pipes": "2",
+      "widthMm": 1125,
+      "heightMm": 576,
+      "depthMm": 126,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 1125×576×126 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 1980.0,
+          "heatingW": 1850.0,
+          "airflowM3h": 350.0,
+          "noiseDbA": 33.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 2690.0,
+          "heatingW": 2600.0,
+          "airflowM3h": 450.0,
+          "noiseDbA": 39.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3290.0,
+          "heatingW": 3440.0,
+          "airflowM3h": 575.0,
+          "noiseDbA": 45.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 22
+      }
+    },
+    {
+      "id": "olimpia-02363",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 1100",
+      "pipes": "2",
+      "widthMm": 1110,
+      "heightMm": 599,
+      "depthMm": 198,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 1110×599×198 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2430.0,
+          "heatingW": 2600.0,
+          "airflowM3h": 460.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3240.0,
+          "heatingW": 3400.0,
+          "airflowM3h": 610.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3850.0,
+          "heatingW": 4110.0,
+          "airflowM3h": 765.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 24
+      }
+    },
+    {
+      "id": "olimpia-02056",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 1400",
+      "pipes": "2",
+      "widthMm": 1110,
+      "heightMm": 599,
+      "depthMm": 198,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 1110×599×198 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3050.0,
+          "heatingW": 3070.0,
+          "airflowM3h": 460.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3780.0,
+          "heatingW": 3870.0,
+          "airflowM3h": 610.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4450.0,
+          "heatingW": 4700.0,
+          "airflowM3h": 765.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 24
+      }
+    },
+    {
+      "id": "olimpia-02057",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLI",
+      "model": "SLI 1600",
+      "pipes": "2",
+      "widthMm": 1180,
+      "heightMm": 599,
+      "depthMm": 198,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall",
+        "ceiling"
+      ],
+      "dimensionNote": "Corpo 1180×599×198 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3280.0,
+          "heatingW": 3280.0,
+          "airflowM3h": 490.0,
+          "noiseDbA": 31.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 4090.0,
+          "heatingW": 4160.0,
+          "airflowM3h": 655.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4850.0,
+          "heatingW": 5050.0,
+          "airflowM3h": 820.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 24
+      }
+    },
+    {
+      "id": "olimpia-02364",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 1100",
+      "pipes": "2",
+      "widthMm": 1110,
+      "heightMm": 599,
+      "depthMm": 198,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 1110×599×198 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 2430.0,
+          "heatingW": 2600.0,
+          "airflowM3h": 460.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3240.0,
+          "heatingW": 3400.0,
+          "airflowM3h": 610.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 3850.0,
+          "heatingW": 4110.0,
+          "airflowM3h": 765.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 24
+      }
+    },
+    {
+      "id": "olimpia-02071",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 1400",
+      "pipes": "2",
+      "widthMm": 1110,
+      "heightMm": 599,
+      "depthMm": 198,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 1110×599×198 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3050.0,
+          "heatingW": 3070.0,
+          "airflowM3h": 460.0,
+          "noiseDbA": 30.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 3780.0,
+          "heatingW": 3870.0,
+          "airflowM3h": 610.0,
+          "noiseDbA": 41.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4450.0,
+          "heatingW": 4700.0,
+          "airflowM3h": 765.0,
+          "noiseDbA": 46.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 24
+      }
+    },
+    {
+      "id": "olimpia-02072",
+      "manufacturer": "Olimpia Splendid",
+      "family": "Bi2 Naked SLIR",
+      "model": "SLIR 1600",
+      "pipes": "2",
+      "widthMm": 1180,
+      "heightMm": 599,
+      "depthMm": 198,
+      "recessDepthMm": 142,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Corpo 1180×599×198 mm; cassaforma 142 mm per incasso a parete con pannello metallico SLI o radiante SLIR. Con griglie verificare plenum e spazio tecnico della posa.",
+      "features": [
+        "Installazione ad incasso",
+        "Motore DC brushless",
+        "Bi2 Naked"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Bassa",
+          "coolingW": 3280.0,
+          "heatingW": 3280.0,
+          "airflowM3h": 490.0,
+          "noiseDbA": 31.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Media",
+          "coolingW": 4090.0,
+          "heatingW": 4160.0,
+          "airflowM3h": 655.0,
+          "noiseDbA": 42.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        },
+        {
+          "label": "Alta",
+          "coolingW": 4850.0,
+          "heatingW": 5050.0,
+          "airflowM3h": 820.0,
+          "noiseDbA": 47.0,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C b.s. / 19 °C b.u.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C b.s. / 15 °C b.u.",
+          "noiseConditions": "Pressione sonora: ambiente 100 m³, riverbero 0,5 s, installazione a pavimento/soffitto, 1/4 sfera a 3 m."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Olimpia Splendid",
+        "sourceUrl": "https://www.olimpiasplendid.it/Downloadfile/IT_Bi2",
+        "sourceType": "pdf",
+        "sha256": "a6376706f895e9beaf9e5f0a5b955abb8ae9142944af8f5b49cc5455b412ffb0",
+        "retrievedAt": "2026-10-07T09:09:36.905836+00:00",
+        "documentRevision": "Catalogo gennaio 2026",
+        "importedAt": "2026-10-07T09:09:36.905836+00:00",
+        "page": 24
       }
     },
     {

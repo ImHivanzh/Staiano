@@ -5,7 +5,7 @@ import { openDisclosure } from "./ui-helpers";
 
 test("dossier sintetico scaricato dal comando rapido: planimetrie A3 assenti e render incluso", async ({
   page,
-}) => {
+}, info) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Disegna manualmente" }).click();
   await page
@@ -52,9 +52,10 @@ test("dossier sintetico scaricato dal comando rapido: planimetrie A3 assenti e r
     throw new Error("Immagine panorama mancante");
   expect(image.dict.get(PDFName.of("Filter"))).toEqual(PDFName.of("DCTDecode"));
   expect(image.contents.byteLength).toBeGreaterThan(20000);
-  await mkdir("output/verification", { recursive: true });
-  await download.saveAs("output/verification/render.pdf");
-  await writeFile("output/verification/render-panorama.jpg", image.contents);
+  const renderDir = info.outputPath();
+  await mkdir(renderDir, { recursive: true });
+  await download.saveAs(info.outputPath("render.pdf"));
+  await writeFile(info.outputPath("render-panorama.jpg"), image.contents);
   await expect(page.locator('[data-staiano-render-export="true"]')).toHaveCount(
     0,
   );

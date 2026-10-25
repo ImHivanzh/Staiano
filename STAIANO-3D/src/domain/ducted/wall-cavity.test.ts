@@ -16,7 +16,7 @@ import { setWallDrywall } from "../geometry/drywall";
 function fixture() {
   let p = guidedProjectFixture();
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
-  p = addGuidedTerminal(p, 2000, "EDLS", "wall");
+  p = addGuidedTerminal(p, 2000, "EDLH", "wall");
   p = movePlacedDevice(
     p,
     p.airTerminals[0].id,

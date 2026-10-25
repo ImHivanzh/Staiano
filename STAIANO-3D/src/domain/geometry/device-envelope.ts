@@ -2,6 +2,7 @@ import type { Point, Project, Room } from "@/schemas/project";
 import { splitCenterElevationM } from "@/domain/air-conditioning/elevation";
 import { roofHeightAt } from "./ceilings";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { footprintCorners, convexFootprintsOverlap } from "./footprint";
 import {
   lineIntersection,
@@ -30,6 +31,7 @@ function envelope(
   planDepthM: number,
   minZ: number,
   maxZ: number,
+  widthMm = item.widthMm,
 ): DeviceEnvelope {
   return {
     deviceId: item.id,
@@ -37,7 +39,7 @@ function envelope(
     roomId: item.roomId,
     cornersXY: footprintCorners(
       item.position,
-      item.widthMm / 1000,
+      widthMm / 1000,
       planDepthM,
       item.rotation,
     ),
@@ -85,12 +87,14 @@ export function deviceEnvelope(
         terminal.heightMm / 1000,
         terminal.elevationM,
         terminal.elevationM + terminal.depthMm / 1000,
+        airTerminalFaceWidthMm(terminal),
       );
     return envelope(
       terminal,
       terminal.depthMm / 1000,
       terminal.elevationM - terminal.heightMm / 2000,
       terminal.elevationM + terminal.heightMm / 2000,
+      airTerminalFaceWidthMm(terminal),
     );
   }
   const unit = project.hvacSystems

@@ -134,15 +134,12 @@ for (const width of [1920, 1024]) {
       const mounting = dialog.getByRole("group", {
         name: "Montaggio terminale",
       });
-      await mounting
-        .getByRole("button", { name: "Parete", exact: true })
-        .click();
       await expect(
         mounting.getByRole("button", { name: "Parete", exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        mounting.getByRole("button", { name: "Soffitto", exact: true }),
       ).toHaveAttribute("aria-pressed", "true");
-      await mounting
-        .getByRole("button", { name: "Soffitto", exact: true })
-        .click();
       await composition.scrollIntoViewIfNeeded();
       expect(
         await dialog.evaluate((node) => node.scrollWidth <= node.clientWidth),

@@ -9,6 +9,7 @@ import { useProjectStore } from "@/stores/project-store";
 import { installationLabels } from "@/domain/installations";
 import styles from "./CustomerView.module.css";
 import { StoveCatalog } from "./systems/StoveCatalog";
+import { loadProjectCatalogs } from "@/services/project/catalogs";
 import {
   customerCameraSchema,
   useCustomerCamera,
@@ -28,6 +29,8 @@ export function CustomerView() {
     let lastSeen = 0;
     let lastRevision: number | undefined;
     let lastFloor: string | undefined;
+    let generation = 0;
+    let closed = false;
     channel.onmessage = (event) => {
       if (event.data?.type === "camera") {
         const parsed = customerCameraSchema.safeParse(event.data.camera);
@@ -35,6 +38,7 @@ export function CustomerView() {
         return;
       }
       if (event.data?.type === "closed") {
+        generation++;
         setStatus("Configuratore scollegato · ultima vista ricevuta");
         return;
       }
@@ -47,6 +51,7 @@ export function CustomerView() {
       )
         return;
       if (event.data.project === null) {
+        generation++;
         useProjectStore.setState({ project: null });
         setStatus("Nessun progetto aperto");
         return;
@@ -57,22 +62,35 @@ export function CustomerView() {
         return;
       }
       const next = parsed.data;
-      lastRevision = event.data.revision;
-      lastFloor = event.data.activeFloorId;
+      const revision = event.data.revision;
+      const floor = event.data.activeFloorId;
+      const update = ++generation;
       const activeFloorId = next.floors.some(
         (floor) => floor.id === event.data.activeFloorId,
       )
         ? event.data.activeFloorId
         : next.floors[0].id;
-      useProjectStore.setState((state) => ({
-        project: next,
-        activeFloorId,
-        revision: state.revision + 1,
-        presentation: true,
-        selection: [],
-        dirty: false,
-      }));
-      setStatus("Aggiornamento live");
+      void loadProjectCatalogs(next)
+        .then(() => {
+          if (closed || generation !== update) return;
+          lastRevision = revision;
+          lastFloor = floor;
+          useProjectStore.setState((state) => ({
+            project: next,
+            activeFloorId,
+            revision: state.revision + 1,
+            presentation: true,
+            selection: [],
+            dirty: false,
+          }));
+          setStatus("Aggiornamento live");
+        })
+        .catch(() => {
+          if (!closed && generation === update)
+            setStatus(
+              "Catalogo storico non disponibile · ultima vista ricevuta",
+            );
+        });
     };
     channel.postMessage({ type: "ready" });
     const heartbeat = window.setInterval(() => {
@@ -81,6 +99,7 @@ export function CustomerView() {
       channel.postMessage({ type: "ready" });
     }, 4000);
     return () => {
+      closed = true;
       clearInterval(heartbeat);
       channel.close();
     };

@@ -64,18 +64,18 @@ test("creazione manuale, quote, altezza, autosave, import/export e 3D", async ({
     .getByRole("button", { name: "Crea stanza", exact: true })
     .click();
   await expect(page.getByTestId("room-area")).toContainText("20,00");
-  await expect(page.getByTestId("room-load")).toContainText("1,89");
+  await expect(page.getByTestId("room-load")).toContainText("2,00");
   await expect(page.getByTestId("wall")).toHaveCount(4);
   await openInspector(page, "Modifica stanza");
   await page
     .getByRole("spinbutton", { name: "Altezza stanza", exact: true })
     .fill("3");
   await page.getByRole("button", { name: "Applica proprietà" }).click();
-  await expect(page.getByTestId("room-load")).toContainText("2,10");
+  await expect(page.getByTestId("room-load")).toContainText("2,22");
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await page.reload();
   await page.getByRole("button", { name: /Soggiorno Rossi.*20,00/ }).click();
-  await expect(page.getByTestId("room-load")).toContainText("2,10");
+  await expect(page.getByTestId("room-load")).toContainText("2,22");
   await openInspector(page, "Modifica stanza");
   await page.getByRole("spinbutton", { name: "Larghezza netta (m)" }).fill("6");
   await page.getByRole("button", { name: "Aggiorna quote nette" }).click();

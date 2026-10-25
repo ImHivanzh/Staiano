@@ -148,13 +148,13 @@ export function findDuctCollisions(
   ];
   const traces = paths.flatMap((path) => {
     const curve = path.flexible
-      ? flexibleDuctCurve(path.points, path.diameterMm)?.curve
+      ? flexibleDuctCurve(
+          path.points,
+          path.diameterMm,
+          path.duct?.flexibleProductId,
+        )?.curve
       : null;
-    if (
-      (path.flexible && !curve) ||
-      path.points.length < 2 ||
-      path.radiusM <= 0
-    )
+    if (path.points.length < 2 || path.radiusM <= 0)
       return [];
     const points = curve
       ? curve.getSpacedPoints(

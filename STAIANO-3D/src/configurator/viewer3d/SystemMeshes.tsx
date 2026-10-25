@@ -305,6 +305,8 @@ export function SystemMeshes({
         .map((c) => (
           <mesh
             key={c.id}
+            name={`Pilastro ${c.id}`}
+            userData={{ sketchupGroup: true }}
             position={[c.position.x, c.heightMm / 2000, c.position.y]}
             rotation={[0, -c.rotation, 0]}
             onClick={(e) => {
@@ -335,6 +337,8 @@ export function SystemMeshes({
             .map((u) => (
               <group
                 key={u.id}
+                name={`Unità canalizzata ${u.productId}`}
+                userData={{ sketchupGroup: true }}
                 position={[
                   u.position.x,
                   (() => {
@@ -384,9 +388,7 @@ export function SystemMeshes({
                     u.depthMm / 2000 - 0.03,
                   ]}
                 >
-                  <boxGeometry
-                    args={[(u.widthMm / 1000) * 0.8, 0.004, 0.03]}
-                  />
+                  <boxGeometry args={[(u.widthMm / 1000) * 0.8, 0.004, 0.03]} />
                   <meshStandardMaterial color="#00aeef" />
                 </mesh>
               </group>
@@ -401,6 +403,8 @@ export function SystemMeshes({
         .map((pl) => (
           <group
             key={pl.id}
+            name={`Plenum ${pl.id}`}
+            userData={{ sketchupGroup: true }}
             position={[pl.position.x, pl.elevationM ?? 2, pl.position.y]}
             rotation={[0, -pl.rotation, 0]}
             onClick={(e) => {

@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useLayoutEffect, useRef, useCallback } from "react";
+import { useThree } from "@react-three/fiber";
 import { TransformControls } from "@react-three/drei";
 import { alignTranslateArrows } from "./translate-arrows";
 import * as THREE from "three";
@@ -9,6 +10,7 @@ import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { editOperatorTerminal } from "@/domain/air-terminals/operator";
 import { snapTerminalPose } from "@/domain/geometry/terminal-snap";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { moveHvacOutdoorUnit } from "@/domain/air-conditioning/outdoor";
 import { moveHydronicOutdoorUnit } from "@/domain/hydronic/apply";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
@@ -30,6 +32,7 @@ export function DeviceTransform({
   onGuide: (s: string) => void;
 }) {
   const { snap, commit, setError } = useProjectStore();
+  const invalidate = useThree((state) => state.invalidate);
   const proxy = useRef(new THREE.Group());
   const dragging = useRef(false);
   useEffect(
@@ -69,12 +72,13 @@ export function DeviceTransform({
           unit.heightMm / 2000 -
           0.05
         : 2);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!proxy.current || !item || dragging.current) return;
     proxy.current.position.set(item.position.x, elevation, item.position.y);
     proxy.current.rotation.set(0, -item.rotation, 0);
     proxy.current.scale.set(1, 1, 1);
-  }, [item, elevation, mode]);
+    invalidate();
+  }, [item, elevation, mode, invalidate]);
   const apply = useCallback(
     (p: Project): Project => {
       const object = proxy.current;
@@ -96,7 +100,12 @@ export function DeviceTransform({
           snap,
         );
       const rotation = -object.rotation.y;
-      const widthMm = Math.max(1, item.widthMm * object.scale.x);
+      const faceOffset = t ? airTerminalFaceWidthMm(t) - t.widthMm : 0;
+      const widthMm = Math.max(
+        1,
+        (t ? airTerminalFaceWidthMm(t) : item.widthMm) * object.scale.x -
+          faceOffset,
+      );
       if (outdoor)
         return hydronicOutdoor
           ? moveHydronicOutdoorUnit(p, id, { rotation })
@@ -187,7 +196,7 @@ export function DeviceTransform({
             else
               onGuide(
                 mode === "scale" && proxy.current
-                  ? `Longhezza ${Math.round(item.widthMm * proxy.current.scale.x)} mm`
+                  ? `Lunghezza ${Math.round((t ? airTerminalFaceWidthMm(t) : item.widthMm) * proxy.current.scale.x - (t ? airTerminalFaceWidthMm(t) - t.widthMm : 0))} mm`
                   : "Modifica 3D in corso",
               );
           } catch (error) {

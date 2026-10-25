@@ -44,7 +44,7 @@ export function SplitPanel({
       existing?.manufacturer ??
         lastAvailableManufacturer(
           project.hvacSystems.map((system) => system.manufacturer),
-          ["Daikin", "Mitsubishi Electric", "Gree"],
+          ["Daikin", "Mitsubishi Electric", "Gree", "LG"],
         ),
     ),
     [roomIds, setRoomIds] = useState(
@@ -68,6 +68,17 @@ export function SplitPanel({
   const catalog = existing
     ? splitCatalogAtVersion(existing.catalogVersion)
     : splitCatalog;
+  const lgMultiCapacityUnavailable =
+    manufacturer === "LG" &&
+    roomIds.length > 1 &&
+    catalog?.combinations.some(
+      (item) =>
+        item.manufacturer === "LG" &&
+        item.mode === "multi" &&
+        item.indoorProductIds.length === roomIds.length &&
+        (item.indoorCoolingW.some((value) => value === null) ||
+          item.indoorHeatingW.some((value) => value === null)),
+    );
   return (
     <section className={styles.panel} aria-label="Configurazione split">
       <header className={styles.heading}>
@@ -87,7 +98,7 @@ export function SplitPanel({
               value={manufacturer}
               onChange={(e) => setManufacturer(e.target.value)}
             >
-              {["Daikin", "Mitsubishi Electric", "Gree"].map((brand) => (
+              {["Daikin", "Mitsubishi Electric", "Gree", "LG"].map((brand) => (
                 <option key={brand}>{brand}</option>
               ))}
             </select>
@@ -194,10 +205,46 @@ export function SplitPanel({
           })}
           {!preview && (
             <p role="status" className="nota">
-              COMPATIBILITÀ NON VERIFICABILE oppure capacità/dimensioni
-              insufficienti: nessuna combinazione automatica disponibile per
-              questa selezione. Non vengono create unità con dati stimati.
+              {lgMultiCapacityUnavailable
+                ? "LG pubblica la combinazione multisplit 5+9, ma non la capacità simultanea per ogni stanza: il dimensionamento automatico resta disabilitato."
+                : "COMPATIBILITÀ NON VERIFICABILE oppure capacità/dimensioni insufficienti: nessuna combinazione automatica disponibile per questa selezione."}{" "}
+              Non vengono create unità con dati stimati.
             </p>
+          )}
+          {manufacturer === "LG" && catalog && (
+            <details>
+              <summary>
+                Catalogo LG a parete ·{" "}
+                {
+                  catalog.indoorUnits.filter(
+                    (unit) =>
+                      unit.manufacturer === "LG" && unit.mounting === "wall",
+                  ).length
+                }{" "}
+                modelli
+              </summary>
+              <p className="nota">
+                Modelli e dimensioni pubblicati da LG. Il dimensionamento
+                automatico usa solo combinazioni con capacità simultanee
+                verificate.
+              </p>
+              <ul>
+                {catalog.indoorUnits
+                  .filter(
+                    (unit) =>
+                      unit.manufacturer === "LG" && unit.mounting === "wall",
+                  )
+                  .map((unit) => (
+                    <li key={unit.id}>
+                      {unit.family} · {unit.model} ·{" "}
+                      {unit.nominalCoolingW
+                        ? `${formatNumber(unit.nominalCoolingW / 1000)} kW`
+                        : "capacità n.d."}{" "}
+                      freddo · {unit.widthMm}×{unit.heightMm}×{unit.depthMm} mm
+                    </li>
+                  ))}
+              </ul>
+            </details>
           )}
           {preview && (
             <>
@@ -304,9 +351,8 @@ export function SplitPanel({
               <summary>Dettagli tecnici e calcolo</summary>
               <p className="nota">
                 Un ambiente usa un monosplit; più ambienti richiedono una
-                combinazione multisplit approvata. Posizionamento iniziale:
-                sommità a 0,10 m sotto il soffitto. Quota di disegno; distanze
-                di installazione da verificare nel manuale del modello.
+                combinazione multisplit approvata. Posa iniziale e quota sono
+                schematiche; verificare le distanze nel manuale del modello.
               </p>
               <p className="nota">
                 Richiesta stanza = volume netto ×{" "}

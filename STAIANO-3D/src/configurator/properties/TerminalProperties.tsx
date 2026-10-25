@@ -6,8 +6,10 @@ import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import { needsTerminalReconfiguration } from "@/domain/air-terminals/legacy";
 import { airTerminalModelDescription } from "@/domain/air-terminals/description";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { Info } from "@phosphor-icons/react";
 import { TerminalEditForm } from "./TerminalEditForm";
+import { terminalDataQuality } from "@/domain/air-terminals/data-quality";
 export function TerminalProperties({
   project,
   id,
@@ -18,6 +20,7 @@ export function TerminalProperties({
   const t = project.airTerminals.find((t) => t.id === id),
     { select } = useProjectStore();
   if (!t) return null;
+  const quality = terminalDataQuality(project, t);
   const room = project.rooms.find((r) => r.id === t.roomId),
     family = airTerminalFamilyAtVersion(t.family, t.catalogVersion),
     legacy = needsTerminalReconfiguration(t);
@@ -35,8 +38,28 @@ export function TerminalProperties({
       <h3>
         {t.family} · {t.use === "supply" ? "Mandata" : "Ripresa"}
       </h3>
-      <p className="nota">{airTerminalModelDescription(family, t.productId)}</p>
+      <p className="nota">
+        {airTerminalModelDescription(
+          family,
+          t.productId,
+          t.commercialOptions?.profileCode,
+        )}
+      </p>
       <p>{room?.name}</p>
+      <dl className="dati-secondari" aria-label="Stato dei dati del terminale">
+        <div>
+          <dt>Prestazioni</dt>
+          <dd>{quality.performance}</dd>
+        </div>
+        <div>
+          <dt>Geometria</dt>
+          <dd>{quality.geometry}</dd>
+        </div>
+        <div>
+          <dt>Prezzo</dt>
+          <dd>{quality.price}</dd>
+        </div>
+      </dl>
       {installationId && (
         <button
           className="bottone chiara"
@@ -96,7 +119,8 @@ export function TerminalProperties({
         <p className="nota">
           {t.productId}
           <br />
-          Faccia {formatNumber(t.widthMm, 0)} × {formatNumber(t.heightMm, 0)} mm
+          Faccia {formatNumber(airTerminalFaceWidthMm(t), 0)} ×{" "}
+          {formatNumber(t.heightMm, 0)} mm
           <br />
           Profondità{" "}
           {t.depthMm === null ? "Dato non disponibile" : `${t.depthMm} mm`}

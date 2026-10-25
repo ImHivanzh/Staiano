@@ -103,6 +103,8 @@ export function HydronicMeshes({
           return (
             <group key={s.id}>
               <group
+                name={`Pompa di calore ${m?.model ?? u.id}`}
+                userData={{ sketchupGroup: true }}
                 position={[u.position.x, u.elevationM, u.position.y]}
                 rotation={[0, -u.rotation, 0]}
                 onClick={(e) => {

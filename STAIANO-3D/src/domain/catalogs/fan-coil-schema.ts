@@ -16,6 +16,7 @@ export const fanCoilProductSchema = z.object({
   widthMm: positive,
   heightMm: positive,
   depthMm: positive,
+  recessDepthMm: positive.optional(),
   mountings: z.array(z.enum(["wall", "ceiling"])).min(1),
   dimensionNote: z.string(),
   features: z.array(z.string()),

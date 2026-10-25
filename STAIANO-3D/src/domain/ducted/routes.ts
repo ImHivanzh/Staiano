@@ -1,6 +1,7 @@
 import type { Duct, Plenum, Point, Project } from "@/schemas/project";
 import { Box3, Vector3 } from "three";
 import { newId } from "@/domain/project";
+import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { bodies, segmentBodyDistance, type Body } from "./duct-bodies";
 import {
   ceilingSurfaces,
@@ -72,7 +73,7 @@ function machineDuctStart(
 function collarLead(
   point: RoutePoint,
   plenum: Plenum,
-  side: PlenumConnectionSide | "front",
+  side: PlenumConnectionSide,
   lead: number,
 ): RoutePoint {
   const across = side === "left" ? -1 : side === "right" ? 1 : 0;
@@ -206,6 +207,7 @@ function flexibleConnectionRoute(
   end: RoutePoint,
   diameterMm: number,
   targetPortIndex = 0,
+  flexibleProductId?: string,
 ) {
   let fallback: { points: RoutePoint[]; length: number } | undefined;
   const volumes = [
@@ -241,7 +243,7 @@ function flexibleConnectionRoute(
     }
     const polygons = [
       ...floorRoutingPolygons(project, terminal.floorId),
-      ...wallCavityPolygons(project, terminal.floorId),
+      ...wallCavityPolygons(project, terminal.floorId, terminal.roomId),
     ];
 
     const startIds = [
@@ -293,7 +295,11 @@ function flexibleConnectionRoute(
             to,
             end,
           ];
-          const rounded = flexibleDuctCurve(points, diameterMm);
+          const rounded = flexibleDuctCurve(
+            points,
+            diameterMm,
+            flexibleProductId,
+          );
           if (!rounded) continue;
           const samples = rounded.curve.getSpacedPoints(
             Math.max(24, Math.ceil(rounded.curve.getLength() / 0.05)),
@@ -408,7 +414,7 @@ export function routeBelowTerminals(
       continue;
     const footprint = footprintCorners(
       terminal.position,
-      terminal.widthMm / 1000 + radiusM * 2,
+      airTerminalFaceWidthMm(terminal) / 1000 + radiusM * 2,
       (terminal.mounting === "ceiling"
         ? terminal.heightMm
         : (terminal.depthMm ?? 0)) /
@@ -554,6 +560,7 @@ export function ductRoute(
       end,
       duct.diameterMm ?? 160,
       index,
+      duct.flexibleProductId,
     );
   }
   const geometry =
@@ -593,6 +600,7 @@ export function ductRoute(
         end,
         duct.diameterMm ?? 160,
         targetIndex,
+        duct.flexibleProductId,
       );
     const automatic =
       duct.routing === "manual"
@@ -867,6 +875,7 @@ function proposedWaypoints(
   end: RoutePoint,
   diameterMm: number,
   targetPortIndex = 0,
+  flexibleProductId?: string,
 ): RoutePoint[] | null {
   const route = flexibleConnectionRoute(
     project,
@@ -876,6 +885,7 @@ function proposedWaypoints(
     end,
     diameterMm,
     targetPortIndex,
+    flexibleProductId,
   );
   if (route.length > 1) return route.slice(1, -1);
   // Conserva un tracciato modificabile anche quando la proposta geometrica fallisce.
@@ -989,6 +999,7 @@ export function createDuctFromEndpoints(
       end,
       diameterMm,
       index,
+      duct.flexibleProductId,
     );
     if (!waypoints) return duct;
     return {
@@ -1048,6 +1059,7 @@ export function setDuctKind(
       return {
         ...duct,
         kind,
+        flexibleProductId: undefined,
         shape: "rectangle" as const,
         widthMm: section.widthMm,
         heightMm: section.heightMm,
@@ -1060,10 +1072,17 @@ export function setDuctKind(
 export function ductLength(
   points: RoutePoint[],
   diameterMm?: number,
+  flexibleProductId?: string,
 ): number | null {
   if (points.length < 2) return null;
   if (diameterMm !== undefined)
-    return flexibleDuctCurve(points, diameterMm)?.curve.getLength() ?? null;
+    return (
+      flexibleDuctCurve(
+        points,
+        diameterMm,
+        flexibleProductId,
+      )?.curve.getLength() ?? null
+    );
   return points
     .slice(1)
     .reduce(
