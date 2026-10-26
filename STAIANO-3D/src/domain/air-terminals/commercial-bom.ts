@@ -143,7 +143,8 @@ const commercialPageFamily: Record<string, string> = {
   "EDRA-PQ": "EDRA",
   "EDCS-PQ": "EDCS",
   "EDRC-PQR": "EDRC",
-  "EDRCS-PQR": "EDRCS",
+  EDRCS: "EDRC",
+  "EDRCS-PQR": "EDRC",
   "EDRCS THERM": "EDRCS",
   "EDRCS-PQR THERM": "EDRCS",
   EDRFQ: "EDRF",
@@ -283,7 +284,8 @@ export function commercialChoicesForTerminal(
     (price) =>
       price.kind === "terminal" &&
       familyMatches(price.familyCode, terminal.family) &&
-      (dimensionsMatch(price.dimensions, dimensions) ||
+      (price.technicalVariantIds?.includes(terminal.productId) ||
+        dimensionsMatch(price.dimensions, dimensions) ||
         (terminal.family === "EBCV" &&
           terminal.commercialOptions?.mountingDuctDiameterMm == null &&
           !!dimensions &&
@@ -302,6 +304,8 @@ export function commercialChoicesForTerminal(
         price.technicalVariantIds.includes(terminal.productId)) &&
       (!commercialPageFamily[terminal.family] ||
         price.modelCode === terminal.family ||
+        price.modelCode.replaceAll("/", "-") === terminal.family ||
+        price.modelCode.startsWith(`${terminal.family} -`) ||
         variant?.modelCodes?.includes(price.modelCode) ||
         variant?.modelCode === price.modelCode) &&
       (!commercialPageFamily[price.modelCode] ||
@@ -480,7 +484,7 @@ function priceLine(
         : kind === "insulated-plenum" && plenum
           ? `${plenum.widthMm} × ${plenum.heightMm} × ${plenum.depthMm} mm`
           : null,
-    sku: article?.code ?? null,
+    sku: article?.code ?? articleCode ?? null,
     quantity,
     unitPriceCents: unitPrice,
     extendedPriceCents: extended,
@@ -492,7 +496,7 @@ function priceLine(
         : price && unitPrice === null
           ? "Verniciatura del colore scelto: prezzo da quotare a Ecoclima."
           : price
-            ? article
+            ? articleCode
               ? null
               : "Codice articolo e descrizione ufficiale non disponibili per questa variante: verificare con Ecoclima."
             : candidates.length

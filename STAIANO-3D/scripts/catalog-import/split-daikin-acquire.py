@@ -54,15 +54,26 @@ for page,text in enumerate(pages,1):
   if not range_values[0]<=range_values[1]<=range_values[2]:
    rejected.add(key);quarantined.append({'outdoorModel':outside,'combination':match[1],'mode':mode,'page':page,'reason':'Manufacturer nominal capacity outside declared min/max range','capacityRangeW':range_values,'rawRow':line})
   if mode in row and row[mode]!=capacity:raise ValueError('Conflicting duplicate manufacturer combination')
-  row[mode]=capacity;row[mode+'Total']=total;row[mode+'Page']=page
+  row[mode]=capacity;row[mode+'Total']=total;row[mode+'Max']=range_values[2];row[mode+'Page']=page
 for (outside,sizes),row in rows.items():
  if (outside,sizes) in rejected:continue
  if 'cool' not in row or 'heat' not in row:raise ValueError('Missing complementary operating mode: '+outside+' '+sizes)
  ids=['daikin-'+('ctxm' if float(s)==1.5 else 'ftxm')+str(round(float(s)*10))+'a' for s in row['sizes']]
  if not all(any(u['id']==id for u in units) for id in ids):continue
- combinations.append({'id':'daikin-multi-'+outside.lower()+'-'+sizes.replace('.','').replace('+','-'),'manufacturer':'Daikin','mode':'multi','outdoorModel':outside,'indoorProductIds':ids,'coolingCapacityW':row['coolTotal'],'heatingCapacityW':row['heatTotal'],'indoorCoolingW':row['cool'],'indoorHeatingW':row['heat'],'minIndoorUnits':2,'maxIndoorUnits':int(outside[0]),'maxConnectedCapacityW':None,'approved':True,'notes':f"Combinazione esatta approvata. Raffrescamento pagina{row['coolPage']}, riscaldamento pagina{row['heatPage']}; capacità effettive simultanee A/B/C/D/E della tabella, non capacità nominali sommate. Condizioni: interno27°C DB/19°C WB, esterno35°C DB in raffrescamento; interno20°C DB, esterno7°C DB/6°C WB in riscaldamento.",'sourceMetadata':source(row['coolPage'])})
+ combinations.append({'id':'daikin-multi-'+outside.lower()+'-'+sizes.replace('.','').replace('+','-'),'manufacturer':'Daikin','mode':'multi','outdoorModel':outside,'indoorProductIds':ids,'coolingCapacityW':row['coolTotal'],'heatingCapacityW':row['heatTotal'],'maxCoolingCapacityW':row['coolMax'],'maxHeatingCapacityW':row['heatMax'],'indoorCoolingW':row['cool'],'indoorHeatingW':row['heat'],'minIndoorUnits':2,'maxIndoorUnits':int(outside[0]),'maxConnectedCapacityW':None,'approved':True,'notes':f"Combinazione esatta approvata. Raffrescamento pagina{row['coolPage']}, riscaldamento pagina{row['heatPage']}; capacità effettive simultanee A/B/C/D/E della tabella, non capacità nominali sommate. Condizioni: interno27°C DB/19°C WB, esterno35°C DB in raffrescamento; interno20°C DB, esterno7°C DB/6°C WB in riscaldamento.",'sourceMetadata':source(row['coolPage'])})
 out=ROOT/'catalog-data/curation/split-daikin.json'
-out.write_text(json.dumps({'indoorUnits':units,'combinations':combinations},ensure_ascii=False,indent=2),encoding='utf8')
+previous=json.loads(out.read_text(encoding='utf8')) if out.exists() else {}
+by_id={item['id']:item for item in previous.get('combinations',[])}
+for item in combinations:
+ existing=by_id.get(item['id'])
+ if existing and 'maxCoolingCapacityW' in item:
+  existing['maxCoolingCapacityW']=item['maxCoolingCapacityW']
+  existing['maxHeatingCapacityW']=item['maxHeatingCapacityW']
+ elif not existing and 'maxCoolingCapacityW' in item:by_id[item['id']]=item
+previous['indoorUnits']=previous.get('indoorUnits',units)
+previous['outdoorUnits']=previous.get('outdoorUnits',[])
+previous['combinations']=list(by_id.values())
+out.write_text(json.dumps(previous,ensure_ascii=False,indent=2),encoding='utf8')
 report={'indoorModels':len(units),'importedCombinations':len(combinations),'quarantinedCombinations':len(rejected),'quarantinedRows':quarantined,'sourceSha256':SHA}
 (DEST/'daikin-import-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
 print('Daikin:',len(units),'indoor models;',len(combinations),'exact approved mono/multi combinations')

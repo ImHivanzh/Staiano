@@ -1,5 +1,5 @@
 {
-  "version": "ecoclima-listino-b8a93d00d13c",
+  "version": "ecoclima-listino-52e55b6264e0",
   "revision": "15-2026",
   "prices": [
     {
@@ -10746,7 +10746,9 @@
       "sourceColumn": 2,
       "originalPrice": "134,09",
       "technicalVariantIds": [
-        "ecoclima-edsc-c-100"
+        "ecoclima-edsc-c-100",
+        "ecoclima-edsc-cc-100",
+        "ecoclima-edsc-q-100"
       ]
     },
     {
@@ -10783,6 +10785,8 @@
       "sourceColumn": 3,
       "originalPrice": "143,81",
       "technicalVariantIds": [
+        "ecoclima-edsc-c-100",
+        "ecoclima-edsc-cc-100",
         "ecoclima-edsc-q-100"
       ]
     },
@@ -10820,7 +10824,9 @@
       "sourceColumn": 4,
       "originalPrice": "153,54  ",
       "technicalVariantIds": [
-        "ecoclima-edsc-cc-100"
+        "ecoclima-edsc-c-100",
+        "ecoclima-edsc-cc-100",
+        "ecoclima-edsc-q-100"
       ]
     },
     {
@@ -10974,7 +10980,9 @@
       "sourceColumn": 2,
       "originalPrice": "134,09",
       "technicalVariantIds": [
-        "ecoclima-edsc-c-125"
+        "ecoclima-edsc-c-125",
+        "ecoclima-edsc-cc-125",
+        "ecoclima-edsc-q-125"
       ]
     },
     {
@@ -11011,6 +11019,8 @@
       "sourceColumn": 3,
       "originalPrice": "143,81",
       "technicalVariantIds": [
+        "ecoclima-edsc-c-125",
+        "ecoclima-edsc-cc-125",
         "ecoclima-edsc-q-125"
       ]
     },
@@ -11048,7 +11058,9 @@
       "sourceColumn": 4,
       "originalPrice": "153,54  ",
       "technicalVariantIds": [
-        "ecoclima-edsc-cc-125"
+        "ecoclima-edsc-c-125",
+        "ecoclima-edsc-cc-125",
+        "ecoclima-edsc-q-125"
       ]
     },
     {
@@ -54431,7 +54443,10 @@
         "ØD (mm)": 97,
         "ØD1 (mm)": 118,
         "L (mm)": 52
-      }
+      },
+      "technicalVariantIds": [
+        "ecoclima-eam-vrfn-100"
+      ]
     },
     {
       "id": "ecoclima-7feef8be57fcce6e79f7c144",
@@ -54470,7 +54485,10 @@
         "ØD (mm)": 120,
         "ØD1 (mm)": 141,
         "L (mm)": 52
-      }
+      },
+      "technicalVariantIds": [
+        "ecoclima-eam-vrfn-125"
+      ]
     },
     {
       "id": "ecoclima-7dccf0a7f8a6d0403a001fee",
@@ -54509,7 +54527,10 @@
         "ØD (mm)": 145,
         "ØD1 (mm)": 162,
         "L (mm)": 62
-      }
+      },
+      "technicalVariantIds": [
+        "ecoclima-eam-vrfn-150"
+      ]
     },
     {
       "id": "ecoclima-deadbc85e41436d9a19bce93",
@@ -62481,7 +62502,8 @@
       "sourceColumn": 2,
       "originalPrice": "116,01",
       "technicalVariantIds": [
-        "ecoclima-edcs-100"
+        "ecoclima-edcs-100",
+        "ecoclima-edcs-pq-100"
       ]
     },
     {
@@ -62518,6 +62540,7 @@
       "sourceColumn": 3,
       "originalPrice": "145,17",
       "technicalVariantIds": [
+        "ecoclima-edcs-100",
         "ecoclima-edcs-pq-100"
       ]
     },
@@ -62707,7 +62730,8 @@
       "sourceColumn": 2,
       "originalPrice": "118,18",
       "technicalVariantIds": [
-        "ecoclima-edcs-150"
+        "ecoclima-edcs-150",
+        "ecoclima-edcs-pq-150"
       ]
     },
     {
@@ -62744,6 +62768,7 @@
       "sourceColumn": 3,
       "originalPrice": "147,37",
       "technicalVariantIds": [
+        "ecoclima-edcs-150",
         "ecoclima-edcs-pq-150"
       ]
     },
@@ -62933,7 +62958,8 @@
       "sourceColumn": 2,
       "originalPrice": "125,09",
       "technicalVariantIds": [
-        "ecoclima-edcs-160"
+        "ecoclima-edcs-160",
+        "ecoclima-edcs-pq-160"
       ]
     },
     {
@@ -62970,6 +62996,7 @@
       "sourceColumn": 3,
       "originalPrice": "150,44",
       "technicalVariantIds": [
+        "ecoclima-edcs-160",
         "ecoclima-edcs-pq-160"
       ]
     },
@@ -63159,7 +63186,8 @@
       "sourceColumn": 2,
       "originalPrice": "143,06",
       "technicalVariantIds": [
-        "ecoclima-edcs-200"
+        "ecoclima-edcs-200",
+        "ecoclima-edcs-pq-200"
       ]
     },
     {
@@ -63196,6 +63224,7 @@
       "sourceColumn": 3,
       "originalPrice": "166,66",
       "technicalVariantIds": [
+        "ecoclima-edcs-200",
         "ecoclima-edcs-pq-200"
       ]
     },
@@ -63385,7 +63414,8 @@
       "sourceColumn": 2,
       "originalPrice": "173,62",
       "technicalVariantIds": [
-        "ecoclima-edcs-250"
+        "ecoclima-edcs-250",
+        "ecoclima-edcs-pq-250"
       ]
     },
     {
@@ -63422,6 +63452,7 @@
       "sourceColumn": 3,
       "originalPrice": "200,52",
       "technicalVariantIds": [
+        "ecoclima-edcs-250",
         "ecoclima-edcs-pq-250"
       ]
     },
@@ -63678,7 +63709,9 @@
       "sourceRow": 6,
       "sourceColumn": 2,
       "originalPrice": "66,63",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-ede-fb-300-598"
+      ]
     },
     {
       "id": "ecoclima-85fadf047f487e97c96eef0e",
@@ -63713,7 +63746,9 @@
       "sourceRow": 6,
       "sourceColumn": 3,
       "originalPrice": "71,33",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-ede-fb-400-598"
+      ]
     },
     {
       "id": "ecoclima-65ce1f710ecb6863bee10143",
@@ -63748,7 +63783,9 @@
       "sourceRow": 6,
       "sourceColumn": 4,
       "originalPrice": "72,90",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-ede-fb-500-598"
+      ]
     },
     {
       "id": "ecoclima-20c92b834e695f0c017aa330",
@@ -63783,7 +63820,9 @@
       "sourceRow": 6,
       "sourceColumn": 5,
       "originalPrice": "74,28",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-ede-fb-600-598"
+      ]
     },
     {
       "id": "ecoclima-5ed7eb5efe1bf87776ad7092",
@@ -64210,7 +64249,8 @@
       "sourceColumn": 2,
       "originalPrice": "43,28",
       "technicalVariantIds": [
-        "ecoclima-ede1-300"
+        "ecoclima-ede1-300",
+        "ecoclima-ede1r-300"
       ]
     },
     {
@@ -64247,7 +64287,8 @@
       "sourceColumn": 3,
       "originalPrice": "48,87",
       "technicalVariantIds": [
-        "ecoclima-ede1-400"
+        "ecoclima-ede1-400",
+        "ecoclima-ede1r-400"
       ]
     },
     {
@@ -64284,7 +64325,8 @@
       "sourceColumn": 4,
       "originalPrice": "71,22",
       "technicalVariantIds": [
-        "ecoclima-ede1-500"
+        "ecoclima-ede1-500",
+        "ecoclima-ede1r-500"
       ]
     },
     {
@@ -64321,7 +64363,8 @@
       "sourceColumn": 5,
       "originalPrice": "74,64",
       "technicalVariantIds": [
-        "ecoclima-ede1-600"
+        "ecoclima-ede1-600",
+        "ecoclima-ede1r-600"
       ]
     },
     {
@@ -64358,7 +64401,8 @@
       "sourceColumn": 6,
       "originalPrice": "121,14",
       "technicalVariantIds": [
-        "ecoclima-ede1-625"
+        "ecoclima-ede1-625",
+        "ecoclima-ede1r-625"
       ]
     },
     {
@@ -64395,7 +64439,8 @@
       "sourceColumn": 7,
       "originalPrice": "196,06",
       "technicalVariantIds": [
-        "ecoclima-ede1-800"
+        "ecoclima-ede1-800",
+        "ecoclima-ede1r-800"
       ]
     },
     {
@@ -65455,7 +65500,8 @@
       "sourceColumn": 2,
       "originalPrice": "43,28",
       "technicalVariantIds": [
-        "ecoclima-ede2-300"
+        "ecoclima-ede2-300",
+        "ecoclima-ede2r-300"
       ]
     },
     {
@@ -65492,7 +65538,8 @@
       "sourceColumn": 3,
       "originalPrice": "48,87",
       "technicalVariantIds": [
-        "ecoclima-ede2-400"
+        "ecoclima-ede2-400",
+        "ecoclima-ede2r-400"
       ]
     },
     {
@@ -65529,7 +65576,8 @@
       "sourceColumn": 4,
       "originalPrice": "59,77",
       "technicalVariantIds": [
-        "ecoclima-ede2-500"
+        "ecoclima-ede2-500",
+        "ecoclima-ede2r-500"
       ]
     },
     {
@@ -65566,7 +65614,8 @@
       "sourceColumn": 5,
       "originalPrice": "68,82",
       "technicalVariantIds": [
-        "ecoclima-ede2-600"
+        "ecoclima-ede2-600",
+        "ecoclima-ede2r-600"
       ]
     },
     {
@@ -65603,7 +65652,8 @@
       "sourceColumn": 6,
       "originalPrice": "107,18",
       "technicalVariantIds": [
-        "ecoclima-ede2-625"
+        "ecoclima-ede2-625",
+        "ecoclima-ede2r-625"
       ]
     },
     {
@@ -65640,7 +65690,8 @@
       "sourceColumn": 7,
       "originalPrice": "196,06",
       "technicalVariantIds": [
-        "ecoclima-ede2-800"
+        "ecoclima-ede2-800",
+        "ecoclima-ede2r-800"
       ]
     },
     {
@@ -101290,7 +101341,8 @@
       "sourceColumn": 2,
       "originalPrice": "61,09",
       "technicalVariantIds": [
-        "ecoclima-edra-100"
+        "ecoclima-edra-100",
+        "ecoclima-edra-pq-100"
       ]
     },
     {
@@ -101327,6 +101379,7 @@
       "sourceColumn": 3,
       "originalPrice": "112,77",
       "technicalVariantIds": [
+        "ecoclima-edra-100",
         "ecoclima-edra-pq-100"
       ]
     },
@@ -101516,7 +101569,8 @@
       "sourceColumn": 2,
       "originalPrice": "62,73",
       "technicalVariantIds": [
-        "ecoclima-edra-150"
+        "ecoclima-edra-150",
+        "ecoclima-edra-pq-150"
       ]
     },
     {
@@ -101553,6 +101607,7 @@
       "sourceColumn": 3,
       "originalPrice": "87,59",
       "technicalVariantIds": [
+        "ecoclima-edra-150",
         "ecoclima-edra-pq-150"
       ]
     },
@@ -101742,7 +101797,8 @@
       "sourceColumn": 2,
       "originalPrice": "67,63",
       "technicalVariantIds": [
-        "ecoclima-edra-160"
+        "ecoclima-edra-160",
+        "ecoclima-edra-pq-160"
       ]
     },
     {
@@ -101779,6 +101835,7 @@
       "sourceColumn": 3,
       "originalPrice": "91,52",
       "technicalVariantIds": [
+        "ecoclima-edra-160",
         "ecoclima-edra-pq-160"
       ]
     },
@@ -101968,7 +102025,8 @@
       "sourceColumn": 2,
       "originalPrice": "80,31",
       "technicalVariantIds": [
-        "ecoclima-edra-200"
+        "ecoclima-edra-200",
+        "ecoclima-edra-pq-200"
       ]
     },
     {
@@ -102005,6 +102063,7 @@
       "sourceColumn": 3,
       "originalPrice": "100,44",
       "technicalVariantIds": [
+        "ecoclima-edra-200",
         "ecoclima-edra-pq-200"
       ]
     },
@@ -102194,7 +102253,8 @@
       "sourceColumn": 2,
       "originalPrice": "101,17",
       "technicalVariantIds": [
-        "ecoclima-edra-250"
+        "ecoclima-edra-250",
+        "ecoclima-edra-pq-250"
       ]
     },
     {
@@ -102231,6 +102291,7 @@
       "sourceColumn": 3,
       "originalPrice": "122,37",
       "technicalVariantIds": [
+        "ecoclima-edra-250",
         "ecoclima-edra-pq-250"
       ]
     },
@@ -102420,7 +102481,8 @@
       "sourceColumn": 2,
       "originalPrice": "126,03",
       "technicalVariantIds": [
-        "ecoclima-edra-300"
+        "ecoclima-edra-300",
+        "ecoclima-edra-pq-300"
       ]
     },
     {
@@ -102609,7 +102671,8 @@
       "sourceColumn": 2,
       "originalPrice": "126,43",
       "technicalVariantIds": [
-        "ecoclima-edra-315"
+        "ecoclima-edra-315",
+        "ecoclima-edra-pq-315"
       ]
     },
     {
@@ -103640,7 +103703,10 @@
       "sourceColumn": 2,
       "originalPrice": "241,40",
       "technicalVariantIds": [
-        "ecoclima-edrc-250"
+        "ecoclima-edrc-250",
+        "ecoclima-edrcs-250",
+        "ecoclima-edrc-pqr-250",
+        "ecoclima-edrcs-pqr-250"
       ]
     },
     {
@@ -103677,7 +103743,10 @@
       "sourceColumn": 3,
       "originalPrice": "312,88",
       "technicalVariantIds": [
-        "ecoclima-edrcs-250"
+        "ecoclima-edrc-250",
+        "ecoclima-edrcs-250",
+        "ecoclima-edrc-pqr-250",
+        "ecoclima-edrcs-pqr-250"
       ]
     },
     {
@@ -103714,7 +103783,10 @@
       "sourceColumn": 4,
       "originalPrice": "411,23",
       "technicalVariantIds": [
-        "ecoclima-edrc-pqr-250"
+        "ecoclima-edrc-250",
+        "ecoclima-edrcs-250",
+        "ecoclima-edrc-pqr-250",
+        "ecoclima-edrcs-pqr-250"
       ]
     },
     {
@@ -103751,6 +103823,9 @@
       "sourceColumn": 5,
       "originalPrice": "436,75",
       "technicalVariantIds": [
+        "ecoclima-edrc-250",
+        "ecoclima-edrcs-250",
+        "ecoclima-edrc-pqr-250",
         "ecoclima-edrcs-pqr-250"
       ]
     },
@@ -103788,7 +103863,10 @@
       "sourceColumn": 2,
       "originalPrice": "274,10",
       "technicalVariantIds": [
-        "ecoclima-edrc-315"
+        "ecoclima-edrc-315",
+        "ecoclima-edrcs-315",
+        "ecoclima-edrc-pqr-315",
+        "ecoclima-edrcs-pqr-315"
       ]
     },
     {
@@ -103825,7 +103903,10 @@
       "sourceColumn": 3,
       "originalPrice": "355,51",
       "technicalVariantIds": [
-        "ecoclima-edrcs-315"
+        "ecoclima-edrc-315",
+        "ecoclima-edrcs-315",
+        "ecoclima-edrc-pqr-315",
+        "ecoclima-edrcs-pqr-315"
       ]
     },
     {
@@ -103862,7 +103943,10 @@
       "sourceColumn": 4,
       "originalPrice": "460,71",
       "technicalVariantIds": [
-        "ecoclima-edrc-pqr-315"
+        "ecoclima-edrc-315",
+        "ecoclima-edrcs-315",
+        "ecoclima-edrc-pqr-315",
+        "ecoclima-edrcs-pqr-315"
       ]
     },
     {
@@ -103899,6 +103983,9 @@
       "sourceColumn": 5,
       "originalPrice": "489,29",
       "technicalVariantIds": [
+        "ecoclima-edrc-315",
+        "ecoclima-edrcs-315",
+        "ecoclima-edrc-pqr-315",
         "ecoclima-edrcs-pqr-315"
       ]
     },
@@ -103936,7 +104023,10 @@
       "sourceColumn": 2,
       "originalPrice": "373,20",
       "technicalVariantIds": [
-        "ecoclima-edrc-400"
+        "ecoclima-edrc-400",
+        "ecoclima-edrcs-400",
+        "ecoclima-edrc-pqr-400",
+        "ecoclima-edrcs-pqr-400"
       ]
     },
     {
@@ -103973,7 +104063,10 @@
       "sourceColumn": 3,
       "originalPrice": "419,15",
       "technicalVariantIds": [
-        "ecoclima-edrcs-400"
+        "ecoclima-edrc-400",
+        "ecoclima-edrcs-400",
+        "ecoclima-edrc-pqr-400",
+        "ecoclima-edrcs-pqr-400"
       ]
     },
     {
@@ -104010,7 +104103,10 @@
       "sourceColumn": 4,
       "originalPrice": "540,99",
       "technicalVariantIds": [
-        "ecoclima-edrc-pqr-400"
+        "ecoclima-edrc-400",
+        "ecoclima-edrcs-400",
+        "ecoclima-edrc-pqr-400",
+        "ecoclima-edrcs-pqr-400"
       ]
     },
     {
@@ -104047,6 +104143,9 @@
       "sourceColumn": 5,
       "originalPrice": "574,56",
       "technicalVariantIds": [
+        "ecoclima-edrc-400",
+        "ecoclima-edrcs-400",
+        "ecoclima-edrc-pqr-400",
         "ecoclima-edrcs-pqr-400"
       ]
     },
@@ -104084,7 +104183,8 @@
       "sourceColumn": 2,
       "originalPrice": "445,06",
       "technicalVariantIds": [
-        "ecoclima-edrc-500"
+        "ecoclima-edrc-500",
+        "ecoclima-edrcs-500"
       ]
     },
     {
@@ -104121,6 +104221,7 @@
       "sourceColumn": 3,
       "originalPrice": "521,15",
       "technicalVariantIds": [
+        "ecoclima-edrc-500",
         "ecoclima-edrcs-500"
       ]
     },
@@ -104158,7 +104259,8 @@
       "sourceColumn": 2,
       "originalPrice": "619,40",
       "technicalVariantIds": [
-        "ecoclima-edrc-630"
+        "ecoclima-edrc-630",
+        "ecoclima-edrcs-630"
       ]
     },
     {
@@ -104195,6 +104297,7 @@
       "sourceColumn": 3,
       "originalPrice": "646,74",
       "technicalVariantIds": [
+        "ecoclima-edrc-630",
         "ecoclima-edrcs-630"
       ]
     },
@@ -104232,7 +104335,8 @@
       "sourceColumn": 2,
       "originalPrice": "42,17",
       "technicalVariantIds": [
-        "ecoclima-edrf-125"
+        "ecoclima-edrf-125",
+        "ecoclima-edrfq-125"
       ]
     },
     {
@@ -104269,6 +104373,7 @@
       "sourceColumn": 3,
       "originalPrice": "38,59",
       "technicalVariantIds": [
+        "ecoclima-edrf-125",
         "ecoclima-edrfq-125"
       ]
     },
@@ -104306,6 +104411,7 @@
       "sourceColumn": 4,
       "originalPrice": "104,84",
       "technicalVariantIds": [
+        "ecoclima-edrf-125",
         "ecoclima-edrfq-125"
       ]
     },
@@ -104342,7 +104448,10 @@
       "sourceRow": 6,
       "sourceColumn": 5,
       "originalPrice": "49,85",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrf-125",
+        "ecoclima-edrfq-125"
+      ]
     },
     {
       "id": "ecoclima-9e613323d1883f2766215402",
@@ -104530,7 +104639,8 @@
       "sourceColumn": 2,
       "originalPrice": "51,27",
       "technicalVariantIds": [
-        "ecoclima-edrf-160"
+        "ecoclima-edrf-160",
+        "ecoclima-edrfq-160"
       ]
     },
     {
@@ -104567,6 +104677,7 @@
       "sourceColumn": 3,
       "originalPrice": "46,88",
       "technicalVariantIds": [
+        "ecoclima-edrf-160",
         "ecoclima-edrfq-160"
       ]
     },
@@ -104604,6 +104715,7 @@
       "sourceColumn": 4,
       "originalPrice": "113,12",
       "technicalVariantIds": [
+        "ecoclima-edrf-160",
         "ecoclima-edrfq-160"
       ]
     },
@@ -104640,7 +104752,10 @@
       "sourceRow": 7,
       "sourceColumn": 5,
       "originalPrice": "51,88",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrf-160",
+        "ecoclima-edrfq-160"
+      ]
     },
     {
       "id": "ecoclima-ecb97539d1aba6ec621e753c",
@@ -104828,7 +104943,8 @@
       "sourceColumn": 2,
       "originalPrice": "66,70",
       "technicalVariantIds": [
-        "ecoclima-edrf-200"
+        "ecoclima-edrf-200",
+        "ecoclima-edrfq-200"
       ]
     },
     {
@@ -104865,6 +104981,7 @@
       "sourceColumn": 3,
       "originalPrice": "60,90",
       "technicalVariantIds": [
+        "ecoclima-edrf-200",
         "ecoclima-edrfq-200"
       ]
     },
@@ -104902,6 +105019,7 @@
       "sourceColumn": 4,
       "originalPrice": "127,12",
       "technicalVariantIds": [
+        "ecoclima-edrf-200",
         "ecoclima-edrfq-200"
       ]
     },
@@ -104938,7 +105056,10 @@
       "sourceRow": 8,
       "sourceColumn": 5,
       "originalPrice": "67,32",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrf-200",
+        "ecoclima-edrfq-200"
+      ]
     },
     {
       "id": "ecoclima-544ff9d3e05a43cbe16f0977",
@@ -105126,7 +105247,8 @@
       "sourceColumn": 2,
       "originalPrice": "80,41",
       "technicalVariantIds": [
-        "ecoclima-edrf-250"
+        "ecoclima-edrf-250",
+        "ecoclima-edrfq-250"
       ]
     },
     {
@@ -105163,6 +105285,7 @@
       "sourceColumn": 3,
       "originalPrice": "73,36",
       "technicalVariantIds": [
+        "ecoclima-edrf-250",
         "ecoclima-edrfq-250"
       ]
     },
@@ -105200,6 +105323,7 @@
       "sourceColumn": 4,
       "originalPrice": "140,37",
       "technicalVariantIds": [
+        "ecoclima-edrf-250",
         "ecoclima-edrfq-250"
       ]
     },
@@ -105236,7 +105360,10 @@
       "sourceRow": 9,
       "sourceColumn": 5,
       "originalPrice": "81,92",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrf-250",
+        "ecoclima-edrfq-250"
+      ]
     },
     {
       "id": "ecoclima-f16a8960c02c98e398ef5de0",
@@ -105424,7 +105551,8 @@
       "sourceColumn": 2,
       "originalPrice": "99,50",
       "technicalVariantIds": [
-        "ecoclima-edrf-315"
+        "ecoclima-edrf-315",
+        "ecoclima-edrfq-315"
       ]
     },
     {
@@ -105461,6 +105589,7 @@
       "sourceColumn": 3,
       "originalPrice": "90,73",
       "technicalVariantIds": [
+        "ecoclima-edrf-315",
         "ecoclima-edrfq-315"
       ]
     },
@@ -105498,6 +105627,7 @@
       "sourceColumn": 4,
       "originalPrice": "156,90",
       "technicalVariantIds": [
+        "ecoclima-edrf-315",
         "ecoclima-edrfq-315"
       ]
     },
@@ -105534,7 +105664,10 @@
       "sourceRow": 10,
       "sourceColumn": 5,
       "originalPrice": "94,41",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrf-315",
+        "ecoclima-edrfq-315"
+      ]
     },
     {
       "id": "ecoclima-18eedb768268acd9e5061401",
@@ -105722,7 +105855,8 @@
       "sourceColumn": 2,
       "originalPrice": "140,69",
       "technicalVariantIds": [
-        "ecoclima-edrf-400"
+        "ecoclima-edrf-400",
+        "ecoclima-edrfq-400"
       ]
     },
     {
@@ -105759,6 +105893,7 @@
       "sourceColumn": 3,
       "originalPrice": "126,51",
       "technicalVariantIds": [
+        "ecoclima-edrf-400",
         "ecoclima-edrfq-400"
       ]
     },
@@ -105796,6 +105931,7 @@
       "sourceColumn": 4,
       "originalPrice": "192,74",
       "technicalVariantIds": [
+        "ecoclima-edrf-400",
         "ecoclima-edrfq-400"
       ]
     },
@@ -105832,7 +105968,10 @@
       "sourceRow": 11,
       "sourceColumn": 5,
       "originalPrice": "114,93",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrf-400",
+        "ecoclima-edrfq-400"
+      ]
     },
     {
       "id": "ecoclima-58bb3bf8a53d6887c0bb4f50",
@@ -106020,7 +106159,8 @@
       "sourceColumn": 2,
       "originalPrice": "45,74",
       "technicalVariantIds": [
-        "ecoclima-edrfb-125"
+        "ecoclima-edrfb-125",
+        "ecoclima-edrfqb-125"
       ]
     },
     {
@@ -106057,6 +106197,7 @@
       "sourceColumn": 3,
       "originalPrice": "49,91",
       "technicalVariantIds": [
+        "ecoclima-edrfb-125",
         "ecoclima-edrfqb-125"
       ]
     },
@@ -106094,6 +106235,7 @@
       "sourceColumn": 4,
       "originalPrice": "117,00",
       "technicalVariantIds": [
+        "ecoclima-edrfb-125",
         "ecoclima-edrfqb-125"
       ]
     },
@@ -106130,7 +106272,10 @@
       "sourceRow": 6,
       "sourceColumn": 5,
       "originalPrice": "49,85",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrfb-125",
+        "ecoclima-edrfqb-125"
+      ]
     },
     {
       "id": "ecoclima-c163cdc0e324bdc3d090323f",
@@ -106318,7 +106463,8 @@
       "sourceColumn": 2,
       "originalPrice": "55,64",
       "technicalVariantIds": [
-        "ecoclima-edrfb-160"
+        "ecoclima-edrfb-160",
+        "ecoclima-edrfqb-160"
       ]
     },
     {
@@ -106355,6 +106501,7 @@
       "sourceColumn": 3,
       "originalPrice": "63,28",
       "technicalVariantIds": [
+        "ecoclima-edrfb-160",
         "ecoclima-edrfqb-160"
       ]
     },
@@ -106392,6 +106539,7 @@
       "sourceColumn": 4,
       "originalPrice": "130,40",
       "technicalVariantIds": [
+        "ecoclima-edrfb-160",
         "ecoclima-edrfqb-160"
       ]
     },
@@ -106428,7 +106576,10 @@
       "sourceRow": 7,
       "sourceColumn": 5,
       "originalPrice": "51,88",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrfb-160",
+        "ecoclima-edrfqb-160"
+      ]
     },
     {
       "id": "ecoclima-08729e7bd8e3e336f37cd64d",
@@ -106616,7 +106767,8 @@
       "sourceColumn": 2,
       "originalPrice": "72,48",
       "technicalVariantIds": [
-        "ecoclima-edrfb-200"
+        "ecoclima-edrfb-200",
+        "ecoclima-edrfqb-200"
       ]
     },
     {
@@ -106653,6 +106805,7 @@
       "sourceColumn": 3,
       "originalPrice": "82,70",
       "technicalVariantIds": [
+        "ecoclima-edrfb-200",
         "ecoclima-edrfqb-200"
       ]
     },
@@ -106690,6 +106843,7 @@
       "sourceColumn": 4,
       "originalPrice": "149,76",
       "technicalVariantIds": [
+        "ecoclima-edrfb-200",
         "ecoclima-edrfqb-200"
       ]
     },
@@ -106726,7 +106880,10 @@
       "sourceRow": 8,
       "sourceColumn": 5,
       "originalPrice": "67,32",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrfb-200",
+        "ecoclima-edrfqb-200"
+      ]
     },
     {
       "id": "ecoclima-700c31ed807e90d31e603c14",
@@ -106914,7 +107071,8 @@
       "sourceColumn": 2,
       "originalPrice": "87,36",
       "technicalVariantIds": [
-        "ecoclima-edrfb-250"
+        "ecoclima-edrfb-250",
+        "ecoclima-edrfqb-250"
       ]
     },
     {
@@ -106951,6 +107109,7 @@
       "sourceColumn": 3,
       "originalPrice": "100,11",
       "technicalVariantIds": [
+        "ecoclima-edrfb-250",
         "ecoclima-edrfqb-250"
       ]
     },
@@ -106988,6 +107147,7 @@
       "sourceColumn": 4,
       "originalPrice": "167,17",
       "technicalVariantIds": [
+        "ecoclima-edrfb-250",
         "ecoclima-edrfqb-250"
       ]
     },
@@ -107024,7 +107184,10 @@
       "sourceRow": 9,
       "sourceColumn": 5,
       "originalPrice": "81,92",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrfb-250",
+        "ecoclima-edrfqb-250"
+      ]
     },
     {
       "id": "ecoclima-36c4e97b6eccb3eac62c0b36",
@@ -107212,7 +107375,8 @@
       "sourceColumn": 2,
       "originalPrice": "108,31",
       "technicalVariantIds": [
-        "ecoclima-edrfb-315"
+        "ecoclima-edrfb-315",
+        "ecoclima-edrfqb-315"
       ]
     },
     {
@@ -107249,6 +107413,7 @@
       "sourceColumn": 3,
       "originalPrice": "124,00",
       "technicalVariantIds": [
+        "ecoclima-edrfb-315",
         "ecoclima-edrfqb-315"
       ]
     },
@@ -107286,6 +107451,7 @@
       "sourceColumn": 4,
       "originalPrice": "191,03",
       "technicalVariantIds": [
+        "ecoclima-edrfb-315",
         "ecoclima-edrfqb-315"
       ]
     },
@@ -107322,7 +107488,10 @@
       "sourceRow": 10,
       "sourceColumn": 5,
       "originalPrice": "94,41",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edrfb-315",
+        "ecoclima-edrfqb-315"
+      ]
     },
     {
       "id": "ecoclima-f9ec928331a55e657e8aae96",
@@ -107546,7 +107715,9 @@
       "sourceRow": 8,
       "sourceColumn": 8,
       "originalPrice": "26,77",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-40"
+      ]
     },
     {
       "id": "ecoclima-05ebc85bd40cf9d9e4479960",
@@ -107581,7 +107752,9 @@
       "sourceRow": 8,
       "sourceColumn": 10,
       "originalPrice": "30,24",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-40"
+      ]
     },
     {
       "id": "ecoclima-299ef03379aa935f7c53d002",
@@ -107616,7 +107789,9 @@
       "sourceRow": 8,
       "sourceColumn": 11,
       "originalPrice": "66,16",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-40"
+      ]
     },
     {
       "id": "ecoclima-0bad1d82d69082acff926c35",
@@ -107688,7 +107863,9 @@
       "sourceRow": 9,
       "sourceColumn": 8,
       "originalPrice": "27,65",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-50"
+      ]
     },
     {
       "id": "ecoclima-55fa3ab3b711bd853c48e1c5",
@@ -107760,7 +107937,9 @@
       "sourceRow": 9,
       "sourceColumn": 10,
       "originalPrice": "29,89",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-50"
+      ]
     },
     {
       "id": "ecoclima-110c12335226fa354b5e35b6",
@@ -107795,7 +107974,9 @@
       "sourceRow": 9,
       "sourceColumn": 11,
       "originalPrice": "67,63",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-50"
+      ]
     },
     {
       "id": "ecoclima-e1a4674c9f38f76d807a7246",
@@ -107831,7 +108012,8 @@
       "sourceColumn": 2,
       "originalPrice": "120,13",
       "technicalVariantIds": [
-        "ecoclima-edu-80"
+        "ecoclima-edu-80",
+        "ecoclima-edu-m-80"
       ]
     },
     {
@@ -107868,6 +108050,7 @@
       "sourceColumn": 3,
       "originalPrice": "352,35",
       "technicalVariantIds": [
+        "ecoclima-edu-80",
         "ecoclima-edu-m-80"
       ]
     },
@@ -108018,7 +108201,10 @@
       "sourceRow": 10,
       "sourceColumn": 8,
       "originalPrice": "31,63",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-80",
+        "ecoclima-edu-m-80"
+      ]
     },
     {
       "id": "ecoclima-4ac0b63ea175ecd9d3ee29c6",
@@ -108091,7 +108277,10 @@
       "sourceRow": 10,
       "sourceColumn": 10,
       "originalPrice": "32,38",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-80",
+        "ecoclima-edu-m-80"
+      ]
     },
     {
       "id": "ecoclima-06767353088624b39da45af4",
@@ -108126,7 +108315,10 @@
       "sourceRow": 10,
       "sourceColumn": 11,
       "originalPrice": "70,99",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-80",
+        "ecoclima-edu-m-80"
+      ]
     },
     {
       "id": "ecoclima-7d1446c147272ace5b9f00d2",
@@ -108162,7 +108354,8 @@
       "sourceColumn": 2,
       "originalPrice": "166,66",
       "technicalVariantIds": [
-        "ecoclima-edu-110"
+        "ecoclima-edu-110",
+        "ecoclima-edu-m-110"
       ]
     },
     {
@@ -108199,6 +108392,7 @@
       "sourceColumn": 3,
       "originalPrice": "377,17",
       "technicalVariantIds": [
+        "ecoclima-edu-110",
         "ecoclima-edu-m-110"
       ]
     },
@@ -108235,7 +108429,10 @@
       "sourceRow": 11,
       "sourceColumn": 8,
       "originalPrice": "37,10",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-110",
+        "ecoclima-edu-m-110"
+      ]
     },
     {
       "id": "ecoclima-460d9b4d694f924fbc4c26e1",
@@ -108308,7 +108505,10 @@
       "sourceRow": 11,
       "sourceColumn": 10,
       "originalPrice": "48,55",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-110",
+        "ecoclima-edu-m-110"
+      ]
     },
     {
       "id": "ecoclima-9eff3aba37ed2c53df354d39",
@@ -108343,7 +108543,10 @@
       "sourceRow": 11,
       "sourceColumn": 11,
       "originalPrice": "79,92",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-110",
+        "ecoclima-edu-m-110"
+      ]
     },
     {
       "id": "ecoclima-1307746cdf9d8f22e9ef4545",
@@ -108379,7 +108582,8 @@
       "sourceColumn": 2,
       "originalPrice": "222,55",
       "technicalVariantIds": [
-        "ecoclima-edu-150"
+        "ecoclima-edu-150",
+        "ecoclima-edu-m-150"
       ]
     },
     {
@@ -108416,6 +108620,7 @@
       "sourceColumn": 3,
       "originalPrice": "475,35",
       "technicalVariantIds": [
+        "ecoclima-edu-150",
         "ecoclima-edu-m-150"
       ]
     },
@@ -108452,7 +108657,10 @@
       "sourceRow": 12,
       "sourceColumn": 8,
       "originalPrice": "45,91",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-150",
+        "ecoclima-edu-m-150"
+      ]
     },
     {
       "id": "ecoclima-f299a29a7b32d6950c1240e5",
@@ -108525,7 +108733,10 @@
       "sourceRow": 12,
       "sourceColumn": 10,
       "originalPrice": "54,76",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-150",
+        "ecoclima-edu-m-150"
+      ]
     },
     {
       "id": "ecoclima-3e31bfaf6a404ec1f912d99e",
@@ -108560,7 +108771,10 @@
       "sourceRow": 12,
       "sourceColumn": 11,
       "originalPrice": "98,36",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-150",
+        "ecoclima-edu-m-150"
+      ]
     },
     {
       "id": "ecoclima-86fa4b9f767ed452e3d5aa2e",
@@ -108596,7 +108810,8 @@
       "sourceColumn": 2,
       "originalPrice": "324,90",
       "technicalVariantIds": [
-        "ecoclima-edu-200"
+        "ecoclima-edu-200",
+        "ecoclima-edu-m-200"
       ]
     },
     {
@@ -108633,6 +108848,7 @@
       "sourceColumn": 3,
       "originalPrice": "577,78",
       "technicalVariantIds": [
+        "ecoclima-edu-200",
         "ecoclima-edu-m-200"
       ]
     },
@@ -108669,7 +108885,10 @@
       "sourceRow": 13,
       "sourceColumn": 8,
       "originalPrice": "57,35",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-200",
+        "ecoclima-edu-m-200"
+      ]
     },
     {
       "id": "ecoclima-a944e8995d5e384d0ce2698c",
@@ -108742,7 +108961,10 @@
       "sourceRow": 13,
       "sourceColumn": 10,
       "originalPrice": "73,06",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-200",
+        "ecoclima-edu-m-200"
+      ]
     },
     {
       "id": "ecoclima-2c944ecd1e7862868267054b",
@@ -108777,7 +108999,10 @@
       "sourceRow": 13,
       "sourceColumn": 11,
       "originalPrice": "134,88",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-200",
+        "ecoclima-edu-m-200"
+      ]
     },
     {
       "id": "ecoclima-1f344f4885f22f826dae8a53",
@@ -108813,7 +109038,8 @@
       "sourceColumn": 2,
       "originalPrice": "252,89",
       "technicalVariantIds": [
-        "ecoclima-edu-230"
+        "ecoclima-edu-230",
+        "ecoclima-edu-m-230"
       ]
     },
     {
@@ -108850,6 +109076,7 @@
       "sourceColumn": 3,
       "originalPrice": "505,73",
       "technicalVariantIds": [
+        "ecoclima-edu-230",
         "ecoclima-edu-m-230"
       ]
     },
@@ -108886,7 +109113,10 @@
       "sourceRow": 14,
       "sourceColumn": 8,
       "originalPrice": "57,35",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-230",
+        "ecoclima-edu-m-230"
+      ]
     },
     {
       "id": "ecoclima-d765b1a7487a77734ee82d1b",
@@ -108959,7 +109189,10 @@
       "sourceRow": 14,
       "sourceColumn": 10,
       "originalPrice": "73,06",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-230",
+        "ecoclima-edu-m-230"
+      ]
     },
     {
       "id": "ecoclima-03f47d7e929786d82a911fa0",
@@ -108994,7 +109227,10 @@
       "sourceRow": 14,
       "sourceColumn": 11,
       "originalPrice": "143,00",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-230",
+        "ecoclima-edu-m-230"
+      ]
     },
     {
       "id": "ecoclima-c0f42b86892aec087082771d",
@@ -109029,7 +109265,9 @@
       "sourceRow": 6,
       "sourceColumn": 2,
       "originalPrice": "122,05",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-f-40"
+      ]
     },
     {
       "id": "ecoclima-9ceb048c364d9bdc431408fd",
@@ -109064,7 +109302,9 @@
       "sourceRow": 7,
       "sourceColumn": 2,
       "originalPrice": "127,72",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-f-50"
+      ]
     },
     {
       "id": "ecoclima-02d65ea2de7f896278b4e997",
@@ -109099,7 +109339,9 @@
       "sourceRow": 8,
       "sourceColumn": 2,
       "originalPrice": "138,55",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-f-80"
+      ]
     },
     {
       "id": "ecoclima-a382d255caf8d100edf25779",
@@ -109134,7 +109376,9 @@
       "sourceRow": 9,
       "sourceColumn": 2,
       "originalPrice": "241,48",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-f-150"
+      ]
     },
     {
       "id": "ecoclima-c33b370cc09af108f8001d55",
@@ -109169,7 +109413,9 @@
       "sourceRow": 10,
       "sourceColumn": 2,
       "originalPrice": "348,06",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-f-200"
+      ]
     },
     {
       "id": "ecoclima-e12411a11c45ed65557571e9",
@@ -109204,7 +109450,9 @@
       "sourceRow": 11,
       "sourceColumn": 2,
       "originalPrice": "275,96",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-f-230"
+      ]
     },
     {
       "id": "ecoclima-1d6027e2219f3fa9add97ad1",
@@ -109462,7 +109710,8 @@
       "sourceColumn": 2,
       "originalPrice": "147,82",
       "technicalVariantIds": [
-        "ecoclima-edu-s-80"
+        "ecoclima-edu-s-80",
+        "ecoclima-edu-sm-80"
       ]
     },
     {
@@ -109498,7 +109747,10 @@
       "sourceRow": 8,
       "sourceColumn": 3,
       "originalPrice": "352,71",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-80",
+        "ecoclima-edu-sm-80"
+      ]
     },
     {
       "id": "ecoclima-8c320bff210814a93154ad55",
@@ -109647,7 +109899,10 @@
       "sourceRow": 8,
       "sourceColumn": 8,
       "originalPrice": "31,63",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-80",
+        "ecoclima-edu-sm-80"
+      ]
     },
     {
       "id": "ecoclima-7583b756c377b5ff3bfeaf2c",
@@ -109720,7 +109975,10 @@
       "sourceRow": 8,
       "sourceColumn": 10,
       "originalPrice": "32,38",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-80",
+        "ecoclima-edu-sm-80"
+      ]
     },
     {
       "id": "ecoclima-f00dbf8887df5b5a78b47401",
@@ -109755,7 +110013,10 @@
       "sourceRow": 8,
       "sourceColumn": 11,
       "originalPrice": "70,99",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-80",
+        "ecoclima-edu-sm-80"
+      ]
     },
     {
       "id": "ecoclima-ce1ba6ff9ce0b6f91a746397",
@@ -109791,7 +110052,8 @@
       "sourceColumn": 2,
       "originalPrice": "279,28",
       "technicalVariantIds": [
-        "ecoclima-edu-s-150"
+        "ecoclima-edu-s-150",
+        "ecoclima-edu-sm-150"
       ]
     },
     {
@@ -109827,7 +110089,10 @@
       "sourceRow": 9,
       "sourceColumn": 3,
       "originalPrice": "462,03",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-150",
+        "ecoclima-edu-sm-150"
+      ]
     },
     {
       "id": "ecoclima-58bdb15458ab6018116eba0d",
@@ -110014,7 +110279,10 @@
       "sourceRow": 9,
       "sourceColumn": 8,
       "originalPrice": "45,91",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-150",
+        "ecoclima-edu-sm-150"
+      ]
     },
     {
       "id": "ecoclima-cd32346444d57fefe5e30721",
@@ -110087,7 +110355,10 @@
       "sourceRow": 9,
       "sourceColumn": 10,
       "originalPrice": "54,76",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-150",
+        "ecoclima-edu-sm-150"
+      ]
     },
     {
       "id": "ecoclima-da43e5c060d962af11463e28",
@@ -110122,7 +110393,10 @@
       "sourceRow": 9,
       "sourceColumn": 11,
       "originalPrice": "98,36",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-150",
+        "ecoclima-edu-sm-150"
+      ]
     },
     {
       "id": "ecoclima-cb685f3eb946b2c43a2613b9",
@@ -110158,7 +110432,8 @@
       "sourceColumn": 2,
       "originalPrice": "357,64",
       "technicalVariantIds": [
-        "ecoclima-edu-s-200"
+        "ecoclima-edu-s-200",
+        "ecoclima-edu-sm-200"
       ]
     },
     {
@@ -110194,7 +110469,10 @@
       "sourceRow": 10,
       "sourceColumn": 3,
       "originalPrice": "541,53",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-200",
+        "ecoclima-edu-sm-200"
+      ]
     },
     {
       "id": "ecoclima-d1ce0a29ac2ea2748633023d",
@@ -110229,7 +110507,10 @@
       "sourceRow": 10,
       "sourceColumn": 8,
       "originalPrice": "57,35",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-200",
+        "ecoclima-edu-sm-200"
+      ]
     },
     {
       "id": "ecoclima-0db5cf79fc52cfae60b22574",
@@ -110302,7 +110583,10 @@
       "sourceRow": 10,
       "sourceColumn": 10,
       "originalPrice": "73,06",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-200",
+        "ecoclima-edu-sm-200"
+      ]
     },
     {
       "id": "ecoclima-d42c0f427c497b3eb25ffb06",
@@ -110337,7 +110621,10 @@
       "sourceRow": 10,
       "sourceColumn": 11,
       "originalPrice": "134,88",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-200",
+        "ecoclima-edu-sm-200"
+      ]
     },
     {
       "id": "ecoclima-f2fda286d6fad0d4bc0ebe37",
@@ -110373,7 +110660,8 @@
       "sourceColumn": 2,
       "originalPrice": "373,01",
       "technicalVariantIds": [
-        "ecoclima-edu-s-230"
+        "ecoclima-edu-s-230",
+        "ecoclima-edu-sm-230"
       ]
     },
     {
@@ -110409,7 +110697,10 @@
       "sourceRow": 11,
       "sourceColumn": 3,
       "originalPrice": "549,35",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-230",
+        "ecoclima-edu-sm-230"
+      ]
     },
     {
       "id": "ecoclima-723b22578a62c91e83e0050e",
@@ -110444,7 +110735,10 @@
       "sourceRow": 11,
       "sourceColumn": 8,
       "originalPrice": "57,35",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-230",
+        "ecoclima-edu-sm-230"
+      ]
     },
     {
       "id": "ecoclima-7bae77d9a52b44f07fccfe8a",
@@ -110517,7 +110811,10 @@
       "sourceRow": 11,
       "sourceColumn": 10,
       "originalPrice": "73,06",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-230",
+        "ecoclima-edu-sm-230"
+      ]
     },
     {
       "id": "ecoclima-ed39877fbf6683a1117a0dac",
@@ -110552,7 +110849,10 @@
       "sourceRow": 11,
       "sourceColumn": 11,
       "originalPrice": "143,00",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-230",
+        "ecoclima-edu-sm-230"
+      ]
     },
     {
       "id": "ecoclima-2a6942175b29400bdd47c896",
@@ -110588,7 +110888,8 @@
       "sourceColumn": 2,
       "originalPrice": "387,45",
       "technicalVariantIds": [
-        "ecoclima-edu-s-250"
+        "ecoclima-edu-s-250",
+        "ecoclima-edu-sm-250"
       ]
     },
     {
@@ -110624,7 +110925,10 @@
       "sourceRow": 12,
       "sourceColumn": 3,
       "originalPrice": "556,11",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-250",
+        "ecoclima-edu-sm-250"
+      ]
     },
     {
       "id": "ecoclima-d76dc878af4271eecdb49f13",
@@ -110660,7 +110964,8 @@
       "sourceColumn": 2,
       "originalPrice": "397,43",
       "technicalVariantIds": [
-        "ecoclima-edu-s-300"
+        "ecoclima-edu-s-300",
+        "ecoclima-edu-sm-300"
       ]
     },
     {
@@ -110696,7 +111001,10 @@
       "sourceRow": 13,
       "sourceColumn": 3,
       "originalPrice": "567,57",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edu-s-300",
+        "ecoclima-edu-sm-300"
+      ]
     },
     {
       "id": "ecoclima-0ce5f912a9ae2136ec7b123e",
@@ -111422,7 +111730,9 @@
       "sourceRow": 6,
       "sourceColumn": 3,
       "originalPrice": "5,52",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-evvmc-80"
+      ]
     },
     {
       "id": "ecoclima-5c5665ed83689c0e511b5e7d",
@@ -111494,7 +111804,9 @@
       "sourceRow": 7,
       "sourceColumn": 3,
       "originalPrice": "6,14",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-evvmc-100"
+      ]
     },
     {
       "id": "ecoclima-9b1ee648dbf7c0956509a254",
@@ -111566,7 +111878,9 @@
       "sourceRow": 8,
       "sourceColumn": 3,
       "originalPrice": "7,62",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-evvmc-125"
+      ]
     },
     {
       "id": "ecoclima-0ae87cdd610d957f5a6c1063",
@@ -111638,7 +111952,9 @@
       "sourceRow": 9,
       "sourceColumn": 3,
       "originalPrice": "11,44",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-evvmc-150"
+      ]
     },
     {
       "id": "ecoclima-aa747191ebfcf43d3868e2e7",
@@ -111710,7 +112026,9 @@
       "sourceRow": 10,
       "sourceColumn": 3,
       "originalPrice": "11,66",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-evvmc-160"
+      ]
     },
     {
       "id": "ecoclima-fbbfe06c86d0782ca6016087",
@@ -111782,7 +112100,9 @@
       "sourceRow": 11,
       "sourceColumn": 3,
       "originalPrice": "16,58",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-evvmc-200"
+      ]
     },
     {
       "id": "ecoclima-ab73326e9da3d8614166fec1",
@@ -175320,7 +175640,9 @@
       "sourceRow": 6,
       "sourceColumn": 4,
       "originalPrice": "88,25",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edlsv-500"
+      ]
     },
     {
       "id": "ecoclima-98ac6bf6d6f3aa7aaf6667d5",
@@ -175429,7 +175751,9 @@
       "sourceRow": 7,
       "sourceColumn": 4,
       "originalPrice": "100,74",
-      "technicalVariantIds": []
+      "technicalVariantIds": [
+        "ecoclima-edlsv-800"
+      ]
     },
     {
       "id": "ecoclima-f76da44cf69b772dcb92b61b",

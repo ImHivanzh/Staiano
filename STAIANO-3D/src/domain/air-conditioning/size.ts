@@ -22,6 +22,7 @@ export type SplitSolution = {
   assignments: SplitAssignment[];
   requiredW: number;
   excessW: number;
+  meetsLoad: boolean;
 };
 export function usableSplitWall(
   project: Project,
@@ -69,11 +70,14 @@ export function usableSplitWall(
       .sort((a, b) => b.span.lengthM - a.span.lengthM)[0] ?? null
   );
 }
-export function usableSplitPlacement(project: Project, room: Room, unit: SplitIndoor) {
+export function usableSplitPlacement(
+  project: Project,
+  room: Room,
+  unit: SplitIndoor,
+) {
   if (unit.mounting === "wall") return usableSplitWall(project, room, unit);
   const candidate = { position: room.centroid, rotation: 0 };
-  return (
-    indoorUnitFitsBelowCeiling(project, room, { ...unit, ...candidate }) &&
+  return indoorUnitFitsBelowCeiling(project, room, { ...unit, ...candidate }) &&
     footprintInsideRoom(
       room,
       candidate.position,
@@ -81,7 +85,6 @@ export function usableSplitPlacement(project: Project, room: Room, unit: SplitIn
       unit.depthMm / 1000,
       0,
     )
-  )
     ? { ...candidate, wall: null, span: null }
     : null;
 }
@@ -91,6 +94,7 @@ export function sizeSplitSystems(
   roomIds: string[],
   manufacturer: string,
   catalog: SplitCatalog,
+  options: { allowUnderCapacity?: boolean } = {},
 ): SplitSolution[] {
   const rooms = project.rooms
     .filter((r) => roomIds.includes(r.id))
@@ -125,12 +129,16 @@ export function sizeSplitSystems(
     ]),
   );
   for (const combination of catalog.combinations) {
+    const coolingCapacityW =
+        combination.maxCoolingCapacityW ?? combination.coolingCapacityW,
+      heatingCapacityW =
+        combination.maxHeatingCapacityW ?? combination.heatingCapacityW;
     if (
       !combination.approved ||
       combination.manufacturer !== manufacturer ||
       combination.indoorProductIds.length !== rooms.length ||
-      combination.coolingCapacityW < requiredW ||
-      (combination.heatingCapacityW ?? 0) < requiredW ||
+      (!options.allowUnderCapacity && coolingCapacityW < requiredW) ||
+      (!options.allowUnderCapacity && (heatingCapacityW ?? 0) < requiredW) ||
       combination.indoorCoolingW.some((v) => v === null) ||
       combination.indoorHeatingW.some((v) => v === null)
     )
@@ -138,8 +146,14 @@ export function sizeSplitSystems(
     const slots = combination.indoorProductIds.map((id, i) => ({
       slotIndex: i,
       indoor: models.get(id)!,
-      coolingW: combination.indoorCoolingW[i]!,
-      heatingW: combination.indoorHeatingW[i]!,
+      coolingW:
+        combination.mode === "mono"
+          ? coolingCapacityW
+          : combination.indoorCoolingW[i]!,
+      heatingW:
+        combination.mode === "mono"
+          ? (heatingCapacityW ?? combination.indoorHeatingW[i]!)
+          : combination.indoorHeatingW[i]!,
     }));
     if (
       combination.maxConnectedCapacityW !== null &&
@@ -156,8 +170,8 @@ export function sizeSplitSystems(
       for (const slot of slots) {
         if (
           used.has(slot.slotIndex) ||
-          slot.coolingW < room.designLoadW ||
-          slot.heatingW < room.designLoadW ||
+          (!options.allowUnderCapacity && slot.coolingW < room.designLoadW) ||
+          (!options.allowUnderCapacity && slot.heatingW < room.designLoadW) ||
           !wallFit.get(room.id)?.has(slot.indoor.id)
         )
           continue;
@@ -174,6 +188,18 @@ export function sizeSplitSystems(
         combination,
         assignments: chosen,
         requiredW,
+        meetsLoad:
+          coolingCapacityW >= requiredW &&
+          (heatingCapacityW ?? 0) >= requiredW &&
+          chosen.every(
+            (assignment) =>
+              assignment.coolingW >=
+                rooms.find((room) => room.id === assignment.roomId)!
+                  .designLoadW &&
+              assignment.heatingW >=
+                rooms.find((room) => room.id === assignment.roomId)!
+                  .designLoadW,
+          ),
         excessW:
           chosen.reduce((s, a) => s + Math.min(a.coolingW, a.heatingW), 0) -
           requiredW,
@@ -181,6 +207,7 @@ export function sizeSplitSystems(
   }
   return solutions.sort(
     (a, b) =>
+      Number(b.meetsLoad) - Number(a.meetsLoad) ||
       a.excessW - b.excessW ||
       a.combination.coolingCapacityW - b.combination.coolingCapacityW ||
       Number(a.combination.region === "UK") -

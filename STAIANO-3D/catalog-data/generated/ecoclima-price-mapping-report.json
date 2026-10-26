@@ -1,6 +1,6 @@
 {
-  "priceVersion": "ecoclima-listino-07a432d5cb1d",
-  "technicalVersion": "2026-10-04-ecoclima-f01779a46f65",
+  "priceVersion": "ecoclima-listino-52e55b6264e0",
+  "technicalVersion": "2026-10-26-ecoclima-1eafdbe37091",
   "rows": [
     {
       "familyCode": "EDLS",
@@ -45,7 +45,7 @@
     {
       "familyCode": "EBCV",
       "configurations": 12,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 12
     },
     {
       "familyCode": "EBV",
@@ -355,7 +355,7 @@
     {
       "familyCode": "EDRCS",
       "configurations": 5,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 5
     },
     {
       "familyCode": "EDRC-PQR",
@@ -365,7 +365,7 @@
     {
       "familyCode": "EDRCS-PQR",
       "configurations": 3,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 3
     },
     {
       "familyCode": "EDRCS THERM",
@@ -400,7 +400,7 @@
     {
       "familyCode": "EDE-FB",
       "configurations": 4,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 4
     },
     {
       "familyCode": "EDQMQ",
@@ -485,7 +485,7 @@
     {
       "familyCode": "EDU-F",
       "configurations": 6,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 6
     },
     {
       "familyCode": "EDU-S",
@@ -495,7 +495,7 @@
     {
       "familyCode": "EDU-SM",
       "configurations": 6,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 6
     },
     {
       "familyCode": "EDU-LFS",
@@ -520,7 +520,7 @@
     {
       "familyCode": "EAM-VRFN",
       "configurations": 3,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 3
     },
     {
       "familyCode": "EDSC-C",
@@ -635,24 +635,16 @@
     {
       "familyCode": "EMV-350",
       "configurations": 1,
-      "matchedConfigurations": 0
+      "matchedConfigurations": 1
     }
   ],
   "unmappedFamilies": [
-    "EBCV",
     "EGA50-3S",
     "EBP",
     "EBP-T",
     "EDE1R",
     "EDE2R",
-    "EDRCS",
-    "EDRCS-PQR",
     "EDRCS THERM",
-    "EDRCS-PQR THERM",
-    "EDE-FB",
-    "EDU-F",
-    "EDU-SM",
-    "EAM-VRFN",
-    "EMV-350"
+    "EDRCS-PQR THERM"
   ]
 }

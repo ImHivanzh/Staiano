@@ -59,8 +59,13 @@ export function SplitPanel({
       manufacturer,
       splitCatalog,
     ),
+    choices = sizeSplitSystems(project, roomIds, manufacturer, splitCatalog, {
+      allowUnderCapacity: true,
+    }),
     preview =
-      solutions.find((s) => s.combination.id === combinationId) ?? solutions[0],
+      choices.find((s) => s.combination.id === combinationId) ??
+      solutions[0] ??
+      choices[0],
     installed = existing
       ? splitCombinationAtVersion(existing.productId, existing.catalogVersion)
       : null,
@@ -84,8 +89,8 @@ export function SplitPanel({
       <header className={styles.heading}>
         <h3>Climatizzatori split</h3>
         <p className="nota">
-          Scegli la marca. Il modello compatibile viene selezionato in base alle
-          stanze servite.
+          Scegli la marca e il modello. Il sistema evidenzia le combinazioni
+          compatibili con il carico delle stanze.
         </p>
       </header>
       <div className={styles.layout}>
@@ -110,7 +115,7 @@ export function SplitPanel({
               value={preview?.combination.id ?? ""}
               onChange={(e) => setCombinationId(e.target.value)}
             >
-              {solutions.map((s) => (
+              {choices.map((s) => (
                 <option key={s.combination.id} value={s.combination.id}>
                   {s.assignments
                     .map(
@@ -119,6 +124,7 @@ export function SplitPanel({
                     )
                     .join(" + ")}{" "}
                   / {s.combination.outdoorModel}
+                  {!s.meetsLoad ? " · potenza insufficiente" : ""}
                 </option>
               ))}
             </select>
@@ -248,6 +254,13 @@ export function SplitPanel({
           )}
           {preview && (
             <>
+              {!preview.meetsLoad && (
+                <p role="status" className="nota">
+                  Modello scelto manualmente: la potenza pubblicata non copre il
+                  carico massimo delle stanze. La configurazione sarà segnata
+                  come non verificata.
+                </p>
+              )}
               <p className="nota">
                 {preview.combination.mode === "mono"
                   ? "Monosplit"
@@ -256,25 +269,44 @@ export function SplitPanel({
               </p>
               <dl className={styles.facts}>
                 <div>
-                  <dt>Raffrescamento</dt>
+                  <dt>
+                    {preview.combination.maxCoolingCapacityW
+                      ? "Raffrescamento massimo"
+                      : "Raffrescamento nominale"}
+                  </dt>
                   <dd>
-                    {formatNumber(preview.combination.coolingCapacityW / 1000)}{" "}
+                    {formatNumber(
+                      (preview.combination.maxCoolingCapacityW ??
+                        preview.combination.coolingCapacityW) / 1000,
+                    )}{" "}
                     kW
+                    {preview.combination.maxCoolingCapacityW &&
+                      ` · nominale ${formatNumber(preview.combination.coolingCapacityW / 1000)} kW`}
                   </dd>
                 </div>
                 <div>
-                  <dt>Riscaldamento</dt>
+                  <dt>
+                    {preview.combination.maxHeatingCapacityW
+                      ? "Riscaldamento massimo"
+                      : "Riscaldamento nominale"}
+                  </dt>
                   <dd>
-                    {preview.combination.heatingCapacityW == null
+                    {(preview.combination.maxHeatingCapacityW ??
+                      preview.combination.heatingCapacityW) == null
                       ? "Non disponibile"
-                      : `${formatNumber(preview.combination.heatingCapacityW / 1000)} kW`}
+                      : `${formatNumber((preview.combination.maxHeatingCapacityW ?? preview.combination.heatingCapacityW!) / 1000)} kW`}
+                    {preview.combination.maxHeatingCapacityW &&
+                      ` · nominale ${formatNumber(preview.combination.heatingCapacityW! / 1000)} kW`}
                   </dd>
                 </div>
                 <div>
                   <dt>Capacità in BTU/h</dt>
                   <dd>
                     {formatNumber(
-                      wattsToBtuh(preview.combination.coolingCapacityW),
+                      wattsToBtuh(
+                        preview.combination.maxCoolingCapacityW ??
+                          preview.combination.coolingCapacityW,
+                      ),
                       0,
                     )}
                   </dd>
@@ -363,6 +395,9 @@ export function SplitPanel({
               </p>
               {combo.indoorProductIds.map((id, i) => {
                 const unit = catalog?.indoorUnits.find((u) => u.id === id),
+                  assignment = preview?.assignments.find(
+                    (item) => item.slotIndex === i,
+                  ),
                   placement = existing?.indoorUnits[i],
                   assigned = placement
                     ? project.rooms.find((r) => r.id === placement.roomId)
@@ -376,10 +411,16 @@ export function SplitPanel({
                   <p className="nota" key={`${id}-${i}`}>
                     {assigned?.name} · {unit?.model ?? id}
                     <br />
-                    {formatNumber((combo.indoorCoolingW[i] ?? 0) / 1000)} kW
-                    freddo ·{" "}
-                    {formatNumber((combo.indoorHeatingW[i] ?? 0) / 1000)} kW
-                    caldo
+                    {formatNumber(
+                      (assignment?.coolingW ?? combo.indoorCoolingW[i] ?? 0) /
+                        1000,
+                    )}{" "}
+                    kW freddo ·{" "}
+                    {formatNumber(
+                      (assignment?.heatingW ?? combo.indoorHeatingW[i] ?? 0) /
+                        1000,
+                    )}{" "}
+                    kW caldo
                     <br />
                     {unit &&
                       `${unit.widthMm}×${unit.heightMm}×${unit.depthMm} mm`}

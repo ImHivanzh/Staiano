@@ -37,6 +37,8 @@ export const splitCombinationSchema = z
     indoorProductIds: z.array(z.string().min(1)).min(1).max(6),
     coolingCapacityW: capacity,
     heatingCapacityW: capacity.nullable(),
+    maxCoolingCapacityW: capacity.nullable().default(null),
+    maxHeatingCapacityW: capacity.nullable().default(null),
     indoorCoolingW: z.array(capacity.nullable()).min(1).max(6),
     indoorHeatingW: z.array(capacity.nullable()).min(1).max(6),
     minIndoorUnits: z.number().int().min(1).max(6),

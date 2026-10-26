@@ -220,17 +220,21 @@ def main():
             if family['familyCode'] != price['familyCode'] and family['sourceMetadata']['sourceUrl'] not in equivalent_urls:
                 continue
             model = price['modelCode']
-            slug = lambda value: re.sub(r'\s+', '-', str(value).strip().lower()).replace('/', '-')
+            slug = lambda value: re.sub(r'[^a-z0-9]+', '-', str(value).strip().lower()).strip('-')
             suffix = slug(size) if size else None
+            if not suffix and price['familyCode'] == 'EAM-VRFN':
+                match = re.fullmatch(r'EAM-(\d+)-VRFN', model)
+                suffix = match[1] if match else None
             prefix = 'ecoclima-' + family['familyCode'].lower() + '-'
             if suffix and suffix.startswith(family['familyCode'].lower() + '-'):
                 suffix = suffix[len(family['familyCode']) + 1:]
             for variant in family['variants']:
                 exact_model = slug(variant.get('modelCode', '')) == slug(model) or variant['id'] == 'ecoclima-' + slug(model)
+                exact_variant = bool(suffix and variant['id'] == prefix + suffix)
                 model_matches = family['familyCode'] == model or model in family.get('modelCodes', []) or exact_model
-                if price['kind'] == 'terminal' and not model_matches:
+                if price['kind'] == 'terminal' and not (model_matches or exact_variant):
                     continue
-                if exact_model or suffix and variant['id'] == prefix + suffix:
+                if exact_model or exact_variant:
                     matches.append(variant['id'])
         if matches or size:
             price['technicalVariantIds'] = matches

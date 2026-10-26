@@ -5,6 +5,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import re
 import urllib.parse
 import urllib.request
 
@@ -52,12 +53,12 @@ class ArticleGrid(grid_module.GridParser):
             self.tables[-1]["articles"] = articles
 
 
-def price_articles(record, html):
+def price_records(record, html):
     parser = ArticleGrid()
     parser.feed(html)
     family = "EGA1-4" if "/ega-1-4-" in record["pageUrl"] else record["code"]
     source = {"sourceUrl": record["pageUrl"]}
-    result = {}
+    result = []
     for table in parser.tables:
         grid = table["grid"]
         if not any(value in ("€", "euro", "Euro") for row in grid for value in row):
@@ -73,8 +74,33 @@ def price_articles(record, html):
         for price in prices:
             code = table["articles"].get((price["sourceRow"] - 3, price["sourceColumn"] - 1))
             if code:
-                result.setdefault(price["id"], set()).add(code)
+                if family == "EDE1" and not price.get("catalogSizeCode"):
+                    heading = grid[0][price["sourceColumn"] - 1]
+                    size = re.fullmatch(r"EDE1\s+(\d+)", heading)
+                    if size:
+                        price["catalogSizeCode"] = size[1]
+                        price["_inferredCatalogSizeCode"] = True
+                if family == "EDE1" and "stacco laterale" in table["heading"].lower():
+                    price["connectionPosition"] = "lateral"
+                result.append((price, code))
     return result
+
+
+def price_articles(record, html):
+    result = {}
+    for price, code in price_records(record, html):
+        result.setdefault(price["id"], set()).add(code)
+    return result
+
+
+def price_key(price):
+    return tuple(json.dumps(price.get(key), sort_keys=True, separators=(",", ":"))
+        for key in ("familyCode", "kind", "modelCode", "catalogSizeCode", "unitPriceCents", "currency", "connectionPosition", "dimensions"))
+
+
+def price_key_without_size(price):
+    return tuple(json.dumps(price.get(key), sort_keys=True, separators=(",", ":"))
+        for key in ("familyCode", "kind", "modelCode", "unitPriceCents", "currency", "colorCode", "connectionPosition", "dimensions"))
 
 
 def fetch_article(entry):
@@ -99,17 +125,32 @@ def main():
     CACHE.mkdir(exist_ok=True)
     catalog = json.loads((ROOT / "catalog-data/generated/ecoclima-prices.json").read_text(encoding="utf-8"))
     wanted = {p["id"] for p in catalog["prices"]}
+    catalog_keys = {}
+    for price in catalog["prices"]:
+        catalog_keys.setdefault(price_key(price), []).append(price)
     records = json.loads((SOURCE / "complete-discovery.json").read_text(encoding="utf-8"))["records"]
-    matches, urls = {}, {}
+    matches, urls, html_prices = {}, {}, []
     for record in records:
         if "htmlSource" not in record:
             continue
         html = (SOURCE / record["htmlSource"]["filename"]).read_text(encoding="utf-8")
-        for identity, codes in price_articles(record, html).items():
-            if identity in wanted:
-                matches.setdefault(identity, set()).update(codes)
-                for code in codes:
-                    urls[code] = record["pageUrl"]
+        for price, code in price_records(record, html):
+            html_prices.append((price, code))
+            identities = [price["id"]] if price["id"] in wanted and not price.get("_inferredCatalogSizeCode") else []
+            candidates = catalog_keys.get(price_key(price), [])
+            if candidates and len({candidate.get("colorCode") for candidate in candidates}) == 1:
+                identities.extend(candidate["id"] for candidate in candidates)
+            for identity in set(identities):
+                matches.setdefault(identity, set()).add(code)
+                urls[code] = record["pageUrl"]
+    for price in catalog["prices"]:
+        if price["familyCode"] != "EDE1" or price.get("catalogSizeCode") is not None or price["sourceMetadata"]["sourceType"] != "html":
+            continue
+        equivalents = [(html_price, code) for html_price, code in html_prices
+            if html_price.get("_inferredCatalogSizeCode") and price_key_without_size(html_price) == price_key_without_size(price)]
+        if len(equivalents) == 1:
+            matches.setdefault(price["id"], set()).add(equivalents[0][1])
+            urls[equivalents[0][1]] = price["sourceMetadata"]["sourceUrl"]
     exact = {key: next(iter(codes)) for key, codes in matches.items() if len(codes) == 1}
     selected = {code: urls[code] for code in set(exact.values())}
     print(f"Mapped {len(exact)}/{len(wanted)} prices to {len(selected)} official articles", flush=True)
@@ -124,7 +165,7 @@ def main():
                 failures[futures[future]] = str(error)
             if index % 100 == 0:
                 print(f"Articles {index + 1}/{len(selected)}", flush=True)
-    output = {"articles": dict(sorted(articles.items())), "priceArticles": dict(sorted((key, code) for key, code in exact.items() if code in articles))}
+    output = {"articles": dict(sorted(articles.items())), "priceArticles": dict(sorted(exact.items()))}
     (ROOT / "catalog-data/generated/ecoclima-articles.json").write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (CACHE / "failures.json").write_text(json.dumps(failures, indent=2), encoding="utf-8")
     print(f"Saved {len(articles)} official article descriptions; {len(failures)} unavailable: {failures}", flush=True)

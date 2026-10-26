@@ -4,7 +4,11 @@ import { assignInstallationRooms } from "../installations";
 import { splitCatalog } from "@/domain/catalogs/splits";
 import type { SplitCatalog } from "@/domain/catalogs/split-schema";
 import { footprintInsideRoom } from "@/domain/geometry/footprint";
-import { sizeSplitSystems, usableSplitPlacement, type SplitSolution } from "./size";
+import {
+  sizeSplitSystems,
+  usableSplitPlacement,
+  type SplitSolution,
+} from "./size";
 import { withHvacOutdoorUnit } from "./outdoor";
 export function splitSystemFromSolution(
   project: Project,
@@ -27,7 +31,8 @@ export function splitSystemFromSolution(
         const preserve =
           old &&
           (old.mounting ?? "wall") === unit.mounting &&
-          (unit.mounting === "ceiling" || room.wallIds.includes(old.wallId ?? "")) &&
+          (unit.mounting === "ceiling" ||
+            room.wallIds.includes(old.wallId ?? "")) &&
           indoorUnitFitsBelowCeiling(project, room, {
             ...unit,
             position: old.position,
@@ -40,9 +45,10 @@ export function splitSystemFromSolution(
             unit.depthMm / 1000,
             old.rotation,
           );
-        const wall = preserve && old.wallId
-          ? project.walls.find((w) => w.id === old.wallId)!
-          : candidate.wall;
+        const wall =
+          preserve && old.wallId
+            ? project.walls.find((w) => w.id === old.wallId)!
+            : candidate.wall;
         return {
           id: old?.id ?? crypto.randomUUID(),
           roomId: room.id,
@@ -69,8 +75,8 @@ export function splitSystemFromSolution(
     airflowM3h: null,
     catalogVersion: catalog.version,
     indoorUnits,
-    compatibilityStatus: "verified",
-    decisionOrigin: "confirmed",
+    compatibilityStatus: solution.meetsLoad ? "verified" : "invalid",
+    decisionOrigin: solution.meetsLoad ? "confirmed" : "manual",
     linearPlan: null,
     outdoorUnit: previous?.outdoorUnit ?? null,
   });
@@ -125,10 +131,11 @@ export function applySplitSystem(
     roomIds,
     manufacturer,
     splitCatalog,
+    { allowUnderCapacity: true },
   );
   const solution = preferredCombinationId
     ? solutions.find((item) => item.combination.id === preferredCombinationId)
-    : solutions[0];
+    : solutions.find((item) => item.meetsLoad);
   if (!solution)
     throw new Error(
       "Nessuna combinazione approvata e verificabile soddisfa capacità simultanee e dimensioni delle stanze selezionate.",
