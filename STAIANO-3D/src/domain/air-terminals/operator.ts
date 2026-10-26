@@ -1,4 +1,8 @@
-import { terminalBodyDepthMm } from "./geometry";
+import {
+  terminalBodyDepthMm,
+  terminalFaceDimensions,
+  preferredEdlsProfile,
+} from "./geometry";
 import type { Project } from "@/schemas/project";
 import {
   airTerminalCatalog,
@@ -192,10 +196,23 @@ export function addOperatorTerminal(
         installationId:
           input.installationId ?? allocation?.system.installationId,
         decisionOrigin: "manual",
-        style: input.style ?? "",
-        color: input.color ?? "",
+        style: input.style ?? added.style,
+        color: input.color ?? added.color,
         finish: input.finish ?? "",
-        commercialOptions: added.commercialOptions,
+        commercialOptions:
+          input.familyCode === "EDLS"
+            ? {
+                fixingBridges: true,
+                continuityKit: true,
+                ...added.commercialOptions,
+                profileCode: preferredEdlsProfile(
+                  variant.slotWidthMm,
+                  input.color ?? added.color,
+                  input.use,
+                ),
+                colorCode: (input.color ?? added.color) || undefined,
+              }
+            : added.commercialOptions,
         pointIndex: null,
         unitIndex: null,
         // Nessun plenum implicito: il corpo separato nasce con lo strumento
@@ -272,19 +289,21 @@ export function editOperatorTerminal(
       ? !airTerminalMountings(family)!.includes(
           before.mounting as "wall" | "ceiling",
         )
-      : !before.manualDimensions)
+      : !before.manualDimensions &&
+        (!terminalFaceDimensions(family, variant).widthMm ||
+          !terminalFaceDimensions(family, variant).heightMm))
   )
     throw new Error(
       "Modello o punto di funzionamento non compatibile: selezionare un punto valido.",
     );
+  const face = terminalFaceDimensions(family, variant);
   const widthMm =
     patch.widthMm ??
     (patch.variantId && !family.isLinearPerMeter
-      ? variant.faceWidthMm
+      ? face.widthMm
       : before.widthMm);
   const heightMm =
-    patch.heightMm ??
-    (patch.variantId ? variant.faceHeightMm : before.heightMm);
+    patch.heightMm ?? (patch.variantId ? face.heightMm : before.heightMm);
   if (
     !widthMm ||
     !heightMm ||
@@ -299,9 +318,9 @@ export function editOperatorTerminal(
   if (
     !family.isLinearPerMeter &&
     !before.manualDimensions &&
-    variant.faceWidthMm &&
-    variant.faceHeightMm &&
-    (widthMm !== variant.faceWidthMm || heightMm !== variant.faceHeightMm)
+    face.widthMm &&
+    face.heightMm &&
+    (widthMm !== face.widthMm || heightMm !== face.heightMm)
   )
     throw new Error(
       "Terminale non lineare: scegliere le dimensioni reali di una variante di catalogo.",
@@ -316,6 +335,22 @@ export function editOperatorTerminal(
         ? {
             ...t,
             ...pose,
+            ...(family.familyCode === "EDLS" &&
+            (patch.color !== undefined || patch.variantId)
+              ? {
+                  commercialOptions: {
+                    ...t.commercialOptions,
+                    fixingBridges: t.commercialOptions?.fixingBridges ?? true,
+                    continuityKit: t.commercialOptions?.continuityKit ?? true,
+                    colorCode: patch.color ?? t.color,
+                    profileCode: preferredEdlsProfile(
+                      variant.slotWidthMm,
+                      patch.color ?? t.color,
+                      t.use,
+                    ),
+                  },
+                }
+              : {}),
             widthMm,
             heightMm,
             productId: variant.id,

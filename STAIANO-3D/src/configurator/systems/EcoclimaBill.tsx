@@ -2,16 +2,12 @@
 import type { Project } from "@/schemas/project";
 import { calculateEcoclimaBom } from "@/domain/air-terminals/commercial-bom";
 import { ecoclimaBomCsv } from "@/services/export/ecoclima-csv";
-import {
-  ecoclimaEasyfattXlsx,
-  easyfattLineReady,
-} from "@/services/export/ecoclima-easyfatt";
+import { materialsEasyfattXlsx } from "@/services/export/materials-easyfatt";
 import { downloadFile } from "@/services/project/format";
 const money = (cents: number) =>
   (cents / 100).toLocaleString("it-IT", { style: "currency", currency: "EUR" });
 export function EcoclimaBill({ project }: { project: Project }) {
   const bill = calculateEcoclimaBom(project);
-  const readyCount = bill.lines.filter(easyfattLineReady).length;
   const name =
     project.name.replace(/[^\p{L}\p{N}._-]+/gu, "-").slice(0, 100) ||
     "progetto";
@@ -34,11 +30,10 @@ export function EcoclimaBill({ project }: { project: Project }) {
       <button
         type="button"
         className="bottone piccolo"
-        disabled={readyCount === 0}
         onClick={() =>
           downloadFile(
             `${name}-preventivo-easyfatt.xlsx`,
-            new Blob([ecoclimaEasyfattXlsx(bill)], {
+            new Blob([materialsEasyfattXlsx(project)], {
               type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             }),
           )
@@ -47,8 +42,9 @@ export function EcoclimaBill({ project }: { project: Project }) {
         Esporta Excel per Easyfatt
       </button>
       <p className="nota">
-        Excel: {readyCount} voci pronte, {bill.lines.length - readyCount} nel
-        foglio “Da completare”. Prezzi di listino, IVA da impostare in Easyfatt.
+        Excel: tutti i materiali del progetto, cumulativi per stanza, anche
+        senza codice. Codici e prezzi assenti restano vuoti; il foglio “Da
+        completare” li riepiloga. IVA da impostare in Easyfatt.
       </p>
       <details>
         <summary>Come importare il preventivo in Easyfatt</summary>

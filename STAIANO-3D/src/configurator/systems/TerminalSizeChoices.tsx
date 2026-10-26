@@ -49,12 +49,14 @@ export function TerminalSolutionChoices({
   onChange,
   recommended,
   linear,
+  circular = false,
 }: {
   solutions: AirTerminalSolution[];
   value: AirTerminalSolution;
   onChange: (index: number) => void;
   recommended?: AirTerminalSolution;
   linear: boolean;
+  circular?: boolean;
 }) {
   const choices = linear
     ? solutions
@@ -66,14 +68,17 @@ export function TerminalSolutionChoices({
       );
   const rectangular =
     !linear &&
+    !circular &&
     choices.every((item) => item.variant.widthMm && item.variant.heightMm) &&
     choices.some((item) => item.variant.widthMm !== item.variant.heightMm);
   const button = (item: AirTerminalSolution) => {
     const text = linear
       ? `${item.variant.slotCount ?? 1} ${(item.variant.slotCount ?? 1) === 1 ? "feritoia" : "feritoie"} · ${item.variant.slotWidthMm ?? "—"} mm · ${item.operatingPoint.airflowPerMeterM3h} m³/h per metro · ${item.operatingPoint.noiseLabel} dB(A)`
-      : item.variant.widthMm && item.variant.heightMm
-        ? `${item.variant.widthMm} × ${item.variant.heightMm} mm`
-        : item.variant.id;
+      : item.variant.nominalDiameterMm || circular
+        ? `Ø ${item.variant.nominalDiameterMm ?? item.variant.widthMm ?? item.variant.heightMm ?? "—"} mm`
+        : item.variant.widthMm && item.variant.heightMm
+          ? `${item.variant.widthMm} × ${item.variant.heightMm} mm`
+          : item.variant.id;
     const selected = linear
       ? item === value
       : item.variant.id === value.variant.id;

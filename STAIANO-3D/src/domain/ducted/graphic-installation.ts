@@ -285,7 +285,12 @@ export function saveTerminalOnPlan(
               ...terminal.commercialOptions,
               ...before.commercialOptions,
               ...(before.color !== terminal.color
-                ? { colorCode: undefined }
+                ? {
+                    colorCode: terminal.commercialOptions?.colorCode,
+                    ...(terminal.family === "EDLS"
+                      ? { profileCode: terminal.commercialOptions?.profileCode }
+                      : {}),
+                  }
                 : {}),
               linearRunId: terminal.commercialOptions?.linearRunId,
               linearRunOrder: terminal.commercialOptions?.linearRunOrder,

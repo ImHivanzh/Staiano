@@ -144,6 +144,7 @@ export default function Viewer3D({
     planPlacementTool,
   } = useProjectStore();
   const [top, setTop] = useState(false);
+  const [printMode, setPrintMode] = useState(false);
   const [isolated, setIsolated] = useState(false);
   const [cutaway, setCutaway] = useState(true);
   const [labels, setLabels] = useState(true);
@@ -574,6 +575,21 @@ export default function Viewer3D({
   const selectedPlenum = p?.plenums.find((pl) => pl.id === selectedId);
   const internalSides =
     p && selectedRoom ? roomMeasuredSides(p, selectedRoom, "internal") : null;
+  useEffect(() => {
+    const media = window.matchMedia("print");
+    const update = () => setPrintMode(media.matches);
+    const beforePrint = () => setPrintMode(true);
+    const afterPrint = () => setPrintMode(false);
+    media.addEventListener("change", update);
+    window.addEventListener("beforeprint", beforePrint);
+    window.addEventListener("afterprint", afterPrint);
+    update();
+    return () => {
+      media.removeEventListener("change", update);
+      window.removeEventListener("beforeprint", beforePrint);
+      window.removeEventListener("afterprint", afterPrint);
+    };
+  }, []);
   useEffect(() => {
     const changed = () =>
       setFullscreen(document.fullscreenElement === container.current);
@@ -1252,6 +1268,7 @@ export default function Viewer3D({
                   frame={frame}
                   rooms={rooms}
                   revision={revision + (cutaway ? 100000 : 0)}
+                  printMode={printMode}
                 />
                 <ArchitectureMeshes
                   walls={walls}
@@ -1343,8 +1360,10 @@ export default function Viewer3D({
                       key={room.id}
                       project={sceneProject ?? p}
                       room={room}
-                      transparent={ceilingTransparent && (!presentation || readOnly)}
-                      showCeiling={suspendedCeiling}
+                      transparent={
+                        ceilingTransparent && (!presentation || readOnly)
+                      }
+                      showCeiling={suspendedCeiling && !printMode}
                     />
                   ))}
                 {ceilingGuide &&

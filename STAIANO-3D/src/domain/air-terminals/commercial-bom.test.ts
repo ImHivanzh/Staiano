@@ -149,6 +149,19 @@ function installedFamily(
 }
 
 describe("official Ecoclima list-price BOM", () => {
+  it("prices EGA6 PUSH like screw closure without an extra charge", () => {
+    const item = installedFamily(
+      "EGA6",
+      (variant) => variant.widthMm === 600 && variant.heightMm === 600,
+    );
+    const screw = quote([{ ...item, style: "" }]);
+    const push = quote([{ ...item, style: "Chiusura PUSH (a richiesta)" }]);
+    const price = screw.lines.find((line) => line.kind === "terminal")!;
+    expect(price.unitPriceCents).toBeGreaterThan(0);
+    expect(push.lines).toEqual(screw.lines);
+    expect(push.knownSubtotalCents).toBe(screw.knownSubtotalCents);
+    expect(push.missingLineCount).toBe(screw.missingLineCount);
+  });
   it("never prices a relocated collar as the OEM plenum, including per-port side overrides", () => {
     const item = terminal();
     for (const change of [

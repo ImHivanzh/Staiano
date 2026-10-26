@@ -28,7 +28,10 @@ import type { sourceMetadataSchema } from "@/domain/catalogs/radiator-schema";
 import { deviceCodes } from "@/services/export/device-codes";
 import { airTerminalModelDescription } from "@/domain/air-terminals/description";
 import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
-import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
+import {
+  airTerminalFaceWidthMm,
+  terminalFaceDimensions,
+} from "@/domain/air-terminals/geometry";
 import {
   splitCombinationAtVersion,
   splitIndoorAtVersion,
@@ -88,6 +91,8 @@ export function buildDossier(project: Project) {
     ...(p.fanCoils ?? []),
   ])
     assignRooms(device.id, [device.roomId]);
+  for (const plenum of p.plenums)
+    assignRooms(plenum.id, plenum.roomId ? [plenum.roomId] : []);
   const localesByCode = new Map(
     [...roomIdsByCode].map(([code, roomIds]) => {
       const roomSet = new Set(roomIds);
@@ -226,11 +231,17 @@ export function buildDossier(project: Project) {
       `${codes.get(d.id)}: catalogo terminali ${d.catalogVersion} non disponibile`,
     );
     const catalogue = terminalDimensionsText(d);
+    const variant = family?.variants.find((item) => item.id === d.productId);
+    const nominalFace =
+      family &&
+      variant &&
+      !d.manualDimensions &&
+      terminalFaceDimensions(family, variant).nominal;
     const commercial = commercialBom.lines.find(
       (line) => line.kind === "terminal" && line.terminalIds.includes(d.id),
     );
     material(
-      `air:${d.productId}:${airTerminalFaceWidthMm(d)}:${d.heightMm}:${d.use}:${d.availableAirflowM3h}:${d.color}:${d.commercialOptions?.profileCode ?? ""}:${commercial?.sku ?? ""}`,
+      `air:${d.productId}:${airTerminalFaceWidthMm(d)}:${d.heightMm}:${d.use}:${d.availableAirflowM3h}:${d.color}:${d.commercialOptions?.profileCode ?? ""}:${commercial?.sku ?? ""}:${d.family === "EGA6" && /push/i.test(d.style) ? "push" : ""}`,
       {
         description: commercial?.sku
           ? commercial.label
@@ -239,12 +250,12 @@ export function buildDossier(project: Project) {
         unit: "pezzi",
         dimensions: [
           catalogue,
-          `Fronte ${display(airTerminalFaceWidthMm(d))} x ${display(d.heightMm)} mm`,
+          `${nominalFace ? "Dimensioni nominali" : "Fronte"} ${display(airTerminalFaceWidthMm(d))} x ${display(d.heightMm)} mm`,
           `Profondità ${d.depthMm === null ? "non pubblicata" : `${display(d.depthMm)} mm`}`,
         ]
           .filter((item): item is string => !!item)
           .join("; "),
-        details: `${display(d.availableAirflowM3h)} m³/h per unità${commercial?.sku ? "" : "; codice articolo Ecoclima da verificare"}`,
+        details: `${display(d.availableAirflowM3h)} m³/h per unità${commercial?.sku ? "" : "; codice articolo Ecoclima da verificare"}${d.family === "EGA6" && /push/i.test(d.style) ? "; Chiusura PUSH allo stesso prezzo della chiusura a vite" : ""}`,
       },
       codes.get(d.id)!,
     );
@@ -270,6 +281,34 @@ export function buildDossier(project: Project) {
       },
       code,
       line.quantity,
+    );
+  }
+  const commercialPlenumTerminals = new Set(
+    commercialBom.lines
+      .filter(
+        (line) =>
+          line.kind === "insulated-plenum" &&
+          line.quantity !== null &&
+          line.quantity > 0,
+      )
+      .flatMap((line) => line.terminalIds),
+  );
+  for (const plenum of p.plenums) {
+    if (
+      plenum.attachmentId &&
+      commercialPlenumTerminals.has(plenum.attachmentId)
+    )
+      continue;
+    material(
+      `plenum:${plenum.model ?? ""}:${plenum.use}:${plenum.widthMm}:${plenum.heightMm}:${plenum.depthMm}`,
+      {
+        description: `Plenum di ${plenum.use === "supply" ? "mandata" : "ripresa"} ${plenum.model ?? "su misura"}`,
+        unit: "pezzi",
+        dimensions: `${plenum.widthMm} x ${plenum.heightMm} x ${plenum.depthMm} mm`,
+        details:
+          "Corpo fisico del progetto; codice articolo e prezzo da verificare.",
+      },
+      codes.get(plenum.id)!,
     );
   }
   for (const s of p.hvacSystems) {

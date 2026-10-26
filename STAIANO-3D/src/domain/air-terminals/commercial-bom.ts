@@ -95,6 +95,9 @@ export function terminalCommercialDimensions(terminal: InstalledTerminal) {
     heightMm: family.isLinearPerMeter ? null : variant.heightMm,
     diameterMm:
       variant.nominalDiameterMm ??
+      (family.shape === "circle"
+        ? (variant.widthMm ?? variant.heightMm)
+        : null) ??
       (terminal.family === "EBCV"
         ? (terminal.commercialOptions?.mountingDuctDiameterMm ?? null)
         : null),

@@ -2,6 +2,25 @@ import { expect, it } from "vitest";
 import * as THREE from "three";
 import { createFanCoilGrilleBars } from "./FanCoilMeshes";
 
+it("does not protrude decorative outlet grilles from a concealed ducted FCZ P/PO", () => {
+  const material = new THREE.MeshStandardMaterial();
+  const bars = createFanCoilGrilleBars({
+    faceW: 0.8,
+    faceH: 0.5,
+    faceD: 0.22,
+    ceiling: true,
+    finCount: 4,
+    returnHeight: 0.12,
+    returnY: -0.14,
+    grilleZ: 0.1103,
+    material,
+    concealedDucted: true,
+  });
+  expect(bars.count).toBe(0);
+  bars.dispose();
+  material.dispose();
+});
+
 it("reconstructs the six longitudinal discharge slats of the Aermec-style cover", () => {
   const material = new THREE.MeshStandardMaterial();
   const bars = createFanCoilGrilleBars({

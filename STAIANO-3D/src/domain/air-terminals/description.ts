@@ -11,8 +11,11 @@ export function airTerminalModelDescription(
   if (!family || !variant) return "Modello non verificabile nello snapshot";
   if (variant.slotCount)
     return `${family.familyCode} · ${variant.slotCount} ${variant.slotCount === 1 ? "feritoia" : "feritoie"}${variant.slotWidthMm ? ` da ${variant.slotWidthMm} mm` : ""}`;
-  if (variant.nominalDiameterMm)
-    return `${family.familyCode} · diametro nominale ${variant.nominalDiameterMm} mm`;
+  const diameter =
+    variant.nominalDiameterMm ??
+    (family.shape === "circle" ? (variant.widthMm ?? variant.heightMm) : null);
+  if (diameter)
+    return `${family.familyCode} · diametro nominale ${diameter} mm`;
   const selectedModelCode = modelCode ?? variant.modelCode;
   if (selectedModelCode) {
     const face =

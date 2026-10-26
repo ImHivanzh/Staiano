@@ -78,6 +78,7 @@ import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import { placeEquipmentDraft } from "@/domain/geometry/equipment-draft";
 import { formatNumber } from "@/utils/format";
+import { deviceCodes } from "@/services/export/device-codes";
 import styles from "./GraphicalDuctedConfigurator.module.css";
 
 /** Contorno del tratto di canale, largo quanto il canale in pianta. */
@@ -157,6 +158,7 @@ export function GraphicalDuctedConfigurator({
           )
         : item.installationId === installation.id),
   );
+  const machineCodes = useMemo(() => deviceCodes(project), [project]);
   const drafts = (project.ductedDrafts ?? []).filter((item) =>
     mainPlan
       ? item.floorId === room.floorId
@@ -1362,9 +1364,9 @@ export function GraphicalDuctedConfigurator({
                     value={system.id}
                     onChange={(event) => setActiveSystemId(event.target.value)}
                   >
-                    {systems.map((item, index) => (
+                    {systems.map((item) => (
                       <option key={item.id} value={item.id}>
-                        Macchina {index + 1} ·{" "}
+                        {machineCodes.get(item.id) ?? item.name} ·{" "}
                         {item.genericMachine?.model ?? item.productId} ·{" "}
                         {item.name}
                       </option>

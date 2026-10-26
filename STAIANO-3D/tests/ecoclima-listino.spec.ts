@@ -28,7 +28,7 @@ test("official Ecoclima model and insulated plenum create an itemized list-price
             p.floors[0].configurationWizard = undefined;
             p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
             p = addGuidedTerminal(p, 1000);
-            const choice = commercialChoicesForTerminal(p.airTerminals[0])[0];
+            const choice = commercialChoicesForTerminal(p.airTerminals[0]).find(choice => choice.modelCode === p.airTerminals[0].commercialOptions?.profileCode && choice.colorCode === p.airTerminals[0].color);
             p.airTerminals[0].commercialOptions = { fixingBridges: true, continuityKit: true, profileCode: choice.modelCode, colorCode: choice.colorCode ?? undefined };
             p = addTerminalPlenum(p, p.airTerminals[0].id);
             console.log(JSON.stringify({ project: p, choice }));
@@ -83,7 +83,7 @@ test("official Ecoclima model and insulated plenum create an itemized list-price
       currency: "EUR",
     }),
   );
-  await expect(dialog).toContainText("Ponte");
+  await expect(dialog).toContainText(/ponte/i);
   const csvDownload = page.waitForEvent("download");
   await dialog.getByRole("button", { name: "Esporta distinta CSV" }).click();
   const csvFile = await (await csvDownload).path();
@@ -102,6 +102,7 @@ test("official Ecoclima model and insulated plenum create an itemized list-price
   expect(excel.suggestedFilename()).toMatch(/-preventivo-easyfatt\.xlsx$/);
   const workbook = unzipSync(readFileSync((await excel.path())!));
   const rows = strFromU8(workbook["xl/worksheets/sheet1.xml"]);
+  expect(rows).toContain("STANZA:");
   expect(rows).toContain(official.modelCode);
   expect(rows).toContain(`<v>${official.unitPriceCents / 100}</v>`);
   expect(strFromU8(workbook["xl/workbook.xml"])).toContain("Da completare");

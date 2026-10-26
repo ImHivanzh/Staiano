@@ -1,7 +1,7 @@
 import type { Project } from "@/schemas/project";
 import type { AirTerminalFamily } from "@/domain/catalogs/air-terminal-schema";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
-import { terminalBodyDepthMm } from "./geometry";
+import { terminalBodyDepthMm, terminalFaceDimensions } from "./geometry";
 import { modelCodeFaceDimensions } from "./face-dimensions";
 import { needsTerminalReconfiguration } from "./legacy";
 import { calculateEcoclimaBom, type EcoclimaBom } from "./commercial-bom";
@@ -61,9 +61,11 @@ export function terminalDataQuality(
         ? "Revisione geometrica non disponibile"
         : terminal.manualDimensions
           ? `Misure dichiarate dall’operatore${terminal.depthMm == null ? "; profondità non dichiarata" : ""}`
-          : terminal.depthMm == null
-            ? "Faccia dimensionata; profondità non pubblicata"
-            : "Ingombro dimensionato; dettagli 3D illustrativi, non CAD di fabbricazione",
+          : terminalFaceDimensions(family, variant).nominal
+            ? `Dimensioni nominali di catalogo; ingombro reale da verificare${terminal.depthMm == null ? "; profondità non pubblicata" : ""}`
+            : terminal.depthMm == null
+              ? "Faccia dimensionata; profondità non pubblicata"
+              : "Ingombro dimensionato; dettagli 3D illustrativi, non CAD di fabbricazione",
     price:
       lines.length && lines.every((line) => line.status === "known")
         ? "Voci del terminale quotate nella revisione del listino; disponibilità da confermare"

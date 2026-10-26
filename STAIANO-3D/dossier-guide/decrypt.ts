@@ -6,6 +6,7 @@ const snapshotSchema = z.object({
   n: z.string().max(120),
   d: z.iso.datetime(),
   k: z.enum(["complete", "summary"]),
+  c: z.number().positive().optional(),
   m: z.array(z.number().finite().nonnegative()).length(10),
   r: z.array(z.string().max(50)).max(12),
 });

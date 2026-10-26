@@ -106,7 +106,7 @@ for (const width of [1920, 1024]) {
   });
 }
 
-test("terminal requires color, drags without opening a popup, rotates, and wizard toggles", async ({
+test("EDLS defaults to white, drags without opening a popup, rotates, and wizard toggles", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
@@ -155,15 +155,6 @@ test("terminal requires color, drags without opening a popup, rotates, and wizar
   await expect(
     popup.getByRole("button", { name: "RAL 9005 · Nero", exact: true }),
   ).toBeVisible();
-  await save.click();
-  await expect(popup.getByRole("alert").first()).toContainText(
-    "Scegli il colore",
-  );
-  await expect(plan.getByTestId("terminal-supply")).toHaveCount(0);
-  await popup
-    .getByRole("group", { name: "Colore scelto", exact: true })
-    .getByRole("button", { name: "RAL 9016 · Bianco", exact: true })
-    .click();
   await expect(
     popup
       .getByRole("group", { name: "Colore scelto", exact: true })

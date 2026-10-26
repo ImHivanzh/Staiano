@@ -300,8 +300,12 @@ test("guided return offers EGA 6 Push and all sizes, disabling supply-only famil
   await sizes
     .getByRole("button", { name: "600 × 600 mm", exact: true })
     .click();
-  await terminalPopup.getByLabel("Larghezza faccia dichiarata").fill("600");
-  await terminalPopup.getByLabel("Altezza faccia dichiarata").fill("600");
+  await expect(
+    terminalPopup.getByLabel("Larghezza faccia dichiarata"),
+  ).toHaveCount(0);
+  await expect(
+    terminalPopup.getByRole("checkbox", { name: "Chiusura PUSH" }),
+  ).toBeChecked();
   await terminalPopup
     .getByRole("group", { name: "Colore scelto", exact: true })
     .getByRole("button", { name: /^RAL 9016 · Bianco/ })
@@ -316,12 +320,10 @@ test("guided return offers EGA 6 Push and all sizes, disabling supply-only famil
     name: "Configura bocchetta",
     exact: true,
   });
-  await expect(edited.getByLabel("Larghezza faccia dichiarata")).toHaveValue(
-    "600",
-  );
-  await expect(edited.getByLabel("Altezza faccia dichiarata")).toHaveValue(
-    "600",
-  );
+  await expect(edited.getByLabel("Larghezza faccia dichiarata")).toHaveCount(0);
+  await expect(
+    edited.getByRole("checkbox", { name: "Chiusura PUSH" }),
+  ).toBeChecked();
   await edited
     .locator("footer")
     .getByRole("button", { name: "Annulla", exact: true })

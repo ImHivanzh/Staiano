@@ -47,16 +47,15 @@ it("EGA6 return permits noise above 37, preserves chosen dimensions and checks t
     use: "return",
     mounting: "ceiling",
     lengthMm: 600,
-    style: "Chiusura Push (a richiesta)",
-    manualDimensions: { widthMm: 600, heightMm: 600, depthMm: null },
   });
   expect(next.airTerminals.at(-1)).toMatchObject({
     family: "EGA6",
     use: "return",
     widthMm: 600,
     heightMm: 600,
-    style: "Chiusura Push (a richiesta)",
+    style: "Chiusura PUSH (a richiesta)",
   });
+  expect(next.airTerminals.at(-1)!.manualDimensions).not.toBe(true);
   const checks = validateProject(next);
   expect(checks.filter((check) => check.code === "returnAirflow")).toHaveLength(
     1,
@@ -77,7 +76,13 @@ it("EGA6 return permits noise above 37, preserves chosen dimensions and checks t
   );
   const refreshed = refreshDuctedBindings(next);
   const edited = editOperatorTerminal(
-    refreshed,
+    {
+      ...refreshed,
+      airTerminals: refreshed.airTerminals.map((terminal) => ({
+        ...terminal,
+        manualDimensions: true,
+      })),
+    },
     refreshed.airTerminals.at(-1)!.id,
     { finish: "Bianco", widthMm: 620 },
   );
@@ -88,19 +93,23 @@ it("EGA6 return permits noise above 37, preserves chosen dimensions and checks t
     heightMm: 600,
     manualDimensions: true,
   });
-  expect(() =>
-    editOperatorTerminal(
-      {
-        ...refreshed,
-        airTerminals: refreshed.airTerminals.map((terminal) => ({
-          ...terminal,
-          manualDimensions: false,
-        })),
-      },
-      refreshed.airTerminals.at(-1)!.id,
-      { finish: "Bianco" },
-    ),
-  ).toThrow("Modello o punto di funzionamento non compatibile");
+  const nominal = editOperatorTerminal(
+    {
+      ...refreshed,
+      airTerminals: refreshed.airTerminals.map((terminal) => ({
+        ...terminal,
+        manualDimensions: false,
+      })),
+    },
+    refreshed.airTerminals.at(-1)!.id,
+    { finish: "Bianco" },
+  );
+  expect(nominal.airTerminals.at(-1)).toMatchObject({
+    widthMm: 600,
+    heightMm: 600,
+    manualDimensions: false,
+    finish: "Bianco",
+  });
   expect(refreshed.airTerminals.at(-1)!.requiredAirflowM3h).toBe(
     system.airflowM3h,
   );

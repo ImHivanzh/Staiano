@@ -1,5 +1,6 @@
 "use client";
 import { NotificationToast } from "../NotificationToast";
+import { terminalFaceDimensions } from "@/domain/air-terminals/geometry";
 import { useState, type Ref } from "react";
 import { Check, Plus, Ruler, Sparkle, X } from "@phosphor-icons/react";
 import type { Point, Project, Room } from "@/schemas/project";
@@ -146,7 +147,9 @@ export function OperatorTerminalControls({
     existing?.style ??
       (family.familyCode === "EGA6" ? "Chiusura Push (a richiesta)" : ""),
   );
-  const [color, setColor] = useState(existing?.color ?? "");
+  const [color, setColor] = useState(
+    existing?.color ?? (family.familyCode === "EDLS" ? "RAL9016" : ""),
+  );
   const [finish, setFinish] = useState(existing?.finish ?? "");
   const finishChoices = terminalFinishChoices(family);
   const finishSpecification = terminalFinishSpecification(family.familyCode);
@@ -165,9 +168,10 @@ export function OperatorTerminalControls({
   const [manualDepth, setManualDepth] = useState(
     existing?.depthMm?.toString() ?? "",
   );
+  const faceDimensions = terminalFaceDimensions(family, solution.variant);
   const missingFace =
-    !solution.variant.faceHeightMm ||
-    (!family.isLinearPerMeter && !solution.variant.faceWidthMm);
+    !faceDimensions.heightMm ||
+    (!family.isLinearPerMeter && !faceDimensions.widthMm);
   const [faceVariant, setFaceVariant] = useState(solution.variant.id);
   if (faceVariant !== solution.variant.id) {
     setFaceVariant(solution.variant.id);
@@ -468,6 +472,12 @@ export function OperatorTerminalControls({
             )}
           </div>
         )}
+        {!missingFace && faceDimensions.nominal && (
+          <p className="nota">
+            Dimensioni nominali di catalogo: {faceDimensions.widthMm} ×{" "}
+            {faceDimensions.heightMm} mm. Ingombro reale da verificare.
+          </p>
+        )}
         {missingFace && (
           <>
             <p className="avviso attenzione">
@@ -614,16 +624,32 @@ export function OperatorTerminalControls({
           <strong>{formatNumber(airflow, 0)} m³/h</strong>.
           <span>Il totale cambia dopo la conferma della posizione.</span>
         </p>
-        <details open={!compact}>
-          <summary>Aspetto e finiture facoltativi</summary>
+        {family.familyCode === "EGA6" && (
           <label className="campo">
-            <span>Stile scelto</span>
+            <span>Chiusura PUSH</span>
             <input
-              value={style}
-              maxLength={100}
-              onChange={(event) => setStyle(event.target.value)}
+              type="checkbox"
+              checked={/push/i.test(style)}
+              onChange={(event) =>
+                setStyle(
+                  event.target.checked ? "Chiusura PUSH (a richiesta)" : "",
+                )
+              }
             />
           </label>
+        )}
+        <details open={!compact}>
+          <summary>Aspetto e finiture facoltativi</summary>
+          {family.familyCode !== "EGA6" && (
+            <label className="campo">
+              <span>Stile scelto</span>
+              <input
+                value={style}
+                maxLength={100}
+                onChange={(event) => setStyle(event.target.value)}
+              />
+            </label>
+          )}
         </details>
       </div>
       {placementError &&
@@ -652,7 +678,7 @@ export function OperatorTerminalControls({
               mounting,
               lengthMm: family.isLinearPerMeter
                 ? totalLengthMm
-                : (solution.variant.faceWidthMm ?? numberFromForm(manualWidth)),
+                : (faceDimensions.widthMm ?? numberFromForm(manualWidth)),
               customLength,
               ...(moduleLengths.length ? { moduleLengthsMm: lengthsMm } : {}),
               style,

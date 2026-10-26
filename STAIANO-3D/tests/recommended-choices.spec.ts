@@ -111,12 +111,12 @@ for (const width of [1920, 1024]) {
       await popup.screenshot({
         path: info.outputPath(`ebl-${room.name}-${width}.png`),
       });
-      await popup
-        .getByLabel("Larghezza faccia dichiarata", { exact: true })
-        .fill(String(numbers[0]));
-      await popup
-        .getByLabel("Altezza faccia dichiarata", { exact: true })
-        .fill(String(numbers[1]));
+      await expect(
+        popup.getByLabel("Larghezza faccia dichiarata", { exact: true }),
+      ).toHaveCount(0);
+      await expect(
+        popup.getByLabel("Altezza faccia dichiarata", { exact: true }),
+      ).toHaveCount(0);
       const alternative = sizes
         .locator('table button:not([data-recommended="true"])')
         .first();
@@ -124,10 +124,10 @@ for (const width of [1920, 1024]) {
       await expect(alternative).toHaveAttribute("aria-pressed", "true");
       await expect(
         popup.getByLabel("Larghezza faccia dichiarata", { exact: true }),
-      ).toHaveValue("");
+      ).toHaveCount(0);
       await expect(
         popup.getByLabel("Altezza faccia dichiarata", { exact: true }),
-      ).toHaveValue("");
+      ).toHaveCount(0);
       await expect(recommended).toHaveCount(1);
       await popup.getByRole("button", { name: "Ripresa", exact: true }).click();
       await expect(

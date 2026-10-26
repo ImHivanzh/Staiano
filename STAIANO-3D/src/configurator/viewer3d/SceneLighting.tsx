@@ -11,10 +11,12 @@ export function SceneLighting({
   frame,
   revision,
   rooms,
+  printMode = false,
 }: {
   frame: SceneFrame;
   revision: number;
   rooms: readonly Room[];
+  printMode?: boolean;
 }) {
   const x = (frame.minX + frame.maxX) / 2,
     z = (frame.minZ + frame.maxZ) / 2;
@@ -75,7 +77,13 @@ export function SceneLighting({
           scale={[10, 10, 1]}
         />
       </Environment>
-      <SiteContext rooms={rooms} x={x} z={z} span={span} />
+      <SiteContext
+        rooms={rooms}
+        x={x}
+        z={z}
+        span={span}
+        showGround={!printMode}
+      />
       <ContactShadows
         key={revision}
         position={[x, -0.338, z]}

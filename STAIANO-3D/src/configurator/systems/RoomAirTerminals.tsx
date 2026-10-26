@@ -461,6 +461,7 @@ export function RoomAirTerminals({
                       onChange={setChoice}
                       recommended={recommendedSolution}
                       linear={family.isLinearPerMeter}
+                      circular={family.shape === "circle"}
                     />
                     {systemId && use === "return" && (
                       <p className="nota">

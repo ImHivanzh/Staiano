@@ -1,4 +1,9 @@
-import { airTerminalFaceWidthMm, terminalBodyDepthMm } from "./geometry";
+import {
+  airTerminalFaceWidthMm,
+  terminalBodyDepthMm,
+  terminalFaceDimensions,
+  preferredEdlsProfile,
+} from "./geometry";
 import type { Point, Project } from "@/schemas/project";
 import {
   airTerminalCatalog,
@@ -47,7 +52,9 @@ export function applyAirTerminalSolution(
     !family.use.includes(use) ||
     (airTerminalMountings(family)
       ? !airTerminalMountings(family)!.includes(mounting)
-      : !dimensions)
+      : !dimensions &&
+        (!terminalFaceDimensions(family, variant).widthMm ||
+          !terminalFaceDimensions(family, variant).heightMm))
   )
     throw new Error("Famiglia o montaggio non compatibili.");
   if (
@@ -63,13 +70,14 @@ export function applyAirTerminalSolution(
   );
   if (opIndex < 0)
     throw new Error("Punto di funzionamento non presente nel catalogo.");
+  const face = terminalFaceDimensions(family, variant);
   const widthMm =
       dimensions?.widthMm ??
       (solution.commercialLengthM !== null
         ? solution.commercialLengthM * 1000
-        : variant.faceWidthMm),
-    heightMm = dimensions?.heightMm ?? variant.faceHeightMm;
-  if (!widthMm || !heightMm || !family.shape)
+        : face.widthMm),
+    heightMm = dimensions?.heightMm ?? face.heightMm;
+  if (!widthMm || !heightMm)
     throw new Error("Ingombro frontale non disponibile dal catalogo.");
   const faceWidthMm = dimensions
     ? widthMm
@@ -202,7 +210,8 @@ export function applyAirTerminalSolution(
         family: familyCode,
         systemId,
         mounting,
-        shape: family.shape!,
+        shape:
+          family.shape ?? (variant.nominalDiameterMm ? "circle" : "rectangle"),
         elevationM:
           mounting === "ceiling"
             ? ceilingHeightAt(project, room, candidate.position)
@@ -216,8 +225,23 @@ export function applyAirTerminalSolution(
         legacyUnverified: false,
         locked: false,
         decisionOrigin: "calculated",
-        style: "",
-        color: "",
+        style:
+          family.familyCode === "EGA6" ? "Chiusura PUSH (a richiesta)" : "",
+        color: family.familyCode === "EDLS" ? "RAL9016" : "",
+        ...(family.familyCode === "EDLS"
+          ? {
+              commercialOptions: {
+                fixingBridges: true,
+                continuityKit: true,
+                profileCode: preferredEdlsProfile(
+                  variant.slotWidthMm,
+                  "RAL9016",
+                  use,
+                ),
+                colorCode: "RAL9016",
+              },
+            }
+          : {}),
         finish: "",
         productCode: "",
         plenumId: null,

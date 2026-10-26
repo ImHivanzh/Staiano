@@ -6,6 +6,7 @@ import { downloadFile } from "@/services/project/format";
 export type DossierDownloadOptions = PanoramaOptions & {
   variant?: "complete" | "summary";
   monochrome?: boolean;
+  includePrices?: boolean;
 };
 
 export async function generateDossier(
@@ -37,12 +38,13 @@ export async function generateDossier(
     renderImages,
     variant: options.variant,
     monochrome: options.monochrome,
+    includePrices: options.includePrices,
   });
   options.signal?.throwIfAborted();
   const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
   return {
     blob,
-    name: `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}${options.monochrome ? "-bianco-nero" : ""}.pdf`,
+    name: `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}${options.monochrome ? "-bianco-nero" : ""}${options.includePrices ? "-con-prezzi" : ""}.pdf`,
   };
 }
 

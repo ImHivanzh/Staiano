@@ -44,6 +44,7 @@ export function TerminalCommercialOptions({
         const updated = modelCode ? applyCommercialModelFace(t, modelCode) : t;
         return {
           ...updated,
+          color: patch.colorCode ?? updated.color,
           commercialOptions: {
             fixingBridges: true,
             continuityKit: true,
@@ -98,6 +99,31 @@ export function TerminalCommercialOptions({
           ))}
         </select>
       </label>
+      {terminal.family === "EGA6" && (
+        <label className="campo">
+          <span>Chiusura PUSH</span>
+          <input
+            type="checkbox"
+            checked={/push/i.test(terminal.style)}
+            disabled={terminal.locked}
+            onChange={(event) =>
+              commit((p) => ({
+                ...p,
+                airTerminals: p.airTerminals.map((item) =>
+                  item.id === terminal.id
+                    ? {
+                        ...item,
+                        style: event.target.checked
+                          ? "Chiusura PUSH (a richiesta)"
+                          : "",
+                      }
+                    : item,
+                ),
+              }))
+            }
+          />
+        </label>
+      )}
       {!choices.length && (
         <p className="nota">
           Prezzo o corrispondenza esatta da verificare sulla scheda originale.

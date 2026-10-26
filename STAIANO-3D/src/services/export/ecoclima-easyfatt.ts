@@ -58,6 +58,12 @@ export function ecoclimaEasyfattXlsx(
         ]),
       ],
     });
+  return easyfattWorkbook(sheets);
+}
+
+export function easyfattWorkbook(
+  sheets: { name: string; rows: (string | number | null)[][] }[],
+): Uint8Array<ArrayBuffer> {
   const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
   const rels = "http://schemas.openxmlformats.org/package/2006/relationships";
   const office =

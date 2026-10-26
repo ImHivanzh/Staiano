@@ -53,6 +53,7 @@ export function createFanCoilGrilleBars({
   grilleZ,
   material,
   longitudinal = false,
+  concealedDucted = false,
 }: {
   faceW: number;
   faceH: number;
@@ -64,12 +65,14 @@ export function createFanCoilGrilleBars({
   grilleZ: number;
   material: THREE.Material;
   longitudinal?: boolean;
+  concealedDucted?: boolean;
 }) {
   const result = new THREE.InstancedMesh(
     box,
     material,
-    finCount + (ceiling ? 3 : longitudinal ? 6 : 18),
+    concealedDucted ? 0 : finCount + (ceiling ? 3 : longitudinal ? 6 : 18),
   );
+  if (concealedDucted) return result;
   result.castShadow = true;
   const transform = new THREE.Object3D();
   let index = 0;
@@ -128,7 +131,8 @@ function FanCoilBody({
     d = unit.depthMm / 1000;
   const ceiling = unit.mounting === "ceiling";
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const concealed = isConcealedFanCoil(product) && !isDuctedFanCoil(product);
+  const concealed = isConcealedFanCoil(product);
+  const concealedDucted = concealed && isDuctedFanCoil(product);
   const aermec = product?.manufacturer === "Aermec" && !concealed;
   const innova = product?.manufacturer === "Innova";
   const shell = concealed ? concealedShell : coating;
@@ -190,6 +194,7 @@ function FanCoilBody({
         grilleZ,
         material: shell,
         longitudinal: aermec,
+        concealedDucted,
       }),
     [
       ceiling,
@@ -202,6 +207,7 @@ function FanCoilBody({
       returnY,
       shell,
       aermec,
+      concealedDucted,
     ],
   );
   useEffect(
@@ -222,31 +228,35 @@ function FanCoilBody({
           receiveShadow
         />
       )}
-      <mesh
-        geometry={plane}
-        material={recess}
-        position={[0, returnY, grilleZ]}
-        scale={[faceW * 0.86, returnHeight, 1]}
-      />
-      <primitive object={bars} />
-      {ceiling ? (
+      {!concealedDucted && (
         <>
           <mesh
             geometry={plane}
             material={recess}
-            position={[0, faceH * 0.33, grilleZ]}
-            scale={[faceW * 0.86, faceH * 0.11, 1]}
+            position={[0, returnY, grilleZ]}
+            scale={[faceW * 0.86, returnHeight, 1]}
           />
-        </>
-      ) : (
-        <>
-          <mesh
-            geometry={plane}
-            material={recess}
-            position={[0, faceH / 2 + 0.0003, 0]}
-            rotation={[-Math.PI / 2, 0, 0]}
-            scale={[faceW * 0.86, faceD * 0.63, 1]}
-          />
+          <primitive object={bars} />
+          {ceiling ? (
+            <>
+              <mesh
+                geometry={plane}
+                material={recess}
+                position={[0, faceH * 0.33, grilleZ]}
+                scale={[faceW * 0.86, faceH * 0.11, 1]}
+              />
+            </>
+          ) : (
+            <>
+              <mesh
+                geometry={plane}
+                material={recess}
+                position={[0, faceH / 2 + 0.0003, 0]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={[faceW * 0.86, faceD * 0.63, 1]}
+              />
+            </>
+          )}
         </>
       )}
       {selected && (

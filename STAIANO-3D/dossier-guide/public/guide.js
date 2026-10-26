@@ -39,6 +39,7 @@ async function loadProject() {
       typeof data.d !== "string" ||
       !Number.isFinite(Date.parse(data.d)) ||
       !["complete", "summary"].includes(data.k) ||
+      (data.c !== undefined && (!Number.isFinite(data.c) || data.c <= 0)) ||
       !Array.isArray(data.m) ||
       data.m.length !== 10 ||
       !data.m.every((n) => Number.isFinite(n) && n >= 0) ||
@@ -69,6 +70,9 @@ async function loadProject() {
       ["Superficie netta", `${number(area)} m²`],
       ["Volume netto", `${number(volume)} m³`],
       ["Fabbisogno stimato", `${number(load / 1000, 2)} kW`],
+      ...(data.c === undefined
+        ? []
+        : [["Coefficiente termico", `${number(data.c, 6)} W/m³`]]),
     ]) {
       const group = document.createElement("div");
       const dt = document.createElement("dt");

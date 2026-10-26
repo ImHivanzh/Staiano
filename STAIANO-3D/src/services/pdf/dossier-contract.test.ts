@@ -17,6 +17,38 @@ import {
 } from "@/domain/catalogs/fan-coils";
 
 describe("Readable complete PDF contract", () => {
+  it.each(["summary", "complete"] as const)(
+    "includes prices in the %s dossier only when selected",
+    async (variant) => {
+      const project = pdfQaFixture();
+      const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+      const texts: string[] = [];
+      for (const includePrices of [false, true]) {
+        const task = pdfjs.getDocument({
+          data: await renderDossierPdf(project, { variant, includePrices }),
+        });
+        const pdf = await task.promise;
+        try {
+          const pages: string[] = [];
+          for (let page = 1; page <= pdf.numPages; page++) {
+            const content = await (await pdf.getPage(page)).getTextContent();
+            pages.push(
+              content.items
+                .map((item) => ("str" in item ? item.str : ""))
+                .join(" "),
+            );
+          }
+          texts.push(pages.join(" "));
+        } finally {
+          await task.destroy();
+        }
+      }
+      expect(texts[0]).not.toContain("Listino materiali Ecoclima");
+      expect(texts[0]).not.toContain(" EUR");
+      expect(texts[1]).toContain("Listino materiali Ecoclima");
+      expect(texts[1]).toContain(" EUR");
+    },
+  );
   it.each(["complete", "summary"] as const)(
     "prints the %s dossier using only gray vector colours and readable text",
     async (variant) => {

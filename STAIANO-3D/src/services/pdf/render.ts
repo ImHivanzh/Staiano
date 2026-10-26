@@ -48,6 +48,7 @@ import { roomLabelPoint } from "@/domain/geometry/room-label";
 export type DossierRenderOptions = {
   variant?: "complete" | "summary";
   monochrome?: boolean;
+  includePrices?: boolean;
   logoSvg?: string;
   generatedAt?: Date;
   renderImages?: readonly ProjectPanorama[];
@@ -2118,20 +2119,22 @@ export async function renderDossierPdf(
     newPage("Distinta materiali - senza prezzi");
     table(
       [
-        "Descrizione / codici",
+        "Descrizione",
+        "Codice",
         "Quantità",
         "Dimensioni",
         "Caratteristiche",
         "Locali",
       ],
       [...data.materials, ...data.accessories].map((m) => [
-        `${m.description}${m.sku ? `; Codice articolo ${m.sku}` : ""}; ${m.codes.join(", ")}`,
+        `${m.description}${m.sku ? `; Codice articolo ${m.sku}` : ""}`,
+        m.codes.join(", "),
         quantityText(m),
         m.dimensions ?? "",
         m.details,
         m.locales.join(", "),
       ]),
-      [0.26, 0.14, 0.19, 0.27, 0.14],
+      [0.22, 0.12, 0.12, 0.17, 0.25, 0.12],
     );
     paragraph(
       "La distinta comprende gli apparecchi configurati e, per ogni radiatore, staffe di sostegno, valvola, detentore e kit copritubo derivati dalle finiture scelte; per i radiatori la quantità è in elementi e tra parentesi è indicato il numero di batterie. I codici articolo degli accessori non vengono generati dalla selezione grafica: verificarli sul listino del produttore. Attacchi, plenum, tubazioni, canalizzazioni e lavorazioni devono essere definiti nel progetto esecutivo. Le unità interne elencate separatamente sono incluse nel rispettivo sistema, senza sommare due volte il kit.",
@@ -2519,53 +2522,53 @@ export async function renderDossierPdf(
         [0.18, 0.34, 0.2, 0.28],
       );
     }
-    if (p.airTerminals.length) {
-      const bill = calculateEcoclimaBom(p);
-      const currency = (cents: number) => `${n(cents / 100, 2)} EUR`;
-      newPage("Listino materiali Ecoclima");
-      paragraph(
-        `Revisione ${bill.revision ?? "non indicata"}. Prezzi originali di listino, senza sconti; trattamento IVA da confermare sulla fonte.`,
-        9,
-      );
-      table(
-        ["Articolo / modello", "Dimensioni", "Quantità", "Listino", "Importo"],
-        bill.lines.map((line) => [
-          `${line.label}${line.sku ? ` (${line.sku})` : ""}${line.reason ? ` - ${line.reason}` : ""}`,
-          line.dimensions ?? "Da verificare",
-          line.quantity === null ? "Da verificare" : String(line.quantity),
-          line.unitPriceCents === null
-            ? "Da quotare"
-            : currency(line.unitPriceCents),
-          line.extendedPriceCents === null
-            ? "Da completare"
-            : currency(line.extendedPriceCents),
-        ]),
-        [0.42, 0.18, 0.1, 0.15, 0.15],
-      );
-      paragraph(
-        bill.complete && bill.totalCents !== null
-          ? `Totale: ${currency(bill.totalCents)}`
-          : `Subtotale articoli con prezzo: ${currency(bill.knownSubtotalCents)}. ${bill.missingLineCount} voci da completare; totale completo non disponibile.`,
-        11,
-      );
-      for (const source of [
-        ...new Map(
-          bill.lines
-            .filter((line) => line.sourceMetadata)
-            .map((line) => [
-              line.sourceMetadata!.sourceUrl,
-              line.sourceMetadata!,
-            ]),
-        ).values(),
-      ])
-        paragraph(
-          `Fonte listino: ${source.sourceUrl}; acquisizione ${source.retrievedAt ?? "non registrata"}; SHA256 ${source.sha256}.`,
-          8,
-          muted,
-        );
-    }
     heading("Nota tecnica");
     paragraph(TECHNICAL_NOTE, 9);
+  }
+  if ((options.includePrices ?? !isSummary) && p.airTerminals.length) {
+    const bill = calculateEcoclimaBom(p);
+    const currency = (cents: number) => `${n(cents / 100, 2)} EUR`;
+    newPage("Listino materiali Ecoclima");
+    paragraph(
+      `Revisione ${bill.revision ?? "non indicata"}. Prezzi originali di listino, senza sconti; trattamento IVA da confermare sulla fonte.`,
+      9,
+    );
+    table(
+      ["Articolo / modello", "Dimensioni", "Quantità", "Listino", "Importo"],
+      bill.lines.map((line) => [
+        `${line.label}${line.sku ? ` (${line.sku})` : ""}${line.reason ? ` - ${line.reason}` : ""}`,
+        line.dimensions ?? "Da verificare",
+        line.quantity === null ? "Da verificare" : String(line.quantity),
+        line.unitPriceCents === null
+          ? "Da quotare"
+          : currency(line.unitPriceCents),
+        line.extendedPriceCents === null
+          ? "Da completare"
+          : currency(line.extendedPriceCents),
+      ]),
+      [0.42, 0.18, 0.1, 0.15, 0.15],
+    );
+    paragraph(
+      bill.complete && bill.totalCents !== null
+        ? `Totale: ${currency(bill.totalCents)}`
+        : `Subtotale articoli con prezzo: ${currency(bill.knownSubtotalCents)}. ${bill.missingLineCount} voci da completare; totale completo non disponibile.`,
+      11,
+    );
+    for (const source of [
+      ...new Map(
+        bill.lines
+          .filter((line) => line.sourceMetadata)
+          .map((line) => [
+            line.sourceMetadata!.sourceUrl,
+            line.sourceMetadata!,
+          ]),
+      ).values(),
+    ])
+      paragraph(
+        `Fonte listino: ${source.sourceUrl}; acquisizione ${source.retrievedAt ?? "non registrata"}; SHA256 ${source.sha256}.`,
+        8,
+        muted,
+      );
   }
   for (const panorama of options.renderImages ?? []) {
     if (panorama.mimeType !== "image/jpeg" || !panorama.bytes.byteLength)

@@ -157,8 +157,42 @@ export function indoorRoute(
   floorId: string,
   start: Point,
   end: Point,
-  polygons = floorRoutingPolygons(project, floorId),
+  polygons?: Point[][],
 ): Point[] {
+  const room = project.rooms.find(
+    (candidate) =>
+      candidate.floorId === floorId &&
+      candidate.geometryStatus === "closed" &&
+      [start, end].every(
+        (point) =>
+          pointInPolygon(point, candidate.polygon) ||
+          candidate.polygon.some((vertex, index) =>
+            onSegment(
+              point,
+              vertex,
+              candidate.polygon[(index + 1) % candidate.polygon.length],
+            ),
+          ),
+      ),
+  );
+  polygons ??= room
+    ? [
+        room.polygon,
+        ...project.walls
+          .filter((wall) => room.wallIds.includes(wall.id))
+          .map((wall) =>
+            footprintCorners(
+              {
+                x: (wall.start.x + wall.end.x) / 2,
+                y: (wall.start.y + wall.end.y) / 2,
+              },
+              distance(wall.start, wall.end),
+              wall.thickness,
+              Math.atan2(wall.end.y - wall.start.y, wall.end.x - wall.start.x),
+            ),
+          ),
+      ]
+    : floorRoutingPolygons(project, floorId);
   // Partially drawn plans leave no walkable polygon: keep devices connectable.
   const direct = () => (samePoint(start, end) ? [start] : [start, end]);
   // Fuori piano il grafo di visibilità non può collegare nulla: stesso esito,

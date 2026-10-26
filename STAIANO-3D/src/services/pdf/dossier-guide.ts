@@ -16,6 +16,7 @@ export async function dossierGuideLink(
     n: p.name.slice(0, 120),
     d: date.toISOString(),
     k: variant,
+    c: p.projectSettings.coefficientWm3,
     m: [
       p.rooms.length,
       data.totals.areaM2,

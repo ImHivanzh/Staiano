@@ -172,6 +172,7 @@ export function Configurator() {
     "complete",
   );
   const [dossierMonochrome, setDossierMonochrome] = useState(false);
+  const [dossierPrices, setDossierPrices] = useState(false);
   const [billOpen, setBillOpen] = useState(false);
   const [flexibleOpen, setFlexibleOpen] = useState(false);
   useEffect(
@@ -687,6 +688,7 @@ export function Configurator() {
       const options = {
         variant,
         monochrome: dossierMonochrome,
+        includePrices: dossierPrices,
         floorId: s.activeFloorId,
         roomId: s.selection.find((item) => item.kind === "room")?.id,
         signal: controller.signal,
@@ -720,6 +722,32 @@ export function Configurator() {
         error instanceof Error
           ? error.message
           : "Distinta materiali non generata. Riprovare.",
+      );
+    } finally {
+      setPdfBusy(false);
+    }
+  }
+  async function exportMaterialsEasyfatt() {
+    if (!p) return;
+    setPdfBusy(true);
+    try {
+      const { materialsEasyfattXlsx } =
+        await import("@/services/export/materials-easyfatt");
+      const bytes = materialsEasyfattXlsx(structuredClone(p));
+      const name =
+        p.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) ||
+        "progetto";
+      downloadFile(
+        `${name}-materiali-easyfatt.xlsx`,
+        new Blob([new Uint8Array(bytes)], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        }),
+      );
+    } catch (error) {
+      s.setError(
+        error instanceof Error
+          ? error.message
+          : "Esportazione Easyfatt non riuscita.",
       );
     } finally {
       setPdfBusy(false);
@@ -1351,6 +1379,15 @@ export function Configurator() {
                       />
                       Stampa in bianco e nero
                     </label>
+                    <label className="opzione-render-pdf">
+                      <input
+                        type="checkbox"
+                        checked={dossierPrices}
+                        disabled={pdfBusy}
+                        onChange={(e) => setDossierPrices(e.target.checked)}
+                      />
+                      Includi prezzi di listino
+                    </label>
                     <button
                       className="bottone tenue piccolo"
                       disabled={pdfBusy}
@@ -1366,6 +1403,18 @@ export function Configurator() {
                     >
                       <DownloadSimple /> Distinta materiali PDF · per stanza
                     </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={pdfBusy}
+                      onClick={() => void exportMaterialsEasyfatt()}
+                    >
+                      <DownloadSimple /> Materiali per Danea Easyfatt · Excel
+                    </button>
+                    <p className="nota">
+                      Easyfatt: importa le righe nel modello Excel del
+                      preventivo. Codici e prezzi non disponibili restano vuoti
+                      nel file; consulta il foglio “Da completare”.
+                    </p>
                     <button
                       className="bottone tenue piccolo"
                       disabled={pdfBusy}

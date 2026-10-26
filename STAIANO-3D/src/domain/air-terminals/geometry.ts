@@ -25,6 +25,42 @@ export function terminalBodyDepthMm(
 ) {
   return (
     variant?.bodyDepthMm ??
+    variant?.depthMm ??
     (family && /^EDFL(B)?-\d+$/.test(family.familyCode) ? 52 : null)
   );
+}
+
+/** Prefer the measured face; use only published nominal sizes when it is absent. */
+export function terminalFaceDimensions(
+  family: AirTerminalFamily,
+  variant: AirTerminalVariant,
+) {
+  return {
+    widthMm:
+      variant.faceWidthMm ??
+      variant.widthMm ??
+      variant.nominalDiameterMm ??
+      null,
+    heightMm:
+      variant.faceHeightMm ??
+      variant.heightMm ??
+      variant.nominalDiameterMm ??
+      (family.isLinearPerMeter ? variant.widthMm : null),
+    nominal:
+      !variant.faceHeightMm ||
+      (!family.isLinearPerMeter && !variant.faceWidthMm),
+  };
+}
+
+export function preferredEdlsProfile(
+  slotWidthMm: number | null,
+  color: string,
+  use: "supply" | "return" = "supply",
+) {
+  if (
+    ![20, 30].includes(slotWidthMm ?? 0) ||
+    !["RAL9005", "RAL9016"].includes(color)
+  )
+    return undefined;
+  return `${color === "RAL9016" ? "EDLSB" : "EDLS"}${use === "supply" ? "20" : "10"}-${slotWidthMm === 20 ? "FA" : "FB"}`;
 }
