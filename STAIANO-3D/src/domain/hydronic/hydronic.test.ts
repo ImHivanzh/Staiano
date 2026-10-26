@@ -344,7 +344,7 @@ describe("impianto idronico documentato", () => {
   });
   it("links selected coils, refuses duplicate association and excludes unmatched water conditions", () => {
     let p = fixture();
-    p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-400-2t", 0);
+    p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-400-2t");
     p = pump(p);
     const system = p.hydronicSystems![0];
     const matched = validateHydronicSystem(p, system);
@@ -370,7 +370,7 @@ describe("impianto idronico documentato", () => {
   });
   it("keeps manual waypoints while live endpoints follow the pump and coil", () => {
     let p = fixture();
-    p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-400-2t", 0);
+    p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-400-2t");
     p = pump(p);
     const s = p.hydronicSystems![0],
       id = s.fanCoilIds[0];

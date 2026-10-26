@@ -1,40 +1,49 @@
 import type { Project } from "@/schemas/project";
-import { connectDraftOnPlan } from "../ducted/plan-connections";
 import { connectTerminalOnPlan } from "../ducted/graphic-installation";
+import { syncAttachedPlenums } from "../ducted/attached-plenums";
 import { ensureFanCoilAirSystem } from "./air";
 
 /**
- * Collega una bocchetta al ventilconvettore canalizzabile. La distribuzione
- * aeraulica nasce al primo collegamento e resta agganciata all'unità.
+ * Collega una bocchetta di mandata solo dopo averle assegnato un plenum fisico.
  */
 export function connectFanCoilAirOnPlan(
   project: Project,
   terminalId: string,
   fanCoilId: string,
 ): Project {
-  const draft = project.ductedDrafts?.find(
-    (item) => item.id === terminalId && item.kind === "terminal",
-  );
   const terminal = project.airTerminals.find((item) => item.id === terminalId);
-  const target = draft ?? terminal;
   const fanCoil = project.fanCoils?.find((item) => item.id === fanCoilId);
-  if (!target) throw new Error("Bocchetta inesistente.");
+  if (!terminal)
+    throw new Error(
+      "Configura la bocchetta e il suo plenum prima del collegamento.",
+    );
   if (!fanCoil) throw new Error("Ventilconvettore inesistente.");
   if (fanCoil.locked)
     throw new Error("Sbloccare il ventilconvettore prima di collegarlo.");
-  if (target.floorId !== fanCoil.floorId)
+  if (terminal.use !== "supply")
+    throw new Error("Collega il ventilconvettore a una bocchetta di mandata.");
+  if (terminal.floorId !== fanCoil.floorId)
     throw new Error(
       "Collega il ventilconvettore a una bocchetta sullo stesso piano.",
     );
-  const terminalInstallation = project.installations.find(
-    (item) => item.id === terminal?.installationId && item.type === "ducted",
-  );
+  if (
+    !project.plenums.some(
+      (plenum) =>
+        plenum.attachmentId === terminal.id && plenum.use === "supply",
+    )
+  )
+    throw new Error(
+      "Aggiungi il plenum di mandata alla bocchetta prima di collegarla al ventilconvettore.",
+    );
   const { project: prepared, systemId } = ensureFanCoilAirSystem(
     project,
     fanCoilId,
-    draft?.installationId ?? terminalInstallation?.id,
+    project.installations.find(
+      (item) => item.id === terminal.installationId && item.type === "ducted",
+    )?.id,
   );
-  return draft
-    ? connectDraftOnPlan(prepared, terminalId, systemId)
-    : connectTerminalOnPlan(prepared, terminalId, systemId);
+  return syncAttachedPlenums(
+    connectTerminalOnPlan(prepared, terminalId, systemId),
+    project,
+  );
 }

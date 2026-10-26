@@ -233,7 +233,7 @@ export function calculatePlenum(
     result.issues.push({
       code: "machineFanCoil",
       message:
-        "Ventilconvettore canalizzabile: portata e potenza del punto di funzionamento scelto. Prevalenza utile, motore e accessori di canalizzazione da verificare sul catalogo del costruttore.",
+        "Ventilconvettore canalizzabile: portata e potenza della massima velocità. Prevalenza utile, motore e accessori di canalizzazione da verificare sul catalogo del costruttore.",
     });
   if (
     !resolved ||

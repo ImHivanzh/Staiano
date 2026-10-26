@@ -307,9 +307,7 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
     "La distribuzione dell’aria, ambiente per ambiente",
   );
   await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
-  expect(
-    Number(await canvas.getAttribute("data-comfort-streams")),
-  ).toBeGreaterThan(0);
+  expect(Number(await canvas.getAttribute("data-comfort-streams"))).toBe(0);
   await viewer
     .getByRole("combobox", { name: "Flusso aria e calore" })
     .selectOption("heat");

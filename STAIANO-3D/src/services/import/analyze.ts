@@ -3,19 +3,32 @@ import type { Point } from "@/schemas/project";
 import type { PlanAnalysis } from "@/domain/geometry/plan-analysis";
 import { reconstructionSchema } from "./reconstruction-schema";
 import { reconstructPlan2D } from "@/domain/geometry/automatic-plan";
+import {
+  clipPlanSegment,
+  consolidateWallCandidates,
+  conflictingCandidates,
+  subtractWallOpenings,
+} from "@/domain/geometry/plan-candidates";
+import { pdfWallSegments } from "@/domain/geometry/pdf-wall-segments";
 
 async function recognize(
   plan: ParsedPlan,
   pixels?: Uint8ClampedArray,
   width = 0,
   height = 0,
+  signal?: AbortSignal,
 ) {
   return new Promise<{ vector: PlanAnalysis; raster: PlanAnalysis | null }>(
     (resolve, reject) => {
       const worker = new Worker("/workers/plan.worker.js", { type: "module" });
       const finish = () => {
         clearTimeout(timeout);
+        signal?.removeEventListener("abort", abort);
         worker.terminate();
+      };
+      const abort = () => {
+        finish();
+        reject(new DOMException("Analisi annullata", "AbortError"));
       };
       const timeout = setTimeout(() => {
         finish();
@@ -46,6 +59,11 @@ async function recognize(
           ),
         );
       };
+      signal?.addEventListener("abort", abort, { once: true });
+      if (signal?.aborted) {
+        abort();
+        return;
+      }
       worker.postMessage(
         {
           kind: "analyze",
@@ -82,17 +100,40 @@ export async function analyzePlan(
     !plan.background ||
     (plan.sourceType !== "pdf" && plan.sourceType !== "raster")
   )
-    return (await recognize(source)).vector;
+    return (await recognize(source, undefined, 0, 0, signal)).vector;
   const img = new Image();
   img.src = plan.analysisDataUrl ?? plan.background.dataUrl;
   await img.decode();
-  const left = region ? Math.max(0, Math.min(region.start.x, region.end.x)) : 0;
-  const top = region ? Math.max(0, Math.min(region.start.y, region.end.y)) : 0;
+  if (
+    region &&
+    (![region.start.x, region.start.y, region.end.x, region.end.y].every(
+      Number.isFinite,
+    ) ||
+      Math.abs(region.end.x - region.start.x) < 8 ||
+      Math.abs(region.end.y - region.start.y) < 8)
+  )
+    throw new Error("Selezionare un’area di almeno 8 pixel per lato.");
+  // A few pixels of context preserve both wall faces at the operator's crop edge.
+  const padding = region
+    ? Math.max(4, Math.min(img.width, img.height) * 0.005)
+    : 0;
+  const left = region
+    ? Math.max(0, Math.floor(Math.min(region.start.x, region.end.x) - padding))
+    : 0;
+  const top = region
+    ? Math.max(0, Math.floor(Math.min(region.start.y, region.end.y) - padding))
+    : 0;
   const sourceWidth = region
-    ? Math.min(img.width, Math.max(region.start.x, region.end.x)) - left
+    ? Math.min(
+        img.width,
+        Math.ceil(Math.max(region.start.x, region.end.x) + padding),
+      ) - left
     : img.width;
   const sourceHeight = region
-    ? Math.min(img.height, Math.max(region.start.y, region.end.y)) - top
+    ? Math.min(
+        img.height,
+        Math.ceil(Math.max(region.start.y, region.end.y) + padding),
+      ) - top
     : img.height;
   if (
     ![left, top, sourceWidth, sourceHeight].every(Number.isFinite) ||
@@ -121,12 +162,86 @@ export async function analyzePlan(
     canvas.height,
   );
   const { vector, raster } = await recognize(
-    source,
+    {
+      ...source,
+      segments: pdfWallSegments(source).flatMap((s) => {
+        const clipped = clipPlanSegment(
+          s,
+          left,
+          top,
+          sourceWidth,
+          sourceHeight,
+          factor,
+        );
+        return clipped ? [clipped] : [];
+      }),
+      analysisReferenceSize: Math.min(img.width, img.height) * factor,
+      analysisMetersPerUnit: plan.analysisMetersPerUnit
+        ? plan.analysisMetersPerUnit / factor
+        : undefined,
+    },
     context.getImageData(0, 0, canvas.width, canvas.height).data,
     canvas.width,
     canvas.height,
+    signal,
   );
-  let result = raster!;
+  signal?.throwIfAborted();
+  const paired = vector.walls.filter(
+    (w) => w.kind === "paired-faces" && w.layer !== "Contorni da verificare",
+  );
+  // Exact PDF face pairs take priority; overlapping raster interpretations stay reviewable.
+  const combined =
+    paired.length >= 3
+      ? consolidateWallCandidates([
+          ...paired,
+          ...raster!.walls
+            .flatMap((w) => subtractWallOpenings(w, vector.openings))
+            .map((w) => {
+              if (paired.some((v) => conflictingCandidates(v, w)))
+                return {
+                  ...w,
+                  layer: "Contorni da verificare",
+                  confidence: Math.min(0.5, w.confidence),
+                };
+              if (
+                vector.openings.some((o) =>
+                  conflictingCandidates(
+                    {
+                      ...w,
+                      start: o.start,
+                      end: o.end,
+                      thicknessUnits: Math.max(12, w.thicknessUnits ?? 0),
+                    },
+                    w,
+                  ),
+                )
+              )
+                return {
+                  ...w,
+                  layer: "Contorni da verificare",
+                  confidence: Math.min(0.5, w.confidence),
+                  reason:
+                    w.reason +
+                    " Possibile serramento indicato dai tracciati PDF.",
+                };
+              return w;
+            }),
+        ])
+      : consolidateWallCandidates(raster!.walls);
+  let result: PlanAnalysis = {
+    ...raster!,
+    walls: combined,
+    openings: [...vector.openings, ...raster!.openings],
+    imageWalls: combined.filter((w) => w.layer !== "Contorni da verificare"),
+    notes: [
+      ...(paired.length >= 3
+        ? [
+            "Assi PDF misurati dalle facce originali, integrati con le proposte dell’immagine.",
+          ]
+        : []),
+      ...raster!.notes,
+    ],
+  };
   try {
     const status = await fetch("/api/import/reconstruct", {
       signal: signal
@@ -169,17 +284,7 @@ export async function analyzePlan(
   // A vector PDF retains exact coordinates when parallel wall faces exist.
   // Raster evidence handles scans, filled-only paths and mixed PDFs instead of
   // letting a decorative vector line suppress recognition of the entire image.
-  if (
-    !result.reconstructed &&
-    !region &&
-    vector.walls.filter((w) => w.kind === "paired-faces").length >= 3 &&
-    vector.walls.filter((w) => w.kind === "paired-faces").length /
-      vector.walls.length >=
-      0.6 &&
-    !result.walls.some((w) => w.confidence >= 0.9)
-  )
-    return vector;
-  if (!region && !result.walls.length && vector.walls.length) return vector;
+  if (!result.walls.length && vector.walls.length) result = vector;
   const analysis = { ...result };
   delete analysis.imageWalls;
   return {

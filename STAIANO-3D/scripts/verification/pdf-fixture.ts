@@ -70,7 +70,7 @@ export function pdfQaFixture() {
   const control = compatibleFanCoilControls(product)[0];
   if (!product || !control)
     throw new Error("Missing original Innova/M7 catalog pairing");
-  project = applyFanCoil(project, room.id, product.id, 0, {
+  project = applyFanCoil(project, room.id, product.id, {
     controllerId: control.id,
   });
   const pump = heatPumpCatalog.products.find(

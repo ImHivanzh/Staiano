@@ -12,6 +12,7 @@ vi.mock("@react-three/fiber", () => ({
 }));
 vi.mock("react", () => ({
   useRef: <T>(value: T) => ({ current: value }),
+  useMemo: <T>(run: () => T) => run(),
   useLayoutEffect: (run: () => void) => run(),
 }));
 import { RoomLabelProjection } from "./RoomLabels";
@@ -30,7 +31,18 @@ it("projects labels once while stationary and updates them after camera movement
   );
   const label = { style } as unknown as HTMLButtonElement;
   RoomLabelProjection({
-    rooms: [{ id: "room", centroid: { x: 1, y: 2 } } as Room],
+    rooms: [
+      {
+        id: "room",
+        centroid: { x: 1, y: 2 },
+        polygon: [
+          { x: 0, y: 0 },
+          { x: 2, y: 0 },
+          { x: 2, y: 4 },
+          { x: 0, y: 4 },
+        ],
+      } as Room,
+    ],
     elements: { current: new Map([["room", label]]) },
   });
   const camera = new PerspectiveCamera(40, 2, 0.01, 100);

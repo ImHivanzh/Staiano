@@ -39,10 +39,9 @@ test("PDF: testi grandi e ruotati restano nello sfondo senza diventare muri", as
     buffer: Buffer.from(await pdf.save()),
   });
   const analysis = dialog.getByLabel("Analisi automatica planimetria");
-  await expect(analysis).toContainText(
-    "4 muri candidati · 0 ad alta affidabilità",
-    { timeout: 20_000 },
-  );
+  await expect(analysis).toContainText("4 proposte principali", {
+    timeout: 20_000,
+  });
   const preview = dialog.getByRole("img", { name: /Anteprima planimetria/ });
   const textPixels = await preview.locator("image").evaluate(async (node) => {
     const image = new Image();
@@ -81,12 +80,11 @@ test("PDF: testi grandi e ruotati restano nello sfondo senza diventare muri", as
   await dialog
     .getByRole("button", { name: "Riconosci muri nell’area" })
     .click();
-  await expect(analysis).toContainText("0 muri candidati", {
+  await expect(analysis).toContainText("0 proposte principali", {
     timeout: 20_000,
   });
   await dialog.getByRole("button", { name: "Analizza pagina intera" }).click();
-  await expect(analysis).toContainText(
-    "4 muri candidati · 0 ad alta affidabilità",
-    { timeout: 20_000 },
-  );
+  await expect(analysis).toContainText("4 proposte principali", {
+    timeout: 20_000,
+  });
 });

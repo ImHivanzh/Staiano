@@ -58,4 +58,4 @@ $taskRuntime = Join-Path $taskRoot 'native\runtime'
 New-Item -ItemType Directory -Path $taskRuntime -Force | Out-Null
 $taskConfig = @{python=$taskExecutable;source=$taskSource;checkpoint=$taskWeights} | ConvertTo-Json
 [IO.File]::WriteAllText((Join-Path $taskRuntime 'plan-ai.json'), $taskConfig, [Text.UTF8Encoding]::new($false))
-Write-Output 'Ricostruzione 2D locale configurata. Ricompilare e riavviare Staiano.'
+Write-Output 'Ricostruzione 2D locale configurata. In Importa planimetria aprire Stato AI e premere Verifica AI. Non occorre ricompilare.'

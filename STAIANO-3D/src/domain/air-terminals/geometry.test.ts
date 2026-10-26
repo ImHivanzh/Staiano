@@ -17,7 +17,7 @@ it("models exactly three EDFL openings even though the data does not separately 
   ).toHaveLength(3);
   expect(terminalBodyDepthMm(family, variant)).toBe(52);
   expect(family.linearFaceLengthOffsetMm).toBe(50);
-  expect(airTerminalMountings(family)).toEqual(["ceiling"]);
+  expect(airTerminalMountings(family)).toEqual(["wall", "ceiling"]);
   expect(family.supportingSources?.[0].sourceMetadata).toMatchObject({
     sha256: "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
     page: 2,

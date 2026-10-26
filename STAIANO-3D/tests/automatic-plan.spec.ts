@@ -73,6 +73,12 @@ test("an imported image becomes an editable 2D plan with rooms and openings afte
       name: "Ho verificato la scala su una misura reale",
     })
     .check();
+  await dialog
+    .getByRole("button", { name: "Seleziona proposte visibili" })
+    .click();
+  await dialog
+    .getByLabel(/Le geometrie selezionate rappresentano assi muro/)
+    .check();
   await expect(importButton).toBeEnabled();
   await importButton.click();
   await expect(dialog).toHaveCount(0);

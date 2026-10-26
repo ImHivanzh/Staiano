@@ -4,9 +4,27 @@ import {
   rotatePlanTensor,
   semanticWallMask,
   suppressPlanAnnotations,
+  planSegmentationTiles,
 } from "./plan-segmentation";
 
 describe("preparazione e segmentazione AI locale", () => {
+  it("copre la tavola con al massimo quattro ritagli sovrapposti e conserva i bordi", () => {
+    expect(planSegmentationTiles(800, 600)).toEqual([]);
+    const tiles = planSegmentationTiles(2200, 1556);
+    expect(tiles).toHaveLength(4);
+    for (let y = 0; y < 1556; y += 31)
+      for (let x = 0; x < 2200; x += 31)
+        expect(
+          tiles.some(
+            (t) =>
+              x >= t.left &&
+              x < t.left + t.width &&
+              y >= t.top &&
+              y < t.top + t.height,
+          ),
+        ).toBe(true);
+    expect(tiles[0].left + tiles[0].width).toBeGreaterThan(tiles[1].left);
+  });
   it("rimuove caratteri isolati mantenendo muri lunghi e tramezzi corti allungati", () => {
     const size = 64,
       pixels = new Uint8ClampedArray(size * size * 4).fill(255),

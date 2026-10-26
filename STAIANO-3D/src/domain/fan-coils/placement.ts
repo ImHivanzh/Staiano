@@ -1,9 +1,11 @@
 import type { Point, Project, Room, Wall } from "@/schemas/project";
 import {
   fanCoilDefaultPanelType,
+  fanCoilMaximumPoint,
   fanCoilPanelDimensions,
   fanCoilRecessDepthMm,
   fanCoilProductAtVersion,
+  isConcealedFanCoil,
   isRecessedFanCoil,
   type FanCoilPanelType,
   type FanCoilProduct,
@@ -123,12 +125,12 @@ export function fanCoilCeilingRange(
       ...bands.map((band) => band.elevationM),
     ) - depth;
   const ranges: FanCoilHeightZone[] = [];
-  const recessed = isRecessedFanCoil(product);
-  // Un apparecchio ad incasso non si appende a vista sotto il soffitto: la posa
-  // a soffitto è ammessa solo dentro un vuoto tecnico.
-  if (!(recessed && mounting === "ceiling") && below >= minimum)
+  const concealed = isConcealedFanCoil(product);
+  // Un apparecchio senza mobile non si appende a vista sotto il soffitto: la
+  // posa a soffitto è ammessa solo dentro un controsoffitto o un vuoto tecnico.
+  if (!(concealed && mounting === "ceiling") && below >= minimum)
     ranges.push({ minM: minimum, maxM: below, reference: "below" });
-  if (!recessed) return ranges.length ? { ranges, defaultM: below } : null;
+  if (!concealed) return ranges.length ? { ranges, defaultM: below } : null;
   // Valid ceiling bands do not overlap; their clipped areas also cover a joint between adjacent bands.
   const covered = bands.reduce((sum, band) => sum + band.areaM2, 0);
   const footprint = area(corners);
@@ -411,7 +413,7 @@ export function initialFanCoilPose(
     widthMm: product.widthMm,
     heightMm: product.heightMm,
     depthMm: product.depthMm,
-    operatingPointIndex: 0,
+    operatingPointIndex: fanCoilMaximumPoint(product).index,
     controllerId: null,
     controllerBoard: null,
     panelType,

@@ -1,6 +1,7 @@
 import type { Project } from "@/schemas/project";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import { ecoclimaPriceCatalog } from "@/domain/catalogs/ecoclima-prices";
+import officialArticles from "../../../catalog-data/generated/ecoclima-articles.json" with { type: "json" };
 import { terminalFinishPrice, terminalFinishLabel } from "./finishes";
 import type { AirTerminalVariant } from "@/domain/catalogs/air-terminal-schema";
 import type {
@@ -53,6 +54,8 @@ export type EcoclimaBomLine = {
   familyCode: string;
   kind: EcoclimaPrice["kind"] | "machine-plenum";
   label: string;
+  /** Dimensioni nominali di catalogo (L x H x P, diametro o feritoie). */
+  dimensions: string | null;
   sku: string | null;
   quantity: number | null;
   unitPriceCents: number | null;
@@ -98,6 +101,26 @@ export function terminalCommercialDimensions(terminal: InstalledTerminal) {
     slotCount: variant.slotCount,
     slotWidthMm: variant.slotWidthMm,
   };
+}
+/** Dimensioni nominali di catalogo: L x H x P, diametro o feritoie. */
+export function terminalDimensionsText(
+  terminal: InstalledTerminal,
+): string | null {
+  const dimensions = terminalCommercialDimensions(terminal);
+  if (!dimensions) return null;
+  const sides = [
+    dimensions.lengthMm === null ? null : `L ${dimensions.lengthMm}`,
+    dimensions.heightMm === null ? null : `H ${dimensions.heightMm}`,
+    dimensions.widthMm === null ? null : `P ${dimensions.widthMm}`,
+  ].filter((item): item is string => item !== null);
+  const parts = sides.length ? [`${sides.join(" × ")} mm`] : [];
+  if (dimensions.diameterMm !== null)
+    parts.push(`Ø ${dimensions.diameterMm} mm`);
+  if (dimensions.slotCount)
+    parts.push(
+      `${dimensions.slotCount} ${dimensions.slotCount === 1 ? "feritoia" : "feritoie"}${dimensions.slotWidthMm ? ` da ${dimensions.slotWidthMm} mm` : ""}`,
+    );
+  return parts.join("; ") || null;
 }
 function dimensionsMatch(
   dimensions: EcoclimaPrice["dimensions"],
@@ -395,6 +418,17 @@ function priceLine(
 ): EcoclimaBomLine {
   const candidates = matchingPrices(terminal, kind, catalog, plenum);
   const price = uniquePrice(candidates);
+  const articleCode =
+    price &&
+    (officialArticles.priceArticles as Record<string, string>)[price.id];
+  const article = articleCode
+    ? (
+        officialArticles.articles as Record<
+          string,
+          { code: string; description: string }
+        >
+      )[articleCode]
+    : undefined;
   const connectionLabels = {
     lateral: "laterale",
     upper: "superiore",
@@ -429,14 +463,21 @@ function priceLine(
     familyCode: terminal.family,
     kind,
     label:
+      article?.description ??
       (price?.label ?? `${labels[kind]} ${terminal.family}`) +
-      (kind === "insulated-plenum" && plenum
-        ? ` · stacco ${connectionLabels[plenum.connectionPosition ?? "lateral"]}`
-        : "") +
-      (kind === "terminal" && terminal.color
-        ? ` · ${terminalFinishLabel(terminal.color)}`
-        : ""),
-    sku: price?.modelCode ?? null,
+        (kind === "insulated-plenum" && plenum
+          ? ` · stacco ${connectionLabels[plenum.connectionPosition ?? "lateral"]}`
+          : "") +
+        (kind === "terminal" && terminal.color
+          ? ` · ${terminalFinishLabel(terminal.color)}`
+          : ""),
+    dimensions:
+      kind === "terminal"
+        ? terminalDimensionsText(terminal)
+        : kind === "insulated-plenum" && plenum
+          ? `${plenum.widthMm} × ${plenum.heightMm} × ${plenum.depthMm} mm`
+          : null,
+    sku: article?.code ?? null,
     quantity,
     unitPriceCents: unitPrice,
     extendedPriceCents: extended,
@@ -448,7 +489,9 @@ function priceLine(
         : price && unitPrice === null
           ? "Verniciatura del colore scelto: prezzo da quotare a Ecoclima."
           : price
-            ? null
+            ? article
+              ? null
+              : "Codice articolo e descrizione ufficiale non disponibili per questa variante: verificare con Ecoclima."
             : candidates.length
               ? "Variante commerciale ambigua: registrare modello, colore e posizione dello stacco."
               : "Prezzo di listino ufficiale non disponibile per questa misura e variante esatta. Richiedere quotazione a Ecoclima.",
@@ -619,6 +662,7 @@ export function calculateEcoclimaBom(
       familyCode: "",
       kind: "machine-plenum",
       label: `Plenum di mandata macchina ${system.manufacturer}`,
+      dimensions: null,
       sku: null,
       quantity: 1,
       unitPriceCents: null,
@@ -642,6 +686,7 @@ export function calculateEcoclimaBom(
       familyCode: terminal?.family ?? "",
       kind: terminal ? "insulated-plenum" : "machine-plenum",
       label: `Plenum ${plenum.use === "supply" ? "mandata" : "ripresa"} ${plenum.model ?? "su misura"} ${plenum.widthMm} x ${plenum.heightMm} x ${plenum.depthMm} mm`,
+      dimensions: `${plenum.widthMm} × ${plenum.heightMm} × ${plenum.depthMm} mm`,
       sku: null,
       quantity: 1,
       unitPriceCents: null,

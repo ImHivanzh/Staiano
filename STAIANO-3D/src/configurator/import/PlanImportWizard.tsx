@@ -16,6 +16,13 @@ import {
   preparePlanImport,
 } from "@/domain/geometry/import-plan";
 import { numberFromForm } from "@/utils/format";
+import {
+  candidateRun,
+  conflictingCandidates,
+  nearestPlanSegment,
+} from "@/domain/geometry/plan-candidates";
+import { PlanWallControls } from "./PlanWallControls";
+import { PlanAiStatus } from "./PlanAiStatus";
 import styles from "./PlanImportWizard.module.css";
 
 export function PlanImportWizard({
@@ -43,6 +50,16 @@ export function PlanImportWizard({
     inverse: DOMMatrix;
   } | null>(null);
   const dragged = useRef(false);
+  const [selectionAction, setSelectionAction] = useState<"include" | "exclude">(
+    "include",
+  );
+  const [showAlternatives, setShowAlternatives] = useState(false),
+    [wholeRun, setWholeRun] = useState(true);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [boxPoints, setBoxPoints] = useState<Point[]>([]);
+  type SelectionSnapshot = { layers: string[]; excluded: string[] };
+  const [past, setPast] = useState<SelectionSnapshot[]>([]),
+    [future, setFuture] = useState<SelectionSnapshot[]>([]);
   const [file, setFile] = useState<File | null>(initialFile ?? null),
     [plan, setPlan] = useState<ParsedPlan | null>(null),
     [loading, setLoading] = useState(false),
@@ -55,7 +72,9 @@ export function PlanImportWizard({
     [convert, setConvert] = useState(false);
   const [points, setPoints] = useState<Point[]>([]),
     [distance, setDistance] = useState(""),
-    [mode, setMode] = useState<"calibrate" | "select" | "area">("calibrate"),
+    [mode, setMode] = useState<"calibrate" | "select" | "area" | "box">(
+      "calibrate",
+    ),
     [thickness, setThickness] = useState("0,10"),
     [originX, setOriginX] = useState("0"),
     [originY, setOriginY] = useState("0");
@@ -117,23 +136,29 @@ export function PlanImportWizard({
       if (count) parsed.layers.push({ name, count, visible: true });
     }
     setLayers(
-      parsed.analysis?.reconstructed
-        ? [...new Set(recognized.map((wall) => wall.layer))]
-        : recognized.some((w) => w.layer === "Muri riconosciuti")
-          ? ["Muri riconosciuti"]
-          : recognized.length
-            ? ["Contorni da verificare"]
-            : [],
+      recognized.some((w) => w.layer === "Muri riconosciuti")
+        ? ["Muri riconosciuti"]
+        : recognized.length
+          ? ["Contorni da verificare"]
+          : [],
     );
     setExcluded(
-      parsed.analysis?.reconstructed
-        ? []
-        : recognized.filter((w) => w.confidence < 0.9).map((w) => w.id),
+      recognized
+        .filter(
+          (w) => w.confidence < 0.9 || w.layer === "Contorni da verificare",
+        )
+        .map((w) => w.id),
     );
     setAxisConfirmed(
-      Boolean(parsed.analysis?.reconstructed) ||
-        recognized.some((w) => w.confidence >= 0.9),
+      recognized.some(
+        (w) => w.confidence >= 0.9 && w.layer !== "Contorni da verificare",
+      ),
     );
+    setPast([]);
+    setFuture([]);
+    setShowAlternatives(false);
+    setHoveredId(null);
+    setBoxPoints([]);
   }
   async function load(next: File, page = 1) {
     analysisController.current?.abort();
@@ -207,6 +232,7 @@ export function PlanImportWizard({
     try {
       const next = {
         ...plan,
+        analysisMetersPerUnit: verified && scale > 0 ? scale : undefined,
         segments: plan.segments.filter(
           (s) =>
             s.layer !== "Muri riconosciuti" &&
@@ -273,16 +299,25 @@ export function PlanImportWizard({
   }, []);
   const segments = plan?.segments ?? [],
     allPoints = segments.flatMap((s) => [s.start, s.end]);
+  const candidateLookup = useMemo(
+    () => new Map(plan?.analysis?.walls.map((w) => [w.id, w]) ?? []),
+    [plan?.analysis],
+  );
   const drawnSegments = useMemo(() => {
     const activeLayers = new Set(layers),
       omitted = new Set(excluded);
     const included = (segment: PlanSegment) =>
       activeLayers.has(segment.layer) && !omitted.has(segment.id);
     // I tracciati inclusi restano cliccabili sopra gli assi alternativi.
-    return (plan?.segments ?? []).toSorted(
-      (a, b) => Number(included(a)) - Number(included(b)),
-    );
-  }, [plan?.segments, layers, excluded]);
+    return (plan?.segments ?? [])
+      .filter(
+        (s) =>
+          s.layer !== "Contorni da verificare" ||
+          showAlternatives ||
+          included(s),
+      )
+      .toSorted((a, b) => Number(included(a)) - Number(included(b)));
+  }, [plan?.segments, layers, excluded, showAlternatives]);
   let minX = 0,
     minY = 0,
     maxX = plan?.background?.widthPx ?? 100,
@@ -339,8 +374,98 @@ export function PlanImportWizard({
   const selected = segments.filter(
     (s) => layers.includes(s.layer) && !excluded.includes(s.id),
   );
+  const preparedImport = useMemo(() => {
+    if (!plan || scale <= 0) return null;
+    try {
+      return preparePlanImport(plan, {
+        selectedLayers: layers,
+        excludedIds: excluded,
+        metersPerUnit: scale,
+        thicknessM: numberFromForm(thickness),
+        convertGeometry: convert,
+        origin: { x: numberFromForm(originX), y: numberFromForm(originY) },
+      });
+    } catch {
+      return null;
+    }
+  }, [plan, scale, layers, excluded, thickness, convert, originX, originY]);
+  const visibleSegments = drawnSegments.filter(
+    (s) =>
+      (s.layer === "Muri riconosciuti" ||
+        s.layer === "Contorni da verificare" ||
+        layers.includes(s.layer)) &&
+      Math.max(s.start.x, s.end.x) >= center.x - viewWidth / 2 &&
+      Math.min(s.start.x, s.end.x) <= center.x + viewWidth / 2 &&
+      Math.max(s.start.y, s.end.y) >= center.y - viewHeight / 2 &&
+      Math.min(s.start.y, s.end.y) <= center.y + viewHeight / 2,
+  );
+  const selectableSegments =
+    selectionAction === "exclude"
+      ? visibleSegments.filter(
+          (s) => layers.includes(s.layer) && !excluded.includes(s.id),
+        )
+      : visibleSegments;
+  function changeSelection(ids: string[], include: boolean) {
+    const targets = segments.filter((s) => ids.includes(s.id));
+    if (!targets.length) return;
+    const nextExcluded = new Set(excluded),
+      nextLayers = new Set(layers);
+    for (const s of targets) {
+      if (include) {
+        nextLayers.add(s.layer);
+        nextExcluded.delete(s.id);
+        const candidate = plan?.analysis?.walls.find((w) => w.id === s.id);
+        if (candidate)
+          for (const other of plan!.analysis!.walls)
+            if (other.id !== s.id && conflictingCandidates(candidate, other))
+              nextExcluded.add(other.id);
+      } else nextExcluded.add(s.id);
+    }
+    if (
+      nextLayers.size === layers.length &&
+      layers.every((l) => nextLayers.has(l)) &&
+      nextExcluded.size === excluded.length &&
+      excluded.every((id) => nextExcluded.has(id))
+    )
+      return;
+    setPast((old) => [
+      ...old.slice(-49),
+      { layers: [...layers], excluded: [...excluded] },
+    ]);
+    setFuture([]);
+    setLayers([...nextLayers]);
+    setExcluded([...nextExcluded]);
+  }
+  function selectionHistory(redo = false) {
+    const list = redo ? future : past,
+      next = list.at(-1);
+    if (!next) return;
+    const current = { layers: [...layers], excluded: [...excluded] };
+    if (redo) {
+      setFuture(list.slice(0, -1));
+      setPast((old) => [...old, current]);
+    } else {
+      setPast(list.slice(0, -1));
+      setFuture((old) => [...old, current]);
+    }
+    setLayers(next.layers);
+    setExcluded(next.excluded);
+  }
+  function chooseSegment(id: string) {
+    const segment = segments.find((s) => s.id === id);
+    if (!segment) return;
+    const ids = wholeRun
+      ? candidateRun(
+          visibleSegments.filter((s) => s.layer === segment.layer),
+          id,
+          scale > 0 ? 0.01 / scale : 2,
+        )
+      : [id];
+    changeSelection(ids, selectionAction === "include");
+    setHoveredId(id);
+  }
   function pick(e: React.MouseEvent<SVGSVGElement>) {
-    if (!plan || mode === "select" || loading) return;
+    if (!plan || loading) return;
     const svg = e.currentTarget,
       matrix = svg.getScreenCTM();
     if (!matrix) return;
@@ -348,6 +473,40 @@ export function PlanImportWizard({
       matrix.inverse(),
     );
     let point: Point = { x: p.x, y: p.y };
+    if (mode === "select") {
+      const ctm = svg.getScreenCTM()!;
+      const nearest = nearestPlanSegment(
+        selectableSegments,
+        point,
+        18 / Math.hypot(ctm.a, ctm.b),
+      );
+      if (nearest) chooseSegment(nearest.id);
+      return;
+    }
+    if (mode === "box") {
+      if (boxPoints.length !== 1) {
+        setBoxPoints([point]);
+        return;
+      }
+      const a = boxPoints[0],
+        left = Math.min(a.x, point.x),
+        right = Math.max(a.x, point.x),
+        top = Math.min(a.y, point.y),
+        bottom = Math.max(a.y, point.y);
+      changeSelection(
+        visibleSegments
+          .filter((s) =>
+            [s.start, s.end].every(
+              (p) => p.x >= left && p.x <= right && p.y >= top && p.y <= bottom,
+            ),
+          )
+          .map((s) => s.id),
+        selectionAction === "include",
+      );
+      setBoxPoints([]);
+      setMode("select");
+      return;
+    }
     if (mode === "area") {
       setAreaPoints((old) => (old.length >= 2 ? [point] : [...old, point]));
       return;
@@ -399,10 +558,29 @@ export function PlanImportWizard({
       closeLabel="Chiudi importazione"
       onClose={onClose}
     >
-      <div className={styles.dialog}>
-        <p className={styles.notice}>
-          1 File · 2 Geometrie · 3 Scala · 4 Verifica manuale
-        </p>
+      <div
+        className={styles.dialog}
+        onKeyDown={(event) => {
+          if (
+            event.target instanceof HTMLInputElement ||
+            event.target instanceof HTMLTextAreaElement ||
+            event.target instanceof HTMLSelectElement
+          )
+            return;
+          if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "z"
+          ) {
+            event.preventDefault();
+            selectionHistory(event.shiftKey);
+          }
+        }}
+      >
+        {!plan && (
+          <p className={styles.notice}>
+            1 File · 2 Geometrie · 3 Scala · 4 Verifica manuale
+          </p>
+        )}
         <input
           ref={fileRef}
           type="file"
@@ -461,75 +639,22 @@ export function PlanImportWizard({
             dell’anteprima.
           </p>
         )}
-        <p className={styles.notice}>
-          Analisi locale con affidabilità visibile. DXF, DWG, PDF, PNG/JPEG.
-          Verificare sempre scala, muri e aperture. Limite 32 MB; immagini 15
-          MB.
-        </p>
+        {!plan && (
+          <p className={styles.notice}>
+            Analisi locale con affidabilità visibile. DXF, DWG, PDF, PNG/JPEG.
+            Verificare sempre scala, muri e aperture. Limite 32 MB; immagini 15
+            MB.
+          </p>
+        )}
+        <PlanAiStatus notes={plan?.analysis?.notes} />
         {loading && (
           <p role="status">Lettura e ricostruzione 2D della planimetria…</p>
         )}
         {error && <NotificationToast message={error} />}
         {plan && (
           <>
-            {plan.analysis && (
-              <section aria-label="Analisi automatica planimetria">
-                <strong>
-                  {plan.analysis.reconstructed
-                    ? `${plan.analysis.roomsDetected} ${plan.analysis.roomsDetected === 1 ? "stanza ricostruita" : "stanze ricostruite"} · ${plan.analysis.walls.length} muri · ${plan.analysis.openings.length} aperture proposte`
-                    : `${plan.analysis.walls.length} muri candidati · ${plan.analysis.walls.filter((wall) => wall.confidence >= 0.9).length} ad alta affidabilità · ${plan.analysis.openings.length} aperture possibili`}
-                </strong>
-                {plan.analysis.reconstructed && (
-                  <p className={styles.notice}>
-                    Conferma una misura reale, poi importa la planimetria 2D.
-                    Muri, stanze e aperture restano modificabili.
-                  </p>
-                )}
-                <details
-                  open={!plan.analysis.reconstructed}
-                  className={styles.analysisOptions}
-                >
-                  <summary>
-                    Dettagli del riconoscimento e selezione muri
-                  </summary>
-                  {plan.analysis.notes.map((note) => (
-                    <p className={styles.notice} key={note}>
-                      {note}
-                    </p>
-                  ))}
-                  {plan.analysis.walls.some((w) => w.confidence < 0.9) && (
-                    <label className={styles.row}>
-                      <input
-                        type="checkbox"
-                        checked={plan.analysis.walls
-                          .filter(
-                            (w) => w.confidence >= 0.5 && w.confidence < 0.9,
-                          )
-                          .every((w) => !excluded.includes(w.id))}
-                        onChange={(e) => {
-                          const ids = plan
-                            .analysis!.walls.filter(
-                              (w) => w.confidence >= 0.5 && w.confidence < 0.9,
-                            )
-                            .map((w) => w.id);
-                          setExcluded((old) =>
-                            e.target.checked
-                              ? old.filter((id) => !ids.includes(id))
-                              : [...new Set([...old, ...ids])],
-                          );
-                          setAxisConfirmed(e.target.checked);
-                        }}
-                      />
-                      {plan.analysis.reconstructed
-                        ? "Includi i muri ricostruiti, modificabili dopo l’importazione"
-                        : "Ho verificato e confermo i muri proposti in arancione (affidabilità media)"}
-                    </label>
-                  )}
-                </details>
-              </section>
-            )}
             <div className={styles.body}>
-              <div>
+              <div className={styles.planColumn}>
                 <p className={styles.filename}>
                   <strong>{plan.filename}</strong>
                   {plan.pageCount &&
@@ -583,6 +708,20 @@ export function PlanImportWizard({
                     </button>
                   )}
                 </div>
+                <p className={styles.notice}>
+                  1. Delimita la pianta · 2. Calibra una misura · 3. Riconosci e
+                  controlla i muri · 4. Importa
+                </p>
+                {plan.background && (
+                  <button
+                    type="button"
+                    className="bottone piccolo"
+                    disabled={loading || !verified}
+                    onClick={() => void recognizeArea(areaPoints.length !== 2)}
+                  >
+                    Riconosci con la scala verificata
+                  </button>
+                )}
                 {mode === "area" && (
                   <p className={styles.notice}>
                     Clicca due angoli opposti della sola pianta: escludi
@@ -663,7 +802,25 @@ export function PlanImportWizard({
                   }}
                   onPointerMove={(event) => {
                     const start = drag.current;
-                    if (!start || start.pointerId !== event.pointerId) return;
+                    if (!start || start.pointerId !== event.pointerId) {
+                      if (mode === "select") {
+                        const matrix = event.currentTarget.getScreenCTM();
+                        if (matrix) {
+                          const p = new DOMPoint(
+                            event.clientX,
+                            event.clientY,
+                          ).matrixTransform(matrix.inverse());
+                          setHoveredId(
+                            nearestPlanSegment(
+                              selectableSegments,
+                              p,
+                              18 / Math.hypot(matrix.a, matrix.b),
+                            )?.id ?? null,
+                          );
+                        }
+                      }
+                      return;
+                    }
                     if (!dragged.current) {
                       if (
                         Math.hypot(
@@ -743,52 +900,81 @@ export function PlanImportWizard({
                       y1={s.start.y}
                       x2={s.end.x}
                       y2={s.end.y}
-                      stroke={
+                      data-candidate-id={
+                        candidateLookup.has(s.id) ? s.id : undefined
+                      }
+                      data-selected={
                         layers.includes(s.layer) && !excluded.includes(s.id)
-                          ? (plan.analysis?.walls.find((w) => w.id === s.id)
-                              ?.confidence ?? 1) < 0.9
-                            ? "#ba7417"
-                            : "#08778c"
-                          : layers.includes(s.layer) &&
-                              plan.analysis?.walls.some((w) => w.id === s.id)
-                            ? "#ba7417"
-                            : "#a6afb4"
+                      }
+                      stroke={
+                        hoveredId === s.id
+                          ? "#183249"
+                          : layers.includes(s.layer) && !excluded.includes(s.id)
+                            ? "#08778c"
+                            : candidateLookup.has(s.id)
+                              ? "#87601b"
+                              : "#a6afb4"
                       }
                       strokeWidth={
-                        plan.analysis?.walls.some((w) => w.id === s.id)
+                        candidateLookup.has(s.id)
                           ? mode === "select"
-                            ? 3
+                            ? hoveredId === s.id
+                              ? 5
+                              : 3
                             : 2
                           : 1
                       }
                       vectorEffect="non-scaling-stroke"
+                      strokeDasharray={
+                        layers.includes(s.layer) && !excluded.includes(s.id)
+                          ? undefined
+                          : s.layer === "Contorni da verificare"
+                            ? "2 5"
+                            : "8 4"
+                      }
+                      pointerEvents="none"
                       opacity={
-                        layers.includes(s.layer) &&
-                        plan.analysis?.walls.some((w) => w.id === s.id)
+                        candidateLookup.has(s.id)
                           ? excluded.includes(s.id)
-                            ? 0.45
+                            ? 0.75
                             : 0.9
                           : 0.15
                       }
-                      onClick={(e) => {
-                        if (mode !== "select") return;
-                        e.stopPropagation();
-                        if (!layers.includes(s.layer))
-                          setLayers((old) => [...old, s.layer]);
-                        setExcluded((old) =>
-                          old.includes(s.id)
-                            ? old.filter((id) => id !== s.id)
-                            : [...old, s.id],
-                        );
-                      }}
                     >
                       <title>
                         {s.layer} · {s.kind} · {s.id}
-                        {plan.analysis?.walls.find((w) => w.id === s.id) &&
-                          ` · Affidabilità euristica ${Math.round(plan.analysis.walls.find((w) => w.id === s.id)!.confidence * 100)}%: ${plan.analysis.walls.find((w) => w.id === s.id)!.reason}`}
+                        {candidateLookup.has(s.id) &&
+                          ` · Affidabilità euristica ${Math.round(candidateLookup.get(s.id)!.confidence * 100)}%: ${candidateLookup.get(s.id)!.reason}`}
                       </title>
                     </line>
                   ))}
+                  {hoveredId &&
+                    (() => {
+                      const w = segments.find((s) => s.id === hoveredId);
+                      return w ? (
+                        <text
+                          x={(w.start.x + w.end.x) / 2}
+                          y={(w.start.y + w.end.y) / 2 - pointMarker * 2}
+                          fontSize={pointMarker * 3}
+                          fill="#183249"
+                          pointerEvents="none"
+                        >
+                          M
+                          {(plan.analysis?.walls.findIndex(
+                            (s) => s.id === w.id,
+                          ) ?? -1) + 1}
+                        </text>
+                      ) : null;
+                    })()}
+                  {boxPoints.length === 1 && (
+                    <circle
+                      cx={boxPoints[0].x}
+                      cy={boxPoints[0].y}
+                      r={pointMarker}
+                      fill="#365aa8"
+                      pointerEvents="none"
+                    />
+                  )}
                   {areaPoints.length === 2 && (
                     <rect
                       x={Math.min(areaPoints[0].x, areaPoints[1].x)}
@@ -838,7 +1024,9 @@ export function PlanImportWizard({
                     ? "Clicca due estremi di una misura nota. I punti si agganciano alle estremità dei tracciati CAD."
                     : mode === "area"
                       ? "Clicca due angoli opposti per delimitare l’area da riconoscere."
-                      : "Clicca un tracciato per escluderlo o includerlo. Le linee grigie non selezionate restano solo riferimento."}
+                      : mode === "box"
+                        ? "Clicca due angoli opposti: saranno trattati i muri completamente contenuti nel rettangolo."
+                        : `${selectionAction === "include" ? "Seleziona" : "Escludi"} il muro più vicino al clic. Trascina per spostare la vista.`}
                 </p>
                 <div className={styles.warnings}>
                   {plan.warnings.map((w) => (
@@ -847,6 +1035,74 @@ export function PlanImportWizard({
                 </div>
               </div>
               <div className={styles.sidebar}>
+                {plan.analysis && (
+                  <section
+                    aria-label="Analisi automatica planimetria"
+                    data-auto-count={
+                      plan.analysis.walls.filter(
+                        (w) =>
+                          w.confidence >= 0.9 &&
+                          w.layer !== "Contorni da verificare",
+                      ).length
+                    }
+                  >
+                    <strong>
+                      {`${plan.analysis.walls.filter((w) => w.layer !== "Contorni da verificare").length} proposte principali · ${plan.analysis.walls.filter((w) => w.layer === "Contorni da verificare").length} alternative · ${preparedImport?.walls.length ?? selected.length} segmenti selezionati`}
+                    </strong>
+                    <p className={styles.notice}>
+                      {plan.analysis.reconstructed &&
+                        `${plan.analysis.roomsDetected} stanze ricostruite · `}
+                      {plan.analysis.openings.length} aperture da verificare. I
+                      segmenti non corrispondono necessariamente a pareti
+                      distinte.
+                    </p>
+                    {plan.analysis.reconstructed && (
+                      <p className={styles.notice}>
+                        Conferma una misura reale, poi importa la planimetria
+                        2D. Muri, stanze e aperture restano modificabili.
+                      </p>
+                    )}
+                    <details className={styles.analysisOptions}>
+                      <summary>
+                        Dettagli del riconoscimento e selezione muri
+                      </summary>
+                      {plan.analysis.notes.map((note) => (
+                        <p className={styles.notice} key={note}>
+                          {note}
+                        </p>
+                      ))}
+                    </details>
+                  </section>
+                )}
+                {!!plan.analysis?.walls.length && (
+                  <PlanWallControls
+                    walls={plan.analysis.walls}
+                    visible={visibleSegments}
+                    selected={new Set(selected.map((s) => s.id))}
+                    scale={scale}
+                    activeId={hoveredId}
+                    action={selectionAction}
+                    onAction={(action) => {
+                      setSelectionAction(action);
+                      setMode("select");
+                      setBoxPoints([]);
+                    }}
+                    onSelect={changeSelection}
+                    onHover={setHoveredId}
+                    showAlternatives={showAlternatives}
+                    onAlternatives={setShowAlternatives}
+                    wholeRun={wholeRun}
+                    onWholeRun={setWholeRun}
+                    onUndo={() => selectionHistory()}
+                    onRedo={() => selectionHistory(true)}
+                    canUndo={past.length > 0}
+                    canRedo={future.length > 0}
+                    onBox={() => {
+                      setMode("box");
+                      setBoxPoints([]);
+                    }}
+                  />
+                )}
                 {segments.length > 0 && (
                   <>
                     <label className={styles.row}>
@@ -863,13 +1119,21 @@ export function PlanImportWizard({
                           <input
                             type="checkbox"
                             checked={layers.includes(layer.name)}
-                            onChange={(e) =>
+                            onChange={(e) => {
+                              setPast((old) => [
+                                ...old.slice(-49),
+                                {
+                                  layers: [...layers],
+                                  excluded: [...excluded],
+                                },
+                              ]);
+                              setFuture([]);
                               setLayers((old) =>
                                 e.target.checked
                                   ? [...old, layer.name]
                                   : old.filter((n) => n !== layer.name),
-                              )
-                            }
+                              );
+                            }}
                           />
                           <span>
                             {layer.name} ({layer.count})
@@ -879,9 +1143,9 @@ export function PlanImportWizard({
                       ))}
                     </div>
                     <p className={styles.notice}>
-                      {selected.length} segmenti selezionati. Testi/quote:{" "}
-                      {plan.annotations.length}, conservati come riferimento
-                      nell&apos;anteprima.
+                      {preparedImport?.walls.length ?? selected.length} segmenti
+                      selezionati. Testi/quote: {plan.annotations.length},
+                      conservati come riferimento nell&apos;anteprima.
                     </p>
                   </>
                 )}
@@ -986,10 +1250,11 @@ export function PlanImportWizard({
                   </label>
                 </div>
                 <p className={styles.notice}>
-                  La conversione aggiunge muri al piano attivo. I contorni
-                  chiusi generano stanze; correggere spessori, giunzioni e nomi
-                  nell&apos;editor. Le linee doppie CAD non vengono interpretate
-                  automaticamente come un unico muro.
+                  La conversione aggiunge solo i muri selezionati al piano
+                  attivo. I contorni chiusi generano stanze; correggere
+                  spessori, giunzioni e nomi nell&apos;editor. Controlla gli
+                  assi proposti dalle facce parallele e le aperture prima di
+                  importare.
                 </p>
               </div>
             </div>
@@ -1010,7 +1275,7 @@ export function PlanImportWizard({
                 {convert
                   ? plan.analysis?.reconstructed
                     ? "Importa planimetria 2D"
-                    : "Importa muri selezionati"
+                    : `Importa muri selezionati (${preparedImport?.walls.length ?? selected.length})`
                   : "Importa sfondo calibrato"}
               </button>
             </div>

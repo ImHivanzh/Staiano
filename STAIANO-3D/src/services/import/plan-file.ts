@@ -1,6 +1,7 @@
 import type { ParsedPlan } from "./plan-types";
 import { readRaster } from "./raster";
 import { extractPdfVectors } from "./pdf-vectors";
+import { pdfWallSegments } from "@/domain/geometry/pdf-wall-segments";
 
 export function validatePlanFile(
   file: Pick<File, "name" | "size" | "type">,
@@ -210,14 +211,43 @@ async function readPdf(file: File, pageNumber: number): Promise<ParsedPlan> {
       pdfjs.OPS.nextLineSetSpacingShowText,
     ]);
     let analysisDataUrl: string | undefined;
-    if (operators.fnArray.some((op) => textOps.has(op))) {
+    const usefulPaths = new Set(
+      pdfWallSegments(
+        {
+          sourceType: "pdf",
+          segments: vectors.segments,
+          background: { widthPx: canvas.width, heightPx: canvas.height },
+        } as ParsedPlan,
+        true,
+      ).map((s) => s.pdfStyle?.path),
+    );
+    const strokedOps = new Set([
+      pdfjs.OPS.stroke,
+      pdfjs.OPS.closeStroke,
+      pdfjs.OPS.fillStroke,
+      pdfjs.OPS.eoFillStroke,
+      pdfjs.OPS.closeFillStroke,
+      pdfjs.OPS.closeEOFillStroke,
+    ]);
+    const omitted = new Set<number>();
+    let pathIndex = 0;
+    for (let i = 0; i < operators.fnArray.length; i++)
+      if (
+        operators.fnArray[i] === pdfjs.OPS.constructPath &&
+        strokedOps.has(operators.argsArray[i][0])
+      ) {
+        if (vectors.segments.length && !usefulPaths.has(++pathIndex))
+          omitted.add(i);
+      }
+    if (operators.fnArray.some((op) => textOps.has(op)) || omitted.size) {
       // Omit glyph painting instead of erasing boxes that may overlap walls.
       await page.render({
         canvas,
         canvasContext: context,
         viewport,
         background: "white",
-        operationsFilter: (index) => !textOps.has(operators.fnArray[index]),
+        operationsFilter: (index) =>
+          !textOps.has(operators.fnArray[index]) && !omitted.has(index),
       }).promise;
       analysisDataUrl = canvas.toDataURL("image/png");
     }

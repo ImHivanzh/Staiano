@@ -151,6 +151,10 @@
       "2026-10-24-ecoclima-fbaca6b7da7e": {
         "file": "85775497059abe1ea0b86a3d42c7e0de1b4200c3dcbba2565d7410ce4115cb9e.json",
         "sha256": "85775497059abe1ea0b86a3d42c7e0de1b4200c3dcbba2565d7410ce4115cb9e"
+      },
+      "2026-10-24-ecoclima-318094c60565": {
+        "file": "47aade8d41853094c2a65578e99e3a5771a894df5018a54ff0ce0bb386ebc78a.json",
+        "sha256": "47aade8d41853094c2a65578e99e3a5771a894df5018a54ff0ce0bb386ebc78a"
       }
     },
     "hvac": {

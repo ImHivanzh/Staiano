@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Project } from "@/schemas/project";
 import {
   fanCoilCatalogAtVersion,
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
@@ -96,7 +97,7 @@ export function FanCoilProperties({
       )
     : null;
   const datumOffset = unit.mounting === "wall" ? visibleHeightMm / 2000 : 0;
-  const point = model?.operatingPoints[unit.operatingPointIndex];
+  const point = model ? fanCoilMaximumPoint(model).point : undefined;
   const airSystem = fanCoilAirSystem(project, id);
   const airVents = project.airTerminals.filter(
     (terminal) => terminal.systemId === airSystem?.id,
@@ -140,39 +141,18 @@ export function FanCoilProperties({
       )}
       <p className="riepilogo-apparecchio">
         {point
-          ? `${formatNumber(point.coolingW / 1000)} kW freddo · ${formatNumber(point.heatingW / 1000)} kW caldo`
+          ? `${point.label} · ${formatNumber(point.coolingW / 1000)} kW freddo · ${formatNumber(point.heatingW / 1000)} kW caldo`
           : "Capacità non verificabile"}
         <br />
         {point?.noiseDbA == null
           ? "Rumore non pubblicato / non verificabile"
-          : `${formatNumber(point.noiseDbA)} dB(A) alla velocità selezionata`}
+          : `${formatNumber(point.noiseDbA)} dB(A) alla massima velocità`}
       </p>
       <p className="nota" data-testid="fan-coil-geometry-disclosure">
         Geometria 3D orientativa: corpo e griglie sono schematici. Le quote
         seguono il dato catalogo disponibile; verificare sulla scheda ufficiale
         attacchi e spazi di manutenzione.
       </p>
-      <label className="campo">
-        <span>Velocità / punto di funzionamento</span>
-        <select
-          disabled={!model || unit.locked}
-          value={unit.operatingPointIndex}
-          onChange={(e) =>
-            commit((p) =>
-              updateFanCoil(p, id, {
-                operatingPointIndex: Number(e.target.value),
-              }),
-            )
-          }
-        >
-          {model?.operatingPoints.map((op, i) => (
-            <option key={i} value={i}>
-              {op.label} · {formatNumber(op.coolingW / 1000)} /{" "}
-              {formatNumber(op.heatingW / 1000)} kW
-            </option>
-          ))}
-        </select>
-      </label>
       <label className="campo">
         <span>Montaggio</span>
         <select
@@ -284,6 +264,14 @@ export function FanCoilProperties({
             anteriore è a filo. Serve una parete o controparete di almeno{" "}
             {model ? fanCoilRecessDepthMm(model, unit.panelType) : unit.depthMm}{" "}
             mm; la posizione non sporge nella stanza.
+          </p>
+        )}
+        {!recessed && isConcealedFanCoil(model) && (
+          <p className="nota" data-testid="fan-coil-ducted-note">
+            Modello canalizzabile senza mobile: il corpo va in un vano o vuoto
+            tecnico e la distribuzione è a canali o bocchette. Non ha pannello
+            frontale a filo muro e la profondità dichiarata è quella della
+            macchina, non di una nicchia.
           </p>
         )}
         <form
@@ -412,7 +400,7 @@ export function FanCoilProperties({
                   {recessed
                     ? "Modello ad incasso: la posa a soffitto è ammessa solo dentro un controsoffitto o un vuoto tecnico; non viene appeso a vista. Verifica pannelli e accessori del modello."
                     : isConcealedFanCoil(model)
-                      ? "Modello senza mobile: il corpo può stare nel vuoto tecnico o sotto il soffitto, secondo la quota scelta. Verifica pannelli e accessori del modello."
+                      ? "Modello canalizzabile senza mobile: la posa a soffitto è ammessa dentro un controsoffitto o un vuoto tecnico; non viene appeso a vista."
                       : "Posa a vista: tutto il corpo resta sotto il soffitto."}{" "}
                   {model?.ceilingInstallation?.note}
                 </p>
@@ -443,14 +431,14 @@ export function FanCoilProperties({
         <summary>Distribuzione aeraulica · plenum e canali</summary>
         {!point?.airflowM3h ? (
           <p role="status" className="nota">
-            Il punto di funzionamento scelto non dichiara la portata d’aria:
-            scegli un’altra velocità per alimentare canali e bocchette.
+            La massima velocità non dichiara la portata d’aria: non è possibile
+            alimentare canali e bocchette con questo modello.
           </p>
         ) : !airSystem ? (
           <>
             <p className="nota">
               Questo ventilconvettore è canalizzabile: può alimentare plenum,
-              canali e bocchette. La portata è quella del punto scelto (
+              canali e bocchette. La portata è quella della massima velocità (
               {formatNumber(point.airflowM3h)} m³/h); prevalenza utile, motore e
               accessori di canalizzazione vanno verificati sulla scheda Aermec.
             </p>

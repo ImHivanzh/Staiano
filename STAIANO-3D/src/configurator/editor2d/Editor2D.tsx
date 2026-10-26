@@ -1,5 +1,6 @@
 "use client";
 import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
+import { roomLabelPoint } from "@/domain/geometry/room-label";
 import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { DrywallLayer } from "./DrywallLayer";
 import { useWaypointDelete } from "../useWaypointDelete";
@@ -211,6 +212,14 @@ export function Editor2D({
   const [delta, setDelta] = useState<Point | null>(null),
     [exact, setExact] = useState("");
   const exactInput = useRef<HTMLInputElement>(null);
+  const [wallDirection, setWallDirection] = useState<Point | null>(null);
+  const pointer = useRef<Point | null>(null);
+  const refreshCursor = useEffectEvent(() => {
+    if (pointer.current) setCursor(targetPoint(pointer.current));
+  });
+  useEffect(() => {
+    refreshCursor();
+  }, [wallDirection, exact, anchor]);
   const finishExactWall = useEffectEvent((end: Point) => finishWall(end));
   useEffect(() => {
     if (tool !== "wall" || readOnly || presentation) return;
@@ -234,7 +243,22 @@ export function Editor2D({
         !inField
       )
         return;
-      if (event.key === "Enter" && exact.trim()) {
+      const direction = (
+        {
+          ArrowLeft: { x: -1, y: 0 },
+          ArrowRight: { x: 1, y: 0 },
+          ArrowUp: { x: 0, y: -1 },
+          ArrowDown: { x: 0, y: 1 },
+        } as Record<string, Point | undefined>
+      )[event.key];
+      if (!inField && anchor && direction) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!event.repeat)
+          setWallDirection((current) =>
+            current && samePoint(current, direction) ? null : direction,
+          );
+      } else if (event.key === "Enter" && exact.trim()) {
         event.preventDefault();
         event.stopPropagation();
         const length = Number(exact.replace(",", "."));
@@ -296,6 +320,13 @@ export function Editor2D({
   const walls = project?.walls.filter((w) => w.floorId === activeFloorId) ?? [],
     rooms = project?.rooms.filter((r) => r.floorId === activeFloorId) ?? [];
   const floor = project?.floors.find((f) => f.id === activeFloorId);
+  const roomLabels = useMemo(
+    () =>
+      new Map(
+        project?.rooms.map((room) => [room.id, roomLabelPoint(room.polygon)]),
+      ),
+    [project?.rooms],
+  );
   const u = Math.max(view.w / size.width, view.h / size.height);
   const fitRef = useRef(fit);
   useEffect(() => {
@@ -367,6 +398,7 @@ export function Editor2D({
       setCurveEnd(null);
       setMeasure(null);
       setExact("");
+      setWallDirection(null);
     };
     reset();
   }, [tool, activeFloorId]);
@@ -399,31 +431,53 @@ export function Editor2D({
   }
   function target(e: React.PointerEvent) {
     const raw = world(e.clientX, e.clientY);
+    pointer.current = raw;
+    return targetPoint(raw);
+  }
+  function targetPoint(raw: Point) {
     if (tool === "calibrate" || tool === "pan")
       return { point: raw, kind: "libero" };
-    const snapped = snapPoint(raw, walls, anchor, {
+    const direction = tool === "wall" && anchor ? wallDirection : null;
+    function constrain(point: Point) {
+      if (!anchor || !direction) return point;
+      const delta = subtract(point, anchor);
+      return add(
+        anchor,
+        scale(
+          direction,
+          Math.max(0, delta.x * direction.x + delta.y * direction.y),
+        ),
+      );
+    }
+    const snapped = snapPoint(constrain(raw), walls, anchor, {
       ...snap,
-      ...(tool === "wall-curve" && curveEnd
+      ...(direction || (tool === "wall-curve" && curveEnd)
         ? { orthogonal: false, angle45: false, parallel: false }
         : {}),
       toleranceM: view.w / 100,
     });
+    if (direction) {
+      snapped.point = constrain(snapped.point);
+      snapped.kind = "asse bloccato";
+    }
     const length = Number(exact.replace(",", "."));
     if (
       anchor &&
       length >= 0.05 &&
       length <= 100 &&
       tool === "wall" &&
-      distance(anchor, snapped.point) > 0.001
+      (direction || distance(anchor, snapped.point) > 0.001)
     )
       return {
         ...snapped,
         point: add(
           anchor,
-          scale(
-            subtract(snapped.point, anchor),
-            length / distance(snapped.point, anchor),
-          ),
+          direction
+            ? scale(direction, length)
+            : scale(
+                subtract(snapped.point, anchor),
+                length / distance(snapped.point, anchor),
+              ),
         ),
       };
     return snapped;
@@ -471,7 +525,13 @@ export function Editor2D({
       setCurveEnd(null);
     } else if (tool === "wall") {
       const end =
-        chainStart && !exact.trim() && distance(hit, chainStart) <= view.w / 100
+        chainStart &&
+        !exact.trim() &&
+        (!wallDirection ||
+          (wallDirection.x
+            ? chainStart.y === anchor.y
+            : chainStart.x === anchor.x)) &&
+        distance(hit, chainStart) <= view.w / 100
           ? chainStart
           : hit;
       finishWall(end);
@@ -497,6 +557,7 @@ export function Editor2D({
       setChainStart(null);
     } else setAnchor(end);
     setExact("");
+    setWallDirection(null);
   }
   function onMove(e: React.PointerEvent<SVGSVGElement>) {
     const d = drag.current;
@@ -1016,8 +1077,8 @@ export function Editor2D({
               strokeWidth={u * 1.5}
             />
             <text
-              x={r.centroid.x}
-              y={r.centroid.y - u * 15}
+              x={roomLabels.get(r.id)!.x}
+              y={roomLabels.get(r.id)!.y - u * 15}
               fontSize={u * 14}
               textAnchor="middle"
               className="nome-stanza"
@@ -1025,8 +1086,8 @@ export function Editor2D({
               {r.name}
             </text>
             <text
-              x={r.centroid.x}
-              y={r.centroid.y + u * 5}
+              x={roomLabels.get(r.id)!.x}
+              y={roomLabels.get(r.id)!.y + u * 5}
               fontSize={u * 12}
               textAnchor="middle"
               className="dato-stanza"
@@ -1034,8 +1095,8 @@ export function Editor2D({
               {formatNumber(r.netAreaM2)} m²
             </text>
             <text
-              x={r.centroid.x}
-              y={r.centroid.y + u * 24}
+              x={roomLabels.get(r.id)!.x}
+              y={roomLabels.get(r.id)!.y + u * 24}
               fontSize={u * 12}
               textAnchor="middle"
               className="potenza-stanza"
@@ -1456,7 +1517,10 @@ export function Editor2D({
           .filter(({ d }) => d.floorId === activeFloorId)
           .map(({ d, system }) => {
             const pos = previewDevice(d);
-            const roundCassette = system.type === "split" && splitIndoorAtVersion(d.productId, d.catalogVersion)?.shape === "round";
+            const roundCassette =
+              system.type === "split" &&
+              splitIndoorAtVersion(d.productId, d.catalogVersion)?.shape ===
+                "round";
             const maximum = ductedMaximumAirflow(system);
             const balance =
               system.type === "ducted"
@@ -1496,7 +1560,11 @@ export function Editor2D({
                     cy={0}
                     r={d.widthMm / 2000}
                     fill="#eef2e7"
-                    stroke={selection.some((s) => s.id === d.id) ? "#00aeef" : "#7a8966"}
+                    stroke={
+                      selection.some((s) => s.id === d.id)
+                        ? "#00aeef"
+                        : "#7a8966"
+                    }
                     strokeWidth={u * 1.5}
                   />
                 ) : (
@@ -1508,7 +1576,9 @@ export function Editor2D({
                     rx={0.025}
                     strokeWidth={u * 1.5}
                     fill={
-                      selection.some((s) => s.id === d.id) ? "#b3ddef" : "#ffffff"
+                      selection.some((s) => s.id === d.id)
+                        ? "#b3ddef"
+                        : "#ffffff"
                     }
                     stroke="#365aa8"
                   />
@@ -1517,28 +1587,30 @@ export function Editor2D({
                   <circle
                     cx={0}
                     cy={0}
-                    r={d.widthMm * 0.36 / 1000}
+                    r={(d.widthMm * 0.36) / 1000}
                     fill="none"
                     stroke="#7a8966"
                     strokeWidth={u}
                     pointerEvents="none"
                   />
-                ) : <>
-                <line
-                  x1={-d.widthMm / 2000 + 0.04}
-                  x2={d.widthMm / 2000 - 0.04}
-                  y1={d.depthMm / 2000 - 0.035}
-                  y2={d.depthMm / 2000 - 0.035}
-                  stroke="#00aeef"
-                  strokeWidth={u}
-                />
-                {/* Fronte della macchina: a 180° deve essere visibile il cambio di lato. */}
-                <path
-                  d={`M 0 ${d.depthMm / 2000 - 0.015} L ${-u * 7} ${d.depthMm / 2000 - 0.075} L ${u * 7} ${d.depthMm / 2000 - 0.075} Z`}
-                  fill="#00aeef"
-                  pointerEvents="none"
-                />
-                </>}
+                ) : (
+                  <>
+                    <line
+                      x1={-d.widthMm / 2000 + 0.04}
+                      x2={d.widthMm / 2000 - 0.04}
+                      y1={d.depthMm / 2000 - 0.035}
+                      y2={d.depthMm / 2000 - 0.035}
+                      stroke="#00aeef"
+                      strokeWidth={u}
+                    />
+                    {/* Fronte della macchina: a 180° deve essere visibile il cambio di lato. */}
+                    <path
+                      d={`M 0 ${d.depthMm / 2000 - 0.015} L ${-u * 7} ${d.depthMm / 2000 - 0.075} L ${u * 7} ${d.depthMm / 2000 - 0.075} Z`}
+                      fill="#00aeef"
+                      pointerEvents="none"
+                    />
+                  </>
+                )}
                 {balance && (
                   <text
                     data-testid="machine-airflow"
@@ -1897,8 +1969,8 @@ export function Editor2D({
               y1={anchor.y}
               x2={cursor.point.x}
               y2={cursor.point.y}
-              className="tratto-provvisorio"
-              strokeWidth={u * 2}
+              className={`tratto-provvisorio${wallDirection ? " asse-bloccato" : ""}`}
+              strokeWidth={u * (wallDirection ? 3 : 2)}
               strokeDasharray={`${u * 5} ${u * 4}`}
               pointerEvents="none"
             />
@@ -2331,7 +2403,9 @@ export function Editor2D({
           <small>
             Digita misura · Invio conferma
             <br />
-            La direzione segue il cursore
+            {wallDirection
+              ? "Asse bloccato · stessa freccia sblocca"
+              : "Frecce: blocca direzione"}
           </small>
         </label>
       )}

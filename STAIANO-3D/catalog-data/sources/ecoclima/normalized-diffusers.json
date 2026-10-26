@@ -611,7 +611,7 @@
         "sourceType": "html",
         "documentRevision": "EDE1 - EDE1R \n                 \n                                     Diffusori a getto elicoidale regolabile",
         "retrievedAt": "2026-10-18T16:15:56.584800+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "fb546c05a24ca207636cf2e2e31d40ef88db6feade262337c6f0252ec1b897ac",
         "page": null
       },
@@ -623,7 +623,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDE1 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:15:56.984685+00:00",
-            "importedAt": "2026-10-24T18:34:12.061680+00:00",
+            "importedAt": "2026-10-26T11:33:06.491403+00:00",
             "sha256": "ecde224abcbbf1e5764abbe0978095dc11c564213f80ef6859f071e93758bdc4",
             "page": null
           }
@@ -752,7 +752,7 @@
         "sourceType": "pdf",
         "documentRevision": "Scheda tecnica EDE1 \n                                                         Download",
         "retrievedAt": "2026-10-18T16:15:56.984685+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "ecde224abcbbf1e5764abbe0978095dc11c564213f80ef6859f071e93758bdc4",
         "page": null
       }
@@ -1368,7 +1368,7 @@
         "sourceType": "html",
         "documentRevision": "EDE2 - EDE2R \n                 \n                                     Diffusori a getto elicoidale regolabile",
         "retrievedAt": "2026-10-18T16:15:56.717147+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "1fba0c6f6c70926117edef257ae7e57d219fdf69e07dacbe83dab93508449637",
         "page": null
       },
@@ -1380,7 +1380,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDE2 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:15:57.658979+00:00",
-            "importedAt": "2026-10-24T18:34:12.061680+00:00",
+            "importedAt": "2026-10-26T11:33:06.491403+00:00",
             "sha256": "f5631aba5cb141faa48d5f00232c9adf75de5576c13b09531c5f341e6a68d81d",
             "page": null
           }
@@ -1509,7 +1509,7 @@
         "sourceType": "pdf",
         "documentRevision": "Scheda tecnica EDE2 \n                                                         Download",
         "retrievedAt": "2026-10-18T16:15:57.658979+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "f5631aba5cb141faa48d5f00232c9adf75de5576c13b09531c5f341e6a68d81d",
         "page": null
       }
@@ -1626,7 +1626,7 @@
         "sourceType": "html",
         "documentRevision": "EDE2S \n                 \n                                     Diffusori a getto elicoidale regolabile",
         "retrievedAt": "2026-10-18T16:15:56.805560+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "5d2d162db3bff54199a8ca28e90e7677578580723d3169fe22928ecb788e56cf",
         "page": null
       }
@@ -2001,7 +2001,7 @@
         "sourceType": "html",
         "documentRevision": "EDE5 \n                 \n                                     Diffusori a getto elicoidale regolabile",
         "retrievedAt": "2026-10-18T16:15:56.781077+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "0d2088136977941a976498bf660c6fca9780c6474812b073db63d5e7cf721fe1",
         "page": null
       }
@@ -2712,7 +2712,7 @@
         "sourceType": "html",
         "documentRevision": "EDLH - EDLHB \n                 \n                                     Diffusori lineari multiferitoia a scomparsa",
         "retrievedAt": "2026-10-18T16:16:00.347658+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "9a2231235567ad898b645480fc35a0c2cab3221f74fdea80b8d94803d11da34f",
         "page": null
       },
@@ -2727,8 +2727,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -2909,7 +2910,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -2926,7 +2927,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.225478+00:00",
+            "importedAt": "2026-10-26T11:33:06.657613+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -2939,8 +2940,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -3461,7 +3463,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -3478,7 +3480,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.225640+00:00",
+            "importedAt": "2026-10-26T11:33:06.657613+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -3491,8 +3493,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -3673,7 +3676,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -3690,7 +3693,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.225956+00:00",
+            "importedAt": "2026-10-26T11:33:06.658676+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -3703,8 +3706,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -4225,7 +4229,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -4242,7 +4246,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.226080+00:00",
+            "importedAt": "2026-10-26T11:33:06.658676+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -4255,8 +4259,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -4437,7 +4442,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -4454,7 +4459,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.226371+00:00",
+            "importedAt": "2026-10-26T11:33:06.658676+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -4467,8 +4472,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -4989,7 +4995,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -5006,7 +5012,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.226493+00:00",
+            "importedAt": "2026-10-26T11:33:06.658676+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -5019,8 +5025,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -5541,7 +5548,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -5558,7 +5565,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.226776+00:00",
+            "importedAt": "2026-10-26T11:33:06.658676+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -5571,8 +5578,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -5753,7 +5761,7 @@
         "sourceType": "html",
         "documentRevision": "EDFL - EDFLB \n                 \n                                     Diffusori lineari a feritoie con deflettori",
         "retrievedAt": "2026-10-18T16:16:17.941860+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e0e90e555f177cfc4f9fdb369652d99b872098253499f10ba475ef2a5b38f8ca",
         "page": null
       },
@@ -5770,7 +5778,7 @@
             "sourceType": "pdf",
             "documentRevision": "Scheda tecnica EDFL EDFLB rev2-2024 \n                                                         Download",
             "retrievedAt": "2026-10-18T16:16:20.416514+00:00",
-            "importedAt": "2026-10-24T18:34:12.227058+00:00",
+            "importedAt": "2026-10-26T11:33:06.658676+00:00",
             "sha256": "273a781cdc0ba9cb6bbebc0a3688b60ac02a75c9b954c34b3efc84609a492afe",
             "page": 2
           }
@@ -5783,8 +5791,9 @@
       "name": "EDFLB-FL Diffusori lineari di ripresa a feritoie con filtro",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -6211,7 +6220,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLB-FL \n                 \n                                     Diffusori lineari di ripresa a feritoie con filtro",
         "retrievedAt": "2026-10-18T16:16:09.834868+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "047171dba9d049336064312d82fb02185c1c9515f57a619d94d85262c3cc5f2b",
         "page": null
       }
@@ -6222,8 +6231,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -6338,7 +6348,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -6353,8 +6363,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -6865,7 +6876,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -6880,8 +6891,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -7392,7 +7404,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -7407,8 +7419,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -7523,7 +7536,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -7538,8 +7551,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -7654,7 +7668,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -7669,8 +7683,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -8181,7 +8196,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -8196,8 +8211,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -8708,7 +8724,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -8723,8 +8739,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -8839,7 +8856,7 @@
         "sourceType": "html",
         "documentRevision": "EDFLNA - EDFLBNA \n                 \n                                     Diffusori a feritoie con deflettori rotativi in alluminio",
         "retrievedAt": "2026-10-18T16:16:32.200846+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2be177ca93c3eab2ef02437742857a043dc669012dd33edb0319f6041626c15a",
         "page": null
       },
@@ -10047,7 +10064,7 @@
         "sourceType": "html",
         "documentRevision": "EDRA - EDRA-PQ \n                 \n                                     Diffusori circolari a coni regolabili",
         "retrievedAt": "2026-10-18T16:16:51.357959+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "8ed3d9bdaf0f06d113b161aeab0a22897c0ec870fdf1fc74ac870b8f8da33686",
         "page": null
       }
@@ -10771,7 +10788,7 @@
         "sourceType": "html",
         "documentRevision": "EDRA - EDRA-PQ \n                 \n                                     Diffusori circolari a coni regolabili",
         "retrievedAt": "2026-10-18T16:16:51.357959+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "8ed3d9bdaf0f06d113b161aeab0a22897c0ec870fdf1fc74ac870b8f8da33686",
         "page": null
       }
@@ -11297,7 +11314,7 @@
         "sourceType": "html",
         "documentRevision": "EDCS - EDCS-PQ \n                 \n                                     Diffusori circolari a singolo cono regolabile",
         "retrievedAt": "2026-10-18T16:16:51.512059+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "6af0725a346ddd9e1f64aaf4967078b626e4155d213e816853fc806303caf01e",
         "page": null
       }
@@ -11823,7 +11840,7 @@
         "sourceType": "html",
         "documentRevision": "EDCS - EDCS-PQ \n                 \n                                     Diffusori circolari a singolo cono regolabile",
         "retrievedAt": "2026-10-18T16:16:51.512059+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "6af0725a346ddd9e1f64aaf4967078b626e4155d213e816853fc806303caf01e",
         "page": null
       }
@@ -12244,7 +12261,7 @@
         "sourceType": "html",
         "documentRevision": "EDEA-SD \n                 \n                                     Diffusori circolari a coni fissi con serranda",
         "retrievedAt": "2026-10-18T16:16:48.696516+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "2a9e461e3e0e717c3b757ec81e7a9553bbc46284d9b401cd1168b1bffe95db13",
         "page": null
       }
@@ -12827,7 +12844,7 @@
         "sourceType": "html",
         "documentRevision": "EDCF \n                 \n                                     Diffusori circolari forellinati",
         "retrievedAt": "2026-10-18T16:17:03.196131+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "dccf1d60fbbe7b7e973f85d394feb9701f4e9afa0e079cb5fc26581eec89a837",
         "page": null
       }
@@ -13578,7 +13595,7 @@
         "sourceType": "html",
         "documentRevision": "EDCC \n                 \n                                     Diffusori circolari con piastra di fondo chiusa",
         "retrievedAt": "2026-10-18T16:17:02.017499+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "5e2c44c2321d669adf9043e2ea9e06bd180bcc621c370e6380ef09a7c31c29be",
         "page": null
       }
@@ -14161,7 +14178,7 @@
         "sourceType": "html",
         "documentRevision": "EDQF1 \n                 \n                                     Diffusori quadrati forellinati",
         "retrievedAt": "2026-10-18T16:17:02.291490+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "90f9f22e6aff9936a4c5cc8fdc221e9bc5135a6288543b16295a84e5cae37ed4",
         "page": null
       }
@@ -14912,7 +14929,7 @@
         "sourceType": "html",
         "documentRevision": "EDQC1 \n                 \n                                     Diffusore quadrato con piastra di fondo chiusa",
         "retrievedAt": "2026-10-18T16:17:04.131989+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "d0bca6ffd1fe8f660e339df06d38f9a61f796a0068f43d0d84def94a4f1d78b8",
         "page": null
       }
@@ -15029,7 +15046,7 @@
         "sourceType": "html",
         "documentRevision": "EDQF3 \n                 \n                                     Diffusori quadrati forellinati",
         "retrievedAt": "2026-10-18T16:17:04.273556+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "0a50cb36d5da562228c15e85fa0aafa29c538848a6697e6883bd01a11530e390",
         "page": null
       }
@@ -16542,7 +16559,7 @@
         "sourceType": "html",
         "documentRevision": "EDRC - EDRCS - EDRC-PQR - EDRCS-PQR \n                 \n                                     Diffusori a geometria variabile",
         "retrievedAt": "2026-10-18T16:17:04.704331+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "db0ee4fad5c66649d5b95ddd1b0e83495ab54f264851764acd0d5d25e866578d",
         "page": null
       }
@@ -18055,7 +18072,7 @@
         "sourceType": "html",
         "documentRevision": "EDRC - EDRCS - EDRC-PQR - EDRCS-PQR \n                 \n                                     Diffusori a geometria variabile",
         "retrievedAt": "2026-10-18T16:17:04.704331+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "db0ee4fad5c66649d5b95ddd1b0e83495ab54f264851764acd0d5d25e866578d",
         "page": null
       }
@@ -19070,7 +19087,7 @@
         "sourceType": "html",
         "documentRevision": "EDRC - EDRCS - EDRC-PQR - EDRCS-PQR \n                 \n                                     Diffusori a geometria variabile",
         "retrievedAt": "2026-10-18T16:17:04.704331+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "db0ee4fad5c66649d5b95ddd1b0e83495ab54f264851764acd0d5d25e866578d",
         "page": null
       }
@@ -20085,7 +20102,7 @@
         "sourceType": "html",
         "documentRevision": "EDRC - EDRCS - EDRC-PQR - EDRCS-PQR \n                 \n                                     Diffusori a geometria variabile",
         "retrievedAt": "2026-10-18T16:17:04.704331+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "db0ee4fad5c66649d5b95ddd1b0e83495ab54f264851764acd0d5d25e866578d",
         "page": null
       }
@@ -21587,7 +21604,7 @@
         "sourceType": "html",
         "documentRevision": "EDRCS THERM - EDRCS-PQR THERM \n                 \n                                     Diffusori termostatici a geometria variabile",
         "retrievedAt": "2026-10-18T16:17:05.914220+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "d76bc5d9d41a1fa72567cb91c7e1af76c8782202d23adeebc3acf7a5c46200a8",
         "page": null
       }
@@ -22270,7 +22287,7 @@
         "sourceType": "html",
         "documentRevision": "EDRCS THERM - EDRCS-PQR THERM \n                 \n                                     Diffusori termostatici a geometria variabile",
         "retrievedAt": "2026-10-18T16:17:05.914220+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "d76bc5d9d41a1fa72567cb91c7e1af76c8782202d23adeebc3acf7a5c46200a8",
         "page": null
       }
@@ -23363,7 +23380,7 @@
         "sourceType": "html",
         "documentRevision": "EDRF - EDRFQ \n                 \n                                     Diffusori a geometria fissa",
         "retrievedAt": "2026-10-18T16:17:07.081635+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "3411b08caa8ad880dd3ef6c2f289d9925ca3c4890e920f743931310f9574be66",
         "page": null
       }
@@ -24450,7 +24467,7 @@
         "sourceType": "html",
         "documentRevision": "EDRF - EDRFQ \n                 \n                                     Diffusori a geometria fissa",
         "retrievedAt": "2026-10-18T16:17:07.081635+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "3411b08caa8ad880dd3ef6c2f289d9925ca3c4890e920f743931310f9574be66",
         "page": null
       }
@@ -25371,7 +25388,7 @@
         "sourceType": "html",
         "documentRevision": "EDRFB - EDRFQB \n                 \n                                     Diffusori a geometria fissa",
         "retrievedAt": "2026-10-18T16:17:08.692309+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "bab0b8e76f0e08c3bc529eff847e2e0908c8e750343598cc58de435538f694da",
         "page": null
       }
@@ -26287,7 +26304,7 @@
         "sourceType": "html",
         "documentRevision": "EDRFB - EDRFQB \n                 \n                                     Diffusori a geometria fissa",
         "retrievedAt": "2026-10-18T16:17:08.692309+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "bab0b8e76f0e08c3bc529eff847e2e0908c8e750343598cc58de435538f694da",
         "page": null
       }
@@ -26734,7 +26751,7 @@
         "sourceType": "html",
         "documentRevision": "EDE-FB \n                 \n                                     Diffusori a getto elicoidale a geometria fissa",
         "retrievedAt": "2026-10-18T16:17:08.690244+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e147317b9d11d1948646bfebfb4d26b61b9ac0598cbc7e44f9359283d406b81b",
         "page": null
       }
@@ -27038,7 +27055,7 @@
         "sourceType": "html",
         "documentRevision": "EDQMQ \n                 \n                                     Diffusori multi-ugello a geometria quadrata",
         "retrievedAt": "2026-10-18T16:17:09.626756+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "22084437bf5aa633f2eaabf8165c90fb2ee5d52c34ed6c89418fd8aff27ef712",
         "page": null
       }
@@ -27342,7 +27359,7 @@
         "sourceType": "html",
         "documentRevision": "EDQMC \n                 \n                                     Diffusori multi-ugello a geometria circolare",
         "retrievedAt": "2026-10-18T16:17:09.694875+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e17e4b1be9ee28713b06361b329e86f4c05aa78e6bd1cbbf0f2a90d10101f115",
         "page": null
       }
@@ -27725,7 +27742,7 @@
         "sourceType": "html",
         "documentRevision": "EDMF-S \n                 \n                                     Diffusori a microugelli orientabili su pannello",
         "retrievedAt": "2026-10-18T16:17:10.822215+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "5e32a81dc8ac05547167aee4b4267466008e025fdcee093ce1654b50c6df6e31",
         "page": null
       }
@@ -30280,7 +30297,7 @@
         "sourceType": "html",
         "documentRevision": "EDMP-P \n                 \n                                     Diffusori a microugelli orientabili su pannello rettangolare",
         "retrievedAt": "2026-10-18T16:17:10.791498+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "fc0168f373f6b5d6fef34c99fdbcac1552bd59571680898d0b0f987a300d3dc8",
         "page": null
       }
@@ -32190,7 +32207,7 @@
         "sourceType": "html",
         "documentRevision": "EDMP-C \n                 \n                                     Diffusori a microugelli orientabili per canali circolari",
         "retrievedAt": "2026-10-18T16:17:12.140807+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "0cf31a23df864d8b6328bfaf2cd7054916400b4fdf84066bc0fb604aaa2d0e89",
         "page": null
       }
@@ -32794,7 +32811,7 @@
         "sourceType": "html",
         "documentRevision": "EDQV EDQV-PQ \n                 \n                                     Diffusori quadrati a 4 vie",
         "retrievedAt": "2026-10-18T16:17:14.084933+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e76a4f70a84f8b809af76275935cd7ccffc02687a1936ca47391a7cf5b0019fe",
         "page": null
       }
@@ -33161,7 +33178,7 @@
         "sourceType": "html",
         "documentRevision": "EDQV EDQV-PQ \n                 \n                                     Diffusori quadrati a 4 vie",
         "retrievedAt": "2026-10-18T16:17:14.084933+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "e76a4f70a84f8b809af76275935cd7ccffc02687a1936ca47391a7cf5b0019fe",
         "page": null
       }
@@ -33493,7 +33510,7 @@
         "sourceType": "html",
         "documentRevision": "EDC 1-6 \n                 \n                                     Diffusori multidirezionali ad alette curve",
         "retrievedAt": "2026-10-18T16:17:14.587048+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c5f394cb1a9a9557ae0d6686343a779fd94eff5c0fec82bfbb1f087906da4410",
         "page": null
       }
@@ -33825,7 +33842,7 @@
         "sourceType": "html",
         "documentRevision": "EDC 1-6 \n                 \n                                     Diffusori multidirezionali ad alette curve",
         "retrievedAt": "2026-10-18T16:17:14.587048+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c5f394cb1a9a9557ae0d6686343a779fd94eff5c0fec82bfbb1f087906da4410",
         "page": null
       }
@@ -34157,7 +34174,7 @@
         "sourceType": "html",
         "documentRevision": "EDC 1-6 \n                 \n                                     Diffusori multidirezionali ad alette curve",
         "retrievedAt": "2026-10-18T16:17:14.587048+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c5f394cb1a9a9557ae0d6686343a779fd94eff5c0fec82bfbb1f087906da4410",
         "page": null
       }
@@ -34489,7 +34506,7 @@
         "sourceType": "html",
         "documentRevision": "EDC 1-6 \n                 \n                                     Diffusori multidirezionali ad alette curve",
         "retrievedAt": "2026-10-18T16:17:14.587048+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c5f394cb1a9a9557ae0d6686343a779fd94eff5c0fec82bfbb1f087906da4410",
         "page": null
       }
@@ -34686,7 +34703,7 @@
         "sourceType": "html",
         "documentRevision": "EDC 1-6 \n                 \n                                     Diffusori multidirezionali ad alette curve",
         "retrievedAt": "2026-10-18T16:17:14.587048+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c5f394cb1a9a9557ae0d6686343a779fd94eff5c0fec82bfbb1f087906da4410",
         "page": null
       }
@@ -34883,7 +34900,7 @@
         "sourceType": "html",
         "documentRevision": "EDC 1-6 \n                 \n                                     Diffusori multidirezionali ad alette curve",
         "retrievedAt": "2026-10-18T16:17:14.587048+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c5f394cb1a9a9557ae0d6686343a779fd94eff5c0fec82bfbb1f087906da4410",
         "page": null
       }
@@ -35593,7 +35610,7 @@
         "sourceType": "html",
         "documentRevision": "EDU - EDU-M \n                 \n                                     Diffusori a ugello orientabili a lunga gittata",
         "retrievedAt": "2026-10-18T16:17:16.122410+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c6c6de26d0d0c0c7f2351c655ceb4474048292c0bbbf1ac370cd82979926d26d",
         "page": null
       }
@@ -35759,7 +35776,7 @@
         "sourceType": "html",
         "documentRevision": "EDU - EDU-M \n                 \n                                     Diffusori a ugello orientabili a lunga gittata",
         "retrievedAt": "2026-10-18T16:17:16.122410+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c6c6de26d0d0c0c7f2351c655ceb4474048292c0bbbf1ac370cd82979926d26d",
         "page": null
       }
@@ -36780,7 +36797,7 @@
         "sourceType": "html",
         "documentRevision": "EDUB \n                 \n                                     Diffusori a ugello orientabili a lunga gittata",
         "retrievedAt": "2026-10-18T16:17:15.232652+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "eeda911798157f0cfbb600436aa98475305e1906a26095f04563c6028fc5e240",
         "page": null
       }
@@ -37399,7 +37416,7 @@
         "sourceType": "html",
         "documentRevision": "EDU-F \n                 \n                                     Diffusori a ugello orientabili a lunga gittata con attacco per canale circolare o flessibile",
         "retrievedAt": "2026-10-18T16:17:16.189865+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "9d51b8676504fe2ced93032a33122b2b59ba45f946aa40983637a3126e9dada7",
         "page": null
       }
@@ -38012,7 +38029,7 @@
         "sourceType": "html",
         "documentRevision": "EDU-S - EDU-SM \n                 \n                                     Diffusori a ugello orientabili a lunga gittata con serranda",
         "retrievedAt": "2026-10-18T16:17:16.994193+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c656a2cd6e4e162df672cab2fd4d46eeb380deceda0b0611a198f457bbf694bc",
         "page": null
       }
@@ -38211,7 +38228,7 @@
         "sourceType": "html",
         "documentRevision": "EDU-S - EDU-SM \n                 \n                                     Diffusori a ugello orientabili a lunga gittata con serranda",
         "retrievedAt": "2026-10-18T16:17:16.994193+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "c656a2cd6e4e162df672cab2fd4d46eeb380deceda0b0611a198f457bbf694bc",
         "page": null
       }
@@ -38830,7 +38847,7 @@
         "sourceType": "html",
         "documentRevision": "EDU-LFS \n                 \n                                     Diffusori a ugello orientabili a lunga gittata con serranda ed attacco per canale circolare o flessibile",
         "retrievedAt": "2026-10-18T16:17:16.740791+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "27ba3236784186c4f8b391342ca92ee17a9465167d8d0f0de86740b0c546c995",
         "page": null
       }
@@ -39157,7 +39174,7 @@
         "sourceType": "html",
         "documentRevision": "EDFDS \n                 \n                                     Diffusori circolari da pavimento",
         "retrievedAt": "2026-10-18T16:17:17.131461+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "f5aeeb64f808dd6e49e1e3dddaaf313c828756d7eb2cffffe878c83dbbceb17a",
         "page": null
       }
@@ -39842,7 +39859,7 @@
         "sourceType": "html",
         "documentRevision": "EVVRC - EVVRB \n                 \n                                     Valvole di ventilazione per l'estrazione dell'aria",
         "retrievedAt": "2026-10-18T16:17:17.868245+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "ee486b69f8fd1cfb982adbd32a5109be9b9b593bf543198f8c3034dbb4cc054e",
         "page": null
       },
@@ -40135,7 +40152,7 @@
         "sourceType": "html",
         "documentRevision": "EVPMC \n                 \n                                     Valvole di mandata e estrazione dell'aria in ABS",
         "retrievedAt": "2026-10-18T16:17:18.694104+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "34d7435d3e42b3118307bb251949bea82f70f35b29ac57fb48720477f2ec97ad",
         "page": null
       }
@@ -40242,7 +40259,7 @@
         "sourceType": "html",
         "documentRevision": "EAM-VRFN \n                 \n                                     Valvole di mandata e ripresa in acciaio inox",
         "retrievedAt": "2026-10-18T16:17:18.686778+00:00",
-        "importedAt": "2026-10-24T18:34:12.061680+00:00",
+        "importedAt": "2026-10-26T11:33:06.491403+00:00",
         "sha256": "57434bbd02b07cd53951868da63f6503c7066178f96102a493141be8848b138a",
         "page": null
       }

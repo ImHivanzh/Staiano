@@ -36,33 +36,24 @@ test("FCZ P e PO sono selezionabili con prestazioni e prevalenza distinte", asyn
     name: "Configura apparecchio",
     exact: true,
   });
-  await popup.getByLabel("Marca ventilconvettore").selectOption("Aermec");
-  const models = popup.getByRole("combobox", {
-    name: "Modello ventilconvettore",
-    exact: true,
+  await popup.getByRole("button", { name: "Aermec", exact: true }).click();
+  await popup.getByRole("button", { name: "2 tubi", exact: true }).click();
+  const models = popup.getByRole("group", { name: "Modello" });
+  const fczP = models.getByRole("button", {
+    name: /FCZ P Ventilconvettori canalizzabili/,
   });
-  await expect(models.locator("option")).toHaveCount(4);
+  await expect(fczP).toBeVisible();
+  await fczP.click();
+  const sizes = popup.getByRole("group", { name: "Taglia" });
+  await expect(sizes.getByRole("button")).toHaveCount(19);
+  await sizes.getByRole("button", { name: /FCZ200P/ }).click();
+  await expect(popup.getByText(/Alta · Parete · 2 tubi/)).toBeVisible();
   await expect(
-    models.locator('optgroup[label="Ventilconvettori canalizzabili"] option'),
-  ).toHaveCount(3);
+    popup.locator("dl").getByText("1,60 kW", { exact: true }),
+  ).toBeVisible();
   await expect(
-    models.locator('optgroup[label="Ventilconvettori a parete e a soffitto"]'),
-  ).toHaveCount(0);
-  await models.selectOption("FCZ P");
-  const sizes = popup.getByRole("combobox", {
-    name: "Taglia ventilconvettore",
-    exact: true,
-  });
-  await expect(sizes.locator("option")).toHaveCount(27);
-  await sizes.selectOption("aermec-fcz200p");
-  await expect(
-    popup
-      .getByRole("combobox", {
-        name: "Velocità / punto di funzionamento",
-        exact: true,
-      })
-      .locator("option"),
-  ).toHaveText([/Bassa.*0,89.*1/, /Media.*1,28.*1,46/, /Alta.*1,6.*1,84/]);
+    popup.locator("dl").getByText("1,84 kW", { exact: true }),
+  ).toBeVisible();
   const cover = popup.getByLabel("Mobile di copertura Aermec");
   await expect(cover.locator("option")).toHaveText([
     "Senza mobile",
@@ -74,21 +65,18 @@ test("FCZ P e PO sono selezionabili con prestazioni e prevalenza distinte", asyn
   await expect(
     popup.getByText(/non è quotato nella fonte acquisita/),
   ).toBeVisible();
-  await models.selectOption("FCZ PO");
+  await models
+    .getByRole("button", { name: /FCZ PO Ventilconvettori canalizzabili/ })
+    .click();
+  await popup.getByRole("button", { name: "4 tubi", exact: true }).click();
+  await models
+    .getByRole("button", { name: /FCZ PO Ventilconvettori canalizzabili/ })
+    .click();
   await expect(cover).toHaveCount(0);
-  await sizes.selectOption("aermec-fcz201po");
-  await expect(sizes).toHaveValue("aermec-fcz201po");
+  await sizes.getByRole("button", { name: /FCZ201PO/ }).click();
+  await expect(popup.getByText(/Alta · 63 Pa/)).toBeVisible();
   await expect(
-    popup
-      .getByRole("combobox", {
-        name: "Velocità / punto di funzionamento",
-        exact: true,
-      })
-      .locator("option")
-      .nth(1),
-  ).toContainText("50 Pa");
-  await expect(
-    popup.getByText(/^Rumore non pubblicato per questo punto/),
+    popup.locator("dl").getByText("Non pubblicato", { exact: true }),
   ).toBeVisible();
 });
 
@@ -120,13 +108,16 @@ test("MZU200 scelto sul FCZ P resta nel progetto e nella distinta", async ({
     name: "Configura apparecchio",
     exact: true,
   });
-  await popup.getByLabel("Marca ventilconvettore").selectOption("Aermec");
+  await popup.getByRole("button", { name: "Aermec", exact: true }).click();
+  await popup.getByRole("button", { name: "2 tubi", exact: true }).click();
   await popup
-    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-    .selectOption("FCZ P");
+    .getByRole("group", { name: "Modello" })
+    .getByRole("button", { name: /FCZ P Ventilconvettori canalizzabili/ })
+    .click();
   await popup
-    .getByRole("combobox", { name: "Taglia ventilconvettore", exact: true })
-    .selectOption("aermec-fcz200p");
+    .getByRole("group", { name: "Taglia" })
+    .getByRole("button", { name: /FCZ200P/ })
+    .click();
   await popup
     .getByLabel("Mobile di copertura Aermec")
     .selectOption("adjustable");
@@ -183,24 +174,23 @@ test("dopo Marca e Modello il sistema consiglia la taglia", async ({
   await expect(
     popup.locator('[aria-label="Ventilconvettore consigliato"]'),
   ).toHaveCount(0);
-  await popup.getByLabel("Marca ventilconvettore").selectOption("Aermec");
+  await popup.getByRole("button", { name: "Aermec", exact: true }).click();
+  await popup.getByRole("button", { name: "2 tubi", exact: true }).click();
   await popup
-    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-    .selectOption("FCZ");
+    .getByRole("group", { name: "Modello" })
+    .getByRole("button", { name: /^FCZ Ventilconvettori canalizzabili/ })
+    .click();
   const recommendation = popup.locator(
     '[aria-label="Ventilconvettore consigliato"]',
   );
   await expect(recommendation).toBeVisible();
   await expect(recommendation).toContainText("Taglia consigliata");
-  const sizes = popup.getByRole("combobox", {
-    name: "Taglia ventilconvettore",
-    exact: true,
+  const sizes = popup.getByRole("group", { name: "Taglia" });
+  const recommendedSize = sizes.getByRole("button", {
+    name: /Taglia consigliata/,
   });
-  const value = await sizes.inputValue();
-  expect(value).not.toBe("");
-  await expect(sizes.locator(`option[value="${value}"]`)).toContainText(
-    "consigliata",
-  );
+  await expect(recommendedSize).toBeVisible();
+  await expect(recommendedSize).toHaveAttribute("aria-pressed", "true");
 });
 
 test("AirLeaf shows the published maximum-speed pressure and its 2026 source", async ({
@@ -232,23 +222,30 @@ test("AirLeaf shows the published maximum-speed pressure and its 2026 source", a
     name: "Configura apparecchio",
     exact: true,
   });
-  await popup.getByLabel("Marca ventilconvettore").selectOption("Innova");
+  await popup.getByRole("button", { name: "Innova", exact: true }).click();
+  await popup.getByRole("button", { name: "2 tubi", exact: true }).click();
   await popup
-    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-    .selectOption("AirLeaf SL");
+    .getByRole("group", { name: "Modello" })
+    .getByRole("button", {
+      name: /^AirLeaf SL Ventilconvettori a parete e a soffitto/,
+    })
+    .click();
   await popup
-    .getByRole("combobox", { name: "Taglia ventilconvettore", exact: true })
-    .selectOption("innova-airleaf-sl-200-2t");
-  const points = popup.getByRole("combobox", {
-    name: "Velocità / punto di funzionamento",
-    exact: true,
-  });
-  await expect(points.locator("option")).toHaveCount(1);
-  await expect(points.locator("option")).toContainText("Massima · 0 Pa");
-  await expect(points.locator("option")).toContainText("41,00 dB(A)");
+    .getByRole("group", { name: "Taglia" })
+    .getByRole("button", { name: /SL 200/ })
+    .click();
   await expect(
-    popup.getByText(/^Rumore non pubblicato per questo punto/),
+    popup.getByText(/Massima · 0 Pa · Parete · 2 tubi/),
+  ).toBeVisible();
+  await expect(
+    popup.getByRole("combobox", {
+      name: "Velocità / punto di funzionamento",
+      exact: true,
+    }),
   ).toHaveCount(0);
+  await expect(
+    popup.locator("dl").getByText("41,00 dB(A)", { exact: true }),
+  ).toBeVisible();
   await openDisclosure(popup, "Condizioni dei dati e fonte");
   await expect(
     popup.getByText(/Rumore: Pressione sonora alla massima portata/),

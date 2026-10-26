@@ -36,7 +36,7 @@ function fixture() {
 
 it("hangs exposed ceiling units below the whole structural ceiling", () => {
   const p = fixture();
-  const placed = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", 0, {
+  const placed = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", {
     mounting: "ceiling",
   });
   const body = fanCoilEnvelope(placed.fanCoils![0]);
@@ -54,7 +54,7 @@ it("distinguishes exposed and concealed units at a suspended ceiling", () => {
     ["innova-airleaf-sl-200-2t", 2.671, 2.8],
     ["innova-airleaf-sli-200-2t", 2.8, 2.926],
   ] as const) {
-    const placed = applyFanCoil(p, p.rooms[0].id, id, 0, {
+    const placed = applyFanCoil(p, p.rooms[0].id, id, {
       mounting: "ceiling",
     });
     const body = fanCoilEnvelope(placed.fanCoils![0]);
@@ -66,14 +66,14 @@ it("distinguishes exposed and concealed units at a suspended ceiling", () => {
 it("does not hang a recessed unit below the ceiling without a technical void", () => {
   const p = fixture();
   expect(() =>
-    applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", 0, {
+    applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", {
       mounting: "ceiling",
     }),
   ).toThrow(/posizione/i);
   // Anche un controsoffitto troppo basso non crea un vuoto utile.
   const low = updateRoom(p, p.rooms[0].id, { ceilingHeightM: 2.6 });
   expect(() =>
-    applyFanCoil(low, low.rooms[0].id, "innova-airleaf-sli-200-2t", 0, {
+    applyFanCoil(low, low.rooms[0].id, "innova-airleaf-sli-200-2t", {
       mounting: "ceiling",
     }),
   ).toThrow(/posizione/i);
@@ -84,7 +84,7 @@ it("hangs a flat exposed unit below the lowest roof point over its footprint", (
   const p = updateRoom(empty, empty.rooms[0].id, {
     roof: { ridgeWallId: empty.rooms[0].wallIds[0], ridgeHeightM: 3.3 },
   });
-  const placed = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", 0, {
+  const placed = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", {
     mounting: "ceiling",
   });
   const unit = placed.fanCoils![0],
@@ -104,7 +104,7 @@ it("hangs a flat exposed unit below the lowest roof point over its footprint", (
 it("retains saved historical poses and reports a body extending into the structural ceiling", () => {
   let p = fixture();
   p = parseProject(
-    applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", 0, {
+    applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", {
       mounting: "ceiling",
     }),
   );
@@ -124,7 +124,7 @@ it("retains saved historical poses and reports a body extending into the structu
 
 it("retains a chosen hanging offset while moving horizontally", () => {
   let p = fixture();
-  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", 0, {
+  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", {
     mounting: "ceiling",
   });
   const unit = p.fanCoils![0];
@@ -163,13 +163,13 @@ it("keeps the published 2500 mm SL horizontal clearance and its original manual"
   });
   const low = updateRoom(p, p.rooms[0].id, { ceilingHeightM: 2.6 });
   expect(() =>
-    applyFanCoil(low, low.rooms[0].id, product.id, 0, { mounting: "ceiling" }),
+    applyFanCoil(low, low.rooms[0].id, product.id, { mounting: "ceiling" }),
   ).toThrow(/posizione/i);
   expect(
     fanCoilProductAtVersion(product.id, "fan-coils-d073b172b15846c0")
       ?.ceilingInstallation,
   ).toBeUndefined();
-  const placed = applyFanCoil(p, p.rooms[0].id, product.id, 0, {
+  const placed = applyFanCoil(p, p.rooms[0].id, product.id, {
     mounting: "ceiling",
   });
   expect(installedTechnicalSheets(placed).documents).toContainEqual(
@@ -240,10 +240,10 @@ it("supports adjacent finished bands and rejects a gap under a concealed body", 
 
 it("keeps wall and horizontal units separate in the bill of materials", () => {
   let p = fixture();
-  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", 0, {
+  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", {
     mounting: "wall",
   });
-  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", 0, {
+  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sl-200-2t", {
     mounting: "ceiling",
   });
   const items = buildDossier(p).materials.filter(

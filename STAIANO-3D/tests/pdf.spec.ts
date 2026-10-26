@@ -103,3 +103,77 @@ test("render document cancellation releases the offscreen scene and creates no d
   expect(downloads).toEqual([]);
   await expect(page.locator(".errore-app[role='alert']")).toHaveCount(0);
 });
+
+test("dossier per stampa: bianco e nero selezionabile, render in grigio e sintetico senza A3", async ({
+  page,
+}, info) => {
+  test.setTimeout(60000);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Disegna manualmente" }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Crea stanza", exact: true })
+    .click();
+  await openDisclosure(page, "File");
+  await page.getByLabel("Tipo dossier").selectOption("summary");
+  await page.getByRole("checkbox", { name: "Stampa in bianco e nero" }).check();
+  await page.screenshot({ path: info.outputPath("print-options-desktop.png") });
+  const [download] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByRole("button", { name: "Dossier PDF", exact: true }).click(),
+  ]);
+  expect(download.suggestedFilename()).toMatch(
+    /-dossier-sintetico-bianco-nero\.pdf$/,
+  );
+  await download.saveAs(info.outputPath("dossier-bianco-nero.pdf"));
+  const pdf = await PDFDocument.load(await readFile((await download.path())!));
+  expect(pdf.getTitle()).toContain("bianco e nero");
+  expect(pdf.getPages().some((sheet) => sheet.getWidth() > 900)).toBe(false);
+  let images = 0;
+  for (const sheet of pdf.getPages()) {
+    const objects = sheet.node
+      .Resources()
+      ?.lookupMaybe(PDFName.of("XObject"), PDFDict);
+    for (const ref of objects?.values() ?? []) {
+      const image = pdf.context.lookup(ref);
+      if (!(image instanceof PDFRawStream)) continue;
+      const data = `data:image/jpeg;base64,${Buffer.from(image.contents).toString("base64")}`;
+      const result = await page.evaluate(async (url) => {
+        const image = await createImageBitmap(await (await fetch(url)).blob());
+        const canvas = new OffscreenCanvas(image.width, image.height);
+        const context = canvas.getContext("2d")!;
+        context.drawImage(image, 0, 0);
+        const pixels = context.getImageData(
+          0,
+          0,
+          image.width,
+          image.height,
+        ).data;
+        image.close();
+        let maxDifference = 0,
+          min = 255,
+          max = 0;
+        for (let i = 0; i < pixels.length; i += 4) {
+          maxDifference = Math.max(
+            maxDifference,
+            Math.abs(pixels[i] - pixels[i + 1]),
+            Math.abs(pixels[i + 1] - pixels[i + 2]),
+          );
+          min = Math.min(min, pixels[i]);
+          max = Math.max(max, pixels[i]);
+        }
+        return { maxDifference, min, max };
+      }, data);
+      expect(result.maxDifference).toBeLessThanOrEqual(2);
+      expect(result.max - result.min).toBeGreaterThan(100);
+      images++;
+    }
+  }
+  expect(images).toBeGreaterThan(0);
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await openDisclosure(page, "File");
+  await expect(
+    page.getByRole("checkbox", { name: "Stampa in bianco e nero" }),
+  ).toBeInViewport();
+  await page.screenshot({ path: info.outputPath("print-options-ipad.png") });
+});

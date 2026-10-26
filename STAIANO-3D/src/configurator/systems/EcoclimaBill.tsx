@@ -97,6 +97,7 @@ export function EcoclimaBill({ project }: { project: Project }) {
             {bill.lines.map((line) => (
               <tr key={line.id}>
                 <td>
+                  {line.sku && <strong>{line.sku} · </strong>}
                   {line.label}
                   {line.reason && <small>{line.reason}</small>}
                   {line.sourceMetadata && (

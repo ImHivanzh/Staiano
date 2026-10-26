@@ -65,7 +65,7 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
       .poll(async () =>
         Number(await canvas.getAttribute("data-comfort-streams")),
       )
-      .toBeGreaterThan(0);
+      .toBe(0);
     await client.screenshot({
       path: info.outputPath(`customer-air-${width}.png`),
     });

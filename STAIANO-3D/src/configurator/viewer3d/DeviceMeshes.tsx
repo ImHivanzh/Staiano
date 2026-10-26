@@ -543,6 +543,7 @@ export type DeviceMeshesProps = {
   isolatedRoomId?: string;
   onSelect: (selection: Selection) => void;
   showHydronicPipes?: boolean;
+  hideDuctedMachines?: boolean;
 };
 
 /** Local axes are width X, height Y, depth Z. Project plan Y maps to world Z. */
@@ -553,6 +554,7 @@ export function DeviceMeshes({
   isolatedRoomId,
   onSelect,
   showHydronicPipes = false,
+  hideDuctedMachines = false,
 }: DeviceMeshesProps) {
   const visible = (item: { floorId: string; roomId: string }) =>
     item.floorId === activeFloorId &&
@@ -571,6 +573,7 @@ export function DeviceMeshes({
         selection={selection}
         isolatedRoomId={isolatedRoomId}
         onSelect={onSelect}
+        hideDuctedMachines={hideDuctedMachines}
       />
       <FanCoilMeshes
         project={project}
@@ -578,6 +581,7 @@ export function DeviceMeshes({
         selection={selection}
         isolatedRoomId={isolatedRoomId}
         onSelect={onSelect}
+        hideDuctedMachines={hideDuctedMachines}
       />
       {!isolatedRoomId && (
         <HydronicMeshes

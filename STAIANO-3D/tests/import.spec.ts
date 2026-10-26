@@ -49,7 +49,7 @@ test("DXF locale: selezione layer, verifica scala, stanze nette e reload", async
     .getByLabel(/Le geometrie selezionate rappresentano assi muro/)
     .check();
   await dialog
-    .getByRole("button", { name: "Importa muri selezionati" })
+    .getByRole("button", { name: /^Importa muri selezionati/ })
     .click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByTestId("wall")).toHaveCount(4);
@@ -157,7 +157,7 @@ test.describe("invalid DWG request", () => {
     expect((await rejected).status()).toBe(400);
     await expect(dialog.getByRole("alert")).toContainText("DWG valido");
     await expect(
-      dialog.getByRole("button", { name: "Importa muri selezionati" }),
+      dialog.getByRole("button", { name: /^Importa muri selezionati/ }),
     ).toHaveCount(0);
     await dialog.getByRole("button", { name: "Chiudi importazione" }).click();
     await expect(page.getByTestId("wall")).toHaveCount(0);

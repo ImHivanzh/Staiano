@@ -33,6 +33,23 @@ export function fanCoilControlAtVersion(id: string, version: string) {
   );
 }
 
+/**
+ * Il ventilconvettore si calcola e si disegna sempre al punto di massima
+ * potenza pubblicata: le velocità inferiori restano solo nella scheda.
+ */
+export function fanCoilMaximumPoint(
+  product: Pick<FanCoilProduct, "operatingPoints">,
+) {
+  return product.operatingPoints.reduce(
+    (best, point, index) =>
+      point.coolingW + point.heatingW >
+      best.point.coolingW + best.point.heatingW
+        ? { index, point }
+        : best,
+    { index: 0, point: product.operatingPoints[0] },
+  );
+}
+
 export type FanCoilCategory = "ducted" | "ambient";
 
 export function isConcealedFanCoil(
@@ -50,13 +67,15 @@ export function isConcealedFanCoil(
 }
 
 /**
- * Prodotti che il costruttore dichiara per installazione ad incasso: il corpo
- * resta nella parete o nel vuoto tecnico e non va posato a vista. Le famiglie
- * Innova SLI/RSI/SLSI e Aermec FCZ P/PO riportano la voce nelle caratteristiche.
+ * Prodotti per installazione ad incasso con faccia anteriore a filo muro:
+ * il corpo resta nella parete o nel vuoto tecnico e il pannello chiude il vano.
+ * Le serie canalizzabili (Aermec FCZ P/PO) sono nascoste ma distribuite a
+ * canali: non richiedono il filo muro e non hanno pannello frontale.
  */
 export function isRecessedFanCoil(
   product: Pick<FanCoilProduct, "family" | "features"> | null | undefined,
 ) {
+  if (isDuctedFanCoil(product)) return false;
   return (
     isConcealedFanCoil(product) ||
     (product?.features ?? []).some((feature) =>
@@ -66,23 +85,27 @@ export function isRecessedFanCoil(
 }
 
 /**
- * Serie pubblicate come canalizzabili: Aermec FCZ, FCZ P e FCZ PO (scheda
- * FCZ-P_I_UN50_16, «canalizzabile con motore potenziato e prevalenza utile»).
- * Restano ventilconvettori: la categoria separa solo la distribuzione d'aria.
+ * Famiglie canalizzabili: il costruttore le pubblica per distribuzione a canali
+ * (Aermec FCZ, FCZ P e FCZ PO, scheda FCZ-P_I_UN50_16). Restano
+ * ventilconvettori, ma non hanno pannello frontale a filo muro.
  */
-const DUCTED_SERIES: Readonly<Record<string, readonly string[]>> = {
-  Aermec: ["FCZ", "FCZ P", "FCZ PO"],
-};
+const DUCTED_FAMILIES: readonly string[] = ["FCZ", "FCZ P", "FCZ PO"];
+
+export function isDuctedFanCoil(
+  product: Pick<FanCoilProduct, "family"> | null | undefined,
+) {
+  return DUCTED_FAMILIES.includes(product?.family ?? "");
+}
 
 export const fanCoilCategoryLabels: Record<FanCoilCategory, string> = {
   ducted: "Ventilconvettori canalizzabili",
   ambient: "Ventilconvettori a parete e a soffitto",
 };
 
-export function fanCoilCategory(product: FanCoilProduct): FanCoilCategory {
-  return DUCTED_SERIES[product.manufacturer]?.includes(product.family)
-    ? "ducted"
-    : "ambient";
+export function fanCoilCategory(
+  product: Pick<FanCoilProduct, "manufacturer" | "family">,
+): FanCoilCategory {
+  return isDuctedFanCoil(product) ? "ducted" : "ambient";
 }
 
 /** Ordine di presentazione: prima i canalizzabili, poi gli altri. */

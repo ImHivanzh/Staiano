@@ -30,7 +30,6 @@ it("removing the last fan coil through its properties removes only its emptied i
     project,
     project.rooms[0].id,
     "innova-airleaf-sl-400-2t",
-    0,
     { installationId },
   );
   project = createInstallation(project, "radiator", project.rooms[0].id);
@@ -424,7 +423,7 @@ it("deletes fan coils and their hydronic references without deleting the shared 
   let project = fixture();
   for (const room of project.rooms.slice(0, 2)) {
     project = createInstallation(project, "fanCoil", room.id);
-    project = applyFanCoil(project, room.id, "innova-airleaf-sl-400-2t", 0, {
+    project = applyFanCoil(project, room.id, "innova-airleaf-sl-400-2t", {
       installationId: project.installations.at(-1)!.id,
     });
   }
@@ -453,4 +452,18 @@ it("deletes fan coils and their hydronic references without deleting the shared 
   expect(removed.hydronicSystems![0].pipeWaypoints).toHaveLength(1);
   expect(removed.rooms[0].systemType).toBe("none");
   expect(() => projectSchema.parse(removed)).not.toThrow();
+});
+
+it("accetta la posa a parete delle feritoie lineari Ecoclima EDLS ed EDFL", () => {
+  for (const familyCode of ["EDLS", "EDFL-20"]) {
+    const project = addGuidedTerminal(
+      guidedProjectFixture(),
+      1000,
+      familyCode,
+      "wall",
+    );
+    const terminal = project.airTerminals.at(-1)!;
+    expect(terminal.family).toBe(familyCode);
+    expect(terminal.mounting).toBe("wall");
+  }
 });

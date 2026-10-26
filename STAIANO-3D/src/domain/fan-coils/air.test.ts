@@ -23,6 +23,7 @@ import { connectionSelection } from "@/configurator/viewer3d/connection-selectio
 import { addOperatorTerminal } from "@/domain/air-terminals/operator";
 import { guidedTerminalPoint } from "../../../tests/guided-fixture";
 import { calculateSupplyPlenum } from "@/domain/ducted/plenum";
+import { connectPlenum, insertPlenum } from "@/domain/ducted/attached-plenums";
 
 function fixture(): Project {
   let project = createProject("FCZ PO canalizzata");
@@ -40,7 +41,7 @@ function fixture(): Project {
     origin: { x: 10, y: 0 },
   });
   project.rooms[0].ceilingHeightM = 2.2;
-  project = applyFanCoil(project, project.rooms[0].id, "aermec-fcz200po", 1, {
+  project = applyFanCoil(project, project.rooms[0].id, "aermec-fcz200po", {
     mounting: "ceiling",
   });
   return ensureInstallations(project);
@@ -57,6 +58,12 @@ function vent(project: Project, roomId: string): Project {
   });
 }
 
+function addSupplyPlenum(project: Project, terminalId: string): Project {
+  const terminal = project.airTerminals.find((item) => item.id === terminalId)!;
+  const inserted = insertPlenum(project, terminal.roomId, terminal.position);
+  return connectPlenum(inserted, inserted.plenums.at(-1)!.id, terminalId);
+}
+
 describe("ventilconvettore canalizzabile", () => {
   it("crea la distribuzione aeraulica dal punto di funzionamento del catalogo", () => {
     const project = fixture();
@@ -70,8 +77,8 @@ describe("ventilconvettore canalizzabile", () => {
     expect(system.fanCoilId).toBe(unit.id);
     expect(system.dataOrigin).toBe("fanCoil");
     expect(system.manufacturer).toBe("Aermec");
-    expect(system.airflowM3h).toBe(226);
-    expect(system.capacityW).toBe(1300);
+    expect(system.airflowM3h).toBe(254);
+    expect(system.capacityW).toBe(1440);
     expect(system.indoorUnits[0].position).toEqual(unit.position);
     expect(system.indoorUnits[0].id).not.toBe(unit.id);
     expect(projectSchema.safeParse(created).success).toBe(true);
@@ -90,6 +97,10 @@ describe("ventilconvettore canalizzabile", () => {
       fanCoilId: unit.id,
       terminalId: terminal.id,
     });
+    expect(() =>
+      connectFanCoilAirOnPlan(project, terminal.id, unit.id),
+    ).toThrow(/plenum di mandata/);
+    project = addSupplyPlenum(project, terminal.id);
     project = connectFanCoilAirOnPlan(project, terminal.id, unit.id);
     const system = fanCoilAirSystem(project, unit.id)!;
     const connected = project.airTerminals.find((t) => t.id === terminal.id)!;
@@ -122,6 +133,12 @@ describe("ventilconvettore canalizzabile", () => {
   it("segue velocità e posizione dell'unità senza duplicare l'apparecchio", () => {
     let project = fixture();
     const unit = project.fanCoils![0];
+    project = {
+      ...project,
+      fanCoils: project.fanCoils!.map((item) =>
+        item.id === unit.id ? { ...item, operatingPointIndex: 0 } : item,
+      ),
+    };
     project = ensureFanCoilAirSystem(project, unit.id).project;
     project = {
       ...project,
@@ -129,7 +146,7 @@ describe("ventilconvettore canalizzabile", () => {
         item.id === unit.id
           ? {
               ...item,
-              operatingPointIndex: 2,
+              operatingPointIndex: 0,
               position: { x: 2, y: 2 },
             }
           : item,
@@ -151,22 +168,25 @@ describe("ventilconvettore canalizzabile", () => {
     const unit = project.fanCoils![0];
     const room = project.rooms[1];
     project = vent(project, room.id);
+    project = ensureFanCoilAirSystem(project, unit.id).project;
+    expect(
+      calculateSupplyPlenum(project, fanCoilAirSystem(project, unit.id)!.id)
+        .machineGeometry?.inlet,
+    ).toBeNull();
+    project = addSupplyPlenum(project, project.airTerminals.at(-1)!.id);
     project = connectFanCoilAirOnPlan(
       project,
       project.airTerminals.at(-1)!.id,
       unit.id,
     );
-    const system = fanCoilAirSystem(project, unit.id)!;
-    expect(calculateSupplyPlenum(project, system.id).machineModel).toBe(
-      "FCZ200PO",
-    );
-    expect(
-      calculateSupplyPlenum(project, system.id).machineGeometry?.inlet,
-    ).toBeNull();
     project = setFanCoilAirDischarge(project, unit.id, {
       connectionWidthMm: 400,
       connectionHeightMm: 180,
     });
+    const system = fanCoilAirSystem(project, unit.id)!;
+    expect(calculateSupplyPlenum(project, system.id).machineModel).toBe(
+      "FCZ200PO",
+    );
     const geometry = calculateSupplyPlenum(
       project,
       fanCoilAirSystem(project, unit.id)!.id,
@@ -180,6 +200,7 @@ describe("ventilconvettore canalizzabile", () => {
     let project = fixture();
     const unit = project.fanCoils![0];
     project = vent(project, project.rooms[1].id);
+    project = addSupplyPlenum(project, project.airTerminals.at(-1)!.id);
     project = connectFanCoilAirOnPlan(
       project,
       project.airTerminals.at(-1)!.id,

@@ -20,6 +20,22 @@ it("labels RAL colours and distinguishes anodized aluminium without guessing a c
   expect(terminalFinishChoices(edls)).toEqual(["RAL9005", "RAL9016"]);
 });
 
+it("offers the published colours for Ecoclima multi-slot diffusers", () => {
+  const edlh = airTerminalCatalog.families.find(
+    (f) => f.familyCode === "EDLH",
+  )!;
+  const edfl = airTerminalCatalog.families.find(
+    (f) => f.familyCode === "EDFL-10",
+  )!;
+  const edflna = airTerminalCatalog.families.find(
+    (f) => f.familyCode === "EDFLNA-10",
+  )!;
+
+  expect(terminalFinishChoices(edlh)).toEqual(["RAL9005", "RAL9016"]);
+  expect(isTerminalFinishAvailable(edfl, "RAL7035")).toBe(true);
+  expect(isTerminalFinishAvailable(edflna, "RAL7035")).toBe(true);
+});
+
 it("offers custom RAL only where published, rejecting malformed codes", () => {
   const eba = airTerminalCatalog.families.find((f) => f.familyCode === "EBA")!;
   const ega6 = airTerminalCatalog.families.find(

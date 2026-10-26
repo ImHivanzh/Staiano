@@ -58,6 +58,7 @@ import { ductScenePaths, findDuctCollisions } from "./ducted/collisions";
 import { validateHydronicSystem } from "./hydronic/validation";
 import {
   fanCoilDefaultPanelType,
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
   fanCoilPanelDimensions,
@@ -196,7 +197,7 @@ export function validateProject(p: Project): Check[] {
       unit.productId,
       unit.catalogVersion,
     );
-    const point = product?.operatingPoints[unit.operatingPointIndex];
+    const point = product && fanCoilMaximumPoint(product).point;
     checks.push({
       code: "fanCoilCatalog",
       status: point ? "valid" : "warning",
@@ -604,7 +605,7 @@ export function validateProject(p: Project): Check[] {
         code: "machineCatalog",
         status: machine ? "warning" : "invalid",
         entityId: system.id,
-        message: `${system.manufacturer} ${machine?.model ?? system.productId}: ventilconvettore canalizzabile, portata e potenza del punto di funzionamento scelto; prevalenza utile, motore e accessori di canalizzazione da verificare sul catalogo del costruttore.`,
+        message: `${system.manufacturer} ${machine?.model ?? system.productId}: ventilconvettore canalizzabile, portata e potenza della massima velocità; prevalenza utile, motore e accessori di canalizzazione da verificare sul catalogo del costruttore.`,
       });
       checks.push({
         code: "machinePower",

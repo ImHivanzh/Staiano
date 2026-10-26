@@ -11,6 +11,7 @@ import {
   fanCoilDefaultPanelType,
   fanCoilPanelTypeValid,
   fanCoilCoverTypeValid,
+  fanCoilMaximumPoint,
 } from "@/domain/catalogs/fan-coils";
 import {
   fanCoilPlacementValid,
@@ -43,7 +44,6 @@ export function applyFanCoil(
   project: Project,
   roomId: string,
   productId: string,
-  operatingPointIndex: number,
   options: {
     mounting?: FanCoilPlacement["mounting"];
     controllerId?: string | null;
@@ -66,14 +66,8 @@ export function applyFanCoil(
     !project.floors.find((f) => f.id === room.floorId)?.scaleVerified
   )
     throw new Error("Configurare un ambiente con scala verificata.");
-  if (
-    !product ||
-    !Number.isInteger(operatingPointIndex) ||
-    !product.operatingPoints[operatingPointIndex]
-  )
-    throw new Error(
-      "Selezionare un modello e una velocità presenti nel catalogo.",
-    );
+  if (!product)
+    throw new Error("Selezionare un modello presente nel catalogo.");
   const panelType =
     options.panelType ??
     fanCoilDefaultPanelType(product, options.mounting ?? "wall");
@@ -107,7 +101,7 @@ export function applyFanCoil(
       widthMm: product.widthMm,
       heightMm: product.heightMm,
       depthMm: product.depthMm,
-      operatingPointIndex,
+      operatingPointIndex: fanCoilMaximumPoint(product).index,
       locked: false,
       controllerId: null,
       controllerBoard: null,
@@ -135,11 +129,7 @@ export function updateFanCoil(
     FanCoilPose &
       Pick<
         FanCoilPlacement,
-        | "operatingPointIndex"
-        | "controllerId"
-        | "panelType"
-        | "coverType"
-        | "locked"
+        "controllerId" | "panelType" | "coverType" | "locked"
       >
   >,
 ): Project {
@@ -162,7 +152,11 @@ export function updateFanCoil(
     throw new Error(
       "Modello ventilconvettore non verificabile nel catalogo originale.",
     );
-  let next = { ...unit, ...patch };
+  let next = {
+    ...unit,
+    ...patch,
+    operatingPointIndex: fanCoilMaximumPoint(product).index,
+  };
   if (!fanCoilPanelTypeValid(product, next.mounting, next.panelType))
     next = {
       ...next,
@@ -170,12 +164,8 @@ export function updateFanCoil(
     };
   if (!fanCoilCoverTypeValid(product, next.coverType))
     next = { ...next, coverType: null };
-  if (
-    !Number.isInteger(next.operatingPointIndex) ||
-    !product.operatingPoints[next.operatingPointIndex] ||
-    !product.mountings.includes(next.mounting)
-  )
-    throw new Error("Velocità o montaggio non disponibili per questo modello.");
+  if (!product.mountings.includes(next.mounting))
+    throw new Error("Montaggio non disponibile per questo modello.");
   if (patch.mounting && patch.mounting !== unit.mounting && !patch.position) {
     const room = project.rooms.find((r) => r.id === unit.roomId)!;
     const pose = initialFanCoilPose(

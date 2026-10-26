@@ -92,7 +92,7 @@ it("leaves other manufacturers and controls unchanged in the new revision", () =
   ).toHaveLength(14);
 });
 
-it("uses the published pressure at maximum speed in noise filtering", () => {
+it("uses the published maximum speed for sizing and reports its noise as a warning", () => {
   const empty = createProject();
   const project = addRectangle(empty, empty.floors[0].id, {
     width: 4,
@@ -116,11 +116,18 @@ it("uses the published pressure at maximum speed in noise filtering", () => {
     }),
   );
   expect(project.projectSettings.maxNoiseDbA).toBe(37);
-  expect(sizeFanCoils(project, project.rooms[0], options)).toEqual([]);
   expect(
     fanCoilCatalog.products.find((p) => p.id === "innova-airleaf-sl-200-2t")!
       .operatingPoints[0].noiseDbA,
   ).toBe(41);
+  // Il limite acustico non esclude più il modello: il massimo è l'unico punto
+  // pubblicato e il pannello lo segnala, senza far sparire il consiglio.
+  expect(sizeFanCoils(project, project.rooms[0], options)).toContainEqual(
+    expect.objectContaining({
+      product: expect.objectContaining({ id: "innova-airleaf-sl-200-2t" }),
+      point: expect.objectContaining({ noiseDbA: 41 }),
+    }),
+  );
 });
 
 it("preserves historic unknown flow and noise through save/reload, exports the new source for new units", () => {
@@ -132,7 +139,7 @@ it("preserves historic unknown flow and noise through save/reload, exports the n
     name: "Camera",
   });
   const project = parseProject(
-    applyFanCoil(room, room.rooms[0].id, "innova-airleaf-sl-200-2t", 0),
+    applyFanCoil(room, room.rooms[0].id, "innova-airleaf-sl-200-2t"),
   );
   expect(installedTechnicalSheets(project).documents).toContainEqual(
     expect.objectContaining({

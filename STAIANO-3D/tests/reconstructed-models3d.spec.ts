@@ -110,7 +110,7 @@ for (const target of cases)
         selectionId=p.airTerminals[0].id;
       }else if(target.kind==='fanCoil'){
         const product=fanCoilCatalog.products.find(p=>p.family===target.family);
-        p=applyFanCoil(p,p.rooms[0].id,product.id,0);
+        p=applyFanCoil(p,p.rooms[0].id,product.id);
         selectionId=p.fanCoils[0].id;
       }else if(target.kind==='heatPump'){
         const product=heatPumpCatalog.products.find(p=>p.family===target.family);

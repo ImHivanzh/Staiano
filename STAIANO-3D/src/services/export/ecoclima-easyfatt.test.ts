@@ -13,6 +13,7 @@ const line: EcoclimaBomLine = {
   familyCode: "EDLS",
   kind: "terminal",
   label: 'Bocchetta <bianca> & "acciaio"',
+  dimensions: null,
   sku: "00123",
   quantity: 1.5,
   unitPriceCents: 8230,

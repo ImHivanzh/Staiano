@@ -54,7 +54,6 @@ it("places a concealed ceiling fan coil in the void while retaining its publishe
     p,
     p.rooms[0].id,
     "innova-airleaf-sli-200-2t",
-    0,
     {
       mounting: "ceiling",
     },

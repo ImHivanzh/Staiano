@@ -171,6 +171,7 @@ export function Configurator() {
   const [dossierVariant, setDossierVariant] = useState<"complete" | "summary">(
     "complete",
   );
+  const [dossierMonochrome, setDossierMonochrome] = useState(false);
   const [billOpen, setBillOpen] = useState(false);
   const [flexibleOpen, setFlexibleOpen] = useState(false);
   useEffect(
@@ -685,6 +686,7 @@ export function Configurator() {
         await import("@/services/pdf/download");
       const options = {
         variant,
+        monochrome: dossierMonochrome,
         floorId: s.activeFloorId,
         roomId: s.selection.find((item) => item.kind === "room")?.id,
         signal: controller.signal,
@@ -705,6 +707,22 @@ export function Configurator() {
       setPdfBusy(false);
       pdfController.current = null;
       setPdfProgress("");
+    }
+  }
+  async function createMaterialsPdf() {
+    if (!p) return;
+    setPdfBusy(true);
+    try {
+      const { downloadMaterials } = await import("@/services/pdf/download");
+      await downloadMaterials(p);
+    } catch (error) {
+      s.setError(
+        error instanceof Error
+          ? error.message
+          : "Distinta materiali non generata. Riprovare.",
+      );
+    } finally {
+      setPdfBusy(false);
     }
   }
   function importRaster(file: File) {
@@ -1324,6 +1342,15 @@ export function Configurator() {
                         <option value="summary">Dossier sintetico</option>
                       </select>
                     </label>
+                    <label className="opzione-render-pdf">
+                      <input
+                        type="checkbox"
+                        checked={dossierMonochrome}
+                        disabled={pdfBusy}
+                        onChange={(e) => setDossierMonochrome(e.target.checked)}
+                      />
+                      Stampa in bianco e nero
+                    </label>
                     <button
                       className="bottone tenue piccolo"
                       disabled={pdfBusy}
@@ -1331,6 +1358,13 @@ export function Configurator() {
                     >
                       <DownloadSimple />{" "}
                       {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
+                    </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={pdfBusy}
+                      onClick={() => void createMaterialsPdf()}
+                    >
+                      <DownloadSimple /> Distinta materiali PDF · per stanza
                     </button>
                     <button
                       className="bottone tenue piccolo"

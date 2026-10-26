@@ -676,6 +676,16 @@ export function RadiatorPanel({
                   : "Trova radiatori compatibili"}
               </button>
             )}
+            {/* Salva del popup prima che il calcolo automatico sia concluso:
+                invia i criteri invece di rifiutare un modello già scelto. */}
+            {saveButtonRef && singleCandidate && !visibleSolutions?.length && (
+              <button
+                ref={saveButtonRef}
+                type="submit"
+                hidden
+                style={{ display: "none" }}
+              />
+            )}
             {searching && (
               <button
                 className={`bottone ${radiatorStyles.submit}`}

@@ -1,6 +1,7 @@
 import type { Point } from "@/schemas/project";
 import { distance, lineIntersection, projection } from "./primitives";
 import type { PlanAnalysis, WallCandidate } from "./plan-analysis";
+import { consolidateWallCandidates } from "./plan-candidates";
 
 type Stroke = {
   start: Point;
@@ -50,115 +51,6 @@ function nearSemanticMask(
   return hits >= 9 || (first && last);
 }
 
-/** Merge collinear segments and the two faces of thick walls into one axis. */
-function clusterWalls(walls: WallCandidate[]) {
-  const tolerance = 6;
-  const groups: WallCandidate[][] = [];
-  for (const wall of [...walls].sort(
-    (a, b) => distance(b.start, b.end) - distance(a.start, a.end),
-  )) {
-    const dx = wall.end.x - wall.start.x,
-      dy = wall.end.y - wall.start.y,
-      length = Math.hypot(dx, dy);
-    if (length < 1e-6) continue;
-    const group = groups.find((items) =>
-      items.some((other) => {
-        const ox = other.end.x - other.start.x,
-          oy = other.end.y - other.start.y,
-          olen = Math.hypot(ox, oy);
-        if (olen < 1e-6) return false;
-        if (Math.abs((dx * ox + dy * oy) / (length * olen)) < 0.995)
-          return false;
-        const nx = -oy / olen,
-          ny = ox / olen;
-        if (
-          Math.abs(
-            wall.start.x * nx +
-              wall.start.y * ny -
-              (other.start.x * nx + other.start.y * ny),
-          ) > tolerance
-        )
-          return false;
-        const gap = Math.max(
-          0,
-          Math.max(
-            Math.min(wall.start.x, wall.end.x),
-            Math.min(other.start.x, other.end.x),
-          ) -
-            Math.min(
-              Math.max(wall.start.x, wall.end.x),
-              Math.max(other.start.x, other.end.x),
-            ),
-          Math.max(
-            Math.min(wall.start.y, wall.end.y),
-            Math.min(other.start.y, other.end.y),
-          ) -
-            Math.min(
-              Math.max(wall.start.y, wall.end.y),
-              Math.max(other.start.y, other.end.y),
-            ),
-        );
-        // Separate collinear runs can be the two sides of a doorway.
-        return gap <= 1;
-      }),
-    );
-    if (group) group.push(wall);
-    else groups.push([wall]);
-  }
-  const result: WallCandidate[] = [];
-  for (const items of groups) {
-    const base = items[0],
-      dx = base.end.x - base.start.x,
-      dy = base.end.y - base.start.y,
-      length = Math.hypot(dx, dy),
-      ux = dx / length,
-      uy = dy / length,
-      nx = -uy,
-      ny = ux;
-    let minimum = Infinity,
-      maximum = -Infinity,
-      offset = 0,
-      thickness = 0,
-      thicknessCount = 0,
-      confidence = 0;
-    for (const wall of items) {
-      for (const point of [wall.start, wall.end]) {
-        minimum = Math.min(
-          minimum,
-          (point.x - base.start.x) * ux + (point.y - base.start.y) * uy,
-        );
-        maximum = Math.max(
-          maximum,
-          (point.x - base.start.x) * ux + (point.y - base.start.y) * uy,
-        );
-        offset += (point.x - base.start.x) * nx + (point.y - base.start.y) * ny;
-      }
-      if (wall.thicknessUnits !== null) {
-        thickness += wall.thicknessUnits;
-        thicknessCount++;
-      }
-      confidence = Math.max(confidence, wall.confidence);
-    }
-    const measured = thicknessCount ? thickness / thicknessCount : null;
-    offset /= items.length * 2;
-    result.push({
-      ...base,
-      start: {
-        x: base.start.x + ux * minimum + nx * offset,
-        y: base.start.y + uy * minimum + ny * offset,
-      },
-      end: {
-        x: base.start.x + ux * maximum + nx * offset,
-        y: base.start.y + uy * maximum + ny * offset,
-      },
-      layer: measured === null ? "Contorni da verificare" : "Muri riconosciuti",
-      thicknessUnits: measured,
-      confidence,
-    });
-  }
-  return result.map((wall, index) => ({ ...wall, id: `raster-${index}` }));
-}
-
 function connectLocalJunctions(walls: WallCandidate[]) {
   // Connect only local junctions. Never fill a door-sized gap automatically.
   for (const a of walls)
@@ -198,6 +90,7 @@ export function recognizeRaster(
   height: number,
   grayFills = true,
   semanticMask?: Uint8Array,
+  options: { referenceSize?: number; metersPerUnit?: number } = {},
 ): PlanAnalysis {
   if (
     !Number.isInteger(width) ||
@@ -212,6 +105,7 @@ export function recognizeRaster(
   )
     throw new Error("Raster di analisi non valido o troppo grande.");
   const semantic = semanticMask !== undefined;
+  const referenceSize = options.referenceSize ?? Math.min(width, height);
   const size = width * height;
   const gray = new Uint8Array(size);
   for (let i = 0; i < size; i++) {
@@ -225,7 +119,7 @@ export function recognizeRaster(
     );
   }
   const mask = new Uint8Array(size);
-  const fillRadius = Math.max(6, Math.round(Math.min(width, height) * 0.08));
+  const fillRadius = Math.max(6, Math.round(referenceSize * 0.08));
   let fillsAdded = false;
   if (semanticMask) {
     for (let i = 0; i < size; i++) mask[i] = semanticMask[i] ? 1 : 0;
@@ -269,7 +163,13 @@ export function recognizeRaster(
             ? 1
             : 0;
       }
-  const minimum = Math.max(18, Math.min(width, height) * 0.025);
+  const minimum =
+    options.metersPerUnit && options.metersPerUnit > 0
+      ? Math.max(8, 0.25 / options.metersPerUnit)
+      : Math.max(
+          18,
+          (options.referenceSize ?? Math.min(width, height)) * 0.025,
+        );
   const at = (x: number, y: number) => {
     x = Math.round(x);
     y = Math.round(y);
@@ -341,8 +241,7 @@ export function recognizeRaster(
     for (const run of finished) {
       const thickness = run.high - run.low + 1,
         length = run.to - run.from;
-      if (thickness > Math.min(width, height) * 0.1 || length < thickness * 4)
-        continue;
+      if (thickness > referenceSize * 0.1 || length < thickness * 4) continue;
       const axis = (run.low + run.high) / 2;
       const point = (v: number) =>
         horizontal ? { x: v, y: axis } : { x: axis, y: v };
@@ -485,7 +384,7 @@ export function recognizeRaster(
           let isolated = 0;
           const widths: number[] = [],
             offsets: number[] = [];
-          const limit = Math.min(width, height) * 0.1;
+          const limit = referenceSize * 0.1;
           for (let j = 0; j <= 20; j++) {
             const v = from + ((last - from) * j) / 20;
             let px = mx + v * dx,
@@ -585,9 +484,7 @@ export function recognizeRaster(
   };
   const repeatable = new Set(
     unique.filter(
-      (s) =>
-        s.width <= Math.max(3, Math.min(width, height) * 0.015) &&
-        sameBackground(s),
+      (s) => s.width <= Math.max(3, referenceSize * 0.015) && sameBackground(s),
     ),
   );
   for (const a of unique) {
@@ -628,8 +525,10 @@ export function recognizeRaster(
   }
   const used = new Set<Stroke>();
   const walls: WallCandidate[] = [];
-  const maximumThickness = Math.min(width, height) * 0.1;
-  const maximumFaceStroke = Math.max(8, Math.min(width, height) * 0.015);
+  const maximumThickness = options.metersPerUnit
+    ? 0.8 / options.metersPerUnit
+    : referenceSize * 0.1;
+  const maximumFaceStroke = Math.max(8, referenceSize * 0.015);
   const available = unique.filter((s) => !repetitive.has(s));
   const grayAt = (p: Point) => {
     const x = Math.round(p.x),
@@ -811,7 +710,14 @@ export function recognizeRaster(
   // Filled-wall evidence can absorb an adjacent faint outline. Preserve the
   // alternative ink geometry in the review-only layer; never auto-import it.
   if (fillsAdded) {
-    const outlines = recognizeRaster(pixels, width, height, false).walls;
+    const outlines = recognizeRaster(
+      pixels,
+      width,
+      height,
+      false,
+      undefined,
+      options,
+    ).walls;
     for (const outline of outlines) {
       if (
         result.some(
@@ -860,7 +766,14 @@ export function recognizeRaster(
   if (semantic && semanticMask) {
     // The model misses some thick, hatched walls. Keep those only when they sit
     // beside its evidence, then merge parallel faces into a single axis.
-    const heuristic = recognizeRaster(pixels, width, height);
+    const heuristic = recognizeRaster(
+      pixels,
+      width,
+      height,
+      true,
+      undefined,
+      options,
+    );
     imageWalls = heuristic.walls;
     const filledWall = (wall: WallCandidate) => {
       let filled = 0;
@@ -882,7 +795,7 @@ export function recognizeRaster(
       const physical =
         (wall.confidence >= 0.9 || filledWall(wall)) &&
         wall.thicknessUnits >= 5 &&
-        distance(wall.start, wall.end) >= Math.min(width, height) * 0.25;
+        distance(wall.start, wall.end) >= referenceSize * 0.25;
       if (!supported && !physical) return [];
       return [
         {
@@ -896,7 +809,10 @@ export function recognizeRaster(
         },
       ];
     });
-    finalWalls = clusterWalls([...deduplicated, ...kept]);
+    // Keep a measured axis instead of averaging it with a competing interpretation.
+    finalWalls = consolidateWallCandidates([...deduplicated, ...kept]).map(
+      (wall, index) => ({ ...wall, id: `raster-${index}` }),
+    );
     connectLocalJunctions(finalWalls);
     // Omitted image evidence stays separate and unconfirmed, without shifting the AI axes.
     for (const wall of heuristic.walls) {

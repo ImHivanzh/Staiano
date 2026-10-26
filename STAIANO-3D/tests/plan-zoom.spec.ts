@@ -199,6 +199,7 @@ test("lo zoom CAD conserva aggancio ai vertici e selezione durante il trasciname
     dialog.getByText("2 segmenti selezionati.", { exact: false }),
   ).toBeVisible();
   await expect(preview.locator("circle")).toHaveCount(1);
+  await dialog.getByRole("button", { name: "Escludi", exact: true }).click();
   const movedTarget = await screenPoint(preview, 5, endpoint.y);
   await page.mouse.click(movedTarget.x, movedTarget.y);
   await expect(

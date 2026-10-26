@@ -51,3 +51,6 @@ native/runtime/*.dll
 native/runtime/*.deps.json
 native/runtime/*.runtimeconfig.json
 native/runtime/plan-ai.json
+
+# Local, generated code-navigation graph.
+src/graphify-out/

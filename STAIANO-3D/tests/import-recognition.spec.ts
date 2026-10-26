@@ -40,7 +40,7 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
   });
   await expect(
     dialog.getByLabel("Analisi automatica planimetria"),
-  ).toContainText("4 muri candidati · 0 ad alta affidabilità");
+  ).toContainText("4 proposte principali");
   await dialog
     .getByRole("button", { name: "Seleziona area da riconoscere" })
     .click();
@@ -58,11 +58,15 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
     .click();
   await expect(
     dialog.getByLabel("Analisi automatica planimetria"),
-  ).toContainText("0 ad alta affidabilità");
+  ).toHaveAttribute("data-auto-count", "0");
   await dialog.getByRole("button", { name: "Analizza pagina intera" }).click();
+  // La sintesi resta quella dell'analisi precedente finché la nuova non finisce.
+  const analyzing = dialog.getByText(/Lettura e ricostruzione/);
+  await expect(analyzing).toHaveCount(1);
+  await expect(analyzing).toHaveCount(0);
   await expect(
     dialog.getByLabel("Analisi automatica planimetria"),
-  ).toContainText("4 muri candidati · 0 ad alta affidabilità");
+  ).toContainText("4 proposte principali");
   await dialog.getByRole("button", { name: "Seleziona punti scala" }).click();
   await preview.click({
     position: { x: box.width * 0.2, y: box.height * 0.5 },
@@ -75,14 +79,15 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
     .getByRole("button", { name: "Calibra scala", exact: true })
     .click();
   const importWalls = dialog.getByRole("button", {
-    name: "Importa muri selezionati",
+    name: /^Importa muri selezionati/,
     exact: true,
   });
   await expect(importWalls).toBeDisabled();
   await dialog
-    .getByLabel(
-      "Ho verificato e confermo i muri proposti in arancione (affidabilità media)",
-    )
+    .getByRole("button", { name: "Seleziona proposte visibili" })
+    .click();
+  await dialog
+    .getByLabel(/Le geometrie selezionate rappresentano assi muro/)
     .check();
   await expect(importWalls).toBeEnabled();
   await importWalls.click();
@@ -94,7 +99,7 @@ test("PDF misto: una linea vettoriale non nasconde i muri nell’immagine", asyn
   expect(imported.rooms).toHaveLength(1);
   expect(imported.rooms[0].geometryStatus).toBe("closed");
   expect(imported.floors[0].importAnalysis).toMatchObject({
-    algorithmVersion: "local-lines-8",
+    algorithmVersion: "local-lines-9",
     sourceType: "pdf",
     wallsAutoCreated: 0,
     wallsConfirmedByOperator: 4,

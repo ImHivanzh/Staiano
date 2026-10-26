@@ -153,7 +153,7 @@ def attach(f, data, keys):
 def linear_families(r):
     code=r["code"]; result=[]
     if code=="EDLH":
-        f=family(r,linear=True,use=["supply","return"]); f["modelCodes"]=["EDLH","EDLHB"]
+        f=family(r,linear=True,use=["supply","return"]); f["modelCodes"]=["EDLH","EDLHB"]; f["finishes"]=["RAL9005","RAL9016"]
         f["mountings"]=["wall","ceiling"]; f["mountingType"]="Parete o soffitto in cartongesso"
         dims=[t for t in r["tables"] if "dimensioni diffusore" in t["heading"].lower()]
         perf=next(t["grid"] for t in r["tables"] if t["grid"][0][0]=="Feritoia")
@@ -172,6 +172,8 @@ def linear_families(r):
         return [f]
     if code=="EDFLB-FL":
         f=family(r,linear=False,use=["return"]); f["type"]="linear"
+        # Slot diffusers are flush-mounted, so the same profile serves ceiling and wall plasterboard.
+        f["mountings"]=["wall","ceiling"]; f["mountingType"]="Parete o soffitto in cartongesso"
         dims=next(t["grid"] for t in r["tables"] if t["grid"][0][0]=="Nr. Feritoie" and "A (mm)" in t["grid"][0])
         table=next(t["grid"] for t in r["tables"] if "funzionamento" in t["heading"].lower())
         for row in dims[1:]:
@@ -203,6 +205,8 @@ def linear_families(r):
             if base=="EDFLB" and config in [10,30]: continue
             f=family(r,f"{base}-{config}",linear=True,use=["return"] if config in [10,30] else ["supply"])
             f["modelCodes"]=[f"{base}-{config}",f"{base} {config}"]
+            # EDLH publishes the same slot profile as "parete o soffitto in cartongesso".
+            f["mountings"]=["wall","ceiling"]; f["mountingType"]="Parete o soffitto in cartongesso"
             if base in ["EDFL", "EDFLB"]:
                 f["linearFaceLengthOffsetMm"] = 50
                 f["geometryNote"] = "Il disegno EDFL/EDFL-B 2024 indica lunghezza frontale L+50 mm; profondità di sezione 52 mm. A/B/C sono quote del profilo riportate nella variante."

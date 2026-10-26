@@ -126,10 +126,10 @@
         "EDFL-50"
       ],
       "standardFinish": "Alluminio anodizzato naturale",
-      "customRal": false,
+      "customRal": true,
       "whiteSurchargePercent": null,
       "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
-      "requestNote": null
+      "requestNote": "Verniciatura telaio in bianco RAL 9016 o altri colori RAL a scelta."
     },
     {
       "familyCodes": [
@@ -138,10 +138,10 @@
         "EDFLB-50"
       ],
       "standardFinish": "RAL9016",
-      "customRal": false,
+      "customRal": true,
       "whiteSurchargePercent": null,
       "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edfl-edflb-diffusori-lineari-a-feritoie-con-deflettori",
-      "requestNote": null
+      "requestNote": "Verniciatura in altri colori RAL a scelta."
     },
     {
       "familyCodes": [
@@ -151,10 +151,10 @@
         "EDFLNA-50"
       ],
       "standardFinish": "Alluminio anodizzato naturale",
-      "customRal": false,
+      "customRal": true,
       "whiteSurchargePercent": null,
       "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
-      "requestNote": null
+      "requestNote": "Verniciatura del telaio in RAL 9010 o altri colori RAL a scelta."
     },
     {
       "familyCodes": [
@@ -164,9 +164,29 @@
         "EDFLBNA-50"
       ],
       "standardFinish": "RAL9010",
-      "customRal": false,
+      "customRal": true,
       "whiteSurchargePercent": null,
       "sourceUrl": "https://www.ecoclima.com/catalogo-generale/diffusione/diffusori/edflna-edflbna-diffusori-a-feritoie-con-deflettori-rotativi-in-alluminio",
+      "requestNote": "Verniciatura del telaio in altri colori RAL a scelta."
+    },
+    {
+      "familyCodes": [
+        "EDLH"
+      ],
+      "standardFinish": "RAL9005",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/attach/Scheda%20tecnica%20EDLS-EDLSB%20rev%203-2025%20IT/attachment-translations/scheda-tecnica-edls-edlsb-rev-3-2025-it.pdf",
+      "requestNote": null
+    },
+    {
+      "familyCodes": [
+        "EDLHB"
+      ],
+      "standardFinish": "RAL9016",
+      "customRal": false,
+      "whiteSurchargePercent": null,
+      "sourceUrl": "https://www.ecoclima.com/attach/Scheda%20tecnica%20EDLS-EDLSB%20rev%203-2025%20IT/attachment-translations/scheda-tecnica-edls-edlsb-rev-3-2025-it.pdf",
       "requestNote": null
     },
     {

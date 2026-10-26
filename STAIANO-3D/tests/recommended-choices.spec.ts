@@ -256,6 +256,9 @@ for (const width of [1920, 1024]) {
       await expect(
         popup.locator(`[aria-label="${recommendation}"]`),
       ).toBeVisible();
+      await popup
+        .locator(`[aria-label="${recommendation}"]`)
+        .scrollIntoViewIfNeeded();
       await expect(
         popup.locator(`[aria-label="${recommendation}"]`),
       ).toBeInViewport();

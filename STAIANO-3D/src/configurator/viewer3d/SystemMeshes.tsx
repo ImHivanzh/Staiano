@@ -275,12 +275,14 @@ export function SystemMeshes({
   selection,
   onSelect,
   isolatedRoomId,
+  hideDuctedMachines = false,
 }: {
   project: Project;
   activeFloorId: string;
   selection: Selection[];
   onSelect: (s: Selection) => void;
   isolatedRoomId?: string;
+  hideDuctedMachines?: boolean;
 }) {
   const chosen = (id: string) => selection.some((s) => s.id === id);
   const { gl } = useThree();
@@ -326,7 +328,7 @@ export function SystemMeshes({
             />
           </mesh>
         ))}
-      {project.hvacSystems
+      {!hideDuctedMachines && project.hvacSystems
         .filter((s) => s.type === "ducted" && !s.fanCoilId)
         .flatMap((s) =>
           s.indoorUnits

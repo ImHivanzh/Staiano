@@ -62,7 +62,7 @@ describe("explicit unconditioned rooms", () => {
 
   it("keeps installed equipment and warns about inconsistent associations, without accepting new equipment", () => {
     const before = fixture();
-    let project = applyFanCoil(before, before.rooms[0].id, "aermec-fcz100", 1);
+    let project = applyFanCoil(before, before.rooms[0].id, "aermec-fcz100");
     const installed = structuredClone(project.fanCoils);
     project = updateRoom(project, project.rooms[0].id, {
       conditioningExclusion: { reason: "Non previsto" },
@@ -75,7 +75,7 @@ describe("explicit unconditioned rooms", () => {
       }),
     );
     expect(() =>
-      applyFanCoil(project, project.rooms[0].id, "aermec-fcz100", 1),
+      applyFanCoil(project, project.rooms[0].id, "aermec-fcz100"),
     ).toThrow();
   });
 

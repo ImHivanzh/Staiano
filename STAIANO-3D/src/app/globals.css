@@ -607,6 +607,9 @@ input[type="checkbox"] {
 .tratto-provvisorio {
   stroke: var(--tinta);
 }
+.tratto-provvisorio.asse-bloccato {
+  stroke: var(--tinta-scura);
+}
 .punto-snap {
   fill: var(--carta);
   stroke: var(--tinta);

@@ -45,7 +45,7 @@ for (const sample of corpus)
       .setInputFiles(path);
     await expect(
       dialog.getByRole("img", { name: /Anteprima planimetria/ }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30000 });
     if (sample.page > 1) {
       await dialog
         .getByLabel("Pagina PDF", { exact: true })
@@ -73,12 +73,15 @@ for (const sample of corpus)
       [sample.region[0] * scale.x, sample.region[1] * scale.y],
       [sample.region[2] * scale.x, sample.region[3] * scale.y],
     ]) {
-      const point = await svg.evaluate((node, p) => {
-        const matrix = (node as SVGSVGElement).getScreenCTM()!;
-        const q = new DOMPoint(p[0], p[1]).matrixTransform(matrix);
-        return { x: q.x, y: q.y };
+      // Click relative to the preview so Playwright scrolls the tall plan into view.
+      const position = await svg.evaluate((node, p) => {
+        const q = new DOMPoint(p[0], p[1]).matrixTransform(
+          (node as SVGSVGElement).getScreenCTM()!,
+        );
+        const box = node.getBoundingClientRect();
+        return { x: q.x - box.left, y: q.y - box.top };
       }, p);
-      await page.mouse.click(point.x, point.y);
+      await svg.click({ position });
     }
     await dialog
       .getByRole("button", { name: "Riconosci muri nell’area" })
@@ -86,6 +89,7 @@ for (const sample of corpus)
     await expect(
       dialog.getByRole("button", { name: "Riconosci muri nell’area" }),
     ).toBeEnabled();
+    await dialog.getByLabel(/^Mostra alternative da verificare/).check();
     const walls = await svg.locator("line").evaluateAll((nodes) =>
       nodes
         .filter((n) => n.textContent?.includes("Affidabilità euristica"))

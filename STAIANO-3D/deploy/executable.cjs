@@ -586,15 +586,19 @@ async function update(dataRoot, config) {
       machineId: release.machineId,
       nonce: release.nonce,
     });
-    fs.renameSync(temporary, target);
-  } finally {
-    if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
-  }
-  const approval = await authorization(dataRoot, config, release.sequence);
-  if (!approval || approval.sha256 !== release.sha256)
-    throw new Error("Il pacchetto non è più autorizzato. Riprovare.");
-  // The active server keeps serving while the new package is downloaded and checked.
-  const switchScript = `& { param($exe, $data)
+    const approval = await authorization(dataRoot, config, release.sequence);
+    if (!approval || approval.sha256 !== release.sha256)
+      throw new Error("Il pacchetto non è più autorizzato. Riprovare.");
+    // The active server keeps serving while the new package is downloaded and checked.
+    const stopScript = `& {
+    $ErrorActionPreference='Stop'
+    schtasks /End /TN '${TASK}' | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw 'Arresto del servizio non riuscito.' }
+    $deadline=(Get-Date).AddSeconds(30)
+    while ((Get-ScheduledTask -TaskName '${TASK}').State -ne 'Ready') { if ((Get-Date) -gt $deadline) { throw 'Attivita non arrestata.' }; Start-Sleep -Milliseconds 250 }
+  }`;
+    const stopService = () => powershell(stopScript);
+    const switchScript = `& { param($exe, $data)
     $ErrorActionPreference='Stop'
     schtasks /End /TN '${TASK}' | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Arresto del servizio non riuscito.' }
@@ -609,51 +613,56 @@ async function update(dataRoot, config) {
     if ((Get-ScheduledTaskInfo -TaskName '${TASK}').LastRunTime -le $last) { Start-ScheduledTask -TaskName '${TASK}' }
   }`;
   const switchTo = (exe) => powershell(switchScript, [exe, dataRoot]);
-  try {
-    switchTo(target);
-    let healthy = false;
-    for (let attempt = 0; attempt < 90; attempt++) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      try {
-        const response = await fetch("http://127.0.0.1:3015/accedi", {
-          signal: AbortSignal.timeout(2000),
-          redirect: "manual",
-        });
-        const processInfo = JSON.parse(
-          fs.readFileSync(
-            path.join(dataRoot, ".cache", "production-server.json"),
-            "utf8",
-          ),
-        );
-        if (
-          response.status === 200 &&
-          response.headers.get("x-staiano-build") === processInfo.buildId &&
-          processInfo.commit === release.commit &&
-          processInfo.executable === target &&
-          (await response.text()).includes("Staiano")
-        ) {
-          healthy = true;
-          break;
+    try {
+      stopService();
+      fs.renameSync(temporary, target);
+      switchTo(target);
+      let healthy = false;
+      for (let attempt = 0; attempt < 90; attempt++) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        try {
+          const response = await fetch("http://127.0.0.1:3015/accedi", {
+            signal: AbortSignal.timeout(2000),
+            redirect: "manual",
+          });
+          const processInfo = JSON.parse(
+            fs.readFileSync(
+              path.join(dataRoot, ".cache", "production-server.json"),
+              "utf8",
+            ),
+          );
+          if (
+            response.status === 200 &&
+            response.headers.get("x-staiano-build") === processInfo.buildId &&
+            processInfo.commit === release.commit &&
+            processInfo.executable === target &&
+            (await response.text()).includes("Staiano")
+          ) {
+            healthy = true;
+            break;
+          }
+        } catch {
+          /* New process is still starting. */
         }
-      } catch {
-        /* New process is still starting. */
       }
+      if (!healthy)
+        throw new Error(
+          "Nuovo EXE non risponde. Ripristino della versione precedente.",
+        );
+      atomicJson(activeFile, {
+        executable: target,
+        sequence: release.sequence,
+        commit: release.commit,
+        sha256: release.sha256,
+        previousSha256: current.sha256,
+      });
+      console.log(`Aggiornamento installato: ${release.commit}`);
+    } catch (error) {
+      switchTo(current.executable);
+      throw error;
     }
-    if (!healthy)
-      throw new Error(
-        "Nuovo EXE non risponde. Ripristino della versione precedente.",
-      );
-    atomicJson(activeFile, {
-      executable: target,
-      sequence: release.sequence,
-      commit: release.commit,
-      sha256: release.sha256,
-      previousSha256: current.sha256,
-    });
-    console.log(`Aggiornamento installato: ${release.commit}`);
-  } catch (error) {
-    switchTo(current.executable);
-    throw error;
+  } finally {
+    if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
   }
 }
 
@@ -685,8 +694,11 @@ async function main() {
         console.log(JSON.stringify(await authorization(dataRoot, config, 0)));
       else await update(dataRoot, config);
     } finally {
-      fs.closeSync(fd);
-      fs.unlinkSync(lock);
+      try {
+        fs.closeSync(fd);
+      } finally {
+        fs.unlinkSync(lock);
+      }
     }
     return;
   }

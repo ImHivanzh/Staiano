@@ -1,6 +1,21 @@
 const MEAN = [0.485, 0.456, 0.406];
 const STD = [0.229, 0.224, 0.225];
 
+/** Four overlapping crops at most: small plans retain one global inference. */
+export function planSegmentationTiles(width: number, height: number) {
+  if (Math.max(width, height) <= 1400) return [];
+  const side = 1280,
+    starts = (size: number) => (size <= side ? [0] : [0, size - side]);
+  return starts(height).flatMap((top) =>
+    starts(width).map((left) => ({
+      left,
+      top,
+      width: Math.min(width, side),
+      height: Math.min(height, side),
+    })),
+  );
+}
+
 /** Rotate every NCHW plane without resampling fine lines. */
 export function rotatePlanTensor(
   data: Float32Array,

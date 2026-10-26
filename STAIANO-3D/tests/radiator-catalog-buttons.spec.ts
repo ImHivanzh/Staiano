@@ -100,3 +100,36 @@ test("a single compatible radiator solution is applied and selected at once", as
   await expect(placed).toHaveCount(1);
   await expect(placed.locator("rect")).toHaveClass(/scelto/);
 });
+
+test("Salva applica il modello scelto senza attendere il calcolo automatico", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Disegna manualmente" }).click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Crea stanza", exact: true })
+    .click();
+  const plan = page.getByRole("region", {
+    name: "Configurazione grafica canalizzato",
+  });
+  await plan.getByRole("button", { name: "Radiatore", exact: true }).click();
+  await pickPlanPoint(plan, 2, 0.4);
+  await plan.getByTestId("draft-radiator").click();
+  const popup = page.getByRole("dialog", {
+    name: "Configura apparecchio",
+    exact: true,
+  });
+  await popup.getByRole("button", { name: "Cordivari", exact: true }).click();
+  await popup.getByRole("button", { name: "Ardesia", exact: true }).click();
+  await popup.getByRole("button", { name: "3 colonne", exact: true }).click();
+  await popup.getByRole("button", { name: /^ALTEZZA 1800\b/ }).click();
+  // Nessuna attesa del dimensionamento automatico: Salva deve avviarlo.
+  await popup
+    .locator("footer")
+    .getByRole("button", { name: "Salva", exact: true })
+    .click();
+  await expect(popup).toHaveCount(0);
+  await expect(plan.getByTestId("radiator-2d")).toHaveCount(1);
+});

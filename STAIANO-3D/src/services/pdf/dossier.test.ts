@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { createProject } from "@/domain/project";
 import { buildDossier, TECHNICAL_NOTE } from "./dossier";
 import { renderDossierPdf } from "./render";
+import { renderMaterialsPdf } from "./materials";
 import { dossierFixture } from "./fixture";
 import { airTerminalCatalog } from "@/domain/catalogs/air-terminals";
 import { sizeAirTerminal } from "@/domain/air-terminals/size";
@@ -17,6 +18,76 @@ import {
 } from "@/domain/catalogs/radiators";
 
 describe("Dossier tecnico locale", () => {
+  it("keeps exact Ecoclima article descriptions and separates finishes in the materials list", () => {
+    const project = dossierFixture();
+    const terminal = project.airTerminals.find(
+      (item) => item.family === "EDLS",
+    )!;
+    terminal.commercialOptions = {
+      profileCode: "EDLS20-FA",
+      colorCode: "RAL9005",
+      fixingBridges: true,
+      continuityKit: true,
+    };
+    terminal.color = "RAL9005";
+    const variant = airTerminalCatalog.families
+      .find((item) => item.familyCode === "EDLS")!
+      .variants.find(
+        (item) => item.slotCount === 1 && item.slotWidthMm === 20,
+      )!;
+    terminal.productId = variant.id;
+    terminal.widthMm = 1000;
+    const black = buildDossier(project);
+    const row = black.materials.find((item) =>
+      item.codes.includes(black.codes.get(terminal.id)!),
+    )!;
+    expect(row.sku).toMatch(/^DDS\d+$/);
+    expect(row.description).toContain("RAL 9005");
+    project.airTerminals.push({
+      ...terminal,
+      id: "white-terminal",
+      color: "RAL9016",
+      commercialOptions: {
+        ...terminal.commercialOptions,
+        profileCode: "EDLSB20-FA",
+        colorCode: "RAL9016",
+      },
+    });
+    const changed = buildDossier(project);
+    const white = changed.materials.find((item) =>
+      item.codes.includes(changed.codes.get("white-terminal")!),
+    )!;
+    expect(white.sku).not.toBe(row.sku);
+    expect(white.description).toContain("RAL 9016");
+    expect(
+      changed.accessories.some(
+        (item) => item.sku && item.description.includes("PONT"),
+      ),
+    ).toBe(true);
+  });
+  it("creates a separate materials PDF with quantities allocated by room", async () => {
+    const project = dossierFixture();
+    const radiator = project.radiators[0];
+    const living = project.rooms.find((room) => room.name === "Soggiorno")!;
+    project.radiators.push({
+      ...radiator,
+      id: `${radiator.id}-living`,
+      roomId: living.id,
+    });
+
+    const row = buildDossier(project).materials.find((item) =>
+      item.description.includes(radiator.family),
+    )!;
+    expect(row.roomQuantities.map((item) => item.room)).toEqual(
+      expect.arrayContaining(["Soggiorno", "Camera matrimoniale"]),
+    );
+    expect(
+      row.roomQuantities.reduce((total, item) => total + item.quantity, 0),
+    ).toBe(row.quantity);
+    const pdf = await PDFDocument.load(await renderMaterialsPdf(project));
+    expect(pdf.getPageCount()).toBeGreaterThanOrEqual(2);
+  });
+
   it("lists generic accessory colours without calling them matching body or official finishes", () => {
     const project = dossierFixture();
     project.radiators[0].finishes = {
@@ -65,7 +136,7 @@ describe("Dossier tecnico locale", () => {
     const sli = fanCoilCatalog.products.find(
       (item) => item.family === "AirLeaf SLI" && item.model === "SLI 200",
     )!;
-    const project = applyFanCoil(base, room.id, sli.id, 0, {
+    const project = applyFanCoil(base, room.id, sli.id, {
       mounting: "wall",
       panelType: "rasomuro",
       controllerId: "innova-eeb749ii",
@@ -94,7 +165,7 @@ describe("Dossier tecnico locale", () => {
       (item) => item.id === "innova-airleaf-rsi-400-2t",
     )!;
     const rsiAccessories = buildDossier(
-      applyFanCoil(base, room.id, rsi.id, 0, {
+      applyFanCoil(base, room.id, rsi.id, {
         mounting: "wall",
         panelType: "rasomuro",
         controllerId: "innova-eeb749ii",
@@ -111,7 +182,7 @@ describe("Dossier tecnico locale", () => {
       (item) => item.id === "innova-airleaf-slsi-400-2t",
     )!;
     const slsiAccessories = buildDossier(
-      applyFanCoil(base, room.id, slsi.id, 0, {
+      applyFanCoil(base, room.id, slsi.id, {
         mounting: "wall",
         panelType: "traditional",
       }),
@@ -130,7 +201,7 @@ describe("Dossier tecnico locale", () => {
       (item) => item.id === "olimpia-01513",
     )!;
     const traditional = buildDossier(
-      applyFanCoil(base, room.id, product.id, 0, {
+      applyFanCoil(base, room.id, product.id, {
         mounting: "wall",
         panelType: "traditional",
       }),
@@ -148,7 +219,7 @@ describe("Dossier tecnico locale", () => {
       ),
     ).toMatchObject({ quantity: 1, details: expect.stringContaining("B0955") });
     const grilles = buildDossier(
-      applyFanCoil(base, room.id, product.id, 0, {
+      applyFanCoil(base, room.id, product.id, {
         mounting: "wall",
         panelType: "grilles-90",
       }),
@@ -174,7 +245,7 @@ describe("Dossier tecnico locale", () => {
     const product = fanCoilCatalog.products.find(
       (item) => item.id === "aermec-fcz400p",
     )!;
-    const project = applyFanCoil(base, room.id, product.id, 0, {
+    const project = applyFanCoil(base, room.id, product.id, {
       mounting: "wall",
       coverType: "adjustable",
     });

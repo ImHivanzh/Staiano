@@ -151,6 +151,7 @@ export function connectPlenum(
 }
 
 type AttachmentOwner = {
+  systemId: string | null;
   elevationM?: number | null;
   position: Point;
   rotation: number;
@@ -175,6 +176,7 @@ function attachmentOwner(
     if (unit)
       return {
         ...unit,
+        systemId: system!.id,
         elevationM: ductedMachineElevationM(project, system!, unit),
       };
   }
@@ -182,7 +184,11 @@ function attachmentOwner(
   const system = project.hvacSystems.find((s) => s.id === plenum.systemId);
   const unit = system?.indoorUnits[0];
   return unit
-    ? { ...unit, elevationM: ductedMachineElevationM(project, system!, unit) }
+    ? {
+        ...unit,
+        systemId: system!.id,
+        elevationM: ductedMachineElevationM(project, system!, unit),
+      }
     : undefined;
 }
 
@@ -256,6 +262,7 @@ export function syncAttachedPlenums(
       return [
         {
           ...plenum,
+          systemId: owner.systemId,
           roomId: owner.roomId,
           floorId: owner.floorId,
           ...(already ? {} : followed),

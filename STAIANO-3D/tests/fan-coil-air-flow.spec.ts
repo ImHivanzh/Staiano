@@ -13,8 +13,8 @@ async function saved(page: import("@playwright/test").Page) {
   );
 }
 
-/** The FCZ is a hydronic terminal and a ducted air handler at the same time. */
-test("la FCZ canalizzabile si collega alle bocchette dal piano", async ({
+/** A supply fan-coil outlet must have its own plenum before connection. */
+test("la FCZ non si collega alla bocchetta di mandata senza plenum", async ({
   page,
 }) => {
   test.setTimeout(180000);
@@ -45,25 +45,17 @@ test("la FCZ canalizzabile si collega alle bocchette dal piano", async ({
     name: "Configura apparecchio",
     exact: true,
   });
-  await equipment.getByLabel("Marca ventilconvettore").selectOption("Aermec");
+  await equipment.getByRole("button", { name: "Aermec", exact: true }).click();
+  await equipment.getByRole("button", { name: "2 tubi", exact: true }).click();
+  const models = equipment.getByRole("group", { name: "Modello" });
+  await models
+    .getByRole("button", { name: /FCZ PO Ventilconvettori canalizzabili/ })
+    .click();
   await equipment
-    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-    .selectOption("FCZ PO");
-  await equipment
-    .getByRole("combobox", { name: "Taglia ventilconvettore", exact: true })
-    .selectOption("aermec-fcz200po");
-  await expect(
-    equipment
-      .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-      .locator("optgroup"),
-  ).toHaveAttribute("label", "Ventilconvettori canalizzabili");
+    .getByRole("group", { name: "Taglia" })
+    .getByRole("button", { name: /FCZ200PO/ })
+    .click();
   await page.screenshot({ path: ".cache/fcz-categoria.png" });
-  await equipment
-    .getByRole("combobox", {
-      name: "Velocità / punto di funzionamento",
-      exact: true,
-    })
-    .selectOption("2");
   await equipment
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
@@ -75,24 +67,19 @@ test("la FCZ canalizzabile si collega alle bocchette dal piano", async ({
   await expect(plan.getByTestId("draft-terminal")).toHaveCount(1);
 
   await plan.getByRole("button", { name: "Collega", exact: true }).click();
-  await plan.getByTestId("fan-coil-2d").click();
-  await plan.getByTestId("draft-terminal").click();
-  await expect(plan.getByTestId("pending-connection")).toHaveCount(1);
-  await plan.screenshot({ path: ".cache/fcz-bocchette.png" });
+  await plan.getByTestId("fan-coil-2d").locator("rect").first().click();
+  await expect(
+    page.getByText(
+      "Configura la bocchetta e il suo plenum prima del collegamento.",
+    ),
+  ).toBeVisible();
   await page.keyboard.press("Escape");
+  await expect(plan.getByTestId("pending-connection")).toHaveCount(0);
 
   const result = await saved(page);
   const air = result.hvacSystems.find((system) => system.fanCoilId);
-  expect(air, "la distribuzione aeraulica nasce dall'unità").toBeTruthy();
-  expect(air!.fanCoilId).toBe(result.fanCoils![0].id);
-  expect(air!.type).toBe("ducted");
-  expect(air!.manufacturer).toBe("Aermec");
-  expect(air!.airflowM3h).toBe(254);
-  const terminal = result.ductedDrafts?.find(
-    (item) => item.kind === "terminal",
-  );
-  expect(terminal?.machineId).toBe(air!.id);
-
-  await page.reload();
-  await expect(plan.getByTestId("pending-connection")).toHaveCount(1);
+  expect(air).toBeUndefined();
+  expect(
+    result.ductedDrafts?.find((item) => item.kind === "terminal")?.machineId,
+  ).toBeUndefined();
 });

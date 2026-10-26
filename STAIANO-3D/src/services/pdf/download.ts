@@ -5,6 +5,7 @@ import { downloadFile } from "@/services/project/format";
 
 export type DossierDownloadOptions = PanoramaOptions & {
   variant?: "complete" | "summary";
+  monochrome?: boolean;
 };
 
 export async function generateDossier(
@@ -35,12 +36,13 @@ export async function generateDossier(
     logoSvg,
     renderImages,
     variant: options.variant,
+    monochrome: options.monochrome,
   });
   options.signal?.throwIfAborted();
   const blob = new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
   return {
     blob,
-    name: `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}.pdf`,
+    name: `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-dossier-${options.variant === "summary" ? "sintetico" : "completo"}${options.monochrome ? "-bianco-nero" : ""}.pdf`,
   };
 }
 
@@ -50,4 +52,16 @@ export async function downloadDossier(
 ): Promise<void> {
   const document = await generateDossier(project, options);
   downloadFile(document.name, document.blob);
+}
+
+export async function downloadMaterials(project: Project): Promise<void> {
+  const snapshot = structuredClone(project);
+  const bytes = await (
+    await import("./materials")
+  ).renderMaterialsPdf(snapshot);
+  const name = `${snapshot.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) || "progetto"}-distinta-materiali.pdf`;
+  downloadFile(
+    name,
+    new Blob([new Uint8Array(bytes)], { type: "application/pdf" }),
+  );
 }

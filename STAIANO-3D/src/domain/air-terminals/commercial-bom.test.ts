@@ -239,6 +239,8 @@ describe("official Ecoclima list-price BOM", () => {
     ]);
     expect(result.totalCents).toBe(17596);
     expect(result.taxTreatment).toBe("not-specified-by-source");
+    // La riga di listino porta le misure di catalogo, non solo il prezzo.
+    expect(result.lines[0].dimensions).toBe("L 1000 mm; 1 feritoia da 20 mm");
     expect(
       result.lines.every((line) => line.sourceMetadata?.sha256.length === 64),
     ).toBe(true);
@@ -392,9 +394,12 @@ describe("official Ecoclima list-price BOM", () => {
     expect(result.totalCents).toBe(22138);
     expect(result.lines.map((line) => [line.sku, line.unitPriceCents])).toEqual(
       [
-        ["EDSC-C", 13409],
-        ["EPI-DC", 8729],
+        ["DDS0006010", 13409],
+        ["DD88001250", 8729],
       ],
+    );
+    expect(result.lines[0].label).toBe(
+      "EDSC-C D.125 DIFFUSORE CIRCOLARE A SCOMPARSA PER CARTONGESSO",
     );
     expect(
       terminalSupplyConnections({ airTerminals: [item] }, "system").connections,

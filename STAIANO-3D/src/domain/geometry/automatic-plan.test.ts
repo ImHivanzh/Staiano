@@ -46,6 +46,15 @@ function fixture(gap = false) {
   return { model, physical };
 }
 describe("ricostruzione automatica della planimetria 2D", () => {
+  it("non allinea una stanza alle alternative originali scartate dalla segmentazione", () => {
+    const { model, physical } = fixture();
+    physical.imageWalls = physical.walls.map((w) => ({
+      ...w,
+      layer: "Contorni da verificare",
+      confidence: 0.5,
+    }));
+    expect(reconstructPlan2D(model, physical).reconstructed).not.toBe(true);
+  });
   it("preferisce l’asse di un muro misurato a un contorno debole più vicino al bordo predetto", () => {
     const { model, physical } = fixture();
     physical.walls.push({

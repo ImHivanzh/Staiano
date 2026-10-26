@@ -149,7 +149,7 @@ export function ConfigurationWizard({
               <details>
                 <summary>Dettagli del riconoscimento</summary>
                 <p className="nota">
-                  {floor.importAnalysis.wallCandidates} muri candidati;{" "}
+                  {floor.importAnalysis.wallCandidates} segmenti candidati;{" "}
                   {floor.importAnalysis.wallsAutoCreated} creati
                   automaticamente;{" "}
                   {floor.importAnalysis.wallsConfirmedByOperator} confermati.

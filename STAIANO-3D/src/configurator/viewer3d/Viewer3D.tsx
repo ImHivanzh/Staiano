@@ -1283,6 +1283,7 @@ export default function Viewer3D({
                     isolatedRoomId={isolatedRoomId}
                     onSelect={pickDevice}
                     showHydronicPipes={channelView}
+                    hideDuctedMachines={readOnly || presentation}
                   />
                 )}
                 {sceneProject &&
@@ -1342,9 +1343,7 @@ export default function Viewer3D({
                       key={room.id}
                       project={sceneProject ?? p}
                       room={room}
-                      transparent={
-                        ceilingTransparent && !presentation && !readOnly
-                      }
+                      transparent={ceilingTransparent && (!presentation || readOnly)}
                       showCeiling={suspendedCeiling}
                     />
                   ))}

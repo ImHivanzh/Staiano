@@ -57,19 +57,20 @@ test("raster analysis creates real walls and a room, saves its original and open
     mimeType: "image/png",
     buffer: Buffer.from(base64, "base64"),
   });
-  await expect(dialog).toContainText("4 muri candidati");
+  await expect(dialog).toContainText("4 proposte principali");
   await dialog
     .getByRole("combobox", { name: "Unità geometria" })
     .selectOption("0.01");
   await dialog.getByLabel("Ho verificato la scala su una misura reale").check();
   const importWalls = dialog.getByRole("button", {
-    name: "Importa muri selezionati",
+    name: /^Importa muri selezionati/,
   });
   await expect(importWalls).toBeDisabled();
   await dialog
-    .getByLabel(
-      "Ho verificato e confermo i muri proposti in arancione (affidabilità media)",
-    )
+    .getByRole("button", { name: "Seleziona proposte visibili" })
+    .click();
+  await dialog
+    .getByLabel(/Le geometrie selezionate rappresentano assi muro/)
     .check();
   await expect(importWalls).toBeEnabled();
   await importWalls.click();
@@ -142,21 +143,16 @@ test("Innova M7 and Gree outdoor heat pump are real editable objects with summar
     name: "Configura apparecchio",
     exact: true,
   });
+  await panel.getByRole("button", { name: "Innova", exact: true }).click();
+  await panel.getByRole("button", { name: "2 tubi", exact: true }).click();
   await panel
-    .getByRole("combobox", { name: "Marca ventilconvettore", exact: true })
-    .selectOption("Innova");
-  await panel
-    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-    .selectOption("AirLeaf SLI");
-  const taglia = panel.getByRole("combobox", {
-    name: "Taglia ventilconvettore",
-    exact: true,
-  });
-  const model = (await taglia
-    .locator("option")
-    .nth(1)
-    .getAttribute("value"))!;
-  await taglia.selectOption(model);
+    .getByRole("group", { name: "Modello" })
+    .getByRole("button", { name: /AirLeaf SLI/ })
+    .click();
+  const taglia = panel.getByRole("group", { name: "Taglia" });
+  const firstSize = taglia.getByRole("button").first();
+  const model = (await firstSize.getAttribute("data-product-id"))!;
+  await firstSize.click();
   await panel
     .getByRole("combobox", { name: "Comando originale Innova M7", exact: true })
     .selectOption("innova-eeb749ii");

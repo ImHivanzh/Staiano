@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { addRectangle, createProject } from "@/domain/project";
+import { addRectangle, createProject, recomputeProject } from "@/domain/project";
 import { projectSchema } from "@/schemas/project";
 import {
   fanCoilCatalog,
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   fanCoilCatalogAtVersion,
   compatibleFanCoilControls,
@@ -15,6 +16,8 @@ import {
   fanCoilInstallationAccessories,
   fanCoilCoverAccessory,
   fanCoilRecessDepthMm,
+  isDuctedFanCoil,
+  isConcealedFanCoil,
   isRecessedFanCoil,
   fanCoilCategory,
   fanCoilCategories,
@@ -119,11 +122,11 @@ describe("ventilconvettori originali", () => {
     const product = fanCoilCatalog.products.find(
       (item) => item.id === "olimpia-01513",
     )!;
-    expect(() => applyFanCoil(thinWalls, room.id, product.id, 0)).toThrow(
+    expect(() => applyFanCoil(thinWalls, room.id, product.id)).toThrow(
       /Nessuna posizione libera/,
     );
     expect(
-      applyFanCoil(thinWalls, room.id, product.id, 0, {
+      applyFanCoil(thinWalls, room.id, product.id, {
         mounting: "wall",
         panelType: "grilles-90",
       }).fanCoils,
@@ -143,17 +146,43 @@ describe("ventilconvettori originali", () => {
       (item) => item.id === "innova-airleaf-sli-200-2t",
     )!;
     expect(() =>
-      applyFanCoil(project, project.rooms[0].id, product.id, 0, {
+      applyFanCoil(project, project.rooms[0].id, product.id, {
         mounting: "wall",
         panelType: "rasomuro",
       }),
     ).toThrow(/Nessuna posizione libera/);
     expect(
-      applyFanCoil(project, project.rooms[0].id, product.id, 0, {
+      applyFanCoil(project, project.rooms[0].id, product.id, {
         mounting: "wall",
         panelType: "traditional",
       }).fanCoils,
     ).toHaveLength(1);
+  });
+
+  it("tratta le Aermec FCZ P/PO come canalizzabili, non come incassi a filo muro", () => {
+    const product = fanCoilCatalog.products.find(
+      (item) => item.id === "aermec-fcz200po",
+    )!;
+    expect(isConcealedFanCoil(product)).toBe(true);
+    expect(isDuctedFanCoil(product)).toBe(true);
+    expect(isRecessedFanCoil(product)).toBe(false);
+    expect(fanCoilCategory(product)).toBe("ducted");
+    expect(fanCoilPanelOptions(product, "wall")).toEqual([]);
+    expect(fanCoilPanelOptions(product, "ceiling")).toEqual([]);
+    let project = createProject("Parete sottile", 35);
+    project.projectSettings.externalWallThicknessM = 0.13;
+    project = addRectangle(project, project.floors[0].id, {
+      width: 8,
+      length: 6,
+      height: 2.7,
+      name: "Room",
+    });
+    // Nessuna nicchia a filo muro: la parete sottile non impedisce la posa.
+    const placed = applyFanCoil(project, project.rooms[0].id, product.id, {
+      mounting: "wall",
+    });
+    expect(placed.fanCoils).toHaveLength(1);
+    expect(fanCoilPlacementValid(placed, placed.fanCoils![0])).toBe(true);
   });
 
   it("seleziona accessori SLI distinti per finitura, taglia, tubi e posa", () => {
@@ -231,7 +260,7 @@ describe("ventilconvettori originali", () => {
       depthMm: 30,
     });
     const base = fixture();
-    const project = applyFanCoil(base, base.rooms[0].id, sli.id, 0, {
+    const project = applyFanCoil(base, base.rooms[0].id, sli.id, {
       mounting: "wall",
       panelType: "traditional",
     });
@@ -319,7 +348,7 @@ describe("ventilconvettori originali", () => {
       // I canalizzabili sono ad incasso: a soffitto serve un vuoto tecnico.
       const p = fixture();
       p.rooms[0].ceilingHeightM = 2.4;
-      const placed = applyFanCoil(p, p.rooms[0].id, id, 1, {
+      const placed = applyFanCoil(p, p.rooms[0].id, id, {
         mounting: "ceiling",
       });
       const loaded = projectSchema.parse(JSON.parse(JSON.stringify(placed)));
@@ -331,12 +360,12 @@ describe("ventilconvettori originali", () => {
     }
   });
 
-  it("persiste più modelli e velocità nello stesso ambiente senza sovrascrivere la posa", () => {
+  it("persiste più modelli nello stesso ambiente senza sovrascrivere la posa", () => {
     let p = fixture();
     const roomId = p.rooms[0].id;
-    p = applyFanCoil(p, roomId, "aermec-fcz100", 1);
+    p = applyFanCoil(p, roomId, "aermec-fcz100");
     const first = structuredClone(p.fanCoils![0]);
-    p = applyFanCoil(p, roomId, "innova-airleaf-sli-400-2t", 0, {
+    p = applyFanCoil(p, roomId, "innova-airleaf-sli-400-2t", {
       controllerId: "innova-efb749ii",
     });
     expect(p.fanCoils).toHaveLength(2);
@@ -356,21 +385,21 @@ describe("ventilconvettori originali", () => {
       first.catalogVersion,
     )!;
     expect(installedFanCoilCapacity(loaded, roomId).coolingW).toBe(
-      original.operatingPoints[1].coolingW + 2120,
+      fanCoilMaximumPoint(original).point.coolingW + 2120,
     );
   });
 
   it("dimensiona sul residuo considerando tutti i ventilconvettori dell'ambiente", () => {
     let p = fixture();
     const roomId = p.rooms[0].id;
-    p = applyFanCoil(p, roomId, "aermec-fcz200", 2);
+    p = applyFanCoil(p, roomId, "aermec-fcz200");
     p = createInstallation(p, "fanCoil", roomId);
-    p = applyFanCoil(p, roomId, "aermec-fcz100", 0, {
+    p = applyFanCoil(p, roomId, "aermec-fcz100", {
       installationId: p.installations.at(-1)!.id,
     });
     expect(installedFanCoilCapacity(p, roomId)).toEqual({
-      coolingW: 2250,
-      heatingW: 2560,
+      coolingW: 2600,
+      heatingW: 3030,
       unknownCount: 0,
     });
     const suggestion = sizeFanCoils(p, p.rooms[0], {
@@ -378,33 +407,35 @@ describe("ventilconvettori originali", () => {
       mounting: "wall",
     })[0];
     expect(suggestion.point.coolingW).toBeGreaterThanOrEqual(
-      p.rooms[0].designLoadW - 2250,
+      p.rooms[0].designLoadW - 2600,
     );
     expect(suggestion.point.coolingW).toBeLessThan(p.rooms[0].designLoadW);
   });
 
   it("non consiglia altri apparecchi quando il fabbisogno è già coperto", () => {
     let p = fixture();
-    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz600", 2);
+    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz600");
     expect(
       sizeFanCoils(p, p.rooms[0], { manufacturer: "Aermec", mounting: "wall" }),
     ).toEqual([]);
   });
 
-  it("modifica velocità e comando conservando posizione manuale e versione catalogo", () => {
+  it("usa sempre il punto di massima anche nei progetti salvati con una velocità inferiore", () => {
     let p = fixture();
-    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", 0);
-    const before = structuredClone(p.fanCoils![0]);
-    p = updateFanCoil(p, before.id, { operatingPointIndex: 2 });
-    expect(p.fanCoils![0].position).toEqual(before.position);
-    expect(p.fanCoils![0].rotation).toBe(before.rotation);
-    expect(p.fanCoils![0].catalogVersion).toBe(before.catalogVersion);
+    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100");
+    const unit = p.fanCoils![0];
+    expect(unit.operatingPointIndex).toBe(2);
     expect(installedFanCoilCapacity(p, p.rooms[0].id).coolingW).toBe(1000);
+    const legacy = {
+      ...p,
+      fanCoils: p.fanCoils!.map((u) => ({ ...u, operatingPointIndex: 0 })),
+    };
+    expect(installedFanCoilCapacity(legacy, p.rooms[0].id).coolingW).toBe(
+      1000,
+    );
+    expect(recomputeProject(legacy).fanCoils![0].operatingPointIndex).toBe(2);
     expect(() =>
-      updateFanCoil(p, before.id, { operatingPointIndex: 9 }),
-    ).toThrow("Velocità");
-    expect(() =>
-      updateFanCoil(p, before.id, { controllerId: "innova-eeb749ii" }),
+      updateFanCoil(p, unit.id, { controllerId: "innova-eeb749ii" }),
     ).toThrow("non documentato");
   });
 
@@ -449,7 +480,7 @@ describe("ventilconvettori originali", () => {
       catalog,
     );
     expect(suggestions).toHaveLength(1);
-    expect(suggestions[0].operatingPointIndex).toBe(2);
+    expect(suggestions[0].point.label).toBe("Alta");
     expect(suggestions[0].point.noiseDbA).toBe(35);
     product.operatingPoints[2].noiseDbA = null;
     expect(
@@ -488,7 +519,7 @@ describe("ventilconvettori originali", () => {
 
   it("quota soffitto indica faccia inferiore e blocca collisioni senza spostare apparecchi esistenti", () => {
     let p = fixture();
-    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", 1, {
+    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", {
       mounting: "ceiling",
     });
     const first = p.fanCoils![0];
@@ -497,7 +528,7 @@ describe("ventilconvettori originali", () => {
       p.rooms[0].heightM - first.depthMm / 1000,
     );
     expect(envelope.maxZ).toBeCloseTo(p.rooms[0].heightM);
-    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", 0, {
+    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", {
       mounting: "ceiling",
     });
     const second = p.fanCoils![1];
@@ -545,7 +576,7 @@ describe("ventilconvettori originali", () => {
 
   it("preserva blocchi operatore e ripristina tipo stanza rimuovendo l’ultimo apparecchio", () => {
     let p = fixture();
-    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100", 0);
+    p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz100");
     const id = p.fanCoils![0].id;
     p = updateFanCoil(p, id, { locked: true });
     expect(() => removeFanCoil(p, id)).toThrow("Sbloccare");

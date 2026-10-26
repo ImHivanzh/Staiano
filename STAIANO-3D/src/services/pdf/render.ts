@@ -1,7 +1,7 @@
 import {
   PDFDocument,
   StandardFonts,
-  rgb,
+  rgb as pdfRgb,
   type PDFPage,
   type PDFFont,
   PDFString,
@@ -33,6 +33,7 @@ import {
 import { ductLength, ductRoute } from "@/domain/ducted/routes";
 import { placedPlenumGeometry } from "@/domain/ducted/placement";
 import {
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
   controllerBoardFor,
@@ -42,29 +43,16 @@ import {
   heatPumpCapacity,
 } from "@/domain/catalogs/heat-pumps";
 import { wattsToBtuh } from "@/domain/thermal/calculate";
+import { roomLabelPoint } from "@/domain/geometry/room-label";
 
 export type DossierRenderOptions = {
   variant?: "complete" | "summary";
+  monochrome?: boolean;
   logoSvg?: string;
   generatedAt?: Date;
   renderImages?: readonly ProjectPanorama[];
 };
 
-const navy = rgb(0.094, 0.196, 0.286),
-  blue = rgb(0.212, 0.353, 0.659),
-  cyan = rgb(0.412, 0.792, 0.98),
-  green = rgb(0.184, 0.49, 0.235),
-  amber = rgb(0.706, 0.325, 0.035),
-  red = rgb(0.776, 0.157, 0.157);
-const ink = navy,
-  muted = rgb(0.318, 0.4, 0.475),
-  faint = rgb(0.38, 0.459, 0.537),
-  line = rgb(0.875, 0.902, 0.929),
-  lineStrong = rgb(0.729, 0.784, 0.839),
-  pale = rgb(0.941, 0.961, 0.98),
-  paper2 = rgb(0.957, 0.969, 0.98),
-  white = rgb(1, 1, 1),
-  navText = rgb(0.733, 0.812, 0.875);
 const n = (v: number, decimals = 2) =>
   new Intl.NumberFormat("it-IT", { maximumFractionDigits: decimals }).format(v);
 // Le quantita restano leggibili: unita al singolare e pezzi raggruppati a parte.
@@ -106,6 +94,28 @@ export async function renderDossierPdf(
 ): Promise<Uint8Array> {
   const data = buildDossier(project),
     p = data.project;
+  const isSummary = options.variant === "summary";
+  const rgb = (r: number, g: number, b: number) => {
+    const gray = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return options.monochrome ? pdfRgb(gray, gray, gray) : pdfRgb(r, g, b);
+  };
+  const navy = rgb(0.094, 0.196, 0.286),
+    blue = rgb(0.212, 0.353, 0.659),
+    cyan = rgb(0.412, 0.792, 0.98),
+    green = rgb(0.184, 0.49, 0.235),
+    amber = rgb(0.706, 0.325, 0.035),
+    red = rgb(0.776, 0.157, 0.157),
+    ink = navy,
+    muted = rgb(0.318, 0.4, 0.475),
+    faint = rgb(0.38, 0.459, 0.537),
+    line = rgb(0.875, 0.902, 0.929),
+    lineStrong = rgb(0.729, 0.784, 0.839),
+    pale = rgb(0.941, 0.961, 0.98),
+    paper2 = rgb(0.957, 0.969, 0.98),
+    white = rgb(1, 1, 1),
+    navText = options.monochrome ? ink : rgb(0.733, 0.812, 0.875),
+    band = options.monochrome ? paper2 : navy,
+    bandText = options.monochrome ? ink : white;
   const doc = await PDFDocument.create(),
     font = await doc.embedFont(StandardFonts.Helvetica),
     bold = await doc.embedFont(StandardFonts.HelveticaBold);
@@ -119,7 +129,7 @@ export async function renderDossierPdf(
   const variantLabel =
     options.variant === "summary" ? "Dossier sintetico" : "Dossier tecnico";
   doc.setTitle(
-    `Dossier ${options.variant === "summary" ? "sintetico" : "tecnico"} - ${p.name}`,
+    `Dossier ${options.variant === "summary" ? "sintetico" : "tecnico"}${options.monochrome ? " - bianco e nero" : ""} - ${p.name}`,
   );
   doc.setAuthor("Termoidraulica Staiano");
   doc.setSubject("Configurazione HVAC e dimensionamento convenzionale");
@@ -626,559 +636,7 @@ export async function renderDossierPdf(
     }
     y -= blockHeight + 12;
   };
-  const invalid = data.checks.filter((c) => c.status === "invalid").length,
-    warnings = data.checks.filter((c) => c.status === "warning").length;
-  let coverPagesY = 0;
-  const drawCover = () => {
-    coverPage = doc.addPage([width, height]);
-    page = coverPage;
-    page.drawRectangle({
-      x: 0,
-      y: height - 26,
-      width,
-      height: 26,
-      color: navy,
-    });
-    tracked("TERMOIDRAULICA STAIANO", 56, height - 17, 6.8, bold, white, 1.5);
-    const bandRight = variantLabel.toUpperCase();
-    tracked(
-      bandRight,
-      width - 56 - trackedWidth(bandRight, 6.8, bold, 1.5),
-      height - 17,
-      6.8,
-      bold,
-      navText,
-      1.5,
-    );
-    const qrSize = 124,
-      qrX = width - 56 - qrSize,
-      qrY = height - 190;
-    if (options.logoSvg) {
-      for (const match of options.logoSvg.matchAll(
-        /<path\b[^>]*fill="(#[0-9a-fA-F]{6})"[^>]*d="([^"]+)"/g,
-      )) {
-        const c = match[1];
-        page.drawSvgPath(match[2], {
-          x: 56,
-          y: qrY + qrSize,
-          scale: qrSize / 646,
-          color: rgb(
-            parseInt(c.slice(1, 3), 16) / 255,
-            parseInt(c.slice(3, 5), 16) / 255,
-            parseInt(c.slice(5, 7), 16) / 255,
-          ),
-        });
-      }
-    }
-    page.drawRectangle({
-      x: qrX,
-      y: qrY,
-      width: qrSize,
-      height: qrSize,
-      color: white,
-    });
-    const moduleSize = qrSize / (qr.modules.size + 8);
-    for (let row = 0; row < qr.modules.size; row++)
-      for (let col = 0; col < qr.modules.size; col++)
-        if (qr.modules.get(row, col))
-          page.drawRectangle({
-            x: qrX + (col + 4) * moduleSize,
-            y: qrY + qrSize - (row + 5) * moduleSize,
-            width: moduleSize,
-            height: moduleSize,
-            color: navy,
-          });
-    page.node.addAnnot(
-      doc.context.register(
-        doc.context.obj({
-          Type: "Annot",
-          Subtype: "Link",
-          Rect: [qrX, qrY, qrX + qrSize, qrY + qrSize],
-          Border: [0, 0, 0],
-          A: { Type: "Action", S: "URI", URI: PDFString.of(guideUrl) },
-        }),
-      ),
-    );
-    txt(
-      "Il tuo progetto e la guida al dossier",
-      qrX - 30,
-      qrY - 11,
-      7.4,
-      font,
-      muted,
-    );
-    let cy = height - 238;
-    let titleSize = 29;
-    while (
-      titleSize > 14 &&
-      wrap(p.name, width - 112, titleSize, bold).length * titleSize * 1.2 > 110
-    )
-      titleSize--;
-    for (const line of wrap(p.name, width - 112, titleSize, bold)) {
-      txt(line, 56, cy, titleSize, bold, navy);
-      cy -= titleSize * 1.2;
-    }
-    cy -= 4;
-    txt(
-      "Impianti termotecnici · configurazione e dimensionamento preliminare",
-      56,
-      cy,
-      10,
-      font,
-      muted,
-    );
-    cy -= 25;
-    page.drawLine({
-      start: { x: 56, y: cy },
-      end: { x: width - 56, y: cy },
-      color: lineStrong,
-      thickness: 0.8,
-    });
-    const updated = new Date(p.updatedAt),
-      meta: [string, string, string, string][] = [
-        [
-          "ELABORATO IL",
-          date.toLocaleDateString("it-IT"),
-          "CONTROLLI",
-          `${invalid} ${invalid === 1 ? "errore" : "errori"} · ${warnings} ${warnings === 1 ? "avviso" : "avvisi"}`,
-        ],
-        [
-          "PROGETTO AGGIORNATO",
-          updated.toLocaleString("it-IT", {
-            dateStyle: "short",
-            timeStyle: "short",
-          }),
-          "IMPIANTI",
-          `${p.hvacSystems.length} HVAC · ${p.radiators.length} radiatori · ${p.airTerminals.length} terminali`,
-        ],
-        ["SCHEMA PROGETTO", String(p.schemaVersion), "PAGINE", ""],
-      ],
-      metaTop = cy - 30;
-    meta.forEach(([leftLabel, leftValue, rightLabel, rightValue], index) => {
-      const rowY = metaTop - index * 42;
-      tracked(leftLabel, 56, rowY, 6.6, bold, faint, 1);
-      txt(leftValue, 56, rowY - 14, 9.5, font, ink);
-      tracked(rightLabel, 306, rowY, 6.6, bold, faint, 1);
-      const tone =
-        rightLabel === "CONTROLLI"
-          ? invalid
-            ? red
-            : warnings
-              ? amber
-              : green
-          : ink;
-      if (rightValue)
-        txt(
-          rightValue,
-          306,
-          rowY - 14,
-          9.5,
-          rightLabel === "CONTROLLI" ? bold : font,
-          tone,
-        );
-    });
-    coverPagesY = metaTop - 84 - 14;
-    const stripTop = metaTop - 140;
-    page.drawLine({
-      start: { x: 56, y: stripTop + 20 },
-      end: { x: width - 56, y: stripTop + 20 },
-      color: lineStrong,
-      thickness: 0.8,
-    });
-    const metrics: [string, string][] = [
-      ["AMBIENTI", String(p.rooms.length)],
-      ["SUPERFICIE NETTA · M²", n(data.totals.areaM2)],
-      ["VOLUME NETTO · M³", n(data.totals.volumeM3)],
-      ["FABBISOGNO · KW", n(data.totals.loadW / 1000, 3)],
-    ];
-    metrics.forEach(([label, value], index) => {
-      const cell = (width - 112) / metrics.length,
-        centerX = 56 + cell * (index + 0.5);
-      centered(value, centerX, stripTop - 12, 20, bold, navy);
-      tracked(
-        label,
-        centerX - trackedWidth(label, 6.4, bold, 1) / 2,
-        stripTop - 31,
-        6.4,
-        bold,
-        faint,
-        1,
-      );
-    });
-    const scope =
-      options.variant === "summary"
-        ? "Riepilogo ambienti · apparecchi scelti · distinta materiali · controlli"
-        : "Planimetrie A3 · schede ambiente · impianti e plenum · distinta materiali · controlli · provenienze";
-    tracked("CONTENUTO", 56, stripTop - 80, 6.4, bold, faint, 0.8);
-    txt(scope, 56, stripTop - 96, 8.5, font, muted);
-    page.drawRectangle({
-      x: 56,
-      y: 54,
-      width: width - 112,
-      height: 54,
-      color: paper2,
-    });
-    page.drawLine({
-      start: { x: 56, y: 108 },
-      end: { x: width - 56, y: 108 },
-      color: navy,
-      thickness: 1.4,
-    });
-    tracked("NOTA", 72, 94, 5.8, bold, faint, 0.8);
-    [
-      `Documento preliminare. Il dimensionamento convenzionale (${n(p.projectSettings.coefficientWm3)} W/m³) non sostituisce il calcolo delle`,
-      "dispersioni né il progetto esecutivo. Verificare dati, fonti e disponibilità commerciale prima dell'ordine.",
-    ].forEach((line, index) => txt(line, 72, 80 - index * 12, 8, font, ink));
-    page.drawRectangle({ x: 0, y: 0, width, height: 30, color: navy });
-    tracked(
-      "GENERATO DAL CONFIGURATORE STAIANO HVAC",
-      56,
-      12,
-      6.4,
-      bold,
-      navText,
-      1.2,
-    );
-  };
-  drawCover();
-  newPage("Sintesi del progetto");
-  paragraph(
-    `Elaborato il ${date.toLocaleDateString("it-IT")}. ${p.floors.length} piani, ${p.walls.length} muri, ${p.rooms.length} ambienti; ${p.hvacSystems.length} sistemi HVAC, ${p.radiators.length} radiatori, ${p.airTerminals.length} terminali aria.`,
-    9,
-    muted,
-  );
-  if (data.provisionalRooms.length)
-    notice(
-      "Contorni aperti",
-      `${data.provisionalRooms.length} ambienti con contorno aperto. I totali considerano solo gli ambienti chiusi; i dati precedenti degli ambienti aperti restano conservati per il recupero e non sono validabili.`,
-      "error",
-    );
-  statusStrip(invalid, warnings);
-  heading(
-    invalid ? "Elaborato con controlli non superati" : "Stato dei controlli",
-  );
-  paragraph(
-    "Il dossier riporta lo stato corrente del progetto, compresi dati mancanti e criticità.",
-  );
-  heading("Metodo e limiti");
-  notice("Limiti del calcolo", TECHNICAL_NOTE, "info");
-  paragraph(
-    "Superfici e volumi riferiti ai contorni netti interni dei muri. I disegni quotati rappresentano le geometrie del progetto; stampare al 100% per rispettare la scala indicata. Le misure numeriche prevalgono sulla misura a righello.",
-    8.5,
-    muted,
-  );
-  if (options.variant === "summary") {
-    heading("Ambienti e apparecchi scelti");
-    paragraph(
-      "Riepilogo della configurazione salvata. Calcoli convenzionali, suggerimenti automatici e apparecchi scelti restano distinti. Per planimetrie A3, percorsi, schede complete, listini e provenienze scaricare il dossier completo.",
-      9,
-      muted,
-    );
-    if (p.rooms.length)
-      table(
-        ["Ambiente", "Misure interne m", "Netta m² / volume m³", "Carico kW"],
-        p.rooms.map((room) => {
-          const sides = roomMeasuredSides(p, room, "internal");
-          return [
-            room.conditioningExclusion
-              ? `${room.name} — non climatizzato: ${room.conditioningExclusion.reason}`
-              : room.name,
-            room.geometryStatus === "unresolved"
-              ? "Contorno aperto"
-              : sides
-                ? `${n(sides.width)} x ${n(sides.length)}; H ${n(room.heightM)}`
-                : `Irregolare; H ${n(room.heightM)}`,
-            room.geometryStatus === "unresolved"
-              ? "Da ricalcolare"
-              : `${n(room.netAreaM2)} / ${n(room.volumeM3)}`,
-            room.geometryStatus === "unresolved"
-              ? "NON VALIDABILE"
-              : n(room.designLoadW / 1000, 3),
-          ];
-        }),
-        [0.3, 0.28, 0.25, 0.17],
-      );
-    else paragraph("Nessun ambiente inserito.", 9, muted);
-    if (data.materials.length || data.accessories.length) {
-      table(
-        ["Descrizione / codici", "Quantità", "Dimensioni", "Caratteristiche"],
-        [...data.materials, ...data.accessories].map((row) => [
-          `${row.description}; ${row.codes.join(", ")}`,
-          quantityText(row),
-          row.dimensions ?? "",
-          row.details,
-        ]),
-        [0.28, 0.14, 0.19, 0.39],
-        "Distinta materiali",
-      );
-    }
-    for (const system of p.hydronicSystems ?? []) {
-      const outdoor = system.outdoorUnit;
-      const product = heatPumpProductAtVersion(
-        system.productId,
-        system.catalogVersion,
-      );
-      const point = product?.operatingPoints[system.operatingPointIndex];
-      const capacity = point && heatPumpCapacity(point);
-      heading(`Pompa di calore ${data.codes.get(system.id)} - ${system.name}`);
-      paragraph(
-        `Unita esterna ${data.codes.get(outdoor.id)}: piano ${p.floors.find((floor) => floor.id === outdoor.floorId)?.name}; X ${n(outdoor.position.x)}, Y ${n(outdoor.position.y)}, quota ${n(outdoor.elevationM)} m. Ventilconvettori collegati: ${system.fanCoilIds.map((id) => data.codes.get(id) ?? id).join(", ") || "nessuno"}.`,
-        9,
-      );
-      paragraph(
-        point
-          ? `Potenze ${capacity!.basis}: ${n(capacity!.heatingW)} W caldo / ${n(capacity!.coolingW)} W freddo. Condizioni caldo: ${point.heatingConditions}; freddo: ${point.coolingConditions}. Le potenze della pompa e dei ventilconvettori a condizioni acqua differenti non provano la copertura del circuito.`
-          : "Punto operativo storico non verificabile.",
-        8,
-        muted,
-      );
-    }
-    const ductedSystems = p.hvacSystems.filter(
-      (candidate) => candidate.type === "ducted",
-    );
-    // I dati degli impianti assenti non compaiono nel riepilogo.
-    if (ductedSystems.length) {
-      newPage("Bilanci e plenum dedicati");
-      heading("Metri richiesti / installati e capacita reale");
-      if (data.linearBalances.length)
-        table(
-          [
-            "Sistema / funzione / modello",
-            "Richiesti / installati m",
-            "Portata richiesta / disponibile",
-            "Esito",
-          ],
-          data.linearBalances.map((balance) => [
-            `${data.codes.get(balance.systemId)} ${balance.use === "supply" ? "mandata" : "ripresa"}; ${balance.familyCode}${balance.mixedModels ? "; modelli misti" : ""}`,
-            `${n(balance.requiredM)} / ${n(balance.installedM)}`,
-            `${n(balance.airflowM3h)} / ${n(balance.availableAirflowM3h)} m³/h`,
-            balance.status === "deficit" ? "DEFICIT" : "sufficiente",
-          ]),
-          [0.32, 0.22, 0.3, 0.16],
-        );
-      else
-        paragraph(
-          "Nessun bilancio lineare disponibile per i sistemi canalizzati configurati.",
-          9,
-          muted,
-        );
-      paragraph(
-        "Con modelli misti il riferimento dei metri richiesti non certifica gli altri modelli: verificare la capacita reale riportata. Una lunghezza richiesta non identifica una singola bocchetta. La composizione e la posa sono scelte dell'operatore.",
-        8,
-        muted,
-      );
-    }
-    const separate = p.plenums.filter((pl) => pl.attachmentId !== undefined);
-    if (separate.length) {
-      heading("Plenum collegati");
-      table(
-        ["Plenum / elemento", "Dimensioni L x H x P", "Stacchi / quota"],
-        separate.map((pl) => [
-          `${data.codes.get(pl.id)} - ${pl.use === "supply" ? "mandata" : "ripresa"}; ${pl.attachmentId ? (data.codes.get(pl.attachmentId) ?? "elemento") : "da collegare"}`,
-          `${n(pl.widthMm)} x ${n(pl.heightMm)} x ${n(pl.depthMm)} mm`,
-          `${pl.portCount ?? 1} x diam. ${pl.portDiameterMm ?? 160} mm; ${n(pl.elevationM ?? 0)} m`,
-        ]),
-        [0.38, 0.34, 0.28],
-      );
-    }
-    for (const system of ductedSystems.filter(
-      (s) => !separate.some((pl) => pl.systemId === s.id),
-    )) {
-      const plenum = calculateSupplyPlenum(p, system.id);
-      const machineName = `${data.codes.get(system.id)} · ${system.manufacturer} ${plenum.machineModel ?? system.productId}`;
-      const placed = p.plenums.find(
-        (candidate) =>
-          candidate.systemId === system.id && candidate.use === "supply",
-      );
-      const geometry = placed
-        ? placedPlenumGeometry(p, placed)
-        : plenum.machineGeometry;
-      ensure(110);
-      heading(
-        `${data.codes.get(system.id)} - plenum ${placed ? data.codes.get(placed.id) : "proposto"}`,
-      );
-      paragraph(
-        `Macchina ${machineName}; ${plenum.branches.length} attacchi richiesti / ${geometry?.ports.length ?? 0} disegnabili. ${placed ? `Dimensioni scelte ${n(placed.widthMm)} x ${n(placed.heightMm)} x ${n(placed.depthMm)} mm; X ${n(placed.position.x)}, Y ${n(placed.position.y)}, quota ${n(placed.elevationM ?? 0)} m.` : "Plenum non ancora posizionato: proposta da confermare."}`,
-        9,
-      );
-      const inlet = geometry?.inlet;
-      paragraph(
-        inlet?.clearOpeningWidthMm != null && inlet.clearOpeningHeightMm != null
-          ? `Luce interna raccordo macchina: ${n(inlet.clearOpeningWidthMm)} x ${n(inlet.clearOpeningHeightMm)} mm.`
-          : "Luce interna raccordo macchina non documentata: da verificare. Nessuna quota sostitutiva inventata.",
-        8,
-        muted,
-      );
-      const front = plenumTechnicalDrawing(p, system.id, "front"),
-        isometric = plenumTechnicalDrawing(p, system.id, "isometric");
-      if (front && isometric) {
-        ensure(250);
-        heading("Viste del plenum");
-        const top = y,
-          half = (usable - 20) / 2;
-        centered(
-          "Vista frontale - tutti gli attacchi",
-          margin + half / 2,
-          top - 5,
-          8.2,
-          bold,
-          navy,
-        );
-        centered(
-          "Vista 3D isometrica del plenum",
-          margin + half + 20 + half / 2,
-          top - 5,
-          8.2,
-          bold,
-          navy,
-        );
-        y = top - 22;
-        drawTechnical(front, 170, machineName, { x: margin, width: half });
-        const bottom = y;
-        y = top - 22;
-        drawTechnical(isometric, 170, machineName, {
-          x: margin + half + 20,
-          width: half,
-        });
-        y = Math.min(y, bottom);
-      } else
-        paragraph(
-          "Vista plenum non disponibile: attacchi o quote non verificati.",
-          9,
-          muted,
-        );
-      const issues = [
-        ...plenum.issues.map((item) => item.message),
-        ...(geometry?.issues ?? []),
-      ];
-      ensure(110 + issues.length * 14);
-      table(
-        [
-          "Attacco / bocchette",
-          "Ø nominale mm",
-          "Portata m³/h",
-          "Velocita m/s",
-        ],
-        plenum.branches.map((branch, index) => [
-          `${index + 1} - ${branch.terminalIds.map((id) => data.codes.get(id) ?? id).join(", ")}`,
-          branch.diameterMm === null ? "Da verificare" : n(branch.diameterMm),
-          n(branch.airflowM3h),
-          branch.velocityMs === null
-            ? "n.d."
-            : `${n(branch.velocityMs)}${branch.velocityMs > plenum.settings.maxBranchVelocityMs ? "; oltre criterio" : ""}`,
-        ]),
-        [0.35, 0.22, 0.23, 0.2],
-      );
-      for (const issue of issues) paragraph(issue, 8, muted);
-      const returnPlenum = p.plenums.find(
-        (candidate) =>
-          candidate.systemId === system.id && candidate.use === "return",
-      );
-      if (returnPlenum) {
-        const returned = calculatePlenum(p, system.id, "return");
-        ensure(48);
-        paragraph(
-          `Plenum di ripresa ${data.codes.get(returnPlenum.id)}: ${returned.branches.length} stacchi, corpo ${n(returnPlenum.widthMm)} × ${n(returnPlenum.heightMm)} × ${n(returnPlenum.depthMm)} mm.${returned.branches.some((branch) => branch.diameterMm === null) ? " Diametri degli stacchi di ripresa da verificare." : ""}`,
-          9,
-        );
-      }
-    }
-    newPage("Anomalie e limiti del riepilogo");
-    const detailed = data.checks.filter(
-      (check) =>
-        check.status === "invalid" ||
-        (check.status === "warning" &&
-          /linearMeters|connection|plenum|hydronic/i.test(check.code)),
-    );
-    if (detailed.length)
-      table(
-        ["Esito", "Codice", "Verifica"],
-        detailed.map((check) => [
-          check.status === "invalid" ? "ERRORE" : "AVVISO",
-          check.code,
-          check.message,
-        ]),
-        [0.14, 0.23, 0.63],
-      );
-    else
-      paragraph(
-        "Nessun errore o avviso di collegamento nei controlli correnti.",
-        9,
-      );
-    const grouped = new Map<string, number>();
-    for (const check of data.checks.filter(
-      (check) => check.status === "warning" && !detailed.includes(check),
-    ))
-      grouped.set(check.code, (grouped.get(check.code) ?? 0) + 1);
-    if (grouped.size) {
-      heading("Altri avvisi raggruppati");
-      table(
-        ["Tipo di avviso", "Numero"],
-        [...grouped].map(([code, count]) => [code, String(count)]),
-        [0.75, 0.25],
-      );
-      paragraph(
-        "Gli avvisi raggruppati restano aperti. Leggere tutti i messaggi e le verifiche nel dossier completo prima dell'ordine o dell'esecuzione.",
-        9,
-        muted,
-      );
-    }
-    if (data.dataQuality.length) {
-      heading("Stato dei dati dei terminali");
-      for (const quality of data.dataQuality)
-        paragraph(
-          `${quality.code}: Prestazioni — ${quality.performance}. Geometria — ${quality.geometry}. Prezzo — ${quality.price}.`,
-          9,
-          muted,
-        );
-    }
-    for (const unresolved of data.unresolved) paragraph(unresolved, 9, muted);
-    paragraph(
-      `${data.sources.length} fonti tecniche risolte. Versioni: ${
-        Object.entries(p.catalogVersions)
-          .map(([key, version]) => `${key}: ${version}`)
-          .join("; ") || "nessuna"
-      }. URL, pagine e SHA-256 sono riportati nel dossier completo.`,
-      8,
-      muted,
-    );
-    paragraph(
-      [
-        "Quote ambienti interne.",
-        ...(ductedSystems.length || p.hydronicSystems?.length
-          ? [
-              "Diametri stacchi nominali; dimensioni corpo, transizione e collari sono proposte di fabbricazione da verificare. Canalizzazioni e collegamenti idronici non includono una verifica delle perdite di carico.",
-            ]
-          : []),
-      ].join(" "),
-      8,
-      muted,
-    );
-  } else {
-    heading("Riepilogo ambienti");
-    if (p.rooms.length)
-      table(
-        [
-          "Codice / stanza / piano",
-          "Netta m²",
-          "H m",
-          "Volume m³",
-          "Q kW / BTU/h",
-        ],
-        p.rooms.map((r, i) => [
-          `A${i + 1} - ${r.name || "Senza nome"}\n${p.floors.find((f) => f.id === r.floorId)?.name}`,
-          r.geometryStatus === "unresolved" ? "Da ricalcolare" : n(r.netAreaM2),
-          n(r.heightM),
-          r.geometryStatus === "unresolved" ? "Da ricalcolare" : n(r.volumeM3),
-          r.geometryStatus === "unresolved"
-            ? "NON VALIDABILE"
-            : r.conditioningExclusion
-              ? "Escluso"
-              : `${n(r.designLoadW / 1000, 3)} / ${n(wattsToBtuh(r.designLoadW), 0)}`,
-        ]),
-        [0.38, 0.13, 0.1, 0.17, 0.22],
-      );
-    else paragraph("Nessun ambiente inserito.", 9, muted);
+  const drawFloorPlans = () => {
     for (const floor of p.floors) {
       page = doc.addPage([1190.55, 841.89]);
       page.drawRectangle({
@@ -1186,10 +644,12 @@ export async function renderDossierPdf(
         y: 841.89 - 22,
         width: 1190.55,
         height: 22,
-        color: navy,
+        color: band,
       });
-      tracked("STAIANO HVAC", 56, 841.89 - 15, 6.6, bold, white, 1.1);
-      const a3Right = "DOSSIER TECNICO · A3";
+      tracked("STAIANO HVAC", 56, 841.89 - 15, 6.6, bold, bandText, 1.1);
+      const a3Right = isSummary
+        ? "DOSSIER SINTETICO · A3"
+        : "DOSSIER TECNICO · A3";
       tracked(
         a3Right,
         1190.55 - 56 - trackedWidth(a3Right, 6.6, bold, 1.1),
@@ -1201,7 +661,9 @@ export async function renderDossierPdf(
       );
       txt(`Planimetria - ${floor.name}`, 56, 780, 20, bold, navy);
       txt(
-        `Quota piano ${n(floor.elevationM)} m; scala ${floor.scaleVerified ? "verificata" : "NON VERIFICATA"}; quote interne utili, superfici stanza al netto`,
+        isSummary
+          ? `Quota piano ${n(floor.elevationM)} m; quote interne utili e superfici nette`
+          : `Quota piano ${n(floor.elevationM)} m; scala ${floor.scaleVerified ? "verificata" : "NON VERIFICATA"}; quote interne utili, superfici stanza al netto`,
         56,
         760,
         8.5,
@@ -1254,7 +716,9 @@ export async function renderDossierPdf(
       rooms.forEach((r) => {
         polygon(
           r.polygon,
-          r.geometryStatus === "unresolved" ? rgb(1, 0.9, 0.75) : pale,
+          !isSummary && r.geometryStatus === "unresolved"
+            ? rgb(1, 0.9, 0.75)
+            : pale,
         );
       });
       walls.forEach((w) => {
@@ -1469,7 +933,7 @@ export async function renderDossierPdf(
         txt(label, x + 4, yy, 8);
       }
       for (const r of rooms) {
-        const at = px(r.centroid),
+        const at = px(roomLabelPoint(r.polygon)),
           code = `A${p.rooms.findIndex((v) => v.id === r.id) + 1}`;
         const rr = r.polygon.map(px),
           roomWidth =
@@ -1483,7 +947,9 @@ export async function renderDossierPdf(
           ...(roomWidth > 160 && roomHeight > 100
             ? [
                 r.geometryStatus === "unresolved"
-                  ? "DA RICHIUDERE"
+                  ? isSummary
+                    ? "—"
+                    : "DA RICHIUDERE"
                   : `${n(r.netAreaM2)} m² / ${n(r.designLoadW / 1000, 3)} kW`,
               ]
             : []),
@@ -1573,7 +1039,9 @@ export async function renderDossierPdf(
         txt(label, lx + 24, ly, 7.8, font, ink);
       });
       txt(
-        "Codici e quote completi nelle tabelle. Grigio: contorni netti; arancione: geometria precedente da richiudere; nero: muri.",
+        isSummary
+          ? "Contorni degli ambienti, muri e apparecchi del progetto. Quote espresse in metri."
+          : "Codici e quote completi nelle tabelle. Grigio: contorni netti; arancione: geometria precedente da richiudere; nero: muri.",
         420,
         62,
         7.5,
@@ -1612,6 +1080,7 @@ export async function renderDossierPdf(
       txt(`1:${n(scale, 1)}`, tbX + 70, tbY + 20, 9, bold, navy);
       tracked("FORMATO", tbX + 130, tbY + 34, 5.8, bold, faint, 0.8);
       txt("A3 · 100%", tbX + 130, tbY + 20, 9, bold, navy);
+      if (isSummary) continue;
       newPage(`Legenda e quote - ${floor.name}`);
       table(
         ["Codice", "Ambiente", "Area netta", "Perimetro netto"],
@@ -1646,6 +1115,507 @@ export async function renderDossierPdf(
         [0.12, 0.23, 0.23, 0.24, 0.18],
       );
     }
+  };
+  const invalid = data.checks.filter((c) => c.status === "invalid").length,
+    warnings = data.checks.filter((c) => c.status === "warning").length;
+  let coverPagesY = 0;
+  const drawCover = () => {
+    coverPage = doc.addPage([width, height]);
+    page = coverPage;
+    page.drawRectangle({
+      x: 0,
+      y: height - 26,
+      width,
+      height: 26,
+      color: band,
+    });
+    tracked(
+      "TERMOIDRAULICA STAIANO",
+      56,
+      height - 17,
+      6.8,
+      bold,
+      bandText,
+      1.5,
+    );
+    const bandRight = variantLabel.toUpperCase();
+    tracked(
+      bandRight,
+      width - 56 - trackedWidth(bandRight, 6.8, bold, 1.5),
+      height - 17,
+      6.8,
+      bold,
+      navText,
+      1.5,
+    );
+    const qrSize = 124,
+      qrX = width - 56 - qrSize,
+      qrY = height - 190;
+    if (options.logoSvg) {
+      for (const match of options.logoSvg.matchAll(
+        /<path\b[^>]*fill="(#[0-9a-fA-F]{6})"[^>]*d="([^"]+)"/g,
+      )) {
+        const c = match[1];
+        page.drawSvgPath(match[2], {
+          x: 56,
+          y: qrY + qrSize,
+          scale: qrSize / 646,
+          color: rgb(
+            parseInt(c.slice(1, 3), 16) / 255,
+            parseInt(c.slice(3, 5), 16) / 255,
+            parseInt(c.slice(5, 7), 16) / 255,
+          ),
+        });
+      }
+    }
+    page.drawRectangle({
+      x: qrX,
+      y: qrY,
+      width: qrSize,
+      height: qrSize,
+      color: white,
+    });
+    const moduleSize = qrSize / (qr.modules.size + 8);
+    for (let row = 0; row < qr.modules.size; row++)
+      for (let col = 0; col < qr.modules.size; col++)
+        if (qr.modules.get(row, col))
+          page.drawRectangle({
+            x: qrX + (col + 4) * moduleSize,
+            y: qrY + qrSize - (row + 5) * moduleSize,
+            width: moduleSize,
+            height: moduleSize,
+            color: navy,
+          });
+    page.node.addAnnot(
+      doc.context.register(
+        doc.context.obj({
+          Type: "Annot",
+          Subtype: "Link",
+          Rect: [qrX, qrY, qrX + qrSize, qrY + qrSize],
+          Border: [0, 0, 0],
+          A: { Type: "Action", S: "URI", URI: PDFString.of(guideUrl) },
+        }),
+      ),
+    );
+    txt(
+      "Il tuo progetto e la guida al dossier",
+      qrX - 30,
+      qrY - 11,
+      7.4,
+      font,
+      muted,
+    );
+    let cy = height - 238;
+    let titleSize = 29;
+    while (
+      titleSize > 14 &&
+      wrap(p.name, width - 112, titleSize, bold).length * titleSize * 1.2 > 110
+    )
+      titleSize--;
+    for (const line of wrap(p.name, width - 112, titleSize, bold)) {
+      txt(line, 56, cy, titleSize, bold, navy);
+      cy -= titleSize * 1.2;
+    }
+    cy -= 4;
+    txt(
+      "Impianti termotecnici · configurazione e dimensionamento preliminare",
+      56,
+      cy,
+      10,
+      font,
+      muted,
+    );
+    cy -= 25;
+    page.drawLine({
+      start: { x: 56, y: cy },
+      end: { x: width - 56, y: cy },
+      color: lineStrong,
+      thickness: 0.8,
+    });
+    const updated = new Date(p.updatedAt),
+      meta: [string, string, string, string][] = [
+        [
+          "ELABORATO IL",
+          date.toLocaleDateString("it-IT"),
+          isSummary ? "DOCUMENTO" : "CONTROLLI",
+          isSummary
+            ? "Riepilogo cliente"
+            : `${invalid} ${invalid === 1 ? "errore" : "errori"} · ${warnings} ${warnings === 1 ? "avviso" : "avvisi"}`,
+        ],
+        [
+          "PROGETTO AGGIORNATO",
+          updated.toLocaleString("it-IT", {
+            dateStyle: "short",
+            timeStyle: "short",
+          }),
+          "IMPIANTI",
+          `${p.hvacSystems.length} HVAC · ${p.radiators.length} radiatori · ${p.airTerminals.length} terminali`,
+        ],
+        ["SCHEMA PROGETTO", String(p.schemaVersion), "PAGINE", ""],
+      ],
+      metaTop = cy - 30;
+    meta.forEach(([leftLabel, leftValue, rightLabel, rightValue], index) => {
+      const rowY = metaTop - index * 42;
+      tracked(leftLabel, 56, rowY, 6.6, bold, faint, 1);
+      txt(leftValue, 56, rowY - 14, 9.5, font, ink);
+      tracked(rightLabel, 306, rowY, 6.6, bold, faint, 1);
+      const tone =
+        rightLabel === "CONTROLLI"
+          ? invalid
+            ? red
+            : warnings
+              ? amber
+              : green
+          : ink;
+      if (rightValue)
+        txt(
+          rightValue,
+          306,
+          rowY - 14,
+          9.5,
+          rightLabel === "CONTROLLI" ? bold : font,
+          tone,
+        );
+    });
+    coverPagesY = metaTop - 84 - 14;
+    const stripTop = metaTop - 140;
+    page.drawLine({
+      start: { x: 56, y: stripTop + 20 },
+      end: { x: width - 56, y: stripTop + 20 },
+      color: lineStrong,
+      thickness: 0.8,
+    });
+    const metrics: [string, string][] = [
+      ["AMBIENTI", String(p.rooms.length)],
+      ["SUPERFICIE NETTA · M²", n(data.totals.areaM2)],
+      ["VOLUME NETTO · M³", n(data.totals.volumeM3)],
+      ["FABBISOGNO · KW", n(data.totals.loadW / 1000, 3)],
+    ];
+    metrics.forEach(([label, value], index) => {
+      const cell = (width - 112) / metrics.length,
+        centerX = 56 + cell * (index + 0.5);
+      centered(value, centerX, stripTop - 12, 20, bold, navy);
+      tracked(
+        label,
+        centerX - trackedWidth(label, 6.4, bold, 1) / 2,
+        stripTop - 31,
+        6.4,
+        bold,
+        faint,
+        1,
+      );
+    });
+    const scope =
+      options.variant === "summary"
+        ? "Ambienti · apparecchi scelti · distinta materiali · render 3D"
+        : "Planimetrie A3 · schede ambiente · impianti e plenum · distinta materiali · controlli · provenienze";
+    tracked("CONTENUTO", 56, stripTop - 80, 6.4, bold, faint, 0.8);
+    txt(scope, 56, stripTop - 96, 8.5, font, muted);
+    page.drawRectangle({
+      x: 56,
+      y: 54,
+      width: width - 112,
+      height: 54,
+      color: paper2,
+    });
+    page.drawLine({
+      start: { x: 56, y: 108 },
+      end: { x: width - 56, y: 108 },
+      color: navy,
+      thickness: 1.4,
+    });
+    tracked("NOTA", 72, 94, 5.8, bold, faint, 0.8);
+    (isSummary
+      ? [
+          "Configurazione degli ambienti e degli impianti scelti.",
+          "Render 3D e riepilogo dei materiali del progetto.",
+        ]
+      : [
+          `Documento preliminare. Il dimensionamento convenzionale (${n(p.projectSettings.coefficientWm3)} W/m³) non sostituisce il calcolo delle`,
+          "dispersioni né il progetto esecutivo. Verificare dati, fonti e disponibilità commerciale prima dell'ordine.",
+        ]
+    ).forEach((line, index) => txt(line, 72, 80 - index * 12, 8, font, ink));
+    page.drawRectangle({ x: 0, y: 0, width, height: 30, color: band });
+    tracked(
+      "GENERATO DAL CONFIGURATORE STAIANO HVAC",
+      56,
+      12,
+      6.4,
+      bold,
+      navText,
+      1.2,
+    );
+  };
+  drawCover();
+  newPage("Sintesi del progetto");
+  paragraph(
+    `Elaborato il ${date.toLocaleDateString("it-IT")}. ${p.floors.length} piani, ${p.walls.length} muri, ${p.rooms.length} ambienti; ${p.hvacSystems.length} sistemi HVAC, ${p.radiators.length} radiatori, ${p.airTerminals.length} terminali aria.`,
+    9,
+    muted,
+  );
+  if (!isSummary && data.provisionalRooms.length)
+    notice(
+      "Contorni aperti",
+      `${data.provisionalRooms.length} ambienti con contorno aperto. I totali considerano solo gli ambienti chiusi; i dati precedenti degli ambienti aperti restano conservati per il recupero e non sono validabili.`,
+      "error",
+    );
+  if (!isSummary) {
+    statusStrip(invalid, warnings);
+    heading(
+      invalid ? "Elaborato con controlli non superati" : "Stato dei controlli",
+    );
+    paragraph(
+      "Il dossier riporta lo stato corrente del progetto, compresi dati mancanti e criticità.",
+    );
+    heading("Metodo e limiti");
+    notice("Limiti del calcolo", TECHNICAL_NOTE, "info");
+    paragraph(
+      "Superfici e volumi riferiti ai contorni netti interni dei muri. I disegni quotati rappresentano le geometrie del progetto; stampare al 100% per rispettare la scala indicata. Le misure numeriche prevalgono sulla misura a righello.",
+      8.5,
+      muted,
+    );
+  } else
+    paragraph(
+      `Dimensionamento convenzionale: ${n(p.projectSettings.coefficientWm3)} W/m³. Superfici e volumi netti degli ambienti; quote espresse in metri.`,
+      9,
+      muted,
+    );
+  if (options.variant === "summary") {
+    // Customer tables retain catalog facts; diagnostic clauses stay in the complete dossier.
+    const clientFacts = (value: string) =>
+      value
+        .split(/;\s*/)
+        .filter(
+          (clause) =>
+            !/verific|orientativ|schematic|non (disponib|dichiarat|documentat|pubblicat|scelt|present)|da (collegare|completare|definire|riconfigurare)/i.test(
+              clause,
+            ),
+        )
+        .join("; ");
+    heading("Ambienti e apparecchi scelti");
+    paragraph(
+      "Riepilogo degli ambienti e della configurazione salvata, con render 3D nelle pagine finali.",
+      9,
+      muted,
+    );
+    if (p.rooms.length)
+      table(
+        ["Ambiente", "Misure interne m", "Netta m² / volume m³", "Carico kW"],
+        p.rooms.map((room) => {
+          const sides = roomMeasuredSides(p, room, "internal");
+          return [
+            room.conditioningExclusion
+              ? `${room.name} — non climatizzato: ${room.conditioningExclusion.reason}`
+              : room.name,
+            room.geometryStatus === "unresolved"
+              ? "—"
+              : sides
+                ? `${n(sides.width)} x ${n(sides.length)}; H ${n(room.heightM)}`
+                : `Irregolare; H ${n(room.heightM)}`,
+            room.geometryStatus === "unresolved"
+              ? "—"
+              : `${n(room.netAreaM2)} / ${n(room.volumeM3)}`,
+            room.geometryStatus === "unresolved"
+              ? "—"
+              : n(room.designLoadW / 1000, 3),
+          ];
+        }),
+        [0.3, 0.28, 0.25, 0.17],
+      );
+    else paragraph("Nessun ambiente inserito.", 9, muted);
+    if (data.materials.length || data.accessories.length) {
+      table(
+        ["Descrizione / codici", "Quantità", "Dimensioni", "Caratteristiche"],
+        [...data.materials, ...data.accessories].map((row) => [
+          `${row.description}${row.sku ? `; Codice articolo ${row.sku}` : ""}; ${row.codes.join(", ")}`,
+          quantityText(row),
+          clientFacts(row.dimensions ?? ""),
+          clientFacts(row.details),
+        ]),
+        [0.28, 0.14, 0.19, 0.39],
+        "Distinta materiali",
+      );
+    }
+    for (const system of p.hydronicSystems ?? []) {
+      const outdoor = system.outdoorUnit;
+      const product = heatPumpProductAtVersion(
+        system.productId,
+        system.catalogVersion,
+      );
+      const point = product?.operatingPoints[system.operatingPointIndex];
+      const capacity = point && heatPumpCapacity(point);
+      heading(`Pompa di calore ${data.codes.get(system.id)} - ${system.name}`);
+      paragraph(
+        `Unita esterna ${data.codes.get(outdoor.id)}: piano ${p.floors.find((floor) => floor.id === outdoor.floorId)?.name}; X ${n(outdoor.position.x)}, Y ${n(outdoor.position.y)}, quota ${n(outdoor.elevationM)} m. Ventilconvettori collegati: ${system.fanCoilIds.map((id) => data.codes.get(id) ?? id).join(", ") || "nessuno"}.`,
+        9,
+      );
+      paragraph(
+        point
+          ? `Potenze ${capacity!.basis}: ${n(capacity!.heatingW)} W caldo / ${n(capacity!.coolingW)} W freddo. Condizioni caldo: ${point.heatingConditions}; freddo: ${point.coolingConditions}.`
+          : "",
+        8,
+        muted,
+      );
+    }
+    const ductedSystems = p.hvacSystems.filter(
+      (candidate) => candidate.type === "ducted",
+    );
+    // I dati degli impianti assenti non compaiono nel riepilogo.
+    if (ductedSystems.length) {
+      newPage("Bilanci e plenum dedicati");
+      heading("Metri richiesti / installati e capacita reale");
+      if (data.linearBalances.length)
+        table(
+          [
+            "Sistema / funzione / modello",
+            "Richiesti / installati m",
+            "Portata richiesta / disponibile",
+          ],
+          data.linearBalances.map((balance) => [
+            `${data.codes.get(balance.systemId)} ${balance.use === "supply" ? "mandata" : "ripresa"}; ${balance.familyCode}${balance.mixedModels ? "; modelli misti" : ""}`,
+            `${n(balance.requiredM)} / ${n(balance.installedM)}`,
+            `${n(balance.airflowM3h)} / ${n(balance.availableAirflowM3h)} m³/h`,
+          ]),
+          [0.38, 0.27, 0.35],
+        );
+      else
+        paragraph(
+          "Nessun bilancio lineare disponibile per i sistemi canalizzati configurati.",
+          9,
+          muted,
+        );
+    }
+    const separate = p.plenums.filter((pl) => pl.attachmentId !== undefined);
+    if (separate.length) {
+      heading("Plenum collegati");
+      table(
+        ["Plenum / elemento", "Dimensioni L x H x P", "Stacchi / quota"],
+        separate.map((pl) => [
+          `${data.codes.get(pl.id)} - ${pl.use === "supply" ? "mandata" : "ripresa"}; ${pl.attachmentId ? (data.codes.get(pl.attachmentId) ?? "elemento") : "da collegare"}`,
+          `${n(pl.widthMm)} x ${n(pl.heightMm)} x ${n(pl.depthMm)} mm`,
+          `${pl.portCount ?? 1} x diam. ${pl.portDiameterMm ?? 160} mm; ${n(pl.elevationM ?? 0)} m`,
+        ]),
+        [0.38, 0.34, 0.28],
+      );
+    }
+    for (const system of ductedSystems.filter(
+      (s) => !separate.some((pl) => pl.systemId === s.id),
+    )) {
+      const plenum = calculateSupplyPlenum(p, system.id);
+      const machineName = `${data.codes.get(system.id)} · ${system.manufacturer} ${plenum.machineModel ?? system.productId}`;
+      const placed = p.plenums.find(
+        (candidate) =>
+          candidate.systemId === system.id && candidate.use === "supply",
+      );
+      const geometry = placed
+        ? placedPlenumGeometry(p, placed)
+        : plenum.machineGeometry;
+      ensure(110);
+      heading(
+        `${data.codes.get(system.id)} - plenum ${placed ? data.codes.get(placed.id) : "proposto"}`,
+      );
+      paragraph(
+        `Macchina ${machineName}; ${plenum.branches.length} attacchi richiesti / ${geometry?.ports.length ?? 0} disegnabili. ${placed ? `Dimensioni scelte ${n(placed.widthMm)} x ${n(placed.heightMm)} x ${n(placed.depthMm)} mm; X ${n(placed.position.x)}, Y ${n(placed.position.y)}, quota ${n(placed.elevationM ?? 0)} m.` : "Plenum proposto."}`,
+        9,
+      );
+      const inlet = geometry?.inlet;
+      if (
+        inlet?.clearOpeningWidthMm != null &&
+        inlet.clearOpeningHeightMm != null
+      )
+        paragraph(
+          `Luce interna raccordo macchina: ${n(inlet.clearOpeningWidthMm)} x ${n(inlet.clearOpeningHeightMm)} mm.`,
+          8,
+          muted,
+        );
+      const front = plenumTechnicalDrawing(p, system.id, "front"),
+        isometric = plenumTechnicalDrawing(p, system.id, "isometric");
+      if (front && isometric) {
+        ensure(250);
+        heading("Viste del plenum");
+        const top = y,
+          half = (usable - 20) / 2;
+        centered(
+          "Vista frontale - tutti gli attacchi",
+          margin + half / 2,
+          top - 5,
+          8.2,
+          bold,
+          navy,
+        );
+        centered(
+          "Vista 3D isometrica del plenum",
+          margin + half + 20 + half / 2,
+          top - 5,
+          8.2,
+          bold,
+          navy,
+        );
+        y = top - 22;
+        drawTechnical(front, 170, machineName, { x: margin, width: half });
+        const bottom = y;
+        y = top - 22;
+        drawTechnical(isometric, 170, machineName, {
+          x: margin + half + 20,
+          width: half,
+        });
+        y = Math.min(y, bottom);
+      }
+      ensure(110);
+      table(
+        [
+          "Attacco / bocchette",
+          "Ø nominale mm",
+          "Portata m³/h",
+          "Velocita m/s",
+        ],
+        plenum.branches.map((branch, index) => [
+          `${index + 1} - ${branch.terminalIds.map((id) => data.codes.get(id) ?? id).join(", ")}`,
+          branch.diameterMm === null ? "—" : n(branch.diameterMm),
+          n(branch.airflowM3h),
+          branch.velocityMs === null ? "n.d." : n(branch.velocityMs),
+        ]),
+        [0.35, 0.22, 0.23, 0.2],
+      );
+      const returnPlenum = p.plenums.find(
+        (candidate) =>
+          candidate.systemId === system.id && candidate.use === "return",
+      );
+      if (returnPlenum) {
+        const returned = calculatePlenum(p, system.id, "return");
+        ensure(48);
+        paragraph(
+          `Plenum di ripresa ${data.codes.get(returnPlenum.id)}: ${returned.branches.length} stacchi, corpo ${n(returnPlenum.widthMm)} × ${n(returnPlenum.heightMm)} × ${n(returnPlenum.depthMm)} mm.`,
+          9,
+        );
+      }
+    }
+  } else {
+    heading("Riepilogo ambienti");
+    if (p.rooms.length)
+      table(
+        [
+          "Codice / stanza / piano",
+          "Netta m²",
+          "H m",
+          "Volume m³",
+          "Q kW / BTU/h",
+        ],
+        p.rooms.map((r, i) => [
+          `A${i + 1} - ${r.name || "Senza nome"}\n${p.floors.find((f) => f.id === r.floorId)?.name}`,
+          r.geometryStatus === "unresolved" ? "Da ricalcolare" : n(r.netAreaM2),
+          n(r.heightM),
+          r.geometryStatus === "unresolved" ? "Da ricalcolare" : n(r.volumeM3),
+          r.geometryStatus === "unresolved"
+            ? "NON VALIDABILE"
+            : r.conditioningExclusion
+              ? "Escluso"
+              : `${n(r.designLoadW / 1000, 3)} / ${n(wattsToBtuh(r.designLoadW), 0)}`,
+        ]),
+        [0.38, 0.13, 0.1, 0.17, 0.22],
+      );
+    else paragraph("Nessun ambiente inserito.", 9, muted);
+    drawFloorPlans();
     for (const [index, r] of p.rooms.entries()) {
       newPage(`A${index + 1} - ${r.name || "Senza nome"}`);
       if (r.geometryStatus === "unresolved")
@@ -1779,7 +1749,7 @@ export async function renderDossierPdf(
               unit.productId,
               unit.catalogVersion,
             );
-            const point = product?.operatingPoints[unit.operatingPointIndex];
+            const point = product && fanCoilMaximumPoint(product).point;
             const control = unit.controllerId
               ? fanCoilControlAtVersion(unit.controllerId, unit.catalogVersion)
               : null;
@@ -1803,7 +1773,7 @@ export async function renderDossierPdf(
             unit.productId,
             unit.catalogVersion,
           );
-          const point = product?.operatingPoints[unit.operatingPointIndex];
+          const point = product && fanCoilMaximumPoint(product).point;
           if (point)
             paragraph(
               `${data.codes.get(unit.id)} - condizioni freddo: ${point.coolingConditions}; caldo: ${point.heatingConditions}; rumore: ${point.noiseConditions}. ${product?.dimensionNote}`,
@@ -2155,7 +2125,7 @@ export async function renderDossierPdf(
         "Locali",
       ],
       [...data.materials, ...data.accessories].map((m) => [
-        `${m.description}; ${m.codes.join(", ")}`,
+        `${m.description}${m.sku ? `; Codice articolo ${m.sku}` : ""}; ${m.codes.join(", ")}`,
         quantityText(m),
         m.dimensions ?? "",
         m.details,
@@ -2558,9 +2528,10 @@ export async function renderDossierPdf(
         9,
       );
       table(
-        ["Articolo / modello", "Quantita", "Listino", "Importo"],
+        ["Articolo / modello", "Dimensioni", "Quantità", "Listino", "Importo"],
         bill.lines.map((line) => [
           `${line.label}${line.sku ? ` (${line.sku})` : ""}${line.reason ? ` - ${line.reason}` : ""}`,
+          line.dimensions ?? "Da verificare",
           line.quantity === null ? "Da verificare" : String(line.quantity),
           line.unitPriceCents === null
             ? "Da quotare"
@@ -2569,7 +2540,7 @@ export async function renderDossierPdf(
             ? "Da completare"
             : currency(line.extendedPriceCents),
         ]),
-        [0.52, 0.12, 0.18, 0.18],
+        [0.42, 0.18, 0.1, 0.15, 0.15],
       );
       paragraph(
         bill.complete && bill.totalCents !== null
@@ -2610,7 +2581,28 @@ export async function renderDossierPdf(
       throw new Error(
         "Il render non appartiene a un piano o ambiente del progetto.",
       );
-    const image = await doc.embedJpg(panorama.bytes);
+    let imageBytes = panorama.bytes;
+    if (options.monochrome) {
+      const bitmap = await createImageBitmap(
+        new Blob([new Uint8Array(imageBytes)], { type: "image/jpeg" }),
+      );
+      try {
+        const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+        const context = canvas.getContext("2d");
+        if (!context)
+          throw new Error("Conversione in bianco e nero non disponibile.");
+        context.filter = "grayscale(1)";
+        context.drawImage(bitmap, 0, 0);
+        const blob = await canvas.convertToBlob({
+          type: "image/jpeg",
+          quality: 0.91,
+        });
+        imageBytes = new Uint8Array(await blob.arrayBuffer());
+      } finally {
+        bitmap.close();
+      }
+    }
+    const image = await doc.embedJpg(imageBytes);
     const landscapeWidth = 841.89,
       landscapeHeight = 595.28;
     page = doc.addPage([landscapeWidth, landscapeHeight]);
@@ -2619,9 +2611,9 @@ export async function renderDossierPdf(
       y: landscapeHeight - 22,
       width: landscapeWidth,
       height: 22,
-      color: navy,
+      color: band,
     });
-    tracked("STAIANO HVAC", 42, landscapeHeight - 15, 6.6, bold, white, 1.1);
+    tracked("STAIANO HVAC", 42, landscapeHeight - 15, 6.6, bold, bandText, 1.1);
     const viewRight = "VISUALIZZAZIONE";
     tracked(
       viewRight,
@@ -2651,21 +2643,24 @@ export async function renderDossierPdf(
       height: imageHeight,
     });
     txt(
-      "Render della geometria di progetto. Finiture illustrative; muri e soffitti in sezione.",
+      isSummary
+        ? "Render degli ambienti e degli impianti del progetto."
+        : "Render della geometria di progetto. Finiture illustrative; muri e soffitti in sezione.",
       42,
       61,
       8,
       font,
       muted,
     );
-    txt(
-      "Visualizzazione orientativa: non sostituisce verifiche, quote e progetto esecutivo.",
-      42,
-      49,
-      8,
-      font,
-      muted,
-    );
+    if (!isSummary)
+      txt(
+        "Visualizzazione orientativa: non sostituisce verifiche, quote e progetto esecutivo.",
+        42,
+        49,
+        8,
+        font,
+        muted,
+      );
   }
   const pages = doc.getPages();
   pages.forEach((v, i) => {

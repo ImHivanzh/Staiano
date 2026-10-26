@@ -1,5 +1,8 @@
 import type { Project } from "@/schemas/project";
-import { fanCoilProductAtVersion } from "@/domain/catalogs/fan-coils";
+import {
+  fanCoilMaximumPoint,
+  fanCoilProductAtVersion,
+} from "@/domain/catalogs/fan-coils";
 import { createInstallation } from "@/domain/installations";
 import { newId } from "@/domain/project";
 
@@ -20,7 +23,7 @@ export function fanCoilAirData(project: Project, fanCoilId: string) {
   const unit = project.fanCoils?.find((item) => item.id === fanCoilId);
   if (!unit) return null;
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const point = product?.operatingPoints[unit.operatingPointIndex];
+  const point = product && fanCoilMaximumPoint(product).point;
   return product && point ? { unit, product, point } : null;
 }
 
@@ -52,7 +55,7 @@ function mirrorUnit(
 
 /**
  * Crea, se assente, la distribuzione aeraulica del ventilconvettore.
- * Portata e potenza restano quelle del punto di funzionamento scelto; il
+ * Portata e potenza restano quelle della massima velocità; il
  * sistema vive nell'impianto canalizzato dei terminali, non in quello idronico.
  */
 export function ensureFanCoilAirSystem(
@@ -70,7 +73,7 @@ export function ensureFanCoilAirSystem(
   const { unit, product, point } = data;
   if (!point.airflowM3h)
     throw new Error(
-      "Il punto scelto non dichiara la portata d'aria: scegli un'altra velocità prima di collegare le bocchette.",
+      "La massima velocità non dichiara la portata d'aria: non è possibile collegare le bocchette.",
     );
   let next = project;
   let installation = installationId
@@ -188,7 +191,7 @@ export function removeFanCoilAirSystem(
 
 /**
  * Riallinea il sistema aeraulico al ventilconvettore: unico apparecchio
- * fisico, portata e potenze del punto scelto, stessa posizione in pianta.
+ * fisico, portata e potenze della massima velocità, stessa posizione in pianta.
  */
 export function syncFanCoilAirSystems(project: Project): Project {
   if (!project.hvacSystems.some((system) => system.fanCoilId)) return project;
@@ -205,7 +208,7 @@ export function syncFanCoilAirSystems(project: Project): Project {
       unit.productId,
       unit.catalogVersion,
     );
-    const point = product?.operatingPoints[unit.operatingPointIndex];
+    const point = product && fanCoilMaximumPoint(product).point;
     const mirror = system.indoorUnits[0];
     const indoorUnit: AirSystem["indoorUnits"][number] = {
       id: mirror?.id ?? newId(),

@@ -1,4 +1,11 @@
 import { describe, expect, it } from "vitest";
+import {
+  PDFDocument,
+  PDFArray,
+  PDFRawStream,
+  decodePDFRawStream,
+} from "pdf-lib";
+import { readFile } from "node:fs/promises";
 import { pdfQaFixture } from "../../../scripts/verification/pdf-fixture";
 import { renderDossierPdf } from "./render";
 import { buildDossier } from "./dossier";
@@ -10,6 +17,37 @@ import {
 } from "@/domain/catalogs/fan-coils";
 
 describe("Readable complete PDF contract", () => {
+  it.each(["complete", "summary"] as const)(
+    "prints the %s dossier using only gray vector colours and readable text",
+    async (variant) => {
+      const document = await PDFDocument.load(
+        await renderDossierPdf(pdfQaFixture(), { variant, monochrome: true }),
+      );
+      expect(document.getTitle()).toContain("bianco e nero");
+      let colours = 0;
+      for (const page of document.getPages()) {
+        const contents = page.node.Contents();
+        const refs =
+          contents instanceof PDFArray ? contents.asArray() : [contents];
+        for (const ref of refs) {
+          const stream = document.context.lookup(ref);
+          expect(stream).toBeInstanceOf(PDFRawStream);
+          const text = new TextDecoder().decode(
+            decodePDFRawStream(stream as PDFRawStream).decode(),
+          );
+          for (const match of text.matchAll(
+            /([\d.]+) ([\d.]+) ([\d.]+) (?:rg|RG)\b/g,
+          )) {
+            expect(Number(match[1])).toBe(Number(match[2]));
+            expect(Number(match[2])).toBe(Number(match[3]));
+            colours++;
+          }
+          expect(text).toMatch(/\bTj\b/);
+        }
+      }
+      expect(colours).toBeGreaterThan(100);
+    },
+  );
   it("keeps all real port numbers in both projections for each independent machine", () => {
     const project = pdfQaFixture();
     expect(project.plenums).toHaveLength(2);
@@ -116,7 +154,7 @@ describe("Readable complete PDF contract", () => {
       )?.details,
     ).toContain("non verificabile");
   });
-  it("creates a shorter summary with real balances, M7, pump location, all ports and unresolved connections", async () => {
+  it("creates a client summary with real balances and equipment without coordinate floor plans, keeping warnings in the complete report", async () => {
     const project = pdfQaFixture();
     project.ducts = [];
     project.airTerminals[0].plenumId = null;
@@ -126,7 +164,21 @@ describe("Readable complete PDF contract", () => {
       data: await renderDossierPdf(project),
     });
     const summaryTask = pdfjs.getDocument({
-      data: await renderDossierPdf(project, { variant: "summary" }),
+      data: await renderDossierPdf(project, {
+        variant: "summary",
+        renderImages: [
+          {
+            title: "Render di verifica",
+            floorId: project.floors[0].id,
+            mimeType: "image/jpeg",
+            width: 1024,
+            height: 1024,
+            bytes: new Uint8Array(
+              await readFile("public/materials3d/stone/basecolor.jpg"),
+            ),
+          },
+        ],
+      }),
     });
     const [complete, summary] = await Promise.all([
       completeTask.promise,
@@ -135,8 +187,11 @@ describe("Readable complete PDF contract", () => {
     try {
       expect(summary.numPages).toBeLessThan(complete.numPages);
       const texts: string[] = [];
+      let floorPlans = 0;
       for (let page = 1; page <= summary.numPages; page++) {
-        const content = await (await summary.getPage(page)).getTextContent();
+        const sheet = await summary.getPage(page);
+        const content = await sheet.getTextContent();
+        if (sheet.view[2] > 1100) floorPlans++;
         texts.push(
           content.items
             .map((item) => ("str" in item ? item.str : ""))
@@ -154,13 +209,40 @@ describe("Readable complete PDF contract", () => {
       expect(text).toContain("M7");
       expect(text).toContain("Chaffoteaux");
       expect(text).toContain("X -2, Y -1, quota 0,15 m");
-      expect(text).toContain("terminalConnection");
-      expect(text).toContain("Altri avvisi raggruppati");
-      expect(text).toContain("dossier completo");
+      expect(floorPlans).toBe(0);
+      for (const floor of project.floors)
+        expect(text).not.toContain(`Planimetria - ${floor.name}`);
+      for (const warning of [
+        "terminalConnection",
+        "Altri avvisi raggruppati",
+        "Anomalie",
+        "Controlli",
+        "AVVISO",
+        "NON VALIDABILE",
+        "da verificare",
+        "Visualizzazione orientativa",
+      ])
+        expect(text).not.toContain(warning);
+      expect(text).toContain(
+        "Render degli ambienti e degli impianti del progetto",
+      );
       for (const check of data.checks.filter(
         (item) => item.status === "invalid",
       ))
-        expect(text).toContain(check.code);
+        expect(text).not.toContain(check.code);
+      const fullText: string[] = [];
+      for (let page = 1; page <= complete.numPages; page++) {
+        const content = await (await complete.getPage(page)).getTextContent();
+        fullText.push(
+          content.items
+            .map((item) => ("str" in item ? item.str : ""))
+            .join(" "),
+        );
+      }
+      expect(fullText.join(" ")).toContain("terminalConnection");
+      expect(fullText.join(" ")).toContain("AVVISO");
+      for (const floor of project.floors)
+        expect(fullText.join(" ")).toContain(`Planimetria - ${floor.name}`);
       for (const balance of data.linearBalances) {
         expect(text).toContain(
           `${balance.airflowM3h.toLocaleString("it-IT", { maximumFractionDigits: 2 })} / ${balance.availableAirflowM3h.toLocaleString("it-IT", { maximumFractionDigits: 2 })} m³/h`,

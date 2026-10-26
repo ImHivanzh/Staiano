@@ -73,7 +73,14 @@ export function comfortFields(
       });
     }
   };
-  for (const terminal of project.airTerminals.filter(visible)) {
+  const ductedSystemIds = new Set(
+    project.hvacSystems
+      .filter((system) => system.type === "ducted")
+      .map((system) => system.id),
+  );
+  for (const terminal of project.airTerminals.filter(
+    (item) => visible(item) && !ductedSystemIds.has(item.systemId ?? ""),
+  )) {
     if (!needsTerminalReconfiguration(terminal) && terminal.elevationM !== null)
       air(
         terminal,

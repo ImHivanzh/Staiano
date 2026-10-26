@@ -12,6 +12,7 @@ import {
   hvacDischargeConnection,
 } from "@/domain/catalogs/hvac";
 import {
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   fanCoilControlAtVersion,
   controllerBoardFor,
@@ -35,7 +36,10 @@ import {
 import { vrvIndoorAtVersion, vrvOutdoorAtVersion } from "@/domain/catalogs/vrv";
 import { hvacOutdoorDimensions } from "@/domain/air-conditioning/outdoor";
 import { terminalDataQuality } from "@/domain/air-terminals/data-quality";
-import { calculateEcoclimaBom } from "@/domain/air-terminals/commercial-bom";
+import {
+  calculateEcoclimaBom,
+  terminalDimensionsText,
+} from "@/domain/air-terminals/commercial-bom";
 
 export const TECHNICAL_NOTE =
   "Dimensionamento convenzionale preliminare: Q = volume netto x coefficiente termico scelto nel progetto (W/m³). Non sostituisce un calcolo delle dispersioni dell'edificio o un progetto esecutivo. Il fabbisogno indicato deve essere verificato da un tecnico qualificato prima dell’esecuzione dell’impianto. Il coefficiente scelto non determina automaticamente clima, involucro, ricambi d'aria, apporti solari e condizioni di esercizio. Potenze e portate provengono dai cataloghi indicati; verificare condizioni nominali, installazione e disponibilità commerciale prima dell'ordine. I prezzi di listino Ecoclima, quando riportati, sono separati dal dimensionamento tecnico.";
@@ -44,6 +48,7 @@ const display = (value: number) =>
   value.toLocaleString("it-IT", { maximumFractionDigits: 2 });
 export type MaterialRow = {
   description: string;
+  sku?: string;
   quantity: number;
   /** Unita di misura della quantita ordinabile (elementi, pezzi, kit, metri). */
   unit: string;
@@ -52,6 +57,12 @@ export type MaterialRow = {
   details: string;
   codes: string[];
   locales: string[];
+  roomQuantities: {
+    room: string;
+    quantity: number;
+    pieces: number;
+    codes: string[];
+  }[];
   /** Apparecchi raggruppati dalla stessa riga. */
   pieces: number;
   /** Unita di `pieces` quando l'unita di ordine e diversa (radiatori: batterie ed elementi). */
@@ -98,17 +109,38 @@ export function buildDossier(project: Project) {
     (target: Map<string, MaterialRow>) =>
     (
       key: string,
-      row: Omit<MaterialRow, "quantity" | "codes" | "locales" | "pieces">,
+      row: Omit<
+        MaterialRow,
+        "quantity" | "codes" | "locales" | "pieces" | "roomQuantities"
+      >,
       code: string,
       step = 1,
     ) => {
       const locales = localesByCode.get(code) ?? [];
+      const room =
+        locales.length > 1
+          ? `Condivisi · ${locales.join(", ")}`
+          : (locales[0] ?? "Non assegnato");
       const existing = target.get(key);
       if (existing) {
         existing.quantity += step;
         existing.pieces++;
         existing.codes.push(code);
         existing.locales = [...new Set([...existing.locales, ...locales])];
+        const roomQuantity = existing.roomQuantities.find(
+          (item) => item.room === room,
+        );
+        if (roomQuantity) {
+          roomQuantity.quantity += step;
+          roomQuantity.pieces++;
+          roomQuantity.codes.push(code);
+        } else
+          existing.roomQuantities.push({
+            room,
+            quantity: step,
+            pieces: 1,
+            codes: [code],
+          });
       } else
         target.set(key, {
           ...row,
@@ -116,6 +148,7 @@ export function buildDossier(project: Project) {
           pieces: 1,
           codes: [code],
           locales,
+          roomQuantities: [{ room, quantity: step, pieces: 1, codes: [code] }],
         });
     };
   const material = collect(materialMap),
@@ -185,21 +218,58 @@ export function buildDossier(project: Project) {
       );
     }
   }
+  const commercialBom = calculateEcoclimaBom(p);
   for (const d of p.airTerminals) {
     const family = airTerminalFamilyAtVersion(d.family, d.catalogVersion);
     addSource(
       family?.sourceMetadata,
       `${codes.get(d.id)}: catalogo terminali ${d.catalogVersion} non disponibile`,
     );
+    const catalogue = terminalDimensionsText(d);
+    const commercial = commercialBom.lines.find(
+      (line) => line.kind === "terminal" && line.terminalIds.includes(d.id),
+    );
     material(
-      `air:${d.productId}:${airTerminalFaceWidthMm(d)}:${d.heightMm}:${d.use}:${d.availableAirflowM3h}`,
+      `air:${d.productId}:${airTerminalFaceWidthMm(d)}:${d.heightMm}:${d.use}:${d.availableAirflowM3h}:${d.color}:${d.commercialOptions?.profileCode ?? ""}:${commercial?.sku ?? ""}`,
       {
-        description: `Ecoclima ${airTerminalModelDescription(family, d.productId, d.commercialOptions?.profileCode)} - ${d.use === "supply" ? "mandata" : "ripresa"}`,
+        description: commercial?.sku
+          ? commercial.label
+          : `Ecoclima ${airTerminalModelDescription(family, d.productId, d.commercialOptions?.profileCode)} - ${d.use === "supply" ? "mandata" : "ripresa"}`,
+        ...(commercial?.sku ? { sku: commercial.sku } : {}),
         unit: "pezzi",
-        dimensions: `Faccia ${display(airTerminalFaceWidthMm(d))} x ${display(d.heightMm)} mm; profondità ${d.depthMm === null ? "non pubblicata" : display(d.depthMm) + " mm"}`,
-        details: `${display(d.availableAirflowM3h)} m³/h per unità`,
+        dimensions: [
+          catalogue,
+          `Fronte ${display(airTerminalFaceWidthMm(d))} x ${display(d.heightMm)} mm`,
+          `Profondità ${d.depthMm === null ? "non pubblicata" : `${display(d.depthMm)} mm`}`,
+        ]
+          .filter((item): item is string => !!item)
+          .join("; "),
+        details: `${display(d.availableAirflowM3h)} m³/h per unità${commercial?.sku ? "" : "; codice articolo Ecoclima da verificare"}`,
       },
       codes.get(d.id)!,
+    );
+  }
+  for (const line of commercialBom.lines) {
+    if (
+      line.kind === "terminal" ||
+      line.kind === "machine-plenum" ||
+      line.quantity === null ||
+      line.quantity <= 0
+    )
+      continue;
+    const code = codes.get(line.terminalIds[0]);
+    if (!code) continue;
+    accessoryMaterial(
+      `ecoclima:${line.sku ?? line.id}:${line.dimensions ?? ""}`,
+      {
+        description: line.label,
+        ...(line.sku ? { sku: line.sku } : {}),
+        unit: "pezzi",
+        dimensions: line.dimensions ?? undefined,
+        details: line.reason ?? "Accessorio Ecoclima di catalogo.",
+      },
+      code,
+      line.quantity,
     );
   }
   for (const s of p.hvacSystems) {
@@ -271,7 +341,7 @@ export function buildDossier(project: Project) {
       unit.productId,
       unit.catalogVersion,
     );
-    const point = product?.operatingPoints[unit.operatingPointIndex];
+    const point = product && fanCoilMaximumPoint(product).point;
     const control = unit.controllerId
       ? fanCoilControlAtVersion(unit.controllerId, unit.catalogVersion)
       : null;
@@ -283,7 +353,7 @@ export function buildDossier(project: Project) {
     if (unit.mounting === "ceiling" && product?.ceilingInstallation)
       addSource(product.ceilingInstallation.sourceMetadata, "");
     material(
-      `fan-coil:${unit.productId}:${unit.catalogVersion}:${unit.operatingPointIndex}:${unit.mounting}`,
+      `fan-coil:${unit.productId}:${unit.catalogVersion}:${unit.mounting}`,
       {
         description: product
           ? `${product.manufacturer} ${product.family} ${product.model}`
@@ -367,7 +437,6 @@ export function buildDossier(project: Project) {
     );
   }
   const openingIds = new Set(p.openings.map((opening) => opening.id));
-  const commercialBom = calculateEcoclimaBom(p);
   return {
     project: p,
     codes,

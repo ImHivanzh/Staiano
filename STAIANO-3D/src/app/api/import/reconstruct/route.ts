@@ -1,6 +1,6 @@
 import { localDwgRequestAllowed } from "@/services/import/dwg-server";
 import {
-  planRecognizerRuntime,
+  recognitionAiStatus,
   reconstructImage,
 } from "@/services/import/reconstruction-server";
 export const runtime = "nodejs";
@@ -9,7 +9,9 @@ export async function GET(request: Request) {
   if (!localDwgRequestAllowed(request))
     return Response.json({ available: false }, { status: 403 });
   return Response.json(
-    { available: Boolean(await planRecognizerRuntime()) },
+    await recognitionAiStatus(
+      new URL(request.url).searchParams.get("check") === "1",
+    ),
     { headers: { "Cache-Control": "no-store" } },
   );
 }

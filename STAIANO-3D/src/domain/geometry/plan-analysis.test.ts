@@ -3,6 +3,34 @@ import type { ParsedPlan } from "@/services/import/plan-types";
 import { analyzeRasterPixels, analyzeVectorPlan } from "./plan-analysis";
 
 describe("riconoscimento locale della planimetria", () => {
+  it("mantiene separati gli assi CAD adiacenti per consentire la selezione del singolo tratto", () => {
+    const segments = [
+      {
+        id: "a",
+        layer: "MURI",
+        kind: "line",
+        start: { x: 0, y: 0 },
+        end: { x: 2, y: 0 },
+      },
+      {
+        id: "b",
+        layer: "MURI",
+        kind: "line",
+        start: { x: 2, y: 0 },
+        end: { x: 4, y: 0 },
+      },
+    ];
+    expect(
+      analyzeVectorPlan({
+        sourceType: "dxf",
+        segments,
+        suggestedMetersPerUnit: 1,
+      } as ParsedPlan).walls.map((w) => [w.start.x, w.end.x]),
+    ).toEqual([
+      [0, 2],
+      [2, 4],
+    ]);
+  });
   it("mantiene separati gli assi proposti e i tracciati originali", () => {
     const segments = [
       {

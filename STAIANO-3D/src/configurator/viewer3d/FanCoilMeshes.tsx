@@ -10,6 +10,7 @@ import {
   fanCoilDefaultPanelType,
   fanCoilProductAtVersion,
   isConcealedFanCoil,
+  isDuctedFanCoil,
 } from "@/domain/catalogs/fan-coils";
 import type { FanCoilPlacement } from "@/domain/fan-coils/placement";
 
@@ -127,7 +128,7 @@ function FanCoilBody({
     d = unit.depthMm / 1000;
   const ceiling = unit.mounting === "ceiling";
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const concealed = isConcealedFanCoil(product);
+  const concealed = isConcealedFanCoil(product) && !isDuctedFanCoil(product);
   const aermec = product?.manufacturer === "Aermec" && !concealed;
   const innova = product?.manufacturer === "Innova";
   const shell = concealed ? concealedShell : coating;
@@ -261,12 +262,14 @@ export function FanCoilMeshes({
   selection,
   onSelect,
   isolatedRoomId,
+  hideDuctedMachines = false,
 }: {
   project: Project;
   activeFloorId: string;
   selection: Selection[];
   onSelect: (selection: Selection) => void;
   isolatedRoomId?: string;
+  hideDuctedMachines?: boolean;
 }) {
   const choose = (id: string) => (event: ThreeEvent<MouseEvent>) => {
     event.stopPropagation();
@@ -284,6 +287,13 @@ export function FanCoilMeshes({
           [unit.widthMm, unit.heightMm, unit.depthMm, unit.elevationM].every(
             (value) => Number.isFinite(value) && value > 0,
           ),
+        )
+        .filter(
+          (unit) =>
+            !hideDuctedMachines ||
+            !isDuctedFanCoil(
+              fanCoilProductAtVersion(unit.productId, unit.catalogVersion),
+            ),
         )
         .map((unit) => (
           <group

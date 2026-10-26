@@ -119,7 +119,7 @@ it.each(["innova-airleaf-sl-200-2t", "innova-airleaf-sli-200-2t"])(
   "checks wall-unit clearance for %s while allowing a concealed unit entirely inside a technical void",
   (id) => {
     const empty = roomProject(3.6);
-    let p = installedFanCoil(empty, empty.rooms[0].id, id, 0, {
+    let p = installedFanCoil(empty, empty.rooms[0].id, id, {
       mounting: "wall",
     });
     p = { ...p, rooms: p.rooms.map((r) => ({ ...r, ceilingHeightM: 2.8 })) };
@@ -139,7 +139,6 @@ it("rejects moving an exposed wall fan under a band and reports an unchanged inv
     empty,
     empty.rooms[0].id,
     "innova-airleaf-sl-200-2t",
-    0,
     { mounting: "wall" },
   );
   const unit = { ...p.fanCoils![0], elevationM: 2.3 };
@@ -197,7 +196,6 @@ it("separates a band's void from the upper void instead of allowing a concealed 
       empty,
       empty.rooms[0].id,
       "innova-airleaf-sli-200-2t",
-      0,
       { mounting: "ceiling" },
     ),
     unit = p.fanCoils![0],
@@ -237,7 +235,7 @@ it("keeps a chosen upper-void elevation when moving outside a lower band", () =>
       elevationM: 2.5,
     },
   ];
-  const p = installedFanCoil(empty, room.id, "innova-airleaf-sli-200-2t", 0, {
+  const p = installedFanCoil(empty, room.id, "innova-airleaf-sli-200-2t", {
       mounting: "ceiling",
     }),
     unit = p.fanCoils![0];
@@ -256,7 +254,6 @@ it("does not invent a technical void for a band whose reference wall is missing"
       empty,
       empty.rooms[0].id,
       "innova-airleaf-sli-200-2t",
-      0,
       { mounting: "ceiling" },
     ),
     unit = p.fanCoils![0],
@@ -289,7 +286,6 @@ it("never recommends a quota above the structural shell even when the finished p
       empty,
       empty.rooms[0].id,
       "innova-airleaf-sl-200-2t",
-      0,
       { mounting: "ceiling" },
     ),
     unit = p.fanCoils![0],

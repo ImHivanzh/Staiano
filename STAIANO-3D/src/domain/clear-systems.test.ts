@@ -21,7 +21,7 @@ function fixture() {
     placeSupplyPlenum(guided, guided.hvacSystems[0].id),
     guided.hvacSystems[0].id,
   );
-  guided = applyFanCoil(guided, guided.rooms[0].id, "aermec-fcz100", 1);
+  guided = applyFanCoil(guided, guided.rooms[0].id, "aermec-fcz100");
   guided = applyHydronicSystem(guided, {
     productId: heatPumpCatalog.products[0].id,
     roomIds: [guided.rooms[0].id],

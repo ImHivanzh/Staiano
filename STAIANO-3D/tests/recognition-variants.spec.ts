@@ -170,11 +170,7 @@ for (const sample of corpus)
         });
       const analysis = dialog.getByLabel("Analisi automatica planimetria");
       await expect(analysis).toBeVisible({ timeout: 30000 });
-      const automatic = Number(
-        (await analysis.locator("strong").innerText()).match(
-          /· (\d+) ad alta affidabilità/,
-        )?.[1],
-      );
+      const automatic = Number(await analysis.getAttribute("data-auto-count"));
       expect(Number.isFinite(automatic)).toBe(true);
       if (sample.id !== "lemon")
         expect(
@@ -182,6 +178,7 @@ for (const sample of corpus)
           "Le facce di stampa e le quote del corpus restano da confermare",
         ).toBe(0);
       const svg = dialog.getByRole("img", { name: /Anteprima planimetria/ });
+      await dialog.getByLabel(/^Mostra alternative da verificare/).check();
       const walls = await svg.locator("line").evaluateAll((nodes) =>
         nodes
           .filter((n) => n.textContent?.includes("Affidabilità euristica"))
@@ -269,10 +266,10 @@ for (const sample of corpus)
       expect(coverage).toBeGreaterThanOrEqual(sample.minimumCoverage);
       if (automatic === 0 && walls.length > 0) {
         await expect(
-          dialog.getByLabel(/Ho verificato e confermo i muri proposti/),
+          dialog.getByLabel(/Le geometrie selezionate rappresentano assi muro/),
         ).not.toBeChecked();
         await expect(
-          dialog.getByRole("button", { name: "Importa muri selezionati" }),
+          dialog.getByRole("button", { name: /^Importa muri selezionati/ }),
         ).toBeDisabled();
       }
       if (sample.id === "unite-barn" && variant.name === "contrasto-ridotto") {
@@ -281,17 +278,17 @@ for (const sample of corpus)
         });
         await expect(alternatives).not.toBeChecked();
         await dialog
-          .getByLabel(/Ho verificato e confermo i muri proposti/)
-          .check();
+          .getByRole("button", { name: "Seleziona proposte visibili" })
+          .click();
         await expect(alternatives).not.toBeChecked();
-        const opacity = await svg
-          .locator("line")
-          .evaluateAll((nodes) =>
-            nodes.map((node) => ({
-              layer: node.textContent?.split(" · ")[0],
-              opacity: Number(node.getAttribute("opacity")),
-            })),
-          );
+        const opacity = await svg.locator("line").evaluateAll((nodes) =>
+          nodes.map((node) => ({
+            layer: node.textContent?.split(" · ")[0],
+            opacity: Number(node.getAttribute("opacity")),
+            selected: node.getAttribute("data-selected"),
+            dash: node.getAttribute("stroke-dasharray"),
+          })),
+        );
         const primary = opacity.filter(
           (row) => row.layer === "Muri riconosciuti",
         );
@@ -300,9 +297,11 @@ for (const sample of corpus)
         );
         expect(primary.length).toBeGreaterThan(0);
         expect(reviewed.length).toBeGreaterThan(0);
-        expect(Math.max(...reviewed.map((row) => row.opacity))).toBeLessThan(
-          Math.min(...primary.map((row) => row.opacity)),
-        );
+        expect(
+          reviewed.every(
+            (row) => row.selected === "false" && row.dash === "2 5",
+          ),
+        ).toBe(true);
         await expect(page.getByTestId("wall")).toHaveCount(0);
       }
     });

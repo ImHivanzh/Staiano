@@ -1,6 +1,7 @@
 import type { Project, Room } from "@/schemas/project";
 import {
   fanCoilCatalog,
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   type FanCoilCatalog,
   type FanCoilProduct,
@@ -18,8 +19,8 @@ export function installedFanCoilCapacity(project: Project, roomId: string) {
     unknownCount = 0;
   for (const unit of project.fanCoils ?? []) {
     if (unit.roomId !== roomId) continue;
-    const point = fanCoilProductAtVersion(unit.productId, unit.catalogVersion)
-      ?.operatingPoints[unit.operatingPointIndex];
+    const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
+    const point = product && fanCoilMaximumPoint(product).point;
     if (!point) {
       unknownCount++;
       continue;
@@ -31,12 +32,11 @@ export function installedFanCoilCapacity(project: Project, roomId: string) {
 }
 export type FanCoilSuggestion = {
   product: FanCoilProduct;
-  operatingPointIndex: number;
   point: FanCoilOperatingPoint;
   pose: FanCoilPose;
   noiseUnverified: boolean;
 };
-/** Power and noise always come from the same original operating point. */
+/** Potenza e rumore sono quelli di massima velocità, come il calcolo del progetto. */
 export function sizeFanCoils(
   project: Project,
   room: Room,
@@ -73,22 +73,10 @@ export function sizeFanCoils(
       options.mounting ?? "wall",
     );
     if (!pose) return [];
-    return product.operatingPoints.flatMap((point, operatingPointIndex) =>
-      point.coolingW >= coolingW &&
-      point.heatingW >= heatingW &&
-      (point.noiseDbA === null ||
-        point.noiseDbA <= project.projectSettings.maxNoiseDbA)
-        ? [
-            {
-              product,
-              operatingPointIndex,
-              point,
-              pose,
-              noiseUnverified: point.noiseDbA === null,
-            },
-          ]
-        : [],
-    );
+    const { point } = fanCoilMaximumPoint(product);
+    return point.coolingW >= coolingW && point.heatingW >= heatingW
+      ? [{ product, point, pose, noiseUnverified: point.noiseDbA === null }]
+      : [];
   });
   return suggestions.sort(
     (a, b) =>

@@ -117,10 +117,11 @@ for (const width of [1920, 1024])
     const mounting = popup.getByRole("group", { name: "Montaggio terminale" });
     await expect(
       mounting.getByRole("button", { name: "Parete", exact: true }),
-    ).toHaveCount(0);
+    ).toBeVisible();
     await expect(
       mounting.getByRole("button", { name: "Soffitto", exact: true }),
     ).toBeVisible();
+    await mounting.getByRole("button", { name: "Parete", exact: true }).click();
     await expect(
       popup.getByRole("tab", { name: "Plenum", exact: true }),
     ).toHaveCount(0);
@@ -189,6 +190,11 @@ for (const width of [1920, 1024])
         .getByRole("button", { name: "30 mm", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");
     await expect(
+      edit
+        .getByRole("group", { name: "Montaggio terminale" })
+        .getByRole("button", { name: "Parete", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
+    await expect(
       edit.getByRole("tab", { name: "Plenum", exact: true }),
     ).toHaveCount(0);
     await expect(plan.getByTestId("plenum-2d")).toHaveCount(0);
@@ -248,7 +254,7 @@ for (const width of [1920, 1024])
     });
     await expect(
       editMounting.getByRole("button", { name: "Parete", exact: true }),
-    ).toHaveCount(0);
+    ).toBeVisible();
     await expect(
       editMounting.getByRole("button", { name: "Soffitto", exact: true }),
     ).toHaveAttribute("aria-pressed", "true");

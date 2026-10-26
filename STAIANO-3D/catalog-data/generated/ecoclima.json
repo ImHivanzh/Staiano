@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-24-ecoclima-318094c60565",
+  "version": "2026-10-26-ecoclima-1eafdbe37091",
   "families": [
     {
       "manufacturer": "Ecoclima",
@@ -635,10 +635,11 @@
         "RAL9016"
       ],
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
-      "geometryNote": "Profilo verticale60mm; E=80/90 per1feritoia,120/140 per2,160/190 per3. LunghezzaL commerciale."
+      "geometryNote": "Profilo verticale60mm; E=80/90 per1feritoia,120/140 per2,160/190 per3. LunghezzaL commerciale. Scheda: rasatura a filo parete, stesso profilo a soffitto o a parete."
     },
     {
       "manufacturer": "Ecoclima",
@@ -86569,6 +86570,10 @@
       "modelCodes": [
         "EDLH",
         "EDLHB"
+      ],
+      "finishes": [
+        "RAL9005",
+        "RAL9016"
       ]
     },
     {
@@ -86577,8 +86582,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -86789,8 +86795,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -87341,8 +87348,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -87553,8 +87561,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -88105,8 +88114,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -88317,8 +88327,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -88869,8 +88880,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -89421,8 +89433,9 @@
       "name": "EDFL - EDFLB Diffusori lineari a feritoie con deflettori",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -89633,8 +89646,9 @@
       "name": "EDFLB-FL Diffusori lineari di ripresa a feritoie con filtro",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -90072,8 +90086,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -90203,8 +90218,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -90730,8 +90746,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -91257,8 +91274,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -91388,8 +91406,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -91519,8 +91538,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -92046,8 +92066,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",
@@ -92573,8 +92594,9 @@
       "name": "EDFLNA - EDFLBNA Diffusori a feritoie con deflettori rotativi in alluminio",
       "description": "Dimensioni e prestazioni pubblicate dal produttore; campi non verificati lasciati null.",
       "type": "linear",
-      "mountingType": "Soffitto",
+      "mountingType": "Parete o soffitto in cartongesso",
       "mountings": [
+        "wall",
         "ceiling"
       ],
       "shape": "rectangle",

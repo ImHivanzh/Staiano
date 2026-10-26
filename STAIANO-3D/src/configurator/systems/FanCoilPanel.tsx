@@ -4,10 +4,10 @@ import Image from "next/image";
 import type { Project, Room } from "@/schemas/project";
 import {
   fanCoilCatalog,
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   compatibleFanCoilControls,
   controllerBoardFor,
-  fanCoilCategories,
   fanCoilCategory,
   fanCoilCategoryLabels,
   fanCoilDefaultPanelType,
@@ -33,6 +33,7 @@ import { initialFanCoilPose } from "@/domain/fan-coils/placement";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import styles from "./SystemConfiguration.module.css";
+import choiceStyles from "./RadiatorPanel.module.css";
 
 export function FanCoilPanel({
   project,
@@ -62,11 +63,11 @@ export function FanCoilPanel({
   const [manufacturer, setManufacturer] = useState(
     existingProduct?.manufacturer ?? "Innova",
   );
+  const [pipes, setPipes] = useState<"2" | "4" | "">(
+    existingProduct?.pipes ?? "",
+  );
   const [family, setFamily] = useState(existingProduct?.family ?? "");
   const [productId, setProductId] = useState(existingDevice?.productId ?? "");
-  const [operatingPointIndex, setOperatingPointIndex] = useState(
-    existingDevice?.operatingPointIndex ?? 0,
-  );
   const [mounting, setMounting] = useState<"wall" | "ceiling">(
     existingDevice?.mounting ?? "wall",
   );
@@ -88,15 +89,14 @@ export function FanCoilPanel({
   const brandProducts = fanCoilCatalog.products.filter(
     (p) => p.manufacturer === manufacturer,
   );
-  const families = [...new Set(brandProducts.map((p) => p.family))];
-  const familyProducts = brandProducts.filter((p) => p.family === family);
-  const product = productId
-    ? (familyProducts.find((p) => p.id === productId) ?? familyProducts[0])
-    : undefined;
-  const point = product
-    ? (product.operatingPoints[operatingPointIndex] ??
-      product.operatingPoints[0])
-    : undefined;
+  const availablePipes = [...new Set(brandProducts.map((p) => p.pipes))];
+  const pipeProducts = brandProducts.filter((p) => !pipes || p.pipes === pipes);
+  const families = [...new Set(pipeProducts.map((p) => p.family))];
+  const familyProducts = brandProducts.filter(
+    (p) => p.family === family && p.pipes === pipes,
+  );
+  const product = familyProducts.find((p) => p.id === productId);
+  const point = product ? fanCoilMaximumPoint(product).point : undefined;
   const panelOptions = product ? fanCoilPanelOptions(product, mounting) : [];
   const selectedPanelType = panelOptions.includes(panelType as FanCoilPanelType)
     ? panelType
@@ -109,8 +109,8 @@ export function FanCoilPanel({
     (u) => u.roomId === room.id,
   );
   const totals = installedFanCoilCapacity(project, room.id);
-  const existingPoint = existingDevice
-    ? existingProduct?.operatingPoints[existingDevice.operatingPointIndex]
+  const existingPoint = existingProduct
+    ? fanCoilMaximumPoint(existingProduct).point
     : undefined;
   const airSystem = existingDevice
     ? fanCoilAirSystem(project, existingDevice.id)
@@ -129,7 +129,11 @@ export function FanCoilPanel({
       }
     : project;
   const suggestion = family
-    ? sizeFanCoils(sizingProject, room, { manufacturer, family, mounting })[0]
+    ? sizeFanCoils(sizingProject, room, {
+        manufacturer,
+        family,
+        mounting,
+      }).find((item) => item.product.pipes === pipes)
     : undefined;
   const mountings = [
     ...new Set(familyProducts.flatMap((item) => item.mountings)),
@@ -145,16 +149,27 @@ export function FanCoilPanel({
     : null;
   function chooseManufacturer(next: string) {
     setManufacturer(next);
+    setPipes("");
     setFamily("");
     setProductId("");
-    setOperatingPointIndex(0);
+    setControllerId("");
+    setPanelType(null);
+    setCoverType(null);
+  }
+  function choosePipes(next: "2" | "4") {
+    setPipes(next);
+    setFamily("");
+    setProductId("");
     setControllerId("");
     setPanelType(null);
     setCoverType(null);
   }
   function chooseFamily(next: string) {
     const nextProducts = fanCoilCatalog.products.filter(
-      (p) => p.manufacturer === manufacturer && p.family === next,
+      (p) =>
+        p.manufacturer === manufacturer &&
+        p.family === next &&
+        p.pipes === pipes,
     );
     const nextMountings = [
       ...new Set(nextProducts.flatMap((item) => item.mountings)),
@@ -167,13 +182,12 @@ export function FanCoilPanel({
           manufacturer,
           family: next,
           mounting: nextMounting,
-        })[0]
+        }).find((item) => item.product.pipes === pipes)
       : undefined;
     setFamily(next);
     setMounting(nextMounting);
     setControllerId("");
     setProductId(recommended?.product.id ?? "");
-    setOperatingPointIndex(recommended?.operatingPointIndex ?? 0);
     setPanelType(
       recommended
         ? fanCoilDefaultPanelType(recommended.product, nextMounting)
@@ -187,7 +201,7 @@ export function FanCoilPanel({
           manufacturer,
           family,
           mounting: next,
-        })[0]
+        }).find((item) => item.product.pipes === pipes)
       : undefined;
     const kept = familyProducts.find(
       (item) => item.id === productId && item.mountings.includes(next),
@@ -195,9 +209,6 @@ export function FanCoilPanel({
     setMounting(next);
     setControllerId("");
     setProductId(kept?.id ?? recommended?.product.id ?? "");
-    setOperatingPointIndex(
-      kept ? operatingPointIndex : (recommended?.operatingPointIndex ?? 0),
-    );
     const nextProduct = kept ?? recommended?.product;
     setPanelType(
       nextProduct ? fanCoilDefaultPanelType(nextProduct, next) : null,
@@ -209,7 +220,6 @@ export function FanCoilPanel({
     if (nextProduct && !nextProduct.mountings.includes(mounting))
       setMounting(nextProduct.mountings[0]);
     setProductId(next);
-    setOperatingPointIndex(0);
     setControllerId("");
     setPanelType(
       nextProduct
@@ -225,9 +235,9 @@ export function FanCoilPanel({
   }
   function useSuggestion() {
     if (!suggestion) return;
+    setPipes(suggestion.product.pipes);
     setFamily(suggestion.product.family);
     setProductId(suggestion.product.id);
-    setOperatingPointIndex(suggestion.operatingPointIndex);
     setControllerId("");
     setPanelType(fanCoilDefaultPanelType(suggestion.product, mounting));
     setCoverType(null);
@@ -241,10 +251,10 @@ export function FanCoilPanel({
         <h3>Ventilconvettori</h3>
         <p className="nota">
           Scegli la marca e il modello: il sistema indica poi la taglia che
-          copre il fabbisogno residuo, con velocità e rumore del punto scelto.
-          Puoi aggiungere più apparecchi nello stesso ambiente: il consiglio
-          considera la potenza già installata da tutti i ventilconvettori
-          presenti, anche di impianti diversi.
+          copre il fabbisogno residuo, con la potenza e il rumore di massima
+          velocità. Puoi aggiungere più apparecchi nello stesso ambiente: il
+          consiglio considera la potenza già installata da tutti i
+          ventilconvettori presenti, anche di impianti diversi.
         </p>
       </header>
       {existingDevice && (
@@ -252,8 +262,8 @@ export function FanCoilPanel({
           <strong>Distribuzione aeraulica</strong>
           {!existingPoint?.airflowM3h ? (
             <p className="nota">
-              Il punto di funzionamento scelto non dichiara la portata d’aria:
-              scegli un’altra velocità per alimentare canali e bocchette.
+              La massima velocità non dichiara la portata d’aria: non è
+              possibile dimensionare canali e bocchette per questo modello.
             </p>
           ) : airSystem ? (
             <p className="nota">
@@ -269,7 +279,7 @@ export function FanCoilPanel({
             <>
               <p className="nota">
                 La FCZ è canalizzabile: alimenta plenum, canali e bocchette con
-                la portata del punto scelto.
+                la portata della massima velocità.
               </p>
               <button
                 type="button"
@@ -321,104 +331,126 @@ export function FanCoilPanel({
       )}
       <div className={styles.layout}>
         <div className={styles.controls}>
-          <h4>Marca, modello e taglia</h4>
+          <h4>Seleziona ventilconvettore</h4>
           <p className="nota">
-            Scegli la marca e il modello: il sistema indica la taglia che copre
-            il fabbisogno residuo. Puoi poi sceglierne un’altra o cambiare
-            velocità.
+            Scegli marca, numero di tubi e modello. La taglia consigliata copre
+            il fabbisogno residuo; puoi selezionarne un’altra.
           </p>
-          <label className="campo">
-            <span>Marca ventilconvettore</span>
-            <select
-              aria-label="Marca ventilconvettore"
-              value={manufacturer}
-              onChange={(e) => chooseManufacturer(e.target.value)}
-            >
+          <fieldset>
+            <legend>Marca</legend>
+            <div className={choiceStyles.choices}>
               {[
                 ...new Set(fanCoilCatalog.products.map((p) => p.manufacturer)),
               ].map((brand) => (
-                <option key={brand}>{brand}</option>
-              ))}
-            </select>
-          </label>
-          <label className="campo">
-            <span>Modello</span>
-            <select
-              aria-label="Modello ventilconvettore"
-              value={family}
-              onChange={(e) => chooseFamily(e.target.value)}
-              disabled={!families.length}
-            >
-              <option value="">Scegli il modello</option>
-              {fanCoilCategories.map((category) => {
-                const options = families.filter((name) => {
-                  const sample = brandProducts.find((p) => p.family === name);
-                  return sample && fanCoilCategory(sample) === category;
-                });
-                if (!options.length) return null;
-                return (
-                  <optgroup
-                    key={category}
-                    label={fanCoilCategoryLabels[category]}
-                  >
-                    {options.map((name) => (
-                      <option key={name} value={name}>
-                        {name}
-                      </option>
-                    ))}
-                  </optgroup>
-                );
-              })}
-            </select>
-          </label>
-          <label className="campo">
-            <span>Taglia</span>
-            <select
-              aria-label="Taglia ventilconvettore"
-              value={product?.id ?? ""}
-              onChange={(e) => chooseTaglia(e.target.value)}
-              disabled={!family}
-            >
-              <option value="">
-                {suggestion
-                  ? `Consigliata: ${suggestion.product.model}`
-                  : family
-                    ? "Scegli la taglia"
-                    : "Scegli prima il modello"}
-              </option>
-              {familyProducts.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.model} · {item.pipes} tubi
-                  {suggestion?.product.id === item.id ? " · consigliata" : ""}
-                </option>
-              ))}
-            </select>
-          </label>
-          {product && point && (
-            <label className="campo">
-              <span>Velocità / punto di funzionamento</span>
-              <select
-                value={operatingPointIndex}
-                onChange={(e) => setOperatingPointIndex(Number(e.target.value))}
-              >
-                {product.operatingPoints.map((p, i) => (
-                  <option key={i} value={i}>
-                    {p.label} · {formatNumber(p.coolingW / 1000)} /{" "}
-                    {formatNumber(p.heatingW / 1000)} kW ·{" "}
-                    {p.noiseDbA === null
-                      ? "rumore non pubblicato"
-                      : `${formatNumber(p.noiseDbA)} dB(A)`}
-                  </option>
-                ))}
-              </select>
-              {product.family.startsWith("Bi2 Naked") &&
-                selectedPanelType?.startsWith("grilles") && (
-                  <small>
-                    Il pannello di copertura va realizzato in cantiere.
+                <button
+                  type="button"
+                  className={choiceStyles.choice}
+                  key={brand}
+                  aria-pressed={manufacturer === brand}
+                  onClick={() => chooseManufacturer(brand)}
+                >
+                  <strong>{brand}</strong>
+                  <small aria-hidden="true">
+                    {
+                      new Set(
+                        fanCoilCatalog.products
+                          .filter((p) => p.manufacturer === brand)
+                          .map((p) => p.family),
+                      ).size
+                    }{" "}
+                    modelli
                   </small>
-                )}
-            </label>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Numero di tubi</legend>
+            <div className={choiceStyles.choices}>
+              {availablePipes.map((count) => (
+                <button
+                  type="button"
+                  className={choiceStyles.choice}
+                  key={count}
+                  aria-pressed={pipes === count}
+                  onClick={() => choosePipes(count)}
+                >
+                  <strong>{count} tubi</strong>
+                  <small aria-hidden="true">
+                    {brandProducts.filter((p) => p.pipes === count).length}{" "}
+                    taglie
+                  </small>
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          {pipes && (
+            <fieldset>
+              <legend>Modello</legend>
+              <div className={choiceStyles.choices}>
+                {families.map((name) => {
+                  const sample = pipeProducts.find((p) => p.family === name)!;
+                  return (
+                    <button
+                      type="button"
+                      className={choiceStyles.choice}
+                      key={name}
+                      aria-pressed={family === name}
+                      onClick={() => chooseFamily(name)}
+                    >
+                      {sample.productPhoto && (
+                        <Image
+                          unoptimized
+                          src={sample.productPhoto.localPath}
+                          alt=""
+                          width={160}
+                          height={90}
+                        />
+                      )}
+                      <strong>{name}</strong>
+                      <small>
+                        {fanCoilCategoryLabels[fanCoilCategory(sample)]}
+                      </small>
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
           )}
+          {family && (
+            <fieldset>
+              <legend>Taglia</legend>
+              <div className={choiceStyles.choices}>
+                {familyProducts.map((item) => {
+                  const maximum = fanCoilMaximumPoint(item).point;
+                  const recommended = suggestion?.product.id === item.id;
+                  return (
+                    <button
+                      type="button"
+                      className={choiceStyles.choice}
+                      key={item.id}
+                      data-product-id={item.id}
+                      aria-pressed={product?.id === item.id}
+                      onClick={() => chooseTaglia(item.id)}
+                    >
+                      <strong>{item.model}</strong>
+                      <small>
+                        {formatNumber(maximum.coolingW / 1000)} kW freddo ·{" "}
+                        {formatNumber(maximum.heatingW / 1000)} kW caldo
+                      </small>
+                      {recommended && <small>Taglia consigliata</small>}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
+          {product?.family.startsWith("Bi2 Naked") &&
+            selectedPanelType?.startsWith("grilles") && (
+              <p className="nota">
+                Il pannello di copertura va realizzato in cantiere.
+              </p>
+            )}
           {family && (
             <label className="campo">
               <span>Montaggio</span>
@@ -495,10 +527,20 @@ export function FanCoilPanel({
               tecnico.
             </p>
           )}
+          {product &&
+            isConcealedFanCoil(product) &&
+            !isRecessedFanCoil(product) && (
+              <p className="nota" data-testid="fan-coil-ducted-note">
+                Modello canalizzabile senza mobile: corpo nel vuoto tecnico e
+                distribuzione a canali o bocchette. Non ha pannello frontale a
+                filo muro; a soffitto serve un controsoffitto o un vuoto
+                tecnico.
+              </p>
+            )}
           {product && point && mounting === "ceiling" && (
             <p className="nota">
               {isConcealedFanCoil(product)
-                ? "Modello senza mobile: usa il vuoto tecnico disponibile, oppure viene appeso sotto il soffitto. Verifica pannelli e accessori del modello."
+                ? "Modello senza mobile: usa il controsoffitto o il vuoto tecnico disponibile; non viene appeso a vista. Verifica pannelli e accessori del modello."
                 : "Posa a vista: il corpo resta sotto il soffitto; la quota indica la faccia inferiore."}
               {product.ceilingInstallation && (
                 <>
@@ -525,7 +567,7 @@ export function FanCoilPanel({
                 </p>
               ) : (
                 <p className="nota">
-                  {formatNumber(point.noiseDbA)} dB(A) alla velocità scelta.
+                  {formatNumber(point.noiseDbA)} dB(A) alla massima velocità.
                   {point.noiseDbA > project.projectSettings.maxNoiseDbA
                     ? " Supera il limite acustico impostato."
                     : ""}{" "}
@@ -591,7 +633,7 @@ export function FanCoilPanel({
           {!product && (
             <p className="nota">
               {family
-                ? "Scegli una taglia per vedere velocità, rumore, comando e posa."
+                ? "Scegli una taglia per vedere potenza, rumore, comando e posa."
                 : "Scegli il modello: poi indico la taglia consigliata per questo ambiente."}
             </p>
           )}
@@ -660,7 +702,7 @@ export function FanCoilPanel({
                 style={saveButtonRef ? { display: "none" } : undefined}
                 onClick={() =>
                   (onPlace ?? commit)((p) =>
-                    applyFanCoil(p, room.id, product.id, operatingPointIndex, {
+                    applyFanCoil(p, room.id, product.id, {
                       mounting,
                       controllerId: controller?.id ?? null,
                       panelType: selectedPanelType,
@@ -712,8 +754,8 @@ export function FanCoilPanel({
                 <summary>Condizioni dei dati e fonte</summary>
                 <p className="nota">{product.features.join(" · ")}</p>
                 <p className="nota">
-                  Suggerimento conservativo: capacità freddo e caldo dello
-                  stesso punto devono coprire separatamente il fabbisogno
+                  Suggerimento conservativo: capacità freddo e caldo della
+                  massima velocità devono coprire separatamente il fabbisogno
                   residuo. Le potenze valgono alle condizioni originali, senza
                   correzioni inventate per altre temperature dell’acqua.
                 </p>
@@ -755,7 +797,7 @@ export function FanCoilPanel({
                 unit.productId,
                 unit.catalogVersion,
               );
-              const speed = model?.operatingPoints[unit.operatingPointIndex];
+              const speed = model && fanCoilMaximumPoint(model).point;
               return (
                 <div key={unit.id} className={styles.installed}>
                   <div>

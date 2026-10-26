@@ -9,6 +9,7 @@ import {
   rotatePlanTensor,
   semanticWallMask,
   suppressPlanAnnotations,
+  planSegmentationTiles,
 } from "@/domain/geometry/plan-segmentation";
 import type { ParsedPlan } from "@/services/import/plan-types";
 
@@ -74,6 +75,7 @@ async function segmentWalls(
   pixels: Uint8ClampedArray,
   width: number,
   height: number,
+  region = { left: 0, top: 0, width, height },
 ) {
   const { session, provider } = await loadModel();
   const source = new ImageData(
@@ -89,9 +91,9 @@ async function segmentWalls(
   const canvas = new OffscreenCanvas(MODEL_SIZE, MODEL_SIZE);
   const context = canvas.getContext("2d");
   if (!context) throw new Error("Anteprima AI non disponibile.");
-  const scale = Math.min(MODEL_SIZE / width, MODEL_SIZE / height);
-  const drawWidth = Math.max(1, Math.round(width * scale));
-  const drawHeight = Math.max(1, Math.round(height * scale));
+  const scale = Math.min(MODEL_SIZE / region.width, MODEL_SIZE / region.height);
+  const drawWidth = Math.max(1, Math.round(region.width * scale));
+  const drawHeight = Math.max(1, Math.round(region.height * scale));
   const left = Math.floor((MODEL_SIZE - drawWidth) / 2);
   const top = Math.floor((MODEL_SIZE - drawHeight) / 2);
   context.fillStyle = "rgb(124, 116, 104)";
@@ -100,7 +102,17 @@ async function segmentWalls(
   context.imageSmoothingQuality = "high";
   context.fillStyle = "white";
   context.fillRect(left, top, drawWidth, drawHeight);
-  context.drawImage(bitmap, left, top, drawWidth, drawHeight);
+  context.drawImage(
+    bitmap,
+    region.left,
+    region.top,
+    region.width,
+    region.height,
+    left,
+    top,
+    drawWidth,
+    drawHeight,
+  );
   bitmap.close();
   const data = context.getImageData(0, 0, MODEL_SIZE, MODEL_SIZE).data;
   const input = normalizePlanImage(data, MODEL_SIZE, MODEL_SIZE, {
@@ -137,11 +149,15 @@ async function segmentWalls(
     MODEL_SIZE,
   );
   const mask = new Uint8Array(width * height);
-  for (let y = 0; y < height; y++) {
-    const my = Math.floor(top + ((y + 0.5) * drawHeight) / height);
+  for (let y = region.top; y < region.top + region.height; y++) {
+    const my = Math.floor(
+      top + ((y - region.top + 0.5) * drawHeight) / region.height,
+    );
     if (my < top || my >= top + drawHeight) continue;
-    for (let x = 0; x < width; x++) {
-      const mx = Math.floor(left + ((x + 0.5) * drawWidth) / width);
+    for (let x = region.left; x < region.left + region.width; x++) {
+      const mx = Math.floor(
+        left + ((x - region.left + 0.5) * drawWidth) / region.width,
+      );
       if (mx < left || mx >= left + drawWidth) continue;
       mask[y * width + x] = wall[my * MODEL_SIZE + mx];
     }
@@ -159,13 +175,59 @@ async function analyze(request: AnalysisRequest) {
     const segmented = await segmentWalls(pixels, width, height);
     semanticMask = segmented.mask;
     provider = segmented.provider;
+    // Exact PDF faces already preserve detail; raster-only sheets need local views.
+    if (
+      vector.walls.filter(
+        (w) =>
+          w.kind === "paired-faces" && w.layer !== "Contorni da verificare",
+      ).length < 3
+    ) {
+      const tiles = planSegmentationTiles(width, height);
+      const votes = new Uint8Array(width * height),
+        counts = new Uint8Array(width * height);
+      for (const tile of tiles) {
+        const local = await segmentWalls(pixels, width, height, tile);
+        // Ignore crop borders where the model sees an artificial wall termination.
+        const margin = 24;
+        for (let y = tile.top; y < tile.top + tile.height; y++)
+          for (let x = tile.left; x < tile.left + tile.width; x++) {
+            if (
+              (tile.left > 0 && x < tile.left + margin) ||
+              (tile.top > 0 && y < tile.top + margin) ||
+              (tile.left + tile.width < width &&
+                x > tile.left + tile.width - margin) ||
+              (tile.top + tile.height < height &&
+                y > tile.top + tile.height - margin)
+            )
+              continue;
+            const i = y * width + x;
+            counts[i]++;
+            votes[i] += local.mask[i];
+          }
+      }
+      if (tiles.length) {
+        for (let i = 0; i < semanticMask.length; i++)
+          if (counts[i]) semanticMask[i] = votes[i] * 2 >= counts[i] ? 1 : 0;
+        provider += " · dettaglio su ritagli sovrapposti";
+      }
+    }
   } catch (error) {
     console.warn(
       "Segmentazione AI non riuscita, uso l’analisi euristica.",
       error,
     );
   }
-  const raster = analyzeRasterPixels(pixels, width, height, true, semanticMask);
+  const raster = analyzeRasterPixels(
+    pixels,
+    width,
+    height,
+    true,
+    semanticMask,
+    {
+      referenceSize: plan.analysisReferenceSize,
+      metersPerUnit: plan.analysisMetersPerUnit,
+    },
+  );
   raster.notes.unshift(
     semanticMask
       ? `Segmentazione AI locale (${provider}): muri, arredi e testo separati prima della vettorizzazione.`

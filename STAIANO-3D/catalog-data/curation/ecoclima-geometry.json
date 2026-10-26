@@ -1,6 +1,7 @@
 {
   "EDLS": {
     "mountings": [
+      "wall",
       "ceiling"
     ],
     "shape": "rectangle",
@@ -11,7 +12,7 @@
     "linearFaceHeightExtraFor30MmPerSlot": 10,
     "bodyDepthMm": 60,
     "page": 3,
-    "note": "Profilo verticale60mm; E=80/90 per1feritoia,120/140 per2,160/190 per3. LunghezzaL commerciale.",
+    "note": "Profilo verticale60mm; E=80/90 per1feritoia,120/140 per2,160/190 per3. LunghezzaL commerciale. Scheda: rasatura a filo parete, stesso profilo a soffitto o a parete.",
     "sourceSha256": "7f043fc11f9904e80f2eb1078893d17f97cf157da2bf70a77d32169f1995c2d9"
   },
   "EBLF": {

@@ -1,4 +1,4 @@
-import { spawn } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
 import {
   mkdir,
   mkdtemp,
@@ -17,6 +17,120 @@ const runtimeSchema = z.object({
   checkpoint: z.string(),
 });
 let busy = false;
+type AiStatus = {
+  available: boolean;
+  state: "unavailable" | "installed" | "ready" | "busy" | "error";
+  message: string;
+  device?: "cuda" | "cpu";
+};
+let checking: Promise<AiStatus> | null = null;
+function stopRecognizer(child: ChildProcess) {
+  if (process.platform === "win32" && child.pid) {
+    spawn(
+      path.join(
+        process.env.SystemRoot ?? "C:\\Windows",
+        "System32/taskkill.exe",
+      ),
+      ["/PID", String(child.pid), "/T", "/F"],
+      { shell: false, windowsHide: true, stdio: "ignore" },
+    ).once("error", () => child.kill());
+  } else child.kill();
+}
+
+/** Installation and an explicit dependency check are distinct from loading the model. */
+export async function recognitionAiStatus(check = false): Promise<AiStatus> {
+  const runtime = await planRecognizerRuntime();
+  if (!runtime)
+    return {
+      available: false,
+      state: "unavailable",
+      message:
+        "Ricostruzione avanzata non configurata su questo server. Il riconoscimento nel browser resta disponibile.",
+    };
+  if (busy)
+    return {
+      available: true,
+      state: "busy",
+      message: "Ricostruzione avanzata attiva: analisi in corso.",
+    };
+  if (!check)
+    return {
+      available: true,
+      state: "installed",
+      message:
+        "Runtime installato. Usa Verifica AI per controllare Python e dipendenze.",
+    };
+  if (checking) return checking;
+  checking = (async () => {
+    try {
+      const result = await new Promise<{ ok: boolean; device: "cuda" | "cpu" }>(
+        (resolve, reject) => {
+          const child = spawn(
+            runtime.python,
+            [
+              "-c",
+              'import json,sys,torch,torchvision,cv2,numpy,PIL,fvcore,scipy; print(json.dumps({"ok":sys.version_info[:2]==(3,12),"device":"cuda" if torch.cuda.is_available() else "cpu"}))',
+            ],
+            {
+              shell: false,
+              windowsHide: true,
+              stdio: ["ignore", "pipe", "ignore"],
+            },
+          );
+          let output = "";
+          const timer = setTimeout(() => {
+            stopRecognizer(child);
+            reject(Error("Verifica scaduta"));
+          }, 15000);
+          child.stdout.on("data", (chunk) => {
+            output += chunk.toString();
+            if (output.length > 4096) {
+              stopRecognizer(child);
+              clearTimeout(timer);
+              reject(Error("Risposta non valida"));
+            }
+          });
+          child.once("error", (error) => {
+            clearTimeout(timer);
+            reject(error);
+          });
+          child.once("close", (code) => {
+            clearTimeout(timer);
+            if (code !== 0) {
+              reject(Error("Python non disponibile"));
+              return;
+            }
+            try {
+              resolve(JSON.parse(output.trim().split(/\r?\n/).at(-1)!));
+            } catch {
+              reject(Error("Risposta non valida"));
+            }
+          });
+        },
+      );
+      if (!result.ok || !["cuda", "cpu"].includes(result.device))
+        throw Error("Python 3.12 richiesto");
+      return {
+        available: true,
+        state: "ready" as const,
+        device: result.device,
+        message: `Ambiente AI pronto (${result.device === "cuda" ? "GPU CUDA" : "CPU"}). Il modello viene caricato durante la ricostruzione.`,
+      };
+    } catch {
+      return {
+        available: false,
+        state: "error" as const,
+        message:
+          "Python 3.12 o le dipendenze AI non funzionano. Ripristina il runtime con la procedura di attivazione e ripeti la verifica.",
+      };
+    }
+  })();
+  try {
+    return await checking;
+  } finally {
+    checking = null;
+  }
+}
 export async function planRecognizerRuntime() {
   const file = path.resolve("native/runtime/plan-ai.json");
   const config = runtimeSchema.safeParse(
@@ -123,17 +237,8 @@ export async function reconstructImage(request: Request) {
       const stop = (error: Error) => {
         if (failure) return;
         failure = error;
-        if (process.platform === "win32" && child.pid) {
-          // A Windows venv launcher owns the actual Python process as a child.
-          spawn(
-            path.join(
-              process.env.SystemRoot ?? "C:\\Windows",
-              "System32/taskkill.exe",
-            ),
-            ["/PID", String(child.pid), "/T", "/F"],
-            { shell: false, windowsHide: true, stdio: "ignore" },
-          ).once("error", () => child.kill());
-        } else child.kill();
+        // A Windows venv launcher owns the actual Python process as a child.
+        stopRecognizer(child);
       };
       const timer = setTimeout(
         () =>

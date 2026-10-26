@@ -7,6 +7,13 @@ export type PlanSegment = {
   start: Point;
   end: Point;
   kind: string;
+  pdfStyle?: {
+    color: string;
+    width: number;
+    dash: number[];
+    path: number;
+    curved: boolean;
+  };
 };
 export type PlanAnnotation = {
   layer: string;
@@ -30,6 +37,9 @@ export type ParsedPlan = {
   pageNumber?: number;
   analysis?: PlanAnalysis;
   analysisDataUrl?: string;
+  /** Stable source resolution and optional operator calibration, also for crops. */
+  analysisMetersPerUnit?: number;
+  analysisReferenceSize?: number;
   originalDataUrl?: string;
 };
 export type ImportedPlan = {

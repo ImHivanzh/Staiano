@@ -34,7 +34,7 @@ function fixture(thickness = 0.3) {
 
 it("recesses a wall-mounted SLI inside the wall with a flush front", () => {
   let p = fixture();
-  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", 0, {
+  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", {
     mounting: "wall",
   });
   const unit = p.fanCoils![0];
@@ -68,7 +68,7 @@ it("recesses a wall-mounted SLI inside the wall with a flush front", () => {
 it("rejects a wall recess when the wall is thinner than the body", () => {
   const p = fixture(0.1);
   expect(() =>
-    applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", 0, {
+    applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", {
       mounting: "wall",
     }),
   ).toThrow(/posizione/i);
@@ -76,7 +76,7 @@ it("rejects a wall recess when the wall is thinner than the body", () => {
 
 it("moves a saved protruding SLI back inside the wall when recomputing", () => {
   let p = fixture();
-  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", 0, {
+  p = applyFanCoil(p, p.rooms[0].id, "innova-airleaf-sli-200-2t", {
     mounting: "wall",
   });
   const unit = p.fanCoils![0];

@@ -35,7 +35,7 @@ function fixture(
    const wall=p.walls.find(w=>w.id===room.wallIds[0]),span=roomWallSpan(room,wall);
    room.ceilingBands=[{id:'side-band',name:'Fascia',wallId:wall.id,offsetM:0,lengthM:span.lengthM,depthM:4,elevationM:2.5}];
   }
-  p=applyFanCoil(p,room.id,kind==='wall-fan'?'innova-airleaf-sl-200-2t':'innova-airleaf-sli-200-2t',0,{mounting:kind==='wall-fan'?'wall':'ceiling'});
+  p=applyFanCoil(p,room.id,kind==='wall-fan'?'innova-airleaf-sl-200-2t':'innova-airleaf-sli-200-2t',{mounting:kind==='wall-fan'?'wall':'ceiling'});
  }
  if(kind==='wall-fan') p.fanCoils[0].position.x+=0.0012345;
  console.log(JSON.stringify(parseProject(p)));

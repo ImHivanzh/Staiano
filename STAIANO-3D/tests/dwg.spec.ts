@@ -34,7 +34,7 @@ test("DWG actual binary imports locally through HTTPS with MIT parser and no com
     })
     .check();
   await dialog
-    .getByRole("button", { name: "Importa muri selezionati", exact: true })
+    .getByRole("button", { name: /^Importa muri selezionati/, exact: true })
     .click();
   await expect(page.getByTestId("wall")).toHaveCount(4);
   await expect(page.locator(".nome-stanza")).toHaveCount(1);

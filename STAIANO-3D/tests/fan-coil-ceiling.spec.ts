@@ -21,7 +21,7 @@ test("preserves a historic ceiling pose, aligns only on request and renders its 
     import {applyFanCoil} from './src/domain/fan-coils/apply.ts';
     import {parseProject} from './src/services/project/format.ts';
     let p=createProject();p=addRectangle(p,p.floors[0].id,{width:5,length:4,height:2.7,name:'Sala'});
-    p=parseProject(applyFanCoil(p,p.rooms[0].id,'innova-airleaf-sl-200-2t',0,{mounting:'ceiling'}));
+    p=parseProject(applyFanCoil(p,p.rooms[0].id,'innova-airleaf-sl-200-2t',{mounting:'ceiling'}));
     p.fanCoils[0].catalogVersion='fan-coils-d073b172b15846c0';
     p.fanCoils[0].elevationM=2.7;
     console.log(JSON.stringify(p));
@@ -112,13 +112,17 @@ test("creates the source plenum by clicking the visible ceiling fan-coil", async
     import {addOperatorTerminal} from './src/domain/air-terminals/operator.ts';
     import {guidedTerminalPoint} from './tests/guided-fixture.ts';
     import {connectFanCoilAirOnPlan} from './src/domain/fan-coils/connect.ts';
+    import {insertPlenum,connectPlenum} from './src/domain/ducted/attached-plenums.ts';
     let p=createProject();p=addRectangle(p,p.floors[0].id,{width:8,length:6,height:2.7,name:'Sala'});
     p.rooms[0].ceilingHeightM=2.2;
-    p=applyFanCoil(p,p.rooms[0].id,'aermec-fcz200po',1,{mounting:'ceiling'});
+    p=applyFanCoil(p,p.rooms[0].id,'aermec-fcz200po',{mounting:'ceiling'});
     const id=p.fanCoils[0].id;p=updateFanCoil(p,id,{elevationM:2.2});
     p=ensureFanCoilAirSystem(p,id).project;
     p=setFanCoilAirDischarge(p,id,{connectionWidthMm:400,connectionHeightMm:150,dimensionBasis:'ductOpening'});
     p=addOperatorTerminal(p,{...guidedTerminalPoint(),roomId:p.rooms[0].id,systemId:null,use:'supply',mounting:'ceiling',lengthMm:1000});
+    const terminal=p.airTerminals[0];
+    const inserted=insertPlenum(p,terminal.roomId,terminal.position);
+    p=connectPlenum(inserted,inserted.plenums.at(-1).id,terminal.id);
     p=connectFanCoilAirOnPlan(p,p.airTerminals[0].id,id);
     console.log(JSON.stringify(p));
   `,
@@ -138,22 +142,29 @@ test("creates the source plenum by clicking the visible ceiling fan-coil", async
   });
   await expect(plan.getByTestId("fan-coil-2d")).toHaveCount(1);
   await plan.getByRole("button", { name: "Plenum", exact: true }).click();
-  await plan.getByTestId("fan-coil-2d").click();
-  await expect(plan.getByTestId("plenum-2d")).toHaveCount(1);
+  await plan
+    .getByTestId("fan-coil-2d")
+    .locator("rect")
+    .first()
+    .click({ position: { x: 4, y: 4 } });
+  await expect(plan.getByTestId("plenum-2d")).toHaveCount(2);
   const saved = await exportPlenumFixture(page);
   expect(saved.fanCoils).toEqual(project.fanCoils);
-  expect(saved.plenums[0]).toMatchObject({
+  const sourcePlenum = saved.plenums.find(
+    (plenum) => plenum.attachmentId === undefined,
+  )!;
+  expect(sourcePlenum).toMatchObject({
     systemId: project.hvacSystems[0].id,
     use: "supply",
   });
-  expect(saved.plenums[0].elevationM).toBeCloseTo(
+  expect(sourcePlenum.elevationM).toBeCloseTo(
     2.2 + project.fanCoils![0].depthMm / 2000,
   );
   expect(saved.hvacSystems[0].indoorUnits[0].heightMm).toBe(
     project.fanCoils![0].depthMm,
   );
   await page.reload();
-  await expect(plan.getByTestId("plenum-2d")).toHaveCount(1);
+  await expect(plan.getByTestId("plenum-2d")).toHaveCount(2);
   expect((await exportPlenumFixture(page)).plenums).toEqual(saved.plenums);
   await openDisclosure(page, "Modifica");
   await page

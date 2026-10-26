@@ -1,8 +1,9 @@
 "use client";
-import { useLayoutEffect, useRef, type RefObject } from "react";
+import { useLayoutEffect, useMemo, useRef, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Room } from "@/schemas/project";
+import { roomLabelPoint } from "@/domain/geometry/room-label";
 
 /** Labels stay in the application React root; the scene only projects coordinates. */
 export function RoomLabelProjection({
@@ -12,6 +13,14 @@ export function RoomLabelProjection({
   rooms: readonly Room[];
   elements: RefObject<Map<string, HTMLButtonElement>>;
 }) {
+  const anchors = useMemo(
+    () =>
+      rooms.map((room) => ({
+        id: room.id,
+        point: roomLabelPoint(room.polygon),
+      })),
+    [rooms],
+  );
   const projection = useRef({
     previous: new THREE.Matrix4(),
     current: new THREE.Matrix4(),
@@ -42,10 +51,10 @@ export function RoomLabelProjection({
     state.height = size.height;
     state.valid = true;
     const projected = state.point;
-    for (const room of rooms) {
+    for (const room of anchors) {
       const label = elements.current.get(room.id);
       if (!label) continue;
-      projected.set(room.centroid.x, 0.03, room.centroid.y).project(camera);
+      projected.set(room.point.x, 0.03, room.point.y).project(camera);
       label.style.transform = `translate(${((projected.x + 1) / 2) * size.width}px,${((1 - projected.y) / 2) * size.height}px) translate(-50%,-50%)`;
       label.style.visibility =
         projected.z < -1 ||

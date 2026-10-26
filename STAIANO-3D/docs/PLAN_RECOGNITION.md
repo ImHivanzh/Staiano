@@ -1,6 +1,16 @@
 # Verifica del riconoscimento planimetrie
 
-Il riconoscimento `local-lines-3` usa soltanto il browser e geometria locale. Conserva fino a 2200 pixel sul lato maggiore, misura tratti pieni e coppie di facce, cerca linee oblique e preserva le alternative dei contorni attenuati in un layer da verificare. Regolarità dei retini, giunzioni, contrasto e continuità limitano i falsi muri automatici. Un punteggio euristico non certifica la destinazione architettonica di un tratto: quote e arredi possono avere la stessa geometria di un muro.
+Il riconoscimento `local-lines-9` usa lettura vettoriale, segmentazione AI locale e geometria nel browser, con ricostruzione Raster2Seq facoltativa sul server locale. Conserva fino a 2200 pixel sul lato maggiore. Gli stili PDF distinguono le quote sottili colorate dalla struttura; gli assi misurati dalle facce vettoriali precedono le interpretazioni raster incompatibili. I contorni alternativi sono recuperabili e separati dalla selezione. Un punteggio euristico non certifica la destinazione architettonica di un tratto.
+
+La deduplicazione confronta direzione, intervallo, spessore e distanza fra assi. Unisce sovrapposizioni e intervalli adiacenti senza riempire i varchi; interpretazioni concorrenti rimangono da verificare. L'analisi dei ritagli conserva il riferimento dimensionale originale e può usare la scala confermata dall'operatore. Le immagini grandi senza geometria vettoriale utile vengono lette anche con quattro ritagli sovrapposti al massimo, con esclusione dei bordi artificiali. Il worker viene terminato quando l'importazione è annullata.
+
+## Regressione privata delle aperture esterne
+
+La tavola privata analizzata il 26 ottobre 2026 ha 5040 segmenti PDF originali. Il vecchio percorso vettoriale si interrompeva oltre 3000. Il nuovo filtro conserva gli originali e permette di analizzare le facce utili senza aumentare il limite della ricerca quadratica.
+
+Le annotazioni locali identificano 30 tratti opachi, 12 varchi e 9 riferimenti non murari. La copertura in lunghezza dei tratti opachi campionati, con distanza massima di 8 pixel, passa dal 59,5% iniziale a circa il 99% nelle verifiche locali. Pagina e ritaglio vengono controllati anche nel vero wizard, con calibrazione sulla quota 16,40 m. Il test verifica separatamente che i riferimenti di cartiglio, cornice e quote non diventino muri principali e che i varchi annotati non siano completamente chiusi. Questi numeri non rappresentano precisione globale, conteggio completo delle pareti o garanzia su altre tavole.
+
+PDF, immagini e annotazioni restano in cartelle ignorate. `tests/plan-private.spec.ts` usa `PRIVATE_PLAN_PDF` e `PRIVATE_PLAN_REFERENCE`; senza entrambi viene saltato. I test pubblici sintetici verificano stili e trasformazioni PDF, muri colorati e sottili, pareti parallele distinte, sovrapposizioni, conservazione delle porte, selezione della fila e coordinate dei ritagli. I controlli browser della selezione comprendono PC e iPad, annullamento, contatori e importazione reale.
 
 ## Campioni pubblici
 

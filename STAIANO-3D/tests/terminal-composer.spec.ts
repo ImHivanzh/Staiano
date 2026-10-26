@@ -136,7 +136,7 @@ for (const width of [1920, 1024]) {
       });
       await expect(
         mounting.getByRole("button", { name: "Parete", exact: true }),
-      ).toHaveCount(0);
+      ).toBeVisible();
       await expect(
         mounting.getByRole("button", { name: "Soffitto", exact: true }),
       ).toHaveAttribute("aria-pressed", "true");

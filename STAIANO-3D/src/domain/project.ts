@@ -21,6 +21,7 @@ import {
   roomWallSpan,
 } from "@/domain/geometry/placement";
 import {
+  fanCoilMaximumPoint,
   fanCoilProductAtVersion,
   isRecessedFanCoil,
 } from "@/domain/catalogs/fan-coils";
@@ -127,6 +128,13 @@ export function clearProjectSystems(project: Project): Project {
 }
 export function recomputeProject(project: Project): Project {
   const p = structuredClone(project);
+  // Ogni ventilconvettore lavora al punto di massima potenza pubblicata, anche
+  // se il progetto salvato ricordava una velocità inferiore.
+  for (const unit of p.fanCoils ?? []) {
+    const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
+    if (product)
+      unit.operatingPointIndex = fanCoilMaximumPoint(product).index;
+  }
   const previousRooms = structuredClone(p.rooms);
   // Materialize junctions so each boundary segment has independent identity.
   // Otherwise deleting a shared section could also delete an exterior wall.

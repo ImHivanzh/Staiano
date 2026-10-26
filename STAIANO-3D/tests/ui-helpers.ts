@@ -45,32 +45,40 @@ export async function pickPlanPoint(scope: Locator, x: number, y: number) {
 }
 
 /**
- * Sceglie marca, modello e (se serve) taglia nel pannello ventilconvettori.
+ * Sceglie marca, tubi, modello e (se serve) taglia nel pannello ventilconvettori.
  * Dopo la scelta del modello la taglia consigliata è già selezionata; quando
  * nessuna taglia copre il fabbisogno si sceglie esplicitamente la prima.
  */
 export async function chooseFanCoilModel(
   scope: Page | Locator,
-  options: { manufacturer?: string; model?: string; taglia?: string } = {},
+  options: {
+    manufacturer?: string;
+    pipes?: "2" | "4";
+    model?: string;
+    taglia?: string;
+  } = {},
 ) {
   await scope
-    .getByLabel("Marca ventilconvettore", { exact: true })
-    .selectOption(options.manufacturer ?? "Aermec");
+    .getByRole("button", {
+      name: options.manufacturer ?? "Aermec",
+      exact: true,
+    })
+    .click();
+  const pipes = options.pipes ?? options.taglia?.match(/-(2|4)t$/)?.[1] ?? "2";
   await scope
-    .getByRole("combobox", { name: "Modello ventilconvettore", exact: true })
-    .selectOption(options.model ?? "FCZ");
-  const taglia = scope.getByRole("combobox", {
-    name: "Taglia ventilconvettore",
-    exact: true,
-  });
+    .getByRole("button", { name: `${pipes} tubi`, exact: true })
+    .click();
+  await scope
+    .getByRole("group", { name: "Modello" })
+    .getByText(options.model ?? "FCZ", { exact: true })
+    .click();
+  const taglia = scope.getByRole("group", { name: "Taglia" });
   if (options.taglia) {
-    await taglia.selectOption(options.taglia);
+    await taglia.locator(`[data-product-id="${options.taglia}"]`).click();
     return;
   }
-  if (!(await taglia.inputValue())) {
-    const value = await taglia.locator("option").nth(1).getAttribute("value");
-    if (value) await taglia.selectOption(value);
-  }
+  if (!(await taglia.locator('[aria-pressed="true"]').count()))
+    await taglia.getByRole("button").first().click();
 }
 
 export async function addPlanTerminal(

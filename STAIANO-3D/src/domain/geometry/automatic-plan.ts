@@ -3,6 +3,7 @@ import type { Reconstruction } from "@/services/import/reconstruction-schema";
 import { distance, lineIntersection, projection } from "./primitives";
 import type { Point } from "@/schemas/project";
 import { detectRoomFaces } from "./rooms";
+import { consolidateWallCandidates } from "./plan-candidates";
 
 /** Keep the learned room topology, anchoring it to visible wall axes. */
 export function reconstructPlan2D(
@@ -11,7 +12,9 @@ export function reconstructPlan2D(
 ): PlanAnalysis {
   const tolerance = Math.max(12, Math.min(model.width, model.height) * 0.04);
   const walls: WallCandidate[] = [];
-  const imageWalls = physical.imageWalls ?? physical.walls;
+  const imageWalls = (physical.imageWalls ?? physical.walls).filter(
+    (w) => w.layer !== "Contorni da verificare",
+  );
   const openingShapes: (Reconstruction["shapes"][number] & {
     reason?: string;
   })[] = model.shapes.filter(
@@ -235,7 +238,9 @@ export function reconstructPlan2D(
       .join("|");
     if (!unique.has(key)) unique.set(key, wall);
   }
-  const selected = [...unique.values()];
+  const selected = consolidateWallCandidates([...unique.values()]).filter(
+    (w) => w.layer !== "Contorni da verificare",
+  );
   const roomsDetected = detectRoomFaces(
     selected.map((wall) => ({
       ...wall,
