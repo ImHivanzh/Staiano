@@ -169,16 +169,16 @@ describe("ventilconvettore canalizzabile", () => {
     const room = project.rooms[1];
     project = vent(project, room.id);
     project = ensureFanCoilAirSystem(project, unit.id).project;
-    expect(
-      calculateSupplyPlenum(project, fanCoilAirSystem(project, unit.id)!.id)
-        .machineGeometry?.inlet,
-    ).toBeNull();
     project = addSupplyPlenum(project, project.airTerminals.at(-1)!.id);
     project = connectFanCoilAirOnPlan(
       project,
       project.airTerminals.at(-1)!.id,
       unit.id,
     );
+    expect(
+      calculateSupplyPlenum(project, fanCoilAirSystem(project, unit.id)!.id)
+        .machineGeometry?.inlet,
+    ).toBeNull();
     project = setFanCoilAirDischarge(project, unit.id, {
       connectionWidthMm: 400,
       connectionHeightMm: 180,
