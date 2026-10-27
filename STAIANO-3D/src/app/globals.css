@@ -169,10 +169,10 @@
   backdrop-filter: none;
 }
 .titolo-progetto {
-  min-width: 0;
+  min-width: 8em;
 }
 .titolo-progetto h1 {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   line-height: 1.25;
   letter-spacing: -0.025em;
   font-size: 19px;
