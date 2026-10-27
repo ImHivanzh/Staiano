@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
@@ -34,17 +34,14 @@ export default function GreeDuctedBody({ width, height, depth, selected, running
     return { scene, size, center: bounds.getCenter(new THREE.Vector3()) };
   }, [model, selected]);
   // Le pale sono nodi FanBlades_<n> con origine sull'asse della ventola (scripts/blender/heat-pump-outdoor-units.py): l'asse è Z locale.
-  const blades = useMemo(() => {
-    const nodes: THREE.Object3D[] = [];
-    scene.traverse((object) => { if (object.name.startsWith("FanBlades_")) nodes.push(object); });
-    return nodes;
-  }, [scene]);
+  const group = useRef<THREE.Group>(null);
   useFrame(({ invalidate }, delta) => {
-    if (!running || !blades.length) return;
-    for (const blade of blades) blade.rotation.z -= delta * 14;
-    invalidate();
+    if (!running) return;
+    let spinning = false;
+    group.current?.traverse((object) => { if (object.name.startsWith("FanBlades_")) { object.rotation.z -= delta * 14; spinning = true; } });
+    if (spinning) invalidate();
   });
-  return <group scale={[width / size.x, height / size.y, depth / size.z]} dispose={null}>
+  return <group ref={group} scale={[width / size.x, height / size.y, depth / size.z]} dispose={null}>
     <primitive object={scene} position={[-center.x, -center.y, -center.z]} />
   </group>;
 }

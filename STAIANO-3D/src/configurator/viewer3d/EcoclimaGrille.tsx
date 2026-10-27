@@ -41,10 +41,12 @@ export function EcoclimaGrille({ model, width, height, open, color }: {
     return { scene, hinge, finish };
   }, [gltf, model, color]);
   useEffect(() => () => finish.dispose(), [finish]);
+  const hingeRef = useRef(hinge);
+  useEffect(() => { hingeRef.current = hinge; }, [hinge]);
   useFrame((_, delta) => {
     progress.current = THREE.MathUtils.damp(progress.current, open ? 1 : 0, 5, delta);
-    hinge.position.z = Math.sin(progress.current * Math.PI) * .006;
-    hinge.rotation.x = -progress.current * 1.15;
+    hingeRef.current.position.z = Math.sin(progress.current * Math.PI) * .006;
+    hingeRef.current.rotation.x = -progress.current * 1.15;
   });
   return <group scale={[width / .6, height / .4, 1]} dispose={null}>
     <primitive object={scene} />
