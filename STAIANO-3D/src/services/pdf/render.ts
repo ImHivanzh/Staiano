@@ -1578,19 +1578,13 @@ export async function renderDossierPdf(
       }
       ensure(110);
       table(
-        [
-          "Attacco / bocchette",
-          "Ø nominale mm",
-          "Portata m³/h",
-          "Velocita m/s",
-        ],
+        ["Attacco / bocchette", "Ø nominale mm", "Portata m³/h"],
         plenum.branches.map((branch, index) => [
           `${index + 1} - ${branch.terminalIds.map((id) => data.codes.get(id) ?? id).join(", ")}`,
           branch.diameterMm === null ? "—" : n(branch.diameterMm),
           n(branch.airflowM3h),
-          branch.velocityMs === null ? "n.d." : n(branch.velocityMs),
         ]),
-        [0.35, 0.22, 0.23, 0.2],
+        [0.45, 0.3, 0.25],
       );
       const returnPlenum = p.plenums.find(
         (candidate) =>
