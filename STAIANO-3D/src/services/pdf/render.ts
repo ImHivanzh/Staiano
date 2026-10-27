@@ -1599,6 +1599,7 @@ export async function renderDossierPdf(
         );
       }
     }
+    drawFloorPlans();
   } else {
     heading("Riepilogo ambienti");
     if (p.rooms.length)

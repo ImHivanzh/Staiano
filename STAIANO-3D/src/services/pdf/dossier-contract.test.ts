@@ -186,7 +186,7 @@ describe("Readable complete PDF contract", () => {
       )?.details,
     ).toContain("non verificabile");
   });
-  it("creates a client summary with real balances and equipment without coordinate floor plans, keeping warnings in the complete report", async () => {
+  it("creates a client summary with real balances and equipment and clean floor plans, keeping warnings in the complete report", async () => {
     const project = pdfQaFixture();
     project.ducts = [];
     project.airTerminals[0].plenumId = null;
@@ -241,9 +241,10 @@ describe("Readable complete PDF contract", () => {
       expect(text).toContain("M7");
       expect(text).toContain("Chaffoteaux");
       expect(text).toContain("X -2, Y -1, quota 0,15 m");
-      expect(floorPlans).toBe(0);
+      expect(floorPlans).toBeGreaterThan(0);
       for (const floor of project.floors)
-        expect(text).not.toContain(`Planimetria - ${floor.name}`);
+        expect(text).toContain(`Planimetria - ${floor.name}`);
+      expect(text).not.toContain("Legenda e quote");
       for (const warning of [
         "terminalConnection",
         "Altri avvisi raggruppati",
