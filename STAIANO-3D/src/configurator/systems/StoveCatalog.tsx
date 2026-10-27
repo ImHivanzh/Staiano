@@ -74,6 +74,7 @@ export function StoveCatalog() {
     "nordica-evelyne-idro-evo": { Grigio: "grigio", Bianco: "bianco", Tortora: "tortora" },
     "nordica-floriana-idro-crystal": { Crystal: "crystal" },
     "nordica-floriana-idro-gres": { "Gres Corten": "gres-corten", "Gres Ostuni": "gres-ostuni" },
+    "nordica-guenda-idro-evo": { Avorio: "avorio", Bronzo: "bronzo", "Tortora Matt": "tortora-matt" },
     "ravelli-flexi-7": { Bianco: "bianco", Nero: "nero" },
   };
   const finish = product && modelColors[product.id]?.[color];

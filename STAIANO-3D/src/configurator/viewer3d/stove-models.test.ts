@@ -117,6 +117,9 @@ it.each([
   "nordica-floriana-idro-crystal-crystal",
   "nordica-floriana-idro-gres-gres-corten",
   "nordica-floriana-idro-gres-gres-ostuni",
+  "nordica-guenda-idro-evo-avorio",
+  "nordica-guenda-idro-evo-bronzo",
+  "nordica-guenda-idro-evo-tortora-matt",
 ])("exports a stove with a door and glass: %s", (name) => {
   const file = readFileSync(`public/models/stoves/${name}.glb`);
   expect(file.toString("ascii", 0, 4)).toBe("glTF");

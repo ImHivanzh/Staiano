@@ -40,6 +40,8 @@ TERRY PLUS e COSTANZA IDRO 5.0: `stufe-terry-costanza.blend`, generato da `scrip
 
 EVELYNE IDRO EVO e FLORIANA IDRO Crystal/Gres: `stufe-evelyne-floriana.blend`, generato da `scripts/blender/evelyne-floriana.py`.
 
+GUENDA IDRO EVO: `stufa-guenda-idro-evo.blend`, generato da `scripts/blender/guenda-idro-evo.py`, con proporzioni e griglia proprie.
+
 La botola animata in app usa gli oggetti `Cornice_mobile` e `Pannello_forato`; `Cornice_fissa` e `Filtro` rimangono fissi. Mantenere questi nomi se si riesporta `egf-push-realistic.glb`. Il corpo verde del plenum EDLS segue l'indicazione diretta del committente; il plenum zincato è rappresentato in grigio metallico.
 
 Riferimenti: [EGA6](https://www.ecoclima.com/catalogo-generale/diffusione/griglie/ega6-griglie-di-ripresa-in-alluminio-passo-25-con-filtro), [EGF-PUSH](https://www.ecoclima.com/catalogo-generale/diffusione/griglie/egf-push-griglia-forellinata-con-filtro), [Innova SLI](https://www.innovaenergie.com/prodotti/fancoils/airleaf/airleaf-sli/), [Innova OSMO](https://www.innova.it/prodotti/fancoils/osmo/) e immagine ufficiale Aermec FCZ P/PO nel catalogo locale.
