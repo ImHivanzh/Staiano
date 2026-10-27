@@ -1955,6 +1955,10 @@ input[type="checkbox"] {
   border-top: 1px solid var(--bordo);
   background: var(--carta);
 }
+.percorso-guidato > footer .pieno {
+  flex: 1 1 auto;
+  justify-content: center;
+}
 .percorso-guidato > footer .bottone {
   min-height: 42px;
   font-size: 13px;

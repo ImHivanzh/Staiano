@@ -124,3 +124,13 @@
     height: 300px;
   }
 }
+.breadcrumb > * + *::before {
+  content: "›";
+  margin-right: 6px;
+  color: var(--testo-tenue);
+  font-weight: 400;
+}
+.breadcrumb > button:last-child {
+  color: var(--testo);
+  font-weight: 650;
+}
