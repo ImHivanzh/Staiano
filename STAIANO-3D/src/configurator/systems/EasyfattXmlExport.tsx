@@ -25,10 +25,10 @@ export function EasyfattXmlExport({ project, disabled = false }: { project: Proj
     } finally { setBusy(false); }
   }
   return <div>
-    <label>Cliente per preventivo XML <input value={customer} maxLength={150} onChange={(event) => setCustomer(event.target.value)} /></label>{" "}
-    <label>Codice cliente Easyfatt (facoltativo) <input value={customerCode} maxLength={100} onChange={(event) => setCustomerCode(event.target.value)} /></label>{" "}
+    <label>Cliente per preventivo XML <input value={customer} maxLength={150} placeholder="Nome o ragione sociale" onChange={(event) => setCustomer(event.target.value)} /></label>{" "}
+    <label>Codice cliente Easyfatt (facoltativo) <input value={customerCode} maxLength={100} placeholder="es. 125 (dall’anagrafica Easyfatt)" onChange={(event) => setCustomerCode(event.target.value)} /></label>{" "}
     <button type="button" className="bottone tenue piccolo" disabled={disabled || busy} onClick={() => void exportXml()}>Materiali per Danea Easyfatt · XML</button>
     {error && <p role="alert">{error}</p>}
-    <p className="nota">L’XML crea un nuovo preventivo. In Easyfatt usa Documenti → Utilità → Importa documenti Easyfatt-XML; verifica cliente, prezzi e IVA. Senza codice cliente Easyfatt potrebbe proporre una nuova anagrafica.</p>
+    <p className="nota">L’XML crea un nuovo preventivo. In Easyfatt usa Documenti → Utilità → Importa documenti Easyfatt-XML; verifica cliente, prezzi e IVA. Il codice cliente è il numero dell’anagrafica Easyfatt: se lo inserisci il preventivo si collega a quel cliente già esistente; se lo lasci vuoto Easyfatt potrebbe proporre una nuova anagrafica.</p>
   </div>;
 }
