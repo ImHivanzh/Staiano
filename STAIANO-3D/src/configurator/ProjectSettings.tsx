@@ -1,13 +1,14 @@
 "use client";
-import { ArrowDown, ArrowUp } from "@phosphor-icons/react";
+import { ArrowDown, ArrowUp, Plus } from "@phosphor-icons/react";
 import type { Project } from "@/schemas/project";
+import { newId } from "@/domain/project";
 import { applyWallThicknessPreservingInterior } from "@/domain/geometry/wall-thickness";
 import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm } from "@/utils/format";
 import { LengthInput } from "./LengthInput";
 
 export function ProjectSettings({ project }: { project: Project }) {
-  const { commit } = useProjectStore();
+  const { commit, setFloor } = useProjectStore();
   return (
     <main className="pagina archivio impostazioni-progetto">
       <h2>Impostazioni progetto</h2>
@@ -117,9 +118,50 @@ export function ProjectSettings({ project }: { project: Project }) {
         </div>
       </form>
       <h3>Gestione piani</h3>
+      <form
+        className="gestione-piano"
+        onSubmit={(event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          const name = String(new FormData(form).get("name")).trim();
+          if (!name) return;
+          const id = newId();
+          commit((p) => ({
+            ...p,
+            floors: [
+              ...p.floors,
+              {
+                id,
+                name,
+                elevationM: p.floors.length * 3,
+                scaleVerified: true,
+                background: null,
+                importAnalysis: null,
+              },
+            ],
+          }));
+          setFloor(id);
+          form.reset();
+        }}
+      >
+        <label className="campo">
+          <span>Nuovo piano</span>
+          <input
+            name="name"
+            aria-label="Nome del nuovo piano"
+            placeholder={`es. Piano ${project.floors.length}`}
+            maxLength={100}
+            required
+          />
+        </label>
+        <button className="bottone piccolo">
+          <Plus aria-hidden="true" /> Aggiungi piano
+        </button>
+      </form>
       <p className="nota">
-        L’ordine viene usato nella navigazione e nel dossier. Le quote verticali
-        dei piani restano quelle impostate.
+        Aggiungi un piano, rinominalo o cambia l’ordine. L’ordine viene usato
+        nella navigazione e nel dossier. Le quote verticali dei piani restano
+        quelle impostate.
       </p>
       {project.floors.map((floor, index) => (
         <form

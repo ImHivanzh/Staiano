@@ -61,9 +61,10 @@ test("units, project defaults and floor management preserve existing geometry th
     .locator(".gestione-piano")
     .getByRole("button", { name: "Rinomina piano" })
     .click();
-  page.once("dialog", (dialog) => dialog.accept("Zona notte"));
+  await page.getByLabel("Nome del nuovo piano").fill("Zona notte");
   await page
-    .getByRole("button", { name: "Aggiungi piano", exact: true })
+    .locator(".gestione-piano")
+    .getByRole("button", { name: "Aggiungi piano" })
     .click();
   await page
     .getByRole("button", { name: "Sposta prima Zona notte", exact: true })
