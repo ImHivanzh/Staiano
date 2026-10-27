@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { useLoader } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
@@ -10,7 +10,7 @@ const casing = new THREE.MeshStandardMaterial({ color: "#e1e5e4", metalness: 0.2
 const grille = new THREE.MeshStandardMaterial({ color: "#7c9098", metalness: 0.2, roughness: 0.5, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
 const plastic = new THREE.MeshStandardMaterial({ color: "#26383e", roughness: 0.7, side: THREE.DoubleSide });
 
-export default function GreeDuctedBody({ width, height, depth, selected, url = "/models/gree/u-match-ducted-realistic.glb" }: { width: number; height: number; depth: number; selected: boolean; url?: string }) {
+export default function GreeDuctedBody({ width, height, depth, selected, running = false, url = "/models/gree/u-match-ducted-realistic.glb" }: { width: number; height: number; depth: number; selected: boolean; running?: boolean; url?: string }) {
   const model = useLoader(GLTFLoader, url);
   const { scene, center, size } = useMemo(() => {
     const scene = model.scene.clone(true);
@@ -33,6 +33,17 @@ export default function GreeDuctedBody({ width, height, depth, selected, url = "
     if (!size.x || !size.y || !size.z) throw new Error("Modello canalizzato senza dimensioni valide.");
     return { scene, size, center: bounds.getCenter(new THREE.Vector3()) };
   }, [model, selected]);
+  // Le pale sono nodi FanBlades_<n> con origine sull'asse della ventola (scripts/blender/heat-pump-outdoor-units.py): l'asse è Z locale.
+  const blades = useMemo(() => {
+    const nodes: THREE.Object3D[] = [];
+    scene.traverse((object) => { if (object.name.startsWith("FanBlades_")) nodes.push(object); });
+    return nodes;
+  }, [scene]);
+  useFrame(({ invalidate }, delta) => {
+    if (!running || !blades.length) return;
+    for (const blade of blades) blade.rotation.z -= delta * 14;
+    invalidate();
+  });
   return <group scale={[width / size.x, height / size.y, depth / size.z]} dispose={null}>
     <primitive object={scene} position={[-center.x, -center.y, -center.z]} />
   </group>;

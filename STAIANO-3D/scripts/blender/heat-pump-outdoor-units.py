@@ -116,11 +116,12 @@ def fan(coll, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=None):
         box(coll, (cx, yf - 0.001, cz), (rw, 0.002, rh), m_rec, 0.008)
         disc(coll, (cx, yf - 0.003, cz), min(rw, rh) * 0.46, 0.002, m_rec)
     rb = r * 0.86 if round_grille else min(rect) * 0.45
+    parts = []
     for i in range(9):
         a = i * 2 * math.pi / 9
         px, pz = cx + math.cos(a) * rb * 0.55, cz + math.sin(a) * rb * 0.55
-        box(coll, (px, yf - 0.006, pz), (rb * 0.58, 0.003, rb * 0.2), m_fan, 0.001, rot=(math.radians(28), -a, 0))
-    disc(coll, (cx, yf - 0.008, cz), rb * 0.17, 0.008, m_fan)
+        parts.append(box(coll, (px, yf - 0.006, pz), (rb * 0.58, 0.003, rb * 0.2), m_fan, 0.001, rot=(math.radians(28), -a, 0)))
+    parts.append(disc(coll, (cx, yf - 0.008, cz), rb * 0.17, 0.008, m_fan))
     if round_grille:
         for f in (1.0, 0.76, 0.52, 0.3):
             ring(coll, (cx, yf - 0.011, cz), r * f, 0.0016, m_wire)
@@ -137,6 +138,22 @@ def fan(coll, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=None):
         for k in range(1, 6):
             box(coll, (cx - rw / 2 + k * rw / 6, yf - 0.0115, cz), (0.003, 0.002, rh), m_wire)
         box(coll, (cx, yf - 0.012, cz), (rw + 0.01, 0.003, 0.006), m_wire)
+    return parts
+
+
+def spinner(parts, k, center):
+    """Pale e mozzo in un solo oggetto con origine sull'asse della ventola: il viewer lo fa ruotare (FanBlades_<k>)."""
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in parts:
+        o.select_set(True)
+    bpy.context.view_layer.objects.active = parts[0]
+    bpy.ops.object.join()
+    o = bpy.context.active_object
+    o.name = f"FanBlades_{k}"
+    bpy.context.scene.cursor.location = center
+    bpy.ops.object.origin_set(type="ORIGIN_CURSOR")
+    # senza rotazione residua il nodo glTF ruota attorno al solo asse della ventola
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
 
 
 def build(name):
@@ -180,11 +197,11 @@ def build(name):
         zone_h = bh - 0.05 if fans == 1 else bh * 0.42
         if S["grille"] == "round":
             r = min(zone_w, zone_h) * 0.47
-            fan(coll, zx, cz, r, yf, S, fan_m, wire_m, rec_m, True)
+            spinner(fan(coll, zx, cz, r, yf, S, fan_m, wire_m, rec_m, True), k, (zx, yf - 0.006, cz))
             disc(coll, (zx, yf - 0.0125, cz), r * 0.11, 0.003, mat("chaff-logo", (0.12, 0.22, 0.55), 0.4))
         elif S["grille"] == "rect":
             rw, rh = zone_w - 0.03, zone_h
-            fan(coll, zx, cz, min(rw, rh) / 2, yf, S, fan_m, wire_m, rec_m, False, (rw, rh))
+            spinner(fan(coll, zx, cz, min(rw, rh) / 2, yf, S, fan_m, wire_m, rec_m, False, (rw, rh)), k, (zx, yf - 0.006, cz))
         else:
             rw, rh = zone_w, bh - 0.03 if fans == 1 else zone_h
             box(coll, (zx, yf - 0.002, zc if fans == 1 else cz), (rw, 0.004, rh), rec_m, 0.012)
@@ -194,9 +211,11 @@ def build(name):
                 box(coll, (zx, yf - 0.007, z), (rw - 0.02, 0.006, 0.009), wire_m, 0.001, rot=(math.radians(-14), 0, 0))
     # unisce gli oggetti per materiale
     by_mat = {}
+    spinning = [o for o in coll.objects if o.name.startswith("FanBlades_")]
     for o in list(coll.objects):
-        by_mat.setdefault(o.data.materials[0].name, []).append(o)
-    joined = []
+        if o not in spinning:
+            by_mat.setdefault(o.data.materials[0].name, []).append(o)
+    joined = list(spinning)
     for objs in by_mat.values():
         bpy.ops.object.select_all(action="DESELECT")
         for o in objs:

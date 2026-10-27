@@ -150,6 +150,7 @@ export function HydronicMeshes({
                         height={h}
                         depth={d}
                         selected={selected}
+                        running={running}
                       />
                     </Suspense>
                   </ModelAssetBoundary>
