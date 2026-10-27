@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Project } from "@/schemas/project";
@@ -106,6 +106,7 @@ export function ComfortFlows({
   roomId?: string;
 }) {
   const { gl } = useThree();
+  const group = useRef<THREE.Group>(null);
   const reduced =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -160,11 +161,14 @@ export function ComfortFlows({
   );
   useFrame(({ clock, invalidate }) => {
     const time = reduced ? 3.2 : clock.elapsedTime;
-    for (const { material } of paths) material.uniforms.uTime.value = time;
+    for (const mesh of group.current?.children ?? [])
+      (
+        (mesh as THREE.Mesh).material as THREE.ShaderMaterial
+      ).uniforms.uTime.value = time;
     if (!reduced && paths.length > 0) invalidate();
   });
   return (
-    <group>
+    <group ref={group}>
       {paths.map(({ field, geometry, material }, i) => (
         <mesh
           key={`${field.deviceId}:${i}`}

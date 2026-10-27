@@ -199,6 +199,10 @@ export function HydronicPanel({
               ? "Ambienti e marca"
               : "Impianto idronico · pompa di calore"}
           </h3>
+          <p className="nota">
+            Una macchina esterna per impianto, collegata ai ventilconvettori
+            selezionati. Puoi creare più impianti indipendenti.
+          </p>
           {formId && (
             <label className="campo">
               <span>Nome macchina</span>
@@ -209,10 +213,6 @@ export function HydronicPanel({
               />
             </label>
           )}
-          <p className="nota">
-            Una macchina esterna per impianto, collegata ai ventilconvettori
-            selezionati. Puoi creare più impianti indipendenti.
-          </p>
           <label className="campo">
             <span>Marca pompa di calore</span>
             <select
