@@ -25,6 +25,7 @@ import {
   CornersOut,
   Cube,
   Eye,
+  EyeSlash,
   MagnifyingGlassPlus,
   Path,
   Power,
@@ -46,6 +47,7 @@ import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { formatNumber } from "@/utils/format";
 import { deviceCodes } from "@/services/export/device-codes";
 import { ArchitectureMeshes } from "./ArchitectureMeshes";
+import { ContextFloors } from "./ContextFloors";
 import { DeviceMeshes } from "./DeviceMeshes";
 import { CameraRig } from "./CameraRig";
 import { SceneLighting } from "./SceneLighting";
@@ -185,6 +187,10 @@ export default function Viewer3D({
   const [channelView, setChannelView] = useState(true);
   const [channelPanel, setChannelPanel] = useState(false);
   const [loadMap, setLoadMap] = useState(false);
+  // Gli altri piani si vedono sopra/sotto quello attivo e si possono nascondere.
+  const [hiddenFloorIds, setHiddenFloorIds] = useState<ReadonlySet<string>>(
+    new Set(),
+  );
   const [tour, setTour] = useState(false);
   const [comfortMode, setComfortMode] = useState<ComfortMode | "off">("cool");
   // Interruttore impianto: ventole, acqua nei tubi e aria dalle macchine.
@@ -798,6 +804,45 @@ export default function Viewer3D({
                       <ThermometerHot size={16} aria-hidden="true" />
                       Mappa fabbisogno
                     </button>
+                    {p && p.floors.length > 1 && (
+                      <>
+                        <span className={styles.menuTitle}>Piani</span>
+                        {p.floors.map((floor) => {
+                          const active = floor.id === activeFloorId;
+                          const visible =
+                            active || !hiddenFloorIds.has(floor.id);
+                          return (
+                            <button
+                              key={floor.id}
+                              aria-pressed={visible}
+                              disabled={active}
+                              title={
+                                active
+                                  ? "Piano attivo: sempre visibile"
+                                  : visible
+                                    ? "Nascondi questo piano"
+                                    : "Mostra questo piano"
+                              }
+                              onClick={() =>
+                                setHiddenFloorIds((current) => {
+                                  const next = new Set(current);
+                                  if (!next.delete(floor.id))
+                                    next.add(floor.id);
+                                  return next;
+                                })
+                              }
+                            >
+                              {visible ? (
+                                <Eye size={16} aria-hidden="true" />
+                              ) : (
+                                <EyeSlash size={16} aria-hidden="true" />
+                              )}
+                              {floor.name}
+                            </button>
+                          );
+                        })}
+                      </>
+                    )}
                   </div>
                   <div
                     className={`${styles.group} ${styles.editingTools} ${styles.cameraTools}`}
@@ -1368,6 +1413,14 @@ export default function Viewer3D({
                   technicalVoids={channelView || editFlexible}
                   isolatedRoom={isolated ? selectedRoom : undefined}
                 />
+                {p && !isolatedRoomId && p.floors.length > 1 && (
+                  <ContextFloors
+                    project={p}
+                    activeFloorId={activeFloorId}
+                    hiddenFloorIds={hiddenFloorIds}
+                    floorFinish={floorFinish}
+                  />
+                )}
                 {sceneProject && (
                   <DeviceMeshes
                     project={sceneProject}

@@ -35,6 +35,8 @@ export type ArchitectureMeshesProps = {
   floorFinish?: "oak" | "stone";
   onReady?: () => void;
   technicalVoids?: boolean;
+  /** Piano mostrato solo come contesto: niente attributi di test né interazione. */
+  context?: boolean;
 };
 
 type WallExtension = { startM: number; endM: number; lengthM: number };
@@ -538,10 +540,12 @@ export function ArchitectureMeshes({
   floorFinish,
   onReady,
   technicalVoids = false,
+  context = false,
 }: ArchitectureMeshesProps) {
   const textures = useSurfaceMaterials();
   const { gl, invalidate } = useThree();
   useEffect(() => {
+    if (context) return;
     gl.domElement.setAttribute(
       "data-drywall-count",
       String(walls.reduce((sum, wall) => sum + drywallSides(wall).length, 0)),
@@ -549,12 +553,13 @@ export function ArchitectureMeshes({
     return () => {
       gl.domElement.removeAttribute("data-drywall-count");
     };
-  }, [gl, walls]);
+  }, [gl, walls, context]);
   useEffect(() => {
+    if (context) return;
     gl.domElement.setAttribute("data-materials", "pbr");
     onReady?.();
     invalidate();
-  }, [gl, onReady, invalidate, textures]);
+  }, [gl, onReady, invalidate, textures, context]);
   useEffect(
     () => () => Object.values(textures).forEach((t) => t.dispose()),
     [textures],

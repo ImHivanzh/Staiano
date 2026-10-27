@@ -160,8 +160,9 @@ export function ProjectSettings({ project }: { project: Project }) {
       </form>
       <p className="nota">
         Aggiungi un piano, rinominalo o cambia l’ordine. L’ordine viene usato
-        nella navigazione e nel dossier. Le quote verticali dei piani restano
-        quelle impostate.
+        nella navigazione e nel dossier. Le frecce spostano il piano più in alto
+        o più in basso: in 3D gli altri piani compaiono sopra o sotto quello
+        attivo e si nascondono dal menu Vista 3D.
       </p>
       {project.floors.map((floor, index) => (
         <form
@@ -191,6 +192,7 @@ export function ProjectSettings({ project }: { project: Project }) {
             />
           </label>
           <button className="bottone piccolo">Rinomina piano</button>
+          <span className="nota">Quota {floor.elevationM} m</span>
           {[-1, 1].map((direction) => (
             <button
               key={direction}
@@ -201,7 +203,7 @@ export function ProjectSettings({ project }: { project: Project }) {
                 index + direction >= project.floors.length
               }
               aria-label={`${direction < 0 ? "Sposta prima" : "Sposta dopo"} ${floor.name}`}
-              title={direction < 0 ? "Sposta prima" : "Sposta dopo"}
+              title={direction < 0 ? "Porta più in basso" : "Porta più in alto"}
               onClick={() =>
                 commit((p) => {
                   const floors = [...p.floors];
@@ -211,10 +213,10 @@ export function ProjectSettings({ project }: { project: Project }) {
                   const next = current + direction;
                   if (current < 0 || next < 0 || next >= floors.length)
                     return p;
-                  [floors[current], floors[next]] = [
-                    floors[next],
-                    floors[current],
-                  ];
+                  // Spostare un piano ne scambia anche la quota: in 3D sale o scende.
+                  const [a, b] = [floors[current], floors[next]];
+                  floors[current] = { ...b, elevationM: a.elevationM };
+                  floors[next] = { ...a, elevationM: b.elevationM };
                   return {
                     ...p,
                     floors,
@@ -228,9 +230,9 @@ export function ProjectSettings({ project }: { project: Project }) {
               }
             >
               {direction < 0 ? (
-                <ArrowUp aria-hidden="true" />
-              ) : (
                 <ArrowDown aria-hidden="true" />
+              ) : (
+                <ArrowUp aria-hidden="true" />
               )}
             </button>
           ))}
