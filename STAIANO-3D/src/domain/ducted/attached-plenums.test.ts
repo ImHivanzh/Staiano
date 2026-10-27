@@ -499,10 +499,15 @@ it("turns a machine plenum together with its machine", () => {
   const machine = p.hvacSystems[0].indoorUnits[0];
   p = connectPlenum(p, p.plenums[0].id, machine.id);
   expect(p.plenums[0].attachmentId).toBe(machine.id);
+  // Collegato, il plenum fitta sulla bocca: a contatto con la macchina, non dov'era.
+  const gap = (machine.depthMm! + p.plenums[0].depthMm) / 2000;
+  const distance = (plenum: (typeof p.plenums)[number], unit: typeof machine) =>
+    Math.hypot(plenum.position.x - unit.position.x, plenum.position.y - unit.position.y);
+  expect(distance(p.plenums[0], machine)).toBeCloseTo(gap);
   const turned = rotateDevice90(p, machine.id);
-  expect(turned.plenums[0].rotation).toBeCloseTo(Math.PI / 2);
-  expect(turned.plenums[0].position.x).toBeCloseTo(4);
-  expect(turned.plenums[0].position.y).toBeCloseTo(2);
+  const turnedMachine = turned.hvacSystems[0].indoorUnits[0];
+  expect(turned.plenums[0].rotation).toBeCloseTo(p.plenums[0].rotation + Math.PI / 2);
+  expect(distance(turned.plenums[0], turnedMachine)).toBeCloseTo(gap);
 });
 
 it("keeps the plenum inlet direction when the body is unconnected", () => {

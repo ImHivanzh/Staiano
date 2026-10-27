@@ -9,7 +9,7 @@ export type ProductToolsProps = {
 };
 export function ProductTools({ type, onClose }: ProductToolsProps) {
   return (
-    <aside className={styles.panel} aria-label="Inserisci apparecchio">
+    <aside className={`${styles.panel} ${styles.insert}`} aria-label="Inserisci apparecchio">
       <p>
         Inserisci gli apparecchi sulla pianta principale. Ogni macchina crea il
         proprio impianto.

@@ -72,6 +72,7 @@ it("serve il GLB della casa dalla memoria e rifiuta file non GLB", async () => {
   const served = await fetch(`${base(link)}/m/0/0.glb`);
   expect(served.headers.get("content-type")).toBe("model/gltf-binary");
   expect(Buffer.from(await served.arrayBuffer()).equals(glb)).toBe(true);
+  expect(await (await fetch(base(link))).text()).toContain('"scalable":true');
   await expect(
     createArHouseLink("x", Buffer.from("non e un glb")),
   ).rejects.toThrow();

@@ -19,12 +19,20 @@ export function FlowParticles({
   color,
   diameterMm,
   flexibleProductId,
+  count = 6,
+  radiusM = 0.024,
+  speedMps,
 }: {
   points: RoutePoint[];
   animated: boolean;
   color: string;
   diameterMm?: number;
   flexibleProductId?: string;
+  /** Numero di particelle; più fitte su tubi lunghi per far leggere il verso. */
+  count?: number;
+  radiusM?: number;
+  /** Velocità costante in m/s; senza, una corsa completa ogni ~8 s. */
+  speedMps?: number;
 }) {
   const ref = useRef<THREE.InstancedMesh>(null);
   const curve = useMemo(() => {
@@ -57,8 +65,10 @@ export function FlowParticles({
   const transform = useMemo(() => new THREE.Object3D(), []);
   useFrame(({ clock, invalidate }) => {
     if (!animated || !ref.current || curve.getLength() < 0.001) return;
-    for (let i = 0; i < 6; i++) {
-      const p = curve.getPointAt((clock.elapsedTime * 0.12 + i / 6) % 1);
+    const length = curve.getLength();
+    const rate = speedMps ? speedMps / length : 0.12;
+    for (let i = 0; i < count; i++) {
+      const p = curve.getPointAt((clock.elapsedTime * rate + i / count) % 1);
       transform.position.copy(p);
       transform.updateMatrix();
       ref.current.setMatrixAt(i, transform.matrix);
@@ -69,10 +79,11 @@ export function FlowParticles({
   return animated ? (
     <instancedMesh
       ref={ref}
-      args={[undefined, undefined, 6]}
+      key={count}
+      args={[undefined, undefined, count]}
       frustumCulled={false}
     >
-      <sphereGeometry args={[0.024, 10, 8]} />
+      <sphereGeometry args={[radiusM, 10, 8]} />
       <meshBasicMaterial color={color} />
     </instancedMesh>
   ) : null;

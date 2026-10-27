@@ -14,7 +14,12 @@ import { resolve } from "node:path";
 export const AR_TTL_MS = 30 * 60 * 1000;
 
 export type ArVariant = { label: string; url: string; glb?: Buffer };
-export type ArItem = { label: string; variants: ArVariant[] };
+export type ArItem = {
+  label: string;
+  variants: ArVariant[];
+  /** Plastico (es. la casa intera): si ingrandisce a pizzico invece di stare a grandezza reale. */
+  scalable?: boolean;
+};
 export class ArBridgeError extends Error {}
 
 type Link = { expiresAt: number; items: ArItem[] };
@@ -101,6 +106,7 @@ const html = (token: string, link: Link) => {
     items: link.items.map((item) => ({
       label: item.label,
       variants: item.variants.map((variant) => variant.label),
+      scalable: !!item.scalable,
     })),
   }).replaceAll("<", "\\u003c");
   return `<!doctype html><html lang="it"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Staiano · Realtà aumentata</title>
@@ -117,7 +123,7 @@ button[aria-pressed=true]{background:#1f5eff;border-color:#1f5eff;color:#fff}
 #variants{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 </style>
 <body>
-<header><h1 id="title"></h1><p>Appoggia il telefono sul pavimento: il modello compare a grandezza reale.</p></header>
+<header><h1 id="title"></h1><p id="hint"></p></header>
 <model-viewer id="mv" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls touch-action="pan-y" shadow-intensity="1" environment-image="neutral" alt="Modello 3D"><button slot="ar-button" class="ar">Vedi nella stanza (AR)</button></model-viewer>
 <footer><select id="item" hidden aria-label="Modello"></select><div id="variants"></div><div id="tools" style="margin-top:8px"><button id="flame" hidden aria-pressed="false">Accendi fiamma</button></div><p id="left"></p></footer>
 <script type="module" src="/ar/${token}/mv.js"></script>
@@ -132,6 +138,9 @@ function draw(){
   $("title").textContent=D.items[item].label;
   const box=$("variants");box.replaceChildren();
   D.items[item].variants.forEach((label,i)=>{const b=document.createElement("button");b.textContent=label;b.setAttribute("aria-pressed",i===variant);b.onclick=()=>{variant=i;draw()};box.append(b)});
+  const scalable=D.items[item].scalable;
+  mv.setAttribute("ar-scale",scalable?"auto":"fixed");
+  $("hint").textContent=scalable?"Plastico della casa: appoggialo su un tavolo e pizzica per ingrandire.":"Appoggia il telefono sul pavimento: il modello compare a grandezza reale.";
   const src="/ar/"+D.token+"/m/"+item+"/"+variant+".glb";
   if(mv.getAttribute("src")!==src)mv.setAttribute("src",src);
 }
@@ -245,7 +254,13 @@ export async function createArHouseLink(
   if (glb.length < 12 || glb.toString("latin1", 0, 4) !== "glTF")
     throw new ArBridgeError("Modello 3D della casa non valido.");
   return register(
-    [{ label: label.slice(0, 120), variants: [{ label: "Casa", url: "", glb }] }],
+    [
+      {
+        label: label.slice(0, 120),
+        scalable: true,
+        variants: [{ label: "Casa", url: "", glb }],
+      },
+    ],
     ttlMs,
   );
 }

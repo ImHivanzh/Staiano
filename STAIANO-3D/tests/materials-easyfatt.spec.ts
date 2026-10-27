@@ -33,8 +33,8 @@ test("Easyfatt exports every material grouped by room, including items without c
     new Uint8Array(await readFile((await download.path())!)),
   );
   const sheet = strFromU8(files["xl/worksheets/sheet1.xml"]);
-  expect(sheet).toContain("STANZA: Soggiorno");
-  expect(sheet).toContain("STANZA: Camera matrimoniale");
+  expect(sheet).toContain("**STANZA: SOGGIORNO**");
+  expect(sheet).toContain("**STANZA: CAMERA MATRIMONIALE**");
   const radiator = [
     ...sheet.matchAll(/<row r="(\d+)">([\s\S]*?)<\/row>/g),
   ].find(

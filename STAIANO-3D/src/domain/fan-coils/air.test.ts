@@ -65,6 +65,28 @@ function addSupplyPlenum(project: Project, terminalId: string): Project {
 }
 
 describe("ventilconvettore canalizzabile", () => {
+  it("collega il plenum anche se la scheda non pubblica la portata alla massima velocità (FCZ xx1P)", () => {
+    let project = fixture();
+    project = {
+      ...project,
+      fanCoils: [],
+      installations: [],
+      hvacSystems: [],
+    };
+    project = applyFanCoil(project, project.rooms[0].id, "aermec-fcz201p", {
+      mounting: "ceiling",
+    });
+    const unit = project.fanCoils![0];
+    const free = insertPlenum(project, unit.roomId, unit.position);
+    const connected = connectPlenum(free, free.plenums.at(-1)!.id, unit.id);
+    expect(fanCoilAirSystem(connected, unit.id)?.airflowM3h).toBe(220);
+    // La plenum aderisce alla macchina: distanza centro-centro pari alle mezze profondità.
+    const plenum = connected.plenums.at(-1)!;
+    const mirror = fanCoilAirSystem(connected, unit.id)!.indoorUnits[0];
+    expect(
+      Math.hypot(plenum.position.x - mirror.position.x, plenum.position.y - mirror.position.y),
+    ).toBeCloseTo((mirror.depthMm + plenum.depthMm) / 2000);
+  });
   it("collega un plenum al ventilconvettore prima di creare la distribuzione aria", () => {
     const project = fixture();
     const unit = project.fanCoils![0];

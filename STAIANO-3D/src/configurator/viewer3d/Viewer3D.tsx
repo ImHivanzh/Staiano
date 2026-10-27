@@ -27,11 +27,8 @@ import {
   Eye,
   EyeSlash,
   MagnifyingGlassPlus,
-  Path,
   Power,
   PlusCircle,
-  Presentation,
-  Stop,
   ThermometerHot,
   Wind,
   SlidersHorizontal,
@@ -90,6 +87,7 @@ import { roomMeasuredSides } from "@/domain/geometry/dimensions";
 import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
 import { ComfortFlows } from "./ComfortFlows";
 import type { ComfortMode } from "./comfort-fields";
+import { useCustomerView } from "./customer-view-state";
 
 class WebGLError extends Component<
   { children: React.ReactNode },
@@ -191,10 +189,12 @@ export default function Viewer3D({
   const [hiddenFloorIds, setHiddenFloorIds] = useState<ReadonlySet<string>>(
     new Set(),
   );
-  const [tour, setTour] = useState(false);
-  const [comfortMode, setComfortMode] = useState<ComfortMode | "off">("cool");
-  // Interruttore impianto: ventole, acqua nei tubi e aria dalle macchine.
-  const [systemOn, setSystemOn] = useState(false);
+  // Impianto, comfort e tour sono condivisi con la Vista Cliente (la TV).
+  const systemOn = useCustomerView((state) => state.systemOn);
+  const comfort = useCustomerView((state) => state.comfort);
+  const tour = useCustomerView((state) => state.tour);
+  // Impianto spento: nessun flusso d'aria, in nessuna vista.
+  const comfortMode: ComfortMode | "off" = systemOn ? comfort : "off";
   const tourIndex = useRef(0);
   const [transformChoice, setTransformChoice] = useState<{
     id?: string;
@@ -574,7 +574,7 @@ export default function Viewer3D({
     selectedId,
   ]);
   useEffect(() => {
-    if (!tour || !p) return;
+    if (!readOnly || !tour || !p) return;
     const targets = [
       ...rooms.map((r) => ({ kind: "room" as const, id: r.id })),
       ...p.plenums
@@ -594,7 +594,7 @@ export default function Viewer3D({
       clearTimeout(first);
       clearInterval(timer);
     };
-  }, [tour, p, rooms, activeFloorId, select]);
+  }, [readOnly, tour, p, rooms, activeFloorId, select]);
   const selectedPlenum = p?.plenums.find((pl) => pl.id === selectedId);
   const internalSides =
     p && selectedRoom ? roomMeasuredSides(p, selectedRoom, "internal") : null;
@@ -725,60 +725,6 @@ export default function Viewer3D({
                 </summary>
                 <div className={styles.viewBody}>
                   <div className={`${styles.group} ${styles.modeTools}`}>
-                    <span className={styles.menuTitle}>Presentazione</span>
-                    <button
-                      aria-pressed={presentation}
-                      onClick={() => {
-                        useProjectStore.setState({
-                          presentation: !presentation,
-                        });
-                        setProductTool(null);
-                        setChannelPanel(false);
-                        setTransformMode(null);
-                        if (!presentation && !fullscreen)
-                          void toggleFullscreen();
-                        if (presentation && fullscreen) void toggleFullscreen();
-                        if (presentation) setTour(false);
-                      }}
-                    >
-                      <Presentation size={16} aria-hidden="true" />
-                      {presentation
-                        ? "Torna alla progettazione"
-                        : "Presentazione cliente"}
-                    </button>
-                    <button
-                      aria-pressed={tour}
-                      onClick={() => {
-                        tourIndex.current = 0;
-                        setTour(!tour);
-                        setFocused(!tour);
-                      }}
-                    >
-                      {tour ? (
-                        <Stop size={16} aria-hidden="true" />
-                      ) : (
-                        <Path size={16} aria-hidden="true" />
-                      )}
-                      {tour ? "Ferma tour" : "Tour del progetto"}
-                    </button>
-                    {presentation && (
-                      <label className={styles.comfortChoice}>
-                        <span>Comfort</span>
-                        <select
-                          aria-label="Flusso aria e calore"
-                          value={comfortMode}
-                          onChange={(e) =>
-                            setComfortMode(
-                              e.target.value as ComfortMode | "off",
-                            )
-                          }
-                        >
-                          <option value="cool">Aria fresca</option>
-                          <option value="heat">Calore</option>
-                          <option value="off">Flussi spenti</option>
-                        </select>
-                      </label>
-                    )}
                     <span className={styles.menuTitle}>Impianto</span>
                     <button
                       aria-pressed={channelView}
@@ -792,7 +738,9 @@ export default function Viewer3D({
                     </button>
                     <button
                       aria-pressed={systemOn}
-                      onClick={() => setSystemOn(!systemOn)}
+                      onClick={() =>
+                        useCustomerView.setState({ systemOn: !systemOn })
+                      }
                     >
                       <Power size={16} aria-hidden="true" />
                       Impianto {systemOn ? "acceso" : "spento"}
@@ -1439,7 +1387,7 @@ export default function Viewer3D({
                     <DuctMeshes
                       project={sceneProject}
                       activeFloorId={activeFloorId}
-                      animated={presentation || readOnly || systemOn}
+                      animated={systemOn}
                       editable={!readOnly && !presentation}
                       flowMode={comfortMode === "heat" ? "heat" : "cool"}
                       onAddWaypoint={addDuctBend}
@@ -1465,16 +1413,14 @@ export default function Viewer3D({
                     />
                   )}
                 {loadMap && <LoadMap rooms={rooms} />}
-                {(presentation || readOnly || systemOn) &&
-                  sceneProject &&
-                  comfortMode !== "off" && (
-                    <ComfortFlows
-                      project={sceneProject}
-                      floorId={activeFloorId}
-                      mode={comfortMode}
-                      roomId={isolatedRoomId}
-                    />
-                  )}
+                {sceneProject && comfortMode !== "off" && (
+                  <ComfortFlows
+                    project={sceneProject}
+                    floorId={activeFloorId}
+                    mode={comfortMode}
+                    roomId={isolatedRoomId}
+                  />
+                )}
                 {p && selectedId && transformMode && !presentation && (
                   <DeviceTransform
                     project={p}
@@ -1542,7 +1488,7 @@ export default function Viewer3D({
                       ? {
                           projectId: p.id,
                           floorId: activeFloorId,
-                          follow: readOnly,
+                          follow: readOnly && !tour,
                         }
                       : undefined
                   }
@@ -1564,7 +1510,7 @@ export default function Viewer3D({
                     "mounting" in chosenDevice &&
                     chosenDevice.mounting === "ceiling"
                   }
-                  animate={!readOnly && (presentation || tour)}
+                  animate={readOnly && tour}
                 />
                 <RenderMarker
                   selected={selectedId ?? ""}

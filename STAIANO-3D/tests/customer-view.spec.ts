@@ -60,6 +60,11 @@ test("customer view shows graphical connection pipes, saved plenums and air flow
     const canvas = client.locator("canvas");
     await expect.poll(connectionCount, { timeout: 30000 }).toBe(1);
     await expect(canvas).toHaveAttribute("data-plenum-count", "2");
+    // Impianto spento: nessun flusso d'aria sulla TV, finché non si accende.
+    if (width === 1920) {
+      await expect(canvas).not.toHaveAttribute("data-comfort-mode");
+      await client.getByRole("button", { name: "Impianto spento" }).click();
+    }
     await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
     await expect
       .poll(async () =>

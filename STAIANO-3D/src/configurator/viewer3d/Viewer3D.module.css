@@ -255,6 +255,14 @@
   gap: 10px;
   pointer-events: none;
 }
+.caption,
+.hint {
+  background: rgb(255 255 255 / 86%);
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  padding: 6px 10px;
+  backdrop-filter: blur(4px);
+}
 .caption {
   max-width: 55%;
   color: var(--testo-tenue);
@@ -270,7 +278,9 @@
 .hint {
   color: var(--testo-tenue);
   font-size: 11px;
+  line-height: 1.6;
   text-align: right;
+  flex: 0 1 auto;
 }
 .roomLabel {
   border: 1px solid var(--bordo-forte);
@@ -357,9 +367,17 @@
   .scene {
     top: 108px;
   }
-  .toolbar > .settings:nth-child(2) > .settingsBody {
+  /* Sotto i 360 px i menu si aprono sull'intera larghezza della barra. */
+  .toolbar > .settings {
+    position: static;
+  }
+  .toolbar > .settings > .viewBody,
+  .toolbar > .settings > .settingsBody {
+    left: 0;
     right: 0;
-    left: auto;
+    width: auto;
+    max-width: none;
+    min-width: 0;
   }
   .productMenu {
     left: 0;

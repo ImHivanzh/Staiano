@@ -43,14 +43,17 @@ function Export({
     const root = group.current;
     if (!ready || !root || finished.current || ++frames.current < 6) return;
     finished.current = true;
-    // Origine al centro della casa e a terra: in AR il modello nasce lì.
+    // Plastico da tavolo (al massimo 1 m), con origine al centro e a terra.
     const box = new THREE.Box3().setFromObject(root);
     if (box.isEmpty())
       return reject(Error("Nessuna geometria da condividere."));
+    const size = box.getSize(new THREE.Vector3());
+    const k = Math.min(1, 1 / Math.max(size.x, size.z, 0.001));
+    root.scale.setScalar(k);
     root.position.set(
-      -(box.min.x + box.max.x) / 2,
-      -box.min.y,
-      -(box.min.z + box.max.z) / 2,
+      (-(box.min.x + box.max.x) / 2) * k,
+      -box.min.y * k,
+      (-(box.min.z + box.max.z) / 2) * k,
     );
     root.updateMatrixWorld(true);
     new GLTFExporter().parse(
@@ -162,7 +165,10 @@ async function houseGlb(project: Project) {
 
 /** Esporta tutti i piani in GLB e crea il link AR da 30 minuti. */
 export async function shareHouseAr(project: Project) {
-  if (!project.floors.length || (!project.walls.length && !project.rooms.length))
+  if (
+    !project.floors.length ||
+    (!project.walls.length && !project.rooms.length)
+  )
     throw Error("Disegna almeno un muro o una stanza prima di condividere.");
   const glb = await houseGlb(structuredClone(project));
   const response = await fetch("/api/ar/house", {

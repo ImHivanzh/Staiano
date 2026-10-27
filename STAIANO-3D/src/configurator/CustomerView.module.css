@@ -28,7 +28,7 @@
 }
 .header p {
   margin: 4px 0 0;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--testo-tenue);
 }
 .header button {
@@ -69,7 +69,41 @@
   padding: 12px 28px;
   border-top: 1px solid var(--bordo);
   background: var(--carta);
-  font-size: 14px;
+  font-size: 18px;
+}
+/* Comandi pensati per una TV: bersagli grandi, testo leggibile da lontano. */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px 28px;
+  border-top: 1px solid var(--bordo);
+  background: var(--carta);
+}
+.controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 0 28px;
+  border: 2px solid var(--bordo);
+  border-radius: 14px;
+  background: var(--carta);
+  color: var(--testo);
+  font: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.controls button svg {
+  width: 28px;
+  height: 28px;
+}
+.controls button[aria-pressed="true"] {
+  border-color: var(--primario, #1f5eff);
+  background: var(--primario, #1f5eff);
+  color: #fff;
 }
 .footer small {
   margin-left: auto;
@@ -90,7 +124,7 @@
   top: 16px;
   right: 16px;
   bottom: 16px;
-  width: min(360px, calc(100% - 32px));
+  width: min(460px, calc(100% - 32px));
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -100,12 +134,12 @@
   border-radius: 12px;
   background: var(--carta);
   box-shadow: 0 8px 28px rgba(24, 50, 73, 0.16);
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.5;
 }
 .presentation h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: 28px;
   letter-spacing: -0.02em;
 }
 .presentation h3 {
@@ -119,7 +153,7 @@
   margin: 0;
 }
 .stepCount {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--testo-tenue);
 }
 .rooms {

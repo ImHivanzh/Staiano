@@ -19,11 +19,28 @@ export function fanCoilAirSystem(project: Project, fanCoilId: string) {
   );
 }
 
+/**
+ * Punto di massima potenza; se la scheda non pubblica la portata alla velocità
+ * massima (Aermec FCZ xx1P) vale quella della velocità più alta che la dichiara.
+ */
+export function fanCoilAirPoint(
+  product: Parameters<typeof fanCoilMaximumPoint>[0],
+) {
+  const max = fanCoilMaximumPoint(product).point;
+  if (!max || max.airflowM3h) return max;
+  const declared = product.operatingPoints.filter((p) => p.airflowM3h);
+  const fallback = declared.reduce<typeof max | undefined>(
+    (best, p) => (!best || p.coolingW > best.coolingW ? p : best),
+    undefined,
+  );
+  return fallback ? { ...max, airflowM3h: fallback.airflowM3h } : max;
+}
+
 export function fanCoilAirData(project: Project, fanCoilId: string) {
   const unit = project.fanCoils?.find((item) => item.id === fanCoilId);
   if (!unit) return null;
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const point = product && fanCoilMaximumPoint(product).point;
+  const point = product && fanCoilAirPoint(product);
   return product && point ? { unit, product, point } : null;
 }
 
@@ -208,7 +225,7 @@ export function syncFanCoilAirSystems(project: Project): Project {
       unit.productId,
       unit.catalogVersion,
     );
-    const point = product && fanCoilMaximumPoint(product).point;
+    const point = product && fanCoilAirPoint(product);
     const mirror = system.indoorUnits[0];
     const indoorUnit: AirSystem["indoorUnits"][number] = {
       id: mirror?.id ?? newId(),

@@ -280,20 +280,13 @@ test("realistic 3D fullscreen and smartphone resize keep usable canvas", async (
   expect(errors).toEqual([]);
 });
 
-test("presentation menu fits desktop and phone widths and switches comfort flows", async ({
+test("view menu fits desktop and phone widths and the air flows only while the system is on", async ({
   page,
 }, testInfo) => {
   test.setTimeout(90000);
   const canvas = await openMeasuredHouse(page);
   const viewer = page.getByTestId("viewer-3d");
-  await openDisclosure(viewer, "Vista 3D");
-  await viewer
-    .getByRole("button", { name: "Presentazione cliente", exact: true })
-    .click();
-  await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
-  await page.evaluate(async () => {
-    if (document.fullscreenElement) await document.exitFullscreen();
-  });
+  await expect(canvas).not.toHaveAttribute("data-comfort-mode");
   for (const width of [1440, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await openDisclosure(viewer, "Vista 3D");
@@ -308,28 +301,21 @@ test("presentation menu fits desktop and phone widths and switches comfort flows
     expect(
       await panel.evaluate((node) => node.scrollWidth <= node.clientWidth),
     ).toBe(true);
-    const choice = viewer.getByRole("combobox", {
-      name: "Flusso aria e calore",
-    });
-    await choice.selectOption("heat");
-    await expect(canvas).toHaveAttribute("data-comfort-mode", "heat");
     await page.screenshot({
-      path: testInfo.outputPath(`presentation-menu-${width}.png`),
+      path: testInfo.outputPath(`view-menu-${width}.png`),
       fullPage: true,
     });
-    await choice.selectOption("cool");
-    await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
   }
-  await viewer
-    .getByRole("combobox", { name: "Flusso aria e calore" })
-    .selectOption("off");
-  await expect(canvas).not.toHaveAttribute("data-comfort-mode");
-  await viewer
-    .getByRole("button", { name: "Torna alla progettazione", exact: true })
-    .click();
   await expect(
-    viewer.getByRole("button", { name: "Presentazione cliente", exact: true }),
-  ).toBeVisible();
+    viewer.getByRole("button", { name: "Presentazione cliente" }),
+  ).toHaveCount(0);
+  await expect(
+    viewer.getByRole("button", { name: "Tour del progetto" }),
+  ).toHaveCount(0);
+  await viewer.getByRole("button", { name: "Impianto spento" }).click();
+  await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
+  await viewer.getByRole("button", { name: "Impianto acceso" }).click();
+  await expect(canvas).not.toHaveAttribute("data-comfort-mode");
 });
 
 test("real Ecoclima grilles and circular valve keep their catalogue face forms", async ({

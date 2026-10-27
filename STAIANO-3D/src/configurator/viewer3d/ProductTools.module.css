@@ -17,6 +17,18 @@
   overflow: hidden;
   animation: openPanel 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+.insert {
+  bottom: auto;
+  gap: 10px;
+  padding: 16px;
+}
+.insert p {
+  margin: 0 0 4px;
+  line-height: 1.5;
+}
+.insert button {
+  width: 100%;
+}
 @keyframes openPanel {
   from {
     transform: translateX(10px);

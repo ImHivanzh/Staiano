@@ -1,7 +1,7 @@
 "use client";
 import { OutdoorBrackets } from "./OutdoorBrackets";
 import { OutdoorCabinet } from "./OutdoorCabinet";
-import { Line, useTexture } from "@react-three/drei";
+import { useTexture } from "@react-three/drei";
 import { Suspense, useEffect, useMemo } from "react";
 import { ModelAssetBoundary } from "./ModelAssetBoundary";
 import GreeDuctedBody from "./GreeDuctedBody";
@@ -11,6 +11,52 @@ import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
 import { heatPumpModelUrl } from "@/domain/catalogs/heat-pump-models";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
 import { FlowParticles } from "./DuctMeshes";
+
+const PIPE_RADIUS_M = 0.011;
+
+/** Tubo pieno (non una linea tratteggiata) a tratti rettilinei con giunti sferici. */
+function PipeTube({
+  points,
+  color,
+}: {
+  points: [number, number, number][];
+  color: string;
+}) {
+  return (
+    <group>
+      {points.map((point, index) => {
+        const next = points[index + 1];
+        const joint = (
+          <mesh position={point}>
+            <sphereGeometry args={[PIPE_RADIUS_M, 10, 8]} />
+            <meshStandardMaterial color={color} roughness={0.5} />
+          </mesh>
+        );
+        if (!next) return <group key={index}>{joint}</group>;
+        const from = new THREE.Vector3(...point);
+        const to = new THREE.Vector3(...next);
+        const length = from.distanceTo(to);
+        if (length < 1e-4) return <group key={index}>{joint}</group>;
+        const middle = from.clone().add(to).multiplyScalar(0.5);
+        const rotation = new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3(0, 1, 0),
+          to.clone().sub(from).normalize(),
+        );
+        return (
+          <group key={index}>
+            {joint}
+            <mesh position={middle} quaternion={rotation}>
+              <cylinderGeometry
+                args={[PIPE_RADIUS_M, PIPE_RADIUS_M, length, 12]}
+              />
+              <meshStandardMaterial color={color} roughness={0.5} />
+            </mesh>
+          </group>
+        );
+      })}
+    </group>
+  );
+}
 
 function HeatPumpIdentification({
   manufacturer,
@@ -185,7 +231,7 @@ export function HydronicMeshes({
                         }));
                         return (
                           <group key={color}>
-                            <Line
+                            <PipeTube
                               points={line.map(
                                 (p) =>
                                   [p.x, p.elevationM, p.y] as [
@@ -195,17 +241,37 @@ export function HydronicMeshes({
                                   ],
                               )}
                               color={color}
-                              lineWidth={2.5}
-                              dashed
-                              dashSize={0.1}
-                              gapSize={0.045}
                             />
                             {running && (
-                              // Mandata verso la macchina, ritorno verso la pompa di calore.
+                              // Mandata verso la macchina, ritorno verso la pompa di calore:
+                              // gocce più larghe del tubo, una ogni ~25 cm, a velocità costante.
                               <FlowParticles
                                 points={back ? [...line].reverse() : line}
                                 animated
-                                color={color}
+                                color={back ? "#d6f1ff" : "#ffd9cf"}
+                                radiusM={PIPE_RADIUS_M * 1.5}
+                                count={Math.min(
+                                  80,
+                                  Math.max(
+                                    6,
+                                    Math.round(
+                                      line.reduce(
+                                        (sum, p, i) =>
+                                          i
+                                            ? sum +
+                                              Math.hypot(
+                                                p.x - line[i - 1].x,
+                                                p.y - line[i - 1].y,
+                                                p.elevationM -
+                                                  line[i - 1].elevationM,
+                                              )
+                                            : 0,
+                                        0,
+                                      ) / 0.25,
+                                    ),
+                                  ),
+                                )}
+                                speedMps={0.35}
                               />
                             )}
                           </group>

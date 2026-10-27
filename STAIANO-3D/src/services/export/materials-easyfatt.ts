@@ -5,6 +5,14 @@ import { easyfattWorkbook } from "./ecoclima-easyfatt";
 import type { EasyfattMappings } from "@/domain/catalogs/easyfatt-mapping";
 import { easyfattArticleKey } from "@/domain/catalogs/easyfatt-mapping";
 
+/** Ordine delle categorie nel preventivo: macchine, accessori, terminali e plenum, Ecoclima, radiatori, resto. */
+function categoryOrder(mappingKey: string) {
+  const prefix = mappingKey.split(":")[0];
+  const order = ["fan-coil", "fan-coil-accessory", "fan-coil-control", "fan-coil-board", "plenum", "air", "ecoclima", "rad", "rad-accessorio"];
+  const index = order.indexOf(prefix);
+  return index < 0 ? order.length : index;
+}
+
 function materialsEasyfattRows(
   project: Project,
   mappings: EasyfattMappings = {},
@@ -88,9 +96,19 @@ function materialsEasyfattRows(
     supplierCode?: string;
     supplier?: string;
   }[] = [];
+  const blank = (): (typeof rows)[number] => ({ cells: [null, null, null, null, null], reason: "" });
   for (const [room, entries] of rooms) {
-    rows.push({ cells: [null, `STANZA: ${room}`, null, null], reason: "" });
-    rows.push(...entries.values());
+    if (rows.length) rows.push(blank());
+    rows.push({ cells: [null, `**STANZA: ${room.toUpperCase()}**`, null, null], reason: "" });
+    const groups = new Map<number, (typeof rows)[number][]>();
+    for (const [identity, entry] of entries) {
+      const group = categoryOrder(identity.split("|")[0]);
+      groups.set(group, [...(groups.get(group) ?? []), entry]);
+    }
+    // Una riga vuota separa le categorie diverse.
+    for (const [, items] of [...groups].sort(([x], [y]) => x - y)) {
+      rows.push(blank(), ...items);
+    }
   }
   return rows;
 }
@@ -146,12 +164,12 @@ const xmlText = (value: string) => value
 
 /** Easyfatt-XML creates a new quote; missing prices must be checked in Easyfatt. */
 export function materialsEasyfattXml(project: Project, mappings: EasyfattMappings, customer: string, date: string, customerCode = ""): string {
-  if (!customer.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error("Indica cliente e data del preventivo.");
+  if ((!customer.trim() && !customerCode.trim()) || !/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error("Indica cliente (nome o codice) e data del preventivo.");
   const rows = materialsEasyfattRows(project, mappings).map(({ cells, supplierCode }) => {
     const [code, description, quantity, price] = cells;
     const decimal = (value: number | string) => Number(value).toLocaleString("en-US", { useGrouping: false, maximumSignificantDigits: 21 });
     return `<Row>${code ? `<Code>${xmlText(String(code))}</Code>` : ""}${supplierCode ? `<SupplierCode>${xmlText(supplierCode)}</SupplierCode>` : ""}<Description>${xmlText(String(description))}</Description>${quantity === null ? "" : `<Qty>${decimal(quantity)}</Qty>`}${price === null ? "" : `<Price>${decimal(price)}</Price>`}</Row>`;
   }).join("\n");
   // Total is required by Danea's XSD but explicitly ignored on import.
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<EasyfattDocuments AppVersion="2" Creator="Staiano HVAC"><Documents><Document><DocumentType>Q</DocumentType><Date>${date}</Date><CustomerName>${xmlText(customer.trim())}</CustomerName>${customerCode.trim() ? `<CustomerCode>${xmlText(customerCode.trim())}</CustomerCode>` : ""}<Total>0</Total><Rows>\n${rows}\n</Rows></Document></Documents></EasyfattDocuments>`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<EasyfattDocuments AppVersion="2" Creator="Staiano HVAC"><Documents><Document><DocumentType>Q</DocumentType><Date>${date}</Date>${customerCode.trim() ? `<CustomerCode>${xmlText(customerCode.trim())}</CustomerCode>` : `<CustomerName>${xmlText(customer.trim())}</CustomerName>`}<Total>0</Total><Rows>\n${rows}\n</Rows></Document></Documents></EasyfattDocuments>`;
 }

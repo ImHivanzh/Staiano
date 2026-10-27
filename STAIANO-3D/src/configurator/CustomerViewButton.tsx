@@ -3,6 +3,11 @@ import { useEffect, useRef } from "react";
 import { Monitor } from "@phosphor-icons/react";
 import { useProjectStore } from "@/stores/project-store";
 import { useCustomerCamera } from "./viewer3d/customer-camera";
+import {
+  customerViewSchema,
+  customerViewValues,
+  useCustomerView,
+} from "./viewer3d/customer-view-state";
 
 export function CustomerViewButton() {
   const connection = useRef<{ window: Window; close: () => void } | null>(null);
@@ -58,8 +63,16 @@ export function CustomerViewButton() {
           if (event.data?.type === "ready") {
             send();
             sendCamera();
+            sendView();
+          }
+          if (event.data?.type === "view") {
+            const view = customerViewSchema.safeParse(event.data.view);
+            if (view.success) useCustomerView.setState(view.data);
           }
         };
+        const sendView = () =>
+          channel.postMessage({ type: "view", view: customerViewValues() });
+        const unsubscribeView = useCustomerView.subscribe(sendView);
         const sendCamera = () => {
           const { camera } = useCustomerCamera.getState();
           if (camera) channel.postMessage({ type: "camera", camera });
@@ -78,6 +91,7 @@ export function CustomerViewButton() {
           closed = true;
           unsubscribe();
           unsubscribeCamera();
+          unsubscribeView();
           channel.postMessage({ type: "closed" });
           channel.close();
           window.removeEventListener("pagehide", close);

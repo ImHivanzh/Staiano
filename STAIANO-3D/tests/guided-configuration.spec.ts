@@ -300,25 +300,15 @@ test("real GPU view edits the shared terminal and shows channels and pillars aft
     fullPage: true,
   });
   await openDisclosure(page.getByTestId("viewer-3d"), "Vista 3D");
-  await viewer
-    .getByRole("button", { name: "Presentazione cliente", exact: true })
-    .click();
-  await expect(viewer).toContainText(
-    "La distribuzione dell’aria, ambiente per ambiente",
-  );
+  await viewer.getByRole("button", { name: "Impianto spento" }).click();
   await expect(canvas).toHaveAttribute("data-comfort-mode", "cool");
   expect(Number(await canvas.getAttribute("data-comfort-streams"))).toBe(0);
-  await viewer
-    .getByRole("combobox", { name: "Flusso aria e calore" })
-    .selectOption("heat");
-  await expect(canvas).toHaveAttribute("data-comfort-mode", "heat");
   await page.screenshot({
-    path: info.outputPath("guided-client-tv.png"),
+    path: info.outputPath("guided-system-on-3d.png"),
     fullPage: true,
   });
-  await viewer
-    .getByRole("button", { name: "Torna alla progettazione", exact: true })
-    .click();
+  await viewer.getByRole("button", { name: "Impianto acceso" }).click();
+  await expect(canvas).not.toHaveAttribute("data-comfort-mode");
   await page.getByRole("button", { name: "2D", exact: true }).click();
   await expect(page.getByTestId("pillar-2d")).toHaveCount(1);
   await expect(page.getByTestId("plenum-2d")).toHaveCount(1);

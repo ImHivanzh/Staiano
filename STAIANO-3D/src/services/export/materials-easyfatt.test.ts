@@ -21,6 +21,11 @@ it("creates an Easyfatt XML quote with shared codes, adjusted quantities and esc
   expect(exported).toContain(`<Qty>${row.roomQuantities[0].quantity * 2}</Qty>`);
   expect(exported).not.toContain("<Price>");
   expect(() => materialsEasyfattXml(project, {}, " ", "2026-10-27")).toThrow();
+  // Con il codice cliente il nome non serve e non viene scritto: Easyfatt usa l'anagrafica esistente.
+  const coded = materialsEasyfattXml(project, {}, "", "2026-10-27", "125");
+  expect(coded).toContain("<CustomerCode>125</CustomerCode>");
+  expect(coded).not.toContain("<CustomerName>");
+  expect(materialsEasyfattXml(project, {}, "Rossi", "2026-10-27", "125")).not.toContain("<CustomerName>");
 });
 
 it("exports shared codes and radiator element quantities without carrying a manufacturer price", () => {
@@ -138,8 +143,8 @@ it("exports all manufacturers with real quantities and preserves absent prices a
     dossier.materials.length + dossier.accessories.length + 1,
   );
   expect(sheet).toContain("Cordivari");
-  expect(sheet).toContain("STANZA: Soggiorno");
-  expect(sheet).toContain("STANZA: Camera matrimoniale");
+  expect(sheet).toContain("**STANZA: SOGGIORNO**");
+  expect(sheet).toContain("**STANZA: CAMERA MATRIMONIALE**");
   expect(sheet).toContain('<c r="D2"/>');
   expect(sheet).toMatch(/<c r="C\d+"><v>\d+(?:\.\d+)?<\/v><\/c>/);
   const pending = strFromU8(files["xl/worksheets/sheet2.xml"]);
@@ -159,7 +164,7 @@ it("keeps descriptive room rows empty of quantity/price and includes items witho
   const sheet = strFromU8(files["xl/worksheets/sheet1.xml"]);
   const rows = [...sheet.matchAll(/<row r="(\d+)">([\s\S]*?)<\/row>/g)];
   const description = rows.find((entry) =>
-    entry[2].includes("STANZA: Camera matrimoniale"),
+    entry[2].includes("**STANZA: CAMERA MATRIMONIALE**"),
   )!;
   expect(description[2]).toContain(`<c r="C${description[1]}"/>`);
   expect(description[2]).toContain(`<c r="D${description[1]}"/>`);

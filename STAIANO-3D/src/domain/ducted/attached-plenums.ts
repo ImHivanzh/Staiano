@@ -141,8 +141,14 @@ export function connectPlenum(
             attachmentId: owner.id,
             systemId: terminal ? terminal.systemId : system!.id,
             use,
+            // Sulla macchina il plenum si appoggia esattamente alla bocca:
+            // la posa si ricalcola dal titolare, non resta dove era stato messo.
             ...(!terminal
-              ? { widthMm: owner.widthMm, heightMm: owner.heightMm }
+              ? {
+                  widthMm: owner.widthMm,
+                  heightMm: owner.heightMm,
+                  status: "proposed" as const,
+                }
               : {}),
           }
         : p,
