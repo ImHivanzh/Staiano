@@ -11,7 +11,7 @@ def stone():
     for _ in range(256*256):
         x=max(.2,min(.6,random.gauss(.39,.04)));v.extend((x,x*1.01,x,1))
     im.pixels=v;im.pack();n=m.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;m.node_tree.links.new(n.outputs['Color'],m.node_tree.nodes.get('Principled BSDF').inputs['Base Color']);return m
-colors={'nero':(.025,.027,.028),'verde':(.08,.17,.10),'nero-antracite':(.025,.027,.028),'bianco':(.83,.84,.83),'bordeaux':(.43,.012,.018)}
+colors={'nero':(.025,.027,.028),'verde':(.08,.17,.10),'nero-antracite':(.025,.027,.028),'bianco':(.83,.84,.83),'bordeaux':(.24,.008,.014)}
 def link(c,o,name):
     for old in list(o.users_collection):old.objects.unlink(o)
     c.objects.link(o);o.name=name;return o
@@ -26,9 +26,9 @@ specs=[('nordica-super-junior-lean',(.356,.423,.802),['nero','verde'],'upright')
 for ident,(w,d,h),finishes,kind in specs:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);shell=stone() if finishes[0]=='pietra' else mat('Rivestimento '+ident,colors[finishes[0]])
     pipe=.24 if kind=='tea' else .03;body=h-pipe
-    box(c,'Corpo',(0,0,body/2),(w,d,body-.02),black,.012)
+    box(c,'Corpo',(0,0,body/2),(w*(.86 if kind=='range' else .72),d,body-.02),black,.012)
     if kind=='range':
-        for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.43,0,body*.50),(w*.14,d*.96,body*.94),shell,.006)
+        for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.43,0,body*.50),(w*.14,d*.99,body*.94),shell,.006)
         box(c,'Pannello inferiore',(0,-d/2-.008,body*.10),(w*.85,.016,body*.17),shell,.004)
         box(c,'Porta focolare',(-w*.18,-d/2-.009,body*.57),(w*.28,.018,body*.43),dark,.006)
         box(c,'Vetro focolare',(-w*.18,-d/2-.020,body*.58),(w*.19,.006,body*.29),glass,.004)
@@ -36,7 +36,7 @@ for ident,(w,d,h),finishes,kind in specs:
         box(c,'Vetro forno',(w*.20,-d/2-.020,body*.58),(w*.26,.006,body*.29),glass,.004)
         cylinder(c,'Termometro forno',(w*.20,-d/2-.025,body*.58),(.025,.006,.025),metal)
     else:
-        for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.40,0,body*.50),(w*.20,d*.96,body*.94),shell,.008)
+        for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.43,0,body*.50),(w*.14,d*.99,body*.94),shell,.008)
         box(c,'Porta',(0,-d/2-.009,body*.52),(w*.70,.018,body*.65),dark,.006)
         box(c,'Vetro sportello',(0,-d/2-.020,body*.57),(w*.48,.006,body*.36),glass,.004)
         cylinder(c,'Regolatore aria',(0,-d/2-.023,body*.25),(.055,.006,.055),metal)

@@ -16,15 +16,15 @@ def box(c,name,loc,size,m,bevel=.003):
 specs=[
 ('nordica-iside-idro-5016',(.690,.628,1.196),[('bianco',(.83,.84,.83)),('pergamena',(.74,.68,.58)),('vogue-ametista',(.30,.16,.23))],True),
 ('nordica-isidora-idro-h16-50-evo',(.596,.708,1.165),[('tortora-lucido',(.47,.38,.33)),('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034))],False),
-('nordica-isidora-idro-h20-50-evo',(.596,.708,1.243),[('avorio',(.80,.75,.68)),('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034))],False),
-('nordica-isidora-idro-h23-50-evo',(.596,.737,1.243),[('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('avorio',(.80,.75,.68))],False)]
+('nordica-isidora-idro-h20-50-evo',(.596,.708,1.243),[('avorio',(.76,.64,.44)),('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034))],False),
+('nordica-isidora-idro-h23-50-evo',(.596,.737,1.243),[('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('avorio',(.76,.64,.44))],False)]
 for ident,(w,d,h),finishes,iside in specs:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);shell=mat('Maiolica '+ident,finishes[0][1])
-    box(c,'Corpo interno',(0,0,h/2),(w,d,h-.02),black,.035)
+    box(c,'Corpo interno',(0,0,h/2),(w*.78,d,h-.02),black,.035)
     for side in (-1,1):
         if iside:
             for i in range(3):
-                z=h*(.17+i*.30);box(c,'Pannello maiolica',(side*w*.38,-d*.38,z),(w*.24,d*.24,h*.28),shell,.025)
+                z=h*(.17+i*.30);box(c,'Pannello maiolica',(side*w*.38,-d*.38,z),(w*.24,d*.24,h*.295),shell,.025)
                 box(c,'Riquadro pannello',(side*w*.38,-d/2-.008,z),(w*.19,.006,h*.22),shell,.018)
         else:box(c,'Montante maiolica',(side*w*.40,-d*.37,h*.50),(w*.20,d*.26,h*.95),shell,.03)
     box(c,'Copertura superiore',(0,-d*.28,h*.955),(w,d*.44,h*.075),shell,.018)

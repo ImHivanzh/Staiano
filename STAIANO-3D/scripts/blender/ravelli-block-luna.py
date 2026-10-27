@@ -14,7 +14,7 @@ def box(c,name,loc,size,m,bevel=.003):
     return o
 for ident,w,d,h,luna in [('ravelli-block-9',.470,.520,1.010,False),('ravelli-block-7',.470,.520,1.010,False),('ravelli-luna',.460,.560,1.080,True)]:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);base=.16 if luna else .01
-    box(c,'Corpo',(0,0,(h+base)/2),(w,d,h-base-.04),black,.014)
+    box(c,'Corpo',(0,0,(h+base)/2),(w*.74,d,h-base-.04),black,.014)
     box(c,'Coperchio',(0,0,h-.024),(w,d,.024),black if luna else stone,.008)
     if not luna:
         for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.39,0,h*.73),(w*.22,d*.95,h*.50),stone,.005)

@@ -22,17 +22,17 @@ def flue(c,w,d,h):
     bpy.ops.mesh.primitive_cylinder_add(vertices=48,radius=.06,depth=.08,location=(0,d*.12,h+.025));o=bpy.context.object
     for old in list(o.users_collection):old.objects.unlink(o)
     c.objects.link(o);o.name='Scarico fumi';o.data.materials.append(black)
-specs=[('nordica-larissa16',(.628,.483,1.225),[('nero-antracite',(.025,.027,.028))],'larissa'),('nordica-asia-50',(.438,.473,1.385),[('vulcan',(.24,.23,.25))],'asia'),('nordica-aurelia-eos-ceramica',(.551,.605,1.489),[('panna',(.80,.75,.67)),('bordeaux',(.28,.025,.034))],'aurelia'),('nordica-aurelia-eos-petra',(.551,.605,1.489),[('pietra',None)],'aurelia'),('nordica-aurelia-eos-steel',(.551,.605,1.489),[('nero-antracite',(.025,.027,.028))],'aurelia'),('nordica-brigitta16',(.404,.397,.640),[('nero',(.025,.027,.028))],'brigitta'),('nordica-candy-eos165',(.404,.397,1.142),[('nero-antracite',(.025,.027,.028))],'brigitta')]
+specs=[('nordica-larissa16',(.628,.483,1.225),[('nero-antracite',(.025,.027,.028))],'larissa'),('nordica-asia-50',(.438,.473,1.385),[('vulcan',(.075,.075,.085))],'asia'),('nordica-aurelia-eos-ceramica',(.551,.605,1.489),[('panna',(.80,.75,.67)),('bordeaux',(.28,.025,.034))],'aurelia'),('nordica-aurelia-eos-petra',(.551,.605,1.489),[('pietra',None)],'aurelia'),('nordica-aurelia-eos-steel',(.551,.605,1.489),[('nero-antracite',(.025,.027,.028))],'aurelia'),('nordica-brigitta16',(.404,.397,.640),[('nero',(.025,.027,.028))],'brigitta'),('nordica-candy-eos165',(.404,.397,1.142),[('nero-antracite',(.025,.027,.028))],'brigitta')]
 for ident,(w,d,h),finishes,kind in specs:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);shell=stone() if finishes[0][1] is None else mat('Rivestimento '+ident,finishes[0][1])
-    box(c,'Corpo',(0,0,h/2),(w,d,h-.03),black,.012)
+    box(c,'Corpo',(0,0,h/2),(w*(.68 if kind in ('aurelia','asia') else 1),d,h-.03),black,.012)
     if kind=='aurelia':
         for side in (-1,1):
-            for i in range(6):box(c,'Pannello laterale',(side*w*.40,0,h*(.12+i*.145)),(w*.16,d*.96,h*.14),shell,.004)
+            for i in range(6):box(c,'Pannello laterale',(side*w*.42,0,h*(.12+i*.145)),(w*.15,d*.99,h*.14),shell,.004)
         for i in range(2):box(c,'Pannello frontale alto',(0,-d/2-.006,h*(.72+i*.12)),(w*.68,.014,h*.115),shell,.003)
     elif kind=='asia':
         for side in (-1,1):
-            for i in range(3):box(c,'Pannello vulcan',(side*w*.40,0,h*(.17+i*.28)),(w*.19,d*.96,h*.27),shell,.004)
+            for i in range(3):box(c,'Pannello vulcan',(side*w*.42,0,h*(.17+i*.28)),(w*.16,d*.99,h*.27),shell,.004)
     else:
         for side in (-1,1):box(c,'Fascia laterale',(side*w*.42,0,h*.50),(w*.14,d*.96,h*.95),shell,.008)
     box(c,'Porta',(0,-d/2-.008,h*(.45 if kind=='aurelia' else .55)),(w*.66,.020,h*(.38 if kind=='aurelia' else .50)),dark,.006)

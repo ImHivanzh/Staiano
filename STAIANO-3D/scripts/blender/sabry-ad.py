@@ -8,9 +8,15 @@ for o in bpy.context.scene.objects:
     o.location.x *= .456/.495; o.scale.x *= .456/.495
     o.location.z *= .924/1.016; o.scale.z *= .924/1.016
 shell=next(m for m in bpy.data.materials if m.name.startswith('Rivestimento nordica-angelica-evo'))
+upper=bpy.data.objects['Pannello superiore']
+upper.data.materials.clear(); upper.data.materials.append(shell)
+upper.location.z=.934*.924; upper.dimensions.z=.10*.924
+door=bpy.data.objects['Cornice sportello']
+door.location.z=.55*.924; door.dimensions.z=.66*.924
+bpy.data.objects['Presa superiore'].location.z=.88*.924
 shader=shell.node_tree.nodes.get('Principled BSDF')
 bpy.ops.object.select_all(action='SELECT')
-for label,rgb in [('grigio-grafite',(.045,.05,.051)),('avorio',(.80,.75,.68)),('bronzo',(.31,.18,.12)),('nero',(.025,.027,.028))]:
+for label,rgb in [('grigio-grafite',(.045,.05,.051)),('avorio',(.78,.66,.44)),('bronzo',(.13,.055,.028)),('nero',(.025,.027,.028))]:
     shell.diffuse_color=(*rgb,1); shader.inputs['Base Color'].default_value=(*rgb,1)
     bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-sabry-ad-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.045,.05,.051,1); shader.inputs['Base Color'].default_value=(.045,.05,.051,1)

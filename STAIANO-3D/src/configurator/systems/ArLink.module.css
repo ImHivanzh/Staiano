@@ -1,0 +1,16 @@
+.ar {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  margin-block: 8px;
+}
+.ar input {
+  width: min(100%, 420px);
+  font: inherit;
+  padding: 8px;
+}
+.ar img {
+  background: white;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+}

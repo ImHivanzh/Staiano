@@ -1,7 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import ModelPreview from "@/configurator/viewer3d/ModelPreview";
+import { ArLink } from "./ArLink";
 import {
   stoveBrands,
   stoveCatalog,
@@ -24,7 +27,8 @@ export function StoveCatalog() {
   const [product, setProduct] = useState<StoveProduct | null>(null);
   const [color, setColor] = useState("");
   const [query, setQuery] = useState("");
-  const [showModel, setShowModel] = useState(false);
+  const [showModel, setShowModel] = useState(true);
+  const [flame, setFlame] = useState(false);
   const modelColors: Record<string, Record<string, string>> = {
     "nordica-amika-ad": { Bianco: "bianco", Nero: "nero" },
     "nordica-amika-petra-ad": { "Pietra Naturale": "pietra" },
@@ -199,6 +203,19 @@ export function StoveCatalog() {
   };
   const finish = product && modelColors[product.id]?.[color];
   const modelUrl = product && finish ? `/models/stoves/${product.id}-${finish}.glb` : null;
+  const variants = product
+    ? Object.entries(modelColors[product.id] ?? {}).map(([label, suffix]) => ({
+        label,
+        url: `/models/stoves/${product.id}-${suffix}.glb`,
+      }))
+    : [];
+  // Carica in anticipo le altre finiture: il cambio colore non lascia l'anteprima vuota.
+  useEffect(() => {
+    useLoader.preload(
+      GLTFLoader,
+      variants.map((variant) => variant.url),
+    );
+  }, [product?.id]); // eslint-disable-line react-hooks/exhaustive-deps
   const technical = product?.technical ?? null;
   const officialSources = technical
     ? [
@@ -350,7 +367,6 @@ export function StoveCatalog() {
                 onClick={() => {
                   setProduct(item);
                   setColor(item.colors[0] ?? "");
-                  setShowModel(false);
                 }}
               >
                 {item.photo && (
@@ -378,7 +394,7 @@ export function StoveCatalog() {
       ) : (
         <div className={styles.detail}>
           <div>
-          {showModel && modelUrl ? <ModelPreview url={modelUrl} /> : product.photo && (
+          {showModel && modelUrl ? <ModelPreview url={modelUrl} flame={flame} /> : product.photo && (
             <Image
               src={product.photo}
               alt={`${product.brand} ${product.name}`}
@@ -388,7 +404,32 @@ export function StoveCatalog() {
             />
           )}
           {modelUrl && <button type="button" className="bottone tenue" onClick={() => setShowModel(!showModel)}>{showModel ? "Mostra fotografia" : "Mostra modello 3D"}</button>}
-          {showModel && modelUrl && <p className="nota">Modello 3D a stufa spenta.</p>}
+          {showModel && modelUrl && <button type="button" className="bottone tenue" aria-pressed={flame} onClick={() => setFlame(!flame)}>{flame ? "Spegni fiamma" : "Accendi fiamma"}</button>}
+          <fieldset className={styles.finishes}>
+            <legend>Finitura del produttore</legend>
+            {product.colors.map((finish) => (
+              <button
+                type="button"
+                className="bottone tenue"
+                key={finish}
+                aria-pressed={color === finish}
+                onClick={() => setColor(finish)}
+              >
+                {finish}
+              </button>
+            ))}
+            {!product.colors.length && (
+              <p className="nota">
+                Consulta le finiture nella scheda ufficiale.
+              </p>
+            )}
+          </fieldset>
+          {color && (
+            <p role="status">
+              Finitura scelta: <strong>{color}</strong>
+            </p>
+          )}
+          {variants.length > 0 && <ArLink key={product.id} label={`${product.brand} ${product.name}`} variants={variants} />}
           </div>
           <div>
             <h4>{product.name}</h4>
@@ -487,30 +528,6 @@ export function StoveCatalog() {
                   </ul>
                 </details>
               </section>
-            )}
-            <fieldset className={styles.finishes}>
-              <legend>Finitura del produttore</legend>
-              {product.colors.map((finish) => (
-                <button
-                  type="button"
-                  className="bottone tenue"
-                  key={finish}
-                  aria-pressed={color === finish}
-                  onClick={() => setColor(finish)}
-                >
-                  {finish}
-                </button>
-              ))}
-              {!product.colors.length && (
-                <p className="nota">
-                  Consulta le finiture nella scheda ufficiale.
-                </p>
-              )}
-            </fieldset>
-            {color && (
-              <p role="status">
-                Finitura scelta: <strong>{color}</strong>
-              </p>
             )}
             <p className="nota">
               La fotografia mostra il modello; il colore selezionato può

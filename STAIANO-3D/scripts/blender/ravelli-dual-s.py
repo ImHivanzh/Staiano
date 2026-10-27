@@ -29,8 +29,8 @@ for ident in ('ravelli-s70','ravelli-s90'):
             b=o.modifiers.new('Raccordo','BEVEL');b.width=bevel;b.segments=4
         return o
     w,d,h=.440,.500,.930
-    box('Corpo',(0,0,h/2),(w,d,h-.02),black,.014)
-    for side in (-1,1):box('Rivestimento laterale',(side*w*.37,0,h*.63),(w*.25,d*.95,h*.70),shell,.018)
+    box('Corpo',(0,0,h/2),(w*.72,d,h-.02),black,.014)
+    for side in (-1,1):box('Rivestimento laterale',(side*w*.39,0,h*.63),(w*.22,d*.97,h*.70),shell,.018)
     box('Porta',(0,-d/2-.009,h*.48),(w*.62,.018,h*.72),black,.004)
     box('Vetro sportello',(0,-d/2-.021,h*.57),(w*.37,.005,h*.30),glass,.003)
     for i in range(6):box('Griglia superiore',(0,-d/2-.020,h*.91-i*.012),(w*.57,.006,.005),dark,.0005)

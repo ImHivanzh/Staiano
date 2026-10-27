@@ -16,6 +16,8 @@ def box(name,loc,dims,material,bevel=.003):
     return o
 w,d,h=.498,.576,1.017
 box('Corpo laterale',(0,0,h/2),(w,d,h-.024),shell,.055)
+for side in (-1,1):
+    box('Fianco posteriore nero',(side*(w/2+.001),d*.25,h*.50),(.004,d*.47,h-.065),black,.001)
 box('Sommità',(0,0,h-.013),(w,d,.028),shell,.025)
 box('Coperchio pellet',(0,.035,h+.002),(w*.54,d*.46,.005),black,.003)
 box('Pannello superiore',(0,-d/2-.006,h*.87),(w*.56,.018,h*.11),shell,.003)

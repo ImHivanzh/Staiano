@@ -21,7 +21,8 @@ box('Coperchio nero',(0,0,h-.013),(w,d,.027),black,.016)
 box('Porta e frontale',(0,-d/2-.008,h*.49),(w*.55,.016,h*.94),black,.004)
 box('Vetro porta',(0,-d/2-.019,h*.52),(w*.275,.006,h*.27),glass,.003)
 box('Maniglia porta',(-w*.24,-d/2-.026,h*.48),(.012,.022,.11),black,.004)
-box('Inserto superiore',(0,-d/2-.019,h*.965),(w*.48,.01,.018),shell,.003)
+box('Inserto superiore',(0,-d*.34,h+.002),(w*.48,d*.18,.005),shell,.002)
+box('Giunto pannello inferiore',(0,-d/2-.019,h*.26),(w*.53,.005,.003),glass,.0005)
 for i in range(3):box('Mandata frontale',(0,-d/2-.021,h*.89-i*.011),(w*.46,.006,.004),glass,.0005)
 for side in (-1,1):
     for i in range(4):
@@ -29,7 +30,7 @@ for side in (-1,1):
         box('Feritoia laterale', (side*(w/2+.002), d*.25,h*.09+i*.025),(.004,d*.13,.003),black,.0005)
 box('Zoccolo',(0,0,.012),(w*.9,d*.9,.024),black,.012)
 bpy.ops.object.select_all(action='SELECT')
-for label,rgb in [('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('nero',(.025,.027,.028)),('avorio',(.80,.75,.68))]:
+for label,rgb in [('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('nero',(.025,.027,.028)),('avorio',(.78,.66,.44))]:
     shell.diffuse_color=(*rgb,1); shell.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*rgb,1)
     bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-ketty-50-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.83,.84,.83,1); shell.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(.83,.84,.83,1)

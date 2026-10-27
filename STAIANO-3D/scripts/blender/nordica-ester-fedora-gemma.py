@@ -11,7 +11,7 @@ def stone():
     for _ in range(256*256):
         x=max(.2,min(.6,random.gauss(.39,.04)));v.extend((x,x*1.01,x,1))
     im.pixels=v;im.pack();n=m.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;m.node_tree.links.new(n.outputs['Color'],m.node_tree.nodes.get('Principled BSDF').inputs['Base Color']);return m
-colors={'vulcan':(.24,.23,.25),'bianco-infinity':(.83,.84,.83),'bordeaux':(.43,.012,.018),'nero-antracite':(.025,.027,.028),'liberty-panna':(.80,.75,.67),'elegance-bordeaux':(.43,.012,.018),'elegance-bianco-infinity':(.83,.84,.83)}
+colors={'vulcan':(.075,.075,.085),'bianco-infinity':(.83,.84,.83),'bordeaux':(.24,.008,.014),'nero-antracite':(.025,.027,.028),'liberty-panna':(.80,.75,.67),'elegance-bordeaux':(.24,.008,.014),'elegance-bianco-infinity':(.83,.84,.83)}
 def box(c,name,loc,size,m,bevel=.003):
     bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object
     for old in list(o.users_collection):old.objects.unlink(o)
@@ -27,11 +27,11 @@ specs=[('nordica-ester-50',(.540,.485,1.331),['vulcan'],'ester',False),('nordica
 for ident,(w,d,h),finishes,kind,oven in specs:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);shell=stone() if finishes[0]=='pietra' else mat('Rivestimento '+ident,colors[finishes[0]])
     pipe=.25 if h>1.30 else .06;body=h-pipe;base=.04
-    box(c,'Corpo',(0,0,(base+body)/2),(w,d,body-base),black,.012)
+    box(c,'Corpo',(0,0,(base+body)/2),(w*.73,d,body-base),black,.012)
     for side in (-1,1):
         for i in range(3 if kind=='gemma' else 2):
             n=3 if kind=='gemma' else 2
-            box(c,'Pannello laterale',(side*w*.39,0,base+(i+.5)*(body-base)/n),(w*.21,d*.96,(body-base)/n-.004),shell,.007)
+            box(c,'Pannello laterale',(side*w*.43,0,base+(i+.5)*(body-base)/n),(w*.14,d*.99,(body-base)/n-.004),shell,.007)
     if kind=='fedora' or (kind=='gemma' and not oven):box(c,'Pannello superiore',(0,-d/2-.007,body*.86),(w*.64,.014,body*.15),shell,.004)
     z=body*(.39 if oven else .54)
     box(c,'Porta',(0,-d/2-.009,z),(w*.65,.020,body*.43),dark,.006)

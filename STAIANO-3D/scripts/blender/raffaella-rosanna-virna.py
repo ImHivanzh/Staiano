@@ -2,7 +2,7 @@
 from pathlib import Path
 import bpy
 root=Path(__file__).resolve().parents[2]
-specs=[('nordica-raffaella-idro-h15-5016',(.633,.626,1.176),[('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('grigio-luce',(.50,.50,.49))],True),('nordica-raffaella-idro-h18-5016',(.633,.626,1.176),[('grigio-luce',(.50,.50,.49)),('avorio',(.80,.75,.68))],True),('nordica-rosanna-idro-50',(.511,.632,1.150),[('nero',(.025,.027,.028)),('bordeaux',(.28,.025,.034)),('avorio',(.80,.75,.68)),('bronzo',(.31,.18,.12))],False)]
+specs=[('nordica-raffaella-idro-h15-5016',(.633,.626,1.176),[('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('grigio-luce',(.50,.50,.49))],True),('nordica-raffaella-idro-h18-5016',(.633,.626,1.176),[('grigio-luce',(.50,.50,.49)),('avorio',(.76,.64,.44))],True),('nordica-rosanna-idro-50',(.511,.632,1.150),[('nero',(.025,.027,.028)),('bordeaux',(.28,.025,.034)),('avorio',(.76,.64,.44)),('bronzo',(.31,.18,.12))],False)]
 for ident,(w,d,h),finishes,raffaella in specs:
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(root/'public/models/stoves/nordica-miriana-idro-h20-avorio.glb'))

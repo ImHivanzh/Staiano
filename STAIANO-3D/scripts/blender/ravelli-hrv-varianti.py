@@ -22,7 +22,7 @@ for ident,w,finishes in [('ravelli-hrv-100-globe',.600,['bianco','nero','bordeau
         m=bpy.data.materials.new(name);m.diffuse_color=(*rgb,1);m.use_nodes=True;p=m.node_tree.nodes.get('Principled BSDF');p.inputs['Base Color'].default_value=(*rgb,1);p.inputs['Roughness'].default_value=rough;return m
     shell=mat('Maiolica',(.83,.84,.83),.25);black=mat('Corpo e porta',(.012,.014,.015),.22);glass=mat('Vetro spento',(.028,.033,.034),.16)
     def cylinder(name,z,height,material):
-        bpy.ops.mesh.primitive_cylinder_add(vertices=96,radius=1,depth=1,location=(0,0,z));o=bpy.context.object;o.name=name;o.dimensions=(w,d,height);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(material)
+        bpy.ops.mesh.primitive_cylinder_add(vertices=96,radius=1,depth=1,location=(0,0,z));o=bpy.context.object;o.name=name;o.dimensions=(w*(1.01 if material is shell else 1),d*(1.01 if material is shell else 1),height);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(material)
         for p in o.data.polygons:p.use_smooth=len(p.vertices)==4
     def box(name,loc,size,material):
         bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.name=name;o.dimensions=size;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(material)

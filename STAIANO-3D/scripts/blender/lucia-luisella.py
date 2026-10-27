@@ -42,7 +42,7 @@ def export(c,ident,shell,finishes):
 
 c=bpy.data.collections.new('nordica-lucia16'); bpy.context.scene.collection.children.link(c)
 w,d,h=.556,.597,1.097
-shell=material('LUCIA rivestimento',(.47,.38,.33))
+shell=material('LUCIA rivestimento',(.47,.38,.33),0,.25)
 box(c,'Chassis posteriore',(0,0,h/2),(w,d,h-.02),black,.035)
 box(c,'Rivestimento superiore',(0,-d*.36-.004,h*.957),(w,d*.28,h*.074),shell,.016)
 box(c,'Rivestimento inferiore',(0,-d*.36-.004,h*.085),(w,d*.28,h*.15),shell,.015)
@@ -51,7 +51,11 @@ box(c,'Sportello nero',(0,-d/2-.008,h*.50),(w*.61,.019,h*.68),dark,.005)
 box(c,'Cornice vetro',(0,-d/2-.019,h*.50),(w*.42,.009,h*.58),black,.004)
 box(c,'Vetro sportello',(0,-d/2-.027,h*.52),(w*.29,.006,h*.37),glass,.004)
 box(c,'Maniglia',(-w*.28,-d/2-.028,h*.49),(.013,.020,.14),dark,.003)
-for i in range(6):box(c,'Griglia mandata',(0,-d/2-.006,h*.895-i*.009),(w*.99,.012,.004),dark,.0005)
+for i in range(6):
+    z=h*.895-i*.009
+    box(c,'Griglia mandata',(0,-d/2-.006,z),(w*.99,.012,.004),dark,.0005)
+    for side in (-1,1):
+        box(c,'Griglia laterale',(side*(w/2+.002),-d*.36,z),(.004,d*.28,.004),dark,.0005)
 box(c,'Coperchio pellet',(0,.025,h+.002),(w*.55,d*.43,.006),dark,.004)
 export(c,'nordica-lucia16',shell,[('tortora',(.47,.38,.33)),('bordeaux',(.28,.025,.034)),('bianco',(.83,.84,.83))])
 
@@ -67,12 +71,12 @@ for ident,w,d,maxi,finishes in [
     box(c,'Cornice porta',(dx,-d/2-.015,h*.53),(w*(.40 if maxi else .34),.012,h*.56),dark,.003)
     box(c,'Sportello',(dx,-d/2-.023,h*.53),(w*(.37 if maxi else .31),.008,h*.53),black,.002)
     box(c,'Vetro sportello',(dx,-d/2-.029,h*.54),(w*(.22 if maxi else .12),.005,h*.37),glass,.002)
-    box(c,'Maniglia',(dx-w*.15,-d/2-.030,h*.51),(.008,.012,.14),metal,.002)
+    box(c,'Maniglia',(dx-w*.15,-d/2-.030,h*.51),(.008,.012,.14),dark,.002)
     box(c,'Display controllo',(-w*.25,-d/2-.015,h*.24),(.07,.006,.036),metal,.002)
     box(c,'Schermo',(-w*.25,-d/2-.019,h*.242),(.028,.003,.008),display,.001)
     if not maxi:
-        dots(c,'Fori mandata superiore',-w*.08,-d/2-.012,h*.95,22,3,.006,dark)
-        dots(c,'Fori presa inferiore',-w*.08,-d/2-.012,h*.035,22,3,.006,dark)
+        dots(c,'Fori mandata superiore',w*.02,-d/2-.012,h*.95,22,3,.006,dark)
+        dots(c,'Fori presa inferiore',w*.02,-d/2-.012,h*.035,22,3,.006,dark)
     else:
         for i in range(8):box(c,'Griglia superiore',(.055,(i-3.5)*.012,h-.004),(w*.55,.004,.003),dark,.0005)
     box(c,'Zoccolo',(0,0,.009),(w*.94,d*.9,.018),dark,.004)

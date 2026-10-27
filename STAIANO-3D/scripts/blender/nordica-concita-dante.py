@@ -5,7 +5,7 @@ root=Path(__file__).resolve().parents[2];bpy.ops.wm.read_factory_settings(use_em
 def mat(name,rgb,rough=.4):
     m=bpy.data.materials.new(name);m.diffuse_color=(*rgb,1);m.use_nodes=True;p=m.node_tree.nodes.get('Principled BSDF');p.inputs['Base Color'].default_value=(*rgb,1);p.inputs['Roughness'].default_value=rough;return m
 black=mat('Ghisa antracite',(.025,.027,.028));dark=mat('Cornice porta',(.006,.007,.008));glass=mat('Vetro spento',(.028,.033,.034),.16);metal=mat('Maniglia',(.18,.18,.17))
-colors={'bordeaux':(.43,.012,.018),'bianco-infinity':(.83,.84,.83),'nero-antracite':(.025,.027,.028),'nero-opaco':(.018,.020,.021)}
+colors={'bordeaux':(.24,.008,.014),'bianco-infinity':(.83,.84,.83),'nero-antracite':(.025,.027,.028),'nero-opaco':(.018,.020,.021)}
 def link(c,o,name):
     for old in list(o.users_collection):old.objects.unlink(o)
     c.objects.link(o);o.name=name;return o
@@ -20,13 +20,13 @@ specs=[('nordica-concita16-maiolica',(.559,.569,1.545),['bordeaux','bianco-infin
 for ident,(w,d,h),finishes,kind in specs:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);shell=mat('Rivestimento '+ident,colors[finishes[0]])
     isdante=kind.startswith('dante');base=.424 if kind=='dante-legna' else .04;pipe=.52 if isdante else .35 if h>1.4 else .08;bodyheight=h-base-pipe
-    box(c,'Corpo',(0,0,base+bodyheight/2),(w,d,bodyheight-.02),black,.012)
+    box(c,'Corpo',(0,0,base+bodyheight/2),(w*(.74 if kind=='classica' else 1),d,bodyheight-.02),black,.012)
     if kind=='dante-legna':
         for side in (-1,1):box(c,'Fianco portalegna',(side*w*.47,0,base/2),(w*.06,d,base),black,.003)
         box(c,'Base portalegna',(0,0,.01),(w,d,.02),black,.003)
         box(c,'Schienale portalegna',(0,d*.46,base/2),(w,.02,base),black,.003)
     elif kind=='classica':
-        for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.39,0,base+bodyheight*.51),(w*.22,d*.96,bodyheight*.94),shell,.008)
+        for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.43,0,base+bodyheight*.51),(w*.14,d*.99,bodyheight*.94),shell,.008)
         box(c,'Pannello superiore',(0,-d/2-.008,base+bodyheight*.88),(w*.66,.016,bodyheight*.16),shell,.006)
         box(c,'Cassetto cenere',(0,-d/2-.008,base+bodyheight*.10),(w*.66,.016,bodyheight*.16),black,.006)
         tube(c,(0,-d/2-.021,base+bodyheight*.10),(.055,.008,.055),metal,'Regolatore aria')

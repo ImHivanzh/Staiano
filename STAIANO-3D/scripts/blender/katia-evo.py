@@ -38,11 +38,11 @@ def panel(c,name,x0,x1,z0,z1,material,offset=.004):
     for p in mesh.polygons:p.use_smooth=True
     return o
 for ident in ('nordica-katia-11-50-evo','nordica-katia-9-50-evo'):
-    shell=mat('Rivestimento inferiore '+ident,(.31,.18,.12)); upper=mat('Rivestimento superiore '+ident,(.025,.027,.028))
+    shell=mat('Rivestimento inferiore '+ident,(.13,.055,.028)); upper=mat('Rivestimento superiore '+ident,(.13,.055,.028))
     c=bpy.data.collections.new(ident); bpy.context.scene.collection.children.link(c)
     skin(c,'Rivestimento inferiore',.018,h*.31,shell)
     skin(c,'Rivestimento superiore',h*.31,h-.025,upper)
-    box(c,'Coperchio superiore',(0,0,h-.012),(w,d,.027),black,.014)
+    skin(c,'Coperchio superiore',h-.025,h+.002,black)
     box(c,'Coperchio pellet',(0,d*.13,h+.003),(w*.53,d*.42,.004),black,.004)
     panel(c,'Cornice sportello',-w*.31,w*.31,h*.315,h*.94,black,.006)
     panel(c,'Vetro ceramico curvo',-w*.135,w*.135,h*.44,h*.78,glass,.009)
@@ -53,12 +53,12 @@ for ident in ('nordica-katia-11-50-evo','nordica-katia-9-50-evo'):
     bpy.ops.object.select_all(action='DESELECT')
     for o in c.objects:o.select_set(True)
     bpy.context.view_layer.objects.active=next(iter(c.objects))
-    for label,rgb in [('bronzo',(.31,.18,.12)),('bianco',(.83,.84,.83)),('tortora-matt',(.47,.38,.33))]:
-        for m,colour in [(shell,rgb),(upper,(.025,.027,.028) if label=='bronzo' else rgb)]:
+    for label,rgb in [('bronzo',(.13,.055,.028)),('bianco',(.83,.84,.83)),('tortora-matt',(.47,.38,.33))]:
+        for m,colour in [(shell,rgb),(upper,rgb)]:
             m.diffuse_color=(*colour,1); m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*colour,1)
         bpy.ops.export_scene.gltf(filepath=str(ROOT/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
-    default=(.31,.18,.12) if '-11-' in ident else (.47,.38,.33)
-    for m,colour in [(shell,default),(upper,(.025,.027,.028) if '-11-' in ident else default)]:
+    default=(.13,.055,.028) if '-11-' in ident else (.47,.38,.33)
+    for m,colour in [(shell,default),(upper,default)]:
         m.diffuse_color=(*colour,1); m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*colour,1)
     c.hide_viewport=True; c.hide_render=True
 for c in bpy.context.scene.collection.children:c.hide_viewport=False;c.hide_render=False

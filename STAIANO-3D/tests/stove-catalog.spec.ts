@@ -17,6 +17,7 @@ test("catalogo stufe: marchio, tecnologia, modello, foto e finiture ufficiali", 
   await catalog.getByRole("button", { name: /^Pellet · Convezione/ }).click();
   await catalog.getByLabel("Cerca modello").fill("Flexi 7");
   await catalog.getByRole("button", { name: /^Flexi 7/ }).click();
+  await catalog.getByRole("button", { name: "Mostra fotografia" }).click();
   const photo = catalog.getByRole("img", {
     name: "Ravelli Flexi 7",
     exact: true,
@@ -96,4 +97,56 @@ test("vista cliente mostra le stufe anche senza un progetto aperto", async ({
   await expect(
     page.getByText("Apri “Vista cliente” dal configuratore.", { exact: false }),
   ).toBeVisible();
+});
+
+test("stufa: finitura dal vivo, fiamma e link AR da 30 minuti", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Cataloghi tecnici", exact: true })
+    .click();
+  await page.getByRole("tab", { name: "Riscaldamento" }).click();
+  const catalog = page.getByRole("region", {
+    name: "Catalogo stufe",
+    exact: true,
+  });
+  await catalog.getByRole("button", { name: /^Ravelli/ }).click();
+  await catalog.getByRole("button", { name: /^Pellet · Convezione/ }).click();
+  await catalog.getByLabel("Cerca modello").fill("Flexi 7");
+  await catalog.getByRole("button", { name: /^Flexi 7/ }).click();
+  const canvas = catalog.locator("canvas");
+  await expect(canvas).toHaveAttribute(
+    "data-model",
+    /ravelli-flexi-7-bianco\.glb$/,
+  );
+  await catalog.getByRole("button", { name: "Nero", exact: true }).click();
+  await expect(canvas).toHaveAttribute("data-model", /ravelli-flexi-7-nero\.glb$/);
+  await catalog.getByRole("button", { name: "Accendi fiamma" }).click();
+  await expect(
+    catalog.getByRole("button", { name: "Spegni fiamma" }),
+  ).toHaveAttribute("aria-pressed", "true");
+
+  await catalog
+    .getByRole("button", { name: "Realtà aumentata su iPad/telefono" })
+    .click();
+  await expect(catalog.getByRole("img", { name: "QR code del link AR" })).toBeVisible();
+  const link = await catalog.getByLabel("Link AR").inputValue();
+  expect(link).toMatch(/^http:\/\/[\d.]+:\d+\/ar\/[\w-]{32}$/);
+  // Il tablet non ha sessione: il ponte risponde con il solo token.
+  const local = link.replace(/\/\/[\d.]+:/, "//127.0.0.1:");
+  const bridge = await page.context().browser()!.newContext();
+  const tablet = await bridge.newPage();
+  await tablet.goto(local);
+  await expect(tablet.locator("model-viewer")).toHaveAttribute(
+    "src",
+    /\/m\/0\/0\.glb$/,
+  );
+  await expect(tablet.getByRole("button", { name: "Nero" })).toBeVisible();
+  await tablet.getByRole("button", { name: "Nero" }).click();
+  await expect(tablet.locator("model-viewer")).toHaveAttribute(
+    "src",
+    /\/m\/0\/1\.glb$/,
+  );
+  await bridge.close();
 });

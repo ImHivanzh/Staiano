@@ -13,7 +13,7 @@ for i in range(3):
     bpy.ops.mesh.primitive_cube_add(size=1,location=(0,-.638/2-.025,1.157*.87-i*.010))
     o=bpy.context.object;o.name='Griglia superiore';o.dimensions=(.576*.43,.006,.004);bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(dark)
 bpy.ops.object.select_all(action='SELECT');p=shell.node_tree.nodes.get('Principled BSDF')
-for label,rgb in [('avorio',(.80,.75,.68)),('bronzo',(.31,.18,.12)),('tortora-matt',(.47,.38,.33))]:
+for label,rgb in [('avorio',(.76,.64,.44)),('bronzo',(.31,.18,.12)),('tortora-matt',(.47,.38,.33))]:
     shell.diffuse_color=(*rgb,1);p.inputs['Base Color'].default_value=(*rgb,1)
     bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-guenda-idro-evo-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.80,.75,.68,1);p.inputs['Base Color'].default_value=(.80,.75,.68,1)

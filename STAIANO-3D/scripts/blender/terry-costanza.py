@@ -17,7 +17,7 @@ for ident,(w,d,h),finishes,terry in [
     ('nordica-terry-plus',(.569,.598,1.151),[('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('tortora-lucido',(.47,.38,.33))],True),
     ('nordica-costanza-idro-50',(.495,.628,1.152),[('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034))],False)]:
     c=bpy.data.collections.new(ident);bpy.context.scene.collection.children.link(c);shell=mat('Rivestimento '+ident,finishes[0][1])
-    box(c,'Corpo',(0,0,h/2),(w,d,h-.02),black,.025)
+    box(c,'Corpo',(0,0,h/2),(w*.76,d,h-.02),black,.025)
     for side in (-1,1):box(c,'Rivestimento laterale',(side*w*.39,-d*.27,h*.50),(w*.22,d*.46,h*.96),shell,.035)
     box(c,'Coperchio',(0,-d*.30,h*.965),(w,d*.40,h*.055),shell,.012)
     box(c,'Cornice sportello',(0,-d/2-.008,h*.53),(w*.55,.018,h*.52),dark,.005)

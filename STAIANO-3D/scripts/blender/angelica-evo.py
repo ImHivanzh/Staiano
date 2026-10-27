@@ -22,7 +22,7 @@ def box(c,name,location,size,mat,bevel=.003):
         o.modifiers.new('Normali','WEIGHTED_NORMAL')
     return o
 
-variants=[('nordica-angelica-evo',1.016,[('avorio',(.86,.79,.68)),('nero',(.025,.027,.028)),('bordeaux',(.27,.025,.033))]),('nordica-angelica-junior',.926,[('nero',(.025,.027,.028)),('avorio',(.86,.79,.68)),('tortora-matt',(.34,.30,.27))])]
+variants=[('nordica-angelica-evo',1.016,[('avorio',(.78,.66,.44)),('nero',(.025,.027,.028)),('bordeaux',(.27,.025,.033))]),('nordica-angelica-junior',.926,[('nero',(.025,.027,.028)),('avorio',(.78,.66,.44)),('tortora-matt',(.34,.30,.27))])]
 for ident,h,colors in variants:
     shell=material('Rivestimento '+ident,colors[0][1])
     w,d=.495,.555; c=bpy.data.collections.new(ident); bpy.context.scene.collection.children.link(c)

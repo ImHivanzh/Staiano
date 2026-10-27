@@ -46,8 +46,8 @@ def arc(collection, name, rx, ry, z0, z1, a0, a1, mat, offset=.002):
     return obj
 
 variants = [
-    ('nordica-dahiana-ad', (.525,.602,1.080), [('avorio',(.86,.79,.68)),('bordeaux',(.28,.025,.034)),('nero',(.025,.027,.028)),('bronzo',(.30,.22,.16))]),
-    ('nordica-daniela', (.500,.586,1.006), [('nero',(.025,.027,.028)),('avorio',(.86,.79,.68)),('tortora-matt',(.42,.34,.27)),('grigio-grafite',(.19,.20,.20))]),
+    ('nordica-dahiana-ad', (.525,.602,1.080), [('avorio',(.78,.66,.44)),('bordeaux',(.28,.025,.034)),('nero',(.025,.027,.028)),('bronzo',(.30,.22,.16))]),
+    ('nordica-daniela', (.500,.586,1.006), [('nero',(.025,.027,.028)),('avorio',(.78,.66,.44)),('tortora-matt',(.42,.34,.27)),('grigio-grafite',(.19,.20,.20))]),
 ]
 for ident, (w,d,h), finishes in variants:
     c = bpy.data.collections.new(ident); bpy.context.scene.collection.children.link(c)

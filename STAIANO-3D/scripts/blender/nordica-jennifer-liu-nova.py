@@ -11,7 +11,7 @@ def stone():
     for _ in range(256*256):
         v=max(.2,min(.6,random.gauss(.39,.045)));pixels.extend((v,v*1.01,v,1))
     im.pixels=pixels;im.pack();n=m.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;m.node_tree.links.new(n.outputs['Color'],m.node_tree.nodes.get('Principled BSDF').inputs['Base Color']);return m
-colors={'nero-antracite':(.025,.027,.028),'bordeaux':(.43,.012,.018),'bianco-infinity':(.83,.84,.83),'bianco-opaco':(.80,.81,.80)}
+colors={'nero-antracite':(.025,.027,.028),'bordeaux':(.24,.008,.014),'bianco-infinity':(.83,.84,.83),'bianco-opaco':(.80,.81,.80)}
 def link(c,o,name):
     for old in list(o.users_collection):old.objects.unlink(o)
     c.objects.link(o);o.name=name;return o
@@ -31,9 +31,9 @@ for ident,(w,d,h),finishes,kind in specs:
         cylinder(c,'Corpo cilindrico',(0,0,(base+body)/2),(w,d,body-base),shell)
         cylinder(c,'Coperchio',(0,0,body-.012),(w,d,.024),shell)
     else:
-        box(c,'Corpo',(0,0,(base+body)/2),(w,d,body-base),black,.016)
+        box(c,'Corpo',(0,0,(base+body)/2),(w*(.72 if kind=='oven' else 1),d,body-base),black,.016)
         if kind=='oven':
-            for side in (-1,1):box(c,'Pannello laterale',(side*w*.4,0,(base+body)/2),(w*.2,d*.95,body-base),shell,.008)
+            for side in (-1,1):box(c,'Pannello laterale',(side*w*.43,0,(base+body)/2),(w*.14,d*.99,body-base),shell,.008)
         if kind=='wide':
             for side in (-1,1):box(c,'Sostegno portalegna',(side*w*.43,0,base/2),(w*.12,d,base),black,.005)
     z=base+(body-base)*(.39 if kind=='oven' else .60)

@@ -2,7 +2,7 @@
 from pathlib import Path
 import bpy
 root=Path(__file__).resolve().parents[2]
-specs=[('nordica-marina-idro-h11',(.550,.601,1.039),[('bronzo',(.31,.18,.12)),('avorio',(.80,.75,.68)),('bordeaux',(.28,.025,.034))],False),('nordica-marina-idro-h13',(.550,.601,1.149),[('avorio',(.80,.75,.68)),('bordeaux',(.28,.025,.034)),('bronzo',(.31,.18,.12))],False),('nordica-miriana-idro-h16',(.599,.724,1.170),[('avorio',(.80,.75,.68)),('nero',(.025,.027,.028)),('tortora-matt',(.47,.38,.33))],True),('nordica-miriana-idro-h20',(.599,.724,1.248),[('avorio',(.80,.75,.68)),('tortora-matt',(.47,.38,.33)),('nero',(.025,.027,.028))],True),('nordica-miriana-idro-h23',(.599,.724,1.248),[('avorio',(.80,.75,.68)),('tortora-matt',(.47,.38,.33)),('nero',(.025,.027,.028))],True)]
+specs=[('nordica-marina-idro-h11',(.550,.601,1.039),[('bronzo',(.31,.18,.12)),('avorio',(.76,.64,.44)),('bordeaux',(.28,.025,.034))],False),('nordica-marina-idro-h13',(.550,.601,1.149),[('avorio',(.76,.64,.44)),('bordeaux',(.28,.025,.034)),('bronzo',(.31,.18,.12))],False),('nordica-miriana-idro-h16',(.599,.724,1.170),[('avorio',(.76,.64,.44)),('nero',(.025,.027,.028)),('tortora-matt',(.47,.38,.33))],True),('nordica-miriana-idro-h20',(.599,.724,1.248),[('avorio',(.76,.64,.44)),('tortora-matt',(.47,.38,.33)),('nero',(.025,.027,.028))],True),('nordica-miriana-idro-h23',(.599,.724,1.248),[('avorio',(.76,.64,.44)),('tortora-matt',(.47,.38,.33)),('nero',(.025,.027,.028))],True)]
 for ident,(w,d,h),finishes,miriana in specs:
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(root/'public/models/stoves/nordica-dahiana-ad-avorio.glb'))
