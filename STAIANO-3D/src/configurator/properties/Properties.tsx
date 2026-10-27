@@ -25,7 +25,7 @@ import {
 } from "@phosphor-icons/react";
 import "./inspector.css";
 import { LengthInput } from "../LengthInput";
-import { CeilingDesign } from "./CeilingDesign";
+import { CeilingDesign, CeilingToggle } from "./CeilingDesign";
 import { RoomConditioning } from "./RoomConditioning";
 import { roomRectSides } from "@/domain/geometry/dimensions";
 import { wallRun, wallRunMeasuredLength } from "@/domain/geometry/wall-runs";
@@ -320,22 +320,9 @@ export function Properties() {
                 defaultValue={r.heightM}
                 required
               />
-              <label className="campo">
-                <span>Controsoffitto</span>
-                <input
-                  type="checkbox"
-                  name="ceiling"
-                  defaultChecked={r.ceilingHeightM !== null}
-                />
-              </label>
-              <LengthInput
-                label="Quota controsoffitto"
-                aria-label="Quota controsoffitto"
-                name="ceilingHeight"
-                min={0.1}
-                max={30}
-                step={0.01}
-                defaultValue={
+              <CeilingToggle
+                enabled={r.ceilingHeightM !== null}
+                defaultHeightM={
                   r.ceilingHeightM ?? Math.max(0.1, r.heightM - 0.3)
                 }
               />

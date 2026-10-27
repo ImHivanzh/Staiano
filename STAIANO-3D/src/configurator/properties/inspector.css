@@ -3,7 +3,8 @@
   color: var(--testo-tenue);
   margin: 5px 0 0;
 }
-[data-testid="drywall-properties"] > fieldset {
+[data-testid="drywall-properties"] > fieldset,
+[data-testid="ceiling-design"] form > fieldset {
   border: 0;
   padding: 0;
   margin: 0;
@@ -170,4 +171,16 @@
 .riepilogo-apparecchio strong {
   color: var(--tinta);
   font-size: 22px;
+}
+.azioni-rapide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+.azioni-rapide .bottone[aria-pressed="true"] {
+  border-color: var(--tinta);
+  background: var(--tinta-tenue);
+  color: var(--tinta);
+  box-shadow: inset 0 0 0 1px var(--tinta);
 }

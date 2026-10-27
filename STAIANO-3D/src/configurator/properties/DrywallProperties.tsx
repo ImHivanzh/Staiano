@@ -20,10 +20,14 @@ export function DrywallProperties({
   if (!rooms.length) return null;
   return (
     <details className="azione-inspector" data-testid="drywall-properties">
-      <summary>Cartongesso e vuoto per i canali</summary>
+      <summary>Controparete in cartongesso</summary>
+      <p className="nota">
+        Crea uno spazio vuoto davanti o dietro il muro, utile per far passare i
+        canali.
+      </p>
       <fieldset disabled={wall.locked}>
-        <label className="campo">
-          <span>Lato stanza del cartongesso</span>
+        <label className="campo" hidden={rooms.length < 2}>
+          <span>Da quale stanza</span>
           <select
             name="room"
             value={roomId}
@@ -103,10 +107,29 @@ function DrywallSideForm({
           value={intent}
           onChange={(event) => setIntent(event.target.value)}
         >
-          <option value="new">Nuova controparete verso la stanza</option>
-          <option value="existing">Fronte già disegnato · cavità dietro</option>
+          <option value="new">Nuova: si aggiunge davanti al muro</option>
+          <option value="existing">
+            Il muro è già disegnato: vuoto dietro
+          </option>
         </select>
       </label>
+      <div
+        className="azioni-rapide"
+        role="group"
+        aria-label="Profondità comuni"
+      >
+        {[5, 10, 15, 20, 30].map((cm) => (
+          <button
+            key={cm}
+            type="button"
+            className="bottone piccolo"
+            aria-pressed={Number(depthCm) === cm}
+            onClick={() => setDepthCm(String(cm))}
+          >
+            {cm} cm
+          </button>
+        ))}
+      </div>
       <label className="campo">
         <span>Profondità del vuoto (cm)</span>
         <input
@@ -122,14 +145,9 @@ function DrywallSideForm({
       </label>
       <p className="nota">
         {intent === "new"
-          ? "Il nuovo fronte riduce lo spazio della stanza selezionata."
-          : "Il fronte disegnato resta fermo; il vuoto si estende dietro la parete."}{" "}
-        0 rimuove il cartongesso dal lato selezionato.
-      </p>
-      <p className="nota">
-        L’intercapedine è vuota e disponibile per i canali. Ripeti
-        l’impostazione per l’altro lato del muro condiviso; 0 rimuove il
-        cartongesso dal lato selezionato.
+          ? "Il nuovo fronte riduce lo spazio della stanza."
+          : "Il muro resta dov’è; il vuoto si estende dietro."}{" "}
+        Per un muro condiviso ripeti l’operazione dall’altra stanza.
       </p>
       {preview.error ? (
         <p role="alert">{preview.error}</p>
@@ -147,6 +165,17 @@ function DrywallSideForm({
       <button className="bottone chiara" disabled={!!preview.error}>
         Applica lato stanza
       </button>
+      {savedOffset !== 0 && (
+        <button
+          type="button"
+          className="bottone piccolo pericolo"
+          onClick={() =>
+            commit((p) => setWallDrywall(p, wall.id, undefined, roomId))
+          }
+        >
+          Rimuovi controparete
+        </button>
+      )}
     </form>
   );
 }

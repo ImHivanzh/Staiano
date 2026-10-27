@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import type { CeilingBand, Project, Room } from "@/schemas/project";
 import { ceilingBandSchema } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
@@ -6,6 +7,7 @@ import { updateRoom } from "@/domain/project";
 import { roomWallSpan } from "@/domain/geometry/placement";
 import { validateCeilingBand } from "@/domain/geometry/ceilings";
 import { numberFromForm } from "@/utils/format";
+import { LengthInput } from "../LengthInput";
 
 export function CeilingDesign({
   project,
@@ -100,69 +102,10 @@ export function CeilingDesign({
   );
   return (
     <details className="azione-inspector" data-testid="ceiling-design">
-      <summary>Tetto e controsoffitto a livelli</summary>
-      <form
-        key={JSON.stringify(room.roof)}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const data = new FormData(e.currentTarget);
-          commit((p) =>
-            updateRoom(p, room.id, {
-              roof: data.get("pitched")
-                ? {
-                    ridgeWallId: String(data.get("ridgeWall")),
-                    ridgeHeightM: numberFromForm(data.get("ridge")),
-                  }
-                : undefined,
-            }),
-          );
-        }}
-      >
-        <label className="campo">
-          <span>
-            <input
-              name="pitched"
-              type="checkbox"
-              defaultChecked={!!room.roof}
-            />{" "}
-            Tetto a due falde
-          </span>
-        </label>
-        <p className="nota">
-          La quota di gronda coincide con l’altezza della stanza. Il colmo corre
-          parallelo alla parete scelta.
-        </p>
-        <label className="campo">
-          <span>Colmo parallelo a</span>
-          <select
-            name="ridgeWall"
-            defaultValue={room.roof?.ridgeWallId ?? walls[0]?.id}
-          >
-            {walls.map((wall, i) => (
-              <option key={wall.id} value={wall.id}>
-                Parete {i + 1}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="campo">
-          <span>Quota colmo (m)</span>
-          <input
-            name="ridge"
-            type="number"
-            min={room.heightM + 0.01}
-            max="30"
-            step="0.01"
-            defaultValue={room.roof?.ridgeHeightM ?? room.heightM + 1}
-            required
-          />
-        </label>
-        <button className="bottone chiara">Applica tetto</button>
-      </form>
+      <summary>Controsoffitto a livelli e tetto</summary>
       <p className="nota">
-        Aggiungi le fasce lungo le pareti. La quota del controsoffitto della
-        stanza definisce la parte centrale; senza controsoffitto centrale resta
-        visibile il tetto.
+        Fasce ribassate lungo le pareti: servono per nascondere canali e plenum.
+        La parte centrale segue la quota del controsoffitto della stanza.
       </p>
       {(room.ceilingBands ?? []).map((band) => (
         <details key={band.id}>
@@ -220,6 +163,109 @@ export function CeilingDesign({
           <button className="bottone chiara">Aggiungi fascia</button>
         </form>
       </details>
+      <RoofForm room={room} walls={walls} />
     </details>
+  );
+}
+
+function RoofForm({ room, walls }: { room: Room; walls: Project["walls"] }) {
+  const { commit } = useProjectStore();
+  const [pitched, setPitched] = useState(!!room.roof);
+  return (
+    <form
+      key={JSON.stringify(room.roof)}
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        commit((p) =>
+          updateRoom(p, room.id, {
+            roof: data.get("pitched")
+              ? {
+                  ridgeWallId: String(data.get("ridgeWall")),
+                  ridgeHeightM: numberFromForm(data.get("ridge")),
+                }
+              : undefined,
+          }),
+        );
+      }}
+    >
+      <label className="campo">
+        <span>
+          <input
+            name="pitched"
+            type="checkbox"
+            checked={pitched}
+            onChange={(e) => setPitched(e.target.checked)}
+          />{" "}
+          Tetto a due falde
+        </span>
+      </label>
+      <fieldset disabled={!pitched}>
+        <p className="nota">
+          La gronda è all’altezza della stanza; il colmo corre parallelo alla
+          parete scelta.
+        </p>
+        <label className="campo">
+          <span>Colmo parallelo a</span>
+          <select
+            name="ridgeWall"
+            defaultValue={room.roof?.ridgeWallId ?? walls[0]?.id}
+          >
+            {walls.map((wall, i) => (
+              <option key={wall.id} value={wall.id}>
+                Parete {i + 1}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="campo">
+          <span>Quota colmo (m)</span>
+          <input
+            name="ridge"
+            type="number"
+            min={room.heightM + 0.01}
+            max="30"
+            step="0.01"
+            defaultValue={room.roof?.ridgeHeightM ?? room.heightM + 1}
+            required
+          />
+        </label>
+      </fieldset>
+      <button className="bottone chiara">Applica tetto</button>
+    </form>
+  );
+}
+
+/** La quota si inserisce solo quando il controsoffitto è attivo. */
+export function CeilingToggle({
+  enabled,
+  defaultHeightM,
+}: {
+  enabled: boolean;
+  defaultHeightM: number;
+}) {
+  const [on, setOn] = useState(enabled);
+  return (
+    <>
+      <label className="campo">
+        <span>Controsoffitto</span>
+        <input
+          type="checkbox"
+          name="ceiling"
+          checked={on}
+          onChange={(e) => setOn(e.target.checked)}
+        />
+      </label>
+      <LengthInput
+        label="Quota controsoffitto"
+        aria-label="Quota controsoffitto"
+        name="ceilingHeight"
+        min={0.1}
+        max={30}
+        step={0.01}
+        defaultValue={defaultHeightM}
+        disabled={!on}
+      />
+    </>
   );
 }
