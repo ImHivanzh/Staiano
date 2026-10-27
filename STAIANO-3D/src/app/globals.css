@@ -2257,3 +2257,12 @@ input[type="checkbox"] {
   width: 28px;
   height: 28px;
 }
+
+/* Etichetta ripetuta dal titolo del riquadro: resta per i lettori di schermo. */
+.legenda-nascosta {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}

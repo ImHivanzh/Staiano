@@ -18,9 +18,21 @@ import { Line } from "@react-three/drei";
 import * as THREE from "three";
 import {
   ArrowClockwise,
+  ArrowLineDown,
+  ArrowsIn,
+  ArrowsOut,
   Camera,
+  CornersOut,
   Cube,
+  Eye,
+  MagnifyingGlassPlus,
+  Path,
+  Power,
   PlusCircle,
+  Presentation,
+  Stop,
+  ThermometerHot,
+  Wind,
   SlidersHorizontal,
   LinkSimple,
 } from "@phosphor-icons/react";
@@ -707,6 +719,7 @@ export default function Viewer3D({
                 </summary>
                 <div className={styles.viewBody}>
                   <div className={`${styles.group} ${styles.modeTools}`}>
+                    <span className={styles.menuTitle}>Presentazione</span>
                     <button
                       aria-pressed={presentation}
                       onClick={() => {
@@ -722,30 +735,10 @@ export default function Viewer3D({
                         if (presentation) setTour(false);
                       }}
                     >
+                      <Presentation size={16} aria-hidden="true" />
                       {presentation
                         ? "Torna alla progettazione"
                         : "Presentazione cliente"}
-                    </button>
-                    <button
-                      aria-pressed={channelView}
-                      onClick={() => {
-                        setChannelView(!channelView);
-                        setChannelPanel(false);
-                      }}
-                    >
-                      Vista Canale
-                    </button>
-                    <button
-                      aria-pressed={systemOn}
-                      onClick={() => setSystemOn(!systemOn)}
-                    >
-                      Impianto {systemOn ? "acceso" : "spento"}
-                    </button>
-                    <button
-                      aria-pressed={loadMap}
-                      onClick={() => setLoadMap(!loadMap)}
-                    >
-                      Mappa fabbisogno
                     </button>
                     <button
                       aria-pressed={tour}
@@ -755,7 +748,11 @@ export default function Viewer3D({
                         setFocused(!tour);
                       }}
                     >
-                      {" "}
+                      {tour ? (
+                        <Stop size={16} aria-hidden="true" />
+                      ) : (
+                        <Path size={16} aria-hidden="true" />
+                      )}
                       {tour ? "Ferma tour" : "Tour del progetto"}
                     </button>
                     {presentation && (
@@ -776,10 +773,36 @@ export default function Viewer3D({
                         </select>
                       </label>
                     )}
+                    <span className={styles.menuTitle}>Impianto</span>
+                    <button
+                      aria-pressed={channelView}
+                      onClick={() => {
+                        setChannelView(!channelView);
+                        setChannelPanel(false);
+                      }}
+                    >
+                      <Wind size={16} aria-hidden="true" />
+                      Vista Canale
+                    </button>
+                    <button
+                      aria-pressed={systemOn}
+                      onClick={() => setSystemOn(!systemOn)}
+                    >
+                      <Power size={16} aria-hidden="true" />
+                      Impianto {systemOn ? "acceso" : "spento"}
+                    </button>
+                    <button
+                      aria-pressed={loadMap}
+                      onClick={() => setLoadMap(!loadMap)}
+                    >
+                      <ThermometerHot size={16} aria-hidden="true" />
+                      Mappa fabbisogno
+                    </button>
                   </div>
                   <div
                     className={`${styles.group} ${styles.editingTools} ${styles.cameraTools}`}
                   >
+                    <span className={styles.menuTitle}>Inquadratura</span>
                     <button
                       className={top ? styles.active : undefined}
                       onClick={() => {
@@ -787,6 +810,7 @@ export default function Viewer3D({
                         setTop(!top);
                       }}
                     >
+                      <ArrowLineDown size={16} aria-hidden="true" />
                       {top ? "Vista prospettica" : "Vista dall'alto"}
                     </button>
                     <button
@@ -798,6 +822,7 @@ export default function Viewer3D({
                         setFitNonce((n) => n + 1);
                       }}
                     >
+                      <Eye size={16} aria-hidden="true" />
                       Vista interna
                     </button>
                     <button
@@ -807,6 +832,7 @@ export default function Viewer3D({
                         setFitNonce((n) => n + 1);
                       }}
                     >
+                      <CornersOut size={16} aria-hidden="true" />
                       Adatta vista
                     </button>
                     <button
@@ -816,9 +842,16 @@ export default function Viewer3D({
                         setFitNonce((n) => n + 1);
                       }}
                     >
+                      <MagnifyingGlassPlus size={16} aria-hidden="true" />
                       Avvicina selezione
                     </button>
+                    <span className={styles.menuTitle}>Schermo e immagine</span>
                     <button onClick={toggleFullscreen}>
+                      {fullscreen ? (
+                        <ArrowsIn size={16} aria-hidden="true" />
+                      ) : (
+                        <ArrowsOut size={16} aria-hidden="true" />
+                      )}
                       {fullscreen ? "Esci da schermo intero" : "Schermo intero"}
                     </button>
                     <button onClick={saveRender} disabled={renderBusy}>

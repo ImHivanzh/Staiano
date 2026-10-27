@@ -3,12 +3,13 @@ import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ArrowsOut, Cube, Fire } from "@phosphor-icons/react";
+import { ArrowsOut, Cube, Fire, Presentation } from "@phosphor-icons/react";
 import { projectSchema } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { installationLabels } from "@/domain/installations";
 import styles from "./CustomerView.module.css";
 import { StoveCatalog } from "./systems/StoveCatalog";
+import { CustomerPresentation } from "./CustomerPresentation";
 import { loadProjectCatalogs } from "@/services/project/catalogs";
 import {
   customerCameraSchema,
@@ -22,6 +23,7 @@ export function CustomerView() {
   const [status, setStatus] = useState("In attesa del configuratore…");
   const [fullscreenError, setFullscreenError] = useState("");
   const [showStoves, setShowStoves] = useState(false);
+  const [explain, setExplain] = useState(false);
   useEffect(() => {
     const token = window.location.hash.slice(1);
     if (!/^[a-f0-9-]{36}$/i.test(token)) return;
@@ -117,6 +119,22 @@ export function CustomerView() {
           <h1>{project?.name ?? "Vista cliente"}</h1>
           <p role="status">{status}</p>
         </div>
+        {project && (
+          <button
+            type="button"
+            className={`bottone piccolo ${explain ? "chiara" : "tenue"}`}
+            aria-pressed={explain}
+            aria-label="Presentazione impianti"
+            title={
+              explain
+                ? "Nascondi la presentazione degli impianti"
+                : "Presenta impianti e bocchette al cliente"
+            }
+            onClick={() => setExplain((value) => !value)}
+          >
+            <Presentation aria-hidden="true" />
+          </button>
+        )}
         <button
           type="button"
           className="bottone piccolo tenue"
@@ -151,7 +169,10 @@ export function CustomerView() {
         {showStoves ? (
           <StoveCatalog />
         ) : project ? (
-          <Viewer3D key={project.id} readOnly />
+          <>
+            <Viewer3D key={project.id} readOnly />
+            {explain && <CustomerPresentation project={project} />}
+          </>
         ) : (
           <div className={styles.waiting}>
             Apri “Vista cliente” dal configuratore.

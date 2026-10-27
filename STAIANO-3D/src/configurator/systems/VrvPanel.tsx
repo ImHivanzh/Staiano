@@ -66,7 +66,9 @@ export function VrvPanel({
           <details open>
             <summary>Ambienti climatizzati · {roomIds.length}</summary>
             <fieldset>
-              <legend>Ambienti climatizzati</legend>
+              <legend className="legenda-nascosta">
+                Ambienti climatizzati
+              </legend>
               {project.rooms.map((item) => (
                 <label className="ambiente-servito" key={item.id}>
                   <input
@@ -102,10 +104,7 @@ export function VrvPanel({
             </select>
           </label>
           {solutions[0] && (
-            <div
-              className={styles.recommendation}
-              aria-label="VRV consigliato"
-            >
+            <div className={styles.recommendation} aria-label="VRV consigliato">
               <strong>Consigliato</strong>
               <p>
                 {solutions[0].outdoor.model} ·{" "}
@@ -126,7 +125,9 @@ export function VrvPanel({
         </div>
         <div className={styles.result}>
           <h4>
-            {preview ? "Soluzione selezionata" : "Nessuna soluzione compatibile"}
+            {preview
+              ? "Soluzione selezionata"
+              : "Nessuna soluzione compatibile"}
           </h4>
           {existing && (
             <p className={styles.installed}>
@@ -164,9 +165,7 @@ export function VrvPanel({
           )}
           {preview && outdoor && (
             <>
-              <p className="nota">
-                VRV/VRF · Unità esterna {outdoor.model}
-              </p>
+              <p className="nota">VRV/VRF · Unità esterna {outdoor.model}</p>
               <dl className={styles.facts}>
                 <div>
                   <dt>Raffrescamento esterno</dt>
@@ -237,18 +236,19 @@ export function VrvPanel({
               </p>
               {preview.assignments.map((assignment) => (
                 <p className="nota" key={assignment.roomId}>
-                  {project.rooms.find((item) => item.id === assignment.roomId)
-                    ?.name}{" "}
+                  {
+                    project.rooms.find((item) => item.id === assignment.roomId)
+                      ?.name
+                  }{" "}
                   · {assignment.indoor.model} ·{" "}
                   {formatNumber(assignment.coolingW / 1000)} kW freddo ·{" "}
                   {formatNumber(assignment.heatingW / 1000)} kW caldo
                 </p>
               ))}
               <p className="nota">
-                Rapporto di connessione ammesso{" "}
-                {outdoor?.minConnectionRatio}–{outdoor?.maxConnectionRatio}%.
-                Unità interne a parete FXAA-A; cassette e canalizzate VRV non
-                sono ancora selezionabili.
+                Rapporto di connessione ammesso {outdoor?.minConnectionRatio}–
+                {outdoor?.maxConnectionRatio}%. Unità interne a parete FXAA-A;
+                cassette e canalizzate VRV non sono ancora selezionabili.
               </p>
               <a
                 className="fonte-catalogo"

@@ -84,3 +84,100 @@
     padding: 12px 16px;
   }
 }
+
+.presentation {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  bottom: 16px;
+  width: min(360px, calc(100% - 32px));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid var(--bordo);
+  border-radius: 12px;
+  background: var(--carta);
+  box-shadow: 0 8px 28px rgba(24, 50, 73, 0.16);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.presentation h2 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+.presentation h3 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--testo-tenue);
+}
+.presentation p {
+  margin: 0;
+}
+.stepCount {
+  font-size: 12px;
+  color: var(--testo-tenue);
+}
+.rooms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rooms li {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--tinta-tenue, #edf2fc);
+  font-size: 12px;
+}
+.facts {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+.facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.facts dt {
+  color: var(--testo-tenue);
+}
+.facts dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+.terminals {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.terminals li {
+  display: grid;
+  gap: 2px;
+}
+.terminals span {
+  font-size: 12px;
+  color: var(--testo-tenue);
+}
+.stepButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+@media (max-width: 760px) {
+  .presentation {
+    top: auto;
+    left: 16px;
+    max-height: 55%;
+  }
+}

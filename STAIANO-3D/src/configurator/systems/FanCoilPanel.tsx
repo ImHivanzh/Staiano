@@ -250,11 +250,9 @@ export function FanCoilPanel({
       <header className={styles.heading}>
         <h3>Ventilconvettori</h3>
         <p className="nota">
-          Scegli la marca e il modello: il sistema indica poi la taglia che
-          copre il fabbisogno residuo, con la potenza e il rumore di massima
-          velocità. Puoi aggiungere più apparecchi nello stesso ambiente: il
-          consiglio considera la potenza già installata da tutti i
-          ventilconvettori presenti, anche di impianti diversi.
+          Il sistema consiglia la taglia che copre il fabbisogno residuo,
+          contando la potenza già installata nell’ambiente. Puoi aggiungere più
+          apparecchi.
         </p>
       </header>
       {existingDevice && (

@@ -132,7 +132,9 @@ export function SplitPanel({
           <details open>
             <summary>Ambienti climatizzati · {roomIds.length}</summary>
             <fieldset>
-              <legend>Ambienti climatizzati</legend>
+              <legend className="legenda-nascosta">
+                Ambienti climatizzati
+              </legend>
               {project.rooms.map((r) => (
                 <label className="ambiente-servito" key={r.id}>
                   <input

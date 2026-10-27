@@ -1,7 +1,7 @@
 import { CatmullRomCurve3, QuadraticBezierCurve3, Vector3 } from "three";
 import type { ComfortField } from "./comfort-fields";
 
-/** Waves taper at both ends so outlets and return inlets stay anchored. */
+/** A gentle S-sweep tapers at both ends so outlets and return inlets stay anchored. */
 export function comfortFlowCurve(field: ComfortField) {
   const base = new QuadraticBezierCurve3(
     new Vector3(...field.start),
@@ -20,7 +20,7 @@ export function comfortFlowCurve(field: ComfortField) {
         .getPoint(t)
         .addScaledVector(
           sideways,
-          amplitude * Math.sin(Math.PI * t) * Math.sin(6 * Math.PI * t),
+          amplitude * Math.sin(Math.PI * t) * Math.sin(2 * Math.PI * t),
         );
     }),
   );

@@ -123,8 +123,7 @@ export function HydronicPanel({
   });
   const orderedProducts = [...products].sort(
     (a, b) =>
-      Number(b.id === recommended?.id) -
-        Number(a.id === recommended?.id) ||
+      Number(b.id === recommended?.id) - Number(a.id === recommended?.id) ||
       heatPumpPreference(a) - heatPumpPreference(b),
   );
   if (!formId)
@@ -244,9 +243,9 @@ export function HydronicPanel({
             >
               <strong>Consigliato · {recommended.model}</strong>
               <p>
-                Taglia scelta sulle potenze massime dichiarate, dove disponibili.{" "}
-                Copre {formatNumber(load / 1000)} kW degli ambienti serviti, in
-                caldo e freddo alle condizioni scelte.
+                Taglia scelta sulle potenze massime dichiarate, dove
+                disponibili. Copre {formatNumber(load / 1000)} kW degli ambienti
+                serviti, in caldo e freddo alle condizioni scelte.
               </p>
               <button
                 type="button"
@@ -312,7 +311,7 @@ export function HydronicPanel({
           <fieldset>
             <legend>Ambienti serviti dalla pompa</legend>
             {rooms.map((r) => (
-              <label className="campo" key={r.id}>
+              <label className="ambiente-servito" key={r.id}>
                 <span>
                   <input
                     type="checkbox"
@@ -344,7 +343,7 @@ export function HydronicPanel({
                 u.catalogVersion,
               );
               return (
-                <label className="campo" key={u.id}>
+                <label className="ambiente-servito" key={u.id}>
                   <span>
                     <input
                       type="checkbox"
@@ -571,14 +570,9 @@ export function HydronicPanel({
                 <tr>
                   <th scope="row">Potenza caldo / freddo</th>
                   <td>
-                    {formatNumber(
-                      (existingCapacity?.heatingW ?? 0) / 1000,
-                    )}{" "}
-                    /{" "}
-                    {formatNumber(
-                      (existingCapacity?.coolingW ?? 0) / 1000,
-                    )}{" "}
-                    kW · potenze {existingCapacity?.basis ?? "non verificabili"}
+                    {formatNumber((existingCapacity?.heatingW ?? 0) / 1000)} /{" "}
+                    {formatNumber((existingCapacity?.coolingW ?? 0) / 1000)} kW
+                    · potenze {existingCapacity?.basis ?? "non verificabili"}
                   </td>
                 </tr>
                 <tr>

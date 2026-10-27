@@ -586,3 +586,21 @@
   background: var(--tinta-tenue);
   color: var(--tinta);
 }
+.menuTitle {
+  padding: 8px 8px 2px;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--testo-tenue);
+}
+.menuTitle:first-child {
+  padding-top: 2px;
+}
+.group button svg {
+  flex-shrink: 0;
+  color: var(--testo-tenue);
+}
+.group button[aria-pressed="true"] svg {
+  color: inherit;
+}
