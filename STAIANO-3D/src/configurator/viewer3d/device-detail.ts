@@ -216,27 +216,50 @@ export function radiatorDetail(
     if (variant.visualShape === "towel") {
       const radius = Math.min(d * 0.22, w * 0.025, 0.018);
       for (const x of [-w / 2 + radius, w / 2 - radius]) {
+        // Foto Cordivari (Claudia): collettori laterali piatti, più profondi che larghi.
+        const collectorDepth = Math.min(radius * 1.6, d / 2);
         result.tubes.push({
           position: [x, 0, 0],
-          scale: [radius, h - 2 * radius, radius],
+          scale: [radius, h - 2 * radius, collectorDepth],
         });
         for (const y of [-h / 2 + radius, h / 2 - radius])
           result.caps.push({
             position: [x, y, 0],
-            scale: [radius, radius, radius],
+            scale: [radius, radius, collectorDepth],
           });
       }
       const bars = Math.max(4, Math.round(h / 0.055));
-      for (let i = 0; i < bars; i++)
-        result.tubes.push({
-          position: [
-            0,
-            -h / 2 + radius * 2 + (i * (h - radius * 4)) / (bars - 1),
-            0,
-          ],
-          scale: [radius * 0.7, w - radius * 2, radius * 0.7],
-          rotation: [0, 0, Math.PI / 2],
-        });
+      // shortcut: foto Cordivari Naike/Anna/Lucy/Gloria (barre a fasce) e Samira (lamelle piatte); numero e passo delle fasce sono illustrativi, le schede non li riportano.
+      const flat = variant.family.startsWith("Samira");
+      const bands = flat
+        ? 3
+        : /^(Naike|Anna|Lucy|Gloria)/.test(variant.family)
+          ? 5
+          : 1;
+      const bandGap = bands > 1 ? 0.05 : 0;
+      const spacing = (h - radius * 4 - bandGap * (bands - 1)) / (bars - 1);
+      for (let i = 0; i < bars; i++) {
+        const y =
+          -h / 2 +
+          radius * 2 +
+          i * spacing +
+          Math.floor((i * bands) / bars) * bandGap;
+        if (flat)
+          result.sections.push({
+            position: [0, y, 0],
+            scale: [
+              w - radius * 2,
+              Math.min(radius * 4, spacing * 0.8),
+              d * 0.5,
+            ],
+          });
+        else
+          result.tubes.push({
+            position: [0, y, 0],
+            scale: [radius * 0.7, w - radius * 2, radius * 0.7],
+            rotation: [0, 0, Math.PI / 2],
+          });
+      }
       return result;
     }
     const slats = Math.max(1, Math.round(w / 0.055)),
@@ -265,18 +288,12 @@ export function radiatorDetail(
         position: [x, 0, d / 2 - 0.008],
         scale: [pitch - 0.0015, h - headHeight, 0.016],
       });
-      for (const y of [-h / 2 + headHeight / 2, h / 2 - headHeight / 2]) {
-        if (variant.family === "OSCAR TONDO")
-          result.caps.push({
-            position: [x, y, 0],
-            scale: [pitch / 2 - 0.001, headHeight / 2, d / 2],
-          });
-        else
-          result.sections.push({
-            position: [x, y, 0],
-            scale: [pitch - 0.0015, headHeight, d],
-          });
-      }
+      // Foto Global OSCAR TONDO: pannelli piani a tutta altezza, senza calotte tonde per elemento.
+      for (const y of [-h / 2 + headHeight / 2, h / 2 - headHeight / 2])
+        result.sections.push({
+          position: [x, y, 0],
+          scale: [pitch - 0.0015, headHeight, d],
+        });
       for (const side of [-1, 1])
         result.fins.push({
           position: [x + side * pitch * 0.3, 0, -0.004],
@@ -289,6 +306,7 @@ export function radiatorDetail(
   const charleston =
     variant?.manufacturer === "Zehnder" &&
     variant.family.startsWith("Charleston ");
+  const tamara = variant?.family.startsWith("Tamara") ?? false;
   const tubular = ardesia || variant?.visualShape === "tubular";
   // A missing historic column count is never inferred from the product identifier.
   const columns = tubular ? variant?.columns : null;
@@ -306,7 +324,7 @@ export function radiatorDetail(
     (ardesia || charleston) && variant
       ? variant.interaxisMm / 2000
       : h / 2 - headerRadius;
-  for (const y of [-headerY, headerY])
+  for (const y of tamara ? [] : [-headerY, headerY])
     result.headers.push({
       position: [0, y, 0],
       scale: [headerRadius, w, Math.min(d / 2, headerRadius * 1.5)],
@@ -317,7 +335,7 @@ export function radiatorDetail(
     ardesia && variant
       ? Math.min((count * pitch) / 2, w / 2 - headerRadius / 4)
       : w / 2 - headerRadius / 4;
-  for (const x of [-plugX, plugX])
+  for (const x of tamara ? [] : [-plugX, plugX])
     result.plugs.push({
       position: [x, headerY, 0],
       scale: [headerRadius * 0.7, headerRadius / 2, headerRadius * 0.7],
@@ -347,6 +365,17 @@ export function radiatorDetail(
             scale: [radius, radius, radius],
           });
       }
+    } else if (tamara) {
+      // Foto Cordivari Tamara: tubi ovali verticali a testa tonda, separati, senza collettori tondi.
+      result.tubes.push({
+        position: [x, 0, 0],
+        scale: [pitch * 0.42, h - d, d / 2],
+      });
+      for (const y of [-1, 1])
+        result.caps.push({
+          position: [x, y * (h / 2 - d / 2), 0],
+          scale: [pitch * 0.42, d / 2, d / 2],
+        });
     } else {
       result.sections.push({
         position: [x, 0, d * 0.22],

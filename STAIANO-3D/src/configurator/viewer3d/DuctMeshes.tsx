@@ -142,6 +142,9 @@ function DuctSegment({
   );
 }
 
+// Scheda e foto Ecoclima ETF10: tubo flessibile nero (grigio scuro per restare leggibile sulla scena).
+const FLEX_DUCT_COLOR = "#33373a";
+
 export function DuctMeshes({
   project,
   activeFloorId,
@@ -224,7 +227,7 @@ export function DuctMeshes({
             <FlexibleDuct
               points={points}
               diameterMm={diameterMm}
-              color={collisions.has(id) ? "#dc2626" : "#ffffff"}
+              color={collisions.has(id) ? "#dc2626" : FLEX_DUCT_COLOR}
               collision={collisions.get(id)}
               fallbackPoint={fallbackPoint}
             />
@@ -278,7 +281,7 @@ export function DuctMeshes({
                     ? "#dc2626"
                     : selectedId === duct.id
                       ? "#50c7df"
-                      : "#ffffff"
+                      : FLEX_DUCT_COLOR
                 }
                 collision={collisions.get(duct.id)}
                 fallbackPoint={

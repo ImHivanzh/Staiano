@@ -54,3 +54,10 @@ native/runtime/plan-ai.json
 
 # Local, generated code-navigation graph.
 src/graphify-out/
+
+# Scratch visual comparisons for Blender model checks (large, regenerable).
+output/verifiche-realismo/
+output/anteprime-hvac/
+output/gree-bim/
+*.blend1
+*.blend.bak

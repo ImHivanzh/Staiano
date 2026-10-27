@@ -19,7 +19,7 @@ import {
   fanCoilPanelDimensions,
 } from "@/domain/catalogs/fan-coils";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
-import { fanCoilCeilingRange } from "@/domain/fan-coils/placement";
+import { fanCoilCeilingRange, fanCoilWallRecess } from "@/domain/fan-coils/placement";
 import { drywallSideForRoom } from "@/domain/geometry/drywall-sides";
 import {
   ensureFanCoilAirSystem,
@@ -283,7 +283,7 @@ export function FanCoilProperties({
               const wall = project.walls.find((w) => w.id === data.get("wall"));
               const span = wall && roomWallSpan(room, wall);
               if (!wall || !span) return;
-              const position = recessed
+              const position = fanCoilWallRecess(model, wall, room.id)
                 ? positionRecessedAlongRoomWall(
                     room,
                     wall,

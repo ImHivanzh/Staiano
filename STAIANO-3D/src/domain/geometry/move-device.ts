@@ -33,6 +33,7 @@ import {
 import {
   fanCoilCeilingRange,
   fanCoilPlacementValid,
+  fanCoilWallRecess,
 } from "@/domain/fan-coils/placement";
 import {
   layoutLinearRun,
@@ -422,7 +423,7 @@ export function movePlacedDevice(
   const moved = {
     roomId: chosen.room.id,
     wallId: chosen.wall.id,
-    position: recessedFanCoil
+    position: recessedFanCoil || (!!fanCoilProduct && fanCoilWallRecess(fanCoilProduct, chosen.wall, chosen.room.id))
       ? positionRecessedAlongRoomWall(
           chosen.room,
           chosen.wall,

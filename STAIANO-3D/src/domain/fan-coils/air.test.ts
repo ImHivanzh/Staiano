@@ -65,6 +65,17 @@ function addSupplyPlenum(project: Project, terminalId: string): Project {
 }
 
 describe("ventilconvettore canalizzabile", () => {
+  it("collega un plenum al ventilconvettore prima di creare la distribuzione aria", () => {
+    const project = fixture();
+    const unit = project.fanCoils![0];
+    const free = insertPlenum(project, unit.roomId, unit.position);
+    const plenum = free.plenums.at(-1)!;
+    expect(connectionSelection(free, plenum.id, unit.id)?.plenumId).toBe(plenum.id);
+    const connected = connectPlenum(free, plenum.id, unit.id);
+    const system = fanCoilAirSystem(connected, unit.id)!;
+    expect(connected.plenums.at(-1)?.attachmentId).toBe(system.indoorUnits[0].id);
+    expect(projectSchema.safeParse(connected).success).toBe(true);
+  });
   it("crea la distribuzione aeraulica dal punto di funzionamento del catalogo", () => {
     const project = fixture();
     const unit = project.fanCoils![0];

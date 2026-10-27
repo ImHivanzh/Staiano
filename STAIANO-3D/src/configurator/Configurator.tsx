@@ -80,6 +80,7 @@ import { formatNumber, numberFromForm } from "@/utils/format";
 import { THERMAL_COEFFICIENT_W_M3 } from "@/domain/thermal/calculate";
 import { Editor2D } from "./editor2d/Editor2D";
 import { GraphicalDuctedConfigurator } from "./systems/GraphicalDuctedConfigurator";
+import { EasyfattXmlExport } from "./systems/EasyfattXmlExport";
 import { Properties, selectionWithProperties } from "./properties/Properties";
 import { ConfigurationWizard } from "./import/ConfigurationWizard";
 import { PillarDialog } from "./PillarDialog";
@@ -733,7 +734,12 @@ export function Configurator() {
     try {
       const { materialsEasyfattXlsx } =
         await import("@/services/export/materials-easyfatt");
-      const bytes = materialsEasyfattXlsx(structuredClone(p));
+      const { loadEasyfattMappings } =
+        await import("@/services/export/easyfatt-mappings");
+      const bytes = materialsEasyfattXlsx(
+        structuredClone(p),
+        await loadEasyfattMappings(),
+      );
       const name =
         p.name.replace(/[^a-zA-Z0-9àèéìòù _-]/g, "").slice(0, 100) ||
         "progetto";
@@ -1410,6 +1416,7 @@ export function Configurator() {
                     >
                       <DownloadSimple /> Materiali per Danea Easyfatt · Excel
                     </button>
+                    <EasyfattXmlExport project={p} disabled={pdfBusy} />
                     <p className="nota">
                       Easyfatt: importa le righe nel modello Excel del
                       preventivo. Codici e prezzi non disponibili restano vuoti

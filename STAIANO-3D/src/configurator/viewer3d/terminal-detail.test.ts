@@ -9,11 +9,15 @@ it.each([
   ["EDQMQ", "jets"],
   ["EDU", "nozzle"],
   ["EDRA", "cones"],
+  ["EDRCS", "vanes"],
+  ["EDRFB", "vanes"],
+  ["EDFDS", "vanes"],
   ["EVVMC", "valve"],
   ["EDSC-Q", "valve"],
   ["EGQR", "grid"],
   ["EADD", "four-way"],
-  ["EBA", "slats"],
+  ["EBA", "grid"],
+  ["EBL", "slats"],
 ])("distinguishes the %s face as %s", (code, expected) => {
   expect(
     terminalPattern(

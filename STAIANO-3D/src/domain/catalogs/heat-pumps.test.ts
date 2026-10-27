@@ -63,9 +63,9 @@ describe("official Daikin Altherma outdoor catalogue", () => {
       expect(sha256File(archived)).toBe(daikin[0].sourceMetadata.sha256);
     else reportUnarchived(["daikin-residential-2025.pdf"]);
     for (const product of daikin)
-      expect(
-        sha256File(join("public", product.productPhoto.localPath)),
-      ).toBe(product.productPhoto.sha256);
+      expect(sha256File(join("public", product.productPhoto.localPath))).toBe(
+        product.productPhoto.sha256,
+      );
   });
 });
 
@@ -156,6 +156,17 @@ describe("complete official Gree VERSATI catalog", () => {
         expect(
           heatPumpCatalog.products.find((current) => current.id === p.id),
         ).toMatchObject(p);
+    }
+  });
+});
+
+describe("heat pump 3D models", () => {
+  it("maps every catalogue product to an existing Blender GLB", async () => {
+    const { heatPumpModelUrl } = await import("./heat-pump-models");
+    for (const p of heatPumpCatalog.products) {
+      const url = heatPumpModelUrl(p);
+      expect(url, p.id).not.toBeNull();
+      expect(existsSync(join(process.cwd(), "public", url!)), p.id).toBe(true);
     }
   });
 });

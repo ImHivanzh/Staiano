@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import ModelPreview from "@/configurator/viewer3d/ModelPreview";
 import {
   stoveBrands,
   stoveCatalog,
@@ -23,6 +24,60 @@ export function StoveCatalog() {
   const [product, setProduct] = useState<StoveProduct | null>(null);
   const [color, setColor] = useState("");
   const [query, setQuery] = useState("");
+  const [showModel, setShowModel] = useState(false);
+  const modelColors: Record<string, Record<string, string>> = {
+    "nordica-amika-ad": { Bianco: "bianco", Nero: "nero" },
+    "nordica-amika-petra-ad": { "Pietra Naturale": "pietra" },
+    "nordica-angelica-evo": { Avorio: "avorio", Nero: "nero", Bordeaux: "bordeaux" },
+    "nordica-angelica-junior": { Nero: "nero", Avorio: "avorio", "Tortora Matt": "tortora-matt" },
+    "nordica-dahiana-ad": { Avorio: "avorio", Bordeaux: "bordeaux", Nero: "nero", Bronzo: "bronzo" },
+    "nordica-daniela": { Nero: "nero", Avorio: "avorio", "Tortora Matt": "tortora-matt", "Grigio Grafite": "grigio-grafite" },
+    "nordica-debby-evo": { Bianco: "bianco", Nero: "nero" },
+    "nordica-debby-petra-evo": { "Pietra Naturale": "pietra" },
+    "nordica-katia-11-50-evo": { Bronzo: "bronzo", Bianco: "bianco", "Tortora Matt": "tortora-matt" },
+    "nordica-katia-9-50-evo": { Bronzo: "bronzo", Bianco: "bianco", "Tortora Matt": "tortora-matt" },
+    "nordica-ketty-50": { Bianco: "bianco", Bordeaux: "bordeaux", Nero: "nero", Avorio: "avorio" },
+    "nordica-klaudia-ad-evo": { Nero: "nero", Bordeaux: "bordeaux", Bianco: "bianco" },
+    "nordica-lucia16": { Tortora: "tortora", Bordeaux: "bordeaux", Bianco: "bianco" },
+    "nordica-luisella-50": { Nero: "nero", "Grigio Grafite": "grigio-grafite", Bordeaux: "bordeaux" },
+    "nordica-luisella-50-maxi": { "Grigio Grafite": "grigio-grafite", Nero: "nero" },
+    "nordica-mariella-ad": { Avorio: "avorio", Bordeaux: "bordeaux", Nero: "nero" },
+    "nordica-noris-evo": { Bronzo: "bronzo", Bianco: "bianco", "Tortora Matt": "tortora-matt" },
+    "nordica-noris-lux-evo": { Tortora: "tortora", Bianco: "bianco" },
+    "nordica-peggy": { Nero: "nero" },
+    "nordica-sabry-ad": { "Grigio Grafite": "grigio-grafite", Avorio: "avorio", Bronzo: "bronzo", Nero: "nero" },
+    "nordica-teodora-evo": { Nero: "nero" },
+    "nordica-teorema-ad": { Avorio: "avorio", Bordeaux: "bordeaux", Nero: "nero" },
+    "nordica-angelica-plus-evo": { Avorio: "avorio", Bordeaux: "bordeaux", Nero: "nero" },
+    "nordica-annabella-plus-50": { Bianco: "bianco", Nero: "nero", "Tortora Matt": "tortora-matt" },
+    "nordica-annalisa-plus-crystal-evo": { Nero: "nero" },
+    "nordica-annalisa-plus-gres-evo": { "Gres Ostuni": "gres-ostuni", "Gres Corten": "gres-corten" },
+    "nordica-dahiana-plus-ad": { Avorio: "avorio", Bordeaux: "bordeaux", Nero: "nero", Bronzo: "bronzo" },
+    "nordica-daniela-plus": { Nero: "nero", Avorio: "avorio", "Tortora Matt": "tortora-matt", "Grigio Grafite": "grigio-grafite" },
+    "nordica-klaudia-plus-ad-evo": { Nero: "nero", Bordeaux: "bordeaux", Bianco: "bianco" },
+    "nordica-lucia-plus16": { Tortora: "tortora", Bordeaux: "bordeaux", Bianco: "bianco" },
+    "nordica-mariella-plus-ad": { Avorio: "avorio", Bordeaux: "bordeaux", Nero: "nero" },
+    "nordica-marilena-plus-50-ad": { Bianco: "bianco", Nero: "nero" },
+    "nordica-marilena-plus-crystal-50-ad": { "Fume'": "fume", Bianco: "bianco" },
+    "nordica-marilena-plus-petra-50-ad": { "Pietra Naturale": "pietra" },
+    "nordica-noris-plus-evo": { Bronzo: "bronzo", Bianco: "bianco", "Tortora Matt": "tortora-matt" },
+    "nordica-noris-plus-lux-evo": { Tortora: "tortora", Bianco: "bianco" },
+    "nordica-sharon-plus-crystal": { Crystal: "crystal" },
+    "nordica-sharon-plus-petra": { "Pietra Naturale": "pietra" },
+    "nordica-sharon-plus-steel": { Nero: "nero" },
+    "nordica-souvenir-plus-lux-50": { Bianco: "bianco", Tortora: "tortora" },
+    "nordica-souvenir-plus-petra-50": { "Pietra Naturale": "pietra" },
+    "nordica-souvenir-plus-steel-50": { Bianco: "bianco", Bordeaux: "bordeaux", Nero: "nero" },
+    "nordica-teorema-plus-ad": { Nero: "nero", Avorio: "avorio", Bordeaux: "bordeaux" },
+    "nordica-terry-plus": { Bianco: "bianco", Bordeaux: "bordeaux", "Tortora Lucido": "tortora-lucido" },
+    "nordica-costanza-idro-50": { Bianco: "bianco", Bordeaux: "bordeaux" },
+    "nordica-evelyne-idro-evo": { Grigio: "grigio", Bianco: "bianco", Tortora: "tortora" },
+    "nordica-floriana-idro-crystal": { Crystal: "crystal" },
+    "nordica-floriana-idro-gres": { "Gres Corten": "gres-corten", "Gres Ostuni": "gres-ostuni" },
+    "ravelli-flexi-7": { Bianco: "bianco", Nero: "nero" },
+  };
+  const finish = product && modelColors[product.id]?.[color];
+  const modelUrl = product && finish ? `/models/stoves/${product.id}-${finish}.glb` : null;
   const technical = product?.technical ?? null;
   const officialSources = technical
     ? [
@@ -174,6 +229,7 @@ export function StoveCatalog() {
                 onClick={() => {
                   setProduct(item);
                   setColor(item.colors[0] ?? "");
+                  setShowModel(false);
                 }}
               >
                 {item.photo && (
@@ -200,7 +256,8 @@ export function StoveCatalog() {
         </>
       ) : (
         <div className={styles.detail}>
-          {product.photo && (
+          <div>
+          {showModel && modelUrl ? <ModelPreview url={modelUrl} /> : product.photo && (
             <Image
               src={product.photo}
               alt={`${product.brand} ${product.name}`}
@@ -209,6 +266,9 @@ export function StoveCatalog() {
               unoptimized
             />
           )}
+          {modelUrl && <button type="button" className="bottone tenue" onClick={() => setShowModel(!showModel)}>{showModel ? "Mostra fotografia" : "Mostra modello 3D"}</button>}
+          {showModel && modelUrl && <p className="nota">Modello 3D a stufa spenta.</p>}
+          </div>
           <div>
             <h4>{product.name}</h4>
             <p>

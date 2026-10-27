@@ -149,6 +149,7 @@ export default function Viewer3D({
   const [cutaway, setCutaway] = useState(true);
   const [labels, setLabels] = useState(true);
   const [ceilingGuide, setCeilingGuide] = useState(true);
+  const [openGrilleIds, setOpenGrilleIds] = useState<Set<string>>(new Set());
   const [interior, setInterior] = useState(false);
   const [suspendedCeiling, setSuspendedCeiling] = useState(true);
   const [ceilingTransparent, setCeilingTransparent] = useState(true);
@@ -1301,6 +1302,7 @@ export default function Viewer3D({
                     onSelect={pickDevice}
                     showHydronicPipes={channelView}
                     hideDuctedMachines={readOnly || presentation}
+                    openGrilleIds={openGrilleIds}
                   />
                 )}
                 {sceneProject &&
@@ -1478,6 +1480,16 @@ export default function Viewer3D({
             </div>
           </div>
           <div className={styles.bottom}>
+            {chosenTerminal && ["EGF-PUSH", "EGFR-PUSH"].includes(chosenTerminal.family) && (
+              <button type="button" className="btn" aria-pressed={openGrilleIds.has(chosenTerminal.id)} onClick={() => setOpenGrilleIds((current) => {
+                const next = new Set(current);
+                if (next.has(chosenTerminal.id)) next.delete(chosenTerminal.id);
+                else next.add(chosenTerminal.id);
+                return next;
+              })}>
+                {openGrilleIds.has(chosenTerminal.id) ? "Chiudi botola" : "Apri botola"}
+              </button>
+            )}
             {!readOnly && presentation && p && (
               <div className={styles.clientStats}>
                 <strong>

@@ -24,6 +24,7 @@ import {
 } from "./plenum-layout";
 import styles from "./PlenumPreview3D.module.css";
 import { plenumTransitionGeometry } from "./plenum-transition";
+import { MachinePlenumShell } from "./SystemMeshes";
 import {
   machinePlenums,
   placedPlenumGeometry,
@@ -138,7 +139,7 @@ function Port({ port }: { port: PlenumPort }) {
           side={THREE.DoubleSide}
         />
       </mesh>
-      <mesh position={[0, 0, 0.0005]}>
+      <mesh position={[0, 0, -0.03]}>
         <circleGeometry args={[radius * 0.965, 40]} />
         <meshStandardMaterial color="#23414f" roughness={0.95} />
       </mesh>
@@ -227,13 +228,6 @@ function Scene({
     () => [0, 0, centerZ],
     [centerZ],
   );
-  const bodyEdges = useMemo(() => {
-    const geometry = new THREE.BoxGeometry(w, h, layout.boxDepthM);
-    const edges = new THREE.EdgesGeometry(geometry);
-    geometry.dispose();
-    return edges;
-  }, [w, h, layout.boxDepthM]);
-  useEffect(() => () => bodyEdges.dispose(), [bodyEdges]);
   return (
     <>
       <color attach="background" args={["#f1f5f2"]} />
@@ -303,22 +297,7 @@ function Scene({
           />
         </mesh>
       )}
-      <group position={[0, 0, layout.transitionDepthM + layout.boxDepthM / 2]}>
-        <mesh>
-          <boxGeometry args={[w, h, layout.boxDepthM]} />
-          <meshStandardMaterial
-            color="#58b7cd"
-            transparent
-            opacity={0.24}
-            roughness={0.4}
-            metalness={0.05}
-            depthWrite={false}
-          />
-        </mesh>
-        <lineSegments geometry={bodyEdges}>
-          <lineBasicMaterial color="#4b9aad" transparent opacity={0.72} />
-        </lineSegments>
-      </group>
+      <MachinePlenumShell layout={layout} selected={false} />
       {layout.ports.map((port) => (
         <Port key={port.branch.id} port={port} />
       ))}

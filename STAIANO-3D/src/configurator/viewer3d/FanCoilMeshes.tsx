@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import type { ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
@@ -13,6 +13,10 @@ import {
   isDuctedFanCoil,
 } from "@/domain/catalogs/fan-coils";
 import type { FanCoilPlacement } from "@/domain/fan-coils/placement";
+import { airMachineDimensions } from "@/domain/fan-coils/air";
+import { DuctedMachineBody } from "./DuctedMachineBody";
+import { ModelAssetBoundary } from "./ModelAssetBoundary";
+import GreeDuctedBody from "./GreeDuctedBody";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
 const plane = new THREE.PlaneGeometry(1, 1);
@@ -36,6 +40,12 @@ const recess = new THREE.MeshStandardMaterial({
   roughness: 0.8,
   side: THREE.DoubleSide,
 });
+const topGrille = new THREE.MeshStandardMaterial({
+  color: "#7d8083",
+  roughness: 0.5,
+  metalness: 0.1,
+});
+const foot = new THREE.CylinderGeometry(1, 1, 1, 24);
 const outline = new THREE.LineBasicMaterial({
   color: "#00a9b8",
   transparent: true,
@@ -54,6 +64,7 @@ export function createFanCoilGrilleBars({
   material,
   longitudinal = false,
   concealedDucted = false,
+  topBars = true,
 }: {
   faceW: number;
   faceH: number;
@@ -66,11 +77,14 @@ export function createFanCoilGrilleBars({
   material: THREE.Material;
   longitudinal?: boolean;
   concealedDucted?: boolean;
+  topBars?: boolean;
 }) {
   const result = new THREE.InstancedMesh(
     box,
     material,
-    concealedDucted ? 0 : finCount + (ceiling ? 3 : longitudinal ? 6 : 18),
+    concealedDucted
+      ? 0
+      : finCount + (ceiling ? 3 : longitudinal ? 6 : topBars ? 18 : 0),
   );
   if (concealedDucted) return result;
   result.castShadow = true;
@@ -107,7 +121,7 @@ export function createFanCoilGrilleBars({
         [0, faceH / 2 + 0.0003, faceD * (-0.26 + i * 0.104)],
         [faceW * 0.86, 0.002, faceD * 0.035],
       );
-  else
+  else if (topBars)
     for (let i = 0; i < 18; i++)
       addBar(
         [faceW * (-0.41 + (0.82 * i) / 17), faceH / 2 + 0.0003, 0],
@@ -135,7 +149,13 @@ function FanCoilBody({
   const concealedDucted = concealed && isDuctedFanCoil(product);
   const aermec = product?.manufacturer === "Aermec" && !concealed;
   const innova = product?.manufacturer === "Innova";
+  // Foto Innova SL/SLS: fronte liscio con una sola feritoia bassa. Disegno Olimpia Bi2: fronte liscio.
+  const slimInnova = innova && !concealed && !ceiling;
+  const smoothFront = product?.manufacturer === "Olimpia Splendid" && !concealed && !ceiling;
+  const slim = slimInnova || smoothFront;
   const shell = concealed ? concealedShell : coating;
+  // Foto Aermec FCZ: due piedini cilindrici sotto il mobile, dentro l'ingombro salvato.
+  const footM = aermec && !ceiling ? Math.min(0.07, h * 0.12) : 0;
   const panel = product
     ? fanCoilPanelDimensions(
         product,
@@ -150,14 +170,14 @@ function FanCoilBody({
     () =>
       new RoundedBoxGeometry(
         w,
-        h,
+        h - footM,
         d,
         3,
         concealed
           ? 0.003
           : Math.min(aermec ? 0.055 : innova ? 0.006 : 0.018, h / 8, d / 4),
       ),
-    [w, h, d, concealed, aermec, innova],
+    [w, h, d, concealed, aermec, innova, footM],
   );
   const edges = useMemo(() => {
     const geometry = new THREE.BoxGeometry(faceW, faceH, faceD);
@@ -178,8 +198,31 @@ function FanCoilBody({
     [body, edges, cover],
   );
   const grilleZ = d / 2 + 0.0003;
-  const returnHeight = faceH * (ceiling ? 0.24 : aermec ? 0.08 : 0.19);
-  const returnY = -faceH * (ceiling ? 0.29 : aermec ? 0.42 : 0.31);
+  const returnHeight =
+    faceH *
+    (ceiling
+      ? 0.24
+      : aermec
+        ? 0.08
+        : smoothFront
+          ? 0.03
+          : slimInnova
+            ? h < 0.45
+              ? 0.15
+              : 0.075
+            : 0.19);
+  const returnY = aermec
+    ? -faceH / 2 + footM + returnHeight / 2 + 0.01
+    : -faceH *
+      (ceiling
+        ? 0.29
+        : smoothFront
+          ? 0.46
+          : slimInnova
+            ? h < 0.45
+              ? 0.28
+              : 0.41
+            : 0.31);
   const finCount = Math.min(12, Math.max(4, Math.round(returnHeight / 0.017)));
   const bars = useMemo(
     () =>
@@ -192,9 +235,10 @@ function FanCoilBody({
         returnHeight,
         returnY,
         grilleZ,
-        material: shell,
+        material: aermec ? topGrille : shell,
         longitudinal: aermec,
         concealedDucted,
+        topBars: !slim,
       }),
     [
       ceiling,
@@ -208,6 +252,7 @@ function FanCoilBody({
       shell,
       aermec,
       concealedDucted,
+      slim,
     ],
   );
   useEffect(
@@ -216,9 +261,58 @@ function FanCoilBody({
     },
     [bars],
   );
+  if (product?.family === "AirLeaf SLI" && hasPanel) {
+    const fallback = cover && <mesh geometry={cover} material={recessedPanel} />;
+    return <>
+      <ModelAssetBoundary fallback={<mesh geometry={body} material={shell} />}><Suspense fallback={<mesh geometry={body} material={shell} />}>
+        <GreeDuctedBody url="/models/hvac/innova-sli-core-realistic.glb" width={w} height={h} depth={d} selected={selected} />
+      </Suspense></ModelAssetBoundary>
+      <group position={[0, 0, d / 2 - faceD / 2]}>
+        <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
+          <GreeDuctedBody url="/models/hvac/innova-sli-panel-realistic.glb" width={faceW} height={faceH} depth={faceD} selected={selected} />
+        </Suspense></ModelAssetBoundary>
+      </group>
+      {selected && <lineSegments geometry={edges} material={outline} renderOrder={3} />}
+    </>;
+  }
+  if (product?.family === "Filomuro Slim Fit") {
+    const fallback = <mesh geometry={body} material={shell} />;
+    return <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
+      <GreeDuctedBody url="/models/hvac/innova-filomuro-realistic.glb" width={w} height={h} depth={d} selected={selected} />
+    </Suspense></ModelAssetBoundary>;
+  }
+  if (product?.family === "AirLeaf SL" || product?.family === "AirLeaf SLS") {
+    const fallback = <mesh geometry={body} material={shell} />;
+    const variant = product.family === "AirLeaf SL" ? "sl" : "sls";
+    return <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
+      <GreeDuctedBody url={`/models/hvac/innova-airleaf-${variant}-realistic.glb`} width={w} height={h} depth={d} selected={selected} />
+    </Suspense></ModelAssetBoundary>;
+  }
+  if (product?.family === "AirLeaf SLI" && !hasPanel) {
+    const fallback = <mesh geometry={body} material={shell} />;
+    return <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
+      <GreeDuctedBody url="/models/hvac/innova-sli-core-realistic.glb" width={w} height={h} depth={d} selected={selected} />
+    </Suspense></ModelAssetBoundary>;
+  }
   return (
     <>
-      <mesh geometry={body} material={shell} castShadow receiveShadow />
+      <mesh
+        geometry={body}
+        material={shell}
+        position={[0, footM / 2, 0]}
+        castShadow
+        receiveShadow
+      />
+      {footM > 0 &&
+        [-1, 1].map((side) => (
+          <mesh
+            key={side}
+            geometry={foot}
+            material={topGrille}
+            position={[side * w * 0.42, -h / 2 + footM / 2, 0]}
+            scale={[0.04, footM, Math.min(0.06, d * 0.3)]}
+          />
+        ))}
       {cover && (
         <mesh
           geometry={cover}
@@ -253,7 +347,7 @@ function FanCoilBody({
                 material={recess}
                 position={[0, faceH / 2 + 0.0003, 0]}
                 rotation={[-Math.PI / 2, 0, 0]}
-                scale={[faceW * 0.86, faceD * 0.63, 1]}
+                scale={[faceW * 0.86, faceD * (slim ? 0.18 : 0.63), 1]}
               />
             </>
           )}
@@ -263,6 +357,26 @@ function FanCoilBody({
         <lineSegments geometry={edges} material={outline} renderOrder={3} />
       )}
     </>
+  );
+}
+
+function FanCoilDuctedBody({
+  unit,
+  selected,
+}: {
+  unit: FanCoilPlacement;
+  selected: boolean;
+}) {
+  return (
+    <group
+      rotation={unit.mounting === "ceiling" ? [-Math.PI / 2, 0, 0] : [0, 0, 0]}
+    >
+      <DuctedMachineBody
+        item={{ ...unit, ...airMachineDimensions(unit) }}
+        selected={selected}
+        connection={null}
+      />
+    </group>
   );
 }
 
@@ -323,12 +437,22 @@ export function FanCoilMeshes({
             }
             onClick={choose(unit.id)}
           >
-            <FanCoilBody
-              unit={unit}
-              selected={selection.some(
-                (s) => s.kind === "device" && s.id === unit.id,
-              )}
-            />
+            {["FCZ P", "FCZ PO"].includes(fanCoilProductAtVersion(unit.productId, unit.catalogVersion)
+              ?.family ?? "") ? (
+              <FanCoilDuctedBody
+                unit={unit}
+                selected={selection.some(
+                  (s) => s.kind === "device" && s.id === unit.id,
+                )}
+              />
+            ) : (
+              <FanCoilBody
+                unit={unit}
+                selected={selection.some(
+                  (s) => s.kind === "device" && s.id === unit.id,
+                )}
+              />
+            )}
           </group>
         ))}
     </group>

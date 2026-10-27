@@ -10,10 +10,15 @@ export function terminalPattern(family: AirTerminalFamily | null) {
   if (/forellinat/.test(name)) return "perforated";
   if (/multi.ugell|microugell/.test(name)) return "jets";
   if (/^edu/.test(name)) return "nozzle";
+  // Foto Ecoclima: diffusori a pale radiali regolabili (EDRC, EDRCS, EDRF, EDRFB, EDFDS).
+  if (/^(edr[cf]|edfds)/.test(name)) return "vanes";
   if (/coni|singolo cono|geometria/.test(name)) return "cones";
   if (family?.type === "valve" || /^edsc|piastra di fondo chiusa/.test(name))
     return "valve";
   if (/maglia|rete/.test(name)) return "grid";
+  // Foto Ecoclima: bocchette a doppia deflessione, barre orizzontali e verticali.
+  if (/^(eba|ebv|ebcv|ebia)$/.test(family?.familyCode?.toLowerCase() ?? ""))
+    return "grid";
   if (family?.type === "diffuser")
     return family.shape === "circle" ? "cones" : "four-way";
   return "slats";
@@ -62,18 +67,23 @@ export function terminalFaceDetail(
   } else if (pattern === "swirl") {
     plate = true;
     const side = Math.min(w, h);
-    for (let i = 0; i < 16; i++) {
-      const angle = (i * Math.PI) / 8;
-      dark.push({
-        position: [
-          Math.cos(angle) * side * 0.28,
-          Math.sin(angle) * side * 0.28,
-          z,
-        ],
-        scale: [side * 0.035, side * 0.22, 1],
-        rotation: [0, 0, angle + 0.6],
-      });
-    }
+    // Foto EDE1: feritoie radiali su due corone concentriche (la corona interna sfalsata).
+    for (const [count, radius, length, offset] of [
+      [16, 0.36, 0.16, 0],
+      [12, 0.2, 0.12, 0.5],
+    ] as const)
+      for (let i = 0; i < count; i++) {
+        const angle = ((i + offset) * 2 * Math.PI) / count;
+        dark.push({
+          position: [
+            Math.cos(angle) * side * radius,
+            Math.sin(angle) * side * radius,
+            z,
+          ],
+          scale: [side * 0.03, side * length, 1],
+          rotation: [0, 0, angle - Math.PI / 2],
+        });
+      }
   } else if (pattern === "perforated") {
     plate = true;
     const columns = Math.min(16, Math.max(3, Math.round(w / 0.015)));
@@ -88,9 +98,10 @@ export function terminalFaceDetail(
       }
   } else if (pattern === "jets") {
     plate = true;
-    const columns = Math.min(6, Math.max(2, Math.round(w / 0.12)));
-    const rows = Math.min(4, Math.max(1, Math.round(h / 0.12)));
-    const radius = Math.min((w - t * 2) / columns, (h - t * 2) / rows) * 0.35;
+    // Foto EDQMQ, EDMP-P, EDMF-S: file di fori piccoli e fitti, non pochi dischi grandi.
+    const columns = Math.min(14, Math.max(2, Math.round(w / 0.04)));
+    const rows = Math.min(14, Math.max(1, Math.round(h / 0.04)));
+    const radius = Math.min((w - t * 2) / columns, (h - t * 2) / rows) * 0.3;
     for (let x = 0; x < columns; x++)
       for (let y = 0; y < rows; y++) {
         const position: [number, number, number] = [
@@ -101,6 +112,25 @@ export function terminalFaceDetail(
         rings.push({ position, scale: [radius, radius, 1] });
         holes.push({ position, scale: [radius, radius, 1] });
       }
+  } else if (pattern === "vanes") {
+    // Pale bianche radiali su fondo scuro con mozzo centrale.
+    const side = Math.min(w, h);
+    if (!circular)
+      dark.push({ position: [0, 0, z], scale: [w - t * 2, h - t * 2, 1] });
+    const count = 12;
+    for (let i = 0; i < count; i++) {
+      const angle = (i * 2 * Math.PI) / count;
+      white.push({
+        position: [
+          Math.cos(angle) * side * 0.27,
+          Math.sin(angle) * side * 0.27,
+          z,
+        ],
+        scale: [side * 0.11, side * 0.34, 1],
+        rotation: [0, 0, angle - Math.PI / 2],
+      });
+    }
+    discs.push({ position: [0, 0, z], scale: [side * 0.1, side * 0.1, 1] });
   } else if (pattern === "cones" || pattern === "nozzle") {
     plate = !circular;
     const radius = Math.min(w, h) * 0.44;

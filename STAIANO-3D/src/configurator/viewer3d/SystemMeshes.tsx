@@ -7,10 +7,66 @@ import { placedPlenumGeometry } from "@/domain/ducted/placement";
 import {
   plenumConnectionSide,
   plenumPortLocal,
+  type PlenumConnectionSide,
 } from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 import { DuctedMachineBody } from "./DuctedMachineBody";
+import { plenumFaceGeometry } from "./plenum-shell";
+
+function AttachedPlenumShell({ plenum, ports, green, selected }: {
+  plenum: Plenum;
+  ports: { side: PlenumConnectionSide; x: number; y: number; z: number; radius: number }[];
+  green: boolean;
+  selected: boolean;
+}) {
+  const w = plenum.widthMm / 1000, h = plenum.heightMm / 1000, d = plenum.depthMm / 1000;
+  const faces = useMemo(() => {
+    const sides = ["front", "rear", "top", "bottom", "left", "right"] as const;
+    return sides.map((side) => {
+      const isEnd = side === "left" || side === "right";
+      const isHorizontal = side === "top" || side === "bottom";
+      const fw = isEnd ? d : w, fh = isHorizontal ? d : h;
+      const holes = ports.filter((p) => p.side === side).map((p) => ({
+        x: isEnd ? -p.y : p.x,
+        y: isHorizontal ? p.y : p.z,
+        radius: p.radius,
+      }));
+      const position: [number, number, number] = side === "front" ? [0, 0, d / 2] : side === "rear" ? [0, 0, -d / 2] : side === "top" ? [0, h / 2, 0] : side === "bottom" ? [0, -h / 2, 0] : side === "left" ? [-w / 2, 0, 0] : [w / 2, 0, 0];
+      const rotation: [number, number, number] = isEnd ? [0, Math.PI / 2, 0] : isHorizontal ? [Math.PI / 2, 0, 0] : [0, 0, 0];
+      return { side, geometry: plenumFaceGeometry(fw, fh, holes), position, rotation };
+    });
+  }, [w, h, d, ports]);
+  useEffect(() => () => { for (const face of faces) face.geometry.dispose(); }, [faces]);
+  return <group>{faces.map((face) => <mesh key={face.side} geometry={face.geometry} position={face.position} rotation={face.rotation} castShadow receiveShadow>
+    <meshStandardMaterial color={selected ? "#67c8de" : green ? "#a6c77a" : "#aebbbd"} metalness={green ? .08 : .65} roughness={green ? .85 : .4} side={THREE.DoubleSide} />
+  </mesh>)}</group>;
+}
+
+export function MachinePlenumShell({ layout, selected }: { layout: PlenumLayout; selected: boolean }) {
+  const [w, h] = layout.body;
+  const depth = layout.boxDepthM;
+  const face = useMemo(() => plenumFaceGeometry(w, h, layout.ports.map((port) => ({
+    x: port.position[0], y: port.position[1], radius: port.diameterM / 2,
+  }))), [w, h, layout.ports]);
+  useEffect(() => () => face.dispose(), [face]);
+  const color = selected ? "#67c8de" : "#aebdc0";
+  return <group position={[0, 0, layout.transitionDepthM]}>
+    <mesh geometry={face} position={[0, 0, depth]} castShadow receiveShadow>
+      <meshStandardMaterial color={color} metalness={.65} roughness={.4} side={THREE.DoubleSide} />
+    </mesh>
+    {[-1, 1].map((side) => <group key={side}>
+      <mesh position={[side * w / 2, 0, depth / 2]}>
+        <boxGeometry args={[.0015, h, depth]} />
+        <meshStandardMaterial color={color} metalness={.65} roughness={.4} />
+      </mesh>
+      <mesh position={[0, side * h / 2, depth / 2]}>
+        <boxGeometry args={[w, .0015, depth]} />
+        <meshStandardMaterial color={color} metalness={.65} roughness={.4} />
+      </mesh>
+    </group>)}
+  </group>;
+}
 
 function NumberLabel({
   label,
@@ -95,17 +151,7 @@ export function PlenumBody({
           />
         </mesh>
       )}
-      <mesh position={[0, 0, layout.transitionDepthM + layout.boxDepthM / 2]}>
-        <boxGeometry args={[width, height, layout.boxDepthM]} />
-        <meshStandardMaterial
-          color={selected ? "#67c8de" : "#9abac6"}
-          transparent
-          opacity={0.4}
-          metalness={0.45}
-          roughness={0.28}
-          depthWrite={false}
-        />
-      </mesh>
+      <MachinePlenumShell layout={layout} selected={selected} />
       {layout.ports.map((port) => (
         <group key={port.branch.id} position={port.position}>
           <mesh
@@ -139,8 +185,12 @@ export function PlenumBody({
               side={THREE.DoubleSide}
             />
           </mesh>
-          <mesh position={[0, 0, 0.0001]}>
-            <circleGeometry args={[port.diameterM * 0.44, 32]} />
+          <mesh position={[0, 0, port.collarLengthM * 0.65]}>
+            <torusGeometry args={[port.diameterM / 2, 0.002, 6, 32]} />
+            <meshStandardMaterial color="#b8c6c8" metalness={0.7} roughness={0.35} />
+          </mesh>
+          <mesh position={[0, 0, -Math.min(layout.boxDepthM * .4, .04)]}>
+            <circleGeometry args={[port.diameterM * 0.49, 32]} />
             <meshStandardMaterial color="#183c4c" />
           </mesh>
           {labels && (
@@ -188,28 +238,15 @@ function PlenumMesh({
       seen[side] = ordinal + 1;
       return ordinal;
     });
+    const ports = sides.map((side, i) => ({
+      side,
+      ...plenumPortLocal(plenum, side, ordinals[i], totals[side], 0.03),
+      radius,
+    }));
+    const green = plenum.material === "insulated" && project.airTerminals.some((terminal) => terminal.id === plenum.attachmentId && terminal.family === "EDLS");
     return (
       <group>
-        <mesh>
-          <boxGeometry
-            args={[
-              plenum.widthMm / 1000,
-              plenum.heightMm / 1000,
-              plenum.depthMm / 1000,
-            ]}
-          />
-          <meshStandardMaterial
-            color={
-              selected
-                ? "#67c8de"
-                : plenum.material === "galvanized"
-                  ? "#b1c0c4"
-                  : "#8ba5ae"
-            }
-            metalness={0.6}
-            roughness={0.4}
-          />
-        </mesh>
+        <AttachedPlenumShell plenum={plenum} ports={ports} green={green} selected={selected} />
         {Array.from({ length: count }, (_, i) => {
           const side = sides[i];
           const local = plenumPortLocal(
@@ -220,7 +257,7 @@ function PlenumMesh({
             0.03,
           );
           return (
-            <mesh
+            <group
               key={i}
               position={[local.x, local.z, local.y]}
               rotation={
@@ -231,14 +268,19 @@ function PlenumMesh({
                     : [Math.PI / 2, 0, 0]
               }
             >
-              <cylinderGeometry args={[radius, radius, 0.06, 24, 1, true]} />
-              <meshStandardMaterial
-                color="#d1dde0"
-                metalness={0.7}
-                roughness={0.3}
-                side={THREE.DoubleSide}
-              />
-            </mesh>
+              <mesh>
+                <cylinderGeometry args={[radius, radius, 0.06, 40, 1, true]} />
+                <meshStandardMaterial color="#b8c1c2" metalness={0.7} roughness={0.35} side={THREE.DoubleSide} />
+              </mesh>
+              <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, .029, 0]}>
+                <ringGeometry args={[radius - .0015, radius, 40]} />
+                <meshStandardMaterial color="#d0d4d4" metalness={0.7} roughness={0.3} side={THREE.DoubleSide} />
+              </mesh>
+              <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -.029, 0]}>
+                <ringGeometry args={[radius - .0015, radius, 40]} />
+                <meshStandardMaterial color="#d0d4d4" metalness={0.7} roughness={0.3} side={THREE.DoubleSide} />
+              </mesh>
+            </group>
           );
         })}
       </group>

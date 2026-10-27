@@ -10,6 +10,8 @@ import {
 } from "./placement";
 import { calculatePlenum } from "./plenum";
 import { ductedMachineElevationM, ductedMachineForDevice } from "./machine";
+import { ensureFanCoilAirSystem } from "../fan-coils/air";
+import { fanCoilProductAtVersion, isDuctedFanCoil } from "../catalogs/fan-coils";
 
 export function insertPlenum(
   project: Project,
@@ -85,6 +87,13 @@ export function connectPlenum(
   plenumId: string,
   ownerId: string,
 ): Project {
+  const fanCoil = project.fanCoils?.find((unit) => unit.id === ownerId);
+  if (fanCoil && !ductedMachineForDevice(project, ownerId)) {
+    if (!isDuctedFanCoil(fanCoilProductAtVersion(fanCoil.productId, fanCoil.catalogVersion)))
+      throw new Error("Il ventilconvettore non è canalizzabile.");
+    if (fanCoil.locked) throw new Error("Sblocca gli elementi prima di collegarli.");
+    project = ensureFanCoilAirSystem(project, ownerId).project;
+  }
   const plenum = project.plenums.find((p) => p.id === plenumId);
   const terminal = project.airTerminals.find((t) => t.id === ownerId);
   const machine = ductedMachineForDevice(project, ownerId);
@@ -659,10 +668,8 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
   const face = terminal?.elevationM ?? roomCeilingHeightM(room);
   const roof = roofHeightAt(project, room, owner.position);
   const height = plenum.heightMm / 1000;
-  // Il plenum di una bocchetta a soffitto vive nel vuoto sopra la faccia,
-  // insieme ai flessibili. Senza controsoffitto il solaio è a filo e il corpo
-  // non ci sta: scende di fianco alla bocchetta invece di attraversare il
-  // solaio, così non resta nascosto né bloccato nei controlli del percorso.
+  // Senza vuoto sopra la faccia (solaio a filo) il corpo non ci sta: scende di
+  // fianco alla bocchetta invece di attraversare il solaio.
   const inVoid = face + (terminal?.depthMm ?? 0) / 1000 + height <= roof + 1e-9;
   const gap =
     (ceiling ? (terminal?.heightMm ?? 0) : (owner.depthMm ?? 0)) / 2000 +

@@ -302,7 +302,7 @@ it("keeps a flush ceiling plenum under the slab and connects it without collisio
   const terminal = p.airTerminals[0];
   const plenum = p.plenums.find((pl) => pl.attachmentId === terminal.id)!;
   // Senza controsoffitto il plenum non ha vuoto: resta sotto il solaio e di
-  // fianco alla bocchetta, cosÃ¬ si vede e il tubo non attraversa il soffitto.
+  // fianco alla bocchetta, così si vede e il tubo non attraversa il soffitto.
   expect(plenum.elevationM! + plenum.heightMm / 2000).toBeLessThanOrEqual(
     p.rooms[0].heightM + 1e-9,
   );
@@ -563,6 +563,14 @@ it("automatically chooses a clear bend around a band without moving collars or r
   p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
   p = addGuidedTerminal(p, 1000);
   p = addTerminalPlenum(p, p.airTerminals[0].id);
+  const terminal = p.airTerminals[0];
+  p.plenums = p.plenums.map((pl) => {
+    const gap = (terminal.heightMm + pl.depthMm) / 2000;
+    return { ...pl, status: "manual" as const, position: {
+      x: terminal.position.x + Math.sin(terminal.rotation) * gap,
+      y: terminal.position.y - Math.cos(terminal.rotation) * gap,
+    }, elevationM: p.rooms[0].heightM - pl.heightMm / 2000 };
+  });
   p = placeSupplyPlenum(p, p.hvacSystems[0].id);
   const duct = p.ducts!.find((d) => d.terminalId)!,
     original = ductRoute(p, duct);

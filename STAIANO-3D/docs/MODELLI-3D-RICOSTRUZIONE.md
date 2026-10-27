@@ -15,6 +15,8 @@ Le modifiche usano lo stesso renderer della vista 3D, dei panorami e di SketchUp
 | Global | Download ufficiali con cataloghi e schede tecniche; nessuna mesh scaricata | Ricostruzione dei frontali e delle testate VIP, OSCAR e OSCAR TONDO |
 | Olimpia Splendid | Pagine ufficiali con voci BIM e DWG per alcune famiglie | Conservati corpi e quote dei pannelli già presenti; nessun oggetto BIM convertito |
 | Aermec | Scheda FCZ ufficiale con documenti tecnici e varianti di posa | Ricostruzione del corpo arrotondato, ripresa inferiore e griglia superiore longitudinale |
+| Gree | Famiglia Revit `GREE_U-Match-Duct-Indoor-Unit.rfa`, U-Match Standard | Convertita in GLB con Innerscene; uso autorizzato dal partner Gree. Mesh rappresentativa, non una conversione parametrica dei singoli modelli |
+| Gree | Famiglia Revit `GREE_Outdoor-Unit-VERSATI-III-SP-08-10.rfa` | Convertita in GLB per le pompe VERSATI III Split 8 e 10; escluso il volume BIM dello spazio di servizio |
 
 Fonti online consultate:
 
@@ -48,7 +50,14 @@ Fonti online consultate:
 | Esterne split/VRV e pompe di calore | Implementato per tipologia | Carter con pannello tecnico e prese laterali; griglia circolare, quadrata VERSATIV o schermatura Altherma. Numero di ventilatori illustrativo quando manca un riferimento OEM preciso |
 | Ventilconvettori | Implementato | FCZ arrotondato con griglia longitudinale; AirLeaf più piatto. Conservati ingombri e pannelli dei modelli a incasso; dettagli interni illustrativi |
 | Terminali Ecoclima | Implementato per tipologia | Schemi distinti di feritoie, elicoidali, forati, ugelli, coni, valvole, reticoli e diffusori a quattro vie. Conteggi interni rappresentativi, salvo le feritoie documentate |
-| Canalizzati | Implementato | Bocche di mandata secondo luce netta documentata, ripresa filtrante, nervature e scatola elettrica. Ripiego proporzionale quando manca una bocca documentata |
+| Canalizzati | Implementato | Mesh Gree U-Match Standard ridimensionata alle quote di ogni macchina e riutilizzata anche per ventilconvettori canalizzabili; marchi rimossi. Le aperture e i dettagli non sono garantiti per ogni modello. Ripiego nativo se la mesh non è disponibile |
+
+La conversione `public/models/gree/u-match-ducted.glb` ha SHA-256
+`e754783c792e4c768eb14ba2362506cddd303c39b27ea1e7df476240d4da8c51`.
+Il file Revit è stato convertito con il visualizzatore Innerscene: non sono
+state verificate tutte le geometrie e le varianti parametriche dell'originale.
+La mesh VERSATI III ha SHA-256
+`4a470dbf5c373c621da29d70e6816b1e554b17e0285dd1eff33a0cd66ab84121`.
 
 ## Correzione della lettura del Garda
 

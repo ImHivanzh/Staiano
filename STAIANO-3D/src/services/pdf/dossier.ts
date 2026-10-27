@@ -50,8 +50,10 @@ type Source = z.infer<typeof sourceMetadataSchema>;
 const display = (value: number) =>
   value.toLocaleString("it-IT", { maximumFractionDigits: 2 });
 export type MaterialRow = {
+  mappingKey: string;
   description: string;
   sku?: string;
+  supplierCode?: string;
   quantity: number;
   /** Unita di misura della quantita ordinabile (elementi, pezzi, kit, metri). */
   unit: string;
@@ -116,7 +118,12 @@ export function buildDossier(project: Project) {
       key: string,
       row: Omit<
         MaterialRow,
-        "quantity" | "codes" | "locales" | "pieces" | "roomQuantities"
+        | "quantity"
+        | "codes"
+        | "locales"
+        | "pieces"
+        | "roomQuantities"
+        | "mappingKey"
       >,
       code: string,
       step = 1,
@@ -149,6 +156,10 @@ export function buildDossier(project: Project) {
       } else
         target.set(key, {
           ...row,
+          mappingKey:
+            key.startsWith("rad:") || key.startsWith("fan-coil:")
+              ? key.split(":").slice(0, 2).join(":")
+              : key,
           quantity: step,
           pieces: 1,
           codes: [code],
@@ -171,6 +182,7 @@ export function buildDossier(project: Project) {
       `rad:${d.productId}:${d.elements}:${d.deltaTK}`,
       {
         description: model,
+        ...(product?.code ? { supplierCode: product.code } : {}),
         unit: sectional ? "elementi" : "pezzi",
         ...(sectional ? { pieceUnit: "batterie" } : {}),
         dimensions: `${display(d.widthMm)} x ${display(d.heightMm)} x ${display(d.depthMm)} mm`,
@@ -397,6 +409,7 @@ export function buildDossier(project: Project) {
         description: product
           ? `${product.manufacturer} ${product.family} ${product.model}`
           : unit.productId,
+        ...(product?.model ? { supplierCode: product.model } : {}),
         unit: "pezzi",
         dimensions: `${unit.widthMm} x ${unit.heightMm} x ${unit.depthMm} mm`,
         details: `${unit.mounting === "wall" ? "parete" : "soffitto"}; ${point ? `${display(point.coolingW)} W freddo / ${display(point.heatingW)} W caldo; ${point.label}` : "punto operativo non verificabile"}; geometria 3D orientativa: corpo e griglie schematici; verificare attacchi e spazi di manutenzione sulla scheda ufficiale${unit.mounting === "ceiling" && product?.ceilingInstallation ? `; ${product.ceilingInstallation.note}` : ""}`,

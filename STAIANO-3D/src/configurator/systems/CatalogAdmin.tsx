@@ -12,6 +12,7 @@ import { heatPumpCatalog } from "@/domain/catalogs/heat-pumps";
 import { vrvCatalog } from "@/domain/catalogs/vrv";
 import { CommercialCatalog } from "./CommercialCatalog";
 import { StoveCatalog } from "./StoveCatalog";
+import { EasyfattCatalogEditor } from "./EasyfattMappings";
 import { airTerminalCoverage } from "@/domain/air-terminals/data-quality";
 export function CatalogAdmin() {
   return (
@@ -22,6 +23,7 @@ export function CatalogAdmin() {
         verificare; i calcoli non richiedono Internet.
       </p>
       <Models3DPanel />
+      <EasyfattCatalogEditor />
       <StoveCatalog />
       <CommercialCatalog />
       <section className="catalogo-scheda">

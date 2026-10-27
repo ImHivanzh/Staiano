@@ -20,6 +20,8 @@ import {
   roomWallSpan,
 } from "../geometry/placement";
 import { validateProject } from "../validation";
+import { setWallDrywall } from "../geometry/drywall";
+import { movePlacedDevice } from "../geometry/move-device";
 
 function fixture(thickness = 0.3) {
   const p = createProject();
@@ -31,6 +33,19 @@ function fixture(thickness = 0.3) {
     name: "Sala",
   });
 }
+
+it("places an FCZ PO behind a sufficiently deep drywall front", () => {
+  let p = fixture();
+  const wall = p.walls[0];
+  p = setWallDrywall(p, wall.id, { roomId: p.rooms[0].id, offsetM: 0.4 });
+  p = applyFanCoil(p, p.rooms[0].id, "aermec-fcz200po", { mounting: "wall" });
+  const span = roomWallSpan(p.rooms[0], p.walls.find((w) => w.id === wall.id)!)!;
+  p = movePlacedDevice(p, p.fanCoils![0].id, { x: (span.start.x + span.end.x) / 2, y: (span.start.y + span.end.y) / 2 });
+  const unit = p.fanCoils![0];
+  expect(unit.wallId).toBe(wall.id);
+  expect(distance(unit.position, projection(unit.position, span.start, span.end))).toBeCloseTo(unit.depthMm / 2000 - 0.002);
+  expect(fanCoilPlacementValid(p, unit)).toBe(true);
+});
 
 it("recesses a wall-mounted SLI inside the wall with a flush front", () => {
   let p = fixture();

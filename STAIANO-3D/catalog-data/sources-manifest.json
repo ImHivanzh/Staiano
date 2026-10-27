@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-25T18:17:59.443Z",
+  "generatedAt": "2026-10-27T10:49:06.678Z",
   "documents": [
     {
       "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
@@ -2106,6 +2106,12 @@
       "sha256": "89c6885acfd5169015afaf7b4c45f7872edb4b19bf32738251e4d9b2266ee66a",
       "manufacturer": "Innova",
       "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sli/",
+      "page": null
+    },
+    {
+      "sha256": "8aea1b516bd6da6a443610062c467d3e9c906b7da02b1c4a221e245765e9ad08",
+      "manufacturer": "Innova",
+      "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro/",
       "page": null
     },
     {

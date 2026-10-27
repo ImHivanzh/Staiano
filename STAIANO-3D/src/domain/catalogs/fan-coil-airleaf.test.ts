@@ -29,7 +29,7 @@ it("imports all 35 maximum-speed AirLeaf points from the acquired 2026 source", 
       .digest("hex"),
   ).toBe(rows.sourceMetadata.sha256);
   const products = fanCoilCatalog.products.filter(
-    (p) => p.manufacturer === "Innova",
+    (p) => p.manufacturer === "Innova" && p.family.startsWith("AirLeaf"),
   );
   expect(products).toHaveLength(35);
   for (const product of products) {
@@ -167,4 +167,24 @@ it("preserves historic unknown flow and noise through save/reload, exports the n
       (doc) => doc.source.sha256 === rows.sourceMetadata.sha256,
     ),
   ).toBe(false);
+});
+
+it("keeps Filomuro Slim Fit to the values published on the Innova product page", () => {
+  const rows = [
+    ["SW 400", 815, 1240, 1500],
+    ["SW 600", 1015, 1610, 2010],
+    ["SW 800", 1215, 1940, 2350],
+  ] as const;
+  for (const [model, width, cooling, heating] of rows) {
+    const product = fanCoilCatalog.products.find(
+      (p) => p.family === "Filomuro Slim Fit" && p.model === model,
+    )!;
+    expect([product.widthMm, product.heightMm, product.depthMm]).toEqual([width, 335, 128]);
+    expect(product.operatingPoints[0]).toMatchObject({
+      coolingW: cooling,
+      heatingW: heating,
+      airflowM3h: null,
+      noiseDbA: null,
+    });
+  }
 });

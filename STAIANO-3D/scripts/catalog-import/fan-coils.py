@@ -341,6 +341,27 @@ for product in innova:
     if product["family"] in horizontal_installations:
         product["ceilingInstallation"] = horizontal_installations[product["family"]]
 
+# Innova Filomuro Slim Fit: la pagina prodotto pubblica solo ingombro, potenze e attacchi.
+# Portata, rumore, immagini e modalità di posa non sono pubblicate: restano null/assenti.
+filomuro_meta = metadata("innova-filomuro-page", "Innova")
+filomuro_meta["documentRevision"] = "Pagina prodotto Filomuro Slim Fit"
+for size, width, cooling, heating in ((400, 815, 1240, 1500), (600, 1015, 1610, 2010), (800, 1215, 1940, 2350)):
+    products.append({
+        "id": f"innova-filomuro-sw-{size}", "manufacturer": "Innova", "family": "Filomuro Slim Fit",
+        "model": f"SW {size}", "pipes": "2", "widthMm": float(width), "heightMm": 335.0, "depthMm": 128.0,
+        "mountings": ["wall"],
+        "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+        "features": ['Profondità 128 mm', 'Attacchi idraulici Eurokonus 3/4", lato DX'],
+        "productPhoto": None,
+        "operatingPoints": [{
+            "label": "Massima", "coolingW": float(cooling), "heatingW": float(heating),
+            "airflowM3h": None, "noiseDbA": None,
+            "coolingConditions": "Acqua 7/12 °C; aria 27 °C.", "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+            "noiseConditions": "Rumore non pubblicato.",
+        }],
+        "sourceMetadata": filomuro_meta,
+    })
+
 data = {"products": products, "controls": controls}
 version = "fan-coils-" + hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
 dest = ROOT / "catalog-data/generated/fan-coils.json"

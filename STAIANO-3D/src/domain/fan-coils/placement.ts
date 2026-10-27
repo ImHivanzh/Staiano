@@ -52,6 +52,10 @@ type FanCoilHeightZone = {
 function availableWallDepthM(wall: Wall, roomId: string): number {
   return wall.thickness + (drywallSideForRoom(wall, roomId)?.offsetM ?? 0);
 }
+
+export function fanCoilWallRecess(product: Pick<FanCoilProduct, "family" | "features" | "depthMm"> | null, wall: Wall, roomId: string) {
+  return isRecessedFanCoil(product) || (product?.family === "FCZ PO" && (drywallSideForRoom(wall, roomId)?.offsetM ?? 0) >= product.depthMm / 1000);
+}
 /** Ceiling poses retain a lower-face datum: exposed bodies hang below, concealed bodies occupy the technical void. */
 export function fanCoilCeilingRange(
   project: Project,
@@ -308,7 +312,8 @@ export function fanCoilPlacementValid(
   if (!room) return false;
   const envelope = fanCoilEnvelope(unit, product);
   if (unit.mounting === "ceiling" && !product) return false;
-  const recessedWall = unit.mounting === "wall" && isRecessedFanCoil(product);
+  const wall = project.walls.find((w) => w.id === unit.wallId);
+  const recessedWall = unit.mounting === "wall" && !!wall && fanCoilWallRecess(product, wall, room.id);
   if (recessedWall) {
     if (!product || !fanCoilRecessedWallValid(project, room, unit, product))
       return false;
@@ -421,11 +426,11 @@ export function initialFanCoilPose(
     locked: false,
   };
   const poses: FanCoilPose[] = [];
-  const recessed = isRecessedFanCoil(product);
   if (mounting === "wall") {
     for (const wall of project.walls.filter((w) =>
       room.wallIds.includes(w.id),
     )) {
+      const recessed = fanCoilWallRecess(product, wall, room.id);
       const span = roomWallSpan(room, wall);
       if (!span || span.lengthM < visibleWidthMm / 1000 + 0.08) continue;
       if (

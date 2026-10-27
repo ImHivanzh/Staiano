@@ -1,5 +1,5 @@
 {
-  "version": "fan-coils-f2d8b9148e421ecb",
+  "version": "fan-coils-da9a577e9a1dff36",
   "products": [
     {
       "id": "innova-airleaf-sl-200-2t",
@@ -7946,6 +7946,129 @@
         "documentRevision": "FCZ-P_I_UN50_16 / dati Eurovent 2025",
         "importedAt": "2026-10-15T23:05:31.477345+00:00",
         "page": 16
+      }
+    },
+    {
+      "id": "innova-filomuro-sw-400",
+      "manufacturer": "Innova",
+      "family": "Filomuro Slim Fit",
+      "model": "SW 400",
+      "pipes": "2",
+      "widthMm": 815.0,
+      "heightMm": 335.0,
+      "depthMm": 128.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 128 mm",
+        "Attacchi idraulici Eurokonus 3/4\", lato DX"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1240.0,
+          "heatingW": 1500.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro/",
+        "sourceType": "html",
+        "sha256": "8aea1b516bd6da6a443610062c467d3e9c906b7da02b1c4a221e245765e9ad08",
+        "retrievedAt": "2026-10-27T10:47:42.274293+00:00",
+        "documentRevision": "Pagina prodotto Filomuro Slim Fit",
+        "importedAt": "2026-10-27T10:47:42.274293+00:00",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-sw-600",
+      "manufacturer": "Innova",
+      "family": "Filomuro Slim Fit",
+      "model": "SW 600",
+      "pipes": "2",
+      "widthMm": 1015.0,
+      "heightMm": 335.0,
+      "depthMm": 128.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 128 mm",
+        "Attacchi idraulici Eurokonus 3/4\", lato DX"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1610.0,
+          "heatingW": 2010.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro/",
+        "sourceType": "html",
+        "sha256": "8aea1b516bd6da6a443610062c467d3e9c906b7da02b1c4a221e245765e9ad08",
+        "retrievedAt": "2026-10-27T10:47:42.274293+00:00",
+        "documentRevision": "Pagina prodotto Filomuro Slim Fit",
+        "importedAt": "2026-10-27T10:47:42.274293+00:00",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-sw-800",
+      "manufacturer": "Innova",
+      "family": "Filomuro Slim Fit",
+      "model": "SW 800",
+      "pipes": "2",
+      "widthMm": 1215.0,
+      "heightMm": 335.0,
+      "depthMm": 128.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 128 mm",
+        "Attacchi idraulici Eurokonus 3/4\", lato DX"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1940.0,
+          "heatingW": 2350.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro/",
+        "sourceType": "html",
+        "sha256": "8aea1b516bd6da6a443610062c467d3e9c906b7da02b1c4a221e245765e9ad08",
+        "retrievedAt": "2026-10-27T10:47:42.274293+00:00",
+        "documentRevision": "Pagina prodotto Filomuro Slim Fit",
+        "importedAt": "2026-10-27T10:47:42.274293+00:00",
+        "page": null
       }
     }
   ],

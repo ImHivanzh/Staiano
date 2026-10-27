@@ -39,7 +39,7 @@ function boundsOf(parts: DetailPart[], geometry: THREE.BufferGeometry) {
 }
 
 describe("mesh dei radiatori e ingombri di catalogo", () => {
-  it("distinguishes Charleston welded heads and Global flat fronts with rounded Oscar Tondo ends", () => {
+  it("distinguishes Charleston welded heads and Global flat fronts, Oscar Tondo included", () => {
     for (const variant of radiatorProducts.filter(
       (p) =>
         p.manufacturer === "Global" ||
@@ -56,7 +56,7 @@ describe("mesh dei radiatori e ingombri di catalogo", () => {
         expect(detail.tubes).toHaveLength(10 * variant.columns!);
       } else {
         expect(detail.fins).toHaveLength(20);
-        expect(detail.caps.length > 0).toBe(variant.family === "OSCAR TONDO");
+        expect(detail.caps).toHaveLength(0);
         const fronts = detail.sections.filter((p) => p.scale[2] === 0.016);
         expect(fronts).toHaveLength(10);
         expect(
@@ -205,6 +205,63 @@ describe("mesh dei radiatori e ingombri di catalogo", () => {
       expect(detail.mirrors).toHaveLength(1);
       expect(detail.mirrors[0].scale[0]).toBeCloseTo(0.3);
     }
+  });
+  it("draws Cordivari Tamara as separate oval tubes without round collectors, as in the photo", () => {
+    const variants = radiatorProducts.filter((p) =>
+      p.family.startsWith("Tamara"),
+    );
+    expect(variants.length).toBeGreaterThan(0);
+    for (const variant of variants) {
+      const elements = variant.commercialElementCounts[0];
+      const item = {
+        manufacturer: variant.manufacturer,
+        family: variant.family,
+        elements,
+        widthMm: variant.pitchMm * elements + variant.widthAdditionMm,
+        heightMm: variant.heightMm,
+        depthMm: variant.depthMm,
+      } as Project["radiators"][number];
+      const detail = radiatorDetail(item, variant);
+      expect(detail.tubes, variant.id).toHaveLength(elements);
+      expect(detail.headers, variant.id).toHaveLength(0);
+      expect(detail.tubes[0].scale[0], variant.id).toBeGreaterThan(
+        detail.tubes[0].scale[2],
+      );
+      // The cylinder length is scale[1]: tube plus the two round ends must span the full height.
+      expect(
+        detail.tubes[0].scale[1] + detail.tubes[0].scale[2] * 2,
+        variant.id,
+      ).toBeCloseTo(variant.heightMm / 1000, 6);
+    }
+  });
+  it("groups Cordivari Naike/Anna/Lucy bars in bands and draws Samira as flat slats, as in the photos", () => {
+    const detailOf = (family: string) => {
+      const variant = radiatorProducts.find(
+        (p) => p.manufacturer === "Cordivari" && p.family === family,
+      )!;
+      const item = {
+        manufacturer: variant.manufacturer,
+        family: variant.family,
+        elements: 1,
+        widthMm: variant.pitchMm + variant.widthAdditionMm,
+        heightMm: variant.heightMm,
+        depthMm: variant.depthMm,
+      } as Project["radiators"][number];
+      return radiatorDetail(item, variant);
+    };
+    const gaps = (family: string) => {
+      const ys = detailOf(family)
+        .tubes.filter((t) => t.rotation)
+        .map((t) => t.position[1])
+        .sort((a, b) => a - b);
+      const steps = ys.slice(1).map((y, i) => y - ys[i]);
+      return steps.filter((s) => s > Math.min(...steps) * 1.5).length;
+    };
+    expect(gaps("Naike Square")).toBe(4);
+    expect(gaps("Claudia Elite")).toBe(0);
+    const samira = detailOf("Samira");
+    expect(samira.sections.length).toBeGreaterThan(5);
+    expect(samira.tubes.filter((t) => t.rotation)).toHaveLength(0);
   });
   it("keeps all 939 catalogue variants inside their declared enclosure", () => {
     for (const variant of radiatorProducts) {

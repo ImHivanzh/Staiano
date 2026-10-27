@@ -27,7 +27,7 @@ export function fanCoilAirData(project: Project, fanCoilId: string) {
   return product && point ? { unit, product, point } : null;
 }
 
-function airMachineDimensions(unit: FanCoil) {
+export function airMachineDimensions(unit: FanCoil) {
   return {
     widthMm: unit.widthMm,
     heightMm: unit.mounting === "ceiling" ? unit.depthMm : unit.heightMm,

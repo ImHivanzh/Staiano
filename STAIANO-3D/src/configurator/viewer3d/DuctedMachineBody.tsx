@@ -8,6 +8,9 @@ import {
 import type { DischargeConnection } from "@/domain/catalogs/hvac-schema";
 import { Parts } from "./Parts";
 import type { DetailPart } from "./device-detail";
+import { Suspense } from "react";
+import { ModelAssetBoundary } from "./ModelAssetBoundary";
+import GreeDuctedBody from "./GreeDuctedBody";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
 const metal = new THREE.MeshStandardMaterial({
@@ -50,16 +53,37 @@ export function ductedOpening(
 export function DuctedMachineBody({
   item,
   selected,
+  connection: suppliedConnection,
 }: {
-  item: Project["hvacSystems"][number]["indoorUnits"][number];
+  item: Pick<
+    Project["hvacSystems"][number]["indoorUnits"][number],
+    "widthMm" | "heightMm" | "depthMm" | "productId" | "catalogVersion"
+  >;
   selected: boolean;
+  connection?: DischargeConnection | null;
+}) {
+  const fallback = <DuctedMachineSketch item={item} selected={selected} connection={suppliedConnection} />;
+  return <ModelAssetBoundary fallback={fallback}>
+    <Suspense fallback={fallback}>
+      <GreeDuctedBody width={item.widthMm / 1000} height={item.heightMm / 1000} depth={item.depthMm / 1000} selected={selected} url={item.productId.startsWith("aermec-fcz") ? "/models/hvac/aermec-fcz-p-po-realistic.glb" : undefined} />
+    </Suspense>
+  </ModelAssetBoundary>;
+}
+
+function DuctedMachineSketch({ item, selected, connection: suppliedConnection }: {
+  item: Pick<Project["hvacSystems"][number]["indoorUnits"][number], "widthMm" | "heightMm" | "depthMm" | "productId" | "catalogVersion">;
+  selected: boolean;
+  connection?: DischargeConnection | null;
 }) {
   const w = item.widthMm / 1000,
     h = item.heightMm / 1000,
     d = item.depthMm / 1000;
-  const connection = hvacDischargeConnection(
-    hvacProductAtVersion(item.productId, item.catalogVersion),
-  );
+  const connection =
+    suppliedConnection === undefined
+      ? hvacDischargeConnection(
+          hvacProductAtVersion(item.productId, item.catalogVersion),
+        )
+      : suppliedConnection;
   const [ow, oh] = ductedOpening(item.widthMm, item.heightMm, connection);
   const trim = Math.min(0.008, h * 0.03);
   const flange: DetailPart[] = [

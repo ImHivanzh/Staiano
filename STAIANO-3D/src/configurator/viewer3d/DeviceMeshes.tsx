@@ -7,6 +7,8 @@ import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeom
 import type { Project, Selection } from "@/schemas/project";
 import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
+import EcoclimaLinearBody from "./EcoclimaLinearBody";
+import { EcoclimaGrille } from "./EcoclimaGrille";
 import {
   splitCenterElevationM,
   roomCeilingHeightM,
@@ -22,7 +24,9 @@ import { RadiatorHardware } from "./RadiatorHardware";
 import { Parts } from "./Parts";
 import { ModelAssetBoundary } from "./ModelAssetBoundary";
 import { radiatorSectionFor } from "@/domain/catalogs/radiator-sections";
+import { globalSectionFor } from "@/domain/catalogs/global-sections";
 const ArdesiaBody = lazy(() => import("./ArdesiaBody"));
+const GlobalBody = lazy(() => import("./GlobalBody"));
 import { SystemMeshes } from "./SystemMeshes";
 import { FanCoilMeshes } from "./FanCoilMeshes";
 import { HydronicMeshes } from "./HydronicMeshes";
@@ -52,6 +56,19 @@ const plastic = new THREE.MeshStandardMaterial({
   roughness: 0.32,
   metalness: 0.02,
 });
+// Foto ufficiali: Gree Airy in alluminio spazzolato, LG Mirror nero lucido.
+const splitFinish: Record<string, THREE.MeshStandardMaterial> = {
+  Airy: new THREE.MeshStandardMaterial({
+    color: "#b9bcbf",
+    roughness: 0.38,
+    metalness: 0.55,
+  }),
+  Mirror: new THREE.MeshStandardMaterial({
+    color: "#1c1e20",
+    roughness: 0.16,
+    metalness: 0.3,
+  }),
+};
 const aluminium = new THREE.MeshStandardMaterial({
   color: "#e8e9e7",
   roughness: 0.35,
@@ -143,6 +160,10 @@ function RadiatorMesh({
     item,
     radiatorProductAtVersion(item.productId, item.catalogVersion),
   );
+  const globalSection = globalSectionFor(
+    item,
+    radiatorProductAtVersion(item.productId, item.catalogVersion),
+  );
   const sketchBody = (
     <>
       <Parts parts={detail.tubes} geometry={cylinder} material={bodyMaterial} />
@@ -182,6 +203,17 @@ function RadiatorMesh({
           <Suspense fallback={sketchBody}>
             <ArdesiaBody
               section={section}
+              heightMm={item.heightMm}
+              elements={item.elements}
+              material={bodyMaterial}
+            />
+          </Suspense>
+        </ModelAssetBoundary>
+      ) : globalSection ? (
+        <ModelAssetBoundary key={globalSection.url} fallback={sketchBody}>
+          <Suspense fallback={sketchBody}>
+            <GlobalBody
+              section={globalSection}
               heightMm={item.heightMm}
               elements={item.elements}
               material={bodyMaterial}
@@ -279,6 +311,7 @@ function SplitMesh({
     () => cassetteDetail(item.widthMm, item.heightMm, item.depthMm),
     [item.widthMm, item.heightMm, item.depthMm],
   );
+  const bodyMaterial = splitFinish[family ?? ""] ?? plastic;
   const emura = family === "Emura";
   const mirrored = family === "Mirror";
   const dualVane = family === "MSZ-LN";
@@ -383,7 +416,7 @@ function SplitMesh({
         <>
           <mesh
             geometry={body}
-            material={plastic}
+            material={bodyMaterial}
             position={[0, 0, emura ? -d * 0.08 : 0]}
             castShadow
             receiveShadow
@@ -429,7 +462,7 @@ function SplitMesh({
           <Parts parts={topFins} geometry={box} material={recess} />
           <mesh
             geometry={rounded}
-            material={plastic}
+            material={bodyMaterial}
             position={[0, -h * 0.405, d / 2 + 0.0015]}
             scale={[w * 0.88, h * 0.035, d * 0.025]}
             rotation={[-0.18, 0, 0]}
@@ -461,9 +494,11 @@ function SplitMesh({
 function TerminalMesh({
   item,
   selected,
+  grilleOpen = false,
 }: {
   item: Project["airTerminals"][number];
   selected: boolean;
+  grilleOpen?: boolean;
 }) {
   const w = airTerminalFaceWidthMm(item) / 1000,
     h = item.heightMm / 1000;
@@ -489,6 +524,33 @@ function TerminalMesh({
     () => terminalFaceDetail(family, variant, w, h, z, item.shape === "circle"),
     [w, h, z, family, variant, item.shape],
   );
+  const grille = item.family === "EGA6" ? "ega6" : item.family === "EBL" ? "ebl" : item.family === "EGF" ? "egf" : ["EGF-PUSH", "EGFR-PUSH"].includes(item.family) ? "egf-push" : null;
+  if (grille) {
+    const fallback = <mesh geometry={box} material={aluminium} scale={[w, h, d || 0.001]} />;
+    return <>
+      <ModelAssetBoundary fallback={fallback}>
+        <Suspense fallback={fallback}>
+          <group position={[0, 0, d / 2 - .024]}>
+            <EcoclimaGrille model={grille} width={w} height={h} open={grilleOpen} color={item.color} />
+          </group>
+        </Suspense>
+      </ModelAssetBoundary>
+      {selected && <SelectionOutline dimensions={[w, h, d || 0.001]} />}
+    </>;
+  }
+  const ecoclimaLinear = item.family === "EDLS" ? "edls" : /^EDFLB?-\d+$/.test(item.family) ? "edfl" : null;
+  if (ecoclimaLinear && variant?.slotCount && variant.slotCount <= 6) {
+    return <>
+      <ModelAssetBoundary fallback={<mesh geometry={box} material={aluminium} scale={[w, h, d || 0.001]} />}>
+        <Suspense fallback={<mesh geometry={box} material={aluminium} scale={[w, h, d || 0.001]} />}>
+          <group position={[0, 0, d ? 0 : -0.026]}>
+            <EcoclimaLinearBody family={ecoclimaLinear} count={variant.slotCount} width={w} height={h} depth={d || 0.052} color={item.color} whiteModel={item.family.startsWith("EDFLB")} supply={item.use === "supply"} slotWidthMm={variant.slotWidthMm} />
+          </group>
+        </Suspense>
+      </ModelAssetBoundary>
+      {selected && <SelectionOutline dimensions={[w, h, d || 0.052]} />}
+    </>;
+  }
   return (
     <>
       {d > 0 &&
@@ -544,6 +606,7 @@ export type DeviceMeshesProps = {
   onSelect: (selection: Selection) => void;
   showHydronicPipes?: boolean;
   hideDuctedMachines?: boolean;
+  openGrilleIds?: ReadonlySet<string>;
 };
 
 /** Local axes are width X, height Y, depth Z. Project plan Y maps to world Z. */
@@ -555,6 +618,7 @@ export function DeviceMeshes({
   onSelect,
   showHydronicPipes = false,
   hideDuctedMachines = false,
+  openGrilleIds,
 }: DeviceMeshesProps) {
   const visible = (item: { floorId: string; roomId: string }) =>
     item.floorId === activeFloorId &&
@@ -738,7 +802,7 @@ export function DeviceMeshes({
             }
             onClick={choose(item.id)}
           >
-            <TerminalMesh item={item} selected={selected(item.id)} />
+            <TerminalMesh item={item} selected={selected(item.id)} grilleOpen={openGrilleIds?.has(item.id)} />
           </group>
         ))}
     </group>

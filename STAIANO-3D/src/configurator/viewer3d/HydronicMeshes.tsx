@@ -2,10 +2,13 @@
 import { OutdoorBrackets } from "./OutdoorBrackets";
 import { OutdoorCabinet } from "./OutdoorCabinet";
 import { Line, useTexture } from "@react-three/drei";
-import { useEffect, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
+import { ModelAssetBoundary } from "./ModelAssetBoundary";
+import GreeDuctedBody from "./GreeDuctedBody";
 import * as THREE from "three";
 import type { Project, Selection } from "@/schemas/project";
 import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
+import { heatPumpModelUrl } from "@/domain/catalogs/heat-pump-models";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
 
 function HeatPumpIdentification({
@@ -100,6 +103,25 @@ export function HydronicMeshes({
             d = u.depthMm / 1000;
           const selected = selection.some((item) => item.id === u.id),
             gree = m?.family === "VERSATI V";
+          const versatiIII = [
+            "gree-versati-iii-8-split-monofase",
+            "gree-versati-iii-10-split-monofase",
+          ].includes(s.productId);
+          const modelUrl = versatiIII
+            ? "/models/gree/versati-iii-sp-08-10.glb"
+            : m
+              ? heatPumpModelUrl(m)
+              : null;
+          const cabinet = (
+            <OutdoorCabinet
+              widthM={w}
+              heightM={h}
+              depthM={d}
+              selected={selected}
+              dark={gree}
+              family={m?.family}
+            />
+          );
           return (
             <group key={s.id}>
               <group
@@ -115,14 +137,21 @@ export function HydronicMeshes({
                 {u.mounting === "brackets" && (
                   <OutdoorBrackets widthM={w} heightM={h} depthM={d} />
                 )}
-                <OutdoorCabinet
-                  widthM={w}
-                  heightM={h}
-                  depthM={d}
-                  selected={selected}
-                  dark={gree}
-                  family={m?.family}
-                />
+                {modelUrl ? (
+                  <ModelAssetBoundary fallback={cabinet}>
+                    <Suspense fallback={cabinet}>
+                      <GreeDuctedBody
+                        url={modelUrl}
+                        width={w}
+                        height={h}
+                        depth={d}
+                        selected={selected}
+                      />
+                    </Suspense>
+                  </ModelAssetBoundary>
+                ) : (
+                  cabinet
+                )}
                 {m && (
                   <HeatPumpIdentification
                     manufacturer={m.manufacturer}
