@@ -186,7 +186,8 @@ try {
   for (const name of names)
     archive.push([
       name,
-      (await readFile(path.join(runtime, name))).toString("base64"),
+      // Ogni file è compresso a parte: un unico JSON di base64 supera il limite di stringa di V8 (~512 MB) con i modelli 3D.
+      gzipSync(await readFile(path.join(runtime, name)), { level: 9 }).toString("base64"),
     ]);
   await writeFile(
     path.join(stage, "runtime.gz"),

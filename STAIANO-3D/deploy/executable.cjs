@@ -434,7 +434,7 @@ function unpack(dataRoot, config) {
   fs.mkdirSync(runtime, { recursive: true });
   for (const [name, encoded] of archive) {
     const target = safeRuntimePath(runtime, name);
-    const content = Buffer.from(encoded, "base64");
+    const content = gunzipSync(Buffer.from(encoded, "base64"));
     const existing = fs.existsSync(target) ? fs.readFileSync(target) : null;
     if (
       !existing ||
