@@ -355,10 +355,22 @@
   right: auto;
 }
 .titolo-menu {
-  font-size: 12px;
-  margin: 10px 0 0;
-  padding-top: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--testo-tenue);
+  margin: 6px 0 0;
+  padding-top: 10px;
   border-top: 1px solid var(--bordo);
+}
+.menu-progetto .comandi-progetto > .titolo-menu:first-child,
+.menu-progetto .comandi-progetto > .nota + .titolo-menu {
+  border-top: 0;
+  padding-top: 0;
+}
+.menu-progetto .comandi-progetto > :is(button, form) svg {
+  flex: none;
 }
 .menu-progetto .comandi-progetto > :is(button, form),
 .menu-progetto .comandi-progetto form > button {
@@ -1632,6 +1644,34 @@ input[type="checkbox"] {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+}
+.schede-catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 16px;
+  border-bottom: 1px solid var(--bordo);
+}
+.schede-catalogo button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--testo-tenue);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.schede-catalogo button.attiva {
+  color: var(--tinta);
+  border-bottom-color: var(--tinta);
+}
+.schede-catalogo button:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: -2px;
 }
 .catalogo-scheda {
   background: var(--carta);

@@ -17,7 +17,10 @@ import {
   ArrowUp,
   DotsThree,
   ArrowClockwise,
+  ArrowCounterClockwise,
+  LinkBreak,
   Path as PathIcon,
+  Trash,
 } from "@phosphor-icons/react";
 import type { Point, Project, Room } from "@/schemas/project";
 import type { Installation } from "@/domain/installations";
@@ -1122,7 +1125,7 @@ export function GraphicalDuctedConfigurator({
             <button
               className={`bottone chiara ${styles.iconButton}`}
               aria-label="Macchina"
-              title="Inserisci macchina canalizzata"
+              title="Inserisci macchina canalizzata (unità interna)"
               aria-pressed={mode === "machine"}
               onClick={() => start("machine")}
             >
@@ -1303,10 +1306,12 @@ export function GraphicalDuctedConfigurator({
                         )
                       }
                     >
+                      <LinkBreak aria-hidden="true" />
                       Scollega
                     </button>
                   )}
                   <button className="bottone pericolo" onClick={deleteSelected}>
+                    <Trash aria-hidden="true" />
                     Elimina
                   </button>
                   <button
@@ -1314,6 +1319,7 @@ export function GraphicalDuctedConfigurator({
                     disabled={!past.length}
                     onClick={undo}
                   >
+                    <ArrowCounterClockwise aria-hidden="true" />
                     Annulla ultima modifica
                   </button>
                 </div>
@@ -1340,6 +1346,7 @@ export function GraphicalDuctedConfigurator({
                       disabled={!past.length}
                       onClick={undo}
                     >
+                      <ArrowCounterClockwise aria-hidden="true" />
                       Annulla ultima modifica
                     </button>
                   </div>

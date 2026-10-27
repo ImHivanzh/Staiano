@@ -1,4 +1,5 @@
 "use client";
+import { ArrowDown, ArrowUp } from "@phosphor-icons/react";
 import type { Project } from "@/schemas/project";
 import { applyWallThicknessPreservingInterior } from "@/domain/geometry/wall-thickness";
 import { useProjectStore } from "@/stores/project-store";
@@ -158,6 +159,7 @@ export function ProjectSettings({ project }: { project: Project }) {
                 index + direction >= project.floors.length
               }
               aria-label={`${direction < 0 ? "Sposta prima" : "Sposta dopo"} ${floor.name}`}
+              title={direction < 0 ? "Sposta prima" : "Sposta dopo"}
               onClick={() =>
                 commit((p) => {
                   const floors = [...p.floors];
@@ -183,7 +185,11 @@ export function ProjectSettings({ project }: { project: Project }) {
                 })
               }
             >
-              {direction < 0 ? "Sposta prima" : "Sposta dopo"}
+              {direction < 0 ? (
+                <ArrowUp aria-hidden="true" />
+              ) : (
+                <ArrowDown aria-hidden="true" />
+              )}
             </button>
           ))}
         </form>

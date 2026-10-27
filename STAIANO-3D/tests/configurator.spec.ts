@@ -7,6 +7,7 @@ test("gallery Ecoclima reale, scelta stile e formula metri lineari", async ({
   await page
     .getByRole("button", { name: "Cataloghi tecnici", exact: true })
     .click();
+  await page.getByRole("tab", { name: "Diffusione aria" }).click();
   await page.getByLabel("Portata richiesta (m³/h)").fill("480");
   await page.getByLabel("Numero punti", { exact: true }).fill("2");
   await page.getByRole("button", { name: "Trova stili compatibili" }).click();

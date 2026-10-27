@@ -20,21 +20,36 @@ import {
   Trash,
   Copy,
   FloppyDisk,
-  DownloadSimple,
-  UploadSimple,
+  FloppyDiskBack,
   Plus,
   Cube,
-  SquaresFour,
+  GridFour,
   CheckCircle,
   WarningCircle,
   FolderOpen,
   X,
-  HouseLine,
+  Blueprint,
+  Books,
   Columns,
+  Door,
+  Drop,
+  Export,
+  Eye,
+  Files,
+  FileArrowDown,
+  FileArrowUp,
+  FilePdf,
+  FileXls,
+  GearSix,
+  Key,
+  ListChecks,
+  Path,
+  PencilRuler,
+  Receipt,
+  ClockCounterClockwise,
   Wind,
   Snowflake,
   Users,
-  ShieldCheck,
   ArrowRight,
   SidebarSimple,
   MagicWand,
@@ -129,6 +144,9 @@ const tools: {
   { id: "measure", label: "Misura", shortcut: "T", icon: Ruler },
   { id: "pan", label: "Sposta vista", shortcut: "H", icon: Hand },
 ];
+
+const closeMenu = (event: { currentTarget: Element }) =>
+  event.currentTarget.closest("details")?.removeAttribute("open");
 
 const equipmentShortcuts: Record<string, PlanPlacementTool> = {
   c: "connect",
@@ -982,7 +1000,7 @@ export function Configurator() {
             title="Planimetria"
             onClick={() => setPage("editor")}
           >
-            <HouseLine /> Planimetria
+            <Blueprint /> Planimetria
           </button>
           <button
             className={`voce-nav ${page === "projects" ? "attiva" : ""}`}
@@ -1001,7 +1019,7 @@ export function Configurator() {
             onClick={() => setPage("checks")}
             disabled={!p}
           >
-            <CheckCircle /> Controlli{" "}
+            <ListChecks /> Controlli{" "}
             {p && (
               <span className="conta">{errors.length + warnings.length}</span>
             )}
@@ -1013,7 +1031,7 @@ export function Configurator() {
             title="Cataloghi tecnici"
             onClick={() => setPage("catalogs")}
           >
-            <SquaresFour />
+            <Books />
             Cataloghi tecnici
           </button>
           {identity?.role === "admin" && (
@@ -1036,7 +1054,7 @@ export function Configurator() {
               title="Licenza"
               onClick={() => setPage("license")}
             >
-              <ShieldCheck />
+              <Key />
               Licenza
             </button>
           )}
@@ -1097,13 +1115,13 @@ export function Configurator() {
                 >
                   <span className="nome-ambiente-nav">
                     {r.systemType === "radiator" ? (
-                      <Columns size={17} aria-hidden="true" />
+                      <Drop size={17} aria-hidden="true" />
                     ) : r.systemType === "ducted" ? (
                       <Wind size={17} aria-hidden="true" />
                     ) : r.systemType === "split" || r.systemType === "vrv" ? (
                       <Snowflake size={17} aria-hidden="true" />
                     ) : (
-                      <HouseLine size={17} aria-hidden="true" />
+                      <Door size={17} aria-hidden="true" />
                     )}
                     {r.name}
                   </span>
@@ -1140,11 +1158,11 @@ export function Configurator() {
           <div className="titolo-progetto">
             <h1>
               {page === "projects"
-                ? "Progetti locali e condivisi"
+                ? "Progetti"
                 : page === "catalogs"
                   ? "Cataloghi tecnici"
                   : page === "checks"
-                    ? "Controlli progetto"
+                    ? "Controlli"
                     : page === "users"
                       ? "Gestione utenti"
                       : page === "license"
@@ -1209,7 +1227,7 @@ export function Configurator() {
                   aria-busy={pdfBusy}
                   onClick={() => void createPdf(false, "summary")}
                 >
-                  <DownloadSimple aria-hidden="true" />
+                  <FilePdf aria-hidden="true" />
                 </button>
               </div>
             )}
@@ -1276,7 +1294,7 @@ export function Configurator() {
             </button>
             <details className="menu-progetto" name="workspace-menus">
               <summary className="bottone">
-                <FolderOpen aria-hidden="true" /> File
+                <Files aria-hidden="true" /> File
               </summary>
               <div className="comandi-progetto">
                 <p className="nota">
@@ -1285,15 +1303,15 @@ export function Configurator() {
                 </p>
                 {p && (
                   <>
+                    <h2 className="titolo-menu">Progetto</h2>
                     <button
                       className="bottone"
                       onClick={(event) => {
                         setPage("settings");
-                        event.currentTarget
-                          .closest("details")
-                          ?.removeAttribute("open");
+                        closeMenu(event);
                       }}
                     >
+                      <GearSix aria-hidden="true" />
                       Impostazioni progetto e piani
                     </button>
                     <button
@@ -1302,46 +1320,29 @@ export function Configurator() {
                       aria-label="Salva progetto"
                       onClick={(event) => {
                         void saveCurrent().catch(() => {});
-                        event.currentTarget
-                          .closest("details")
-                          ?.removeAttribute("open");
+                        closeMenu(event);
                       }}
                     >
-                      <FloppyDisk />
+                      <FloppyDisk aria-hidden="true" />
                       Salva progetto
                     </button>
                     <button
-                      className="bottone"
-                      onClick={(event) => {
-                        try {
-                          exportProject(p);
-                          event.currentTarget
-                            .closest("details")
-                            ?.removeAttribute("open");
-                        } catch {
-                          s.setError(
-                            "Esportazione non riuscita. Verificare il progetto.",
-                          );
-                        }
-                      }}
+                      className="bottone tenue piccolo"
+                      onClick={() => void saveAs()}
                     >
-                      <DownloadSimple />
-                      Esporta
+                      <FloppyDiskBack aria-hidden="true" />
+                      Salva con nome
                     </button>
                     <button
-                      className="bottone"
-                      disabled={skpBusy}
-                      aria-busy={skpBusy}
-                      title="Piano attivo: planimetria importata, muri, apparecchi e canali. Geometrie e colori di base in formato SketchUp."
-                      onClick={(event) => {
-                        event.currentTarget
-                          .closest("details")
-                          ?.removeAttribute("open");
-                        void downloadSkp();
+                      className="bottone tenue piccolo"
+                      onClick={() => {
+                        const name = window.prompt("Nome progetto", p.name);
+                        if (name?.trim())
+                          s.commit((p) => ({ ...p, name: name.trim() }));
                       }}
                     >
-                      <DownloadSimple />
-                      {skpBusy ? "Preparazione SKP…" : "Scarica modello SKP"}
+                      <PencilSimple aria-hidden="true" />
+                      Rinomina progetto
                     </button>
                   </>
                 )}
@@ -1349,16 +1350,30 @@ export function Configurator() {
                   className="bottone"
                   onClick={(event) => {
                     fileInput.current?.click();
-                    event.currentTarget
-                      .closest("details")
-                      ?.removeAttribute("open");
+                    closeMenu(event);
                   }}
                 >
-                  <UploadSimple />
+                  <FolderOpen aria-hidden="true" />
                   Apri progetto
                 </button>
                 {p && (
                   <>
+                    <button
+                      className="bottone"
+                      onClick={(event) => {
+                        try {
+                          exportProject(p);
+                          closeMenu(event);
+                        } catch {
+                          s.setError(
+                            "Esportazione non riuscita. Verificare il progetto.",
+                          );
+                        }
+                      }}
+                    >
+                      <Export aria-hidden="true" />
+                      Esporta
+                    </button>
                     <h2 className="titolo-menu">Documenti</h2>
                     <label className="opzione-render-pdf">
                       Documento{" "}
@@ -1394,61 +1409,38 @@ export function Configurator() {
                       />
                       Includi prezzi di listino
                     </label>
+                    <p className="nota">
+                      Il dossier include sempre il render 3D.
+                    </p>
                     <button
                       className="bottone tenue piccolo"
                       disabled={pdfBusy}
                       onClick={() => void createPdf(false)}
                     >
-                      <DownloadSimple />{" "}
+                      <FilePdf aria-hidden="true" />{" "}
                       {pdfBusy ? "Generazione PDF…" : "Dossier PDF"}
+                    </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={pdfBusy}
+                      onClick={() => void createPdf(true)}
+                    >
+                      <Eye aria-hidden="true" />
+                      Anteprima PDF
                     </button>
                     <button
                       className="bottone tenue piccolo"
                       disabled={pdfBusy}
                       onClick={() => void createMaterialsPdf()}
                     >
-                      <DownloadSimple /> Distinta materiali PDF · per stanza
+                      <FilePdf aria-hidden="true" /> Distinta materiali PDF ·
+                      per stanza
                     </button>
-                    <button
-                      className="bottone tenue piccolo"
-                      disabled={pdfBusy}
-                      onClick={() => void exportMaterialsEasyfatt()}
-                    >
-                      <DownloadSimple /> Materiali per Danea Easyfatt · Excel
-                    </button>
-                    <EasyfattXmlExport project={p} disabled={pdfBusy} />
-                    <p className="nota">
-                      Easyfatt: importa le righe nel modello Excel del
-                      preventivo. Codici e prezzi non disponibili restano vuoti
-                      nel file; consulta il foglio “Da completare”.
-                    </p>
-                    <button
-                      className="bottone tenue piccolo"
-                      disabled={pdfBusy}
-                      onClick={() => void createPdf(true)}
-                    >
-                      Anteprima PDF
-                    </button>
-                    <button
-                      className="bottone tenue piccolo"
-                      disabled={sheetsBusy}
-                      onClick={() => void downloadTechnicalSheets()}
-                    >
-                      <DownloadSimple />
-                      {sheetsBusy
-                        ? "Preparazione schede tecniche…"
-                        : "Scarica schede tecniche"}
-                    </button>
-                    {sheetsNotice && (
-                      <NotificationToast message={sheetsNotice} tone="info" />
-                    )}
-                    <p className="nota">
-                      Il dossier include sempre il render 3D.
-                    </p>
                     <button
                       className="bottone tenue piccolo"
                       onClick={() => setBillOpen(true)}
                     >
+                      <Receipt aria-hidden="true" />
                       Listino materiali
                     </button>
                     {pdfBusy && (
@@ -1464,22 +1456,47 @@ export function Configurator() {
                         </button>
                       </>
                     )}
+                    <h2 className="titolo-menu">Esporta per altri programmi</h2>
                     <button
                       className="bottone tenue piccolo"
-                      onClick={() => void saveAs()}
+                      disabled={pdfBusy}
+                      onClick={() => void exportMaterialsEasyfatt()}
                     >
-                      Salva con nome
+                      <FileXls aria-hidden="true" /> Materiali per Danea
+                      Easyfatt · Excel
                     </button>
+                    <EasyfattXmlExport project={p} disabled={pdfBusy} />
+                    <p className="nota">
+                      Easyfatt: importa le righe nel modello Excel del
+                      preventivo. Codici e prezzi non disponibili restano vuoti
+                      nel file; consulta il foglio “Da completare”.
+                    </p>
                     <button
-                      className="bottone tenue piccolo"
-                      onClick={() => {
-                        const name = window.prompt("Nome progetto", p.name);
-                        if (name?.trim())
-                          s.commit((p) => ({ ...p, name: name.trim() }));
+                      className="bottone"
+                      disabled={skpBusy}
+                      aria-busy={skpBusy}
+                      title="Piano attivo: planimetria importata, muri, apparecchi e canali. Geometrie e colori di base in formato SketchUp."
+                      onClick={(event) => {
+                        closeMenu(event);
+                        void downloadSkp();
                       }}
                     >
-                      Rinomina progetto
+                      <Cube aria-hidden="true" />
+                      {skpBusy ? "Preparazione SKP…" : "Scarica modello SKP"}
                     </button>
+                    <button
+                      className="bottone tenue piccolo"
+                      disabled={sheetsBusy}
+                      onClick={() => void downloadTechnicalSheets()}
+                    >
+                      <FileArrowDown aria-hidden="true" />
+                      {sheetsBusy
+                        ? "Preparazione schede tecniche…"
+                        : "Scarica schede tecniche"}
+                    </button>
+                    {sheetsNotice && (
+                      <NotificationToast message={sheetsNotice} tone="info" />
+                    )}
                   </>
                 )}
                 <form action="/api/auth/logout" method="post">
@@ -1577,7 +1594,7 @@ export function Configurator() {
                 onClick={() => void newProject("manual")}
               >
                 <span className="icona-inizio">
-                  <Square size={28} aria-hidden="true" />
+                  <PencilRuler size={28} aria-hidden="true" />
                 </span>
                 <strong>Disegna manualmente</strong>
                 <span>Parti da zero. Muri, quote esatte e stanze.</span>
@@ -1590,7 +1607,7 @@ export function Configurator() {
                 onClick={() => void newProject("import")}
               >
                 <span className="icona-inizio">
-                  <UploadSimple size={28} aria-hidden="true" />
+                  <FileArrowUp size={28} aria-hidden="true" />
                 </span>
                 <strong>Importa planimetria</strong>
                 <span>
@@ -1704,6 +1721,7 @@ export function Configurator() {
                           })();
                         }}
                       >
+                        <FolderOpen aria-hidden="true" />
                         Apri
                       </button>
                       <button
@@ -1761,6 +1779,7 @@ export function Configurator() {
                           })();
                         }}
                       >
+                        <ClockCounterClockwise aria-hidden="true" />
                         Recupera autosave
                       </button>
                       <button
@@ -1968,6 +1987,7 @@ export function Configurator() {
                   >
                     <summary className="bottone piccolo">Modifica</summary>
                     <div className="comandi-progetto">
+                      <h2 className="titolo-menu">Aggiungi</h2>
                       <button
                         className="bottone piccolo tenue"
                         onClick={() => {
@@ -1975,6 +1995,7 @@ export function Configurator() {
                           setPlanOpen(true);
                         }}
                       >
+                        <FileArrowUp aria-hidden="true" />
                         Importa planimetria
                       </button>
                       {floor?.background && (
@@ -1982,6 +2003,7 @@ export function Configurator() {
                           className="bottone piccolo tenue"
                           onClick={() => s.setTool("calibrate")}
                         >
+                          <Ruler aria-hidden="true" />
                           Ricalibra
                         </button>
                       )}
@@ -1990,9 +2012,20 @@ export function Configurator() {
                           className="bottone piccolo"
                           onClick={() => setRectangleOpen(true)}
                         >
+                          <Square aria-hidden="true" />
                           Aggiungi stanza
                         </button>
                       )}
+                      <button
+                        className="bottone piccolo tenue strumento-pilastro"
+                        onClick={() =>
+                          useProjectStore.setState({ pillarDialog: true })
+                        }
+                      >
+                        <Columns aria-hidden="true" />
+                        Aggiungi pilastro
+                      </button>
+                      <h2 className="titolo-menu">Selezione</h2>
                       <select
                         aria-label="Elemento nel progetto"
                         value={
@@ -2042,14 +2075,6 @@ export function Configurator() {
                             </option>
                           ))}
                       </select>
-                      <button
-                        className="bottone piccolo tenue strumento-pilastro"
-                        onClick={() =>
-                          useProjectStore.setState({ pillarDialog: true })
-                        }
-                      >
-                        Aggiungi pilastro
-                      </button>
                       <div className="strumenti-cronologia">
                         <button
                           className="bottone piccolo tenue"
@@ -2094,6 +2119,7 @@ export function Configurator() {
                           Elimina
                         </button>
                       </div>
+                      <h2 className="titolo-menu">Impianto</h2>
                       <button
                         className="bottone piccolo pericolo"
                         onClick={deleteSystems}
@@ -2183,6 +2209,7 @@ export function Configurator() {
                       s.select(duct ? { kind: "device", id: duct.id } : null);
                     }}
                   >
+                    <Path aria-hidden="true" />
                     Flessibili
                   </button>
                   <div className="selettore-vista">
@@ -2193,7 +2220,7 @@ export function Configurator() {
                         s.setView("2d");
                       }}
                     >
-                      <SquaresFour />
+                      <GridFour />
                       2D
                     </button>
                     <button
@@ -2214,7 +2241,7 @@ export function Configurator() {
                       aria-controls="proprieta-progetto"
                       onClick={() => setInspectorOpen((open) => !open)}
                     >
-                      <SidebarSimple aria-hidden="true" />
+                      <SidebarSimple aria-hidden="true" mirrored />
                       Proprietà
                     </button>
                   )}

@@ -9,6 +9,7 @@ test("manufacturer GLB preview loads locally, switches models and downloads", as
   await page
     .getByRole("button", { name: "Cataloghi tecnici", exact: true })
     .click();
+  await page.getByRole("tab", { name: "Modelli 3D e Easyfatt" }).click();
   await page
     .getByLabel("Modello 3D", { exact: true })
     .selectOption("ardesia-2-460-1800");
