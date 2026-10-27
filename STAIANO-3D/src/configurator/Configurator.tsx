@@ -881,12 +881,11 @@ export function Configurator() {
           )),
     );
   const propertySelection = p ? selectionWithProperties(p, s.selection) : [];
-  const showInspector =
-    inspectorOpen &&
-    s.view === "2d" &&
-    ((propertySelection.length > 0 && !ductedSelection) ||
-      floor?.configurationWizard?.status === "active" ||
-      wizardReturn?.projectId === p?.id);
+  const inspectorAvailable =
+    (propertySelection.length > 0 && !ductedSelection) ||
+    floor?.configurationWizard?.status === "active" ||
+    wizardReturn?.projectId === p?.id;
+  const showInspector = inspectorOpen && s.view === "2d" && inspectorAvailable;
   const ActiveDrawingIcon =
     tools.find((tool) => tool.id === s.tool && tool.id !== "select")?.icon ??
     PencilSimple;
@@ -2237,7 +2236,12 @@ export function Configurator() {
                     <button
                       className={`bottone piccolo ${showInspector ? "chiara" : "tenue"}`}
                       aria-label="Mostra proprietà"
-                      title="Mostra o nascondi proprietà"
+                      title={
+                        inspectorAvailable
+                          ? "Mostra o nascondi proprietà"
+                          : "Seleziona un elemento per vederne le proprietà"
+                      }
+                      disabled={!inspectorAvailable}
                       aria-expanded={showInspector}
                       aria-controls="proprieta-progetto"
                       onClick={() => setInspectorOpen((open) => !open)}

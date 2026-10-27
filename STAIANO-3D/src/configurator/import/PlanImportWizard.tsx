@@ -1,4 +1,5 @@
 "use client";
+import { Scan } from "@phosphor-icons/react";
 import { NotificationToast } from "../NotificationToast";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -577,9 +578,16 @@ export function PlanImportWizard({
         }}
       >
         {!plan && (
-          <p className={styles.notice}>
-            1 File · 2 Geometrie · 3 Scala · 4 Verifica manuale
-          </p>
+          <ol className={styles.steps} aria-label="Fasi dell’importazione">
+            {["File", "Geometrie", "Scala", "Verifica manuale"].map(
+              (label, index) => (
+                <li key={label} aria-current={index === 0 ? "step" : undefined}>
+                  <span aria-hidden="true">{index + 1}</span>
+                  {label}
+                </li>
+              ),
+            )}
+          </ol>
         )}
         <input
           ref={fileRef}
@@ -626,9 +634,10 @@ export function PlanImportWizard({
             </p>
             <button
               type="button"
-              className="bottone tenue"
+              className="bottone chiara"
               onClick={() => void scan()}
             >
+              <Scan aria-hidden="true" />
               {scanning ? "Scansione in corso…" : "Scansiona planimetria"}
             </button>
           </fieldset>

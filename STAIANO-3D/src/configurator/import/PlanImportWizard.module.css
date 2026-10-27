@@ -181,3 +181,66 @@
     overflow: visible;
   }
 }
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  color: var(--testo-tenue, #425a69);
+  font-size: 12px;
+}
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.steps li span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--bordo-forte, #bac8d6);
+  font-size: 11px;
+  font-weight: 700;
+}
+.steps li[aria-current="step"] {
+  color: var(--tinta, #365aa8);
+  font-weight: 700;
+}
+.steps li[aria-current="step"] span {
+  border-color: var(--tinta, #365aa8);
+  background: var(--tinta, #365aa8);
+  color: #fff;
+}
+.dialog input[type="file"] {
+  padding: 18px;
+  border-style: dashed;
+  background: var(--tinta-tenue, #edf2fc);
+}
+.dialog input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 6px 12px;
+  border: 1px solid var(--bordo-forte, #bac8d6);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--testo, #183249);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.scanOptions fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.scanOptions legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}

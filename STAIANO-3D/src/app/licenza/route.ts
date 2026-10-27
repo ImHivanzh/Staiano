@@ -118,6 +118,7 @@ label{display:block;font-size:13px;font-weight:600;margin-bottom:8px}
 input{width:100%;min-height:50px;font:inherit;font-size:16px;color:#183249;background:#fff;border:1px solid #bac8d6;border-radius:6px;padding:12px;caret-color:#365aa8;letter-spacing:.06em;text-transform:uppercase}
 input:focus{border-color:#365aa8;outline:2px solid #365aa8;outline-offset:3px}
 button{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:50px;margin-top:24px;padding:12px 16px;border:0;border-radius:6px;background:#365aa8;color:#fff;font:600 14px Inter,system-ui;cursor:pointer}
+.azione-primaria{display:flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:12px 16px;border-radius:6px;background:#365aa8;color:#fff;font:600 14px Inter,system-ui;text-decoration:none}
 button:hover{background:#294781}
 button:focus-visible{outline:2px solid #365aa8;outline-offset:3px}
 .access-note{font-size:12px;line-height:1.6;color:#516679;margin:28px 0 0}
@@ -146,7 +147,7 @@ button:focus-visible{outline:2px solid #365aa8;outline-offset:3px}
   ${updateRequired ? "" : `<div class="righe">${rows}</div>`}
   ${
     status.ok
-      ? `<a class="fonte-catalogo" href="/" style="font-size:14px">Apri il configuratore</a><p class="access-note">La disattivazione e lo spostamento su un’altra postazione si gestiscono dalla sezione Licenza dell’amministratore.</p>`
+      ? `<a class="azione-primaria" href="/">Apri il configuratore</a><p class="access-note">La disattivazione e lo spostamento su un’altra postazione si gestiscono dalla sezione Licenza dell’amministratore.</p>`
       : updateRequired
         ? `<section class="update-help" aria-label="Come aggiornare Staiano HVAC">
   ${
