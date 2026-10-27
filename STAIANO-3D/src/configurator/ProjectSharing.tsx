@@ -1,7 +1,7 @@
 "use client";
 import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState } from "react";
-import { ShareNetwork } from "@phosphor-icons/react";
+import { ArrowClockwise, ShareNetwork, UserMinus } from "@phosphor-icons/react";
 import type { Project } from "@/schemas/project";
 import {
   flushSave,
@@ -193,9 +193,11 @@ export function ProjectSharing({
             </label>
             <button
               type="button"
+              className="bottone"
               disabled={busy || !target || repository.isReadOnly(project.id)}
               onClick={() => void act("share", target)}
             >
+              <ShareNetwork aria-hidden="true" />
               Condividi
             </button>
             {details?.members.map((member) => (
@@ -203,9 +205,11 @@ export function ProjectSharing({
                 {member}{" "}
                 <button
                   type="button"
+                  className="bottone piccolo tenue"
                   disabled={busy || repository.isReadOnly(project.id)}
                   onClick={() => void act("revoke", member)}
                 >
+                  <UserMinus aria-hidden="true" />
                   Revoca
                 </button>
               </p>
@@ -216,6 +220,7 @@ export function ProjectSharing({
           <>
             <button
               type="button"
+              className="bottone tenue"
               disabled={busy}
               onClick={async () => {
                 try {
@@ -225,6 +230,7 @@ export function ProjectSharing({
                 }
               }}
             >
+              <ArrowClockwise aria-hidden="true" />
               Aggiorna registro
             </button>
             <ol>

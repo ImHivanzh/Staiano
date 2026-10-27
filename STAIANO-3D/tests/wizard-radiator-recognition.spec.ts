@@ -19,7 +19,7 @@ test("the guided wizard recognizes a radiator system at the plant step", async (
   await expect(wizard).toContainText("Camera");
   await expect(wizard).toContainText("1 radiatore");
   await expect(wizard).not.toContainText("Nessuna macchina inserita");
-  await wizard.getByLabel("Aggiungi apparecchio").selectOption("radiator");
+  await wizard.getByRole("button", { name: "Radiatore", exact: true }).click();
   await expect(
     page.getByText("Clicca per inserire l’apparecchio. Escape annulla."),
   ).toBeVisible();

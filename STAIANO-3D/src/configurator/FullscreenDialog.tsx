@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { X } from "@phosphor-icons/react";
 import styles from "./FullscreenDialog.module.css";
 
 function outsideDialog(element: HTMLDialogElement, x: number, y: number) {
@@ -79,11 +80,12 @@ export function FullscreenDialog({
         <button
           type="button"
           className="bottone"
+          aria-label={closeLabel}
           title={`${closeLabel} (Esc)`}
           aria-keyshortcuts="Escape"
           onClick={onClose}
         >
-          {closeLabel}
+          <X aria-hidden="true" />
         </button>
       </header>
       <div className={styles.content}>{children}</div>

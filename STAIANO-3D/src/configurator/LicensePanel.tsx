@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
+import { ArrowClockwise, Key, Prohibit } from "@phosphor-icons/react";
 import { NotificationToast } from "./NotificationToast";
 
 type LicenseStatusView = {
@@ -147,35 +148,42 @@ export function LicensePanel() {
             </strong>
             {status?.message ? ` — ${status.message}` : ""}
           </p>
-          <p className="nota">
-            Cliente: {status?.customer ?? "—"} · Piano: {status?.plan ?? "—"}
-            <br />
-            Licenza: {status?.licenseId ?? "—"}
-            <br />
-            Postazione: {status?.machineId ?? "—"}
-            <br />
-            Versione installata:{" "}
-            {build
-              ? `${build.buildId}${build.commit ? ` · ${build.commit.slice(0, 12)}` : ""}`
-              : "—"}
-            <br />
-            Attivata il: {formatDate(status?.activatedAt ?? null)} · Ultima
-            verifica: {formatDate(status?.lastVerifiedAt ?? null)}
-            <br />
-            Scadenza:{" "}
-            {status?.expiresAt
-              ? new Date(status.expiresAt * 1000).toLocaleDateString("it-IT")
-              : "nessuna"}
-          </p>
-          <div>
+          <dl className="dati-licenza">
+            <dt>Cliente</dt>
+            <dd>{status?.customer ?? "—"}</dd>
+            <dt>Piano</dt>
+            <dd>{status?.plan ?? "—"}</dd>
+            <dt>Licenza</dt>
+            <dd>{status?.licenseId ?? "—"}</dd>
+            <dt>Postazione</dt>
+            <dd>{status?.machineId ?? "—"}</dd>
+            <dt>Versione installata</dt>
+            <dd>
+              {build
+                ? `${build.buildId}${build.commit ? ` · ${build.commit.slice(0, 12)}` : ""}`
+                : "—"}
+            </dd>
+            <dt>Attivata il</dt>
+            <dd>{formatDate(status?.activatedAt ?? null)}</dd>
+            <dt>Ultima verifica</dt>
+            <dd>{formatDate(status?.lastVerifiedAt ?? null)}</dd>
+            <dt>Scadenza</dt>
+            <dd>
+              {status?.expiresAt
+                ? new Date(status.expiresAt * 1000).toLocaleDateString("it-IT")
+                : "nessuna"}
+            </dd>
+          </dl>
+          <div className="azioni-progetto">
             <button
               className="bottone piccolo"
               type="button"
               disabled={busy}
               onClick={() => void send("refresh")}
             >
+              <ArrowClockwise aria-hidden="true" />
               Verifica adesso
-            </button>{" "}
+            </button>
             <button
               className="bottone tenue piccolo"
               type="button"
@@ -189,6 +197,7 @@ export function LicensePanel() {
                   void send("deactivate");
               }}
             >
+              <Prohibit aria-hidden="true" />
               Disattiva questa postazione
             </button>
           </div>
@@ -209,6 +218,7 @@ export function LicensePanel() {
                 />
               </label>
               <button className="bottone" type="submit">
+                <Key aria-hidden="true" />
                 Attiva su questa postazione
               </button>
             </fieldset>

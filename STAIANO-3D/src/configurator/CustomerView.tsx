@@ -3,7 +3,7 @@ import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ArrowsOut } from "@phosphor-icons/react";
+import { ArrowsOut, Cube, Fire } from "@phosphor-icons/react";
 import { projectSchema } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { installationLabels } from "@/domain/installations";
@@ -123,6 +123,11 @@ export function CustomerView() {
           aria-pressed={showStoves}
           onClick={() => setShowStoves((value) => !value)}
         >
+          {showStoves ? (
+            <Cube aria-hidden="true" />
+          ) : (
+            <Fire aria-hidden="true" />
+          )}{" "}
           {showStoves ? "Mostra progetto" : "Catalogo stufe"}
         </button>
         <button

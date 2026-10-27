@@ -19,6 +19,8 @@ import * as THREE from "three";
 import {
   ArrowClockwise,
   Camera,
+  Cube,
+  PlusCircle,
   SlidersHorizontal,
   LinkSimple,
 } from "@phosphor-icons/react";
@@ -699,7 +701,10 @@ export default function Viewer3D({
                 </details>
               )}
               <details className={styles.settings} name="viewer-menus">
-                <summary>Vista 3D</summary>
+                <summary>
+                  <Cube size={18} aria-hidden="true" />
+                  Vista 3D
+                </summary>
                 <div className={styles.viewBody}>
                   <div className={`${styles.group} ${styles.modeTools}`}>
                     <button
@@ -932,7 +937,10 @@ export default function Viewer3D({
                     </button>
                   )}
                   <details className={styles.settings} name="viewer-menus">
-                    <summary>Aggiungi apparecchio</summary>
+                    <summary>
+                      <PlusCircle size={18} aria-hidden="true" />
+                      Aggiungi apparecchio
+                    </summary>
                     <div
                       className={styles.productMenu}
                       onClick={(event) =>
@@ -941,6 +949,7 @@ export default function Viewer3D({
                           ?.removeAttribute("open")
                       }
                     >
+                      <span className={styles.menuGroup}>Riscaldamento</span>
                       <button
                         className={
                           productTool === "radiator" ? styles.active : undefined
@@ -952,6 +961,25 @@ export default function Viewer3D({
                       </button>
                       <button
                         className={
+                          productTool === "heatPump" ? styles.active : undefined
+                        }
+                        onClick={() => setProductTool("heatPump")}
+                      >
+                        <EquipmentIcon type="heatPump" />
+                        Pompa di calore
+                      </button>
+                      <button
+                        className={
+                          productTool === "fanCoil" ? styles.active : undefined
+                        }
+                        onClick={() => setProductTool("fanCoil")}
+                      >
+                        <EquipmentIcon type="fanCoil" />
+                        Ventilconvettori
+                      </button>
+                      <span className={styles.menuGroup}>Climatizzazione</span>
+                      <button
+                        className={
                           productTool === "split" ? styles.active : undefined
                         }
                         onClick={() => setProductTool("split")}
@@ -961,6 +989,18 @@ export default function Viewer3D({
                       </button>
                       <button
                         className={
+                          productTool === "machine" ? styles.active : undefined
+                        }
+                        onClick={() => setProductTool("machine")}
+                      >
+                        <EquipmentIcon type="machine" />
+                        Macchina manuale
+                      </button>
+                      <span className={styles.menuGroup}>
+                        Distribuzione aria
+                      </span>
+                      <button
+                        className={
                           productTool === "terminal" ? styles.active : undefined
                         }
                         onClick={() => setProductTool("terminal")}
@@ -968,11 +1008,12 @@ export default function Viewer3D({
                         <EquipmentIcon type="terminal" />
                         Bocchette
                       </button>
-                      <button onClick={() => setProductTool("machine")}>
-                        <EquipmentIcon type="machine" />
-                        Macchina manuale
-                      </button>
                       <button
+                        className={
+                          planPlacementTool === "plenum"
+                            ? styles.active
+                            : undefined
+                        }
                         onClick={() => {
                           useProjectStore.setState({
                             planPlacementTool: "plenum",
@@ -983,14 +1024,7 @@ export default function Viewer3D({
                         <EquipmentIcon type="plenum" />
                         Plenum
                       </button>
-                      <button onClick={() => setProductTool("heatPump")}>
-                        <EquipmentIcon type="heatPump" />
-                        Pompa di calore
-                      </button>
-                      <button onClick={() => setProductTool("fanCoil")}>
-                        <EquipmentIcon type="fanCoil" />
-                        Ventilconvettori
-                      </button>
+                      <span className={styles.menuGroup}>Struttura</span>
                       <button
                         onClick={() =>
                           useProjectStore.setState({ pillarDialog: true })
@@ -1489,16 +1523,27 @@ export default function Viewer3D({
             </div>
           </div>
           <div className={styles.bottom}>
-            {chosenTerminal && ["EGF-PUSH", "EGFR-PUSH"].includes(chosenTerminal.family) && (
-              <button type="button" className="btn" aria-pressed={openGrilleIds.has(chosenTerminal.id)} onClick={() => setOpenGrilleIds((current) => {
-                const next = new Set(current);
-                if (next.has(chosenTerminal.id)) next.delete(chosenTerminal.id);
-                else next.add(chosenTerminal.id);
-                return next;
-              })}>
-                {openGrilleIds.has(chosenTerminal.id) ? "Chiudi botola" : "Apri botola"}
-              </button>
-            )}
+            {chosenTerminal &&
+              ["EGF-PUSH", "EGFR-PUSH"].includes(chosenTerminal.family) && (
+                <button
+                  type="button"
+                  className="btn"
+                  aria-pressed={openGrilleIds.has(chosenTerminal.id)}
+                  onClick={() =>
+                    setOpenGrilleIds((current) => {
+                      const next = new Set(current);
+                      if (next.has(chosenTerminal.id))
+                        next.delete(chosenTerminal.id);
+                      else next.add(chosenTerminal.id);
+                      return next;
+                    })
+                  }
+                >
+                  {openGrilleIds.has(chosenTerminal.id)
+                    ? "Chiudi botola"
+                    : "Apri botola"}
+                </button>
+              )}
             {!readOnly && presentation && p && (
               <div className={styles.clientStats}>
                 <strong>

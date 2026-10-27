@@ -1,9 +1,19 @@
 "use client";
 import type { Project, Room } from "@/schemas/project";
+import { EquipmentIcon } from "../EquipmentIcon";
 import {
   useProjectStore,
   type PlanPlacementTool,
 } from "@/stores/project-store";
+
+const equipmentChoices = [
+  { tool: "machine", label: "Macchina canalizzata", icon: "machine" },
+  { tool: "radiator", label: "Radiatore", icon: "radiator" },
+  { tool: "fanCoil", label: "Ventilconvettore", icon: "fanCoil" },
+  { tool: "split", label: "Split", icon: "split" },
+  { tool: "vrv", label: "VRV / VRF", icon: "vrv" },
+  { tool: "heatPump", label: "Pompa di calore", icon: "heatPump" },
+] as const;
 
 export function InstallationWizard({
   project,
@@ -45,26 +55,23 @@ export function InstallationWizard({
         Scegli un apparecchio e inseriscilo sulla pianta. Il clic su un
         apparecchio esistente apre la sua configurazione.
       </p>
-      <div className="scelta-partenza">
-        <label className="campo">
-          <span>Aggiungi apparecchio</span>
-          <select
-            value=""
-            disabled={!rooms.length}
-            onChange={(event) => place(event.target.value as PlanPlacementTool)}
-          >
-            <option value="" disabled>
-              Scegli e inserisci sulla pianta
-            </option>
-            <option value="machine">Macchina canalizzata</option>
-            <option value="radiator">Radiatore</option>
-            <option value="fanCoil">Ventilconvettore</option>
-            <option value="split">Split</option>
-            <option value="vrv">VRV / VRF</option>
-            <option value="heatPump">Pompa di calore</option>
-          </select>
-        </label>
-      </div>
+      <fieldset className="scelta-apparecchio" disabled={!rooms.length}>
+        <legend>Aggiungi apparecchio</legend>
+        <div className="griglia-apparecchi">
+          {equipmentChoices.map(({ tool, label, icon }) => (
+            <button
+              type="button"
+              className="bottone chiara"
+              key={tool}
+              title={`Inserisci sulla pianta: ${label.toLowerCase()}`}
+              onClick={() => place(tool)}
+            >
+              <EquipmentIcon type={icon} />
+              {label}
+            </button>
+          ))}
+        </div>
+      </fieldset>
       {machines.map((machine) => (
         <div className="formula" key={machine.id}>
           <strong>

@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
-import { ArrowClockwise } from "@phosphor-icons/react";
+import { ArrowClockwise, Books, PencilSimple } from "@phosphor-icons/react";
 import type { Project, Room } from "@/schemas/project";
 import { hvacCatalog } from "@/domain/catalogs/hvac";
 import { maximumAirflowOption } from "@/domain/catalogs/hvac-airflow";
@@ -190,6 +190,7 @@ export function DuctedMachinePicker({
               disabled={hydronic}
               onClick={() => setManual(false)}
             >
+              <Books aria-hidden="true" />
               Catalogo verificato
             </button>
             <button
@@ -198,6 +199,7 @@ export function DuctedMachinePicker({
               aria-pressed={manual}
               onClick={() => setManual(true)}
             >
+              <PencilSimple aria-hidden="true" />
               Dati manuali
             </button>
           </div>

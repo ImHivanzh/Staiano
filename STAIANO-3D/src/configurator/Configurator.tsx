@@ -1327,15 +1327,12 @@ export function Configurator() {
                       <FloppyDisk aria-hidden="true" />
                       Salva progetto
                     </button>
-                    <button
-                      className="bottone tenue piccolo"
-                      onClick={() => void saveAs()}
-                    >
+                    <button className="bottone" onClick={() => void saveAs()}>
                       <FloppyDiskBack aria-hidden="true" />
                       Salva con nome
                     </button>
                     <button
-                      className="bottone tenue piccolo"
+                      className="bottone"
                       onClick={() => {
                         const name = window.prompt("Nome progetto", p.name);
                         if (name?.trim())
@@ -2026,6 +2023,29 @@ export function Configurator() {
                         <Columns aria-hidden="true" />
                         Aggiungi pilastro
                       </button>
+                      <h2 className="titolo-menu">Cronologia</h2>
+                      <div className="strumenti-cronologia">
+                        <button
+                          className="bottone piccolo tenue"
+                          aria-label="Annulla"
+                          title="Annulla (Ctrl+Z)"
+                          disabled={!s.past.length}
+                          onClick={s.undo}
+                        >
+                          <ArrowCounterClockwise />
+                          Annulla
+                        </button>
+                        <button
+                          className="bottone piccolo tenue"
+                          aria-label="Ripeti"
+                          title="Ripeti (Ctrl+Y)"
+                          disabled={!s.future.length}
+                          onClick={s.redo}
+                        >
+                          <ArrowClockwise />
+                          Ripeti
+                        </button>
+                      </div>
                       <h2 className="titolo-menu">Selezione</h2>
                       <select
                         aria-label="Elemento nel progetto"
@@ -2077,26 +2097,6 @@ export function Configurator() {
                           ))}
                       </select>
                       <div className="strumenti-cronologia">
-                        <button
-                          className="bottone piccolo tenue"
-                          aria-label="Annulla"
-                          title="Annulla (Ctrl+Z)"
-                          disabled={!s.past.length}
-                          onClick={s.undo}
-                        >
-                          <ArrowCounterClockwise />
-                          Annulla
-                        </button>
-                        <button
-                          className="bottone piccolo tenue"
-                          aria-label="Ripeti"
-                          title="Ripeti (Ctrl+Y)"
-                          disabled={!s.future.length}
-                          onClick={s.redo}
-                        >
-                          <ArrowClockwise />
-                          Ripeti
-                        </button>
                         <button
                           className="bottone piccolo tenue"
                           aria-label="Copia selezione"

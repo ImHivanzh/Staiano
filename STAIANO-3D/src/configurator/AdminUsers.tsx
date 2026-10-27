@@ -1,6 +1,7 @@
 "use client";
 import { NotificationToast } from "./NotificationToast";
 import { useEffect, useState, type FormEvent } from "react";
+import { FloppyDisk, Key, UserPlus } from "@phosphor-icons/react";
 import type { ManagedUser } from "@/server/auth";
 
 export function AdminUsers({ username }: { username: string }) {
@@ -127,6 +128,7 @@ export function AdminUsers({ username }: { username: string }) {
                 configuratore; la gestione utenti resta riservata all’admin.
               </p>
               <button className="bottone" type="submit">
+                <UserPlus aria-hidden="true" />
                 Crea utente
               </button>
             </fieldset>
@@ -160,7 +162,9 @@ export function AdminUsers({ username }: { username: string }) {
                 </a>
               ) : (
                 <details>
-                  <summary>Imposta password</summary>
+                  <summary>
+                    <Key aria-hidden="true" /> Imposta password
+                  </summary>
                   <form onSubmit={submit}>
                     <input type="hidden" name="action" value="reset" />
                     <input
@@ -196,6 +200,7 @@ export function AdminUsers({ username }: { username: string }) {
                         il cambio password al prossimo accesso.
                       </p>
                       <button className="bottone piccolo" type="submit">
+                        <FloppyDisk aria-hidden="true" />
                         Salva password
                       </button>
                     </fieldset>

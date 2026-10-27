@@ -2186,3 +2186,74 @@ input[type="checkbox"] {
     max-height: calc(100dvh - 120px);
   }
 }
+.scelta-apparecchio {
+  margin: 0 0 20px;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.scelta-apparecchio legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--testo-tenue);
+}
+.griglia-apparecchi {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.griglia-apparecchi .bottone {
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  height: auto;
+  min-height: 64px;
+  padding: 10px 6px;
+  text-align: center;
+  line-height: 1.2;
+}
+.azioni[role="group"] > .bottone[aria-pressed] {
+  border: 1px solid var(--bordo-forte);
+}
+.azioni[role="group"] > .bottone[aria-pressed="true"] {
+  border-color: var(--tinta);
+  background: var(--tinta-tenue);
+  color: var(--tinta);
+  box-shadow: inset 0 0 0 1px var(--tinta);
+}
+
+.dati-licenza {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 4px 14px;
+  margin: 10px 0 14px;
+  font-size: 0.82rem;
+}
+.dati-licenza dt {
+  color: var(--testo-tenue);
+}
+.dati-licenza dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.menu-progetto > .comandi-progetto {
+  overflow-x: hidden;
+}
+.menu-progetto .opzione-render-pdf:has(input[type="checkbox"]) {
+  justify-content: flex-start;
+  gap: 8px;
+}
+.menu-progetto .comandi-progetto .bottone.tenue {
+  justify-content: flex-start;
+}
+.menu-modifica .strumento-pilastro {
+  order: 0;
+}
+.griglia-apparecchi .bottone svg {
+  width: 28px;
+  height: 28px;
+}

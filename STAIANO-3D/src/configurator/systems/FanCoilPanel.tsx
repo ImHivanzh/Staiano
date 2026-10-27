@@ -630,11 +630,9 @@ export function FanCoilPanel({
               )}
             </>
           )}
-          {!product && (
+          {!product && family && (
             <p className="nota">
-              {family
-                ? "Scegli una taglia per vedere potenza, rumore, comando e posa."
-                : "Scegli il modello: poi indico la taglia consigliata per questo ambiente."}
+              Scegli una taglia per vedere potenza, rumore, comando e posa.
             </p>
           )}
         </div>
@@ -655,11 +653,15 @@ export function FanCoilPanel({
               </button>
             </div>
           ) : (
-            <p className="nota">
-              {family
-                ? "Nessuna taglia di questo modello copre il fabbisogno residuo con lo spazio e la quota disponibili. Per un modello ad incasso servono una parete abbastanza spessa a parete o un controsoffitto/vuoto tecnico a soffitto. Puoi anche configurare più apparecchi."
-                : "Scegli marca e modello: poi indico la taglia che copre il fabbisogno residuo."}
-            </p>
+            family && (
+              <p className="nota">
+                Nessuna taglia di questo modello copre il fabbisogno residuo con
+                lo spazio e la quota disponibili. Per un modello ad incasso
+                servono una parete abbastanza spessa a parete o un
+                controsoffitto/vuoto tecnico a soffitto. Puoi anche configurare
+                più apparecchi.
+              </p>
+            )
           )}
           <h4>
             {existingDevice
