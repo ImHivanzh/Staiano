@@ -15,6 +15,6 @@ for i in range(3):
 bpy.ops.object.select_all(action='SELECT');p=shell.node_tree.nodes.get('Principled BSDF')
 for label,rgb in [('avorio',(.80,.75,.68)),('bronzo',(.31,.18,.12)),('tortora-matt',(.47,.38,.33))]:
     shell.diffuse_color=(*rgb,1);p.inputs['Base Color'].default_value=(*rgb,1)
-    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-guenda-idro-evo-{label}.glb'),export_format='GLB',use_selection=True)
+    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-guenda-idro-evo-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.80,.75,.68,1);p.inputs['Base Color'].default_value=(.80,.75,.68,1)
 bpy.context.preferences.filepaths.save_version=0;bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufa-guenda-idro-evo.blend'))

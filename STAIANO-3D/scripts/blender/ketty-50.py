@@ -31,7 +31,7 @@ box('Zoccolo',(0,0,.012),(w*.9,d*.9,.024),black,.012)
 bpy.ops.object.select_all(action='SELECT')
 for label,rgb in [('bianco',(.83,.84,.83)),('bordeaux',(.28,.025,.034)),('nero',(.025,.027,.028)),('avorio',(.80,.75,.68))]:
     shell.diffuse_color=(*rgb,1); shell.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*rgb,1)
-    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-ketty-50-{label}.glb'),export_format='GLB',use_selection=True)
+    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-ketty-50-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.83,.84,.83,1); shell.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(.83,.84,.83,1)
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufa-ketty-50.blend'))

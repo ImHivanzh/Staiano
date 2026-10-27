@@ -10,6 +10,7 @@ import type { Project, Selection } from "@/schemas/project";
 import { heatPumpProductAtVersion } from "@/domain/catalogs/heat-pumps";
 import { heatPumpModelUrl } from "@/domain/catalogs/heat-pump-models";
 import { hydronicPipeRoute } from "@/domain/hydronic/routes";
+import { FlowParticles } from "./DuctMeshes";
 
 function HeatPumpIdentification({
   manufacturer,
@@ -82,12 +83,14 @@ export function HydronicMeshes({
   project,
   floorId,
   showPipes = false,
+  running = false,
   selection = [],
   onSelect,
 }: {
   project: Project;
   floorId?: string;
   showPipes?: boolean;
+  running?: boolean;
   selection?: Selection[];
   onSelect?: (selection: Selection) => void;
 }) {
@@ -120,6 +123,7 @@ export function HydronicMeshes({
               selected={selected}
               dark={gree}
               family={m?.family}
+              running={running}
             />
           );
           return (
@@ -168,27 +172,44 @@ export function HydronicMeshes({
                   if (path.length < 2) return null;
                   return (
                     <group key={id}>
-                      {[
-                        [-0.025, "#db7562"],
-                        [0.025, "#66bde3"],
-                      ].map(([offset, color]) => (
-                        <Line
-                          key={String(color)}
-                          points={path.map(
-                            (p) =>
-                              [p.x + Number(offset), p.elevationM, p.y] as [
-                                number,
-                                number,
-                                number,
-                              ],
-                          )}
-                          color={String(color)}
-                          lineWidth={2.5}
-                          dashed
-                          dashSize={0.1}
-                          gapSize={0.045}
-                        />
-                      ))}
+                      {(
+                        [
+                          [-0.025, "#db7562", false],
+                          [0.025, "#66bde3", true],
+                        ] as const
+                      ).map(([offset, color, back]) => {
+                        const line = path.map((p) => ({
+                          ...p,
+                          x: p.x + offset,
+                        }));
+                        return (
+                          <group key={color}>
+                            <Line
+                              points={line.map(
+                                (p) =>
+                                  [p.x, p.elevationM, p.y] as [
+                                    number,
+                                    number,
+                                    number,
+                                  ],
+                              )}
+                              color={color}
+                              lineWidth={2.5}
+                              dashed
+                              dashSize={0.1}
+                              gapSize={0.045}
+                            />
+                            {running && (
+                              // Mandata verso la macchina, ritorno verso la pompa di calore.
+                              <FlowParticles
+                                points={back ? [...line].reverse() : line}
+                                animated
+                                color={color}
+                              />
+                            )}
+                          </group>
+                        );
+                      })}
                     </group>
                   );
                 })}

@@ -25,6 +25,6 @@ stone.node_tree.links.new(tex.outputs['Color'], shader.inputs['Base Color'])
 top.data.materials.clear()
 top.data.materials.append(stone)
 bpy.ops.object.select_all(action='SELECT')
-bpy.ops.export_scene.gltf(filepath=str(root / 'public/models/stoves/nordica-amika-petra-ad-pietra.glb'), export_format='GLB', use_selection=True)
+bpy.ops.export_scene.gltf(filepath=str(root / 'public/models/stoves/nordica-amika-petra-ad-pietra.glb'), export_format='GLB', use_selection=True,export_apply=True)
 bpy.context.preferences.filepaths.save_version = 0
 bpy.ops.wm.save_as_mainfile(filepath=str(root / 'assets/blender/stufa-amika-petra.blend'))

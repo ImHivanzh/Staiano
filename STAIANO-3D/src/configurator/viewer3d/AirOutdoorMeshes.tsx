@@ -10,12 +10,14 @@ export function AirOutdoorMeshes({
   project,
   floorId,
   showPipes = false,
+  running = false,
   selection = [],
   onSelect,
 }: {
   project: Project;
   floorId?: string;
   showPipes?: boolean;
+  running?: boolean;
   selection?: Selection[];
   onSelect?: (selection: Selection) => void;
 }) {
@@ -53,6 +55,7 @@ export function AirOutdoorMeshes({
                   heightM={h}
                   depthM={d}
                   selected={selected}
+                  running={running}
                 />
               </group>
               {showPipes &&

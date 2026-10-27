@@ -22,7 +22,7 @@ def output(c,ident,shell,variants):
     bpy.context.view_layer.objects.active=next(iter(c.objects)); p=shell.node_tree.nodes.get('Principled BSDF')
     for label,rgb in variants:
         shell.diffuse_color=(*rgb,1); p.inputs['Base Color'].default_value=(*rgb,1)
-        bpy.ops.export_scene.gltf(filepath=str(ROOT/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(ROOT/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     shell.diffuse_color=(*variants[0][1],1); p.inputs['Base Color'].default_value=(*variants[0][1],1)
     c.hide_viewport=True; c.hide_render=True
 for ident,lux,colors in [

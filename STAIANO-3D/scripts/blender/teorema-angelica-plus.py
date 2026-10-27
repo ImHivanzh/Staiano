@@ -20,7 +20,7 @@ for target,source,depth_scale,blendfile in specs:
             bpy.ops.object.transform_apply(location=False,rotation=False,scale=True); lip.data.materials.append(shell)
             bevel=lip.modifiers.new('Bordi','BEVEL'); bevel.width=.009; bevel.segments=3
         bpy.ops.object.select_all(action='SELECT')
-        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{target}-{finish}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{target}-{finish}.glb'),export_format='GLB',use_selection=True,export_apply=True)
         if finish=='avorio':
             bpy.context.preferences.filepaths.save_version=0
             bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender'/blendfile))

@@ -12,7 +12,7 @@ shader=shell.node_tree.nodes.get('Principled BSDF')
 bpy.ops.object.select_all(action='SELECT')
 for label,rgb in [('grigio-grafite',(.045,.05,.051)),('avorio',(.80,.75,.68)),('bronzo',(.31,.18,.12)),('nero',(.025,.027,.028))]:
     shell.diffuse_color=(*rgb,1); shader.inputs['Base Color'].default_value=(*rgb,1)
-    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-sabry-ad-{label}.glb'),export_format='GLB',use_selection=True)
+    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-sabry-ad-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.045,.05,.051,1); shader.inputs['Base Color'].default_value=(.045,.05,.051,1)
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufa-sabry-ad.blend'))

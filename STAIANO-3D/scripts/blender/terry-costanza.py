@@ -32,7 +32,7 @@ for ident,(w,d,h),finishes,terry in [
     bpy.context.view_layer.objects.active=next(iter(c.objects));p=shell.node_tree.nodes.get('Principled BSDF')
     for label,rgb in finishes:
         shell.diffuse_color=(*rgb,1);p.inputs['Base Color'].default_value=(*rgb,1)
-        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     rgb=finishes[0][1];shell.diffuse_color=(*rgb,1);p.inputs['Base Color'].default_value=(*rgb,1);c.hide_viewport=True;c.hide_render=True
 for c in bpy.context.scene.collection.children:c.hide_viewport=False;c.hide_render=False
 bpy.context.preferences.filepaths.save_version=0;bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufe-terry-costanza.blend'))

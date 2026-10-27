@@ -74,7 +74,10 @@ for ident,w,d,h in [('nordica-amika-ad',.460,.465,1.200),('ravelli-flexi-7',.530
     cylinder(coll,'Coperchio pellet',(0,0,h-.001),(w*.64,d*.58,.008),black)
     # A flat glass door is slightly proud of the curved metal front, as in the photos.
     zdoor=h*(.49 if amika else .50)
-    box(coll,'Cornice porta',(0,-ry-.005,zdoor),(w*(.46 if amika else .43),.012,h*(.38 if amika else .42)),door,.004)
+    if amika:
+        arc_panel(coll,'Cornice porta curva',rx,ry,zdoor-h*.19,zdoor+h*.19,-.48,.48,door,.004)
+    else:
+        box(coll,'Cornice porta',(0,-ry-.005,zdoor),(w*.43,.012,h*.42),door,.004)
     box(coll,'Vetro spento',(0,-ry-.012,zdoor+.025),(w*(.26 if amika else .30),.004,h*(.22 if amika else .27)),glass,.003)
     box(coll,'Maniglia porta',(w*(.245 if amika else .24),-ry-.014,zdoor+.025),(.012,.022,.10),black,.003)
     for i in range(5 if amika else 4):
@@ -99,7 +102,7 @@ for ident,w,d,h in [('nordica-amika-ad',.460,.465,1.200),('ravelli-flexi-7',.530
     shader=next(n for n in shell.node_tree.nodes if n.type=='BSDF_PRINCIPLED')
     for label,rgb in [('bianco',(.83,.84,.83)),('nero',(.032,.035,.036))]:
         shell.diffuse_color=(*rgb,1); shader.inputs['Base Color'].default_value=(*rgb,1)
-        bpy.ops.export_scene.gltf(filepath=str(OUT/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,use_active_scene=True)
+        bpy.ops.export_scene.gltf(filepath=str(OUT/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True,use_active_scene=True)
     shell.diffuse_color=(.83,.84,.83,1); shader.inputs['Base Color'].default_value=(.83,.84,.83,1)
     coll.hide_viewport=True; coll.hide_render=True
 

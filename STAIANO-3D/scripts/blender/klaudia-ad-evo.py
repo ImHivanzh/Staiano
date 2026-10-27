@@ -28,7 +28,7 @@ box('Base',(0,0,.012),(w*.9,d*.9,.024),black,.012)
 bpy.ops.object.select_all(action='SELECT')
 for label,rgb in [('nero',(.025,.027,.028)),('bordeaux',(.28,.025,.034)),('bianco',(.83,.84,.83))]:
     shell.diffuse_color=(*rgb,1); shell.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*rgb,1)
-    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-klaudia-ad-evo-{label}.glb'),export_format='GLB',use_selection=True)
+    bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'nordica-klaudia-ad-evo-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
 shell.diffuse_color=(.025,.027,.028,1); shell.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(.025,.027,.028,1)
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufa-klaudia-ad-evo.blend'))

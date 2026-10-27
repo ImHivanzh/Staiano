@@ -56,7 +56,7 @@ for ident in ('nordica-katia-11-50-evo','nordica-katia-9-50-evo'):
     for label,rgb in [('bronzo',(.31,.18,.12)),('bianco',(.83,.84,.83)),('tortora-matt',(.47,.38,.33))]:
         for m,colour in [(shell,rgb),(upper,(.025,.027,.028) if label=='bronzo' else rgb)]:
             m.diffuse_color=(*colour,1); m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*colour,1)
-        bpy.ops.export_scene.gltf(filepath=str(ROOT/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(ROOT/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     default=(.31,.18,.12) if '-11-' in ident else (.47,.38,.33)
     for m,colour in [(shell,default),(upper,(.025,.027,.028) if '-11-' in ident else default)]:
         m.diffuse_color=(*colour,1); m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*colour,1)

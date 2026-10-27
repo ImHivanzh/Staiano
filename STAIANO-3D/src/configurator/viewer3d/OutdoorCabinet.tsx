@@ -30,6 +30,7 @@ export function OutdoorCabinet({
   selected = false,
   dark = false,
   family = "",
+  running = false,
 }: {
   widthM: number;
   heightM: number;
@@ -37,6 +38,7 @@ export function OutdoorCabinet({
   selected?: boolean;
   dark?: boolean;
   family?: string;
+  running?: boolean;
 }) {
   const footHeight = Math.min(0.03, h * 0.1);
   const screen = /^Altherma 3 (R MT|H HT)$/.test(family);
@@ -81,7 +83,11 @@ export function OutdoorCabinet({
         ) : (
           fans.map((y) => (
             <group key={y} position={[-w * 0.18, y, d / 2 + 0.002]}>
-              <OutdoorFan radiusM={radius} dark={dark || square} />
+              <OutdoorFan
+                radiusM={radius}
+                dark={dark || square}
+                running={running}
+              />
               {square &&
                 Array.from({ length: 20 }, (_, i) => (
                   <mesh

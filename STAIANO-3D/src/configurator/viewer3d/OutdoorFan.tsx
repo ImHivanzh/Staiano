@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 const disc = new THREE.CircleGeometry(1, 48);
@@ -57,25 +59,35 @@ outdoorFanGrille.setAttribute(
 export function OutdoorFan({
   radiusM,
   dark = false,
+  running = false,
 }: {
   radiusM: number;
   dark?: boolean;
+  running?: boolean;
 }) {
   const metal = metals[Number(dark)];
+  const blades = useRef<THREE.Group>(null);
+  useFrame(({ invalidate }, delta) => {
+    if (!running || !blades.current) return;
+    blades.current.rotation.z -= delta * 14;
+    invalidate();
+  });
   return (
     <group scale={radiusM} dispose={null}>
       <mesh geometry={disc} material={recess} position={[0, 0, 0.002]} />
-      {[0, 1, 2].map((index) => (
-        <group key={index} rotation={[0, 0, (index * Math.PI * 2) / 3]}>
-          <mesh
-            geometry={blade}
-            material={impeller}
-            position={[0, 0.43, 0.014]}
-            rotation={[0, 0, -0.4]}
-            scale={[0.24, 0.44, 0.015]}
-          />
-        </group>
-      ))}
+      <group ref={blades}>
+        {[0, 1, 2].map((index) => (
+          <group key={index} rotation={[0, 0, (index * Math.PI * 2) / 3]}>
+            <mesh
+              geometry={blade}
+              material={impeller}
+              position={[0, 0.43, 0.014]}
+              rotation={[0, 0, -0.4]}
+              scale={[0.24, 0.44, 0.015]}
+            />
+          </group>
+        ))}
+      </group>
       <lineSegments
         geometry={outdoorFanGrille}
         material={wires[Number(dark)]}

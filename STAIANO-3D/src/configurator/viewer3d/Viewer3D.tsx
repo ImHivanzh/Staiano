@@ -173,6 +173,8 @@ export default function Viewer3D({
   const [loadMap, setLoadMap] = useState(false);
   const [tour, setTour] = useState(false);
   const [comfortMode, setComfortMode] = useState<ComfortMode | "off">("cool");
+  // Interruttore impianto: ventole, acqua nei tubi e aria dalle macchine.
+  const [systemOn, setSystemOn] = useState(false);
   const tourIndex = useRef(0);
   const [transformChoice, setTransformChoice] = useState<{
     id?: string;
@@ -727,6 +729,12 @@ export default function Viewer3D({
                       }}
                     >
                       Vista Canale
+                    </button>
+                    <button
+                      aria-pressed={systemOn}
+                      onClick={() => setSystemOn(!systemOn)}
+                    >
+                      Impianto {systemOn ? "acceso" : "spento"}
                     </button>
                     <button
                       aria-pressed={loadMap}
@@ -1300,7 +1308,8 @@ export default function Viewer3D({
                     selection={selection}
                     isolatedRoomId={isolatedRoomId}
                     onSelect={pickDevice}
-                    showHydronicPipes={channelView}
+                    showHydronicPipes={channelView || systemOn}
+                    systemRunning={systemOn}
                     hideDuctedMachines={readOnly || presentation}
                     openGrilleIds={openGrilleIds}
                   />
@@ -1310,7 +1319,7 @@ export default function Viewer3D({
                     <DuctMeshes
                       project={sceneProject}
                       activeFloorId={activeFloorId}
-                      animated={presentation || readOnly}
+                      animated={presentation || readOnly || systemOn}
                       editable={!readOnly && !presentation}
                       flowMode={comfortMode === "heat" ? "heat" : "cool"}
                       onAddWaypoint={addDuctBend}
@@ -1336,7 +1345,7 @@ export default function Viewer3D({
                     />
                   )}
                 {loadMap && <LoadMap rooms={rooms} />}
-                {(presentation || readOnly) &&
+                {(presentation || readOnly || systemOn) &&
                   sceneProject &&
                   comfortMode !== "off" && (
                     <ComfortFlows

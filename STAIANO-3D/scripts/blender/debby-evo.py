@@ -15,8 +15,12 @@ white=material('Rivestimento bianco',(.82,.83,.82))
 stone=material('Pietra naturale',(.43,.45,.44),0,.82)
 image=bpy.data.images.new('Grana pietra',width=256,height=256)
 random.seed(283611); pixels=[]
-for _ in range(256*256):
-    value=max(.18,min(.67,random.gauss(.43,.07))); pixels.extend((value,value*1.015,value*.99,1))
+for y in range(256):
+    for x in range(256):
+        u=x/255; v=y/255
+        vein=math.sin(19*u+7*v+1.5*math.sin(9*v+3*u))
+        value=max(.25,min(.67,.48+.035*math.sin(8*u-5*v)+.025*math.sin(21*v+4*u)-.11*math.exp(-(vein/.16)**2)+random.gauss(0,.008)))
+        pixels.extend((value,value*1.015,value*.99,1))
 image.pixels=pixels; image.pack()
 texture=stone.node_tree.nodes.new('ShaderNodeTexImage'); texture.image=image
 stone.node_tree.links.new(texture.outputs['Color'],stone.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
@@ -61,7 +65,7 @@ for ident,petra in [('nordica-debby-evo',False),('nordica-debby-petra-evo',True)
     for label,rgb in finishes:
         if rgb:
             white.diffuse_color=(*rgb,1); white.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(*rgb,1)
-        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     white.diffuse_color=(.82,.83,.82,1); white.node_tree.nodes.get('Principled BSDF').inputs['Base Color'].default_value=(.82,.83,.82,1)
     c.hide_viewport=True; c.hide_render=True
 for c in bpy.context.scene.collection.children:c.hide_viewport=False; c.hide_render=False

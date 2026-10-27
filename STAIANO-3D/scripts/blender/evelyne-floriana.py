@@ -47,7 +47,7 @@ for ident,(w,d,h),finishes,kind in specs:
     for label,rgb in finishes:
         shell.diffuse_color=(*rgb,1);p.inputs['Base Color'].default_value=(*rgb,1)
         if tex:tex.image=texture(label,rgb)
-        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     rgb=finishes[0][1];shell.diffuse_color=(*rgb,1);p.inputs['Base Color'].default_value=(*rgb,1)
     if tex:tex.image=bpy.data.images['Gres '+finishes[0][0]]
     c.hide_viewport=True;c.hide_render=True

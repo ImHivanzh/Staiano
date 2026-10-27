@@ -22,18 +22,18 @@ def box(c,name,location,size,mat,bevel=.003):
         o.modifiers.new('Normali','WEIGHTED_NORMAL')
     return o
 
-variants=[('nordica-angelica-evo',1.016,[('avorio',(.78,.72,.63)),('nero',(.025,.027,.028)),('bordeaux',(.27,.025,.033))]),('nordica-angelica-junior',.926,[('nero',(.025,.027,.028)),('avorio',(.78,.72,.63)),('tortora-matt',(.34,.30,.27))])]
+variants=[('nordica-angelica-evo',1.016,[('avorio',(.86,.79,.68)),('nero',(.025,.027,.028)),('bordeaux',(.27,.025,.033))]),('nordica-angelica-junior',.926,[('nero',(.025,.027,.028)),('avorio',(.86,.79,.68)),('tortora-matt',(.34,.30,.27))])]
 for ident,h,colors in variants:
     shell=material('Rivestimento '+ident,colors[0][1])
     w,d=.495,.555; c=bpy.data.collections.new(ident); bpy.context.scene.collection.children.link(c)
     box(c,'Corpo laterale',(0,0,h/2),(w,d,h-.03),shell,.055)
     box(c,'Copertura superiore',(0,0,h-.015),(w,d,.03),dark,.025)
-    box(c,'Pannello superiore',(0,-d/2-.001,h*.82),(w*.57,.015,h*.14),dark,.004)
-    box(c,'Cornice sportello',(0,-d/2-.009,h*.51),(w*.57,.02,h*.48),dark,.005)
+    box(c,'Pannello superiore',(0,-d/2-.001,h*.87),(w*.57,.015,h*.23),dark,.004)
+    box(c,'Cornice sportello',(0,-d/2-.009,h*.50),(w*.57,.02,h*.52),dark,.005)
     box(c,'Vetro sportello',(0,-d/2-.021,h*.53),(w*.29,.006,h*.24),glass,.002)
     box(c,'Maniglia sportello',(-w*.24,-d/2-.027,h*.49),(.014,.025,h*.17),handle,.004)
-    box(c,'Presa superiore',(0,-d/2-.023,h*.74),(w*.46,.01,.012),handle,.002)
-    box(c,'Base frontale',(0,-d/2-.004,h*.15),(w*.57,.012,h*.24),shell,.004)
+    box(c,'Presa superiore',(0,-d/2-.023,h*.76),(w*.46,.01,.009),handle,.002)
+    box(c,'Base frontale',(0,-d/2-.001,h*.12),(w*.57,.005,h*.22),shell,.002)
     for x in (-w*.36,w*.36):box(c,'Piedino',(x,0,.014),(.04,.09,.028),dark,.006)
     for i in range(9):box(c,'Fessura coperchio',((i-4)*.038,-.025,h+.001),(.006,.10,.002),dark,.0005)
     bpy.ops.object.select_all(action='DESELECT')
@@ -42,7 +42,7 @@ for ident,h,colors in variants:
     p=shell.node_tree.nodes.get('Principled BSDF')
     for label,rgb in colors:
         shell.diffuse_color=(*rgb,1); p.inputs['Base Color'].default_value=(*rgb,1)
-        bpy.ops.export_scene.gltf(filepath=str(out/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(out/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     shell.diffuse_color=(*colors[0][1],1); p.inputs['Base Color'].default_value=(*colors[0][1],1)
     c.hide_render=True; c.hide_viewport=True
 for c in bpy.context.scene.collection.children:c.hide_render=False; c.hide_viewport=False

@@ -13,7 +13,7 @@ import { useProjectStore } from "@/stores/project-store";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
 
-function FlowParticles({
+export function FlowParticles({
   points,
   animated,
   color,

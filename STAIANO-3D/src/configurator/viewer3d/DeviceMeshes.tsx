@@ -9,6 +9,8 @@ import { radiatorProductAtVersion } from "@/domain/catalogs/radiators";
 import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import EcoclimaLinearBody from "./EcoclimaLinearBody";
 import { EcoclimaGrille } from "./EcoclimaGrille";
+import EcoclimaTerminalBody from "./EcoclimaTerminalBody";
+import { ecoclimaDiffuserModel, ecoclimaGrilleIsNatural, ecoclimaGrilleUrl, ecoclimaNaturalModels } from "./ecoclima-diffuser-models";
 import {
   splitCenterElevationM,
   roomCeilingHeightM,
@@ -538,6 +540,21 @@ function TerminalMesh({
       {selected && <SelectionOutline dimensions={[w, h, d || 0.001]} />}
     </>;
   }
+  const diffuser = ecoclimaDiffuserModel(item.family);
+  const modelUrl = diffuser ? `/models/ecoclima/diffusers/${diffuser}.glb` : ecoclimaGrilleUrl(item.family, item.productId);
+  if (modelUrl) {
+    const fallback = <mesh geometry={box} material={aluminium} scale={[w, h, d || 0.001]} />;
+    return <>
+      <ModelAssetBoundary fallback={fallback}>
+        <Suspense fallback={fallback}>
+          <group position={[0, 0, d / 2]}>
+            <EcoclimaTerminalBody url={modelUrl} width={w} height={h} depth={d || null} color={item.color} natural={diffuser ? ecoclimaNaturalModels.includes(diffuser) : ecoclimaGrilleIsNatural(item.family)} />
+          </group>
+        </Suspense>
+      </ModelAssetBoundary>
+      {selected && <SelectionOutline dimensions={[w, h, d || 0.05]} />}
+    </>;
+  }
   const ecoclimaLinear = item.family === "EDLS" ? "edls" : /^EDFLB?-\d+$/.test(item.family) ? "edfl" : null;
   if (ecoclimaLinear && variant?.slotCount && variant.slotCount <= 6) {
     return <>
@@ -605,6 +622,8 @@ export type DeviceMeshesProps = {
   isolatedRoomId?: string;
   onSelect: (selection: Selection) => void;
   showHydronicPipes?: boolean;
+  /** Impianto acceso: ventole esterne in rotazione e acqua in circolo nei tubi. */
+  systemRunning?: boolean;
   hideDuctedMachines?: boolean;
   openGrilleIds?: ReadonlySet<string>;
 };
@@ -617,6 +636,7 @@ export function DeviceMeshes({
   isolatedRoomId,
   onSelect,
   showHydronicPipes = false,
+  systemRunning = false,
   hideDuctedMachines = false,
   openGrilleIds,
 }: DeviceMeshesProps) {
@@ -652,6 +672,7 @@ export function DeviceMeshes({
           project={project}
           floorId={activeFloorId}
           showPipes={showHydronicPipes}
+          running={systemRunning}
           selection={selection}
           onSelect={onSelect}
         />
@@ -660,6 +681,7 @@ export function DeviceMeshes({
         project={project}
         floorId={activeFloorId}
         showPipes={showHydronicPipes && !isolatedRoomId}
+        running={systemRunning}
         selection={selection}
         onSelect={onSelect}
       />

@@ -37,6 +37,6 @@ for side in (-1,1):
     box('Pannello laterale',(side*w*.482,0,h*.54),(.013,d*.48,h*.30),trim,.004)
 for i in range(9):box('Aerazione superiore',((i-4)*.045,-d*.30,h*.910),(.016,.065,.003),dark,.001)
 bpy.ops.object.select_all(action='SELECT')
-bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves/nordica-teodora-evo-nero.glb'),export_format='GLB',use_selection=True)
+bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves/nordica-teodora-evo-nero.glb'),export_format='GLB',use_selection=True,export_apply=True)
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufa-teodora-evo.blend'))

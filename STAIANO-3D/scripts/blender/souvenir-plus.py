@@ -43,7 +43,7 @@ for ident,h,finishes,isstone,lux in specs:
     bpy.context.view_layer.objects.active=next(iter(c.objects));shader=shell.node_tree.nodes.get('Principled BSDF')
     for label,rgb in finishes:
         if rgb is not None:shell.diffuse_color=(*rgb,1);shader.inputs['Base Color'].default_value=(*rgb,1)
-        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True)
+        bpy.ops.export_scene.gltf(filepath=str(root/'public/models/stoves'/f'{ident}-{label}.glb'),export_format='GLB',use_selection=True,export_apply=True)
     if finishes[0][1] is not None:
         rgb=finishes[0][1];shell.diffuse_color=(*rgb,1);shader.inputs['Base Color'].default_value=(*rgb,1)
     c.hide_viewport=True;c.hide_render=True
