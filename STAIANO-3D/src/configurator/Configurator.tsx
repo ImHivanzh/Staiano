@@ -38,6 +38,7 @@ import {
   Files,
   FileArrowDown,
   FileArrowUp,
+  FilePlus,
   FilePdf,
   FileXls,
   GearSix,
@@ -1289,7 +1290,7 @@ export function Configurator() {
               title="Nuovo progetto"
               onClick={() => setNewDialog("choose")}
             >
-              <Plus />
+              <FilePlus aria-hidden="true" />
               Nuovo
             </button>
             <details className="menu-progetto" name="workspace-menus">
