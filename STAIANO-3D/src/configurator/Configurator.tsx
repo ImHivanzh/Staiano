@@ -97,6 +97,7 @@ import { THERMAL_COEFFICIENT_W_M3 } from "@/domain/thermal/calculate";
 import { Editor2D } from "./editor2d/Editor2D";
 import { GraphicalDuctedConfigurator } from "./systems/GraphicalDuctedConfigurator";
 import { EasyfattXmlExport } from "./systems/EasyfattXmlExport";
+import { ArLink } from "./systems/ArLink";
 import { Properties, selectionWithProperties } from "./properties/Properties";
 import { ConfigurationWizard } from "./import/ConfigurationWizard";
 import { PillarDialog } from "./PillarDialog";
@@ -1481,6 +1482,15 @@ export function Configurator() {
                       <Cube aria-hidden="true" />
                       {skpBusy ? "Preparazione SKP…" : "Scarica modello SKP"}
                     </button>
+                    <ArLink
+                      key={p.id}
+                      title="Casa in realtà aumentata (iPad/telefono)"
+                      request={async () =>
+                        (
+                          await import("@/services/render3d/ar-house")
+                        ).shareHouseAr(p)
+                      }
+                    />
                     <button
                       className="bottone tenue piccolo"
                       disabled={sheetsBusy}

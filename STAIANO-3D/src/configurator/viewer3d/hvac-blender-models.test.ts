@@ -4,7 +4,7 @@ import { Box3, Mesh, Raycaster, Vector3 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { grilleHinge } from "./EcoclimaGrille";
 
-it.each(["ega6", "ebl", "egf", "egf-push", "innova-sli-core", "innova-sli-panel", "aermec-fcz-p-po", "innova-osmo-sl", "plenum-3-stacchi"])("loads the editable Blender export %s without unrelated scene objects", async (name) => {
+it.each(["ega6", "ebl", "egf", "egf-push", "innova-sli-core", "innova-sli-panel", "aermec-fcz-p-po", "innova-osmo-sl", "olimpia-bi2-air", "olimpia-bi2-smart", "plenum-3-stacchi"])("loads the editable Blender export %s without unrelated scene objects", async (name) => {
   const data = readFileSync(`public/models/hvac/${name}-realistic.glb`);
   const model = await new GLTFLoader().parseAsync(data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength), "");
   const meshes: Mesh[] = [];

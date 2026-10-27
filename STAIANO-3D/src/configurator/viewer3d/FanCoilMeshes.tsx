@@ -261,7 +261,9 @@ function FanCoilBody({
     },
     [bars],
   );
-  if (product?.family === "AirLeaf SLI" && hasPanel) {
+  // RSI e SLSI condividono cassaforma e pannello estetico della SLI (stesse quote di catalogo).
+  const sliLike = ["AirLeaf SLI", "AirLeaf RSI", "AirLeaf SLSI"].includes(product?.family ?? "");
+  if (sliLike && hasPanel) {
     const fallback = cover && <mesh geometry={cover} material={recessedPanel} />;
     return <>
       <ModelAssetBoundary fallback={<mesh geometry={body} material={shell} />}><Suspense fallback={<mesh geometry={body} material={shell} />}>
@@ -288,10 +290,19 @@ function FanCoilBody({
       <GreeDuctedBody url={`/models/hvac/innova-airleaf-${variant}-realistic.glb`} width={w} height={h} depth={d} selected={selected} />
     </Suspense></ModelAssetBoundary>;
   }
-  if (product?.family === "AirLeaf SLI" && !hasPanel) {
+  if (sliLike && !hasPanel) {
     const fallback = <mesh geometry={body} material={shell} />;
     return <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
       <GreeDuctedBody url="/models/hvac/innova-sli-core-realistic.glb" width={w} height={h} depth={d} selected={selected} />
+    </Suspense></ModelAssetBoundary>;
+  }
+  const olimpiaModel = !concealed && product?.manufacturer === "Olimpia Splendid"
+    ? { "Bi2 Air": "olimpia-bi2-air", "Bi2 Smart S1": "olimpia-bi2-smart" }[product.family]
+    : undefined;
+  if (olimpiaModel) {
+    const fallback = <mesh geometry={body} material={shell} />;
+    return <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
+      <GreeDuctedBody url={`/models/hvac/${olimpiaModel}-realistic.glb`} width={w} height={h} depth={d} selected={selected} />
     </Suspense></ModelAssetBoundary>;
   }
   return (

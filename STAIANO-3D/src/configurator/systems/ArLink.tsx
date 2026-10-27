@@ -9,9 +9,14 @@ type Link = { urls: string[]; expiresAt: number; qr: string };
 export function ArLink({
   label,
   variants,
+  request,
+  title = "Realtà aumentata su iPad/telefono",
 }: {
-  label: string;
-  variants: { label: string; url: string }[];
+  label?: string;
+  variants?: { label: string; url: string }[];
+  /** Crea il link in altro modo (es. casa intera esportata dal browser). */
+  request?: () => Promise<{ urls: string[]; expiresAt: number }>;
+  title?: string;
 }) {
   const [link, setLink] = useState<Link | null>(null);
   const [error, setError] = useState("");
@@ -28,13 +33,17 @@ export function ArLink({
     setBusy(true);
     setError("");
     try {
-      const response = await fetch("/api/ar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: [{ label, variants }] }),
-      });
-      const body = await response.json();
-      if (!response.ok) throw new Error(body.message);
+      let body: { urls: string[]; expiresAt: number };
+      if (request) body = await request();
+      else {
+        const response = await fetch("/api/ar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: [{ label, variants }] }),
+        });
+        body = await response.json();
+        if (!response.ok) throw new Error((body as { message?: string }).message);
+      }
       setLink({
         urls: body.urls,
         expiresAt: body.expiresAt,
@@ -62,7 +71,7 @@ export function ArLink({
         disabled={busy}
         onClick={create}
       >
-        {link ? "Nuovo link AR" : "Realtà aumentata su iPad/telefono"}
+        {busy ? "Preparazione AR…" : link ? "Nuovo link AR" : title}
       </button>
       {error && <p role="alert">{error}</p>}
       {link &&

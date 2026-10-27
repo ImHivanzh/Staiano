@@ -1,5 +1,10 @@
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { createArLink, isLanAddress, validateItems } from "./ar-bridge";
+import {
+  createArHouseLink,
+  createArLink,
+  isLanAddress,
+  validateItems,
+} from "./ar-bridge";
 
 const model = "/models/stoves/nordica-ketty-50-bianco.glb";
 const items = [
@@ -59,4 +64,15 @@ it("accetta solo indirizzi di rete locale", () => {
     expect(isLanAddress(ok)).toBe(true);
   for (const no of ["8.8.8.8", "172.32.0.1", "2001:db8::1", undefined])
     expect(isLanAddress(no)).toBe(false);
+});
+
+it("serve il GLB della casa dalla memoria e rifiuta file non GLB", async () => {
+  const glb = Buffer.concat([Buffer.from("glTF"), Buffer.alloc(32)]);
+  const link = await createArHouseLink("Casa Rossi", glb);
+  const served = await fetch(`${base(link)}/m/0/0.glb`);
+  expect(served.headers.get("content-type")).toBe("model/gltf-binary");
+  expect(Buffer.from(await served.arrayBuffer()).equals(glb)).toBe(true);
+  await expect(
+    createArHouseLink("x", Buffer.from("non e un glb")),
+  ).rejects.toThrow();
 });

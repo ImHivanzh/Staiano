@@ -13,7 +13,7 @@ import { resolve } from "node:path";
 /** Ponte AR: porta separata, aperta solo mentre esiste almeno un link valido. */
 export const AR_TTL_MS = 30 * 60 * 1000;
 
-export type ArVariant = { label: string; url: string };
+export type ArVariant = { label: string; url: string; glb?: Buffer };
 export type ArItem = { label: string; variants: ArVariant[] };
 export class ArBridgeError extends Error {}
 
@@ -117,7 +117,7 @@ button[aria-pressed=true]{background:#1f5eff;border-color:#1f5eff;color:#fff}
 #variants{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 </style>
 <body>
-<header><h1 id="title"></h1><p>Appoggia il telefono sul pavimento: la stufa compare a grandezza reale.</p></header>
+<header><h1 id="title"></h1><p>Appoggia il telefono sul pavimento: il modello compare a grandezza reale.</p></header>
 <model-viewer id="mv" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls touch-action="pan-y" shadow-intensity="1" environment-image="neutral" alt="Modello 3D"><button slot="ar-button" class="ar">Vedi nella stanza (AR)</button></model-viewer>
 <footer><select id="item" hidden aria-label="Modello"></select><div id="variants"></div><div id="tools" style="margin-top:8px"><button id="flame" hidden aria-pressed="false">Accendi fiamma</button></div><p id="left"></p></footer>
 <script type="module" src="/ar/${token}/mv.js"></script>
@@ -192,6 +192,10 @@ async function handle(request: IncomingMessage, response: ServerResponse) {
       link.items[Number(rest[1])]?.variants[
         Number(rest[2].replace(/\.glb$/, ""))
       ];
+    if (variant?.glb)
+      return void response
+        .writeHead(200, headers("model/gltf-binary"))
+        .end(variant.glb);
     if (variant) [path, type] = [variant.url.slice(1), "model/gltf-binary"];
   }
   if (!path || !type) return fail(404, "Non trovato.");
@@ -232,8 +236,25 @@ function listen(): Promise<void> {
   return state.starting;
 }
 
+/** Casa intera esportata dal browser: il GLB vive solo in memoria, per la durata del link. */
+export async function createArHouseLink(
+  label: string,
+  glb: Buffer,
+  ttlMs = AR_TTL_MS,
+) {
+  if (glb.length < 12 || glb.toString("latin1", 0, 4) !== "glTF")
+    throw new ArBridgeError("Modello 3D della casa non valido.");
+  return register(
+    [{ label: label.slice(0, 120), variants: [{ label: "Casa", url: "", glb }] }],
+    ttlMs,
+  );
+}
+
 export async function createArLink(items: unknown, ttlMs = AR_TTL_MS) {
-  const checked = validateItems(items);
+  return register(validateItems(items), ttlMs);
+}
+
+async function register(checked: ArItem[], ttlMs: number) {
   await listen();
   const token = randomBytes(24).toString("base64url");
   const expiresAt = Date.now() + ttlMs;
