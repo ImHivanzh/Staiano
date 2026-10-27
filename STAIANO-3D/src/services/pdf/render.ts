@@ -1349,8 +1349,22 @@ export async function renderDossierPdf(
   };
   drawCover();
   newPage("Sintesi del progetto");
+  const count = (value: number, one: string, many: string) =>
+    `${value} ${value === 1 ? one : many}`;
   paragraph(
-    `Elaborato il ${date.toLocaleDateString("it-IT")}. ${p.floors.length} piani, ${p.walls.length} muri, ${p.rooms.length} ambienti; ${p.hvacSystems.length} sistemi HVAC, ${p.radiators.length} radiatori, ${p.airTerminals.length} terminali aria.`,
+    isSummary
+      ? `Elaborato il ${date.toLocaleDateString("it-IT")}. ${[
+          count(p.rooms.length, "ambiente", "ambienti"),
+          p.hvacSystems.length
+            ? count(p.hvacSystems.length, "impianto", "impianti")
+            : "",
+          p.radiators.length
+            ? count(p.radiators.length, "radiatore", "radiatori")
+            : "",
+        ]
+          .filter(Boolean)
+          .join(", ")}.`
+      : `Elaborato il ${date.toLocaleDateString("it-IT")}. ${p.floors.length} piani, ${p.walls.length} muri, ${p.rooms.length} ambienti; ${p.hvacSystems.length} sistemi HVAC, ${p.radiators.length} radiatori, ${p.airTerminals.length} terminali aria.`,
     9,
     muted,
   );
