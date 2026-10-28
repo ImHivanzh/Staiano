@@ -5,6 +5,7 @@ import * as THREE from "three";
 import type { SceneFrame } from "./scene-layout";
 import type { Room } from "@/schemas/project";
 import { SiteContext } from "./SiteContext";
+import { HORIZON_COLOR, SkyDome } from "./SkyDome";
 
 /** A local studio environment: no remote HDRI or runtime network dependency. */
 export function SceneLighting({
@@ -28,15 +29,22 @@ export function SceneLighting({
   }, [x, z]);
   return (
     <>
-      <color attach="background" args={["#dce5e8"]} />
-      <fog attach="fog" args={["#dce5e8", span * 3, span * 16]} />
-      <hemisphereLight color="#daeaff" groundColor="#9b9471" intensity={1.25} />
+      <color attach="background" args={[HORIZON_COLOR]} />
+      <fog attach="fog" args={[HORIZON_COLOR, span * 3, span * 16]} />
+      {!printMode && (
+        <SkyDome
+          center={[x, 0, z]}
+          radius={span * 12}
+          sun={[-0.8 * span, 0.9 * span + frame.height, -0.6 * span]}
+        />
+      )}
+      <hemisphereLight color="#dcebff" groundColor="#8f8a6c" intensity={1.0} />
       <ambientLight intensity={0.12} />
       <primitive object={target} />
       <directionalLight
         target={target}
         position={[x - span * 0.8, span * 0.9 + frame.height, z - span * 0.6]}
-        intensity={2.8}
+        intensity={3.2}
         color="#fff2dc"
         castShadow
         shadow-mapSize={[2048, 2048]}

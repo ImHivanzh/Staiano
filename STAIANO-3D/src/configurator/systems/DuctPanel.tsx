@@ -14,6 +14,8 @@ import { formatNumber, numberFromForm } from "@/utils/format";
 import {
   flexibleDuctPressureLossPaM,
   flexibleDuctProducts,
+  flexibleDuctInsulationMm,
+  flexibleDuctOuterRadiusM,
 } from "@/domain/catalogs/flexible-ducts";
 
 export function DuctPanel({
@@ -163,7 +165,7 @@ export function DuctPanel({
                       }));
                     }}
                   >
-                    <option value="">Generico · SKU non selezionato</option>
+                    <option value="">Generico isolato · 25 mm · SKU non selezionato</option>
                     {flexibleDuctProducts.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.sourceMetadata.manufacturer} {item.familyCode}
@@ -171,6 +173,7 @@ export function DuctPanel({
                     ))}
                   </select>
                 </label>
+                {!product && <p className="nota">Isolante {flexibleDuctInsulationMm()} mm · diametro esterno {formatNumber(flexibleDuctOuterRadiusM(duct.diameterMm ?? 160) * 2000)} mm. L’ingombro esterno è incluso nei controlli di collisione.</p>}
                 {product && (
                   <>
                     <label className="campo">

@@ -1,7 +1,11 @@
 "use client";
 import { useEffect, useMemo } from "react";
 import type { Room } from "@/schemas/project";
-import { foundationGeometry, groundTexture } from "./site-geometry";
+import {
+  foundationGeometry,
+  GROUND_EXTENT,
+  groundTexture,
+} from "./site-geometry";
 
 /** Illustrative surroundings give the measured architecture a ground plane and scale. */
 export function SiteContext({
@@ -35,8 +39,13 @@ export function SiteContext({
           position={[x, -0.34, z]}
           receiveShadow
         >
-          <planeGeometry args={[span * 100, span * 100]} />
-          <meshStandardMaterial map={ground} roughness={1} color="#cbd0bc" />
+          <planeGeometry args={[span * GROUND_EXTENT, span * GROUND_EXTENT]} />
+          <meshStandardMaterial
+            map={ground}
+            roughness={1}
+            color="#c9c9c4"
+            transparent
+          />
         </mesh>
       )}
       {foundations.map((geometry, index) => (

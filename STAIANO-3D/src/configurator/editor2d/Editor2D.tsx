@@ -1,6 +1,7 @@
 "use client";
 import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
-import { roomLabelPoint } from "@/domain/geometry/room-label";
+import { roomLabelPointAvoiding } from "@/domain/geometry/room-label";
+import { roomTone } from "@/domain/room-tone";
 import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 import { DrywallLayer } from "./DrywallLayer";
 import { useWaypointDelete } from "../useWaypointDelete";
@@ -71,6 +72,14 @@ function readableLabel(rotation: number, centerY: number) {
     ? `rotate(180 0 ${centerY})`
     : undefined;
 }
+const floorPattern: Partial<Record<ReturnType<typeof roomTone>, string>> = {
+  living: "floor-wood",
+  bedroom: "floor-wood",
+  study: "floor-wood",
+  kitchen: "floor-tile",
+  bath: "floor-tile",
+};
+
 export function Editor2D({
   placement,
   configuration,
@@ -320,13 +329,41 @@ export function Editor2D({
   const walls = project?.walls.filter((w) => w.floorId === activeFloorId) ?? [],
     rooms = project?.rooms.filter((r) => r.floorId === activeFloorId) ?? [];
   const floor = project?.floors.find((f) => f.id === activeFloorId);
-  const roomLabels = useMemo(
-    () =>
-      new Map(
-        project?.rooms.map((room) => [room.id, roomLabelPoint(room.polygon)]),
-      ),
-    [project?.rooms],
-  );
+  const planCenter = {
+    x:
+      walls.reduce((sum, wall) => sum + wall.start.x + wall.end.x, 0) /
+      (2 * Math.max(1, walls.length)),
+    y:
+      walls.reduce((sum, wall) => sum + wall.start.y + wall.end.y, 0) /
+      (2 * Math.max(1, walls.length)),
+  };
+  const roomLabels = useMemo(() => {
+    const devices = [
+      ...(project?.radiators ?? []),
+      ...(project?.airTerminals ?? []),
+      ...(project?.hvacSystems.flatMap((system) => system.indoorUnits) ?? []),
+    ];
+    return new Map(
+      project?.rooms.map((room) => [
+        room.id,
+        roomLabelPointAvoiding(
+          room.polygon,
+          devices
+            .filter((item) => item.roomId === room.id)
+            .map((item) => ({
+              x: item.position.x,
+              y: item.position.y,
+              radius: Math.max(item.widthMm ?? 0, item.depthMm ?? 0) / 2000,
+            })),
+        ),
+      ]),
+    );
+  }, [
+    project?.rooms,
+    project?.radiators,
+    project?.airTerminals,
+    project?.hvacSystems,
+  ]);
   const u = Math.max(view.w / size.width, view.h / size.height);
   const fitRef = useRef(fit);
   useEffect(() => {
@@ -1009,6 +1046,48 @@ export function Editor2D({
               fill="none"
             />
           </pattern>
+          <pattern
+            id="floor-wood"
+            width="2.4"
+            height="0.28"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M0 0H2.4 M0 0.14H2.4 M1.6 0V0.14 M0.5 0.14V0.28"
+              className="trama-parquet"
+              strokeWidth={u * 0.7}
+              fill="none"
+            />
+          </pattern>
+          <pattern
+            id="floor-tile"
+            width="0.6"
+            height="0.6"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M0 0H0.6 M0 0V0.6"
+              className="trama-piastrelle"
+              strokeWidth={u * 0.8}
+              fill="none"
+            />
+          </pattern>
+          <pattern
+            id="wall-hatch"
+            width={u * 7}
+            height={u * 7}
+            patternUnits="userSpaceOnUse"
+            patternTransform="rotate(45)"
+          >
+            <line
+              x1="0"
+              y1="0"
+              x2="0"
+              y2={u * 7}
+              className="trama-muro"
+              strokeWidth={u * 1.1}
+            />
+          </pattern>
         </defs>
         <rect
           x={view.x - 100}
@@ -1074,8 +1153,16 @@ export function Editor2D({
                   ? "stanza-pianta scelta"
                   : "stanza-pianta"
               }
+              data-tone={roomTone(r.name, r.usage)}
               strokeWidth={u * 1.5}
             />
+            {floorPattern[roomTone(r.name, r.usage)] && (
+              <polygon
+                points={r.polygon.map((p) => `${p.x},${p.y}`).join(" ")}
+                fill={`url(#${floorPattern[roomTone(r.name, r.usage)]})`}
+                pointerEvents="none"
+              />
+            )}
             <text
               x={roomLabels.get(r.id)!.x}
               y={roomLabels.get(r.id)!.y - u * 15}
@@ -1149,12 +1236,22 @@ export function Editor2D({
             } else if (run && run.walls[0].id === w.id && project) {
               const from = previewPoint(run.start),
                 to = previewPoint(run.end);
+              // La quota sta sul lato esterno del muro: su un muro verticale
+              // il testo orizzontale finirebbe sotto lo spessore del muro.
+              const length = distance(from, to) || 1;
+              let nx = -(to.y - from.y) / length,
+                ny = (to.x - from.x) / length;
+              const mx = (from.x + to.x) / 2,
+                my = (from.y + to.y) / 2;
+              if ((mx - planCenter.x) * nx + (my - planCenter.y) * ny < 0)
+                [nx, ny] = [-nx, -ny];
+              const offset =
+                Math.max(...run.walls.map((item) => item.thickness)) / 2 +
+                u * 10 +
+                Math.abs(nx) * u * 22;
               quota = {
-                x: (from.x + to.x) / 2,
-                y:
-                  (from.y + to.y) / 2 -
-                  Math.max(...run.walls.map((item) => item.thickness)) / 2 -
-                  u * 10,
+                x: mx + nx * offset,
+                y: my + ny * offset + (ny > 0 ? u * 9 : 0),
                 value: wallRunMeasuredLength(project, w.id, "internal"),
               };
             }
@@ -1224,6 +1321,16 @@ export function Editor2D({
                 strokeWidth={w.thickness}
                 className={chosen ? "muro-pianta scelto" : "muro-pianta"}
               />
+              <line
+                x1={a.x}
+                y1={a.y}
+                x2={b.x}
+                y2={b.y}
+                strokeWidth={w.thickness}
+                stroke="url(#wall-hatch)"
+                strokeLinecap="square"
+                pointerEvents="none"
+              />
               {chosen &&
                 [a, b].map((v, i) => (
                   <circle
@@ -1289,32 +1396,39 @@ export function Editor2D({
                   strokeWidth={wall.thickness + 0.012}
                 />
                 {opening.type === "window" ? (
-                  [-1, 1].map((sign) => (
-                    <line
-                      key={sign}
-                      x1={0}
-                      x2={width}
-                      y1={(sign * wall.thickness) / 4}
-                      y2={(sign * wall.thickness) / 4}
-                      stroke="#4599ac"
+                  <>
+                    <rect
+                      x={0}
+                      y={-wall.thickness / 2}
+                      width={width}
+                      height={wall.thickness}
+                      className="vetro-pianta"
                       strokeWidth={u * 1.2}
                     />
-                  ))
+                    <line
+                      x1={0}
+                      x2={width}
+                      y1={0}
+                      y2={0}
+                      className="vetro-pianta-asse"
+                      strokeWidth={u * 1.2}
+                    />
+                  </>
                 ) : (
                   <>
+                    <path
+                      d={`M 0 0 L ${width} 0 A ${width} ${width} 0 0 1 0 ${width} Z`}
+                      className="battente-pianta"
+                      strokeWidth={u}
+                    />
                     <line
                       x1={0}
                       x2={0}
                       y1={0}
                       y2={width}
-                      stroke="#7b8a7d"
-                      strokeWidth={u * 1.2}
-                    />
-                    <path
-                      d={`M ${width} 0 A ${width} ${width} 0 0 1 0 ${width}`}
-                      fill="none"
-                      stroke="#7b8a7d"
-                      strokeWidth={u}
+                      stroke="#5f7064"
+                      strokeWidth={u * 2.2}
+                      strokeLinecap="round"
                     />
                   </>
                 )}
@@ -2432,11 +2546,29 @@ export function Editor2D({
           <Plus />
         </button>
       </div>
+      <ScaleBar metersPerPixel={u} />
       <div className="stato-editor">
         Quote interne · Unità: metri · Griglia 50 cm
         {terminalPose && ` · ${terminalPose.label}`}
         {cursor && tool !== "select" ? ` · Snap: ${cursor.kind}` : ""}
       </div>
+    </div>
+  );
+}
+
+/** Barra di scala: lunghezza tonda in metri che occupa tra 70 e 170 pixel. */
+function ScaleBar({ metersPerPixel }: { metersPerPixel: number }) {
+  const length = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50].find(
+    (meters) => meters / metersPerPixel >= 70,
+  );
+  if (!length || length / metersPerPixel > 170) return null;
+  return (
+    <div
+      className="scala-pianta"
+      style={{ width: length / metersPerPixel }}
+      aria-hidden="true"
+    >
+      <span>{formatNumber(length)} m</span>
     </div>
   );
 }

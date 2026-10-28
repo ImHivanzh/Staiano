@@ -9,6 +9,15 @@ import { cameraCutWalls, type SceneFrame } from "./scene-layout";
 import { useCustomerCamera } from "./customer-camera";
 import { bounds, pointInPolygon } from "@/domain/geometry/primitives";
 import { cameraMoveVector } from "./camera-move";
+import {
+  restartSocialClock,
+  sampleSocialStops,
+  socialCaption,
+  socialTime,
+  socialStops,
+  type SocialHome,
+  type SocialPoint,
+} from "./social-shots";
 
 const MOVE_CODES = new Set(["KeyW", "KeyA", "KeyS", "KeyD", "KeyQ", "KeyE"]);
 
@@ -23,6 +32,9 @@ export function CameraRig({
   viewRotation,
   underside,
   animate = false,
+  orbit = false,
+  shots = [],
+  hook = "",
   sync,
   interiorRoom,
   preserveView = false,
@@ -37,6 +49,11 @@ export function CameraRig({
   viewRotation?: number;
   underside?: boolean;
   animate?: boolean;
+  orbit?: boolean;
+  /** Apparecchi su cui la regia social si avvicina. */
+  shots?: readonly SocialPoint[];
+  /** Titolo d'apertura del video social. */
+  hook?: string;
   sync?: { projectId: string; floorId: string; follow: boolean };
   interiorRoom?: Room;
   preserveView?: boolean;
@@ -46,6 +63,38 @@ export function CameraRig({
   const previous = useRef("");
   const lastBroadcast = useRef({ time: 0, value: "" });
   const follow = sync?.follow ?? false;
+  const director = useRef<{
+    home: SocialHome;
+    stops: ReturnType<typeof socialStops>;
+  } | null>(null);
+  // Regia social: parte dall'inquadratura attuale e ci ritorna alla fine del giro. L'inquadratura di
+  // partenza si fissa una volta sola: se cambiano le scene a giro iniziato, la camera sta già volando.
+  const home = useRef<SocialHome | null>(null);
+  useEffect(() => {
+    if (!orbit || !controls.current) {
+      director.current = null;
+      home.current = null;
+      socialCaption.alpha = 0;
+      return;
+    }
+    if (!home.current) {
+      const target = controls.current.target;
+      const offset = camera.position.clone().sub(target);
+      const radius = Math.max(0.5, offset.length());
+      home.current = {
+        target: target.toArray() as [number, number, number],
+        radius,
+        polar: Math.min(1.2, Math.max(0.5, Math.acos(offset.y / radius))),
+        azimuth: Math.atan2(offset.x, offset.z),
+      };
+    }
+    director.current = {
+      home: home.current,
+      stops: socialStops(home.current, shots, hook),
+    };
+    restartSocialClock();
+    invalidate();
+  }, [orbit, shots, hook, camera, invalidate]);
   useEffect(() => {
     if (!follow) return;
     const apply = () => {
@@ -241,6 +290,24 @@ export function CameraRig({
     preserveView,
   ]);
   useFrame((_, delta) => {
+    // frameloop "demand": la regia social chiede un nuovo fotogramma finché è attiva.
+    if (orbit && director.current && controls.current) {
+      const { stops } = director.current;
+      const view = sampleSocialStops(stops, socialTime());
+      const [x, y, z] = view.target;
+      const flat = Math.sin(view.polar) * view.radius;
+      camera.position.set(
+        x + flat * Math.sin(view.azimuth),
+        y + Math.cos(view.polar) * view.radius,
+        z + flat * Math.cos(view.azimuth),
+      );
+      controls.current.target.set(x, y, z);
+      controls.current.update();
+      socialCaption.text = view.label;
+      socialCaption.alpha = view.alpha;
+      socialCaption.age = view.age;
+      invalidate();
+    }
     if (
       !follow &&
       !motion.current &&
@@ -345,13 +412,13 @@ export function CameraRig({
     <OrbitControls
       ref={controls}
       makeDefault
-      enabled={!follow}
+      enabled={!follow && !orbit}
       enableDamping
       dampingFactor={0.12}
       minDistance={0.2}
       maxDistance={2000}
       maxPolarAngle={
-        interiorRoom || underside ? Math.PI * 0.85 : Math.PI / 2 - 0.03
+        interiorRoom || underside || orbit ? Math.PI * 0.85 : Math.PI / 2 - 0.03
       }
       screenSpacePanning
     />

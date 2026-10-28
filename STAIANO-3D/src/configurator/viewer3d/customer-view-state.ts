@@ -8,15 +8,25 @@ export const customerViewSchema = z.object({
   tour: z.boolean(),
   explain: z.boolean(),
 });
-export type CustomerViewState = z.infer<typeof customerViewSchema>;
+export type CustomerViewValues = z.infer<typeof customerViewSchema>;
+/** `social` (orbita automatica in 9:16) e `recording` (registrazione del video) valgono solo sulla TV: non passano al PC. */
+export type CustomerViewState = CustomerViewValues & {
+  social: boolean;
+  recording: boolean;
+  /** Avanzamento della creazione del video, da 0 a 1. */
+  progress: number;
+};
 // Transitorio: non sporca né salva il progetto.
 export const useCustomerView = create<CustomerViewState>(() => ({
   systemOn: false,
   comfort: "cool",
   tour: false,
   explain: false,
+  social: false,
+  recording: false,
+  progress: 0,
 }));
-export const customerViewValues = (): CustomerViewState => {
+export const customerViewValues = (): CustomerViewValues => {
   const { systemOn, comfort, tour, explain } = useCustomerView.getState();
   return { systemOn, comfort, tour, explain };
 };

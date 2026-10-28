@@ -84,6 +84,10 @@ test("Plenum crea il plenum della bocchetta agganciato alla bocchetta", async ({
   expect(terminal.plenumId).toBe(plenum.id);
   expect(after.ducts).toHaveLength(plenum.portCount ?? 1);
   await page.screenshot({ path: ".cache/plenum-bocchetta-2d.png" });
+  await page.getByRole("button", { name: "3D", exact: true }).click();
+  await expect(page.getByTestId("viewer-3d").locator("canvas")).toHaveAttribute("data-rendered", "true");
+  await expect(page.getByTestId("viewer-3d").locator("canvas")).toHaveAttribute("data-duct-count", String(after.ducts!.length));
+  await page.screenshot({ path: "output/verifiche-realismo/plenum-browser.png" });
 });
 
 test("cliccare di nuovo la stessa bocchetta seleziona il plenum esistente senza duplicarlo", async ({

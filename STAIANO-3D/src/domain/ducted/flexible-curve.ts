@@ -1,5 +1,5 @@
 import { Curve, CurvePath, LineCurve3, Vector3 } from "three";
-import { flexibleDuctMinimumRadiusFactor } from "@/domain/catalogs/flexible-ducts";
+import { flexibleDuctMinimumRadiusFactor, flexibleDuctOuterRadiusM } from "@/domain/catalogs/flexible-ducts";
 import type { RoutePoint } from "./routes";
 import { segmentDistance } from "../geometry/segment-distance";
 
@@ -115,8 +115,8 @@ export function flexibleDuctCurve(
   )
     return null;
   return (
-    attempt(points, diameterMm, 2, minimumRadiusFactor) ??
-    attempt(points, diameterMm, minimumRadiusFactor, minimumRadiusFactor)
+    attempt(points, diameterMm, 2, minimumRadiusFactor, productId) ??
+    attempt(points, diameterMm, minimumRadiusFactor, minimumRadiusFactor, productId)
   );
 }
 
@@ -126,6 +126,7 @@ function attempt(
   diameterMm: number,
   target: number,
   minimum: number,
+  productId?: string | null,
 ) {
   if (!Number.isFinite(diameterMm) || diameterMm <= 0) return null;
   const vertices: Vector3[] = [];
@@ -166,7 +167,8 @@ function attempt(
   const radii = angles.map((angle, i) =>
     angle ? target * diameter * Math.min(factors[i - 1], factors[i]) : 0,
   );
-  if (radii.some((r, i) => angles[i] > 1e-6 && r < diameter * minimum - 1e-8))
+  const minimumPhysicalRadius = Math.max(diameter * minimum, flexibleDuctOuterRadiusM(diameterMm, productId) + .001);
+  if (radii.some((r, i) => angles[i] > 1e-6 && r < minimumPhysicalRadius - 1e-8))
     return null;
   const curve = new CurvePath<Vector3>();
   let cursor = vertices[0];
@@ -227,7 +229,7 @@ function attempt(
   });
   for (let i = 0; i < segments.length; i++) {
     for (let j = i + 2; j < segments.length; j++)
-      if (selfSegmentsOverlap(segments[i], segments[j], diameter, tolerance))
+      if (selfSegmentsOverlap(segments[i], segments[j], flexibleDuctOuterRadiusM(diameterMm, productId) * 2, tolerance))
         return null;
   }
   return { curve, minimumRadiusM: Math.min(...radii.filter((r) => r > 0)) };

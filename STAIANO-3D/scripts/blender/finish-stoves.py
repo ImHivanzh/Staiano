@@ -15,9 +15,11 @@ def finished(path):
 def is_glass(o):return any(s.material and 'vetro' in s.material.name.lower() for s in o.material_slots)
 def front_uv(o):
     me=o.data;layer=me.uv_layers.active or me.uv_layers.new(name='UVMap')
-    xs=[v.co.x for v in me.vertices];zs=[v.co.z for v in me.vertices];x0,z0=min(xs),min(zs);dx,dz=max(xs)-x0 or 1,max(zs)-z0 or 1
+    # Side glazing needs its horizontal UV along Y; front glazing uses X.
+    axis=0 if o.dimensions.x>=o.dimensions.y else 1
+    xs=[v.co[axis] for v in me.vertices];zs=[v.co.z for v in me.vertices];x0,z0=min(xs),min(zs);dx,dz=max(xs)-x0 or 1,max(zs)-z0 or 1
     for loop in me.loops:
-        co=me.vertices[loop.vertex_index].co;layer.data[loop.index].uv=((co.x-x0)/dx,(co.z-z0)/dz)
+        co=me.vertices[loop.vertex_index].co;layer.data[loop.index].uv=((co[axis]-x0)/dx,(co.z-z0)/dz)
 def finish(path):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(path))

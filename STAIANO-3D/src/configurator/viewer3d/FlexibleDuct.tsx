@@ -6,6 +6,10 @@ import * as THREE from "three";
 import type { RoutePoint } from "@/domain/ducted/routes";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 import type { DuctCollision } from "@/domain/ducted/collisions";
+import { flexibleDuctInsulationMm } from "@/domain/catalogs/flexible-ducts";
+import { flexibleDuctGeometry, flexibleFoilTexture } from "./flexible-duct-geometry";
+
+const foilHeight = flexibleFoilTexture();
 
 export function FlexibleDuct({
   points,
@@ -25,33 +29,16 @@ export function FlexibleDuct({
   const shape = useMemo(() => {
     const path = flexibleDuctCurve(points, diameterMm, flexibleProductId);
     if (!path) return null;
-    const { curve } = path;
-    const length = curve.getLength();
-    const geometry = new THREE.TubeGeometry(
-      curve,
-      Math.min(512, Math.max(24, Math.ceil(length * 35))),
-      diameterMm / 2000,
-      16,
-      false,
-    );
-    const canvas = document.createElement("canvas");
-    canvas.width = 32;
-    canvas.height = 4;
-    const context = canvas.getContext("2d")!;
-    const gradient = context.createLinearGradient(0, 0, 32, 0);
-    gradient.addColorStop(0, "#555555");
-    gradient.addColorStop(0.4, "#eeeeee");
-    gradient.addColorStop(1, "#555555");
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, 32, 4);
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.repeat.set(length / 0.025, 1);
-    return { geometry, texture };
+    const geometry = flexibleDuctGeometry(path.curve, diameterMm, flexibleDuctInsulationMm(flexibleProductId));
+    const texture = foilHeight.clone();
+    texture.repeat.set(geometry.length / .2, Math.PI * 2 * geometry.outerRadius / .2);
+    return { ...geometry, texture };
   }, [points, diameterMm, flexibleProductId]);
   useEffect(
     () => () => {
-      shape?.geometry.dispose();
+      shape?.foil.dispose();
+      shape?.liner?.dispose();
+      shape?.ends.forEach((end) => end.dispose());
       shape?.texture.dispose();
     },
     [shape],
@@ -99,16 +86,27 @@ export function FlexibleDuct({
         : "visible";
   });
   return shape ? (
-    <mesh geometry={shape.geometry}>
-      <meshStandardMaterial
+    <group>
+    <mesh geometry={shape.foil} castShadow receiveShadow>
+      <meshStandardMaterial attach="material-0"
         color={color}
-        metalness={0.2}
-        roughness={0.55}
+        metalness={flexibleProductId === "ecoclima-etf10" ? .15 : .85}
+        roughness={.45}
         bumpMap={shape.texture}
-        bumpScale={0.012}
+        roughnessMap={shape.texture}
+        bumpScale={.004}
         side={THREE.DoubleSide}
       />
+      <meshStandardMaterial attach="material-1" color={color} metalness={.9} roughness={.3} side={THREE.DoubleSide} />
     </mesh>
+    {shape.liner && <mesh geometry={shape.liner} receiveShadow>
+      <meshStandardMaterial attach="material-0" color="#c9c8b4" metalness={.25} roughness={.75} side={THREE.DoubleSide} bumpMap={shape.texture} bumpScale={.0003} />
+      <meshStandardMaterial attach="material-1" color={color} metalness={.9} roughness={.3} side={THREE.DoubleSide} />
+    </mesh>}
+    {shape.ends.map((end, index) => <mesh key={index} geometry={end}>
+      <meshStandardMaterial color="#c6bfa5" roughness={1} side={THREE.DoubleSide} bumpMap={shape.texture} bumpScale={.001} />
+    </mesh>)}
+    </group>
   ) : points.length > 1 ? (
     <group>
       <Line

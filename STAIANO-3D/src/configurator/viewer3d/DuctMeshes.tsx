@@ -153,8 +153,8 @@ function DuctSegment({
   );
 }
 
-// Scheda e foto Ecoclima ETF10: tubo flessibile nero (grigio scuro per restare leggibile sulla scena).
-const FLEX_DUCT_COLOR = "#33373a";
+// Generic insulated foil follows the supplied photo; the selected ETF10 retains its published black finish.
+const FLEX_DUCT_COLOR = "#bdc3c4";
 
 export function DuctMeshes({
   project,
@@ -292,7 +292,7 @@ export function DuctMeshes({
                     ? "#dc2626"
                     : selectedId === duct.id
                       ? "#50c7df"
-                      : FLEX_DUCT_COLOR
+                      : duct.flexibleProductId === "ecoclima-etf10" ? "#33373a" : FLEX_DUCT_COLOR
                 }
                 collision={collisions.get(duct.id)}
                 fallbackPoint={

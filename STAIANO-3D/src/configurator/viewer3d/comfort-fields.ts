@@ -17,6 +17,8 @@ export function comfortFields(
   floorId: string,
   mode: ComfortMode,
   roomId?: string,
+  /** Nel video social anche le bocchette dei sistemi canalizzati mostrano l'aria che esce. */
+  includeDucted = false,
 ): ComfortField[] {
   const fields: ComfortField[] = [];
   const visible = (item: { floorId: string; roomId: string }) =>
@@ -79,7 +81,9 @@ export function comfortFields(
       .map((system) => system.id),
   );
   for (const terminal of project.airTerminals.filter(
-    (item) => visible(item) && !ductedSystemIds.has(item.systemId ?? ""),
+    (item) =>
+      visible(item) &&
+      (includeDucted || !ductedSystemIds.has(item.systemId ?? "")),
   )) {
     if (!needsTerminalReconfiguration(terminal) && terminal.elevationM !== null)
       air(
@@ -107,6 +111,28 @@ export function comfortFields(
     for (const radiator of project.radiators.filter(visible)) {
       const room = project.rooms.find((r) => r.id === radiator.roomId);
       if (!room || room.geometryStatus !== "closed") continue;
+      // Il calore esce anche dal fronte, verso la stanza, salendo piano: non solo in verticale.
+      const ahead = [-Math.sin(radiator.rotation), Math.cos(radiator.rotation)];
+      const side = [Math.cos(radiator.rotation), Math.sin(radiator.rotation)];
+      for (let i = 0; i < 3; i++) {
+        const across = (((i - 1) * radiator.widthMm) / 1000) * 0.3;
+        const elevation = 0.1 + (radiator.heightMm / 1000) * 0.55;
+        const point = (
+          distance: number,
+          rise: number,
+        ): [number, number, number] => [
+          radiator.position.x + side[0] * across + ahead[0] * distance,
+          Math.min(room.heightM - 0.05, elevation + rise),
+          radiator.position.y + side[1] * across + ahead[1] * distance,
+        ];
+        fields.push({
+          deviceId: radiator.id,
+          kind: "convection",
+          start: point(radiator.depthMm / 2000, 0),
+          control: point(radiator.depthMm / 2000 + 0.7, 0.1),
+          end: point(radiator.depthMm / 2000 + 1.5, 0.4),
+        });
+      }
       for (let i = 0; i < 3; i++) {
         const across = (((i - 1) * radiator.widthMm) / 1000) * 0.25;
         const x = radiator.position.x + across * Math.cos(radiator.rotation);

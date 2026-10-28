@@ -507,13 +507,16 @@ export function plenumConnectionSide(
   return normalizedSide(position);
 }
 
+/** Same physical collar length for route endpoints and the visible terminal-plenum sleeves. */
+export const ATTACHED_PLENUM_COLLAR_LENGTH_M = .06;
+
 /** Posizione locale dello stacco sul corpo, in metri. */
 export function plenumPortLocal(
   plenum: Pick<Plenum, "widthMm" | "heightMm" | "depthMm">,
   side: PlenumConnectionSide,
   ordinal: number,
   total: number,
-  lead = 0.06,
+  lead = ATTACHED_PLENUM_COLLAR_LENGTH_M,
 ) {
   const fraction = total > 1 ? (ordinal + 0.5) / total - 0.5 : 0;
   const halfWidth = plenum.widthMm / 2000;

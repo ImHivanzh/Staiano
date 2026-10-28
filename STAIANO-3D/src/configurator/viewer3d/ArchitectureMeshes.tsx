@@ -37,6 +37,8 @@ export type ArchitectureMeshesProps = {
   technicalVoids?: boolean;
   /** Piano mostrato solo come contesto: niente attributi di test né interazione. */
   context?: boolean;
+  /** Ante delle porte (livello attivabile): spente, resta il vano vuoto con il solo telaio. */
+  doors?: boolean;
 };
 
 type WallExtension = { startM: number; endM: number; lengthM: number };
@@ -311,6 +313,55 @@ function OpeningFrame({
   );
 }
 
+/** Anta socchiusa con pannelli e maniglia: lo stesso telaio, ma la porta si riconosce a colpo d'occhio. */
+function DoorLeaf({ opening }: { opening: WallOpening }) {
+  const { left, right, bottom, top } = opening;
+  const rim = Math.min(0.05, (right - left) / 8, (top - bottom) / 8);
+  const width = Math.max(0.2, right - left - rim * 2 - 0.01);
+  const height = Math.max(0.5, top - bottom - rim - 0.01);
+  const leaf = 0.04;
+  const panelWidth = width * 0.68;
+  const panels = [0.27, 0.73].map((share) => ({
+    y: height * share,
+    h: height * (share < 0.5 ? 0.3 : 0.42),
+  }));
+  return (
+    // Cerniera sul montante sinistro; 70° di apertura verso la stanza.
+    <group position={[left + rim, bottom, 0]} rotation={[0, -1.22, 0]}>
+      <mesh position={[width / 2, height / 2, 0]} castShadow receiveShadow>
+        <boxGeometry args={[width, height, leaf]} />
+        <meshStandardMaterial color="#f1ece1" roughness={0.42} />
+      </mesh>
+      {[-1, 1].flatMap((side) =>
+        panels.map((panel) => (
+          <mesh
+            key={`${side}-${panel.y}`}
+            position={[width / 2, panel.y, (side * (leaf + 0.008)) / 2]}
+          >
+            <boxGeometry args={[panelWidth, panel.h, 0.008]} />
+            <meshStandardMaterial color="#e6dfd0" roughness={0.5} />
+          </mesh>
+        )),
+      )}
+      {[-1, 1].map((side) => (
+        <mesh
+          key={side}
+          position={[width - 0.07, 1.0, (side * (leaf + 0.05)) / 2]}
+          rotation={[0, 0, Math.PI / 2]}
+          castShadow
+        >
+          <cylinderGeometry args={[0.009, 0.009, 0.11, 10]} />
+          <meshStandardMaterial
+            color="#b9c0c4"
+            metalness={0.85}
+            roughness={0.28}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 function ArchitecturalWall({
   wall,
   walls,
@@ -326,6 +377,7 @@ function ArchitecturalWall({
   transparent = false,
   fixtures = true,
   lining = false,
+  doors = false,
 }: {
   wall: Wall;
   walls: readonly Wall[];
@@ -342,6 +394,7 @@ function ArchitecturalWall({
   fixtures?: boolean;
   /** Cartongesso/controparete: tinta leggermente più calda del soffitto. */
   lining?: boolean;
+  doors?: boolean;
 }) {
   const trueHeight = architecturalWallHeight(wall, rooms, defaultHeightM);
   const height = cut ? Math.min(cutHeightM, trueHeight) : trueHeight;
@@ -479,6 +532,13 @@ function ArchitecturalWall({
             thickness={wall.thickness}
           />
         ))}
+      {fixtures &&
+        doors &&
+        apertures
+          .filter((o) => o.type === "door" && !o.headClipped)
+          .map((opening) => (
+            <DoorLeaf key={`leaf-${opening.id}`} opening={opening} />
+          ))}
       {openings
         .filter(
           (o) =>
@@ -541,6 +601,7 @@ export function ArchitectureMeshes({
   onReady,
   technicalVoids = false,
   context = false,
+  doors = false,
 }: ArchitectureMeshesProps) {
   const textures = useSurfaceMaterials();
   const { gl, invalidate } = useThree();
@@ -554,6 +615,16 @@ export function ArchitectureMeshes({
       gl.domElement.removeAttribute("data-drywall-count");
     };
   }, [gl, walls, context]);
+  useEffect(() => {
+    if (context) return;
+    gl.domElement.setAttribute(
+      "data-door-leaves",
+      String(doors ? openings.filter((o) => o.type === "door").length : 0),
+    );
+    return () => {
+      gl.domElement.removeAttribute("data-door-leaves");
+    };
+  }, [gl, openings, doors, context]);
   useEffect(() => {
     if (context) return;
     gl.domElement.setAttribute("data-materials", "pbr");
@@ -626,6 +697,7 @@ export function ArchitectureMeshes({
             transparent={thin && technicalVoids}
             lining={thin}
             fixtures={fixtures}
+            doors={doors}
           />
         );
         if (!hollows.length)

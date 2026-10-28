@@ -199,6 +199,21 @@ def record_download(url, host, filename, mime, *, expected_sha=None, max_bytes=3
     return {"name": filename, "sourceUrl": url, "finalUrl": response.url, "sha256": sha}
 
 
+def pdf_dimensions(data, sheet):
+    import pypdf
+
+    if len(data) != sheet["bytes"] or hashlib.sha256(data).hexdigest() != sheet["sha256"]:
+        raise ValueError("Scheda dimensionale diversa dalla revisione validata")
+    text = " ".join((pypdf.PdfReader(BytesIO(data)).pages[sheet["page"] - 1].extract_text() or "").split())
+    if not re.search(rf"\b{re.escape(sheet['model'])}\b", text, re.I):
+        raise ValueError("Scheda dimensionale di un altro modello")
+    match = re.search(rf"Dimensioni d['’]ingombro H\s*x\s*L\s*x\s*P.*?\bmm\s+({NUMBER})\s*x\s*({NUMBER})\s*x\s*({NUMBER})\b", text, re.I)
+    dimensions = dict(zip(("heightMm", "widthMm", "depthMm"), (float(number(v)) for v in match.groups()))) if match else None
+    if dimensions != sheet["dimensionsMm"]:
+        raise ValueError("Quote della scheda dimensionale discordanti")
+    return dimensions
+
+
 def acquire(product):
     curated = json.loads(CURATED.read_text(encoding="utf8"))["products"].get(product["id"])
     if curated:
@@ -238,6 +253,9 @@ def acquire(product):
     sha = hashlib.sha256(data).hexdigest()
     filename = f"{product['id']}-{sha}.html"
     (SOURCE / filename).write_bytes(data)
+    dimension_sheet = json.loads(CURATED.read_text(encoding="utf8")).get("dimensionSheets", {}).get(product["id"])
+    if dimension_sheet:
+        record_download(dimension_sheet["sourceUrl"], expected_host, dimension_sheet["name"], "application/pdf", expected_sha=dimension_sheet["sha256"])
     return {"id": product["id"], "name": filename, "sourceUrl": url, "sha256": sha, "retrievedAt": datetime.now(timezone.utc).isoformat(), "historicalHashMatches": sha == product["sourceSha256"]}
 
 
@@ -248,7 +266,8 @@ def main():
     args = arguments.parse_args()
     products = json.loads(SNAPSHOT.read_text(encoding="utf8"))["products"]
     manifest_file = SOURCE / "manifest.json"
-    curated_products = json.loads(CURATED.read_text(encoding="utf8"))["products"]
+    curation = json.loads(CURATED.read_text(encoding="utf8"))
+    curated_products = curation["products"]
     if args.acquire:
         SOURCE.mkdir(parents=True, exist_ok=True)
         records = []
@@ -305,7 +324,13 @@ def main():
                 raise ValueError("Documento locale diverso dallo SHA-256 acquisito")
             values = extract(data.decode("utf8"), product["name"])
             retrieved = source["retrievedAt"]
-            verified.append({"id": product["id"], **values, "sourceMetadata": {"manufacturer": product["brand"], "sourceUrl": source["sourceUrl"], "sourceType": "html", "documentRevision": None, "retrievedAt": retrieved, "importedAt": retrieved, "sha256": source["sha256"], "page": None}, "supportingSources": []})
+            supporting = []
+            sheet = curation.get("dimensionSheets", {}).get(product["id"])
+            if sheet:
+                # The published HTML incorrectly labels these millimetre values as cm.
+                values["dimensionsMm"] = pdf_dimensions((SOURCE / sheet["name"]).read_bytes(), sheet)
+                supporting.append({"sourceMetadata": {"manufacturer": product["brand"], "sourceUrl": sheet["sourceUrl"], "sourceType": "pdf", "documentRevision": None, "retrievedAt": sheet["retrievedAt"], "importedAt": sheet["retrievedAt"], "sha256": sheet["sha256"], "page": sheet["page"]}})
+            verified.append({"id": product["id"], **values, "sourceMetadata": {"manufacturer": product["brand"], "sourceUrl": source["sourceUrl"], "sourceType": "html", "documentRevision": None, "retrievedAt": retrieved, "importedAt": retrieved, "sha256": source["sha256"], "page": None}, "supportingSources": supporting})
         except Exception as error:
             failures.append({"id": product["id"], "error": str(error)})
     report = {"models": len(products), "verifiedProducts": len(verified), "withDimensions": sum(row["dimensionsMm"] is not None for row in verified), "withNominalPower": sum(row["nominalPowerW"] is not None for row in verified), "withWaterPower": sum(row["waterPowerW"] is not None for row in verified), "sourceFormats": {"html": sum(row["sourceMetadata"]["sourceType"] == "html" for row in verified), "pdf": sum(row["sourceMetadata"]["sourceType"] == "pdf" for row in verified)}, "failures": failures, "missingDimensions": [row["id"] for row in verified if row["dimensionsMm"] is None], "missingNominalPower": [row["id"] for row in verified if row["nominalPowerW"] is None]}

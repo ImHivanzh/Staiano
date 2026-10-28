@@ -26,6 +26,25 @@ class StoveTechnicalTest(unittest.TestCase):
         result = importer.extract("<h1>Modello</h1><li>Dimensioni (HxPxL) 1000x500x600 mm</li>", "Modello")
         self.assertIsNone(result["dimensionsMm"])
 
+    def test_pinned_dimension_sheet_checks_model_hash_and_axis_order(self):
+        content = b"%PDF fixture"
+        sheet = {"bytes": len(content), "sha256": hashlib.sha256(content).hexdigest(), "page": 1, "model": "Easy 7", "dimensionsMm": {"widthMm": 525, "heightMm": 1030, "depthMm": 480}}
+        previous = sys.modules.get("pypdf")
+        sys.modules["pypdf"] = types.SimpleNamespace(PdfReader=lambda _: types.SimpleNamespace(pages=[types.SimpleNamespace(extract_text=lambda: "Modello Easy 7 ADV Dimensioni d'ingombro H x L x P / Dimensions mm 1030 x 525 x 480")]))
+        try:
+            self.assertEqual(importer.pdf_dimensions(content, sheet), sheet["dimensionsMm"])
+            with self.assertRaisesRegex(ValueError, "revisione"):
+                importer.pdf_dimensions(b"changed", sheet)
+            with self.assertRaisesRegex(ValueError, "altro modello"):
+                importer.pdf_dimensions(content, {**sheet, "model": "Easy 9"})
+            with self.assertRaisesRegex(ValueError, "discordanti"):
+                importer.pdf_dimensions(content, {**sheet, "dimensionsMm": {"widthMm": 5250}})
+        finally:
+            if previous is None:
+                sys.modules.pop("pypdf", None)
+            else:
+                sys.modules["pypdf"] = previous
+
     def test_incompatible_page_identity_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "Titolo"):
             importer.extract("<h1>Altro modello</h1><li>Dimensioni (LxHxP)460x1200x465 mm</li>", "AMIKA AD")

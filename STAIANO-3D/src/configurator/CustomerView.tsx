@@ -6,7 +6,9 @@ import Image from "next/image";
 import {
   ArrowsOut,
   Cube,
+  DeviceMobile,
   Fire,
+  MapTrifold,
   Path,
   Power,
   Presentation,
@@ -16,8 +18,11 @@ import { projectSchema } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { installationLabels } from "@/domain/installations";
 import styles from "./CustomerView.module.css";
+import { clipFormat } from "./viewer3d/SocialRecorder";
+import { SOCIAL_CLIP_SECONDS } from "./viewer3d/social-shots";
 import { StoveCatalog } from "./systems/StoveCatalog";
 import { CustomerPresentation } from "./CustomerPresentation";
+import { CustomerPlan } from "./CustomerPlan";
 import { loadProjectCatalogs } from "@/services/project/catalogs";
 import {
   customerCameraSchema,
@@ -36,6 +41,7 @@ export function CustomerView() {
   const [status, setStatus] = useState("In attesa del configuratore…");
   const [fullscreenError, setFullscreenError] = useState("");
   const [showStoves, setShowStoves] = useState(false);
+  const [showPlan, setShowPlan] = useState(false);
   const view = useCustomerView();
   const link = useRef<BroadcastChannel | null>(null);
   // Cambio dalla TV: vale subito qui e viene comunicato al PC.
@@ -47,6 +53,16 @@ export function CustomerView() {
       view: { systemOn, comfort, tour, explain },
     });
   };
+  // Esc chiude la modalità social e riporta i comandi.
+  useEffect(() => {
+    if (!view.social) return;
+    const leave = (event: KeyboardEvent) => {
+      if (event.key === "Escape")
+        useCustomerView.setState({ social: false, recording: false });
+    };
+    window.addEventListener("keydown", leave);
+    return () => window.removeEventListener("keydown", leave);
+  }, [view.social]);
   useEffect(() => {
     const token = window.location.hash.slice(1);
     if (!/^[a-f0-9-]{36}$/i.test(token)) return;
@@ -137,7 +153,19 @@ export function CustomerView() {
     };
   }, []);
   return (
-    <main className={styles.customer}>
+    <main className={styles.customer} data-social={view.social || undefined}>
+      {view.social && project && !showStoves && (
+        <header className={styles.socialBar}>
+          <Image
+            src="/logo.svg"
+            alt="Termoidraulica Staiano"
+            width={150}
+            height={52}
+            priority
+          />
+          <h1>{project.name}</h1>
+        </header>
+      )}
       <header className={styles.header}>
         <Image
           src="/logo.svg"
@@ -185,7 +213,12 @@ export function CustomerView() {
         ) : project ? (
           <>
             <Viewer3D key={project.id} readOnly />
-            {view.explain && <CustomerPresentation project={project} />}
+            {view.explain && !view.social && (
+              <CustomerPresentation project={project} />
+            )}
+            {showPlan && !view.social && activeFloor && (
+              <CustomerPlan project={project} floorId={activeFloor} />
+            )}
           </>
         ) : (
           <div className={styles.waiting}>
@@ -196,7 +229,41 @@ export function CustomerView() {
           </div>
         )}
       </div>
-      {project && !showStoves && (
+      {project && !showStoves && view.social && (
+        <div className={styles.socialBarBottom}>
+          <button
+            type="button"
+            className={styles.socialRec}
+            data-recording={view.recording || undefined}
+            style={
+              {
+                "--avanzamento": view.progress,
+              } as React.CSSProperties
+            }
+            disabled={view.recording}
+            onClick={() => {
+              if (!clipFormat())
+                return setFullscreenError(
+                  "Registrazione video non disponibile in questo browser.",
+                );
+              useCustomerView.setState({ recording: true });
+            }}
+          >
+            {view.recording
+              ? `Creazione video… ${Math.round(view.progress * 100)}%`
+              : `Registra video · ${SOCIAL_CLIP_SECONDS} s`}
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              useCustomerView.setState({ social: false, recording: false })
+            }
+          >
+            Esci · Esc
+          </button>
+        </div>
+      )}
+      {project && !showStoves && !view.social && (
         <nav className={styles.controls} aria-label="Comandi presentazione">
           <button
             type="button"
@@ -227,15 +294,34 @@ export function CustomerView() {
           </button>
           <button
             type="button"
+            aria-pressed={showPlan}
+            onClick={() => setShowPlan((value) => !value)}
+          >
+            <MapTrifold aria-hidden="true" />
+            Pianta
+          </button>
+          <button
+            type="button"
             aria-pressed={view.explain}
             onClick={() => change({ explain: !view.explain })}
           >
             <Presentation aria-hidden="true" />
             Presentazione
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              // Impianto acceso: nel video si vedono anche i flussi d'aria.
+              useCustomerView.setState({ social: true, systemOn: true });
+              setShowPlan(false);
+            }}
+          >
+            <DeviceMobile aria-hidden="true" />
+            Social
+          </button>
         </nav>
       )}
-      {project && !showStoves && (
+      {project && !showStoves && !view.social && (
         <footer className={styles.footer}>
           <span>
             {project.floors.find((floor) => floor.id === activeFloor)?.name}

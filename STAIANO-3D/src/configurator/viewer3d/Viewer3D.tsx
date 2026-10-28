@@ -50,6 +50,7 @@ import { CameraRig } from "./CameraRig";
 import { SceneLighting } from "./SceneLighting";
 import { SceneEffects } from "./SceneEffects";
 import { RoomLabelProjection } from "./RoomLabels";
+import { roomTone, roomToneColors } from "@/domain/room-tone";
 import { RoomCeiling3D } from "./RoomCeiling3D";
 import { CeilingReference } from "./CeilingReference";
 import { ProductTools, type ProductTool } from "./ProductTools";
@@ -88,6 +89,20 @@ import { systemLinearBalances } from "@/domain/air-terminals/linear-meters";
 import { ComfortFlows } from "./ComfortFlows";
 import type { ComfortMode } from "./comfort-fields";
 import { useCustomerView } from "./customer-view-state";
+import { ViewShift } from "./ViewShift";
+import { SocialRecorder } from "./SocialRecorder";
+import {
+  SOCIAL_MAX_SHOTS,
+  fitSocialRoom,
+  socialView,
+  type SocialPoint,
+} from "./social-shots";
+import {
+  socialScript,
+  type SocialFacts,
+  type SocialScene,
+} from "./social-copy";
+import { SocialCeiling } from "./SocialCeiling";
 
 class WebGLError extends Component<
   { children: React.ReactNode },
@@ -185,15 +200,28 @@ export default function Viewer3D({
   const [channelView, setChannelView] = useState(true);
   const [channelPanel, setChannelPanel] = useState(false);
   const [loadMap, setLoadMap] = useState(false);
+  // Livello "Porte": spento resta il vano vuoto con il solo telaio.
+  const [doorsVisible, setDoorsVisible] = useState(true);
   // Gli altri piani si vedono sopra/sotto quello attivo e si possono nascondere.
   const [hiddenFloorIds, setHiddenFloorIds] = useState<ReadonlySet<string>>(
     new Set(),
   );
   // Impianto, comfort e tour sono condivisi con la Vista Cliente (la TV).
-  const systemOn = useCustomerView((state) => state.systemOn);
-  const comfort = useCustomerView((state) => state.comfort);
+  const switchedOn = useCustomerView((state) => state.systemOn);
+  const chosenComfort = useCustomerView((state) => state.comfort);
   const tour = useCustomerView((state) => state.tour);
+  const explain = useCustomerView((state) => state.explain);
+  const social = useCustomerView((state) => state.social);
+  // Nel video social l'impianto è sempre acceso, qualunque cosa arrivi dal PC.
+  const systemOn = switchedOn || (readOnly && social);
   // Impianto spento: nessun flusso d'aria, in nessuna vista.
+  // Con soli radiatori il video non ha nulla da mostrare in "aria fresca": passa al calore.
+  const heatOnly =
+    !!p &&
+    p.radiators.length > 0 &&
+    !p.airTerminals.length &&
+    !p.hvacSystems.some((system) => system.indoorUnits.length);
+  const comfort = readOnly && social && heatOnly ? "heat" : chosenComfort;
   const comfortMode: ComfortMode | "off" = systemOn ? comfort : "off";
   const tourIndex = useRef(0);
   const [transformChoice, setTransformChoice] = useState<{
@@ -457,6 +485,221 @@ export default function Viewer3D({
       ) ?? [],
     [p?.walls, activeFloorId, isolatedRoomId, rooms],
   );
+  // Video social stanza per stanza: una panoramica per ogni stanza con apparecchi (le vuote si saltano),
+  // dal lato in cui si vede il fronte dell'apparecchio principale. Con poche stanze si aggiungono
+  // primi piani degli apparecchi, sempre dal davanti. Didascalie in social-copy.ts.
+  const socialPlan = useMemo<{
+    shots: SocialPoint[];
+    hook: string;
+    invite: string;
+  }>(() => {
+    if (!p) return { shots: [], hook: "", invite: "" };
+    const here = (item: { floorId: string }) => item.floorId === activeFloorId;
+    const heating = comfort === "heat";
+    type Device = {
+      roomId: string;
+      kind: "split" | "grille" | "radiator";
+      at: { x: number; y: number };
+      rotation: number;
+      /** Altezza della camera per il primo piano e inquadratura (davanti, raggio, angolo). */
+      eye: number;
+      /** Quota del centro dell'apparecchio, per sapere se sta in quadro. */
+      height: number;
+      close: { ahead: number; radius: number; polar: number };
+      /** Per i testi: bocchetta a soffitto, termosifone sotto una finestra. */
+      ceiling?: boolean;
+      underWindow?: boolean;
+    };
+    // Il termosifone sta sotto una finestra se è sullo stesso muro e dentro il suo tratto.
+    const underWindow = (item: {
+      wallId: string | null;
+      position: { x: number; y: number };
+      widthMm: number;
+    }) => {
+      const wall = p.walls.find((w) => w.id === item.wallId);
+      if (!wall) return false;
+      const length = Math.hypot(
+        wall.end.x - wall.start.x,
+        wall.end.y - wall.start.y,
+      );
+      if (!length) return false;
+      const along =
+        ((item.position.x - wall.start.x) * (wall.end.x - wall.start.x) +
+          (item.position.y - wall.start.y) * (wall.end.y - wall.start.y)) /
+        length;
+      return p.openings.some(
+        (o) =>
+          o.type === "window" &&
+          o.wallId === item.wallId &&
+          Math.abs(along - (o.offsetM + o.widthM / 2)) <= o.widthM / 2 + 0.1,
+      );
+    };
+    const devices: Device[] = [
+      ...p.hvacSystems.flatMap((system) =>
+        system.indoorUnits.filter(here).flatMap((unit): Device[] => {
+          const room = p.rooms.find((r) => r.id === unit.roomId);
+          return room
+            ? [
+                {
+                  roomId: room.id,
+                  kind: "split",
+                  at: unit.position,
+                  rotation: unit.rotation,
+                  eye: splitCenterElevationM(room, unit, p) + 0.1,
+                  height: splitCenterElevationM(room, unit, p),
+                  close: { ahead: 0.9, radius: 4.2, polar: 1.2 },
+                },
+              ]
+            : [];
+        }),
+      ),
+      ...p.airTerminals
+        .filter((item) => here(item) && item.use !== "return")
+        .flatMap((item): Device[] => {
+          const room = p.rooms.find((r) => r.id === item.roomId);
+          if (!room) return [];
+          const ceiling = item.mounting === "ceiling";
+          const elevation = ceiling
+            ? (item.elevationM ?? room.ceilingHeightM ?? room.heightM)
+            : (item.elevationM ?? 1.2);
+          // A soffitto la camera sta sotto, ad altezza d'occhi, e guarda verso la bocchetta.
+          return [
+            {
+              roomId: room.id,
+              kind: "grille",
+              at: item.position,
+              rotation: item.rotation,
+              eye: ceiling ? elevation - 0.5 : elevation,
+              height: elevation,
+              close: ceiling
+                ? { ahead: 0.8, radius: 3.6, polar: 1.5 }
+                : { ahead: 0.6, radius: 3.4, polar: 1.45 },
+              ceiling,
+            },
+          ];
+        }),
+      // Senza flussi (modo freddo) il radiatore non ha nulla da mostrare.
+      ...(heating
+        ? p.radiators.filter(here).map((item): Device => ({
+            roomId: item.roomId,
+            kind: "radiator",
+            at: item.position,
+            rotation: item.rotation,
+            eye: 0.7,
+            height: 0.7,
+            close: { ahead: 0.5, radius: 3.2, polar: 1.3 },
+            underWindow: underWindow(item),
+          }))
+        : []),
+    ];
+    const rank = { split: 0, grille: 1, radiator: 2 };
+    const byRoom = p.rooms
+      .map((room) => ({
+        room,
+        devices: devices
+          .filter((device) => device.roomId === room.id)
+          .sort((a, b) => rank[a.kind] - rank[b.kind]),
+      }))
+      .filter((entry) => entry.devices.length);
+    // Oltre il limite restano le stanze con più apparecchi, nell'ordine del progetto.
+    const chosenRooms = [...byRoom]
+      .sort((a, b) => b.devices.length - a.devices.length)
+      .slice(0, SOCIAL_MAX_SHOTS)
+      .sort((a, b) => byRoom.indexOf(a) - byRoom.indexOf(b));
+    const factsOf = (inside: Device[]): SocialFacts => {
+      const count = (kind: Device["kind"]) =>
+        inside.filter((d) => d.kind === kind).length;
+      return {
+        splits: count("split"),
+        grilles: count("grille"),
+        radiators: count("radiator"),
+        ceiling: inside.some((d) => d.kind === "grille" && d.ceiling),
+        underWindow: inside.some((d) => d.underWindow),
+      };
+    };
+    const scenes: { point: SocialPoint; scene: SocialScene }[] =
+      chosenRooms.map(({ room, devices: inside }) => {
+        const main = inside[0];
+        const mean = (pick: (device: Device) => number) =>
+          inside.reduce((sum, device) => sum + pick(device), 0) / inside.length;
+        const box = bounds(room.polygon);
+        // Si guarda il centro della stanza, alla quota media degli apparecchi.
+        const target: [number, number, number] = [
+          (box.minX + box.maxX) / 2,
+          Math.min(
+            2,
+            Math.max(
+              0.9,
+              mean((d) => d.height),
+            ),
+          ),
+          (box.minY + box.maxY) / 2,
+        ];
+        // Raggio minimo con cui tutti gli apparecchi stanno nella parte libera del quadro.
+        const view = fitSocialRoom(
+          target,
+          inside.map((d): [number, number, number] => [
+            d.at.x,
+            d.height,
+            d.at.y,
+          ]),
+          -main.rotation,
+          0.85,
+          5,
+          22,
+        );
+        return {
+          point: {
+            position: target,
+            radius: view.radius,
+            polar: 0.85,
+            azimuth: view.azimuth,
+            label: "",
+          },
+          scene: {
+            room: room.name,
+            kind: inside.every((d) => d.kind === main.kind)
+              ? main.kind
+              : "generic",
+            facts: factsOf(inside),
+          },
+        };
+      });
+    // Poche stanze: primi piani degli apparecchi (prima da davanti, poi di tre quarti).
+    const closeUps = (variant: 0 | 1) =>
+      chosenRooms.flatMap(({ room, devices: inside }) =>
+        inside.slice(0, 1).map((device) => ({
+          point: socialView(device.at, device.rotation, device.eye, "", {
+            ahead: device.close.ahead,
+            radius: device.close.radius * (variant ? 0.85 : 1),
+            polar: device.close.polar,
+            side: variant ? 0.55 : 0,
+          }),
+          scene: {
+            room: room.name,
+            kind: device.kind,
+            detail: true,
+            facts: factsOf(inside),
+          },
+        })),
+      );
+    for (const extra of [...closeUps(0), ...closeUps(1)])
+      if (scenes.length < 3) scenes.push(extra);
+    // Le didascalie si assegnano a scelta fatta: nessun messaggio si ripete nel video.
+    const script = socialScript(
+      scenes.map((entry) => entry.scene),
+      heating,
+      p.id,
+    );
+    return {
+      shots: scenes.map((entry, index) => ({
+        ...entry.point,
+        label: script.captions[index],
+      })),
+      hook: script.hook,
+      invite: script.invite,
+    };
+  }, [p, activeFloorId, comfort]);
   const frame = useMemo(() => {
     if (isolatedRoomId && rooms[0]) {
       const box = bounds(rooms[0].polygon);
@@ -751,6 +994,23 @@ export default function Viewer3D({
                     >
                       <ThermometerHot size={16} aria-hidden="true" />
                       Mappa fabbisogno
+                    </button>
+                    <span className={styles.menuTitle}>Livelli</span>
+                    <button
+                      aria-pressed={doorsVisible}
+                      title={
+                        doorsVisible
+                          ? "Nascondi le porte: resta il vano vuoto"
+                          : "Mostra le porte"
+                      }
+                      onClick={() => setDoorsVisible((value) => !value)}
+                    >
+                      {doorsVisible ? (
+                        <Eye size={16} aria-hidden="true" />
+                      ) : (
+                        <EyeSlash size={16} aria-hidden="true" />
+                      )}
+                      Porte
                     </button>
                     {p && p.floors.length > 1 && (
                       <>
@@ -1343,6 +1603,7 @@ export default function Viewer3D({
                   walls={walls}
                   rooms={rooms}
                   openings={p?.openings ?? []}
+                  doors={doorsVisible}
                   defaultHeightM={p?.projectSettings.defaultHeightM ?? 2.7}
                   selection={selection}
                   onSelect={(target) => {
@@ -1419,6 +1680,7 @@ export default function Viewer3D({
                     floorId={activeFloorId}
                     mode={comfortMode}
                     roomId={isolatedRoomId}
+                    includeDucted={readOnly && social}
                   />
                 )}
                 {p && selectedId && transformMode && !presentation && (
@@ -1443,7 +1705,15 @@ export default function Viewer3D({
                       showCeiling={suspendedCeiling && !printMode}
                     />
                   ))}
+                {readOnly &&
+                  social &&
+                  rooms
+                    .filter(
+                      (room) => !room.roof && room.ceilingHeightM === null,
+                    )
+                    .map((room) => <SocialCeiling key={room.id} room={room} />)}
                 {ceilingGuide &&
+                  !(readOnly && social) &&
                   rooms
                     .filter((room) =>
                       p?.airTerminals.some(
@@ -1488,7 +1758,7 @@ export default function Viewer3D({
                       ? {
                           projectId: p.id,
                           floorId: activeFloorId,
-                          follow: readOnly && !tour,
+                          follow: readOnly && !tour && !social,
                         }
                       : undefined
                   }
@@ -1511,6 +1781,9 @@ export default function Viewer3D({
                     chosenDevice.mounting === "ceiling"
                   }
                   animate={readOnly && tour}
+                  orbit={readOnly && social}
+                  shots={socialPlan.shots}
+                  hook={socialPlan.hook}
                 />
                 <RenderMarker
                   selected={selectedId ?? ""}
@@ -1524,6 +1797,10 @@ export default function Viewer3D({
                   }
                 />
                 <SceneEffects enabled={walls.length < 150} />
+                <ViewShift pixels={readOnly && explain ? 240 : 0} />
+                {readOnly && social && (
+                  <SocialRecorder invite={socialPlan.invite} />
+                )}
               </Canvas>
             </WebGLError>
             {dragGuide && (
@@ -1539,6 +1816,12 @@ export default function Viewer3D({
                       else labelElements.current.delete(room.id);
                     }}
                     className={styles.roomLabel}
+                    style={
+                      {
+                        "--tono":
+                          roomToneColors[roomTone(room.name, room.usage)].solid,
+                      } as React.CSSProperties
+                    }
                     aria-label={`Seleziona ${room.name} nel 3D`}
                     aria-pressed={selection.some((s) => s.id === room.id)}
                     onClick={() => select({ kind: "room", id: room.id })}

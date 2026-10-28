@@ -3,6 +3,15 @@ import raw from "../../../catalog-data/generated/flexible-ducts.json" with { typ
 export const flexibleDuctProducts = raw.products;
 export type FlexibleDuctProductId = (typeof flexibleDuctProducts)[number]["id"];
 
+export function flexibleDuctInsulationMm(productId?: string | null) {
+  // Generic silver hose: 25 mm insulation chosen by the user; ETF10 keeps its uninsulated construction.
+  return productId === "ecoclima-etf10" ? 0 : 25;
+}
+
+export function flexibleDuctOuterRadiusM(diameterMm: number, productId?: string | null) {
+  return diameterMm / 2000 + flexibleDuctInsulationMm(productId) / 1000;
+}
+
 export function flexibleDuctMinimumRadiusFactor(
   productId: string | null | undefined,
   diameterMm: number | null | undefined,

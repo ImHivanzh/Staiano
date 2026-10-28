@@ -1,5 +1,44 @@
 import { expect, test } from "./browser-test";
 
+test("Iside aggiornata: modello, maiolica e fiamma restano utilizzabili", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Cataloghi tecnici", exact: true }).click();
+  await page.getByRole("tab", { name: "Riscaldamento" }).click();
+  const catalog = page.getByRole("region", { name: "Catalogo stufe", exact: true });
+  await catalog.getByRole("button", { name: /^La Nordica Extraflame/ }).click();
+  await catalog.getByRole("button", { name: /^Pellet · Idro/ }).click();
+  await catalog.getByLabel("Cerca modello").fill("ISIDE IDRO");
+  await catalog.getByRole("button", { name: /^ISIDE IDRO 5\.0\.16/ }).click();
+  const canvas = catalog.getByTestId("model-preview").locator("canvas");
+  await expect(canvas).toHaveAttribute("data-model", "/models/stoves/nordica-iside-idro-5016-bianco.glb");
+  await catalog.getByRole("button", { name: "Accendi fiamma", exact: true }).click();
+  await expect(catalog.getByRole("button", { name: "Spegni fiamma", exact: true })).toBeVisible();
+  await catalog.getByRole("group", { name: "Finitura del produttore", exact: true }).getByRole("button", { name: "Pergamena", exact: true }).click();
+  await expect(canvas).toHaveAttribute("data-model", "/models/stoves/nordica-iside-idro-5016-pergamena.glb");
+  // Bounds animates the camera after the replacement model mounts.
+  await page.waitForTimeout(1200);
+  await canvas.screenshot({ path: "output/verifiche-realismo/iside-browser-fiamma.png" });
+});
+
+test("Dafne View aggiornata: modello curvo e fiamma nel catalogo", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Cataloghi tecnici", exact: true }).click();
+  await page.getByRole("tab", { name: "Riscaldamento" }).click();
+  const catalog = page.getByRole("region", { name: "Catalogo stufe", exact: true });
+  await catalog.getByRole("button", { name: /^Ravelli/ }).click();
+  await catalog.getByRole("button", { name: /^Legna · Convezione/ }).click();
+  await catalog.getByLabel("Cerca modello").fill("Dafne View");
+  await catalog.getByRole("button", { name: /^Dafne View/ }).click();
+  const canvas = catalog.getByTestId("model-preview").locator("canvas");
+  await expect(canvas).toHaveAttribute("data-model", "/models/stoves/ravelli-dafne-view-nero.glb");
+  await catalog.getByRole("button", { name: "Accendi fiamma", exact: true }).click();
+  await expect(catalog.getByRole("button", { name: "Spegni fiamma", exact: true })).toBeVisible();
+  await page.waitForTimeout(1200);
+  await canvas.screenshot({ path: "output/verifiche-realismo/dafne-browser-fiamma.png" });
+});
+
 test("catalogo stufe: marchio, tecnologia, modello, foto e finiture ufficiali", async ({
   page,
 }) => {

@@ -2029,9 +2029,9 @@
     {
       "id": "ravelli-easy-7",
       "dimensionsMm": {
-        "widthMm": 5250.0,
-        "heightMm": 10300.0,
-        "depthMm": 4800.0
+        "heightMm": 1030.0,
+        "widthMm": 525.0,
+        "depthMm": 480.0
       },
       "nominalPowerW": {
         "minW": 3100.0,
@@ -2051,14 +2051,27 @@
         "sha256": "4f8f453bc190f4306078caf92d11e6d2827394f831fd753a9e55f157305abe77",
         "page": null
       },
-      "supportingSources": []
+      "supportingSources": [
+        {
+          "sourceMetadata": {
+            "manufacturer": "Ravelli",
+            "sourceUrl": "https://ita.ravelligroup.it/wp-content/uploads/2.2-Datasheet-Ravelli-Easy7.pdf",
+            "sourceType": "pdf",
+            "documentRevision": null,
+            "retrievedAt": "2026-10-28T10:24:42.236221+00:00",
+            "importedAt": "2026-10-28T10:24:42.236221+00:00",
+            "sha256": "25b3fceefaf38451e3eec50dfc0806bb46ea80b7d5753a7beafa9ef8f1ee23d2",
+            "page": 1
+          }
+        }
+      ]
     },
     {
       "id": "ravelli-easy-9",
       "dimensionsMm": {
-        "widthMm": 5250.0,
-        "heightMm": 10300.0,
-        "depthMm": 4800.0
+        "heightMm": 1030.0,
+        "widthMm": 525.0,
+        "depthMm": 480.0
       },
       "nominalPowerW": {
         "minW": 3100.0,
@@ -2078,7 +2091,20 @@
         "sha256": "a44988cf64d6c112ccb2829b0854a8ce17fc788a0616ac20bdf6e10bd5525705",
         "page": null
       },
-      "supportingSources": []
+      "supportingSources": [
+        {
+          "sourceMetadata": {
+            "manufacturer": "Ravelli",
+            "sourceUrl": "https://ita.ravelligroup.it/wp-content/uploads/2.2-Datasheet-Ravelli-Easy9.pdf",
+            "sourceType": "pdf",
+            "documentRevision": null,
+            "retrievedAt": "2026-10-28T10:24:42.236234+00:00",
+            "importedAt": "2026-10-28T10:24:42.236234+00:00",
+            "sha256": "78d2227cca93ef89bdaabc413f8a76299e49e129989f6ddcc4de502302d6dd7a",
+            "page": 1
+          }
+        }
+      ]
     },
     {
       "id": "ravelli-hrv-160-design",

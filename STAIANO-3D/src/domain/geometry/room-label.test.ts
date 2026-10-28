@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { centroid, pointInPolygon } from "./primitives";
-import { roomLabelPoint } from "./room-label";
+import { roomLabelPoint, roomLabelPointAvoiding } from "./room-label";
 
 const corridor = [
   { x: 0, y: 0 },
@@ -58,4 +58,30 @@ it("keeps the anchor inside a long thin concave corridor below the search precis
     { x: 0, y: 80 },
   ];
   expect(pointInPolygon(roomLabelPoint(polygon), polygon)).toBe(true);
+});
+
+const hall = [
+  { x: 0, y: 0 },
+  { x: 8, y: 0 },
+  { x: 8, y: 6 },
+  { x: 0, y: 6 },
+];
+
+it("keeps the ideal label point when nothing covers it", () => {
+  expect(roomLabelPointAvoiding(hall, [])).toEqual(roomLabelPoint(hall));
+});
+
+it("moves the label off a device on the ideal point, staying inside the room", () => {
+  const base = roomLabelPoint(hall);
+  const moved = roomLabelPointAvoiding(hall, [
+    { x: base.x, y: base.y, radius: 0.3 },
+  ]);
+  expect(moved).not.toEqual(base);
+  expect(
+    Math.abs(moved.x - base.x) >= 0.95 || Math.abs(moved.y - base.y) >= 0.7,
+  ).toBe(true);
+  expect(moved.x).toBeGreaterThan(0.65);
+  expect(moved.x).toBeLessThan(7.35);
+  expect(moved.y).toBeGreaterThan(0.4);
+  expect(moved.y).toBeLessThan(5.6);
 });

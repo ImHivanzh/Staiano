@@ -29,6 +29,7 @@ function Model({ url, flame }: { url: string; flame: boolean }) {
     let live = true;
     new THREE.TextureLoader().load("/models/flame.png", (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
+      texture.flipY = false; // Match GLTFLoader's UV convention.
       if (live) setMap(texture);
     });
     return () => {

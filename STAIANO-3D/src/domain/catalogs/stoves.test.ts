@@ -67,4 +67,11 @@ describe("catalogo stufe ufficiale", () => {
     expect(isetta.technical!.supportingSources.map((source) => source.sourceMetadata.sourceType)).toEqual(["json", "pdf", "html"]);
     expect(isetta.technical!.supportingSources.find((source) => source.sourceMetadata.sourceType === "json")?.sourceMetadata.sha256).toBe("c92a07b30ba72aaa44430a46cf8de2fab8684bfdfa638f7c22f06f7ab2bf43ea");
   });
+  it.each(["ravelli-easy-7", "ravelli-easy-9"])("uses the PDF millimetres for %s despite the HTML cm label", (id) => {
+    const product = stoveCatalog.products.find((item) => item.id === id)!;
+    expect(product.technical?.dimensionsMm).toEqual({ widthMm: 525, heightMm: 1030, depthMm: 480 });
+    expect(product.technical?.supportingSources).toEqual([
+      { sourceMetadata: expect.objectContaining({ sourceType: "pdf", page: 1, manufacturer: "Ravelli" }) },
+    ]);
+  });
 });

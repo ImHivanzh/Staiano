@@ -16,7 +16,12 @@ function move(keys: Partial<CameraMoveKeys>, top = false) {
   camera.position.set(0, top ? 10 : 0, top ? 0.0001 : 10);
   camera.lookAt(0, 0, 0);
   camera.updateMatrixWorld();
-  return cameraMoveVector(camera, new Vector3(0, 0, 0), { ...none, ...keys }, 2);
+  return cameraMoveVector(
+    camera,
+    new Vector3(0, 0, 0),
+    { ...none, ...keys },
+    2,
+  );
 }
 
 it("moves horizontally relative to the view and vertically with Q/E", () => {

@@ -107,36 +107,72 @@ def ring(coll, loc, r, wire, m):
     return put(o, m)
 
 
-def fan(coll, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=None):
-    """Ventola con 7 pale e griglia. round_grille: anelli e raggi; altrimenti fili orizzontali nel rettangolo rect."""
+def fan(coll, body, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=None):
+    """Tre pale curve arretrate, protette da una griglia circolare o rettangolare."""
     if round_grille:
-        disc(coll, (cx, yf - 0.001, cz), r * 1.02, 0.002, m_rec)
+        disc(coll, (cx, yf + 0.09, cz), r * 1.02, 0.002, m_rec)
     else:
         rw, rh = rect
-        box(coll, (cx, yf - 0.001, cz), (rw, 0.002, rh), m_rec, 0.008)
-        disc(coll, (cx, yf - 0.003, cz), min(rw, rh) * 0.46, 0.002, m_rec)
+        box(coll, (cx, yf + 0.09, cz), (rw, 0.002, rh), m_rec, 0.008)
+        disc(coll, (cx, yf + 0.087, cz), min(rw, rh) * 0.46, 0.002, m_rec)
     rb = r * 0.86 if round_grille else min(rect) * 0.45
-    parts = []
-    for i in range(9):
-        a = i * 2 * math.pi / 9
-        px, pz = cx + math.cos(a) * rb * 0.55, cz + math.sin(a) * rb * 0.55
-        parts.append(box(coll, (px, yf - 0.006, pz), (rb * 0.58, 0.003, rb * 0.2), m_fan, 0.001, rot=(math.radians(28), -a, 0)))
-    parts.append(disc(coll, (cx, yf - 0.008, cz), rb * 0.17, 0.008, m_fan))
+    # The impeller needs an actual cavity, behind the guard and in front of the backing.
     if round_grille:
-        for f in (1.0, 0.76, 0.52, 0.3):
-            ring(coll, (cx, yf - 0.011, cz), r * f, 0.0016, m_wire)
-        for i in range(24):
-            a = i * 2 * math.pi / 24
+        bpy.ops.mesh.primitive_cylinder_add(vertices=64, radius=rb * 1.02, depth=.16,
+                                          location=(cx, yf + .05, cz), rotation=(math.pi / 2, 0, 0))
+        cutter = bpy.context.object
+    else:
+        cutter = box(coll, (cx, yf + .05, cz), (rw, .16, rh), m_rec, .008)
+    modifier = body.modifiers.new('Apertura ventola', 'BOOLEAN')
+    modifier.operation = 'DIFFERENCE'; modifier.object = cutter
+    bpy.context.view_layer.objects.active = body
+    bpy.ops.object.modifier_apply(modifier=modifier.name)
+    bpy.data.objects.remove(cutter, do_unlink=True)
+    parts = []
+    for i in range(3):
+        vertices = []
+        for row in range(13):
+            t = row / 12
+            radius = rb * (.16 + .78 * t)
+            chord = .22 + .78 * math.sin(math.pi * t) ** .55
+            for col in range(7):
+                u = col / 6 - .5
+                angle = i * math.tau / 3 - .65 * t + chord * u
+                vertices.append((cx + radius * math.cos(angle),
+                                 yf + .04 + rb * .08 * u * math.sin(math.pi * t),
+                                 cz + radius * math.sin(angle)))
+        faces = [(row * 7 + col, row * 7 + col + 1, (row + 1) * 7 + col + 1, (row + 1) * 7 + col)
+                 for row in range(12) for col in range(6)]
+        mesh = bpy.data.meshes.new('Pala curva'); mesh.from_pydata(vertices, [], faces); mesh.update()
+        blade = bpy.data.objects.new('Pala curva', mesh); coll.objects.link(blade); put(blade, m_fan)
+        bpy.ops.object.select_all(action='DESELECT'); blade.select_set(True)
+        bpy.context.view_layer.objects.active = blade
+        thickness = blade.modifiers.new('Spessore pala', 'SOLIDIFY'); thickness.thickness = .002
+        bpy.ops.object.modifier_apply(modifier=thickness.name)
+        bpy.ops.object.shade_smooth()
+        parts.append(blade)
+    parts.append(disc(coll, (cx, yf + 0.038, cz), rb * 0.17, 0.008, m_fan))
+    if round_grille:
+        for k in range(20):
+            ring(coll, (cx, yf - 0.011, cz), r * (.16 + .84 * k / 19), 0.0012, m_wire)
+        for i in range(64):
+            a = i * 2 * math.pi / 64
             box(coll, (cx + math.cos(a) * r * 0.5, yf - 0.0115, cz + math.sin(a) * r * 0.5),
-                (r * 1.0, 0.0018, 0.0022), m_wire, rot=(0, -a, 0))
+                (r * 1.0, 0.0016, 0.0016), m_wire, rot=(0, -a, 0))
+        for sx, sz in ((-1, -1), (-1, 1), (1, -1), (1, 1)):
+            x, z = cx + sx * r * .78, cz + sz * r * .78
+            box(coll, (x, yf - .006, z), (r * .22, .012, r * .30), m_wire, .012,
+                rot=(0, sx * sz * math.radians(35), 0))
+            disc(coll, (x, yf - .014, z), .004, .002, m_rec, verts=16)
     else:
         rw, rh = rect
-        n = max(8, int(rh / 0.016))
+        n = max(8, int(rh / 0.008))
         for i in range(n):
             z = cz - rh / 2 + (i + 0.5) * rh / n
-            box(coll, (cx, yf - 0.011, z), (rw, 0.002, 0.0022), m_wire)
-        for k in range(1, 6):
-            box(coll, (cx - rw / 2 + k * rw / 6, yf - 0.0115, cz), (0.003, 0.002, rh), m_wire)
+            box(coll, (cx, yf - 0.011, z), (rw, 0.0014, 0.0014), m_wire)
+        columns = max(8, int(rw / .012))
+        for k in range(1, columns):
+            box(coll, (cx - rw / 2 + k * rw / columns, yf - 0.0115, cz), (0.0014, 0.0014, rh), m_wire)
         box(coll, (cx, yf - 0.012, cz), (rw + 0.01, 0.003, 0.006), m_wire)
     return parts
 
@@ -176,7 +212,7 @@ def build(name):
     # piedi lunghi lungo la profondità (foto)
     for x in (-w * 0.34, w * 0.34):
         box(coll, (x, 0, foot_h / 2), (0.06, d * 0.86, foot_h), foot_m, 0.004)
-    box(coll, (0, 0, zc), (w, d, bh), body_m, S["bevel"])
+    body = box(coll, (0, 0, zc), (w, d, bh), body_m, S["bevel"])
     zone_w = w * zone
     zx = -w / 2 + 0.02 + zone_w / 2
     if style == "ebla_e":
@@ -197,11 +233,11 @@ def build(name):
         zone_h = bh - 0.05 if fans == 1 else bh * 0.42
         if S["grille"] == "round":
             r = min(zone_w, zone_h) * 0.47
-            spinner(fan(coll, zx, cz, r, yf, S, fan_m, wire_m, rec_m, True), k, (zx, yf - 0.006, cz))
+            spinner(fan(coll, body, zx, cz, r, yf, S, fan_m, wire_m, rec_m, True), k, (zx, yf + 0.04, cz))
             disc(coll, (zx, yf - 0.0125, cz), r * 0.11, 0.003, mat("chaff-logo", (0.12, 0.22, 0.55), 0.4))
         elif S["grille"] == "rect":
             rw, rh = zone_w - 0.03, zone_h
-            spinner(fan(coll, zx, cz, min(rw, rh) / 2, yf, S, fan_m, wire_m, rec_m, False, (rw, rh)), k, (zx, yf - 0.006, cz))
+            spinner(fan(coll, body, zx, cz, min(rw, rh) / 2, yf, S, fan_m, wire_m, rec_m, False, (rw, rh)), k, (zx, yf + 0.04, cz))
         else:
             rw, rh = zone_w, bh - 0.03 if fans == 1 else zone_h
             box(coll, (zx, yf - 0.002, zc if fans == 1 else cz), (rw, 0.004, rh), rec_m, 0.012)
@@ -241,7 +277,7 @@ def build(name):
     cam.location = c + Vector((w * 1.1, -2.2, h * 0.28))
     cam.rotation_euler = (c - cam.location).to_track_quat("-Z", "Y").to_euler()
     sc.camera = cam
-    for n, off, power in (("K", (-1.5, -2.5, 2.5), 450), ("F", (2, -2, 0.8), 160)):
+    for n, off, power in (("K", (-1.5, -2.5, 2.5), 180), ("F", (2, -2, 0.8), 80)):
         ld = bpy.data.lights.new(n, "AREA")
         ld.energy, ld.size = power, 2
         lo = bpy.data.objects.new(n, ld)
@@ -250,7 +286,7 @@ def build(name):
         lo.rotation_euler = (c - lo.location).to_track_quat("-Z", "Y").to_euler()
     sc.world = bpy.data.worlds.new(name)
     sc.world.color = (0.2, 0.2, 0.22)
-    sc.view_settings.view_transform = "Standard"
+    sc.view_settings.view_transform = "AgX"
     sc.render.engine = "BLENDER_EEVEE"
     sc.render.resolution_x = sc.render.resolution_y = 640
     sc.render.filepath = str(ROOT / f"output/verifiche-realismo/heat-pump-{name}.png")

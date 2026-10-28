@@ -574,22 +574,93 @@ input[type="checkbox"] {
   stroke: var(--bordo);
   cursor: pointer;
 }
+.stanza-pianta[data-tone="living"] {
+  fill: #fbf1e3;
+}
+.stanza-pianta[data-tone="bedroom"] {
+  fill: #f2eefa;
+}
+.stanza-pianta[data-tone="kitchen"] {
+  fill: #fcece6;
+}
+.stanza-pianta[data-tone="bath"] {
+  fill: #e5f4f8;
+}
+.stanza-pianta[data-tone="study"] {
+  fill: #e9f4ee;
+}
+.stanza-pianta[data-tone="passage"] {
+  fill: #f1f3f5;
+}
+.stanza-pianta[data-tone] {
+  fill-opacity: 1;
+}
+.trama-parquet {
+  stroke: rgb(140 100 60 / 20%);
+}
+.trama-piastrelle {
+  stroke: rgb(70 120 145 / 22%);
+}
+.trama-muro {
+  stroke: rgb(255 255 255 / 26%);
+}
+.vetro-pianta {
+  fill: #e4f3f8;
+  stroke: #3f8fa6;
+}
+.vetro-pianta-asse {
+  stroke: #7cc0d3;
+}
+.battente-pianta {
+  fill: rgb(95 112 100 / 7%);
+  stroke: #7b8a7d;
+  stroke-dasharray: 0.06 0.04;
+}
+.scala-pianta {
+  position: absolute;
+  left: 16px;
+  bottom: 40px;
+  height: 7px;
+  border: 1.5px solid var(--testo-tenue);
+  border-top: 0;
+  pointer-events: none;
+}
+.scala-pianta span {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--testo-tenue);
+  white-space: nowrap;
+}
 .stanza-pianta.scelta {
   fill: var(--tinta-tenue);
   stroke: var(--tinta);
 }
 .nome-stanza {
   fill: var(--testo);
-  font-weight: 650;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  paint-order: stroke;
+  stroke: rgb(255 255 255 / 80%);
+  stroke-width: var(--contorno-quota, 0.035);
   pointer-events: none;
 }
 .dato-stanza {
   fill: var(--testo-tenue);
+  paint-order: stroke;
+  stroke: rgb(255 255 255 / 80%);
+  stroke-width: var(--contorno-quota, 0.035);
   pointer-events: none;
 }
 .potenza-stanza {
   fill: var(--tinta);
-  font-weight: 600;
+  font-weight: 650;
+  paint-order: stroke;
+  stroke: rgb(255 255 255 / 80%);
+  stroke-width: var(--contorno-quota, 0.035);
   pointer-events: none;
 }
 .presa-muro {
@@ -597,7 +668,7 @@ input[type="checkbox"] {
   cursor: move;
 }
 .muro-pianta {
-  stroke: var(--testo-tenue);
+  stroke: #36495c;
   stroke-linecap: square;
   cursor: move;
 }

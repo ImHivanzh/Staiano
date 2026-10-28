@@ -310,7 +310,7 @@ it("keeps a flush ceiling plenum under the slab and connects it without collisio
   expect(findDuctCollisions(p, ductScenePaths(p)).size).toBe(0);
 });
 
-it("tries a shorter collar lead before accepting a route through a pillar", () => {
+it("reports a pillar that cannot clear the new insulated hose envelope", () => {
   let p = guidedProjectFixture();
   p.rooms[0].heightM = 4;
   p.rooms[0].ceilingHeightM = 2.4;
@@ -332,7 +332,11 @@ it("tries a shorter collar lead before accepting a route through a pillar", () =
   ];
   const paths = ductScenePaths(p);
   expect(paths).toHaveLength(1);
-  expect(findDuctCollisions(p, paths).size).toBe(0);
+  // The former bare hose fitted; 25 mm insulation now makes this exact collar approach too tight.
+  expect(paths[0].radiusM).toBeCloseTo(paths[0].diameterMm / 2000 + .025);
+  expect([...findDuctCollisions(p, paths).values()]).toEqual([
+    expect.objectContaining({ withIds: ["obstacle"] }),
+  ]);
 });
 
 it("keeps the ceiling terminal plenum in the void above a suspended ceiling", () => {

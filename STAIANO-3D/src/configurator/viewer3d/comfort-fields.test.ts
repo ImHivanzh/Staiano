@@ -58,8 +58,14 @@ it("rises in heating and sinks in cooling for real split, ceiling and wall outle
   const split = house.hvacSystems.find((s) => s.type === "split")!;
   project.hvacSystems.push(split);
   project.rooms.push(...house.rooms);
-  const supply = project.airTerminals.find((terminal) => terminal.use === "supply")!;
-  project.airTerminals.push({ ...supply, id: "standalone-supply", systemId: null });
+  const supply = project.airTerminals.find(
+    (terminal) => terminal.use === "supply",
+  )!;
+  project.airTerminals.push({
+    ...supply,
+    id: "standalone-supply",
+    systemId: null,
+  });
   project.fanCoils!.push({
     ...project.fanCoils![0],
     id: "ceiling-fan",

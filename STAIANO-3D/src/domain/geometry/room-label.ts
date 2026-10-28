@@ -67,3 +67,51 @@ export function roomLabelPoint(polygon: Point[]): Point {
   }
   return { x: best.x, y: best.y };
 }
+
+export interface LabelObstacle {
+  x: number;
+  y: number;
+  /** Mezza diagonale dell'ingombro in metri. */
+  radius: number;
+}
+
+/**
+ * Sposta l'etichetta dal punto ideale al punto libero più vicino quando un apparecchio
+ * la coprirebbe. Il riquadro è approssimato in metri: basta a evitare il testo sovrapposto.
+ */
+export function roomLabelPointAvoiding(
+  polygon: Point[],
+  obstacles: readonly LabelObstacle[],
+  halfWidth = 0.65,
+  halfHeight = 0.4,
+): Point {
+  const base = roomLabelPoint(polygon);
+  const hits = (p: Point) =>
+    obstacles.some(
+      (o) =>
+        Math.abs(o.x - p.x) < halfWidth + o.radius &&
+        Math.abs(o.y - p.y) < halfHeight + o.radius,
+    );
+  if (!hits(base)) return base;
+  const fits = (p: Point) =>
+    [-1, 1].every((sx) =>
+      [-1, 1].every((sy) =>
+        pointInPolygon(
+          { x: p.x + sx * halfWidth, y: p.y + sy * halfHeight },
+          polygon,
+        ),
+      ),
+    );
+  let best: Point | null = null;
+  let bestDistance = Infinity;
+  for (let dx = -3; dx <= 3; dx += 0.2)
+    for (let dy = -3; dy <= 3; dy += 0.2) {
+      const p = { x: base.x + dx, y: base.y + dy };
+      const d = Math.hypot(dx, dy);
+      if (d < bestDistance && fits(p) && !hits(p)) {
+        best = p;
+        bestDistance = d;
+      }
+    }
+  return best ?? base;
+}

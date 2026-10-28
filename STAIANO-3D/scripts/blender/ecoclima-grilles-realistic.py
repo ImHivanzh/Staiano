@@ -2,6 +2,7 @@
 from pathlib import Path
 import math
 import bpy
+from mathutils import Vector, noise
 
 ROOT=Path(__file__).resolve().parents[2]
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -20,6 +21,18 @@ aluminium=mat('Alluminio anodizzato',(.59,.62,.62),.65,.4)
 shadow=mat('Interno',(.035,.04,.04),.05,.8)
 filter_mat=mat('Filtro G2',(.58,.59,.57),0,.98)
 hardware=mat('Cerniere e chiusura',(.19,.21,.21),.65,.5)
+
+# Packed texture survives GLB export, unlike a procedural Noise shader.
+fabric=bpy.data.images.new('Tessuto filtrante G2',width=256,height=256)
+pixels=[]
+for row in range(256):
+    for col in range(256):
+        value=.76 + .12*noise.noise(Vector((col*.12,row*.12,0))) + .06*noise.noise(Vector((col*.9,row*1.8,3)))
+        pixels.extend((value,value,value*.98,1))
+fabric.pixels.foreach_set(pixels); fabric.pack()
+nodes=filter_mat.node_tree.nodes; links=filter_mat.node_tree.links
+tex=nodes.new('ShaderNodeTexImage'); tex.image=fabric
+links.new(tex.outputs['Color'],next(n for n in nodes if n.type=='BSDF_PRINCIPLED').inputs['Base Color'])
 
 
 def box(c, name, loc, dims, material):
@@ -70,14 +83,32 @@ def perforation(c, width, height, y):
     o=bpy.data.objects.new('Pannello_forato',mesh); c.objects.link(o); o.data.materials.append(white)
 
 
+def filter_cartridge(c):
+    media=box(c,'Filtro', (0,.013,0),(.525,.012,.325),filter_mat)
+    uv=media.data.uv_layers.active or media.data.uv_layers.new(name='UVMap')
+    for loop in media.data.loops:
+        co=media.data.vertices[loop.vertex_index].co
+        uv.data[loop.index].uv=(co.x/.525+.5,co.z/.325+.5)
+    miter_frame(c,'Filtro_telaio',.545,.345,.010,.013,aluminium)
+    # Protective wire net on the front of the removable 12 mm cartridge.
+    for i in range(-12,13):
+        box(c,'Filtro_rete', (i*.02,.006,0),(.0006,.0006,.325),hardware)
+    for i in range(-7,8):
+        box(c,'Filtro_rete', (0,.0055,i*.02),(.525,.0006,.0006),hardware)
+    for x in (-.20,.20):
+        for z in (-.17,.17):
+            box(c,'Filtro_fermo',(x,.004,z),(.014,.003,.009),hardware)
+
+
 for family in ('ega6','ebl','egf','egf-push'):
     c=bpy.data.collections.new(family.upper()); scene.collection.children.link(c)
     surface=aluminium if family in ('ega6','ebl') else white
     miter_frame(c,'Cornice_fissa',.6,.4,.024,-.021,surface)
     push=family=='egf-push'; filtered=push or family=='ega6'
     if filtered:
-        box(c,'Filtro', (0,.013,0),(.545,.012,.345),filter_mat)
-        miter_frame(c,'Cornice_mobile',.552,.352,.016,-.023,surface)
+        filter_cartridge(c)
+        # 2 mm visual clearance per side; the old frame touched the fixed opening.
+        miter_frame(c,'Cornice_mobile',.548 if push else .552,.348 if push else .352,.016,-.023,surface)
         if push:
             for x in (-.25,.25):
                 box(c,'Cerniera', (x,-.002,.169),(.014,.018,.012),hardware)
@@ -100,6 +131,10 @@ for family in ('ega6','ebl','egf','egf-push'):
             # distanziali verticali vicino ai due lati, come nella foto del produttore
             for x in (-.235,.235): box(c,'Distanziale barre', (x,-.022,0),(.008,.012,.336),surface)
     bpy.ops.object.select_all(action='DESELECT')
+    if push:
+        hinge=bpy.data.objects.new('Asse_botola',None)
+        hinge.location=(0,-.023,.174)
+        c.objects.link(hinge)
     for o in c.objects: o.select_set(True)
     bpy.context.view_layer.objects.active=next(iter(c.objects))
     bpy.ops.export_scene.gltf(filepath=str(ROOT/'public/models/hvac'/f'{family}-realistic.glb'),export_format='GLB',use_selection=True,use_active_scene=True)

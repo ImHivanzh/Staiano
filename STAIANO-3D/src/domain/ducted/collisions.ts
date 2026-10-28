@@ -13,6 +13,7 @@ import {
   type CeilingSurface,
 } from "./ceiling-surfaces";
 import type { Body } from "./duct-bodies";
+import { flexibleDuctOuterRadiusM } from "@/domain/catalogs/flexible-ducts";
 import { deviceCodes } from "@/services/export/device-codes";
 
 export type DuctScenePath = {
@@ -68,8 +69,9 @@ export function ductScenePaths(
       diameterMm,
       flexible: !duct || duct.kind === "flexible",
       radiusM:
-        !duct || duct.shape === "circle"
-          ? diameterMm / 2000
+        !duct || duct.kind === "flexible"
+          ? flexibleDuctOuterRadiusM(diameterMm, duct?.flexibleProductId)
+          : duct.shape === "circle" ? diameterMm / 2000
           : Math.hypot(duct.widthMm ?? 0, duct.heightMm ?? 0) / 2000,
       fallbackPoint:
         fallbackPoint ??

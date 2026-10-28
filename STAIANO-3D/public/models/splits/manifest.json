@@ -1,0 +1,222 @@
+[
+  {
+    "family": "Perfera All Seasons",
+    "url": "/models/splits/perfera-all-seasons.glb",
+    "referenceModel": "CTXM15A",
+    "dimensionsMm": [
+      804,
+      298,
+      252
+    ],
+    "photo": "/catalog-assets/splits/daikin-perfera-all-seasons-official.jpg"
+  },
+  {
+    "family": "MSZ-AY",
+    "url": "/models/splits/msz-ay.glb",
+    "referenceModel": "MSZ-AY15VGKP",
+    "dimensionsMm": [
+      760,
+      250,
+      199
+    ],
+    "photo": "/catalog-assets/splits/mitsubishi-msz-ay.png"
+  },
+  {
+    "family": "Pular New",
+    "url": "/models/splits/pular-new.glb",
+    "referenceModel": "GWH09AGBXB-K6DNA1B/I",
+    "dimensionsMm": [
+      779,
+      260,
+      185
+    ],
+    "photo": "/catalog-assets/splits/gree-pular.png"
+  },
+  {
+    "family": "Pular",
+    "url": "/models/splits/pular.glb",
+    "referenceModel": "GWH18AGD-K6DNA1D/I",
+    "dimensionsMm": [
+      982,
+      311,
+      221
+    ],
+    "photo": "/catalog-assets/splits/gree-pular.png"
+  },
+  {
+    "family": "Standard Plus",
+    "url": "/models/splits/standard-plus.glb",
+    "referenceModel": "MJ05PC.NSJ",
+    "dimensionsMm": [
+      754,
+      308,
+      189
+    ],
+    "photo": "/catalog-assets/splits/lg-standard-plus.png"
+  },
+  {
+    "family": "Mirror",
+    "url": "/models/splits/mirror.glb",
+    "referenceModel": "AM07BH.NSJ",
+    "dimensionsMm": [
+      837,
+      308,
+      192
+    ],
+    "photo": "/catalog-assets/splits/lg-mirror.png"
+  },
+  {
+    "family": "Air Purification",
+    "url": "/models/splits/air-purification.glb",
+    "referenceModel": "AP09RT.NSJ",
+    "dimensionsMm": [
+      857,
+      348,
+      189
+    ],
+    "photo": "/catalog-assets/splits/lg-air-purification.png"
+  },
+  {
+    "family": "Deluxe",
+    "url": "/models/splits/deluxe.glb",
+    "referenceModel": "DM07RH.NSJ",
+    "dimensionsMm": [
+      837,
+      308,
+      189
+    ],
+    "photo": "/catalog-assets/splits/lg-deluxe.png"
+  },
+  {
+    "family": "Standard 2",
+    "url": "/models/splits/standard-2.glb",
+    "referenceModel": "MS07ET.NSA",
+    "dimensionsMm": [
+      754,
+      308,
+      189
+    ],
+    "photo": "/catalog-assets/splits/lg-standard-2.png"
+  },
+  {
+    "family": "DUALCOOL AI Deluxe",
+    "url": "/models/splits/dualcool-ai-deluxe.glb",
+    "referenceModel": "H09S1DA",
+    "dimensionsMm": [
+      895,
+      307,
+      235
+    ],
+    "photo": "/catalog-assets/splits/lg-dualcool-ai-deluxe.jpg"
+  },
+  {
+    "family": "DUALCOOL AI Premium",
+    "url": "/models/splits/dualcool-ai-premium.glb",
+    "referenceModel": "H09S1PA",
+    "dimensionsMm": [
+      895,
+      307,
+      235
+    ],
+    "photo": "/catalog-assets/splits/lg-dualcool-ai-premium.jpg"
+  },
+  {
+    "family": "Stylish",
+    "url": "/models/splits/stylish.glb",
+    "referenceModel": "FTXA20CW",
+    "dimensionsMm": [
+      798,
+      295,
+      189
+    ],
+    "photo": "/catalog-assets/splits/daikin-stylish-official.jpg"
+  },
+  {
+    "family": "Emura",
+    "url": "/models/splits/emura.glb",
+    "referenceModel": "FTXJ20AW",
+    "dimensionsMm": [
+      900,
+      305,
+      212
+    ],
+    "photo": "/catalog-assets/splits/daikin-emura-official.jpg"
+  },
+  {
+    "family": "Comfora",
+    "url": "/models/splits/comfora.glb",
+    "referenceModel": "FTXP20N9",
+    "dimensionsMm": [
+      770,
+      286,
+      225
+    ],
+    "photo": "/catalog-assets/splits/daikin-comfora-official.jpg"
+  },
+  {
+    "family": "Sensira",
+    "url": "/models/splits/sensira.glb",
+    "referenceModel": "FTXF20E",
+    "dimensionsMm": [
+      770,
+      286,
+      225
+    ],
+    "photo": "/catalog-assets/splits/daikin-sensira-official.jpg"
+  },
+  {
+    "family": "Clivia",
+    "url": "/models/splits/clivia.glb",
+    "referenceModel": "GWH09AUCXB-K6DNA1A/I",
+    "dimensionsMm": [
+      837,
+      293,
+      200
+    ],
+    "photo": "/catalog-assets/splits/gree-clivia.png"
+  },
+  {
+    "family": "Airy",
+    "url": "/models/splits/airy.glb",
+    "referenceModel": "GWH09AVCXB-K6DNA1B/I",
+    "dimensionsMm": [
+      907,
+      292,
+      200
+    ],
+    "photo": "/catalog-assets/splits/gree-airy.png"
+  },
+  {
+    "family": "MSZ-HR",
+    "url": "/models/splits/msz-hr.glb",
+    "referenceModel": "MSZ-HR25VF",
+    "dimensionsMm": [
+      838,
+      280,
+      228
+    ],
+    "photo": "/catalog-assets/splits/mitsubishi-msz-hr.png"
+  },
+  {
+    "family": "MSZ-EF",
+    "url": "/models/splits/msz-ef.glb",
+    "referenceModel": "MSZ-EF18VGKW",
+    "dimensionsMm": [
+      885,
+      299,
+      195
+    ],
+    "photo": "/catalog-assets/splits/mitsubishi-msz-ef.png"
+  },
+  {
+    "family": "MSZ-LN",
+    "url": "/models/splits/msz-ln.glb",
+    "referenceModel": "MSZ-LN18VG2W",
+    "dimensionsMm": [
+      890,
+      307,
+      233
+    ],
+    "photo": "/catalog-assets/splits/mitsubishi-msz-ln.png"
+  }
+]

@@ -35,6 +35,8 @@ import { HydronicMeshes } from "./HydronicMeshes";
 import { AirOutdoorMeshes } from "./AirOutdoorMeshes";
 import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
 import { vrvIndoorAtVersion } from "@/domain/catalogs/vrv";
+import { splitWallModelUrl } from "@/domain/catalogs/split-models";
+const SplitWallBody = lazy(() => import("./SplitWallBody"));
 import { cassetteDetail, roundCassetteGrille } from "./cassette-detail";
 import { terminalFaceDetail } from "./terminal-detail";
 import { Html, Line, MeshReflectorMaterial } from "@react-three/drei";
@@ -304,6 +306,7 @@ function SplitMesh({
     splitIndoorAtVersion(item.productId, item.catalogVersion) ??
     vrvIndoorAtVersion(item.productId, item.catalogVersion);
   const family = product?.family;
+  const wallModel = splitWallModelUrl(family);
   const ceiling =
     (product && "mounting" in product && product.mounting === "ceiling") ||
     item.mounting === "ceiling";
@@ -412,6 +415,16 @@ function SplitMesh({
             geometry={box}
             material={plastic}
           />
+          {selected && <SelectionOutline dimensions={[w, h, d]} />}
+        </>
+      ) : wallModel ? (
+        <>
+          <ModelAssetBoundary fallback={<mesh geometry={body} material={bodyMaterial} />}>
+            <Suspense fallback={<mesh geometry={body} material={bodyMaterial} />}>
+              <SplitWallBody url={wallModel} width={w} height={h} depth={d} />
+            </Suspense>
+          </ModelAssetBoundary>
+          <BrandMark name={manufacturer} width={Math.min(.10, w * .12)} position={[0, h * .03, d / 2 + .0003]} />
           {selected && <SelectionOutline dimensions={[w, h, d]} />}
         </>
       ) : (

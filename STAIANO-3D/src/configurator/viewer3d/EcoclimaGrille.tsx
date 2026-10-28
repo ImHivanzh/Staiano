@@ -6,14 +6,13 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
 export function grilleHinge(scene: THREE.Object3D) {
-  const hinge = new THREE.Group();
-  hinge.position.y = 0.176;
+  const hinge = scene.getObjectByName("Asse_botola");
+  if (!hinge) throw new Error("Modello EGF-PUSH senza asse della botola.");
+  scene.updateMatrixWorld(true);
   const door = scene.children.filter((child) => /^(Cornice_mobile|Pannello_forato)/.test(child.name));
   for (const child of door) {
-    child.position.y -= 0.176;
-    hinge.add(child);
+    hinge.attach(child);
   }
-  scene.add(hinge);
   return hinge;
 }
 
@@ -25,7 +24,7 @@ export function EcoclimaGrille({ model, width, height, open, color }: {
   const progress = useRef(0);
   const { scene, hinge, finish } = useMemo(() => {
     const scene = gltf.scene.clone(true);
-    let hinge = new THREE.Group();
+    let hinge: THREE.Object3D = new THREE.Group();
     const natural = (model === "ega6" || model === "ebl") && !color;
     const tint = /^#[0-9a-f]{6}$/i.test(color) ? color : color === "RAL9005" ? "#171819" : color === "RAL9016" ? "#f4f4f0" : natural ? "#b5bdbf" : "#efefed";
     const finish = new THREE.MeshStandardMaterial({ color: tint, metalness: natural ? .55 : .15, roughness: .48, side: THREE.DoubleSide });
@@ -45,7 +44,6 @@ export function EcoclimaGrille({ model, width, height, open, color }: {
   useEffect(() => { hingeRef.current = hinge; }, [hinge]);
   useFrame((_, delta) => {
     progress.current = THREE.MathUtils.damp(progress.current, open ? 1 : 0, 5, delta);
-    hingeRef.current.position.z = Math.sin(progress.current * Math.PI) * .006;
     hingeRef.current.rotation.x = -progress.current * 1.15;
   });
   return <group scale={[width / .6, height / .4, 1]} dispose={null}>

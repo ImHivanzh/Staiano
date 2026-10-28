@@ -99,11 +99,13 @@ export function ComfortFlows({
   floorId,
   mode,
   roomId,
+  includeDucted,
 }: {
   project: Project;
   floorId: string;
   mode: ComfortMode;
   roomId?: string;
+  includeDucted?: boolean;
 }) {
   const { gl } = useThree();
   const group = useRef<THREE.Group>(null);
@@ -112,36 +114,38 @@ export function ComfortFlows({
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const paths = useMemo(
     () =>
-      comfortFields(project, floorId, mode, roomId).map((field, i) => {
-        const returned = field.kind === "return";
-        return {
-          field,
-          geometry: wispGeometry(comfortFlowCurve(field)),
-          material: new THREE.ShaderMaterial({
-            vertexShader,
-            fragmentShader,
-            transparent: true,
-            depthWrite: false,
-            side: THREE.DoubleSide,
-            uniforms: {
-              uColor: {
-                value: new THREE.Color(
-                  returned
-                    ? "#6f9aa3"
-                    : mode === "heat"
-                      ? "#f0883a"
-                      : "#2f9fe0",
-                ),
+      comfortFields(project, floorId, mode, roomId, includeDucted).map(
+        (field, i) => {
+          const returned = field.kind === "return";
+          return {
+            field,
+            geometry: wispGeometry(comfortFlowCurve(field)),
+            material: new THREE.ShaderMaterial({
+              vertexShader,
+              fragmentShader,
+              transparent: true,
+              depthWrite: false,
+              side: THREE.DoubleSide,
+              uniforms: {
+                uColor: {
+                  value: new THREE.Color(
+                    returned
+                      ? "#6f9aa3"
+                      : mode === "heat"
+                        ? "#f0883a"
+                        : "#2f9fe0",
+                  ),
+                },
+                uTime: { value: 0 },
+                uPhase: { value: (i * 0.13) % 1 },
+                uOpacity: { value: returned ? 0.6 : 0.95 },
+                uWidth: { value: returned ? 0.045 : 0.065 },
               },
-              uTime: { value: 0 },
-              uPhase: { value: (i * 0.13) % 1 },
-              uOpacity: { value: returned ? 0.6 : 0.95 },
-              uWidth: { value: returned ? 0.045 : 0.065 },
-            },
-          }),
-        };
-      }),
-    [project, floorId, mode, roomId],
+            }),
+          };
+        },
+      ),
+    [project, floorId, mode, roomId, includeDucted],
   );
   useEffect(() => {
     gl.domElement.setAttribute("data-comfort-mode", mode);

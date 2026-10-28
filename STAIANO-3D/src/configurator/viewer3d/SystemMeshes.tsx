@@ -8,38 +8,27 @@ import {
   plenumConnectionSide,
   plenumPortLocal,
   type PlenumConnectionSide,
+  ATTACHED_PLENUM_COLLAR_LENGTH_M,
 } from "@/domain/ducted/attached-plenums";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 import { DuctedMachineBody } from "./DuctedMachineBody";
-import { plenumFaceGeometry } from "./plenum-shell";
+import { attachedPlenumFaces, plenumFaceGeometry, type PlenumOpening } from "./plenum-shell";
+import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 
-function AttachedPlenumShell({ plenum, ports, green, selected }: {
+function AttachedPlenumShell({ plenum, ports, green, selected, inlet }: {
   plenum: Plenum;
   ports: { side: PlenumConnectionSide; x: number; y: number; z: number; radius: number }[];
   green: boolean;
   selected: boolean;
+  inlet: PlenumOpening | null;
 }) {
   const w = plenum.widthMm / 1000, h = plenum.heightMm / 1000, d = plenum.depthMm / 1000;
-  const faces = useMemo(() => {
-    const sides = ["front", "rear", "top", "bottom", "left", "right"] as const;
-    return sides.map((side) => {
-      const isEnd = side === "left" || side === "right";
-      const isHorizontal = side === "top" || side === "bottom";
-      const fw = isEnd ? d : w, fh = isHorizontal ? d : h;
-      const holes = ports.filter((p) => p.side === side).map((p) => ({
-        x: isEnd ? -p.y : p.x,
-        y: isHorizontal ? p.y : p.z,
-        radius: p.radius,
-      }));
-      const position: [number, number, number] = side === "front" ? [0, 0, d / 2] : side === "rear" ? [0, 0, -d / 2] : side === "top" ? [0, h / 2, 0] : side === "bottom" ? [0, -h / 2, 0] : side === "left" ? [-w / 2, 0, 0] : [w / 2, 0, 0];
-      const rotation: [number, number, number] = isEnd ? [0, Math.PI / 2, 0] : isHorizontal ? [Math.PI / 2, 0, 0] : [0, 0, 0];
-      return { side, geometry: plenumFaceGeometry(fw, fh, holes), position, rotation };
-    });
-  }, [w, h, d, ports]);
+  const faces = useMemo(() => attachedPlenumFaces(w, h, d, ports, inlet), [w, h, d, ports, inlet]);
   useEffect(() => () => { for (const face of faces) face.geometry.dispose(); }, [faces]);
   return <group>{faces.map((face) => <mesh key={face.side} geometry={face.geometry} position={face.position} rotation={face.rotation} castShadow receiveShadow>
-    <meshStandardMaterial color={selected ? "#67c8de" : green ? "#a6c77a" : "#aebbbd"} metalness={green ? .08 : .65} roughness={green ? .85 : .4} side={THREE.DoubleSide} />
+    <meshStandardMaterial attach="material-0" color={selected ? "#67c8de" : green ? "#a6c77a" : "#aebbbd"} metalness={green ? .08 : .65} roughness={green ? .85 : .4} />
+    <meshStandardMaterial attach="material-1" color={selected ? "#67c8de" : "#b7bdbd"} metalness={.65} roughness={.45} />
   </mesh>)}</group>;
 }
 
@@ -177,10 +166,10 @@ export function PlenumBody({
           </mesh>
           <mesh position={[0, 0, port.collarLengthM]}>
             <ringGeometry
-              args={[port.diameterM * 0.44, port.diameterM / 2, 32]}
+              args={[port.diameterM / 2 - .0015, port.diameterM / 2, 32]}
             />
             <meshStandardMaterial
-              color="#91b5c5"
+              color="#b8c6c8"
               metalness={0.7}
               side={THREE.DoubleSide}
             />
@@ -188,10 +177,6 @@ export function PlenumBody({
           <mesh position={[0, 0, port.collarLengthM * 0.65]}>
             <torusGeometry args={[port.diameterM / 2, 0.002, 6, 32]} />
             <meshStandardMaterial color="#b8c6c8" metalness={0.7} roughness={0.35} />
-          </mesh>
-          <mesh position={[0, 0, -Math.min(layout.boxDepthM * .4, .04)]}>
-            <circleGeometry args={[port.diameterM * 0.49, 32]} />
-            <meshStandardMaterial color="#183c4c" />
           </mesh>
           {labels && (
             <NumberLabel
@@ -240,22 +225,28 @@ function PlenumMesh({
     });
     const ports = sides.map((side, i) => ({
       side,
-      ...plenumPortLocal(plenum, side, ordinals[i], totals[side], 0.03),
+      ...plenumPortLocal(plenum, side, ordinals[i], totals[side], ATTACHED_PLENUM_COLLAR_LENGTH_M / 2),
       radius,
     }));
-    const green = plenum.material === "insulated" && project.airTerminals.some((terminal) => terminal.id === plenum.attachmentId && terminal.family === "EDLS");
+    const terminal = project.airTerminals.find((terminal) => terminal.id === plenum.attachmentId);
+    const family = terminal && airTerminalFamilyAtVersion(terminal.family, terminal.catalogVersion);
+    const variant = family?.variants.find((variant) => variant.id === terminal?.productId);
+    const side = terminal?.mounting === "ceiling" ? "bottom" : "front";
+    const circular = terminal?.shape === "circle" || terminal?.family.startsWith("EDSC-");
+    const nominal = variant?.nominalDiameterMm ?? terminal?.commercialOptions?.mountingDuctDiameterMm;
+    const inlet: PlenumOpening | null = !terminal ? null : circular
+      ? nominal ? { side, radius: nominal / 2000 } : null
+      : { side, width: Math.max(.001, plenum.widthMm / 1000 - .024), height: Math.max(.001, (side === "bottom" ? plenum.depthMm : plenum.heightMm) / 1000 - .024) };
+    const renderPorts = inlet && "radius" in inlet
+      ? [...ports, { side: inlet.side, ...plenumPortLocal(plenum, inlet.side, 0, 1, ATTACHED_PLENUM_COLLAR_LENGTH_M / 2), radius: inlet.radius }]
+      : ports;
+    const green = plenum.material === "insulated";
     return (
       <group>
-        <AttachedPlenumShell plenum={plenum} ports={ports} green={green} selected={selected} />
-        {Array.from({ length: count }, (_, i) => {
-          const side = sides[i];
-          const local = plenumPortLocal(
-            plenum,
-            side,
-            ordinals[i],
-            totals[side],
-            0.03,
-          );
+        <AttachedPlenumShell plenum={plenum} ports={ports} green={green} selected={selected} inlet={inlet} />
+        {renderPorts.map((local, i) => {
+          const side = local.side;
+          const radius = local.radius;
           return (
             <group
               key={i}
@@ -269,14 +260,14 @@ function PlenumMesh({
               }
             >
               <mesh>
-                <cylinderGeometry args={[radius, radius, 0.06, 40, 1, true]} />
+                <cylinderGeometry args={[radius, radius, ATTACHED_PLENUM_COLLAR_LENGTH_M, 40, 1, true]} />
                 <meshStandardMaterial color="#b8c1c2" metalness={0.7} roughness={0.35} side={THREE.DoubleSide} />
               </mesh>
-              <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, .029, 0]}>
+              <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, ATTACHED_PLENUM_COLLAR_LENGTH_M / 2, 0]}>
                 <ringGeometry args={[radius - .0015, radius, 40]} />
                 <meshStandardMaterial color="#d0d4d4" metalness={0.7} roughness={0.3} side={THREE.DoubleSide} />
               </mesh>
-              <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -.029, 0]}>
+              <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -ATTACHED_PLENUM_COLLAR_LENGTH_M / 2, 0]}>
                 <ringGeometry args={[radius - .0015, radius, 40]} />
                 <meshStandardMaterial color="#d0d4d4" metalness={0.7} roughness={0.3} side={THREE.DoubleSide} />
               </mesh>

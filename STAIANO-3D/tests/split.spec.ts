@@ -5,6 +5,10 @@ import { exportPlenumFixture } from "./plenum-ui-fixture";
 test("split reale: salva, ricarica e sincronizza selezione2D/3D", async ({
   page,
 }) => {
+  const splitAssets: number[] = [];
+  page.on("response", (response) => {
+    if (/\/models\/splits\/[^/]+\.glb$/.test(new URL(response.url()).pathname)) splitAssets.push(response.status());
+  });
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await page.getByRole("button", { name: /^Disegna manualmente/ }).click();
@@ -68,6 +72,7 @@ test("split reale: salva, ricarica e sincronizza selezione2D/3D", async ({
   const canvas = page.getByTestId("viewer-3d").locator("canvas");
   await expect(canvas).toHaveAttribute("data-rendered", "true");
   await expect(canvas).toHaveAttribute("data-selection", unit.id);
+  await expect.poll(() => splitAssets).toContain(200);
   await page
     .getByRole("button", { name: /^Controlli/ })
     .first()

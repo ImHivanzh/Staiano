@@ -19,6 +19,7 @@ import {
   segmentInsideFloor,
 } from "@/domain/geometry/indoor-route";
 import { flexibleDuctCurve } from "./flexible-curve";
+import { flexibleDuctOuterRadiusM } from "@/domain/catalogs/flexible-ducts";
 import { wallCavityGeometry, wallCavityPolygons } from "./wall-cavity";
 import { roofHeightAt } from "../geometry/ceilings";
 import { footprintCorners } from "@/domain/geometry/footprint";
@@ -235,7 +236,7 @@ function flexibleConnectionRoute(
         x: -cavityGeometry!.normal.x,
         y: -cavityGeometry!.normal.y,
       };
-      const radius = diameterMm / 2000;
+      const radius = flexibleDuctOuterRadiusM(diameterMm, flexibleProductId);
       const toDepth =
         (to.x - cavity[0].x) * normal.x + (to.y - cavity[0].y) * normal.y;
       if (depth < target.depthMm / 1000 || toDepth + radius > depth + 1e-6)
@@ -304,7 +305,7 @@ function flexibleConnectionRoute(
           const samples = rounded.curve.getSpacedPoints(
             Math.max(24, Math.ceil(rounded.curve.getLength() / 0.05)),
           );
-          const radius = diameterMm / 2000;
+          const radius = flexibleDuctOuterRadiusM(diameterMm, flexibleProductId);
           if (
             terminal.mounting === "wall" &&
             samples.some((point) => {
@@ -489,7 +490,7 @@ export function airConnectionRoutes(project: Project, floorId: string) {
         floorId,
         points,
         [terminal.id],
-        end.diameterMm / 2000,
+        flexibleDuctOuterRadiusM(end.diameterMm),
       );
       return [
         {

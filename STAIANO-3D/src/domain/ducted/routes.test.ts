@@ -12,8 +12,10 @@ import {
   plenumConnectionSide,
   syncAttachedPlenums,
   attachedPlenumPorts,
+  plenumPortLocal,
+  ATTACHED_PLENUM_COLLAR_LENGTH_M,
 } from "./attached-plenums";
-import { machinePlenum, placeSupplyPlenum } from "./placement";
+import { machinePlenum, placeSupplyPlenum, placedPlenumGeometry } from "./placement";
 import { flexibleDuctCurve } from "./flexible-curve";
 import { Vector3 } from "three";
 import {
@@ -227,6 +229,41 @@ it.each(
     }
   },
 );
+
+it.each([0, Math.PI / 2, Math.PI].flatMap((rotation) =>
+  (["upper", "lower", "left", "right", "rear", "front"] as const).map((position) => ({ rotation, position })),
+))("mates the hose exactly to both visible mouths: $position, rotation $rotation", ({ rotation, position }) => {
+  let p = fixture();
+  const terminal = p.airTerminals[0];
+  p = { ...p, plenums: p.plenums.map((body) => body.attachmentId === terminal.id
+    ? { ...body, status: "manual" as const, rotation, position: { x: 5, y: 3 }, connectionPosition: position }
+    : { ...body, rotation }) };
+  const result = createDuctFromEndpoints(p, terminal.id, p.hvacSystems[0].id);
+  const source = machinePlenum(result.project, terminal.systemId!, "supply")!;
+  const target = terminalPlenum(result.project, terminal)!;
+  expect(target.position).toEqual({ x: 5, y: 3 });
+  expect(target.rotation).toBeCloseTo(rotation);
+  const side = plenumConnectionSide(result.project, target);
+  const half = ATTACHED_PLENUM_COLLAR_LENGTH_M / 2;
+  const centre = plenumPortLocal(target, side, 0, 1, half);
+  const axis = new Vector3(...({ top: [0, 1, 0], bottom: [0, -1, 0], left: [-1, 0, 0], right: [1, 0, 0], front: [0, 0, 1], rear: [0, 0, -1] }[side] as [number, number, number]));
+  const targetMouth = new Vector3(centre.x, centre.z, centre.y).addScaledVector(axis, half)
+    .applyAxisAngle(new Vector3(0, 1, 0), -target.rotation)
+    .add(new Vector3(target.position.x, target.elevationM!, target.position.y));
+  const geometry = placedPlenumGeometry(result.project, source)!;
+  const port = geometry.ports.find((port) => port.branch.terminalIds.includes(terminal.id))!;
+  const sourceMouth = new Vector3(port.centerMm[0] / 1000, port.centerMm[1] / 1000,
+    (port.centerMm[2] + port.collarLengthMm) / 1000 - source.depthMm / 2000)
+    .applyAxisAngle(new Vector3(0, 1, 0), -source.rotation)
+    .add(new Vector3(source.position.x, source.elevationM!, source.position.y));
+  for (const id of result.ductIds) {
+    const duct = result.project.ducts!.find((duct) => duct.id === id)!;
+    const curve = flexibleDuctCurve(ductRoute(result.project, duct), duct.diameterMm!)!.curve;
+    expect(curve.getPointAt(0).distanceTo(sourceMouth)).toBeLessThan(1e-7);
+    expect(curve.getPointAt(1).distanceTo(targetMouth)).toBeLessThan(1e-7);
+  }
+  expect(result.ductIds.length).toBeGreaterThan(0);
+});
 
 it("uses a different side for each collar of the same plenum", () => {
   let p = fixture();

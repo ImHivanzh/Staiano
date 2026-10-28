@@ -84,7 +84,7 @@ it.each([80, 160, 315])(
         flexibleDuctCurve(
           route.map((point, index) =>
             index >= 4
-              ? { ...point, elevationM: 2.5 + diameterMm / 1000 + 0.01 }
+              ? { ...point, elevationM: 2.5 + (diameterMm + 50) / 1000 + 0.01 }
               : point,
           ),
           diameterMm,
