@@ -9,6 +9,7 @@ import { drywallGeometries } from "../geometry/drywall";
 import { projectOutdoorUnits } from "../hydronic/placement";
 import {
   architecturalWallHeight,
+  liningHeight,
   measuredOpenings,
   wallPanels,
 } from "@/configurator/viewer3d/architecture-geometry";
@@ -218,6 +219,15 @@ export function bodies(
         const copy = {
           ...wall,
           thickness,
+          height:
+            thickness === wall.thickness
+              ? wall.height
+              : liningHeight(
+                  wall,
+                  project.rooms,
+                  cavity.roomId,
+                  project.projectSettings.defaultHeightM,
+                ),
           start: {
             x: start.x - (cavity.normal.x * thickness) / 2,
             y: start.y - (cavity.normal.y * thickness) / 2,
@@ -244,6 +254,12 @@ export function bodies(
             {
               ...wall,
               thickness: 0.0125,
+              height: liningHeight(
+                wall,
+                project.rooms,
+                cavity.roomId,
+                project.projectSettings.defaultHeightM,
+              ),
               start: cavity.back[end],
               end: cavity.front[end],
             },

@@ -538,3 +538,29 @@ it("places the machine plenum beside an existing terminal plenum and aligns it w
   );
   expect(placeSupplyPlenum(p, p.hvacSystems[0].id).plenums).toHaveLength(2);
 });
+
+it("riaggancia in verticale il plenum staccato dalla bocchetta a parete", () => {
+  const p = fixture("wall");
+  const terminal = p.airTerminals[0];
+  const detached = {
+    ...p,
+    plenums: p.plenums.map((item) => ({
+      ...item,
+      status: "manual" as const,
+      elevationM: (terminal.elevationM ?? 2) - 0.5,
+    })),
+  };
+  const healed = syncAttachedPlenums(detached, detached);
+  expect(healed.plenums[0].elevationM).toBe(terminal.elevationM);
+  // Un piccolo distacco scelto, ancora a contatto, resta com'è.
+  const near = {
+    ...detached,
+    plenums: detached.plenums.map((item) => ({
+      ...item,
+      elevationM: (terminal.elevationM ?? 2) - 0.05,
+    })),
+  };
+  expect(syncAttachedPlenums(near, near).plenums[0].elevationM).toBeCloseTo(
+    (terminal.elevationM ?? 2) - 0.05,
+  );
+});

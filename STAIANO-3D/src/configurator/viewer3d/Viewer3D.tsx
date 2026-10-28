@@ -1,10 +1,11 @@
 "use client";
 import {
+  addPlenumOnMachine,
   addTerminalPlenum,
   connectPlenum,
   syncAttachedPlenums,
 } from "@/domain/ducted/attached-plenums";
-import { addMachinePlenum } from "@/domain/ducted/placement";
+
 import {
   Component,
   useCallback,
@@ -279,7 +280,7 @@ export default function Viewer3D({
         .commit((project) =>
           terminal
             ? addTerminalPlenum(project, terminal.id)
-            : addMachinePlenum(project, target.id),
+            : addPlenumOnMachine(project, target.id),
         );
       const saved = useProjectStore.getState();
       if (!saved.error) {

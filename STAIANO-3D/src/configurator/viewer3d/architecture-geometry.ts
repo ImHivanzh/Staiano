@@ -104,6 +104,18 @@ export function architecturalWallHeight(
   );
 }
 
+/** La controparete arriva al controsoffitto: sopra, l'intercapedine continua nel vuoto tecnico (a L). */
+export function liningHeight(
+  wall: Wall,
+  rooms: readonly Room[],
+  roomId: string,
+  defaultHeightM: number,
+) {
+  const full = architecturalWallHeight(wall, rooms, defaultHeightM);
+  const ceiling = rooms.find((r) => r.id === roomId)?.ceilingHeightM;
+  return ceiling && ceiling < full ? ceiling : full;
+}
+
 /** Limit an isolated room to its own span of a longer shared wall. */
 export function roomWallSpan(wall: Wall, room: Room | undefined) {
   const length = distance(wall.start, wall.end);

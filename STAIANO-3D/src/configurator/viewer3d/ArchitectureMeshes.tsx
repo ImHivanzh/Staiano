@@ -9,6 +9,7 @@ import type { Room, Selection, Wall } from "@/schemas/project";
 import { distance } from "@/domain/geometry/primitives";
 import {
   architecturalWallHeight,
+  liningHeight,
   measuredOpenings,
   roomWallSpan,
   wallPanels,
@@ -749,7 +750,10 @@ export function ArchitectureMeshes({
         return (
           <group key={wall.id} {...sketchupGroup}>
             {hollows.map((hollow, index) => {
-              const front = layer(hollow, hollow.front, 0.0125);
+              const front = {
+                ...layer(hollow, hollow.front, 0.0125),
+                height: liningHeight(wall, rooms, hollow.roomId, defaultHeightM),
+              };
               return (
                 <group key={hollow.roomId}>
                   {index === 0 &&
@@ -777,6 +781,7 @@ export function ArchitectureMeshes({
                           {
                             ...wall,
                             thickness: 0.0125,
+                            height: front.height,
                             start: hollow.back[end],
                             end: hollow.front[end],
                           },

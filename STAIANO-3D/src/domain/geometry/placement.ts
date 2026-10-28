@@ -71,3 +71,19 @@ export function positionRecessedAlongRoomWall(
     scale(normal, -(depthM / 2 - 0.002)),
   );
 }
+
+/**
+ * Bocchetta a parete: dietro un cartongesso abbastanza profondo il corpo sta
+ * nella controparete e fuori esce soltanto la griglia (o la feritoia).
+ */
+export function positionWallTerminal(
+  room: Room,
+  wall: Wall,
+  offsetM: number,
+  depthM: number,
+): Point {
+  return depthM > 0 &&
+    (drywallSideForRoom(wall, room.id)?.offsetM ?? 0) >= depthM
+    ? positionRecessedAlongRoomWall(room, wall, offsetM, depthM)
+    : positionAlongRoomWall(room, wall, offsetM, depthM);
+}

@@ -312,7 +312,9 @@ export function findDuctCollisions(
         !first.bounds.intersectsBox(second.bounds)
       )
         continue;
-      const radius = first.path.radiusM + second.path.radiusM - 1e-5;
+      // I flessibili sono morbidi: si toccano e si schiacciano. Collidono solo
+      // se l'asse di uno entra nel corpo dell'altro (distanza assi < raggio maggiore).
+      const radius = Math.max(first.path.radiusM, second.path.radiusM) - 1e-5;
       let intersects = false;
       for (let i = 1; i < first.points.length && !intersects; i++)
         for (let j = 1; j < second.points.length; j++) {

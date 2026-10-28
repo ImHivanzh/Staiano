@@ -4,6 +4,7 @@ import { Edges } from "@react-three/drei";
 import * as THREE from "three";
 import type { CeilingBand, Project, Room } from "@/schemas/project";
 import { ceilingBandPolygon } from "@/domain/geometry/ceilings";
+import { roomNetPolygon } from "@/domain/geometry/drywall";
 import { ceilingShellPositions } from "@/domain/geometry/ceiling-shell";
 import { SuspendedCeiling } from "./CeilingReference";
 
@@ -75,6 +76,10 @@ export function RoomCeiling3D({
   transparent?: boolean;
   showCeiling?: boolean;
 }) {
+  const net = useMemo(
+    () => roomNetPolygon(project, room),
+    [project.walls, project.rooms, room],
+  );
   return (
     <group>
       {(room.roof ||
@@ -86,7 +91,7 @@ export function RoomCeiling3D({
       {showCeiling && (
         <>
           {room.ceilingHeightM !== null && (
-            <SuspendedCeiling room={room} transparent={transparent} />
+            <SuspendedCeiling room={room} polygon={net} transparent={transparent} />
           )}
           {room.ceilingBands?.map((band) => (
             <CeilingShell

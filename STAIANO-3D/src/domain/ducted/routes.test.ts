@@ -529,6 +529,13 @@ it("saves an editable route by the wall even when automatic routing fails", () =
     },
   );
   const plenum = terminalPlenum(p, p.airTerminals[0])!;
+  // Un plenum libero si riaggancia in verticale alla bocchetta: per ottenere il
+  // fallimento automatico lo si lascia staccato e bloccato.
+  p.plenums = p.plenums.map((item) =>
+    item.id === plenum.id
+      ? { ...item, elevationM: (terminal.elevationM ?? 2) + 0.6, locked: true }
+      : item,
+  );
   expect(
     p
       .ducts!.filter((duct) => duct.terminalId === terminal.id)

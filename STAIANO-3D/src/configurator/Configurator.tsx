@@ -345,11 +345,23 @@ export function Configurator() {
         )
         .forEach((menu) => {
           const trigger = menu.querySelector("summary");
-          if (trigger)
-            menu.style.setProperty(
-              "--header-menu-top",
-              `${Math.ceil(trigger.getBoundingClientRect().bottom) + 4}px`,
-            );
+          if (!trigger) return;
+          const box = trigger.getBoundingClientRect();
+          menu.style.setProperty(
+            "--header-menu-top",
+            `${Math.ceil(box.bottom) + 4}px`,
+          );
+          // Bordo destro sul pulsante, ma mai sotto la barra laterale né fuori schermo.
+          const side = document
+            .querySelector(".hvac-app > .barra-lato")
+            ?.getBoundingClientRect();
+          const minLeft =
+            side && side.height > window.innerHeight / 2 ? side.right + 8 : 12;
+          const width = Math.min(300, window.innerWidth - 32);
+          menu.style.setProperty(
+            "--header-menu-left",
+            `${Math.max(minLeft, Math.min(box.right - width, window.innerWidth - width - 12))}px`,
+          );
         });
     };
     const outsideMenu = (event: PointerEvent) => {

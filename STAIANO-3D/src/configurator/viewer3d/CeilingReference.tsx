@@ -5,20 +5,20 @@ import * as THREE from "three";
 import type { Room } from "@/schemas/project";
 
 /** Toggleable suspended-ceiling layer; visible only where the operator measured one. */
-export function SuspendedCeiling({ room, transparent = true }: { room: Room; transparent?: boolean }) {
+export function SuspendedCeiling({ room, polygon = room.polygon, transparent = true }: { room: Room; polygon?: Room["polygon"]; transparent?: boolean }) {
   const height = room.ceilingHeightM;
   const geometry = useMemo(() => {
     if (height === null) return null;
     const shape = new THREE.Shape();
-    room.polygon.forEach((p, i) =>
+    polygon.forEach((p, i) =>
       i ? shape.lineTo(p.x, -p.y) : shape.moveTo(p.x, -p.y),
     );
     shape.closePath();
     return new THREE.ShapeGeometry(shape);
-  }, [room.polygon, height]);
+  }, [polygon, height]);
   useEffect(() => () => geometry?.dispose(), [geometry]);
   if (height === null || !geometry) return null;
-  const points = room.polygon.map(
+  const points = polygon.map(
     (p) => [p.x, height, p.y] as [number, number, number],
   );
   points.push(points[0]);

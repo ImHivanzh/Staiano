@@ -24,6 +24,7 @@ import { addOperatorTerminal } from "@/domain/air-terminals/operator";
 import { guidedTerminalPoint } from "../../../tests/guided-fixture";
 import { calculateSupplyPlenum } from "@/domain/ducted/plenum";
 import { connectPlenum, insertPlenum } from "@/domain/ducted/attached-plenums";
+import { addPlenumOnMachine } from "@/domain/ducted/attached-plenums";
 
 function fixture(): Project {
   let project = createProject("FCZ PO canalizzata");
@@ -97,6 +98,14 @@ describe("ventilconvettore canalizzabile", () => {
     const system = fanCoilAirSystem(connected, unit.id)!;
     expect(connected.plenums.at(-1)?.attachmentId).toBe(system.indoorUnits[0].id);
     expect(projectSchema.safeParse(connected).success).toBe(true);
+  });
+  it("crea il plenum già collegato cliccando il ventilconvettore con lo strumento Plenum", () => {
+    const project = fixture();
+    const unit = project.fanCoils![0];
+    const created = addPlenumOnMachine(project, unit.id);
+    const system = fanCoilAirSystem(created, unit.id)!;
+    expect(created.plenums.at(-1)?.systemId).toBe(system.id);
+    expect(projectSchema.safeParse(created).success).toBe(true);
   });
   it("crea la distribuzione aeraulica dal punto di funzionamento del catalogo", () => {
     const project = fixture();

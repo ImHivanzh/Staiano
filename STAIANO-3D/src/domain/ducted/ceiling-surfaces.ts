@@ -2,6 +2,7 @@ import { Box3, Ray, ShapeUtils, Triangle, Vector2, Vector3 } from "three";
 import type { Point, Project } from "@/schemas/project";
 import { ceilingBandPolygon } from "../geometry/ceilings";
 import { ceilingShellPositions } from "../geometry/ceiling-shell";
+import { roomNetPolygon } from "../geometry/drywall";
 import { segmentDistance } from "./duct-bodies";
 
 export type CeilingSurface = {
@@ -54,7 +55,7 @@ export function ceilingSurfaces(
       add(
         `ceiling:${room.id}`,
         `controsoffitto ${room.name}`,
-        flat(room.polygon, room.ceilingHeightM),
+        flat(roomNetPolygon(project, room), room.ceilingHeightM),
       );
     for (const band of room.ceilingBands ?? [])
       add(

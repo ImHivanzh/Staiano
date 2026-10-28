@@ -100,6 +100,34 @@ export function drywallGeometry(
   };
 }
 
+/** Pianta del controsoffitto: la stanza senza le intercapedini dietro le contropareti, che restano aperte verso il vuoto tecnico. */
+export function roomNetPolygon(project: DrywallProject, room: Room) {
+  let polygon = room.polygon;
+  for (const wall of project.walls) {
+    const side = drywallSideForRoom(wall, room.id);
+    if (!side || side.offsetM <= 0 || !room.wallIds.includes(wall.id)) continue;
+    const hollow = drywallGeometry(project, wall, room.id);
+    if (!hollow) continue;
+    const { start } = hollow.front,
+      { normal } = hollow;
+    const inside = (p: { x: number; y: number }) =>
+      (p.x - start.x) * normal.x + (p.y - start.y) * normal.y;
+    const clipped: typeof polygon = [];
+    polygon.forEach((a, i) => {
+      const b = polygon[(i + 1) % polygon.length],
+        da = inside(a),
+        db = inside(b);
+      if (da >= -1e-9) clipped.push(a);
+      if ((da >= -1e-9) !== (db >= -1e-9)) {
+        const t = da / (da - db);
+        clipped.push({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+      }
+    });
+    if (clipped.length >= 3) polygon = clipped;
+  }
+  return polygon;
+}
+
 export function drywallGeometries(project: DrywallProject, wall: Wall) {
   return drywallSides(wall).flatMap((side) => {
     const geometry = drywallGeometry(project, wall, side.roomId);

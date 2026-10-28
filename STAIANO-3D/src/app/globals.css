@@ -2317,6 +2317,17 @@ input[type="checkbox"] {
 
 .menu-progetto > .comandi-progetto {
   overflow-x: hidden;
+  /* Una sola colonna che può restringersi: i pulsanti non sforano il bordo. */
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 641px) {
+  .azioni-testata .menu-progetto > .comandi-progetto {
+    position: fixed;
+    top: var(--header-menu-top, 56px);
+    left: var(--header-menu-left, auto);
+    right: auto;
+    max-height: calc(100dvh - var(--header-menu-top, 56px) - 12px);
+  }
 }
 .menu-progetto .opzione-render-pdf:has(input[type="checkbox"]) {
   justify-content: flex-start;

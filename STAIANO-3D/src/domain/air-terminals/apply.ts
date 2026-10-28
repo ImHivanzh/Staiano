@@ -20,7 +20,7 @@ import {
 } from "@/domain/geometry/footprint";
 import {
   roomWallSpan,
-  positionAlongRoomWall,
+  positionWallTerminal,
 } from "@/domain/geometry/placement";
 type AirTerminal = Project["airTerminals"][number];
 /** Persist every physical unit and the exact catalogue operating point. */
@@ -139,7 +139,7 @@ export function applyAirTerminalSolution(
         offset += 0.1
       )
         candidates.push({
-          position: positionAlongRoomWall(
+          position: positionWallTerminal(
             room,
             wall,
             offset,

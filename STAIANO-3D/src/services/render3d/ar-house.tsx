@@ -26,6 +26,60 @@ function floorOffsets(project: Project) {
   return raw.map((item) => ({ ...item, offsetM: item.offsetM - min }));
 }
 
+/** GLTFExporter disegna le texture su canvas: i DataTexture procedurali (flessibili, pietra, intonaco) vanno copiati su canvas, senza toccare quelle condivise col 3D. */
+function bakeDataTextures(root: THREE.Object3D) {
+  const baked = new Map<THREE.Texture, THREE.CanvasTexture>();
+  const bake = (texture: THREE.Texture) => {
+    const data = (texture.image as { data?: Uint8Array } | null)?.data;
+    if (!(texture instanceof THREE.DataTexture) || !(data instanceof Uint8Array))
+      return texture;
+    let copy = baked.get(texture);
+    if (!copy) {
+      const { width, height } = texture.image;
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      canvas
+        .getContext("2d")!
+        .putImageData(
+          new ImageData(new Uint8ClampedArray(data), width, height),
+          0,
+          0,
+        );
+      copy = new THREE.CanvasTexture(canvas);
+      copy.wrapS = texture.wrapS;
+      copy.wrapT = texture.wrapT;
+      copy.colorSpace = texture.colorSpace;
+      baked.set(texture, copy);
+    }
+    return copy;
+  };
+  const clones = new Map<THREE.Material, THREE.Material>();
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const swap = (material: THREE.Material) => {
+      const slots = Object.entries(material).filter(
+        ([, value]) => (value as THREE.Texture | null)?.isTexture,
+      ) as [string, THREE.Texture][];
+      if (!slots.some(([, texture]) => bake(texture) !== texture))
+        return material;
+      let clone = clones.get(material);
+      if (!clone) {
+        clone = material.clone();
+        for (const [slot, texture] of slots)
+          (clone as unknown as Record<string, THREE.Texture>)[slot] =
+            bake(texture);
+        clones.set(material, clone);
+      }
+      return clone;
+    };
+    mesh.material = Array.isArray(mesh.material)
+      ? mesh.material.map(swap)
+      : swap(mesh.material);
+  });
+}
+
 function Export({
   group,
   ready,
@@ -56,13 +110,19 @@ function Export({
       (-(box.min.z + box.max.z) / 2) * k,
     );
     root.updateMatrixWorld(true);
+    bakeDataTextures(root);
     new GLTFExporter().parse(
       root,
       (result) =>
         result instanceof ArrayBuffer
           ? resolve(result)
           : reject(Error("Esportazione GLB non riuscita.")),
-      () => reject(Error("Esportazione GLB non riuscita.")),
+      (error) =>
+        reject(
+          Error(
+            `Esportazione GLB non riuscita: ${error instanceof Error ? error.message : String(error)}`,
+          ),
+        ),
       { binary: true },
     );
   });

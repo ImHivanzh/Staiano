@@ -1,12 +1,13 @@
 "use client";
 import {
+  addPlenumOnMachine,
   addTerminalPlenum,
   attachedPlenumPorts,
   connectPlenum,
   terminalPlenum,
 } from "@/domain/ducted/attached-plenums";
 import { ductedMachineForDevice } from "@/domain/ducted/machine";
-import { addMachinePlenum } from "@/domain/ducted/placement";
+
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
 import {
@@ -544,10 +545,14 @@ export function GraphicalDuctedConfigurator({
         setNotice("Plenum selezionato.");
         return;
       }
-      const create = clickedTerminal
-        ? (p: Project) => addTerminalPlenum(p, clickedTerminal.id)
-        : ductedMachineForDevice(project, deviceId)
-          ? (p: Project) => addMachinePlenum(p, deviceId)
+      const plenumTerminal = project.airTerminals.find(
+        (item) => item.id === deviceId,
+      );
+      const create = plenumTerminal
+        ? (p: Project) => addTerminalPlenum(p, plenumTerminal.id)
+        : ductedMachineForDevice(project, deviceId) ||
+            project.fanCoils?.some((item) => item.id === deviceId)
+          ? (p: Project) => addPlenumOnMachine(p, deviceId)
           : null;
       if (!create) {
         setNotice(
@@ -555,8 +560,8 @@ export function GraphicalDuctedConfigurator({
         );
         return;
       }
-      const already = clickedTerminal
-        ? project.plenums.find((pl) => pl.attachmentId === clickedTerminal.id)
+      const already = plenumTerminal
+        ? project.plenums.find((pl) => pl.attachmentId === plenumTerminal.id)
         : null;
       if (already) {
         useProjectStore.getState().select({ kind: "device", id: already.id });
@@ -571,7 +576,7 @@ export function GraphicalDuctedConfigurator({
         saved.select({ kind: "device", id });
         setSelectedId(id);
         setNotice(
-          clickedTerminal
+          plenumTerminal
             ? "Plenum creato e collegato alla bocchetta: spostalo in pianta o in 3D."
             : "Plenum creato e collegato alla macchina.",
         );

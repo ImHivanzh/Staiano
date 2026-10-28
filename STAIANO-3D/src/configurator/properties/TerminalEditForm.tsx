@@ -6,6 +6,7 @@ import { editOperatorTerminal } from "@/domain/air-terminals/operator";
 import { movePlacedDevice } from "@/domain/geometry/move-device";
 import {
   positionAlongRoomWall,
+  positionWallTerminal,
   roomWallSpan,
 } from "@/domain/geometry/placement";
 import {
@@ -57,7 +58,9 @@ export function TerminalEditForm({
               const wall = p.walls.find((w) => w.id === wallId)!;
               const span = roomWallSpan(room, wall);
               if (!span) throw new Error("Parete non associata alla stanza.");
-              target = positionAlongRoomWall(
+              target = (t.mounting === "wall"
+                ? positionWallTerminal
+                : positionAlongRoomWall)(
                 room,
                 wall,
                 numberFromForm(data.get("offset")),

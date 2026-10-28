@@ -664,3 +664,12 @@ it("uses finite concave ceiling faces and detects crossing in either direction",
     ),
   ).toBe(false);
 });
+
+it("accepts soft hoses that touch or press against each other, but not one whose axis enters the other", () => {
+  const p = fixture(),
+    a = hose(p),
+    b = hose(p, "side", [point(1, 2.15), point(9, 2.15)]);
+  expect(findDuctCollisions(p, [a, b]).size).toBe(0);
+  b.points = [point(1, 2.05), point(9, 2.05)];
+  expect(findDuctCollisions(p, [a, b]).get(a.id)?.withIds).toContain(b.id);
+});

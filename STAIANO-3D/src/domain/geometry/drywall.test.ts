@@ -3,7 +3,7 @@ import {
   guidedProjectFixture,
   addGuidedTerminal,
 } from "../../../tests/guided-fixture";
-import { setWallDrywall, drywallGeometry } from "./drywall";
+import { setWallDrywall, drywallGeometry, roomNetPolygon } from "./drywall";
 import { roomWallSpan } from "./placement";
 import { area, distance } from "./primitives";
 import { duplicateSelection } from "./selection";
@@ -256,5 +256,18 @@ it("counts a pillar overlapping a lining only once in usable area", () => {
   p = setWallDrywall(p, wall.id, { roomId: room.id, offsetM: 0.3 });
   expect(p.rooms[0].netAreaM2).toBeCloseTo(
     room.netAreaM2 - span.lengthM * 0.3 - 0.16 + 0.08,
+  );
+});
+
+it("il controsoffitto esclude l'intercapedine della controparete (vuoto a L)", () => {
+  const base = guidedProjectFixture(),
+    room = base.rooms[0],
+    wall = base.walls.find((w) => w.id === room.wallIds[0])!;
+  expect(roomNetPolygon(base, room)).toEqual(room.polygon);
+  const p = setWallDrywall(base, wall.id, { roomId: room.id, offsetM: 0.3 });
+  const net = roomNetPolygon(p, p.rooms[0]);
+  expect(Math.abs(area(net))).toBeCloseTo(
+    Math.abs(area(room.polygon)) -
+      0.3 * roomWallSpan(room, wall)!.lengthM,
   );
 });

@@ -4,6 +4,7 @@ import { roomCeilingHeightM } from "../air-conditioning/elevation";
 import { roofHeightAt } from "../geometry/ceilings";
 import { resolveTerminalAccessorySpecification } from "../air-terminals/commercial-bom";
 import {
+  addMachinePlenum,
   machinePlenum,
   machinePlenums,
   placedPlenumGeometry,
@@ -47,6 +48,22 @@ export function insertPlenum(
       },
     ],
   };
+}
+
+/** Ventilconvettore senza distribuzione aria: plenum libero già collegato alla macchina. */
+export function addFanCoilPlenum(project: Project, fanCoilId: string): Project {
+  const unit = project.fanCoils?.find((item) => item.id === fanCoilId);
+  if (!unit) throw new Error("Clicca un ventilconvettore configurato.");
+  const free = insertPlenum(project, unit.roomId, unit.position);
+  return connectPlenum(free, free.plenums.at(-1)!.id, fanCoilId);
+}
+
+/** Plenum creato cliccando una macchina canalizzata o un ventilconvettore canalizzabile. */
+export function addPlenumOnMachine(project: Project, machineId: string): Project {
+  return !ductedMachineForDevice(project, machineId) &&
+    project.fanCoils?.some((unit) => unit.id === machineId)
+    ? addFanCoilPlenum(project, machineId)
+    : addMachinePlenum(project, machineId);
 }
 
 /**
@@ -327,6 +344,20 @@ export function syncAttachedPlenums(
     }
     const placed = attachedPlenumPose(project, plenum);
     return placed ? [placed] : [];
+  }).map((plenum) => {
+    // Un distacco scelto resta, ma il corpo non si stacca mai in verticale
+    // dalla bocchetta a parete a cui è agganciato.
+    const terminal = project.airTerminals.find(
+      (t) => t.id === plenum.attachmentId,
+    );
+    return terminal?.mounting === "wall" &&
+      !plenum.locked &&
+      terminal.elevationM != null &&
+      plenum.elevationM != null &&
+      Math.abs(plenum.elevationM - terminal.elevationM) >
+        (plenum.heightMm + (terminal.heightMm ?? 0)) / 2000
+      ? { ...plenum, elevationM: terminal.elevationM }
+      : plenum;
   });
   const posed = { ...project, plenums };
   // Lato macchina eliminato in questa modifica: i rami non si ricreano,

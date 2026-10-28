@@ -7,7 +7,11 @@ import {
   subtract,
   type SnapOptions,
 } from "./primitives";
-import { positionAlongRoomWall, roomWallSpan } from "./placement";
+import {
+  positionAlongRoomWall,
+  positionWallTerminal,
+  roomWallSpan,
+} from "./placement";
 import { ceilingFrontPose } from "./ceilings";
 import { airTerminalFaceWidthMm } from "@/domain/air-terminals/geometry";
 
@@ -124,7 +128,9 @@ export function snapTerminalPose(
     safeStart <= safeEnd
       ? Math.max(safeStart, Math.min(safeEnd, offset))
       : span.lengthM / 2;
-  const position = positionAlongRoomWall(chosen.room, wall, offset, depth);
+  const position = (
+    item.mounting === "wall" ? positionWallTerminal : positionAlongRoomWall
+  )(chosen.room, wall, offset, depth);
   return {
     roomId: chosen.room.id,
     ceilingBandId: undefined,
