@@ -238,8 +238,9 @@ export function DuctMeshes({
             <FlexibleDuct
               points={points}
               diameterMm={diameterMm}
-              color={collisions.has(id) ? "#dc2626" : FLEX_DUCT_COLOR}
+              color={editable && collisions.has(id) ? "#dc2626" : FLEX_DUCT_COLOR}
               collision={collisions.get(id)}
+              warnings={editable}
               fallbackPoint={fallbackPoint}
             />
             <FlowParticles
@@ -288,13 +289,14 @@ export function DuctMeshes({
                 diameterMm={duct.diameterMm ?? 160}
                 flexibleProductId={duct.flexibleProductId}
                 color={
-                  collisions.has(duct.id)
+                  editable && collisions.has(duct.id)
                     ? "#dc2626"
                     : selectedId === duct.id
                       ? "#50c7df"
                       : duct.flexibleProductId === "ecoclima-etf10" ? "#33373a" : FLEX_DUCT_COLOR
                 }
                 collision={collisions.get(duct.id)}
+                warnings={editable}
                 fallbackPoint={
                   terminal
                     ? {

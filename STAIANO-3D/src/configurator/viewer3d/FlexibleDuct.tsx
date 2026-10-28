@@ -18,6 +18,7 @@ export function FlexibleDuct({
   color,
   fallbackPoint,
   collision,
+  warnings = true,
 }: {
   points: RoutePoint[];
   diameterMm: number;
@@ -25,6 +26,8 @@ export function FlexibleDuct({
   color: string;
   fallbackPoint?: RoutePoint;
   collision?: DuctCollision;
+  /** Avvisi di collisione e percorso: solo in modifica, mai in Vista Cliente. */
+  warnings?: boolean;
 }) {
   const shape = useMemo(() => {
     const path = flexibleDuctCurve(points, diameterMm, flexibleProductId);
@@ -48,7 +51,7 @@ export function FlexibleDuct({
   const warning = useRef<HTMLSpanElement | null>(null);
   const projected = useMemo(() => new THREE.Vector3(), []);
   useEffect(() => {
-    if ((shape && !collision) || !warningPoint) return;
+    if (!warnings || (shape && !collision) || !warningPoint) return;
     // A DOM label needs no nested React root, which cannot unmount during a scene render.
     const element = document.createElement("span");
     element.setAttribute("role", collision ? "alert" : "status");
@@ -71,7 +74,7 @@ export function FlexibleDuct({
       warning.current = null;
       element.remove();
     };
-  }, [gl, shape, warningPoint, collision]);
+  }, [gl, shape, warningPoint, collision, warnings]);
   useFrame(({ camera, size }) => {
     if (!warning.current || !warningPoint) return;
     projected

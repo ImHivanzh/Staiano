@@ -157,14 +157,18 @@ it("follows the terminal while proposed, then keeps its offset and follows the t
     y: state.plenums[0].position.y - state.airTerminals[0].position.y,
   });
   expect(offset(following)).toEqual(offset(p));
-  // L'operatore sposta il plenum: resta agganciato e conserva il distacco.
-  const placed = movePlacedDevice(following, plenumId, { x: 5, y: 4 });
-  expect(placed.plenums[0].status).toBe("manual");
+  // Trascinare il plenum agganciato sposta anche la bocchetta: restano uniti.
+  const placed = syncAttachedPlenums(
+    movePlacedDevice(following, plenumId, { x: 5, y: 4 }),
+    following,
+  );
+  expect(placed.plenums[0].position).toEqual({ x: 5, y: 4 });
+  expect(offset(placed)).toEqual(offset(following));
   const ownerMoved = syncAttachedPlenums(
     movePlacedDevice(placed, id, { x: 4.5, y: 2.5 }),
     placed,
   );
-  expect(ownerMoved.plenums[0].position).toEqual({ x: 5.5, y: 3.5 });
+  expect(offset(ownerMoved)).toEqual(offset(placed));
   const rotated = rotateDevice90(ownerMoved, plenumId);
   expect(rotated.plenums[0].rotation).toBeCloseTo(
     ownerMoved.plenums[0].rotation + Math.PI / 2,
@@ -234,12 +238,17 @@ it("keeps the terminal plenum when reconnecting and supports a return plenum on 
     plenum.rotation + Math.PI / 2,
   );
   expect(projectSchema.safeParse(moved).success).toBe(true);
-  const relocated = movePlacedDevice(moved, id, { x: 4, y: 4 });
-  expect(relocated.plenums.find((pl) => pl.id === id)!.position).toEqual({
-    x: 4,
-    y: 4,
-  });
-  expect(relocated.plenums.find((pl) => pl.id === id)!.status).toBe("manual");
+  // Spostare il plenum della macchina trascina la macchina: restano uniti.
+  const relocated = syncAttachedPlenums(
+    movePlacedDevice(moved, id, { x: 4, y: 4 }),
+    moved,
+  );
+  const unit = relocated.hvacSystems[0].indoorUnits[0];
+  const before = moved.hvacSystems[0].indoorUnits[0];
+  const relocatedPlenum = relocated.plenums.find((pl) => pl.id === id)!;
+  expect(relocatedPlenum.position.x).toBeCloseTo(4);
+  expect(relocatedPlenum.position.y).toBeCloseTo(4);
+  expect(unit.position).not.toEqual(before.position);
   expect(recordOperatorChanges(p, moved).ducts!.length).toBeGreaterThan(0);
 });
 

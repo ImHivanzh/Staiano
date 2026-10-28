@@ -83,6 +83,31 @@ export function movePlacedDevice(
       ),
     };
   }
+  // Un plenum agganciato non si sposta da solo: trascina il titolare e
+  // il resto lo segue (sincronizzazione dei plenum agganciati).
+  const attached = project.plenums.find(
+    (pl) => pl.id === deviceId && pl.attachmentId,
+  );
+  if (attached) {
+    const unit = project.hvacSystems
+      .flatMap((s) => s.indoorUnits.map((u) => ({ u, s })))
+      .find(({ u }) => u.id === attached.attachmentId);
+    const owner =
+      unit?.u ?? project.airTerminals.find((t) => t.id === attached.attachmentId);
+    if (owner) {
+      if (attached.locked)
+        throw new Error("Sbloccare l’elemento prima di spostarlo.");
+      return movePlacedDevice(
+        project,
+        unit?.s.fanCoilId ?? owner.id,
+        {
+          x: target.x - (attached.position.x - owner.position.x),
+          y: target.y - (attached.position.y - owner.position.y),
+        },
+        snap,
+      );
+    }
+  }
   if (
     project.plenums.some((pl) => pl.id === deviceId) ||
     project.hvacSystems.some(
