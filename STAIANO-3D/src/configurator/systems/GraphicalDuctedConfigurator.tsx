@@ -7,6 +7,7 @@ import {
   terminalPlenum,
 } from "@/domain/ducted/attached-plenums";
 import { ductedMachineForDevice } from "@/domain/ducted/machine";
+import { missingMachinePlenums } from "@/domain/ducted/placement";
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { ductScenePaths, findDuctCollisions } from "@/domain/ducted/collisions";
@@ -1394,6 +1395,14 @@ export function GraphicalDuctedConfigurator({
               · Mancano{" "}
               <strong>{formatNumber(balance.remaining, 0)} m³/h</strong>.
               Ripresa: mancano {formatNumber(returnBalance.remaining, 0)} m³/h.
+              {missingMachinePlenums(project, system.id).map((use) => (
+                <strong key={use} role="alert">
+                  {" "}
+                  Manca il plenum di {use === "supply" ? "mandata" : "ripresa"}{" "}
+                  davanti alla macchina: i flessibili restano agganciati in
+                  aria.
+                </strong>
+              ))}
             </div>
           )}
           <p

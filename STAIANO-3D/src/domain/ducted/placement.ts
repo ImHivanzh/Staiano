@@ -71,6 +71,27 @@ export function machinePlenums(project: Project, systemId: string): Plenum[] {
   );
 }
 
+/** Lati con bocchette collegate ma senza plenum salvato davanti alla macchina: i flessibili restano agganciati in aria. */
+export function missingMachinePlenums(
+  project: Project,
+  systemId: string,
+): Array<"supply" | "return"> {
+  const saved = machinePlenums(project, systemId);
+  return (["supply", "return"] as const).filter(
+    (use) =>
+      !saved.some((plenum) => plenum.use === use) &&
+      project.airTerminals.some(
+        (terminal) =>
+          terminal.systemId === systemId &&
+          terminal.use === use &&
+          (terminal.plenumId ||
+            (project.ducts ?? []).some(
+              (duct) => duct.terminalId === terminal.id,
+            )),
+      ),
+  );
+}
+
 /** Create a dedicated saved plenum, never shared with a second autonomous machine. */
 export function placePlenum(
   project: Project,

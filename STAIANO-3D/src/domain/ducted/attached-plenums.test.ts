@@ -19,7 +19,9 @@ import {
   machinePlenum,
   placedPlenumGeometry,
   placeSupplyPlenum,
+  missingMachinePlenums,
 } from "./placement";
+import { validateProject } from "../validation";
 import { movePlacedDevice } from "../geometry/move-device";
 import { rotateDevice90 } from "../geometry/rotate-device";
 import {
@@ -572,4 +574,18 @@ it("riaggancia in verticale il plenum staccato dalla bocchetta a parete", () => 
   expect(syncAttachedPlenums(near, near).plenums[0].elevationM).toBeCloseTo(
     (terminal.elevationM ?? 2) - 0.05,
   );
+});
+
+it("segnala il plenum macchina mancante e lo toglie quando viene creato", () => {
+  let p = guidedProjectFixture();
+  p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+  p = addGuidedTerminal(p, 1000);
+  p = addTerminalPlenum(p, p.airTerminals[0].id);
+  const system = p.hvacSystems[0];
+  expect(missingMachinePlenums(p, system.id)).toEqual(["supply"]);
+  expect(
+    validateProject(p).some((check) => check.code === "machinePlenumMissing"),
+  ).toBe(true);
+  const placed = placeSupplyPlenum(p, system.id);
+  expect(missingMachinePlenums(placed, system.id)).toEqual([]);
 });

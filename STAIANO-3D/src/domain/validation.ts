@@ -39,7 +39,11 @@ import {
 import { deviceCodes } from "@/services/export/device-codes";
 import { systemLinearBalances } from "./air-terminals/linear-meters";
 import { calculatePlenum } from "./ducted/plenum";
-import { placedPlenumGeometry, machinePlenums } from "./ducted/placement";
+import {
+  placedPlenumGeometry,
+  machinePlenums,
+  missingMachinePlenums,
+} from "./ducted/placement";
 import { pillarFootprint } from "./geometry/pillars";
 import {
   convexFootprintsOverlap,
@@ -1055,6 +1059,14 @@ export function validateProject(p: Project): Check[] {
         message: `${codes.get(pillar.id)}: pilastri sovrapposti; correggere prima di usare area e calcoli.`,
       });
   }
+  for (const system of p.hvacSystems.filter((s) => s.type === "ducted"))
+    for (const use of missingMachinePlenums(p, system.id))
+      checks.push({
+        code: "machinePlenumMissing",
+        status: "warning",
+        entityId: system.indoorUnits[0]?.id ?? system.id,
+        message: `${system.name}: manca il plenum di ${use === "supply" ? "mandata" : "ripresa"} davanti alla macchina; i flessibili risultano agganciati in aria. Usa lo strumento Plenum sulla macchina.`,
+      });
   for (const duct of p.ducts ?? []) {
     if (duct.kind === "flexible") {
       const product = flexibleDuctProducts.find(
