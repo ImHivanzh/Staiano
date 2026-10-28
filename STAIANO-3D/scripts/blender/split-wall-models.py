@@ -127,7 +127,7 @@ for family,product in families.items():
     for o in scene.objects:
         if o.type=='MESH': o.select_set(True)
     slug=family.lower().replace(' ','-')
-    bpy.ops.export_scene.gltf(filepath=str(OUT/(slug+'.glb')),export_format='GLB',use_selection=True,export_apply=True)
+    bpy.ops.export_scene.gltf(filepath=str(OUT/(slug+'.glb')),export_format='GLB',use_selection=True,use_active_scene=True,export_apply=True)
     manifest.append(dict(family=family,url='/models/splits/'+slug+'.glb',referenceModel=product['model'],
         dimensionsMm=[product[k] for k in ('widthMm','heightMm','depthMm')],photo='/catalog-assets/'+photo_path(family)))
     camera=bpy.data.objects.new('Camera',bpy.data.cameras.new('Camera')); scene.collection.objects.link(camera)

@@ -15,14 +15,15 @@ export default function EcoclimaLinearBody({ family, count, width, height, depth
   const { scene, center, size } = useMemo(() => {
     const copy = model.scene.clone(true);
     const white = whiteModel || color === "RAL9016" || color.toLowerCase() === "#ffffff";
+    const natural = !white && !color && family === "edfl";
     const finish = /^#[0-9a-f]{6}$/i.test(color) ? color : color === "RAL9005" || (family === "edls" && !color) ? "#171819" : white ? "#f4f4f0" : "#aeb7b9";
     copy.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
       const material = Array.isArray(object.material) ? object.material[0] : object.material;
-      if (material.name.startsWith("Profile")) object.material = new THREE.MeshStandardMaterial({ color: finish, metalness: white ? 0.1 : 0.6, roughness: 0.45 });
+      if (material.name.startsWith("Profile")) object.material = new THREE.MeshStandardMaterial({ color: finish, metalness: natural ? 0.95 : 0, roughness: natural ? 0.36 : 0.4 });
       if (material.name.startsWith("Deflector")) {
         object.visible = supply;
-        if (white) object.material = new THREE.MeshStandardMaterial({ color: "#efefeb", metalness: 0.15, roughness: 0.5 });
+        if (white) object.material = new THREE.MeshStandardMaterial({ color: "#efefeb", metalness: 0, roughness: 0.4 });
       }
       object.castShadow = true;
       object.receiveShadow = true;

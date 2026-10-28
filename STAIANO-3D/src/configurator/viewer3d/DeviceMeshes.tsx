@@ -53,12 +53,12 @@ const ring = new THREE.RingGeometry(0.76, 1, 48);
 const enamel = new THREE.MeshStandardMaterial({
   color: "#f5f4ef",
   roughness: 0.26,
-  metalness: 0.16,
+  metalness: 0,
 });
 const plastic = new THREE.MeshStandardMaterial({
   color: "#f5f5f1",
   roughness: 0.32,
-  metalness: 0.02,
+  metalness: 0,
 });
 // Foto ufficiali: Gree Airy in alluminio spazzolato, LG Mirror nero lucido.
 const splitFinish: Record<string, THREE.MeshStandardMaterial> = {
@@ -82,7 +82,7 @@ const aluminium = new THREE.MeshStandardMaterial({
 const whiteFace = new THREE.MeshStandardMaterial({
   color: "#f4f3ee",
   roughness: 0.4,
-  metalness: 0.08,
+  metalness: 0,
   side: THREE.DoubleSide,
   polygonOffset: true,
   polygonOffsetFactor: -2,
@@ -147,7 +147,7 @@ function RadiatorMesh({
       new THREE.MeshStandardMaterial({
         color: bodyFinish?.colorHex ?? enamel.color,
         roughness: bodyFinish?.kind === "metal" ? 0.22 : 0.3,
-        metalness: bodyFinish?.kind === "metal" ? 0.8 : 0.12,
+        metalness: bodyFinish?.kind === "metal" ? 0.95 : 0,
       }),
     [bodyFinish],
   );

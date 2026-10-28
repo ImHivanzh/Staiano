@@ -27,7 +27,7 @@ export function EcoclimaGrille({ model, width, height, open, color }: {
     let hinge: THREE.Object3D = new THREE.Group();
     const natural = (model === "ega6" || model === "ebl") && !color;
     const tint = /^#[0-9a-f]{6}$/i.test(color) ? color : color === "RAL9005" ? "#171819" : color === "RAL9016" ? "#f4f4f0" : natural ? "#b5bdbf" : "#efefed";
-    const finish = new THREE.MeshStandardMaterial({ color: tint, metalness: natural ? .55 : .15, roughness: .48, side: THREE.DoubleSide });
+    const finish = new THREE.MeshStandardMaterial({ color: tint, metalness: natural ? .95 : 0, roughness: natural ? .36 : .4, side: THREE.DoubleSide });
     if (model === "egf-push") {
       hinge = grilleHinge(scene);
     }

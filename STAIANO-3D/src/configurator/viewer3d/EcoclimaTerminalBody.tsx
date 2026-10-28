@@ -17,7 +17,7 @@ export default function EcoclimaTerminalBody({ url, width, height, depth, color,
     copy.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return;
       const material = Array.isArray(object.material) ? object.material[0] : object.material;
-      if (material.name.startsWith("Profile")) object.material = new THREE.MeshStandardMaterial({ color: finish, map: material.map, flatShading: material.flatShading, metalness: natural && !tinted ? 0.55 : 0.1, roughness: 0.45, side: THREE.DoubleSide });
+      if (material.name.startsWith("Profile")) object.material = new THREE.MeshStandardMaterial({ color: finish, map: material.map, flatShading: material.flatShading, metalness: natural && !tinted ? 0.95 : 0, roughness: natural && !tinted ? 0.36 : 0.4, side: THREE.DoubleSide });
       object.castShadow = true;
       object.receiveShadow = true;
     });

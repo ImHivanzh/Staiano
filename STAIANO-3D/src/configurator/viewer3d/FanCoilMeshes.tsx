@@ -23,17 +23,17 @@ const plane = new THREE.PlaneGeometry(1, 1);
 const coating = new THREE.MeshStandardMaterial({
   color: "#f4f3ef",
   roughness: 0.3,
-  metalness: 0.15,
+  metalness: 0,
 });
 const concealedShell = new THREE.MeshStandardMaterial({
   color: "#bec9cc",
   roughness: 0.4,
-  metalness: 0.65,
+  metalness: 0.95,
 });
 const recessedPanel = new THREE.MeshStandardMaterial({
   color: "#f4f4f1",
   roughness: 0.34,
-  metalness: 0.08,
+  metalness: 0,
 });
 const recess = new THREE.MeshStandardMaterial({
   color: "#25343b",

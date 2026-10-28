@@ -12,7 +12,7 @@ const bezel = new THREE.RingGeometry(1, 1.16, 48);
 const box = new THREE.BoxGeometry(1, 1, 1);
 const finishes = ["#f0f0ed", "#7a7e83", "#bfdde0"].map(
   (color) =>
-    new THREE.MeshStandardMaterial({ color, metalness: 0.22, roughness: 0.42 }),
+    new THREE.MeshStandardMaterial({ color, metalness: 0, roughness: 0.42 }),
 );
 const feet = new THREE.MeshStandardMaterial({
   color: "#252e35",
@@ -25,7 +25,7 @@ const shadow = new THREE.MeshStandardMaterial({
 const darkCoating = new THREE.MeshStandardMaterial({
   color: "#44484b",
   roughness: 0.45,
-  metalness: 0.2,
+  metalness: 0,
 });
 
 /** Casing and illustrative feet share the complete saved height, without a gap. */

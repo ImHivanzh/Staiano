@@ -33,8 +33,8 @@ SPECS = {
     "EBLR": dict(kind="bars", frame=10, flange=2, ret=2, depth=30, bar=(2, 20), pitch=12),
     "EBLS": dict(kind="bars", frame=18, flange=3, ret=2, depth=40, bar=(2, 18), pitch=12, perf_frame=True),
     "EBL3": dict(kind="bars", frame=15, flange=3, ret=2, depth=45, bar=(2, 24), pitch=12, tilt=20, filter=True),
-    "EGA": dict(kind="slats", frame=18, flange=3, ret=1.5, pitch=25, chord=28, angle=38, thick=1.5),
-    "EGA1-4": dict(kind="slats", frame=18, flange=3, ret=1.5, pitch=25, chord=28, angle=38, thick=1.5, filter=True),
+    "EGA": dict(kind="slats", frame=18, flange=3, ret=1.5, pitch=25, chord=28, angle=45, thick=1.5),
+    "EGA1-4": dict(kind="slats", frame=18, flange=3, ret=1.5, pitch=25, chord=28, angle=45, thick=1.5, filter=True),
     "EGA50": dict(kind="slats", frame=20, flange=3, ret=2, pitch=50, chord=57, angle=35, thick=2),
     "EGA50-3F": dict(kind="slats", frame=20, flange=3, ret=2, pitch=50, chord=57, angle=35, thick=2, filter=True),
     "EGA50-3S": dict(kind="slats", frame=20, flange=3, ret=2, pitch=50, chord=57, angle=35, thick=2),
@@ -342,7 +342,10 @@ def build(fam, v, w, h, keep):
     for o in c.objects:
         o.select_set(True)
     bpy.context.view_layer.objects.active = next(iter(c.objects))
-    bpy.ops.export_scene.gltf(filepath=str(out / f"{code}.glb"), export_format="GLB", use_selection=True, use_active_scene=True, export_normals=False)
+    target = out / f"{code}.glb"
+    temporary = out / f"{code}.export.glb"
+    bpy.ops.export_scene.gltf(filepath=str(temporary), export_format="GLB", use_selection=True, use_active_scene=True, export_normals=False)
+    temporary.replace(target)
     if keep:
         c.hide_viewport = c.hide_render = True
     else:

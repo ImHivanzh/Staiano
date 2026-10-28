@@ -5,8 +5,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
 const selectedMaterial = new THREE.MeshStandardMaterial({ color: "#73b5ce", metalness: 0.5, roughness: 0.35 });
-const galvanized = new THREE.MeshStandardMaterial({ color: "#bdcbd0", metalness: 0.2, roughness: 0.5, side: THREE.DoubleSide });
-const casing = new THREE.MeshStandardMaterial({ color: "#e1e5e4", metalness: 0.25, roughness: 0.48, side: THREE.DoubleSide });
+const galvanized = new THREE.MeshStandardMaterial({ color: "#bdcbd0", metalness: 0.95, roughness: 0.36, side: THREE.DoubleSide });
+const casing = new THREE.MeshStandardMaterial({ color: "#e1e5e4", metalness: 0, roughness: 0.4, side: THREE.DoubleSide });
 const grille = new THREE.MeshStandardMaterial({ color: "#7c9098", metalness: 0.2, roughness: 0.5, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
 const plastic = new THREE.MeshStandardMaterial({ color: "#26383e", roughness: 0.7, side: THREE.DoubleSide });
 

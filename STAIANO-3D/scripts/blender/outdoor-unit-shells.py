@@ -109,7 +109,7 @@ for name, (w, h, d) in CLASSES.items():
     bpy.ops.object.select_all(action='DESELECT')
     for o in scene.objects:
         if o.type == 'MESH': o.select_set(True)
-    bpy.ops.export_scene.gltf(filepath=str(OUT / f'unita-esterna-{name}.glb'), export_format='GLB', use_selection=True, export_apply=True)
+    bpy.ops.export_scene.gltf(filepath=str(OUT / f'unita-esterna-{name}.glb'), export_format='GLB', use_selection=True, use_active_scene=True, export_apply=True)
     manifest.append(dict(shell=name, url=f'/models/outdoor/unita-esterna-{name}.glb', referenceMm=[round(w * 1000), round(h * 1000), round(d * 1000)]))
     mathutils = __import__('mathutils'); camera = bpy.data.objects.new('Camera', bpy.data.cameras.new('Camera')); scene.collection.objects.link(camera)
     target = mathutils.Vector((0, 0, 0)); camera.location = target + mathutils.Vector((-.8, -1.0, .45)).normalized() * max(w, h) * 2.4

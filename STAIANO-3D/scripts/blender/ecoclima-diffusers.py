@@ -241,22 +241,36 @@ def build(code):
         # EDE: white plate, louvres in two rings turned off-radial plus four long cardinal bars (photo);
         # EDE2R: two plain spiral rings of identical louvres
         S = 295
-        prism(c, "Profile_piastra", square(S), 0, 3, PROFILE)
+        plate = prism(c, "Profile_piastra", square(S), 0, 3, PROFILE)
 
         def louvre(r, a, length, rot):
             ang = a + rot
             ux, uz = math.cos(ang) * length / 2, math.sin(ang) * length / 2
-            wx, wz = -math.sin(ang) * 4, math.cos(ang) * 4
+            wx, wz = -math.sin(ang) * 4.75, math.cos(ang) * 4.75
             cx, cz = r * math.cos(a), r * math.sin(a)
-            prism(c, "Barra", [(cx - ux - wx, cz - uz - wz), (cx + ux - wx, cz + uz - wz), (cx + ux + wx, cz + uz + wz), (cx - ux + wx, cz - uz + wz)], -1.5, 1.5, BAR)
+            outline = [(cx - ux - wx, cz - uz - wz), (cx + ux - wx, cz + uz - wz), (cx + ux + wx, cz + uz + wz), (cx - ux + wx, cz - uz + wz)]
+            cutter = prism(c, "Apertura_temporanea", outline, -1, 5, DARK)
+            # Closed, outward-facing volumes are required by the exact boolean solver.
+            import bmesh
+            for mesh in (plate.data, cutter.data):
+                bm = bmesh.new(); bm.from_mesh(mesh)
+                bmesh.ops.recalc_face_normals(bm, faces=list(bm.faces))
+                bm.to_mesh(mesh); bm.free()
+            bpy.context.view_layer.objects.active = plate
+            modifier = plate.modifiers.new('Feritoia passante', 'BOOLEAN')
+            modifier.object, modifier.operation = cutter, 'DIFFERENCE'
+            bpy.ops.object.modifier_apply(modifier=modifier.name)
+            bpy.data.objects.remove(cutter, do_unlink=True)
+            prism(c, "Barra", outline, 2, 1, BAR)
 
         spiral = code == "ede2-square"
-        for k in range(0 if spiral else 4):
-            louvre(S * .21, k * math.pi / 2, S * .26, 0)
-        for count, r, length, rot, off in (((14, S * .3, S * .14, .6, 0), (22, S * .43, S * .14, .6, 0)) if spiral else
-                                           ((12, S * .27, S * .13, .45, .5), (16, S * .41, S * .13, .3, 0))):
-            for i in range(count):
-                louvre(r, (i + off) * math.tau / count, length, rot)
+        if spiral:
+            for i in range(24):
+                louvre(S * .32, i * math.tau / 24, S * .24, .4)
+        else:
+            for i in range(28):
+                length = S * (.38 if i % 7 == 0 else .2 if i % 2 else .29)
+                louvre(S * .43 - length / 2, i * math.tau / 28, length, 0)
         square_tube(c, "Collare", S * .42, 3, 80, NECK)
     elif code in ("valve-round", "valve-abs", "valve-inox"):
         # EVVMC/EVVRC (steel neck, domed disc), EVPMC (all ABS, deeper rim), EAM-VRFN (stainless, conical disc): normalised on Ø200
@@ -339,16 +353,20 @@ def build(code):
     for o in c.objects:
         o.select_set(True)
     bpy.context.view_layer.objects.active = next(iter(c.objects))
-    bpy.ops.export_scene.gltf(filepath=str(OUT / f"{code}.glb"), export_format="GLB", use_selection=True, use_active_scene=True)
+    target = OUT / f"{code}.glb"
+    temporary = OUT / f"{code}.export.glb"
+    bpy.ops.export_scene.gltf(filepath=str(temporary), export_format="GLB", use_selection=True, use_active_scene=True)
+    temporary.replace(target)
     c.hide_viewport = c.hide_render = True
 
 
 MODELS = ("edrc-round", "edrc-square", "edrf-round", "edrf-square", "edra-round", "edra-square", "edcs-round", "edcs-square", "edqv-square", "edu-round",
           "ede-square", "ede2-square", "valve-round", "valve-abs", "valve-inox", "edcf-round", "edcc-round", "edqf-square", "edqc-square", "edea-round",
           "edqm-square", "edqm-round", "edfds-round", "edsc-round", "edsc-square", "eadd-square")
-for model in MODELS:
+for model in globals().get('ONLY_MODELS', MODELS):
     build(model)
 for c in scene.collection.children:
     c.hide_viewport = c.hide_render = False
 bpy.context.preferences.filepaths.save_version = 0
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / "assets/blender/ecoclima-diffusers.blend"))
+blend_name = 'ecoclima-diffusers-ede-refined' if 'ONLY_MODELS' in globals() else 'ecoclima-diffusers'
+bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / f"assets/blender/{blend_name}.blend"))
