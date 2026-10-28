@@ -1,0 +1,24 @@
+[
+  {
+    "family": "Round Cassette",
+    "url": "/models/cassettes/round-cassette.glb",
+    "referenceModel": "UT36F.NY0",
+    "dimensionsMm": [
+      1050,
+      330,
+      1050
+    ],
+    "photo": "/catalog-assets/splits/lg-round-cassette.png"
+  },
+  {
+    "family": "4 Way Cassette",
+    "url": "/models/cassettes/4-way-cassette.glb",
+    "referenceModel": "MT06R.NR0",
+    "dimensionsMm": [
+      570,
+      214,
+      570
+    ],
+    "photo": "/catalog-assets/splits/lg-4-way-cassette.png"
+  }
+]

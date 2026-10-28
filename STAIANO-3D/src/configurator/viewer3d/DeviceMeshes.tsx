@@ -35,7 +35,7 @@ import { HydronicMeshes } from "./HydronicMeshes";
 import { AirOutdoorMeshes } from "./AirOutdoorMeshes";
 import { splitIndoorAtVersion } from "@/domain/catalogs/splits";
 import { vrvIndoorAtVersion } from "@/domain/catalogs/vrv";
-import { splitWallModelUrl } from "@/domain/catalogs/split-models";
+import { cassetteModelUrl, splitWallModelUrl } from "@/domain/catalogs/split-models";
 const SplitWallBody = lazy(() => import("./SplitWallBody"));
 import { cassetteDetail, roundCassetteGrille } from "./cassette-detail";
 import { terminalFaceDetail } from "./terminal-detail";
@@ -307,6 +307,7 @@ function SplitMesh({
     vrvIndoorAtVersion(item.productId, item.catalogVersion);
   const family = product?.family;
   const wallModel = splitWallModelUrl(family);
+  const cassetteModel = cassetteModelUrl(family);
   const ceiling =
     (product && "mounting" in product && product.mounting === "ceiling") ||
     item.mounting === "ceiling";
@@ -368,10 +369,8 @@ function SplitMesh({
     () => roundCassetteGrille(item.widthMm, item.heightMm, item.depthMm),
     [item.widthMm, item.heightMm, item.depthMm],
   );
-  return (
+  const cassetteFallback = roundCassette ? (
     <>
-      {roundCassette ? (
-        <>
           <mesh
             geometry={cassetteCylinder}
             material={plastic}
@@ -399,10 +398,9 @@ function SplitMesh({
             scale={[w * 0.27, 0.0005, d * 0.27]}
           />
           <Parts parts={roundGrille} geometry={box} material={deepRecess} />
-          {selected && <SelectionOutline dimensions={[w, h, d]} />}
-        </>
-      ) : ceiling ? (
-        <>
+    </>
+  ) : (
+    <>
           <Parts parts={[cassette.body]} geometry={box} material={aluminium} />
           <Parts parts={cassette.frame} geometry={rounded} material={plastic} />
           <Parts
@@ -415,6 +413,22 @@ function SplitMesh({
             geometry={box}
             material={plastic}
           />
+    </>
+  );
+  return (
+    <>
+      {cassetteModel ? (
+        <>
+          <ModelAssetBoundary fallback={cassetteFallback}>
+            <Suspense fallback={cassetteFallback}>
+              <SplitWallBody url={cassetteModel} width={w} height={h} depth={d} />
+            </Suspense>
+          </ModelAssetBoundary>
+          {selected && <SelectionOutline dimensions={[w, h, d]} />}
+        </>
+      ) : ceiling ? (
+        <>
+          {cassetteFallback}
           {selected && <SelectionOutline dimensions={[w, h, d]} />}
         </>
       ) : wallModel ? (

@@ -218,5 +218,16 @@
       233
     ],
     "photo": "/catalog-assets/splits/mitsubishi-msz-ln.png"
+  },
+  {
+    "family": "VRV 5 FXAA-A",
+    "url": "/models/splits/vrv-5-fxaa-a.glb",
+    "referenceModel": "FXAA15A",
+    "dimensionsMm": [
+      795,
+      290,
+      266
+    ],
+    "photo": "/catalog-assets/vrv/daikin-fxaa-a.jpg"
   }
 ]

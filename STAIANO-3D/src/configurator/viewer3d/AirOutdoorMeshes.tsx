@@ -56,6 +56,7 @@ export function AirOutdoorMeshes({
                   depthM={d}
                   selected={selected}
                   running={running}
+                  shell
                 />
               </group>
               {showPipes &&

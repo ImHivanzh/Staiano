@@ -19,7 +19,10 @@ PHOTOS = {
     'Standard Plus': 'lg-standard-plus.png', 'Standard 2': 'lg-standard-2.png', 'Mirror': 'lg-mirror.png',
     'Deluxe': 'lg-deluxe.png', 'Air Purification': 'lg-air-purification.png',
     'DUALCOOL AI Deluxe': 'lg-dualcool-ai-deluxe.jpg', 'DUALCOOL AI Premium': 'lg-dualcool-ai-premium.jpg',
+    'VRV 5 FXAA-A': 'vrv/daikin-fxaa-a.jpg',  # path relative to public/catalog-assets when it contains a slash
 }
+
+def photo_path(family): return PHOTOS[family] if '/' in PHOTOS[family] else 'splits/' + PHOTOS[family]
 
 def material(name, color, rough=.3, metal=0):
     m=bpy.data.materials.new(name); m.diffuse_color=(*color,1); m.use_nodes=True
@@ -70,10 +73,13 @@ catalog=json.loads((ROOT/'catalog-data/generated/splits.json').read_text(encodin
 families={}
 for product in catalog['indoorUnits']:
     if product['mounting']=='wall': families.setdefault(product['family'],product)
+# VRV wall units have no mounting field in the catalogue; they are wall-hung.
+for product in json.loads((ROOT/'catalog-data/generated/vrv.json').read_text(encoding='utf-8'))['indoorUnits']:
+    families.setdefault(product['family'],product)
 assert set(families)==set(PHOTOS), 'Every wall family needs an inspected product photo'
 scenes=[]; manifest=[]
 for family,product in families.items():
-    photo=ROOT/'public/catalog-assets/splits'/PHOTOS[family]; assert photo.is_file(),photo
+    photo=ROOT/'public/catalog-assets'/photo_path(family); assert photo.is_file(),photo
     w,h,d=[product[k]/1000 for k in ('widthMm','heightMm','depthMm')]
     scene=bpy.data.scenes.new('Split '+family); scenes.append(scene); bpy.context.window.scene=scene
     flat=family in ('Stylish','MSZ-EF','MSZ-LN','MSZ-AY','Mirror','Airy') or family.startswith('DUALCOOL')
@@ -123,7 +129,7 @@ for family,product in families.items():
     slug=family.lower().replace(' ','-')
     bpy.ops.export_scene.gltf(filepath=str(OUT/(slug+'.glb')),export_format='GLB',use_selection=True,export_apply=True)
     manifest.append(dict(family=family,url='/models/splits/'+slug+'.glb',referenceModel=product['model'],
-        dimensionsMm=[product[k] for k in ('widthMm','heightMm','depthMm')],photo='/catalog-assets/splits/'+PHOTOS[family]))
+        dimensionsMm=[product[k] for k in ('widthMm','heightMm','depthMm')],photo='/catalog-assets/'+photo_path(family)))
     camera=bpy.data.objects.new('Camera',bpy.data.cameras.new('Camera')); scene.collection.objects.link(camera)
     camera.location=(w*.8,-1.8,h*.65); camera.rotation_euler=(-camera.location).to_track_quat('-Z','Y').to_euler()
     camera.data.type='ORTHO'; camera.data.ortho_scale=w*1.25; scene.camera=camera

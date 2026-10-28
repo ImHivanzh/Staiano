@@ -33,7 +33,7 @@ def box(name, loc, dims, m, bevel=0, segments=4):
     o.data.materials.append(m)
     if bevel:
         b = o.modifiers.new('Bordi', 'BEVEL')
-        b.width = bevel
+        b.width = min(bevel, min(dims) * .45)  # un raccordo piu largo dello spessore ribalta le normali
         b.segments = segments
         bpy.ops.object.modifier_apply(modifier='Bordi')
     return o
@@ -76,14 +76,14 @@ def bi2_smart():
     sheet = mat('Deflettore', (.82, .83, .82), .3, .35)
     w, d, h = .759, .150, .579
     box('Mobile', (0, 0, 0), (w, d, h), white, .03, 6)
-    # Frontale piatto leggermente sporgente
-    box('Frontale', (0, -d / 2 + .004, .02), (w - .05, .008, h - .09), white, .012, 4)
-    # Bocca di mandata in basso con deflettore orizzontale
-    box('Bocca mandata', (0, -.018, -h / 2 + .012), (w - .2, d - .06, .018), dark, .002, 2)
-    box('Deflettore', (0, -d / 2 - .002, -h / 2 + .022), (w - .22, .018, .006), sheet, .002, 2)
-    # Griglia di ripresa sottile in alto, lamelle fini
-    for i in range(6):
-        box('Lama ripresa', (0, -d / 2 + .0012, h / 2 - .02 - i * .006), (w - .2, .0012, .0022), dark)
+    # Fronte liscio "total flat": nessun pannello sovrapposto (le facce complanari al corpo renderizzano nere)
+    # Mandata sul lato inferiore (come nel disegno): vano scuro, deflettore e lamelle orizzontali
+    box('Bocca mandata', (0, -.02, -h / 2 + .0015), (w - .16, d - .07, .004), dark, .0008, 2)
+    box('Deflettore', (0, -.04, -h / 2 - .0005), (w - .2, d - .1, .003), sheet, .001, 2)
+    for i in range(5):
+        box('Lama mandata', (0, -.075 + i * .028, -h / 2 + .0005), (w - .22, .004, .0012), dark)
+    # Ripresa: feritoia sottile sul bordo superiore del fronte
+    box('Ripresa aria', (0, -d / 2 - .0004, h / 2 - .035), (w - .2, .0012, .008), dark, .0003, 2)
     export('olimpia-bi2-smart-realistic.glb', 'olimpia-bi2-smart-realistic.blend')
 
 

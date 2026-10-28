@@ -537,3 +537,51 @@ it.each(woodStoves)(
     }
   },
 );
+
+const revisedPelletStoves = [
+  { id: "ravelli-hoop-7", size: [.520, 1.110, .550], finishes: ["bianco", "bronzo"] },
+  { id: "ravelli-hoop-9", size: [.520, 1.110, .550], finishes: ["bronzo"] },
+  { id: "ravelli-mild", size: [.690, .800, .610], finishes: ["nero"] },
+  { id: "ravelli-easy-7", size: [.525, 1.030, .480], finishes: ["bianco", "bordeaux", "nero", "bronzo"] },
+  { id: "ravelli-easy-9", size: [.525, 1.030, .480], finishes: ["bianco", "bordeaux", "nero", "bronzo"] },
+];
+
+it.each(revisedPelletStoves.flatMap((stove) => stove.finishes.map((finish) => ({ ...stove, finish }))))(
+  "preserves $id $finish glazing, silhouettes and rendering budget", async ({ id, finish, size }) => {
+    const bytes = readFileSync(`public/models/stoves/${id}-${finish}.glb`);
+    const json = JSON.parse(bytes.toString("utf8", 20, 20 + bytes.readUInt32LE(12)));
+    expect(json.materials.length).toBeLessThanOrEqual(4);
+    expect(json.materials.some((material: { occlusionTexture?: unknown }) => material.occlusionTexture)).toBe(true);
+    let triangles = 0;
+    for (const mesh of json.meshes) for (const primitive of mesh.primitives) {
+      triangles += json.accessors[primitive.indices ?? primitive.attributes.POSITION].count / 3;
+    }
+    expect(triangles).toBeLessThanOrEqual(15000);
+    const loader = new GLTFLoader().register(() => ({ name: "geometry-test", loadTexture: async () => new Texture() }));
+    const model = await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), "");
+    model.scene.updateMatrixWorld(true);
+    const meshes: Mesh[] = [];
+    model.scene.traverse((object) => { if (object instanceof Mesh) meshes.push(object); });
+    const bounds = new Box3().setFromObject(model.scene);
+    const measured = bounds.getSize(new Vector3());
+    [measured.x, measured.y, measured.z].forEach((dimension, index) => expect(Math.abs(dimension-size[index])).toBeLessThan(.0021));
+    const glazing = meshes.find((mesh) => /^Vetro_sportello/.test(mesh.name))!;
+    const centre = new Box3().setFromObject(glazing).getCenter(new Vector3());
+    const ray = new Raycaster(new Vector3(centre.x, centre.y, bounds.max.z+.1), new Vector3(0, 0, -1));
+    expect(ray.intersectObjects(meshes)[0]?.object).toBe(glazing);
+    expect(glazing.geometry.getAttribute("uv")).toBeDefined();
+    if (id.startsWith("ravelli-hoop")) {
+      const capsule = meshes.find((mesh) => /^Cornice_capsula/.test(mesh.name))!;
+      const capBounds = new Box3().setFromObject(capsule);
+      const capSize = capBounds.getSize(new Vector3());
+      ray.set(new Vector3(capBounds.max.x-capSize.x*.05, capBounds.max.y-capSize.y*.02, bounds.max.z+.1), new Vector3(0, 0, -1));
+      expect(ray.intersectObject(capsule)).toHaveLength(0);
+      ray.set(new Vector3(0, size[1]+.01, size[2]*2.5*.062), new Vector3(0, -1, 0));
+      expect(ray.intersectObjects(meshes)[0]?.distance).toBeGreaterThan(.035);
+      const upper = meshes.find((mesh) => /^Rivestimento_superiore/.test(mesh.name))!;
+      ray.set(new Vector3(bounds.max.x+.1, size[1]*.72, 0), new Vector3(-1, 0, 0));
+      expect(ray.intersectObjects(meshes)[0]?.object).toBe(upper);
+    }
+    if (id === "ravelli-mild") expect(meshes.filter((mesh) => /^Piede_rastremato/.test(mesh.name))).toHaveLength(4);
+  },
+);

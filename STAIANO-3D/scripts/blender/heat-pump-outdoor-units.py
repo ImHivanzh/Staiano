@@ -52,13 +52,13 @@ MODELS = {
 STYLE = {
     # corpo, pannello tecnico, griglia/fondo ventola, ventola, raggio smusso
     "chaff": dict(body=(0.95, 0.95, 0.94), panel=(0.93, 0.93, 0.92), recess=(0.82, 0.83, 0.84), fan=(0.96, 0.96, 0.96),
-                  wire=(0.88, 0.88, 0.88), bevel=0.035, grille="round", foot=(0.74, 0.75, 0.76)),
-    "greew": dict(body=(0.88, 0.89, 0.9), panel=(0.78, 0.8, 0.82), recess=(0.2, 0.22, 0.24), fan=(0.62, 0.64, 0.66),
-                  wire=(0.7, 0.72, 0.74), bevel=0.012, grille="rect", foot=(0.6, 0.61, 0.62)),
+                  wire=(0.88, 0.88, 0.88), bevel=0.035, grille="round", foot=(0.74, 0.75, 0.76), blades=7),
+    "greew": dict(body=(0.88, 0.89, 0.9), panel=(0.78, 0.8, 0.82), recess=(0.2, 0.22, 0.24), fan=(0.08, 0.085, 0.09),
+                  wire=(0.7, 0.72, 0.74), bevel=0.012, grille="rect", foot=(0.6, 0.61, 0.62), logo=True, blades=5),
     "greeb": dict(body=(0.1, 0.1, 0.11), panel=(0.12, 0.12, 0.13), recess=(0.03, 0.03, 0.035), fan=(0.06, 0.06, 0.065),
-                  wire=(0.17, 0.17, 0.18), bevel=0.01, grille="rect", foot=(0.07, 0.07, 0.08)),
+                  wire=(0.17, 0.17, 0.18), bevel=0.01, grille="round", foot=(0.07, 0.07, 0.08), blades=5, logo=True),
     "ebla_e": dict(body=(0.93, 0.93, 0.92), panel=(0.9, 0.9, 0.9), recess=(0.25, 0.27, 0.29), fan=(0.2, 0.21, 0.22),
-                   wire=(0.9, 0.9, 0.9), bevel=0.012, grille="rect", foot=(0.15, 0.15, 0.16), side=(0.1, 0.55, 0.72)),
+                   wire=(0.9, 0.9, 0.9), bevel=0.012, grille="round", foot=(0.15, 0.15, 0.16), side=(0.1, 0.55, 0.72), blades=5),
     "ebla_d": dict(body=(0.64, 0.66, 0.69), panel=(0.64, 0.66, 0.69), recess=(0.035, 0.037, 0.04), fan=(0.05, 0.05, 0.055),
                    wire=(0.1, 0.1, 0.11), bevel=0.01, grille="louvre", foot=(0.12, 0.12, 0.13)),
     "dark": dict(body=(0.075, 0.08, 0.085), panel=(0.09, 0.095, 0.1), recess=(0.03, 0.032, 0.035), fan=(0.05, 0.05, 0.055),
@@ -107,8 +107,8 @@ def ring(coll, loc, r, wire, m):
     return put(o, m)
 
 
-def fan(coll, body, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=None):
-    """Tre pale curve arretrate, protette da una griglia circolare o rettangolare."""
+def fan(coll, body, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=None, blades=3):
+    """Pale curve (3 o piu) arretrate, protette da una griglia circolare o rettangolare."""
     if round_grille:
         disc(coll, (cx, yf + 0.09, cz), r * 1.02, 0.002, m_rec)
     else:
@@ -129,15 +129,15 @@ def fan(coll, body, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=N
     bpy.ops.object.modifier_apply(modifier=modifier.name)
     bpy.data.objects.remove(cutter, do_unlink=True)
     parts = []
-    for i in range(3):
+    for i in range(blades):
         vertices = []
         for row in range(13):
             t = row / 12
             radius = rb * (.16 + .78 * t)
-            chord = .22 + .78 * math.sin(math.pi * t) ** .55
+            chord = (.22 + .78 * math.sin(math.pi * t) ** .55) * 3 / blades
             for col in range(7):
                 u = col / 6 - .5
-                angle = i * math.tau / 3 - .65 * t + chord * u
+                angle = i * math.tau / blades - .65 * t + chord * u
                 vertices.append((cx + radius * math.cos(angle),
                                  yf + .04 + rb * .08 * u * math.sin(math.pi * t),
                                  cz + radius * math.sin(angle)))
@@ -151,7 +151,8 @@ def fan(coll, body, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=N
         bpy.ops.object.modifier_apply(modifier=thickness.name)
         bpy.ops.object.shade_smooth()
         parts.append(blade)
-    parts.append(disc(coll, (cx, yf + 0.038, cz), rb * 0.17, 0.008, m_fan))
+    parts.append(disc(coll, (cx, yf + 0.03, cz), rb * 0.17, 0.03, m_fan))  # mozzo alto, come nella ventola stampata
+    ring(coll, (cx, yf + 0.0, cz), rb * 1.0, 0.007, m_wire)  # bocca convogliatrice attorno alle pale
     if round_grille:
         for k in range(20):
             ring(coll, (cx, yf - 0.011, cz), r * (.16 + .84 * k / 19), 0.0012, m_wire)
@@ -159,11 +160,6 @@ def fan(coll, body, cx, cz, r, yf, s, m_fan, m_wire, m_rec, round_grille, rect=N
             a = i * 2 * math.pi / 64
             box(coll, (cx + math.cos(a) * r * 0.5, yf - 0.0115, cz + math.sin(a) * r * 0.5),
                 (r * 1.0, 0.0016, 0.0016), m_wire, rot=(0, -a, 0))
-        for sx, sz in ((-1, -1), (-1, 1), (1, -1), (1, 1)):
-            x, z = cx + sx * r * .78, cz + sz * r * .78
-            box(coll, (x, yf - .006, z), (r * .22, .012, r * .30), m_wire, .012,
-                rot=(0, sx * sz * math.radians(35), 0))
-            disc(coll, (x, yf - .014, z), .004, .002, m_rec, verts=16)
     else:
         rw, rh = rect
         n = max(8, int(rh / 0.008))
@@ -222,6 +218,11 @@ def build(name):
     pw = w / 2 - 0.012 - px0
     if pw > 0.04:
         box(coll, ((px0 + w / 2 - 0.012) / 2, yf - 0.0015, zc), (pw, 0.003, bh - 0.05), panel_m, 0.006)
+        if S.get('logo'):  # targhetta Gree: fondo chiaro con disco blu e arancio
+            lx, lz = (px0 + w / 2 - 0.012) / 2, zc + (bh - 0.05) * 0.3
+            box(coll, (lx, yf - 0.0035, lz), (min(pw * .7, .09), 0.002, min(pw * .7, .09) * .75), mat('gree-targa', (.93, .93, .94), .4), 0.004)
+            disc(coll, (lx - .012, yf - 0.0052, lz), .012, 0.002, mat('gree-blu', (.08, .3, .65), .4), verts=24)
+            box(coll, (lx + .014, yf - 0.0052, lz - .012), (.026, 0.002, .007), mat('gree-arancio', (.95, .5, .1), .4))
         # sportello cavi/valvole in basso a destra
         box(coll, (w / 2 - 0.05, yf - 0.003, foot_h + 0.06), (0.05, 0.003, 0.022), rec_m, 0.003)
     # fessure laterali (scambiatore) sul fianco sinistro
@@ -233,11 +234,13 @@ def build(name):
         zone_h = bh - 0.05 if fans == 1 else bh * 0.42
         if S["grille"] == "round":
             r = min(zone_w, zone_h) * 0.47
-            spinner(fan(coll, body, zx, cz, r, yf, S, fan_m, wire_m, rec_m, True), k, (zx, yf + 0.04, cz))
-            disc(coll, (zx, yf - 0.0125, cz), r * 0.11, 0.003, mat("chaff-logo", (0.12, 0.22, 0.55), 0.4))
+            spinner(fan(coll, body, zx, cz, r, yf, S, fan_m, wire_m, rec_m, True, blades=S.get('blades', 3)), k, (zx, yf + 0.04, cz))
+            if style == 'chaff':  # logo al centro: disco blu con spicchio rosso, come nella foto
+                disc(coll, (zx, yf - 0.0125, cz), r * 0.13, 0.003, mat('chaff-logo', (0.12, 0.22, 0.55), 0.4))
+                disc(coll, (zx + r * 0.045, yf - 0.0145, cz), r * 0.07, 0.003, mat('chaff-logo-rosso', (0.78, 0.08, 0.1), 0.4), verts=24)
         elif S["grille"] == "rect":
             rw, rh = zone_w - 0.03, zone_h
-            spinner(fan(coll, body, zx, cz, min(rw, rh) / 2, yf, S, fan_m, wire_m, rec_m, False, (rw, rh)), k, (zx, yf + 0.04, cz))
+            spinner(fan(coll, body, zx, cz, min(rw, rh) / 2, yf, S, fan_m, wire_m, rec_m, False, (rw, rh), blades=S.get('blades', 3)), k, (zx, yf + 0.04, cz))
         else:
             rw, rh = zone_w, bh - 0.03 if fans == 1 else zone_h
             box(coll, (zx, yf - 0.002, zc if fans == 1 else cz), (rw, 0.004, rh), rec_m, 0.012)

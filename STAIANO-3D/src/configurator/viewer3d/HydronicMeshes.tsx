@@ -97,30 +97,45 @@ function HeatPumpIdentification({
     return texture;
   }, [manufacturer, model]);
   useEffect(() => () => label.dispose(), [label]);
+  // Logo e targhetta sono decalcomanie piccole, a filo del carter: sul pannello tecnico, con le proporzioni del file.
+  const image = logo.image as { width: number; height: number };
+  const logoWidth = Math.min(width * 0.17, 0.2),
+    logoHeight = (logoWidth * image.height) / image.width,
+    plateWidth = Math.min(depth * 0.5, 0.2),
+    plateHeight = plateWidth * 0.375;
   return (
     <>
-      <mesh position={[width * 0.23, height * 0.28, depth / 2 + 0.018]}>
-        <planeGeometry args={[width * 0.42, height * 0.13]} />
-        <meshBasicMaterial map={logo} toneMapped={false} />
-      </mesh>
-      <mesh
-        position={[width / 2 + 0.008, height * 0.1, 0]}
-        rotation={[0, Math.PI / 2, 0]}
-      >
-        <planeGeometry
-          args={[depth * 0.86, Math.min(height * 0.3, depth * 0.4)]}
-        />
-        <meshBasicMaterial map={label} toneMapped={false} />
-      </mesh>
-      <mesh
-        position={[-width / 2 - 0.008, height * 0.1, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-      >
-        <planeGeometry
-          args={[depth * 0.86, Math.min(height * 0.3, depth * 0.4)]}
-        />
-        <meshBasicMaterial map={label} toneMapped={false} />
-      </mesh>
+      {manufacturer !== "Gree" && (
+        <mesh
+          position={[width * 0.33, height * 0.3, depth / 2 + 0.0015]}
+          renderOrder={1}
+        >
+          <planeGeometry args={[logoWidth, logoHeight]} />
+          <meshBasicMaterial
+            map={logo}
+            toneMapped={false}
+            transparent
+            polygonOffset
+            polygonOffsetFactor={-2}
+          />
+        </mesh>
+      )}
+      {[1, -1].map((side) => (
+        <mesh
+          key={side}
+          position={[side * (width / 2 + 0.0012), height * 0.1, 0]}
+          rotation={[0, (side * Math.PI) / 2, 0]}
+          renderOrder={1}
+        >
+          <planeGeometry args={[plateWidth, plateHeight]} />
+          <meshBasicMaterial
+            map={label}
+            toneMapped={false}
+            polygonOffset
+            polygonOffsetFactor={-2}
+          />
+        </mesh>
+      ))}
     </>
   );
 }

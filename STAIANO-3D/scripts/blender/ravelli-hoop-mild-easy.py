@@ -5,6 +5,7 @@ from pathlib import Path
 import math,json
 import bpy,bmesh
 from mathutils import Vector
+from bpy_extras.object_utils import world_to_camera_view
 root=Path(__file__).resolve().parents[2]
 bpy.ops.wm.read_factory_settings(use_empty=True)
 technical={p['id']:p for p in json.loads((root/'catalog-data/generated/stoves-technical.json').read_text(encoding='utf-8'))['products']}
@@ -42,7 +43,9 @@ def prism(c,name,points,low,high,m,portrait=False):
     data=bpy.data.meshes.new(name);data.from_pydata(vertices,[],faces);data.update()
     bm=bmesh.new();bm.from_mesh(data);bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(data);bm.free()
     data.materials.append(m)
-    for p in data.polygons:p.use_smooth=p.index>=2
+    for p in data.polygons:
+        # Flat sheets keep their normals; only the short corner arcs are smoothed.
+        p.use_smooth=p.index>=2 and math.dist(points[p.index-2],points[(p.index-1)%n])<.015
     uv=data.uv_layers.new(name='UVMap')
     x0=min(v[0] for v in vertices);z0=min(v[2] for v in vertices)
     w=max(v[0] for v in vertices)-x0;h=max(v[2] for v in vertices)-z0
@@ -51,9 +54,7 @@ def prism(c,name,points,low,high,m,portrait=False):
     obj=bpy.data.objects.new(name,data);c.objects.link(obj);return obj
 
 def plan(c,name,w,d,bottom,top,m,r=.03):
-    obj=prism(c,name,outline(w,d,r),bottom,top,m)
-    obj.modifiers.new('Normali piani','WEIGHTED_NORMAL')
-    return obj
+    return prism(c,name,outline(w,d,r),bottom,top,m)
 
 def portrait(c,name,w,h,y,z,m,r=.01,depth=.006):
     return prism(c,name,[(x,zz+z) for x,zz in outline(w,h,r)],y,y+depth,m,True)
@@ -76,7 +77,7 @@ def collar(c,cover,diameter,y,bottom,top):
     for i in range(count):
         j=(i+1)%count;faces.extend(((i,j,2*count+j,2*count+i),(count+i,3*count+i,3*count+j,count+j),
                                   (2*count+i,2*count+j,3*count+j,3*count+i),(i,count+i,count+j,j)))
-    data=bpy.data.meshes.new('Collare fumi');data.from_pydata(vertices,[],faces);data.materials.append(black)
+    data=bpy.data.meshes.new('Collare fumi');data.from_pydata(vertices,[],faces);data.materials.append(black);data.uv_layers.new(name='UVMap')  # same attributes as the other black parts: one exported material
     obj=bpy.data.objects.new('Collare fumi aperto',data);c.objects.link(obj)
     bpy.ops.mesh.primitive_cylinder_add(vertices=64,radius=diameter/2-.002,depth=.09,location=(0,y,bottom))
     cutter=bpy.context.object;subtract(cover,cutter);bpy.data.objects.remove(cutter,do_unlink=True)
@@ -152,6 +153,42 @@ for ident,finishes,kind in specs:
     assert all(abs(a-b)<.0021 for a,b in zip(measured,(w,d,h))),(ident,measured)
     print('VERIFIED',ident,measured,flush=True)
     output(c,ident,shell,finishes)
-for c in bpy.context.scene.collection.children:c.hide_viewport=False;c.hide_render=False
+master=bpy.context.scene
+for index,c in enumerate(list(master.collection.children)):
+    scene=master if index==0 else bpy.data.scenes.new(c.name)
+    if index:
+        master.collection.children.unlink(c);scene.collection.children.link(c)
+    scene.name=c.name;c.hide_viewport=False;c.hide_render=False
+    scene.unit_settings.system='METRIC';scene.unit_settings.scale_length=1
+    scene['reference_photo']='//../../public/catalogs/stoves/'+c.name+'.jpg'
+    scene['geometry_note']='Visual reconstruction; concealed sheet gauges and radii are illustrative.'
+    triangles=0
+    for obj in c.objects:
+        if obj.type=='MESH':obj.data.calc_loop_triangles();triangles+=len(obj.data.loop_triangles)
+    assert triangles<=15000,(c.name,triangles,'triangle budget')
+    materials={slot.material for obj in c.objects for slot in obj.material_slots if slot.material}
+    assert len(materials)<=4,(c.name,len(materials),'material budget')
+    scene['triangles']=triangles
+    bpy.context.window.scene=scene
+    dims=technical[c.name]['dimensionsMm'];w,d,h=(dims[key]/1000 for key in ('widthMm','depthMm','heightMm'))
+    target=bpy.data.objects.new('EMPTY_CamTarget_'+c.name,None);scene.collection.objects.link(target);target.location=(0,0,h/2)
+    camera=bpy.data.objects.new('CAM_'+c.name+'_Hero',bpy.data.cameras.new('CAM_'+c.name+'_Hero'))
+    scene.collection.objects.link(camera);camera.location=(max(w,d,h)*.9,-max(w,d,h)*2.5,h*.85)
+    camera.rotation_euler=(target.location-camera.location).to_track_quat('-Z','Y').to_euler()
+    camera.data.type='ORTHO';camera.data.ortho_scale=max(w,d,h)*1.5;scene.camera=camera
+    scene.render.resolution_x=800;scene.render.resolution_y=1000;scene.render.resolution_percentage=100
+    bpy.context.view_layer.update()
+    points=[obj.matrix_world@Vector(corner) for obj in c.objects if obj.type=='MESH' for corner in obj.bound_box]
+    projected=[world_to_camera_view(scene,camera,point) for point in points]
+    extent=max(max(abs(p.x-.5),abs(p.y-.5))*2 for p in projected);camera.data.ortho_scale*=extent/.9
+    for name,position,energy in [('Key',(-1.5,-2,2),180),('Fill',(2,-1,1),70)]:
+        data=bpy.data.lights.new('LGT_'+name+'_'+c.name,'AREA');data.energy=energy;data.size=2
+        lamp=bpy.data.objects.new(data.name,data);scene.collection.objects.link(lamp);lamp.location=target.location+Vector(position)
+        lamp.rotation_euler=(target.location-lamp.location).to_track_quat('-Z','Y').to_euler()
+    scene.world=bpy.data.worlds.new('WORLD_'+c.name);scene.world.use_nodes=True
+    next(n for n in scene.world.node_tree.nodes if n.type=='BACKGROUND').inputs[0].default_value=(.25,.25,.25,1)
+    scene.render.engine='CYCLES';scene.cycles.samples=32
+    print('SOURCE_QA',c.name,triangles,len(materials),flush=True)
+bpy.context.window.scene=master
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'assets/blender/stufe-ravelli-hoop-mild-easy.blend'))

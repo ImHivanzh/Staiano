@@ -3,8 +3,9 @@ import { expect, it } from "vitest";
 import { Box3, Mesh, Vector3 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import models from "../../../public/models/splits/manifest.json";
+import cassettes from "../../../public/models/cassettes/manifest.json";
 import { splitCatalog } from "@/domain/catalogs/splits";
-import { splitWallModelUrl } from "@/domain/catalogs/split-models";
+import { cassetteModelUrl, splitWallModelUrl } from "@/domain/catalogs/split-models";
 
 it("covers every current wall family and keeps unknown or cassette families on their renderer", () => {
   for (const unit of splitCatalog.indoorUnits.filter(
@@ -47,3 +48,34 @@ it.each(models)(
     }
   },
 );
+
+it.each(cassettes)(
+  "loads the $family cassette reconstruction with openings, louvres and the saved envelope",
+  async (model) => {
+    const bytes = readFileSync(`public${model.url}`);
+    const gltf = await new GLTFLoader().parseAsync(
+      bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
+      "",
+    );
+    const names: string[] = [];
+    gltf.scene.traverse((object) => {
+      if (object instanceof Mesh) names.push(object.name);
+    });
+    expect(names.some((name) => /^Rete_griglia|^Lamella_ripresa/.test(name))).toBe(true);
+    expect(names.some((name) => /^Anello_mandata|^Deflettore_aria/.test(name))).toBe(true);
+    expect(existsSync(`public${model.photo}`)).toBe(true);
+    const size = new Box3().setFromObject(gltf.scene).getSize(new Vector3());
+    for (const [index, value] of [size.x, size.y, size.z].entries()) {
+      expect(Math.abs(value - model.dimensionsMm[index] / 1000), model.family).toBeLessThan(0.004);
+    }
+  },
+);
+
+it("matches every ceiling family and only those", () => {
+  for (const unit of splitCatalog.indoorUnits.filter((u) => u.mounting === "ceiling")) {
+    const url = cassetteModelUrl(unit.family);
+    expect(url, unit.model).not.toBeNull();
+    expect(existsSync(`public${url}`), unit.model).toBe(true);
+  }
+  expect(cassetteModelUrl("Emura")).toBeNull();
+});

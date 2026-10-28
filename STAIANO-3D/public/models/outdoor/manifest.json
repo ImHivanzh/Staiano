@@ -1,0 +1,29 @@
+[
+  {
+    "shell": "compatta",
+    "url": "/models/outdoor/unita-esterna-compatta.glb",
+    "referenceMm": [
+      830,
+      600,
+      330
+    ]
+  },
+  {
+    "shell": "alta",
+    "url": "/models/outdoor/unita-esterna-alta.glb",
+    "referenceMm": [
+      950,
+      1050,
+      400
+    ]
+  },
+  {
+    "shell": "larga",
+    "url": "/models/outdoor/unita-esterna-larga.glb",
+    "referenceMm": [
+      1400,
+      940,
+      340
+    ]
+  }
+]

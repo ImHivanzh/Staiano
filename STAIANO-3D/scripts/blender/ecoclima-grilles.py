@@ -4,7 +4,7 @@ Archetypes (shapes from the manufacturer photos in public/catalog/, quotas not p
 are reconstructed from them): "double" (EBA, EBV, EBIA, EBCV: front vertical + rear horizontal blades),
 "bars" (EBL*: fixed horizontal bars), "slats" (EGA*, EGZ*, ETA, EGS, EAG*, EDC*: inclined slats),
 "mesh" (EGQ*: square egg-crate), "perf" (EGFR, EGFF, EAGF, EGA-ONE: perforated plate, texture-tiled holes),
-"floor" (EBP*: walkable bar grille), "nozzle" (EDMP*, EDMF: panel with rows of micro-nozzles),
+"round" (EAG-AL, EAG-INOX: circular frame with clipped slats), "floor" (EBP*: walkable bar grille), "nozzle" (EDMP*, EDMF: panel with rows of micro-nozzles),
 "linear" (EDLH, EDLSV: slot diffusers, built 1000 mm long and scaled along x by the app, the section is constant). Blade/bar/hole pitch is real, so counts follow the size.
 The outer size is the face the app draws (faceWidthMm/faceHeightMm, else widthMm/heightMm or the nominal
 diameter, as in src/domain/air-terminals/geometry.ts terminalFaceDimensions) and the file is named after the
@@ -17,6 +17,7 @@ Run: `blender -b -P scripts/blender/ecoclima-grilles.py` (glTF export does not w
 from pathlib import Path
 import json
 import math
+import os
 import bpy
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,7 +31,7 @@ SPECS = {
     "EBIA": dict(kind="double", frame=20, flange=3, ret=2, depth=60, front=(4, 32, 4), rear=(4, 22, 38), pitch=40),
     "EBLF": dict(kind="bars", frame=3, flange=0, ret=3, depth=40, bar=(3, 25), pitch=12),
     "EBLR": dict(kind="bars", frame=10, flange=2, ret=2, depth=30, bar=(2, 20), pitch=12),
-    "EBLS": dict(kind="bars", frame=18, flange=3, ret=2, depth=40, bar=(2, 18), pitch=12),
+    "EBLS": dict(kind="bars", frame=18, flange=3, ret=2, depth=40, bar=(2, 18), pitch=12, perf_frame=True),
     "EBL3": dict(kind="bars", frame=15, flange=3, ret=2, depth=45, bar=(2, 24), pitch=12, tilt=20, filter=True),
     "EGA": dict(kind="slats", frame=18, flange=3, ret=1.5, pitch=25, chord=28, angle=38, thick=1.5),
     "EGA1-4": dict(kind="slats", frame=18, flange=3, ret=1.5, pitch=25, chord=28, angle=38, thick=1.5, filter=True),
@@ -41,8 +42,8 @@ SPECS = {
     "EGZ100": dict(kind="slats", frame=20, flange=3, ret=2, pitch=100, chord=105, angle=35, thick=1.5),
     "ETA": dict(kind="slats", frame=12, flange=2, ret=1.5, pitch=20, chord=28, angle=50, thick=1.5),
     "EGS": dict(kind="slats", frame=10, flange=1, ret=1, pitch=10, chord=12, angle=35, thick=1, rib=True),
-    "EAG-AL": dict(kind="slats", frame=12, flange=2, ret=1.5, pitch=15, chord=17, angle=35, thick=1.5),
-    "EAG-INOX": dict(kind="slats", frame=12, flange=2, ret=1.5, pitch=15, chord=17, angle=35, thick=1.5),
+    "EAG-AL": dict(kind="round", frame=10, flange=2, ret=1.5, pitch=16, chord=18, angle=35, thick=1.5),
+    "EAG-INOX": dict(kind="round", frame=8, flange=2, ret=1.5, pitch=16, chord=18, angle=35, thick=1.5),
     "EDLH": dict(kind="linear", frame=0, flange=3, ret=2, depth=60, end=10),
     "EDLSV": dict(kind="linear", frame=0, flange=3, ret=2, depth=90, end=10),
     "EAG": dict(kind="slats", frame=12, flange=2, ret=1.5, pitch=15, chord=17, angle=35, thick=1.5),
@@ -173,10 +174,11 @@ def frame_and_walls(c, sp, X, Z, depth):
     F, T, R = sp["frame"], sp["flange"], sp["ret"]
     ix, iz = X - F, Z - F
     if T:
-        box(c, "Profile_cornice", -X, X, 0, T, iz, Z, PROFILE)
-        box(c, "Profile_cornice", -X, X, 0, T, -Z, -iz, PROFILE)
-        box(c, "Profile_cornice", -X, -ix, 0, T, -iz, iz, PROFILE)
-        box(c, "Profile_cornice", ix, X, 0, T, -iz, iz, PROFILE)
+        m, tile = (PERF[False], 6) if sp.get("perf_frame") else (PROFILE, None)  # EBLS: punched frame (photo)
+        box(c, "Profile_cornice", -X, X, 0, T, iz, Z, m, uv_tile=tile)
+        box(c, "Profile_cornice", -X, X, 0, T, -Z, -iz, m, uv_tile=tile)
+        box(c, "Profile_cornice", -X, -ix, 0, T, -iz, iz, m, uv_tile=tile)
+        box(c, "Profile_cornice", ix, X, 0, T, -iz, iz, m, uv_tile=tile)
     wx = ix if T else X - R
     wz = iz if T else Z - R
     box(c, "Profile_ritorno", -wx - R, wx + R, T, depth, wz, wz + R, PROFILE)
@@ -228,6 +230,36 @@ def build_slats(c, sp, X, Z):
     back(c, sp, ix, iz, depth)
 
 
+def ring(c, name, r0, r1, y0, y1, material, sides=64):
+    """Annulus r0..r1 (mm) extruded along y from y0 to y1; r0 = 0 gives a disc."""
+    pts = [(math.cos(k * math.tau / sides), math.sin(k * math.tau / sides)) for k in range(sides)]
+    v = [(r * px * MM, y * MM, r * pz * MM) for r in (r1, r0) for y in (y0, y1) for px, pz in pts]
+    o, i = 0, 2 * sides  # outer rings at y0 / y1, inner rings at y0 / y1
+    faces = []
+    for k in range(sides):
+        n = (k + 1) % sides
+        faces += [(o + k, o + n, o + sides + n, o + sides + k)]  # outer wall
+        if r0:
+            faces += [(i + k, i + sides + k, i + sides + n, i + n), (o + k, i + k, i + n, o + n), (o + sides + k, o + sides + n, i + sides + n, i + sides + k)]
+    if not r0:
+        faces += [tuple(range(sides)), tuple(range(2 * sides - 1, sides - 1, -1))]
+    return solid(c, name, v, faces, material)
+
+
+def build_round(c, sp, X, Z):
+    """Circular grille: flange ring, return tube and inclined slats clipped to the opening (X = radius)."""
+    reach = sp["chord"] * math.sin(math.radians(sp["angle"])) + sp["thick"] * math.cos(math.radians(sp["angle"]))
+    depth = max(sp["flange"] + 2, round(reach + 3))
+    ri = X - sp["frame"]
+    ring(c, "Profile_cornice", ri, X, 0, sp["flange"], PROFILE)
+    ring(c, "Profile_ritorno", ri, ri + sp["ret"], sp["flange"], depth, PROFILE)
+    for z in positions(2 * ri, sp["pitch"]):
+        half = math.sqrt(max(ri * ri - (z + sp["thick"]) ** 2, 0))
+        if half > 3:
+            prism(c, "Profile_lamella", tilted(reach / 2 + 1, z, sp["thick"] / 2, sp["chord"] / 2, sp["angle"]), -half, half, PROFILE)
+    ring(c, "Interno", 0, ri, depth + 1, depth + 2, DARK)
+
+
 def build_mesh(c, sp, X, Z):
     P, t, d = sp["pitch"], sp["thick"], sp["depth"]
     mesh_d = 20
@@ -268,6 +300,8 @@ def build_nozzle(c, sp, X, Z):
     for z in positions(2 * iz - 2 * sp["r"], sp["row_pitch"]):
         for x in positions(2 * ix - 2 * sp["r"], sp["pitch"]):
             cup(c, x, z, sp["r"])
+            collar = ring(c, "Profile_collare", sp["r"] * .9, sp["r"] * 1.35, -1.5, 0, PROFILE, 24)  # shallow collar around each nozzle (photo)
+            collar.location = (x * MM, 0, z * MM)
     back(c, sp, ix, iz, sp["depth"])
 
 
@@ -290,7 +324,7 @@ def build_linear(c, sp, X, Z, slots, slot_w):
     box(c, "Profile_ritorno", -X, X, T, depth, -Z, -Z + 2, PROFILE)
 
 
-BUILDERS = dict(nozzle=build_nozzle, double=build_double, bars=build_bars, slats=build_slats, mesh=build_mesh, perf=build_perf, floor=build_floor)
+BUILDERS = dict(round=build_round, nozzle=build_nozzle, double=build_double, bars=build_bars, slats=build_slats, mesh=build_mesh, perf=build_perf, floor=build_floor)
 
 
 def build(fam, v, w, h, keep):
@@ -330,7 +364,10 @@ def face(family, v):
 
 catalog = json.loads((ROOT / "catalog-data/generated/ecoclima.json").read_text(encoding="utf-8"))
 built = {}
+ONLY = set(filter(None, os.environ.get("ECO_ONLY", "").split(",")))  # partial rebuild: other families keep the GLBs they have, the scene goes to its own .blend
 for fam in SPECS:
+    if ONLY and fam not in ONLY:
+        continue
     family = next((f for f in catalog["families"] if f["familyCode"] == fam), None)
     todo = [(v, face(family, v)) for v in family["variants"]] if family else []
     todo = [(v, wh) for v, wh in todo if wh]
@@ -344,4 +381,5 @@ print("built", built)
 for c in scene.collection.children:
     c.hide_viewport = c.hide_render = False
 bpy.context.preferences.filepaths.save_version = 0
-bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / "assets/blender/ecoclima-grilles.blend"))
+blend = "ecoclima-grilles" + ("-" + "-".join(sorted(ONLY)).lower() if ONLY else "")
+bpy.ops.wm.save_as_mainfile(filepath=str(ROOT / f"assets/blender/{blend}.blend"))
