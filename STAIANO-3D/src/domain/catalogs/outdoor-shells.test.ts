@@ -5,7 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import shells from "../../../public/models/outdoor/manifest.json";
 import { splitCatalog } from "./splits";
 import { vrvCatalog } from "./vrv";
-import { outdoorFanPlate, outdoorShellClass, outdoorShellUrl } from "./outdoor-shells";
+import { outdoorFanLayout, outdoorFanPlate, outdoorShellClass, outdoorShellUrl } from "./outdoor-shells";
 
 it("assigns every split and VRV outdoor unit to an existing casing model", () => {
   const seen = new Set<string>();
@@ -43,5 +43,22 @@ it("keeps the fan plate inside the casing width", () => {
     const plate = outdoorFanPlate(w);
     expect(plate.left).toBeGreaterThan(-w / 2);
     expect(plate.left + plate.width).toBeLessThan(w / 2);
+  }
+});
+
+it("fits the fans of every catalogue outdoor unit inside the fan plate and the casing, without overlap or the valve notch", () => {
+  for (const unit of [...splitCatalog.outdoorUnits, ...vrvCatalog.outdoorUnits]) {
+    const w = unit.widthMm / 1000, h = unit.heightMm / 1000;
+    const plate = outdoorFanPlate(w), { radius, centres, footHeight } = outdoorFanLayout(w, h);
+    expect(radius, unit.model).toBeGreaterThan(0.08);
+    centres.forEach(([x, y], index) => {
+      expect(x - radius, unit.model).toBeGreaterThanOrEqual(plate.left);
+      expect(x + radius, unit.model).toBeLessThanOrEqual(plate.left + plate.width);
+      expect(y - radius, unit.model).toBeGreaterThanOrEqual(-h / 2 + footHeight);
+      expect(y + radius, unit.model).toBeLessThanOrEqual(h / 2 - 0.016);
+      // the service-valve notch occupies the right-hand 12 % of the front
+      expect(x + radius, unit.model).toBeLessThan(w / 2 - w * 0.12);
+      for (const [x2, y2] of centres.slice(index + 1)) expect(Math.hypot(x - x2, y - y2), unit.model).toBeGreaterThanOrEqual(2 * radius);
+    });
   }
 });

@@ -4,7 +4,7 @@ import { lazy, Suspense } from "react";
 import * as THREE from "three";
 import { OutdoorFan } from "./OutdoorFan";
 import { ModelAssetBoundary } from "./ModelAssetBoundary";
-import { outdoorFanPlate, outdoorShellClass, outdoorShellUrl } from "@/domain/catalogs/outdoor-shells";
+import { outdoorFanLayout, outdoorShellClass, outdoorShellUrl } from "@/domain/catalogs/outdoor-shells";
 
 const OutdoorShellBody = lazy(() => import("./SplitWallBody"));
 const bezel = new THREE.RingGeometry(1, 1.16, 48);
@@ -56,19 +56,7 @@ export function OutdoorCabinet({
   const fans = h > 1.3 ? [-h * 0.23, h * 0.23] : [0];
   const radius = Math.min(w * 0.28, (h * 0.34) / fans.length);
   if (shell) {
-    const plate = outdoorFanPlate(w);
-    const wide = w > 1.2 && h <= 1.3;
-    const bodyHeight = h - footHeight - 0.032;
-    const fanRadius = Math.min(
-      wide ? plate.width * 0.23 : plate.width * 0.46,
-      (bodyHeight * 0.46) / (h > 1.3 ? 2 : 1),
-    );
-    const centreX = plate.left + plate.width / 2;
-    const placements: [number, number][] = h > 1.3
-      ? fans.map((y) => [centreX, y])
-      : wide
-        ? [[centreX - plate.width * 0.25, 0], [centreX + plate.width * 0.25, 0]]
-        : [[centreX, footHeight / 2]];
+    const { radius: fanRadius, centres: placements } = outdoorFanLayout(w, h);
     const casing = (
       <mesh geometry={box} material={finishes[Number(dark)]} position={[0, footHeight / 2, 0]} scale={[w, h - footHeight, d]} castShadow receiveShadow />
     );
