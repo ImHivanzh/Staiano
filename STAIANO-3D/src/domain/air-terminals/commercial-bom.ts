@@ -17,6 +17,19 @@ type InstalledTerminal = Project["airTerminals"][number] & {
 type BomProject = Pick<Project, "airTerminals" | "hvacSystems"> &
   Partial<Pick<Project, "plenums">>;
 /**
+ * Le misure di catalogo sono date per il plenum sopra il controsoffitto:
+ * L1 x H in pianta, P in altezza. A parete il corpo è girato, quindi la faccia
+ * davanti alla bocchetta è L1 x H e P diventa la profondità nel muro.
+ */
+export function terminalPlenumBody<T extends number | null>(
+  terminal: Pick<Project["airTerminals"][number], "mounting">,
+  spec: { lengthMm: T; widthMm: T; heightMm: T },
+) {
+  return terminal.mounting === "ceiling"
+    ? { widthMm: spec.lengthMm, heightMm: spec.heightMm, depthMm: spec.widthMm }
+    : { widthMm: spec.lengthMm, heightMm: spec.widthMm, depthMm: spec.heightMm };
+}
+/**
  * Un plenum salvato resta l'accessorio di catalogo finché coincide con la
  * scheda; appena l'operatore ne cambia quota o modello diventa una quotazione
  * separata, distinta dal prezzo del terminale.
@@ -24,6 +37,7 @@ type BomProject = Pick<Project, "airTerminals" | "hvacSystems"> &
 function savedPlenumIsCatalogue(
   plenum: Project["plenums"][number],
   specification: TerminalAccessorySpecification | null,
+  terminal: Pick<Project["airTerminals"][number], "mounting">,
 ) {
   const spec = specification?.plenum;
   const expectedSide = spec?.connectionPosition === "upper" ? "upper" : "rear";
@@ -38,9 +52,16 @@ function savedPlenumIsCatalogue(
     !!spec &&
     sidesMatch &&
     plenum.model === spec.modelCode &&
-    plenum.widthMm === spec.lengthMm &&
-    plenum.heightMm === spec.heightMm &&
-    plenum.depthMm === spec.widthMm &&
+    // Anche i plenum salvati prima con l'orientamento da soffitto restano di catalogo.
+    [
+      terminalPlenumBody(terminal, spec),
+      terminalPlenumBody({ mounting: "ceiling" }, spec),
+    ].some(
+      (body) =>
+        plenum.widthMm === body.widthMm &&
+        plenum.heightMm === body.heightMm &&
+        plenum.depthMm === body.depthMm,
+    ) &&
     (plenum.portCount ?? 1) === spec.portCount &&
     (plenum.portDiameterMm ?? 160) === spec.portDiameterMm &&
     (plenum.material ?? "insulated") === "insulated" &&
@@ -561,7 +582,7 @@ export function calculateEcoclimaBom(
     const separate = terminalPlenums.get(terminal.id);
     // Nessun plenum è implicito nella bocchetta: si quota solo il corpo
     // separato realmente collegato e coerente con la scheda di catalogo.
-    if (separate && savedPlenumIsCatalogue(separate, specification)) {
+    if (separate && savedPlenumIsCatalogue(separate, specification, terminal)) {
       lines.push(
         priceLine(terminal, "insulated-plenum", 1, catalog, null, separate),
       );

@@ -37,16 +37,17 @@ function fixture() {
 
 it("allows two separate hoses behind the declared wall, with real bend radii and round-trip persistence", () => {
   let p = fixture();
+  p.plenums[0].connectionPositions = ["rear", "rear"];
   expect(p.ducts).toHaveLength(2);
   expect(p.ducts!.every((d) => ductRoute(p, d).length === 0)).toBe(true);
   p = setWallDrywall(p, p.airTerminals[0].wallId!, {
     roomId: p.rooms[0].id,
-    offsetM: -0.5,
+    offsetM: -0.8,
   });
   p = decodeProject(encodeProject(p));
   expect(
     p.walls.find((w) => w.id === p.airTerminals[0].wallId)!.drywall!.offsetM,
-  ).toBe(-0.5);
+  ).toBe(-0.8);
   expect(wallCavityPolygon(p, p.airTerminals[0])).toHaveLength(4);
   for (const duct of p.ducts!)
     expect(
@@ -75,7 +76,7 @@ it("supports actual upper collars on a wall plenum in a shallower cavity", () =>
     roomId: p.rooms[0].id,
     offsetM: -0.3,
   });
-  p.plenums[0].connectionPosition = "upper";
+  p.plenums[0].connectionPositions = ["upper", "upper"];
   const ends = attachedPlenumPorts(p, p.plenums[0]);
   expect(ends[0].elevationM).toBeGreaterThan(p.plenums[0].elevationM!);
   for (const duct of p.ducts!)
@@ -95,4 +96,14 @@ it("does not extend the floor for ceiling terminals or an unassociated wall", ()
   expect(wallCavityPolygon(p, t)).toBeNull();
   t.mounting = "ceiling";
   expect(wallCavityPolygon(p, t)).toBeNull();
+});
+
+it("a wall plenum faces the grille with the catalogue footprint and goes P deep behind it", () => {
+  const p = fixture();
+  const [t] = p.airTerminals;
+  const [pl] = p.plenums;
+  expect(pl.widthMm).toBe(2000);
+  expect(pl.heightMm).toBe(65);
+  expect(pl.depthMm).toBe(240);
+  expect(pl.heightMm).toBeLessThanOrEqual(t.heightMm + 10);
 });

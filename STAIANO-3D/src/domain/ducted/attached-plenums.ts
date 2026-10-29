@@ -2,7 +2,10 @@ import type { Plenum, Point, Project } from "@/schemas/project";
 import { newId } from "../project";
 import { roomCeilingHeightM } from "../air-conditioning/elevation";
 import { roofHeightAt } from "../geometry/ceilings";
-import { resolveTerminalAccessorySpecification } from "../air-terminals/commercial-bom";
+import {
+  resolveTerminalAccessorySpecification,
+  terminalPlenumBody,
+} from "../air-terminals/commercial-bom";
 import {
   addMachinePlenum,
   machinePlenum,
@@ -527,15 +530,26 @@ export function plenumConnectionSide(
   const terminal = project.airTerminals.find(
     (t) => t.id === plenum.attachmentId,
   );
+  const chosen = plenum.connectionPositions?.[portIndex];
   const position =
-    plenum.connectionPositions?.[portIndex] ??
+    chosen ??
     plenum.connectionPosition ??
     (terminal
       ? resolveTerminalAccessorySpecification(terminal)?.plenum
           ?.connectionPosition
       : undefined) ??
     (terminal?.mounting === "ceiling" ? "upper" : "lateral");
-  return normalizedSide(position);
+  // Le posizioni di catalogo sono date col plenum sopra il controsoffitto
+  // (profondità = P, lato lungo = "laterale"). A parete il corpo è girato:
+  // lo stacco laterale esce dal lato lungo (alto) e quello superiore dal retro.
+  const wall = terminal && terminal.mounting !== "ceiling" && !chosen;
+  return normalizedSide(
+    wall && position === "lateral"
+      ? "upper"
+      : wall && position === "upper"
+        ? "rear"
+        : position,
+  );
 }
 
 /** Same physical collar length for route endpoints and the visible terminal-plenum sleeves. */
@@ -647,9 +661,11 @@ function catalogueTerminalPlenum(
     use: terminal.use,
     position: terminal.position,
     rotation: terminal.rotation,
-    widthMm: spec.lengthMm,
-    heightMm: spec.heightMm,
-    depthMm: spec.widthMm,
+    ...terminalPlenumBody(terminal, {
+      lengthMm: spec.lengthMm,
+      widthMm: spec.widthMm,
+      heightMm: spec.heightMm,
+    }),
     elevationM: terminal.elevationM ?? undefined,
     portCount: spec.portCount,
     portDiameterMm: spec.portDiameterMm,
