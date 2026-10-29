@@ -223,6 +223,10 @@
       "fan-coils-da9a577e9a1dff36": {
         "file": "fcb1fef8e426cdaa1284bf6c75ac147130f37432564dd228e17f33a102b9c8a4.json",
         "sha256": "fcb1fef8e426cdaa1284bf6c75ac147130f37432564dd228e17f33a102b9c8a4"
+      },
+      "fan-coils-be04a200d8caaa8c": {
+        "file": "541662100502d73d24df88a8693551cfa40e78b2d8473beaf1c68a1b0c896950.json",
+        "sha256": "541662100502d73d24df88a8693551cfa40e78b2d8473beaf1c68a1b0c896950"
       }
     },
     "heatPumps": {
