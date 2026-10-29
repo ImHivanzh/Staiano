@@ -218,7 +218,8 @@ versione di Python (es. 3.14 contro 3.13) si usa il sorgente.
 
 ### Ricostruzione avanzata (Raster2Seq)
 
-Si prepara da sola: aprendo lo Stato AI, se manca (o è incompleta) il server
+Si prepara da sola, all'avvio del server (`src/instrumentation.ts`, non in
+sviluppo né nel collaudo dell'EXE) o aprendo lo Stato AI: se manca (o è incompleta) il server
 lancia in background `deploy/setup-plan-recognizer.ps1` con Python 3.12 (`py -3.12`
 o `STAIANO_PYTHON312`) e scarica modello e librerie, diversi GB, in
 `.cache/floorplan-ai` (cartella dati, resta fra un aggiornamento e l'altro).
