@@ -53,6 +53,13 @@ function availableWallDepthM(wall: Wall, roomId: string): number {
   return wall.thickness + (drywallSideForRoom(wall, roomId)?.offsetM ?? 0);
 }
 
+/** Innova Filomuro (Slim Fit): ventilconvettore a parete in alto, come uno split. */
+export const isHighWallFanCoil = (product: Pick<FanCoilProduct, "family"> | null) =>
+  !!product?.family.startsWith("Filomuro");
+
+/** Distanza tra la faccia superiore del corpo e il soffitto, come per lo split (splitCenterElevationM). */
+const HIGH_WALL_GAP_M = 0.1;
+
 export function fanCoilWallRecess(product: Pick<FanCoilProduct, "family" | "features" | "depthMm"> | null, wall: Wall, roomId: string) {
   return isRecessedFanCoil(product) || (product?.family === "FCZ PO" && (drywallSideForRoom(wall, roomId)?.offsetM ?? 0) >= product.depthMm / 1000);
 }
@@ -450,21 +457,29 @@ export function initialFanCoilPose(
         offset += 0.2
       )
         offsets.push(offset);
-      for (const offset of offsets)
+      for (const offset of offsets) {
+        const position = recessed
+          ? positionRecessedAlongRoomWall(
+              room,
+              wall,
+              offset,
+              product.depthMm / 1000,
+            )
+          : positionAlongRoomWall(room, wall, offset, product.depthMm / 1000);
+        // Posa alta: base del corpo = quota massima sotto il soffitto meno lo stacco.
+        const high = isHighWallFanCoil(product)
+          ? fanCoilCeilingRange(project, room, product, position, rotation, mounting, panelType)
+          : null;
         poses.push({
           wallId: wall.id,
           mounting,
-          position: recessed
-            ? positionRecessedAlongRoomWall(
-                room,
-                wall,
-                offset,
-                product.depthMm / 1000,
-              )
-            : positionAlongRoomWall(room, wall, offset, product.depthMm / 1000),
+          position,
           rotation,
-          elevationM: 0.1 + visibleHeightMm / 2000,
+          elevationM: high
+            ? high.defaultM - HIGH_WALL_GAP_M + visibleHeightMm / 2000
+            : 0.1 + visibleHeightMm / 2000,
         });
+      }
     }
   } else {
     const box = bounds(room.polygon);

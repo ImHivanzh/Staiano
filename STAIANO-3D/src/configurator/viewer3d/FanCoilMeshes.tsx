@@ -277,10 +277,10 @@ function FanCoilBody({
       {selected && <lineSegments geometry={edges} material={outline} renderOrder={3} />}
     </>;
   }
-  if (product?.family === "Filomuro Slim Fit") {
+  if (product?.family.startsWith("Filomuro")) {
     const fallback = <mesh geometry={body} material={shell} />;
     return <ModelAssetBoundary fallback={fallback}><Suspense fallback={fallback}>
-      <GreeDuctedBody url="/models/hvac/innova-filomuro-realistic.glb" width={w} height={h} depth={d} selected={selected} />
+      <GreeDuctedBody url={product.family === "Filomuro Incasso" ? "/models/hvac/innova-filomuro-incasso-realistic.glb" : "/models/hvac/innova-filomuro-realistic.glb"} width={w} height={h} depth={d} selected={selected} />
     </Suspense></ModelAssetBoundary>;
   }
   if (product?.family === "AirLeaf SL" || product?.family === "AirLeaf SLS") {

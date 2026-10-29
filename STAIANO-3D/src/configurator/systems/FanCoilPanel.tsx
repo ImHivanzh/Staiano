@@ -118,7 +118,6 @@ export function FanCoilPanel({
   const airVents = project.airTerminals.filter(
     (terminal) => terminal.systemId === airSystem?.id,
   );
-  const remainingCoolingW = Math.max(0, room.designLoadW - totals.coolingW);
   const remainingHeatingW = Math.max(0, room.designLoadW - totals.heatingW);
   const sizingProject = existingDevice
     ? {
@@ -312,13 +311,11 @@ export function FanCoilPanel({
           <dd>{installed.length}</dd>
         </div>
       </dl>
-      {installed.length > 0 &&
-        (remainingCoolingW > 0 || remainingHeatingW > 0) && (
+      {installed.length > 0 && remainingHeatingW > 0 && (
           <p className={styles.remaining} role="status">
             <strong>Potenza ancora da coprire:</strong>{" "}
-            {formatNumber(remainingCoolingW / 1000)} kW freddo ·{" "}
-            {formatNumber(remainingHeatingW / 1000)} kW caldo. Aggiungi un
-            apparecchio o scegli un modello più potente.
+            {formatNumber(remainingHeatingW / 1000)} kW in riscaldamento.
+            Aggiungi un apparecchio o scegli un modello più potente.
           </p>
         )}
       {totals.unknownCount > 0 && (

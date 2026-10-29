@@ -1,5 +1,5 @@
 {
-  "version": "fan-coils-da9a577e9a1dff36",
+  "version": "fan-coils-be04a200d8caaa8c",
   "products": [
     {
       "id": "innova-airleaf-sl-200-2t",
@@ -8068,6 +8068,214 @@
         "retrievedAt": "2026-10-27T10:47:42.274293+00:00",
         "documentRevision": "Pagina prodotto Filomuro Slim Fit",
         "importedAt": "2026-10-27T10:47:42.274293+00:00",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-xl-400",
+      "manufacturer": "Innova",
+      "family": "Filomuro Slim Fit XL",
+      "model": "SW XL 400",
+      "pipes": "2",
+      "widthMm": 845.0,
+      "heightMm": 335.0,
+      "depthMm": 215.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 215 mm",
+        "Attacchi idraulici Eurokonus 3/4\", lato DX"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1750.0,
+          "heatingW": 2100.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-xl/",
+        "sourceType": "html",
+        "sha256": "a0ae1bbdd7bb1cff40f04fef0a4b0265dc1ec239bb794a9cf6e91ff526e33245",
+        "retrievedAt": "2026-10-29T14:26:50.054Z",
+        "documentRevision": "Pagina prodotto Filomuro Slim Fit XL",
+        "importedAt": "2026-10-29T14:26:50.054Z",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-xl-800",
+      "manufacturer": "Innova",
+      "family": "Filomuro Slim Fit XL",
+      "model": "SW XL 800",
+      "pipes": "2",
+      "widthMm": 1245.0,
+      "heightMm": 335.0,
+      "depthMm": 215.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 215 mm",
+        "Attacchi idraulici Eurokonus 3/4\", lato DX"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 3120.0,
+          "heatingW": 3450.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-xl/",
+        "sourceType": "html",
+        "sha256": "a0ae1bbdd7bb1cff40f04fef0a4b0265dc1ec239bb794a9cf6e91ff526e33245",
+        "retrievedAt": "2026-10-29T14:26:50.054Z",
+        "documentRevision": "Pagina prodotto Filomuro Slim Fit XL",
+        "importedAt": "2026-10-29T14:26:50.054Z",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-incasso-400",
+      "manufacturer": "Innova",
+      "family": "Filomuro Incasso",
+      "model": "SWI 400",
+      "pipes": "2",
+      "widthMm": 804.0,
+      "heightMm": 307.0,
+      "depthMm": 128.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 128 mm",
+        "Attacchi idraulici 3/4\" EK",
+        "Installazione ad incasso"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1240.0,
+          "heatingW": 1500.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-incasso/",
+        "sourceType": "html",
+        "sha256": "36825e09fd447c72296a28b34a8b15f17b1e1ed28bf150db4de05d61e04baf0c",
+        "retrievedAt": "2026-10-29T14:26:50.054Z",
+        "documentRevision": "Pagina prodotto Filomuro Incasso",
+        "importedAt": "2026-10-29T14:26:50.054Z",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-incasso-600",
+      "manufacturer": "Innova",
+      "family": "Filomuro Incasso",
+      "model": "SWI 600",
+      "pipes": "2",
+      "widthMm": 1004.0,
+      "heightMm": 307.0,
+      "depthMm": 128.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 128 mm",
+        "Attacchi idraulici 3/4\" EK",
+        "Installazione ad incasso"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1610.0,
+          "heatingW": 2010.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-incasso/",
+        "sourceType": "html",
+        "sha256": "36825e09fd447c72296a28b34a8b15f17b1e1ed28bf150db4de05d61e04baf0c",
+        "retrievedAt": "2026-10-29T14:26:50.054Z",
+        "documentRevision": "Pagina prodotto Filomuro Incasso",
+        "importedAt": "2026-10-29T14:26:50.054Z",
+        "page": null
+      }
+    },
+    {
+      "id": "innova-filomuro-incasso-800",
+      "manufacturer": "Innova",
+      "family": "Filomuro Incasso",
+      "model": "SWI 800",
+      "pipes": "2",
+      "widthMm": 1204.0,
+      "heightMm": 307.0,
+      "depthMm": 128.0,
+      "mountings": [
+        "wall"
+      ],
+      "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+      "features": [
+        "Profondità 128 mm",
+        "Attacchi idraulici 3/4\" EK",
+        "Installazione ad incasso"
+      ],
+      "productPhoto": null,
+      "operatingPoints": [
+        {
+          "label": "Massima",
+          "coolingW": 1940.0,
+          "heatingW": 2350.0,
+          "airflowM3h": null,
+          "noiseDbA": null,
+          "coolingConditions": "Acqua 7/12 °C; aria 27 °C.",
+          "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+          "noiseConditions": "Rumore non pubblicato."
+        }
+      ],
+      "sourceMetadata": {
+        "manufacturer": "Innova",
+        "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-incasso/",
+        "sourceType": "html",
+        "sha256": "36825e09fd447c72296a28b34a8b15f17b1e1ed28bf150db4de05d61e04baf0c",
+        "retrievedAt": "2026-10-29T14:26:50.054Z",
+        "documentRevision": "Pagina prodotto Filomuro Incasso",
+        "importedAt": "2026-10-29T14:26:50.054Z",
         "page": null
       }
     }

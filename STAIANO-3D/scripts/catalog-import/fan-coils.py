@@ -362,6 +362,35 @@ for size, width, cooling, heating in ((400, 815, 1240, 1500), (600, 1015, 1610, 
         "sourceMetadata": filomuro_meta,
     })
 
+# Filomuro Slim Fit XL e Incasso: stesse pagine prodotto Innova, stessi dati pubblicati (ingombro, potenze, attacchi).
+# L'Incasso è dichiarato "incassato in alto a muro": nessuna altra quota di posa è pubblicata.
+filomuro_extra = (
+    ("innova-filomuro-xl-page", "Pagina prodotto Filomuro Slim Fit XL", "innova-filomuro-xl", "Filomuro Slim Fit XL", "SW XL",
+     335.0, 215.0, 'Attacchi idraulici Eurokonus 3/4", lato DX', ((400, 845, 1750, 2100), (800, 1245, 3120, 3450)), []),
+    ("innova-filomuro-incasso-page", "Pagina prodotto Filomuro Incasso", "innova-filomuro-incasso", "Filomuro Incasso", "SWI",
+     307.0, 128.0, 'Attacchi idraulici 3/4" EK', ((400, 804, 1240, 1500), (600, 1004, 1610, 2010), (800, 1204, 1940, 2350)),
+     ["Installazione ad incasso"]),
+)
+for source, revision, prefix, family, model, height, depth, hydraulic, sizes, extra in filomuro_extra:
+    meta = metadata(source, "Innova")
+    meta["documentRevision"] = revision
+    for size, width, cooling, heating in sizes:
+        products.append({
+            "id": f"{prefix}-{size}", "manufacturer": "Innova", "family": family,
+            "model": f"{model} {size}", "pipes": "2", "widthMm": float(width), "heightMm": height, "depthMm": depth,
+            "mountings": ["wall"],
+            "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
+            "features": [f"Profondità {depth:g} mm", hydraulic, *extra],
+            "productPhoto": None,
+            "operatingPoints": [{
+                "label": "Massima", "coolingW": float(cooling), "heatingW": float(heating),
+                "airflowM3h": None, "noiseDbA": None,
+                "coolingConditions": "Acqua 7/12 °C; aria 27 °C.", "heatingConditions": "Acqua 45/40 °C; aria 20 °C.",
+                "noiseConditions": "Rumore non pubblicato.",
+            }],
+            "sourceMetadata": meta,
+        })
+
 data = {"products": products, "controls": controls}
 version = "fan-coils-" + hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
 dest = ROOT / "catalog-data/generated/fan-coils.json"

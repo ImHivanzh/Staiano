@@ -103,7 +103,6 @@ it("uses the published maximum speed for sizing and reports its noise as a warni
   const options = {
     manufacturer: "Innova",
     family: "AirLeaf SL",
-    requiredCoolingW: 800,
     requiredHeatingW: 800,
   };
   const previous = fanCoilCatalogAtVersion("fan-coils-b244c72c5197bef0")!;

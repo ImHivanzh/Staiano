@@ -44,22 +44,17 @@ export function sizeFanCoils(
     manufacturer?: string;
     family?: string;
     mounting?: FanCoilPlacement["mounting"];
-    requiredCoolingW?: number;
     requiredHeatingW?: number;
   } = {},
   catalog: FanCoilCatalog = fanCoilCatalog,
 ): FanCoilSuggestion[] {
   // All fan coils in the room share its load, even across independent installations.
   const installed = installedFanCoilCapacity(project, room.id);
-  const coolingW =
-    options.requiredCoolingW ??
-    Math.max(0, room.designLoadW - installed.coolingW);
+  // I consigli seguono solo la potenza in riscaldamento: il freddo non entra nella scelta.
   const heatingW =
     options.requiredHeatingW ??
     Math.max(0, room.designLoadW - installed.heatingW);
-  if (![coolingW, heatingW].every((v) => Number.isFinite(v) && v >= 0))
-    return [];
-  if (coolingW === 0 && heatingW === 0) return [];
+  if (!Number.isFinite(heatingW) || heatingW <= 0) return [];
   const suggestions = catalog.products.flatMap((product) => {
     if (
       (options.manufacturer && options.manufacturer !== product.manufacturer) ||
@@ -74,16 +69,14 @@ export function sizeFanCoils(
     );
     if (!pose) return [];
     const { point } = fanCoilMaximumPoint(product);
-    return point.coolingW >= coolingW && point.heatingW >= heatingW
+    return point.heatingW >= heatingW
       ? [{ product, point, pose, noiseUnverified: point.noiseDbA === null }]
       : [];
   });
   return suggestions.sort(
     (a, b) =>
       Number(a.noiseUnverified) - Number(b.noiseUnverified) ||
-      a.point.coolingW +
-        a.point.heatingW -
-        (b.point.coolingW + b.point.heatingW) ||
+      a.point.heatingW - b.point.heatingW ||
       (a.point.noiseDbA ?? Infinity) - (b.point.noiseDbA ?? Infinity) ||
       a.product.id.localeCompare(b.product.id),
   );

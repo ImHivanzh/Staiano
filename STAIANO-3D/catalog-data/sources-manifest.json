@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-28T10:26:23.663Z",
+  "generatedAt": "2026-10-29T14:27:49.390Z",
   "documents": [
     {
       "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
@@ -2091,6 +2091,12 @@
       "page": 14
     },
     {
+      "sha256": "36825e09fd447c72296a28b34a8b15f17b1e1ed28bf150db4de05d61e04baf0c",
+      "manufacturer": "Innova",
+      "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-incasso/",
+      "page": null
+    },
+    {
       "sha256": "63948c4f3516acb5b6d5fa5c06e274446486f5deaed554cbcf899407f9a42b25",
       "manufacturer": "Innova",
       "sourceUrl": "https://www.innova.it/prodotti/fancoils/airleaf/airleaf-sls/",
@@ -2125,6 +2131,12 @@
       "manufacturer": "Innova",
       "sourceUrl": "https://rep.innova.it/downloads/manuali/N420927A_Manuale%20installazione%20Comandi%20AirLeaf_NEW%20RS_Rev.10_%20IT.pdf",
       "page": 6
+    },
+    {
+      "sha256": "a0ae1bbdd7bb1cff40f04fef0a4b0265dc1ec239bb794a9cf6e91ff526e33245",
+      "manufacturer": "Innova",
+      "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-xl/",
+      "page": null
     },
     {
       "sha256": "ceeae388ef2e51d0ee6d88371ce62ac2be837bc02df29fceb892560e5f58cf68",

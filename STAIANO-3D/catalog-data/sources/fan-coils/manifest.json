@@ -61,5 +61,19 @@
     "sourceType": "html",
     "sha256": "8aea1b516bd6da6a443610062c467d3e9c906b7da02b1c4a221e245765e9ad08",
     "retrievedAt": "2026-10-27T10:47:42.274293+00:00"
+  },
+  {
+    "name": "innova-filomuro-xl-page",
+    "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-xl/",
+    "sourceType": "html",
+    "sha256": "a0ae1bbdd7bb1cff40f04fef0a4b0265dc1ec239bb794a9cf6e91ff526e33245",
+    "retrievedAt": "2026-10-29T14:26:50.054Z"
+  },
+  {
+    "name": "innova-filomuro-incasso-page",
+    "sourceUrl": "https://www.innova.it/prodotti/fancoils/filomuro/filomuro-incasso/",
+    "sourceType": "html",
+    "sha256": "36825e09fd447c72296a28b34a8b15f17b1e1ed28bf150db4de05d61e04baf0c",
+    "retrievedAt": "2026-10-29T14:26:50.054Z"
   }
 ]

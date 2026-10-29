@@ -115,3 +115,17 @@ it("moves a saved protruding SLI back inside the wall when recomputing", () => {
   expect(loaded.fanCoils![0].position).not.toEqual(old.position);
   expect(fanCoilPlacementValid(loaded, loaded.fanCoils![0])).toBe(true);
 });
+
+it.each([
+  ["innova-filomuro-sw-600", 0.335],
+  ["innova-filomuro-xl-800", 0.335],
+  ["innova-filomuro-incasso-600", 0.307],
+])("places Innova Filomuro %s high on the wall like a split", (productId, heightM) => {
+  let p = fixture();
+  p = applyFanCoil(p, p.rooms[0].id, productId, { mounting: "wall" });
+  const unit = p.fanCoils![0];
+  // base del corpo 0,1 m sotto il soffitto finito (2,7 m)
+  expect(unit.elevationM - heightM / 2).toBeCloseTo(2.7 - heightM - 0.1, 2);
+  expect(unit.elevationM + heightM / 2).toBeLessThanOrEqual(2.7 - 0.1 + 1e-6);
+  expect(fanCoilPlacementValid(p, unit)).toBe(true);
+});

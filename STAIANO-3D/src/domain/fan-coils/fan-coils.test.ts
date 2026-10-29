@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { addRectangle, createProject, recomputeProject } from "@/domain/project";
+import {
+  addRectangle,
+  createProject,
+  recomputeProject,
+} from "@/domain/project";
 import { projectSchema } from "@/schemas/project";
 import {
   fanCoilCatalog,
@@ -406,10 +410,10 @@ describe("ventilconvettori originali", () => {
       manufacturer: "Aermec",
       mounting: "wall",
     })[0];
-    expect(suggestion.point.coolingW).toBeGreaterThanOrEqual(
-      p.rooms[0].designLoadW - 2600,
+    expect(suggestion.point.heatingW).toBeGreaterThanOrEqual(
+      p.rooms[0].designLoadW - 3030,
     );
-    expect(suggestion.point.coolingW).toBeLessThan(p.rooms[0].designLoadW);
+    expect(suggestion.point.heatingW).toBeLessThan(p.rooms[0].designLoadW);
   });
 
   it("non consiglia altri apparecchi quando il fabbisogno è già coperto", () => {
@@ -430,16 +434,14 @@ describe("ventilconvettori originali", () => {
       ...p,
       fanCoils: p.fanCoils!.map((u) => ({ ...u, operatingPointIndex: 0 })),
     };
-    expect(installedFanCoilCapacity(legacy, p.rooms[0].id).coolingW).toBe(
-      1000,
-    );
+    expect(installedFanCoilCapacity(legacy, p.rooms[0].id).coolingW).toBe(1000);
     expect(recomputeProject(legacy).fanCoils![0].operatingPointIndex).toBe(2);
     expect(() =>
       updateFanCoil(p, unit.id, { controllerId: "innova-eeb749ii" }),
     ).toThrow("non documentato");
   });
 
-  it("suggerisce solo punti che soddisfano sia freddo sia caldo con rumore della stessa velocità", () => {
+  it("suggerisce in base al solo riscaldamento, con rumore della stessa velocità", () => {
     const p = fixture(),
       room = p.rooms[0];
     const product = structuredClone(
@@ -476,7 +478,7 @@ describe("ventilconvettori originali", () => {
     const suggestions = sizeFanCoils(
       p,
       room,
-      { requiredCoolingW: 1500, requiredHeatingW: 1500 },
+      { requiredHeatingW: 1500 },
       catalog,
     );
     expect(suggestions).toHaveLength(1);
@@ -484,13 +486,32 @@ describe("ventilconvettori originali", () => {
     expect(suggestions[0].point.noiseDbA).toBe(35);
     product.operatingPoints[2].noiseDbA = null;
     expect(
-      sizeFanCoils(
-        p,
-        room,
-        { requiredCoolingW: 1500, requiredHeatingW: 1500 },
-        catalog,
-      )[0].noiseUnverified,
+      sizeFanCoils(p, room, { requiredHeatingW: 1500 }, catalog)[0]
+        .noiseUnverified,
     ).toBe(true);
+  });
+
+  it("ignora la potenza in freddo: basta quella in riscaldamento", () => {
+    const p = fixture(),
+      product = structuredClone(
+        fanCoilCatalog.products.find((u) => u.id === "aermec-fcz100")!,
+      );
+    product.operatingPoints = product.operatingPoints.map((pt) => ({
+      ...pt,
+      coolingW: 100,
+      heatingW: 2000,
+    }));
+    const catalog: FanCoilCatalog = {
+      version: "test",
+      products: [product],
+      controls: [],
+    };
+    expect(
+      sizeFanCoils(p, p.rooms[0], { requiredHeatingW: 1500 }, catalog),
+    ).toHaveLength(1);
+    expect(
+      sizeFanCoils(p, p.rooms[0], { requiredHeatingW: 2500 }, catalog),
+    ).toEqual([]);
   });
 
   it("associa M7 solo alle famiglie documentate e alla scheda corretta per tubi e collegamento", () => {
