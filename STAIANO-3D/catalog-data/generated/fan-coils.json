@@ -1,5 +1,5 @@
 {
-  "version": "fan-coils-be04a200d8caaa8c",
+  "version": "fan-coils-558c27cfead43a28",
   "products": [
     {
       "id": "innova-airleaf-sl-200-2t",
@@ -7965,7 +7965,12 @@
         "Profondità 128 mm",
         "Attacchi idraulici Eurokonus 3/4\", lato DX"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-sw.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/1358/vista_9.640x0.jpg",
+        "sha256": "4d0e40cd45faf5c7fb62a02303713adc5b90d1c84bc2c912f64ab1f628fd8d20",
+        "caption": "Innova Filomuro Slim Fit, immagine ufficiale"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8006,7 +8011,12 @@
         "Profondità 128 mm",
         "Attacchi idraulici Eurokonus 3/4\", lato DX"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-sw.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/1358/vista_9.640x0.jpg",
+        "sha256": "4d0e40cd45faf5c7fb62a02303713adc5b90d1c84bc2c912f64ab1f628fd8d20",
+        "caption": "Innova Filomuro Slim Fit, immagine ufficiale"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8047,7 +8057,12 @@
         "Profondità 128 mm",
         "Attacchi idraulici Eurokonus 3/4\", lato DX"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-sw.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/1358/vista_9.640x0.jpg",
+        "sha256": "4d0e40cd45faf5c7fb62a02303713adc5b90d1c84bc2c912f64ab1f628fd8d20",
+        "caption": "Innova Filomuro Slim Fit, immagine ufficiale"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8088,7 +8103,12 @@
         "Profondità 215 mm",
         "Attacchi idraulici Eurokonus 3/4\", lato DX"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-xl.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/3487/xl_frontale.640x0.jpg",
+        "sha256": "d696f79cc661c18fe6450958cb0b95aeefecf614d2640f82ff5de68801ff8c10",
+        "caption": "Innova Filomuro Slim Fit XL, immagine ufficiale"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8129,7 +8149,12 @@
         "Profondità 215 mm",
         "Attacchi idraulici Eurokonus 3/4\", lato DX"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-xl.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/3487/xl_frontale.640x0.jpg",
+        "sha256": "d696f79cc661c18fe6450958cb0b95aeefecf614d2640f82ff5de68801ff8c10",
+        "caption": "Innova Filomuro Slim Fit XL, immagine ufficiale"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8171,7 +8196,12 @@
         "Attacchi idraulici 3/4\" EK",
         "Installazione ad incasso"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-incasso.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/1360/dettaglio_slwi.640x0.jpg",
+        "sha256": "822e7698bc5c18d8968facb591dbd03808c84bbd83a33bf553f08aa1bbf36690",
+        "caption": "Innova Filomuro Incasso, dettaglio ufficiale della piastra a filo muro"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8213,7 +8243,12 @@
         "Attacchi idraulici 3/4\" EK",
         "Installazione ad incasso"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-incasso.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/1360/dettaglio_slwi.640x0.jpg",
+        "sha256": "822e7698bc5c18d8968facb591dbd03808c84bbd83a33bf553f08aa1bbf36690",
+        "caption": "Innova Filomuro Incasso, dettaglio ufficiale della piastra a filo muro"
+      },
       "operatingPoints": [
         {
           "label": "Massima",
@@ -8255,7 +8290,12 @@
         "Attacchi idraulici 3/4\" EK",
         "Installazione ad incasso"
       ],
-      "productPhoto": null,
+      "productPhoto": {
+        "localPath": "/catalog-assets/fan-coils/innova-filomuro-incasso.jpg",
+        "sourceUrl": "https://www.innova.it/site/assets/files/1360/dettaglio_slwi.640x0.jpg",
+        "sha256": "822e7698bc5c18d8968facb591dbd03808c84bbd83a33bf553f08aa1bbf36690",
+        "caption": "Innova Filomuro Incasso, dettaglio ufficiale della piastra a filo muro"
+      },
       "operatingPoints": [
         {
           "label": "Massima",

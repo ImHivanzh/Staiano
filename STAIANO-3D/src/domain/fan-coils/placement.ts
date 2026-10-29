@@ -60,6 +60,25 @@ export const isHighWallFanCoil = (product: Pick<FanCoilProduct, "family"> | null
 /** Distanza tra la faccia superiore del corpo e il soffitto, come per lo split (splitCenterElevationM). */
 const HIGH_WALL_GAP_M = 0.1;
 
+/**
+ * Quota del centro di un Filomuro a parete: la base del corpo sta HIGH_WALL_GAP_M sotto il
+ * soffitto finito (come uno split). Null se il modello non è da posa alta o manca lo spazio.
+ */
+export function highWallElevationM(
+  project: Project,
+  room: Room,
+  product: FanCoilProduct,
+  position: Point,
+  rotation: number,
+  panelType: FanCoilPanelType | null,
+): number | null {
+  if (!isHighWallFanCoil(product)) return null;
+  const range = fanCoilCeilingRange(project, room, product, position, rotation, "wall", panelType);
+  if (!range) return null;
+  const heightMm = fanCoilPanelDimensions(product, panelType)?.heightMm ?? product.heightMm;
+  return range.defaultM - HIGH_WALL_GAP_M + heightMm / 2000;
+}
+
 export function fanCoilWallRecess(product: Pick<FanCoilProduct, "family" | "features" | "depthMm"> | null, wall: Wall, roomId: string) {
   return isRecessedFanCoil(product) || (product?.family === "FCZ PO" && (drywallSideForRoom(wall, roomId)?.offsetM ?? 0) >= product.depthMm / 1000);
 }
@@ -466,18 +485,14 @@ export function initialFanCoilPose(
               product.depthMm / 1000,
             )
           : positionAlongRoomWall(room, wall, offset, product.depthMm / 1000);
-        // Posa alta: base del corpo = quota massima sotto il soffitto meno lo stacco.
-        const high = isHighWallFanCoil(product)
-          ? fanCoilCeilingRange(project, room, product, position, rotation, mounting, panelType)
-          : null;
         poses.push({
           wallId: wall.id,
           mounting,
           position,
           rotation,
-          elevationM: high
-            ? high.defaultM - HIGH_WALL_GAP_M + visibleHeightMm / 2000
-            : 0.1 + visibleHeightMm / 2000,
+          elevationM:
+            highWallElevationM(project, room, product, position, rotation, panelType) ??
+            0.1 + visibleHeightMm / 2000,
         });
       }
     }

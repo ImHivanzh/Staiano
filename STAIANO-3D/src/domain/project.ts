@@ -25,6 +25,11 @@ import {
   fanCoilProductAtVersion,
   isRecessedFanCoil,
 } from "@/domain/catalogs/fan-coils";
+import {
+  fanCoilPlacementValid,
+  highWallElevationM,
+  isHighWallFanCoil,
+} from "@/domain/fan-coils/placement";
 import { wallRun, wallRunMeasuredLength } from "@/domain/geometry/wall-runs";
 import { calculateRoomThermal } from "./geometry/ceilings";
 import { THERMAL_COEFFICIENT_W_M3 } from "@/domain/thermal/calculate";
@@ -297,16 +302,30 @@ export function recomputeProject(project: Project): Project {
       ? wall
       : withDrywallSides(wall, sides);
   });
-  p.fanCoils = reassociate(p.fanCoils ?? []).map((unit) => {
+  p.fanCoils = reassociate(p.fanCoils ?? []).map((original) => {
+    let unit = original;
     if (unit.locked || unit.mounting !== "wall") return unit;
     const product = fanCoilProductAtVersion(
       unit.productId,
       unit.catalogVersion,
     );
-    if (!isRecessedFanCoil(product)) return unit;
     const room = p.rooms.find(
       (r) => r.id === unit.roomId && r.floorId === unit.floorId,
     );
+    // Filomuro inseriti prima della posa alta: ancora alla quota bassa di default, li alza.
+    if (
+      room &&
+      product &&
+      isHighWallFanCoil(product) &&
+      Math.abs(unit.elevationM - (0.1 + unit.heightMm / 2000)) < 1e-3
+    ) {
+      const elevationM = highWallElevationM(p, room, product, unit.position, unit.rotation, unit.panelType ?? null);
+      if (elevationM !== null) {
+        const raised = { ...unit, elevationM };
+        if (fanCoilPlacementValid(p, raised, product)) unit = raised;
+      }
+    }
+    if (!isRecessedFanCoil(product)) return unit;
     const wall = p.walls.find(
       (w) => w.id === unit.wallId && w.floorId === unit.floorId,
     );

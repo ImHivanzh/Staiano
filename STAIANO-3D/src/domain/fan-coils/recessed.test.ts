@@ -129,3 +129,19 @@ it.each([
   expect(unit.elevationM + heightM / 2).toBeLessThanOrEqual(2.7 - 0.1 + 1e-6);
   expect(fanCoilPlacementValid(p, unit)).toBe(true);
 });
+
+it.each(["innova-filomuro-sw-600", "innova-filomuro-incasso-600"])(
+  "alza un %s salvato con la vecchia quota bassa e lascia stare quelli bloccati",
+  (id) => {
+    let p = fixture();
+    p = applyFanCoil(p, p.rooms[0].id, id, { mounting: "wall" });
+    const high = p.fanCoils![0].elevationM;
+    const low = 0.1 + p.fanCoils![0].heightMm / 2000;
+    const legacy = (locked: boolean) => ({
+      ...p,
+      fanCoils: p.fanCoils!.map((u) => ({ ...u, elevationM: low, locked })),
+    });
+    expect(recomputeProject(legacy(false)).fanCoils![0].elevationM).toBeCloseTo(high);
+    expect(recomputeProject(legacy(true)).fanCoils![0].elevationM).toBeCloseTo(low);
+  },
+);

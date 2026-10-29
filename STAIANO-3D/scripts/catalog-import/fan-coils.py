@@ -342,9 +342,15 @@ for product in innova:
         product["ceilingInstallation"] = horizontal_installations[product["family"]]
 
 # Innova Filomuro Slim Fit: la pagina prodotto pubblica solo ingombro, potenze e attacchi.
-# Portata, rumore, immagini e modalità di posa non sono pubblicate: restano null/assenti.
+# Portata, rumore e modalità di posa non sono pubblicate: restano null/assenti.
 filomuro_meta = metadata("innova-filomuro-page", "Innova")
 filomuro_meta["documentRevision"] = "Pagina prodotto Filomuro Slim Fit"
+SITE = "https://www.innova.it/site/assets/files"
+filomuro_photos = {
+    "innova-filomuro-sw": acquired_photo("innova-filomuro-sw", f"{SITE}/1358/vista_9.640x0.jpg", "Innova Filomuro Slim Fit, immagine ufficiale"),
+    "innova-filomuro-xl": acquired_photo("innova-filomuro-xl", f"{SITE}/3487/xl_frontale.640x0.jpg", "Innova Filomuro Slim Fit XL, immagine ufficiale"),
+    "innova-filomuro-incasso": acquired_photo("innova-filomuro-incasso", f"{SITE}/1360/dettaglio_slwi.640x0.jpg", "Innova Filomuro Incasso, dettaglio ufficiale della piastra a filo muro"),
+}
 for size, width, cooling, heating in ((400, 815, 1240, 1500), (600, 1015, 1610, 2010), (800, 1215, 1940, 2350)):
     products.append({
         "id": f"innova-filomuro-sw-{size}", "manufacturer": "Innova", "family": "Filomuro Slim Fit",
@@ -352,7 +358,7 @@ for size, width, cooling, heating in ((400, 815, 1240, 1500), (600, 1015, 1610, 
         "mountings": ["wall"],
         "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
         "features": ['Profondità 128 mm', 'Attacchi idraulici Eurokonus 3/4", lato DX'],
-        "productPhoto": None,
+        "productPhoto": filomuro_photos["innova-filomuro-sw"],
         "operatingPoints": [{
             "label": "Massima", "coolingW": float(cooling), "heatingW": float(heating),
             "airflowM3h": None, "noiseDbA": None,
@@ -381,7 +387,7 @@ for source, revision, prefix, family, model, height, depth, hydraulic, sizes, ex
             "mountings": ["wall"],
             "dimensionNote": "Ingombro dalla pagina prodotto Innova; modalità di posa e accessori non pubblicati, da verificare.",
             "features": [f"Profondità {depth:g} mm", hydraulic, *extra],
-            "productPhoto": None,
+            "productPhoto": filomuro_photos[prefix],
             "operatingPoints": [{
                 "label": "Massima", "coolingW": float(cooling), "heatingW": float(heating),
                 "airflowM3h": None, "noiseDbA": None,
