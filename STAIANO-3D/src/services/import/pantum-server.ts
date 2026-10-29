@@ -33,38 +33,42 @@ export async function scanPantum(
   try {
     folder = await mkdtemp(path.join(tmpdir(), "staiano-pantum-"));
     const output = path.join(folder, "scansione.pdf");
-    await new Promise<void>((resolve, reject) => {
-      execFile(
-        /* turbopackIgnore: true */
-        process.env.STAIANO_SCANNER_PYTHON || "python",
-        [
-          path.resolve(
-            process.env.STAIANO_PACKAGED === "1"
-              ? "native/pantum/scansione.pyc"
-              : "native/pantum/scansione.py",
-          ),
-          "--worker-scan",
-          String(dpi),
-          output,
-          source,
-        ],
-        { windowsHide: true, timeout: 125_000, maxBuffer: 4096 },
-        (error, _stdout, stderr) => {
-          if (!error) return resolve();
-          reject(
-            new ScannerError(
-              error.killed
-                ? "Timeout scanner. Riprova quando la Pantum è pronta."
-                : error.code === "ENOENT"
-                  ? "Python scanner non disponibile. Verifica STAIANO_SCANNER_PYTHON sul server."
-                  : stderr.trim().slice(0, 500) ||
-                    "Acquisizione Pantum non riuscita.",
-              error.killed ? 504 : error.code === "ENOENT" ? 503 : 502,
-            ),
-          );
-        },
-      );
-    });
+    const run = (script: string) =>
+      new Promise<void>((resolve, reject) => {
+        execFile(
+          /* turbopackIgnore: true */
+          process.env.STAIANO_SCANNER_PYTHON || "python",
+          [path.resolve(script), "--worker-scan", String(dpi), output, source],
+          { windowsHide: true, timeout: 125_000, maxBuffer: 4096 },
+          (error, _stdout, stderr) => {
+            if (!error) return resolve();
+            reject(
+              new ScannerError(
+                error.killed
+                  ? "Timeout scanner. Riprova quando la Pantum è pronta."
+                  : error.code === "ENOENT"
+                    ? "Python scanner non disponibile. Verifica STAIANO_SCANNER_PYTHON sul server."
+                    : stderr.trim().slice(0, 500) ||
+                      "Acquisizione Pantum non riuscita.",
+                error.killed ? 504 : error.code === "ENOENT" ? 503 : 502,
+              ),
+            );
+          },
+        );
+      });
+    const script = "native/pantum/scansione.py";
+    if (process.env.STAIANO_PACKAGED !== "1") await run(script);
+    else
+      // Il .pyc vale solo per la versione di Python della build: con un'altra
+      // (es. 3.14 contro 3.13) python rifiuta il magic number, si usa il sorgente.
+      await run(`${script}c`).catch((error: unknown) => {
+        if (
+          error instanceof ScannerError &&
+          /bad magic number/i.test(error.message)
+        )
+          return run(script);
+        throw error;
+      });
     const size = (await stat(output)).size;
     if (size <= 5 || size > 32 * 1024 * 1024)
       throw new ScannerError("PDF scanner assente o troppo grande.");

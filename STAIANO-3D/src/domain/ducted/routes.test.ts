@@ -26,6 +26,7 @@ import {
   moveDuctWaypoint,
   removeDuctWaypoint,
   setDuctKind,
+  uncrossedPairs,
 } from "./routes";
 import { projectSchema } from "@/schemas/project";
 import { movePlacedDevice } from "../geometry/move-device";
@@ -612,4 +613,15 @@ it("adds a bend using the plan projection and interpolates the existing elevatio
     y: 3,
     elevationM: 2,
   });
+});
+
+it("pairs facing collars by position so left never joins right", () => {
+  const at = (x: number, y: number) => ({ x, y, elevationM: 2.4 });
+  const machine = [at(-0.1, 0), at(0.1, 0)];
+  // Plenum girato di 180°: i suoi stacchi 0 e 1 sono scambiati in pianta.
+  expect(uncrossedPairs(machine, [at(0.1, 2), at(-0.1, 2)])).toEqual([1, 0]);
+  expect(uncrossedPairs(machine, [at(-0.1, 2), at(0.1, 2)])).toEqual([0, 1]);
+  // Direzione obliqua (verso +x,+y): sinistra resta con sinistra.
+  expect(uncrossedPairs(machine, [at(2.1, 2), at(1.9, 2)])).toEqual([1, 0]);
+  expect(uncrossedPairs(machine, [at(0, 2)])).toEqual([0]);
 });

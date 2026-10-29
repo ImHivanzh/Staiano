@@ -151,6 +151,11 @@ try {
     ],
     { stdio: "inherit" },
   );
+  // Sorgente di riserva: il .pyc funziona solo con la stessa versione di Python.
+  await cp(
+    path.join(root, "native/pantum/scansione.py"),
+    path.join(runtime, "native/pantum/scansione.py"),
+  );
   let compiled = 0;
   for (const name of await files(path.join(runtime, dist, "server"))) {
     // Next evaluates these data records in a VM without CommonJS module/require.

@@ -112,19 +112,25 @@
   border-color: var(--tinta);
 }
 .model span {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--testo-tenue);
+}
+.model > span:nth-child(2),
+.model > span:nth-child(3) {
+  font-size: 14px;
+  color: var(--testo);
+  text-align: center;
 }
 .modelName {
   display: grid;
   gap: 4px;
 }
 .modelName strong {
-  font-size: 14px;
+  font-size: 16px;
   color: var(--testo);
 }
 .model .selectedLabel {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--tinta);
 }
@@ -224,9 +230,9 @@
 }
 .compactPicker .model {
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr) auto;
-  gap: 8px;
-  padding: 10px 12px;
-  min-height: 52px;
+  gap: 12px;
+  padding: 14px 16px;
+  min-height: 68px;
 }
 .compactPicker .modelName {
   grid-column: auto;

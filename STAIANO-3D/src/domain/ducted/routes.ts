@@ -41,34 +41,82 @@ import { connectTerminalOnPlan } from "./graphic-installation";
 
 export type RoutePoint = Point & { elevationM: number };
 
-/** Start on a real outlet of the machine plenum, never on the machine casing. */
+/**
+ * Abbina gli stacchi per posizione, non per indice: se i due corpi si guardano
+ * "sinistra" e "destra" locali si scambiano e i tubi si incrocerebbero. Ordina
+ * entrambi i lati trasversalmente alla direzione macchina→plenum e li accoppia
+ * per rango. Restituisce, per ogni stacco di partenza, l'indice d'arrivo.
+ */
+export function uncrossedPairs(
+  starts: RoutePoint[],
+  ends: RoutePoint[],
+): number[] {
+  const k = Math.min(starts.length, ends.length);
+  const identity = Array.from({ length: k }, (_, i) => i);
+  if (k < 2) return identity;
+  const mean = (list: RoutePoint[], axis: "x" | "y") =>
+    list.slice(0, k).reduce((sum, p) => sum + p[axis], 0) / k;
+  const dx = mean(ends, "x") - mean(starts, "x");
+  const dy = mean(ends, "y") - mean(starts, "y");
+  if (Math.hypot(dx, dy) < 1e-6) return identity;
+  const order = (list: RoutePoint[]) =>
+    [...identity].sort(
+      (a, b) =>
+        list[a].y * dx - list[a].x * dy - (list[b].y * dx - list[b].x * dy),
+    );
+  const from = order(starts);
+  const to = order(ends);
+  const pairs = [...identity];
+  from.forEach((start, rank) => (pairs[start] = to[rank]));
+  return pairs;
+}
+
+function machineStarts(
+  project: Project,
+  systemId: string,
+  terminalId: string,
+): RoutePoint[] {
+  const terminal = project.airTerminals.find((t) => t.id === terminalId);
+  const plenum = terminal && machinePlenum(project, systemId, terminal.use);
+  if (!plenum) return [];
+  if (!placedPlenumGeometry(project, plenum) && plenum.attachmentId)
+    return attachedPlenumPorts(project, plenum).map((port) => ({
+      x: port.x,
+      y: port.y,
+      elevationM: port.elevationM,
+    }));
+  return (
+    placedPlenumGeometry(project, plenum)
+      ?.ports.filter((p) => p.branch.terminalIds.includes(terminalId))
+      .map((port) =>
+        plenumLocalToPlan(plenum, [
+          port.centerMm[0] / 1000,
+          port.centerMm[1] / 1000,
+          (port.centerMm[2] + port.collarLengthMm) / 1000,
+        ]),
+      ) ?? []
+  );
+}
+
+/**
+ * Start on a real outlet of the machine plenum, never on the machine casing.
+ * `portIndex` è lo stacco del plenum della bocchetta: parte dallo stacco
+ * macchina che gli sta di fronte, senza incroci.
+ */
 function machineDuctStart(
   project: Project,
   systemId: string,
   terminalId: string,
   portIndex = 0,
 ): RoutePoint | null {
+  const starts = machineStarts(project, systemId, terminalId);
   const terminal = project.airTerminals.find((t) => t.id === terminalId);
-  if (!terminal) return null;
-  const plenum = machinePlenum(project, systemId, terminal.use);
-  if (!plenum) return null;
-  if (!placedPlenumGeometry(project, plenum) && plenum.attachmentId) {
-    const port = attachedPlenumPorts(project, plenum)[portIndex];
-    if (!port) return null;
-    return { x: port.x, y: port.y, elevationM: port.elevationM };
-  }
-  const ports =
-    placedPlenumGeometry(project, plenum)?.ports.filter((p) =>
-      p.branch.terminalIds.includes(terminalId),
-    ) ?? [];
-  const port = ports[portIndex];
-  return port
-    ? plenumLocalToPlan(plenum, [
-        port.centerMm[0] / 1000,
-        port.centerMm[1] / 1000,
-        (port.centerMm[2] + port.collarLengthMm) / 1000,
-      ])
-    : null;
+  const body = terminal && terminalPlenum(project, terminal);
+  const paired = uncrossedPairs(
+    starts,
+    body ? attachedPlenumPorts(project, body) : [],
+  ).indexOf(portIndex);
+  return starts[paired >= 0 ? paired : portIndex] ?? null;
 }
 
 function collarLead(

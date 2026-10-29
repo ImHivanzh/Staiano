@@ -1,3 +1,4 @@
+import path from "node:path";
 import { afterEach, expect, it, vi } from "vitest";
 import { readFile, stat, writeFile } from "node:fs/promises";
 import { scanPantum } from "./pantum-server";
@@ -65,4 +66,20 @@ it("rejects invalid output, releases the lock after failures and handles worker 
     });
     await expect(scanPantum(150, "adf")).rejects.toMatchObject({ status });
   }
+});
+
+it("falls back to the source when the packaged .pyc is for another Python", async () => {
+  vi.stubEnv("STAIANO_PACKAGED", "1");
+  const scripts: string[] = [];
+  execute.mockImplementation((...args: unknown[]) => {
+    const [script, , , destination] = args[1] as string[];
+    scripts.push(script);
+    const callback = args[3] as (e: unknown, o: string, s: string) => void;
+    if (script.endsWith(".pyc"))
+      return callback({ code: 1 }, "", "ImportError: bad magic number in 'scansione'");
+    void writeFile(destination, "%PDF-1.7\nscan").then(() => callback(null, "", ""));
+  });
+  expect((await scanPantum(150, "piano")).toString()).toBe("%PDF-1.7\nscan");
+  expect(scripts.map((s) => path.basename(s))).toEqual(["scansione.pyc", "scansione.py"]);
+  vi.unstubAllEnvs();
 });
