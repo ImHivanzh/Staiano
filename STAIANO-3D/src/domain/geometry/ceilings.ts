@@ -231,6 +231,19 @@ export function ceilingFrontPose(
   };
 }
 
+/** Quota massima del centro di una bocchetta a parete: il frontale resta sotto il cartongesso. */
+export function wallTerminalMaxElevationM(
+  project: Project,
+  room: Room,
+  point: Point,
+  heightMm: number,
+) {
+  return Math.max(
+    heightMm / 2000,
+    ceilingHeightAt(project, room, point) - heightMm / 2000 - 0.05,
+  );
+}
+
 export function syncCeilingTerminals(project: Project): Project {
   return {
     ...project,
@@ -241,8 +254,17 @@ export function syncCeilingTerminals(project: Project): Project {
           ...ceilingFrontPose(project, t, t.position, t.ceilingEdge),
         };
       const room = project.rooms.find((r) => r.id === t.roomId);
-      return room && t.mounting === "ceiling" && t.elevationM !== null
-        ? { ...t, elevationM: ceilingHeightAt(project, room, t.position) }
+      if (!room || t.elevationM === null) return t;
+      if (t.mounting === "ceiling")
+        return { ...t, elevationM: ceilingHeightAt(project, room, t.position) };
+      return t.mounting === "wall"
+        ? {
+            ...t,
+            elevationM: Math.min(
+              t.elevationM,
+              wallTerminalMaxElevationM(project, room, t.position, t.heightMm),
+            ),
+          }
         : t;
     }),
   };

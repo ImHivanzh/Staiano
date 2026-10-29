@@ -150,7 +150,11 @@ export function applyAirTerminalSolution(
         });
     }
   }
-  const wallElevationM = Math.min(2.2, room.heightM - heightMm / 2000 - 0.05);
+  // Sotto il cartongesso: con controsoffitto la quota finita sostituisce la struttura.
+  const wallElevationM = Math.min(
+    2.2,
+    (room.ceilingHeightM ?? room.heightM) - heightMm / 2000 - 0.05,
+  );
   if (mounting === "wall" && wallElevationM <= heightMm / 2000)
     throw new Error("Altezza stanza insufficiente per il terminale.");
   for (let pointIndex = 0; pointIndex < solution.numberOfPoints; pointIndex++)

@@ -184,3 +184,15 @@ it("uses the finished ceiling height for a flat room, including after reload and
   project = updateRoom(project, room.id, { ceilingHeightM: null });
   expect(project.rooms[0].volumeM3).toBeCloseTo(8 * 12 * 3);
 });
+
+it("keeps a wall terminal face below the plasterboard, never in the void above it", async () => {
+  const { syncCeilingTerminals } = await import("./ceilings");
+  const base = addGuidedTerminal(guidedProjectFixture(), 1000) as any;
+  const room = base.rooms[0];
+  room.ceilingHeightM = 2.0;
+  const wall = { ...base.airTerminals[0], mounting: "wall", ceilingBandId: null, elevationM: 2.2, heightMm: 80 };
+  const synced = syncCeilingTerminals({ ...base, airTerminals: [wall] });
+  expect(synced.airTerminals[0].elevationM).toBeCloseTo(2.0 - 0.04 - 0.05, 6);
+  const low = syncCeilingTerminals({ ...base, airTerminals: [{ ...wall, elevationM: 1.5 }] });
+  expect(low.airTerminals[0].elevationM).toBe(1.5);
+});

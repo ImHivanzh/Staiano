@@ -582,7 +582,7 @@ function TerminalMesh({
       {selected && <SelectionOutline dimensions={[w, h, d || 0.05]} />}
     </>;
   }
-  const ecoclimaLinear = item.family === "EDLS" ? "edls" : /^EDFLB?-\d+$/.test(item.family) ? "edfl" : null;
+  const ecoclimaLinear = item.family === "EDLS" ? "edls" : /^EDFLB?(NA)?-\d+$/.test(item.family) ? "edfl" : null;
   if (ecoclimaLinear && variant?.slotCount && variant.slotCount <= 6) {
     return <>
       <ModelAssetBoundary fallback={<mesh geometry={box} material={aluminium} scale={[w, h, d || 0.001]} />}>
