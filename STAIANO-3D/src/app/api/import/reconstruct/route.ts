@@ -1,19 +1,26 @@
 import { localDwgRequestAllowed } from "@/services/import/dwg-server";
 import {
+  planRecognizerRuntime,
   recognitionAiStatus,
+  recognizerBusy,
   reconstructImage,
 } from "@/services/import/reconstruction-server";
+import { prepareRecognizer } from "@/services/import/plan-recognizer-setup";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   if (!localDwgRequestAllowed(request))
     return Response.json({ available: false }, { status: 403 });
-  return Response.json(
-    await recognitionAiStatus(
-      new URL(request.url).searchParams.get("check") === "1",
-    ),
-    { headers: { "Cache-Control": "no-store" } },
+  const check = new URL(request.url).searchParams.get("check") === "1";
+  // Installa o sostituisce da solo il modello AI quando manca o è cambiato.
+  await prepareRecognizer(
+    check,
+    await planRecognizerRuntime(),
+    recognizerBusy(),
   );
+  return Response.json(await recognitionAiStatus(check), {
+    headers: { "Cache-Control": "no-store" },
+  });
 }
 export async function POST(request: Request) {
   if (!localDwgRequestAllowed(request))

@@ -213,6 +213,20 @@ Lo scanner è configurato in `SCANNER_HOST`; il bridge verifica l'hash del drive
 prima di caricarlo. Le scansioni Staiano concorrenti vengono bloccate, i PDF
 temporanei eliminati al termine. L'API richiede sessione e stessa origine.
 Non viene inviata alcuna email. Limiti: una pagina A4, niente colore o duplex.
+Il pacchetto EXE contiene anche `scansione.py`: se il `.pyc` è per un'altra
+versione di Python (es. 3.14 contro 3.13) si usa il sorgente.
+
+### Ricostruzione avanzata (Raster2Seq)
+
+Si prepara da sola: aprendo lo Stato AI, se manca (o è incompleta) il server
+lancia in background `deploy/setup-plan-recognizer.ps1` con Python 3.12 (`py -3.12`
+o `STAIANO_PYTHON312`) e scarica modello e librerie, diversi GB, in
+`.cache/floorplan-ai` (cartella dati, resta fra un aggiornamento e l'altro).
+`installed.json` conserva l'impronta del modello, calcolata da URL, hash e
+versioni pip dello script più `requirements.txt`. Se cambiano, al primo accesso
+il vecchio ambiente viene cancellato e il nuovo installato. Un ambiente
+indicato a mano fuori da `.cache/floorplan-ai` non viene toccato. Un errore non
+riparte da solo: serve «Verifica AI».
 
 ## Verifica
 

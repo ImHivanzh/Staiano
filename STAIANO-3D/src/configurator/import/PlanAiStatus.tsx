@@ -41,6 +41,17 @@ export function PlanAiStatus({ notes = [] }: { notes?: string[] }) {
     ]);
     return () => controller.abort();
   }, []);
+  // Durante la preparazione automatica il server si aggiorna da solo: riprova finché non finisce.
+  useEffect(() => {
+    if (status?.state !== "preparing") return;
+    const timer = setInterval(() => {
+      void fetch("/api/import/reconstruct", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((next) => next && setStatus(next))
+        .catch(() => {});
+    }, 15000);
+    return () => clearInterval(timer);
+  }, [status?.state]);
   async function check() {
     setLoading(true);
     try {
@@ -66,15 +77,17 @@ export function PlanAiStatus({ notes = [] }: { notes?: string[] }) {
         Stato AI ·{" "}
         {status?.state === "ready"
           ? "pronta"
-          : status?.state === "installed"
-            ? "installata"
-            : status?.state === "busy"
-              ? "in uso"
-              : status?.state === "error"
-                ? "verifica non riuscita"
-                : status
-                  ? "da attivare"
-                  : "controllo…"}
+          : status?.state === "preparing"
+            ? "in preparazione"
+            : status?.state === "installed"
+              ? "installata"
+              : status?.state === "busy"
+                ? "in uso"
+                : status?.state === "error"
+                  ? "verifica non riuscita"
+                  : status
+                    ? "da attivare"
+                    : "controllo…"}
       </summary>
       <p className={styles.notice}>
         {notes.some((n) => n.includes("Segmentazione AI locale"))
@@ -98,45 +111,54 @@ export function PlanAiStatus({ notes = [] }: { notes?: string[] }) {
       >
         Verifica AI
       </button>
-      <h3>Come attivare la ricostruzione avanzata</h3>
-      <ol className={styles.notice}>
-        <li>
-          Sul PC che esegue Staiano installa Python 3.12. Su iPad il
-          riconoscitore avanzato usa quel PC.
-        </li>
-        <li>
-          Apri PowerShell nella cartella del server contenente{" "}
-          <code>deploy</code> ed esegui il comando seguente. La procedura
-          prepara il runtime e scarica modello e dipendenze locali (diversi GB).
-          Con il programma EXE, la cartella è <code>runtime</code> accanto
-          all’eseguibile.
-        </li>
-        <li>
-          Torna qui e premi Verifica AI. Il riconoscitore parte su richiesta:
-          non occorre avviare un servizio Windows separato.
-        </li>
-      </ol>
-      <pre className={styles.aiCommand}>{activation}</pre>
-      <button
-        type="button"
-        className="bottone piccolo tenue"
-        onClick={() => {
-          void (async () => {
-            try {
-              await navigator.clipboard.writeText(activation);
-              setCopied("copied");
-            } catch {
-              setCopied("manual");
-            }
-          })();
-        }}
-      >
-        {copied === "copied"
-          ? "Comando copiato"
-          : copied === "manual"
-            ? "Seleziona e copia il comando qui sopra"
-            : "Copia comando di attivazione"}
-      </button>
+      {status?.state !== "preparing" && (
+        <>
+          <h3>Attivazione manuale</h3>
+          <p className={styles.notice}>
+            Di norma il server prepara da solo la ricostruzione avanzata e, se
+            il modello cambia, sostituisce quello vecchio. Questi passaggi
+            servono solo se la preparazione automatica non riesce.
+          </p>
+          <ol className={styles.notice}>
+            <li>
+              Sul PC che esegue Staiano installa Python 3.12. Su iPad il
+              riconoscitore avanzato usa quel PC.
+            </li>
+            <li>
+              Apri PowerShell nella cartella del server contenente{" "}
+              <code>deploy</code> ed esegui il comando seguente. La procedura
+              prepara il runtime e scarica modello e dipendenze locali (diversi
+              GB). Con il programma EXE, la cartella è <code>runtime</code>{" "}
+              accanto all’eseguibile.
+            </li>
+            <li>
+              Torna qui e premi Verifica AI. Il riconoscitore parte su
+              richiesta: non occorre avviare un servizio Windows separato.
+            </li>
+          </ol>
+          <pre className={styles.aiCommand}>{activation}</pre>
+          <button
+            type="button"
+            className="bottone piccolo tenue"
+            onClick={() => {
+              void (async () => {
+                try {
+                  await navigator.clipboard.writeText(activation);
+                  setCopied("copied");
+                } catch {
+                  setCopied("manual");
+                }
+              })();
+            }}
+          >
+            {copied === "copied"
+              ? "Comando copiato"
+              : copied === "manual"
+                ? "Seleziona e copia il comando qui sopra"
+                : "Copia comando di attivazione"}
+          </button>
+        </>
+      )}
     </details>
   );
 }

@@ -10,6 +10,7 @@ import {
 import path from "node:path";
 import { z } from "zod";
 import { reconstructionSchema } from "./reconstruction-schema";
+import { recognizerDefaults, setupState } from "./plan-recognizer-setup";
 
 const runtimeSchema = z.object({
   python: z.string(),
@@ -19,7 +20,13 @@ const runtimeSchema = z.object({
 let busy = false;
 type AiStatus = {
   available: boolean;
-  state: "unavailable" | "installed" | "ready" | "busy" | "error";
+  state:
+    | "unavailable"
+    | "preparing"
+    | "installed"
+    | "ready"
+    | "busy"
+    | "error";
   message: string;
   device?: "cuda" | "cpu";
 };
@@ -38,13 +45,23 @@ function stopRecognizer(child: ChildProcess) {
 }
 
 /** Installation and an explicit dependency check are distinct from loading the model. */
+export const recognizerBusy = () => busy;
 export async function recognitionAiStatus(check = false): Promise<AiStatus> {
+  const setup = setupState();
+  if (setup?.state === "running")
+    return {
+      available: false,
+      state: "preparing",
+      message:
+        "Preparazione della ricostruzione avanzata in corso: scarico modello e librerie (diversi GB, anche decine di minuti). Il riconoscimento nel browser resta disponibile.",
+    };
   const runtime = await planRecognizerRuntime();
   if (!runtime)
     return {
       available: false,
-      state: "unavailable",
+      state: setup?.state === "error" ? "error" : "unavailable",
       message:
+        setup?.message ??
         "Ricostruzione avanzata non configurata su questo server. Il riconoscimento nel browser resta disponibile.",
     };
   if (busy)
