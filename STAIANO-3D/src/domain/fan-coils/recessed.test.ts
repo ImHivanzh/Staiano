@@ -131,17 +131,24 @@ it.each([
 });
 
 it.each(["innova-filomuro-sw-600", "innova-filomuro-incasso-600"])(
-  "alza un %s salvato con la vecchia quota bassa e lascia stare quelli bloccati",
+  "alza un %s salvato a terra, anche se bloccato o a quota bassa non di default",
   (id) => {
     let p = fixture();
     p = applyFanCoil(p, p.rooms[0].id, id, { mounting: "wall" });
     const high = p.fanCoils![0].elevationM;
-    const low = 0.1 + p.fanCoils![0].heightMm / 2000;
-    const legacy = (locked: boolean) => ({
+    const half = p.fanCoils![0].heightMm / 2000;
+    const legacy = (elevationM: number, locked: boolean) => ({
       ...p,
-      fanCoils: p.fanCoils!.map((u) => ({ ...u, elevationM: low, locked })),
+      fanCoils: p.fanCoils!.map((u) => ({ ...u, elevationM, locked })),
     });
-    expect(recomputeProject(legacy(false)).fanCoils![0].elevationM).toBeCloseTo(high);
-    expect(recomputeProject(legacy(true)).fanCoils![0].elevationM).toBeCloseTo(low);
+    for (const [elevationM, locked] of [
+      [0.1 + half, false],
+      [0.1 + half, true],
+      [0.25 + half, false],
+    ] as const)
+      expect(recomputeProject(legacy(elevationM, locked)).fanCoils![0].elevationM).toBeCloseTo(high);
+    // una quota scelta a mano ben sopra il pavimento resta com'è
+    const chosen = 1.2 + half;
+    expect(recomputeProject(legacy(chosen, false)).fanCoils![0].elevationM).toBeCloseTo(chosen);
   },
 );

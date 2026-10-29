@@ -302,30 +302,16 @@ export function recomputeProject(project: Project): Project {
       ? wall
       : withDrywallSides(wall, sides);
   });
-  p.fanCoils = reassociate(p.fanCoils ?? []).map((original) => {
-    let unit = original;
+  const snapRecessed = (unit: NonNullable<typeof p.fanCoils>[number]) => {
     if (unit.locked || unit.mounting !== "wall") return unit;
     const product = fanCoilProductAtVersion(
       unit.productId,
       unit.catalogVersion,
     );
+    if (!isRecessedFanCoil(product)) return unit;
     const room = p.rooms.find(
       (r) => r.id === unit.roomId && r.floorId === unit.floorId,
     );
-    // Filomuro inseriti prima della posa alta: ancora alla quota bassa di default, li alza.
-    if (
-      room &&
-      product &&
-      isHighWallFanCoil(product) &&
-      Math.abs(unit.elevationM - (0.1 + unit.heightMm / 2000)) < 1e-3
-    ) {
-      const elevationM = highWallElevationM(p, room, product, unit.position, unit.rotation, unit.panelType ?? null);
-      if (elevationM !== null) {
-        const raised = { ...unit, elevationM };
-        if (fanCoilPlacementValid(p, raised, product)) unit = raised;
-      }
-    }
-    if (!isRecessedFanCoil(product)) return unit;
     const wall = p.walls.find(
       (w) => w.id === unit.wallId && w.floorId === unit.floorId,
     );
@@ -353,7 +339,38 @@ export function recomputeProject(project: Project): Project {
       Math.abs(position.y - unit.position.y) < 1e-4
       ? unit
       : { ...unit, position };
-  });
+  };
+  // Filomuro salvati prima della posa alta: il corpo poggia quasi a terra (base < 0,35 m), li alza
+  // anche se bloccati, perché la quota bassa era solo il default e non una scelta.
+  const raiseHighWall = (unit: NonNullable<typeof p.fanCoils>[number]) => {
+    if (unit.mounting !== "wall" || unit.elevationM - unit.heightMm / 2000 > 0.35)
+      return unit;
+    const product = fanCoilProductAtVersion(
+      unit.productId,
+      unit.catalogVersion,
+    );
+    const room = p.rooms.find(
+      (r) => r.id === unit.roomId && r.floorId === unit.floorId,
+    );
+    if (!room || !product || !isHighWallFanCoil(product)) return unit;
+    const elevationM = highWallElevationM(
+      p,
+      room,
+      product,
+      unit.position,
+      unit.rotation,
+      unit.panelType ?? null,
+    );
+    if (elevationM === null) return unit;
+    const raised = { ...unit, elevationM };
+    return fanCoilPlacementValid(p, raised, product) ||
+      !fanCoilPlacementValid(p, unit, product)
+      ? raised
+      : unit;
+  };
+  p.fanCoils = reassociate(p.fanCoils ?? []).map((unit) =>
+    raiseHighWall(snapRecessed(unit)),
+  );
   p.airTerminals = reassociate(p.airTerminals);
   p.ductedDrafts = p.ductedDrafts?.filter(
     (draft) =>
