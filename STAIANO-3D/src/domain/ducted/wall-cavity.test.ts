@@ -98,12 +98,10 @@ it("does not extend the floor for ceiling terminals or an unassociated wall", ()
   expect(wallCavityPolygon(p, t)).toBeNull();
 });
 
-it("a wall plenum faces the grille with the catalogue footprint and goes P deep behind it", () => {
+it("a wall plenum has the trapezoidal drawing footprint: 149 wide face, P deep behind the grille", () => {
   const p = fixture();
-  const [t] = p.airTerminals;
   const [pl] = p.plenums;
   expect(pl.widthMm).toBe(2000);
-  expect(pl.heightMm).toBe(65);
+  expect(pl.heightMm).toBe(149);
   expect(pl.depthMm).toBe(240);
-  expect(pl.heightMm).toBeLessThanOrEqual(t.heightMm + 10);
 });

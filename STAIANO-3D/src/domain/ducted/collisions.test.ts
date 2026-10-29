@@ -350,7 +350,17 @@ it("keeps the ceiling terminal plenum in the void above a suspended ceiling", ()
   const terminal = p.airTerminals[0];
   const plenum = p.plenums.find((pl) => pl.attachmentId === terminal.id)!;
   // Con il controsoffitto il plenum sta sopra la faccia della bocchetta.
-  expect(plenum.position).toEqual(terminal.position);
+  // La bocca del plenum e larga come la bocchetta: il corpo (149) si sposta
+  // di (149 - larghezza bocchetta) / 2 verso il lato largo.
+  const shift = (149 - terminal.heightMm) / 2000;
+  expect(plenum.position.x).toBeCloseTo(
+    terminal.position.x - Math.sin(terminal.rotation) * shift,
+    9,
+  );
+  expect(plenum.position.y).toBeCloseTo(
+    terminal.position.y + Math.cos(terminal.rotation) * shift,
+    9,
+  );
   expect(plenum.elevationM! - plenum.heightMm / 2000).toBeGreaterThanOrEqual(
     terminal.elevationM!,
   );

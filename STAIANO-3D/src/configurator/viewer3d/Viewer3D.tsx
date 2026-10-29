@@ -34,6 +34,8 @@ import {
   Wind,
   SlidersHorizontal,
   LinkSimple,
+  Door,
+  Stack,
 } from "@phosphor-icons/react";
 import { rotateDevice90 } from "@/domain/geometry/rotate-device";
 import { useProjectStore } from "@/stores/project-store";
@@ -941,7 +943,10 @@ export default function Viewer3D({
                   name="viewer-menus"
                   data-testid="installation-overview"
                 >
-                  <summary>Impianti · {p?.installations.length}</summary>
+                  <summary>
+                    <Stack size={18} aria-hidden="true" />
+                    Impianti · {p?.installations.length}
+                  </summary>
                   <div className={styles.settingsBody}>
                     <p>
                       Vista complessiva: tutti gli impianti sono visibili
@@ -1217,9 +1222,10 @@ export default function Viewer3D({
                   </button>
                   {selectedWall && (
                     <button
-                      className="bottone piccolo"
+                      className="bottone"
                       onClick={() => setWallOpen(true)}
                     >
+                      <Door size={18} aria-hidden="true" />
                       Porte e finestre
                     </button>
                   )}

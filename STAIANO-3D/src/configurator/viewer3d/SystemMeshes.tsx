@@ -9,7 +9,10 @@ import {
   plenumPortLocal,
   type PlenumConnectionSide,
   ATTACHED_PLENUM_COLLAR_LENGTH_M,
+  withCatalogueBody,
 } from "@/domain/ducted/attached-plenums";
+import { trapezoidalNeckMm, isTrapezoidalPlenumFamily } from "@/domain/air-terminals/trapezoidal-plenum";
+import { trapezoidalPlenumPieces } from "./trapezoidal-plenum-shell";
 import { plenumTransitionGeometry } from "./plenum-transition";
 import { layoutFromMachineGeometry, type PlenumLayout } from "./plenum-layout";
 import { DuctedMachineBody } from "./DuctedMachineBody";
@@ -30,6 +33,36 @@ function AttachedPlenumShell({ plenum, ports, green, selected, inlet }: {
     <meshStandardMaterial attach="material-0" color={selected ? "#67c8de" : green ? "#a6c77a" : "#aebbbd"} metalness={green ? .08 : .65} roughness={green ? .85 : .4} />
     <meshStandardMaterial attach="material-1" color={selected ? "#67c8de" : "#b7bdbd"} metalness={.65} roughness={.45} />
   </mesh>)}</group>;
+}
+
+/** Plenum trapezoidale EDLS/EDLH: lamiere del profilo del disegno, bocca aperta sul diffusore. */
+function TrapezoidalPlenumShell({ plenum, mounting, neckMm, ports, green, selected }: {
+  plenum: Plenum;
+  mounting: "ceiling" | "wall";
+  /** Larghezza di tabella del collo (65 FA, 75 FB). */
+  neckMm: number;
+  ports: { side: PlenumConnectionSide; x: number; radius: number }[];
+  green: boolean;
+  selected: boolean;
+}) {
+  const length = plenum.widthMm / 1000;
+  const endSide = mounting === "ceiling" ? "top" : "rear";
+  const backSide = mounting === "ceiling" ? "rear" : "top";
+  const pieces = useMemo(() => trapezoidalPlenumPieces(
+    length, mounting,
+    ports.filter((p) => p.side === endSide),
+    ports.filter((p) => p.side === backSide),
+    neckMm,
+  ), [length, mounting, neckMm, ports, endSide, backSide]);
+  useEffect(() => () => { for (const piece of pieces) piece.geometry.dispose(); }, [pieces]);
+  return <group>{pieces.map((piece, i) => piece.kind === "cap"
+    ? <mesh key={i} geometry={piece.geometry} castShadow receiveShadow>
+        <meshStandardMaterial color={selected ? "#67c8de" : "#b7bdbd"} metalness={.65} roughness={.45} side={THREE.DoubleSide} />
+      </mesh>
+    : <mesh key={i} geometry={piece.geometry} castShadow receiveShadow>
+        <meshStandardMaterial attach="material-0" color={selected ? "#67c8de" : green ? "#a6c77a" : "#aebbbd"} metalness={green ? .08 : .65} roughness={green ? .85 : .4} />
+        <meshStandardMaterial attach="material-1" color={selected ? "#67c8de" : "#b7bdbd"} metalness={.65} roughness={.45} />
+      </mesh>)}</group>;
 }
 
 export function MachinePlenumShell({ layout, selected }: { layout: PlenumLayout; selected: boolean }) {
@@ -194,13 +227,14 @@ export function PlenumBody({
 
 function PlenumMesh({
   project,
-  plenum,
+  plenum: saved,
   selected,
 }: {
   project: Project;
   plenum: Plenum;
   selected: boolean;
 }) {
+  const plenum = useMemo(() => withCatalogueBody(project, saved), [project, saved]);
   const geometry = useMemo(
     () => placedPlenumGeometry(project, plenum),
     [project, plenum],
@@ -243,7 +277,9 @@ function PlenumMesh({
     const green = plenum.material === "insulated";
     return (
       <group>
-        <AttachedPlenumShell plenum={plenum} ports={ports} green={green} selected={selected} inlet={inlet} />
+        {terminal && isTrapezoidalPlenumFamily(terminal.family) && plenum.model && plenum.depthMm === (terminal.mounting === "ceiling" ? 149 : 240) && plenum.heightMm === (terminal.mounting === "ceiling" ? 240 : 149)
+          ? <TrapezoidalPlenumShell neckMm={trapezoidalNeckMm(terminal.heightMm)} plenum={plenum} mounting={terminal.mounting === "ceiling" ? "ceiling" : "wall"} ports={ports} green={green} selected={selected} />
+          : <AttachedPlenumShell plenum={plenum} ports={ports} green={green} selected={selected} inlet={inlet} />}
         {renderPorts.map((local, i) => {
           const side = local.side;
           const radius = local.radius;

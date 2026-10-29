@@ -7,6 +7,11 @@ import {
   terminalPlenumBody,
 } from "../air-terminals/commercial-bom";
 import {
+  TRAPEZOIDAL_PLENUM_MM,
+  trapezoidalNeckMm,
+  usesTrapezoidalDrawing,
+} from "../air-terminals/trapezoidal-plenum";
+import {
   addMachinePlenum,
   machinePlenum,
   machinePlenums,
@@ -600,7 +605,41 @@ export function plenumPortLocal(
               };
 }
 
+/**
+ * Plenum di catalogo salvato con le misure di tabella: il punto d'attacco prende
+ * le dimensioni della bocchetta (e il trapezio EDLS/EDLH la parte alta 149 mm),
+ * così corpo 3D, bocca e stacchi coincidono.
+ */
+export function withCatalogueBody(project: Project, plenum: Plenum): Plenum {
+  const terminal = project.airTerminals.find(
+    (t) => t.id === plenum.attachmentId,
+  );
+  if (!terminal) return plenum;
+  const spec = resolveTerminalAccessorySpecification(terminal)?.plenum;
+  if (
+    !spec?.lengthMm ||
+    !spec.widthMm ||
+    !spec.heightMm ||
+    plenum.model !== spec.modelCode
+  )
+    return plenum;
+  const sizes = {
+    lengthMm: spec.lengthMm,
+    widthMm: spec.widthMm,
+    heightMm: spec.heightMm,
+  };
+  const old = terminalPlenumBody(terminal, sizes, true);
+  if (
+    plenum.widthMm !== old.widthMm ||
+    plenum.heightMm !== old.heightMm ||
+    plenum.depthMm !== old.depthMm
+  )
+    return plenum;
+  return { ...plenum, ...terminalPlenumBody(terminal, sizes) };
+}
+
 export function attachedPlenumPorts(project: Project, plenum: Plenum) {
+  plenum = withCatalogueBody(project, plenum);
   const count = plenum.portCount ?? 1;
   const diameter = plenum.portDiameterMm ?? 160;
   const sides = Array.from({ length: count }, (_, i) =>
@@ -679,7 +718,31 @@ function catalogueTerminalPlenum(
   });
 }
 
+/**
+ * La bocca del trapezio è affacciata a un bordo del corpo: per averla sopra la
+ * bocchetta il corpo si sposta, verso il lato largo, di (larga - collo) / 2.
+ */
+function trapezoidalMouthShiftM(
+  terminal: Project["airTerminals"][number],
+  plenum: Plenum,
+) {
+  const spec = resolveTerminalAccessorySpecification(terminal)?.plenum;
+  if (
+    !spec ||
+    plenum.model !== spec.modelCode ||
+    !usesTrapezoidalDrawing(terminal.family, spec) ||
+    (terminal.mounting === "ceiling" ? plenum.depthMm : plenum.heightMm) !==
+      TRAPEZOIDAL_PLENUM_MM.wideMm
+  )
+    return 0;
+  return (
+    (TRAPEZOIDAL_PLENUM_MM.wideMm - trapezoidalNeckMm(terminal.heightMm)) /
+    2000
+  );
+}
+
 function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
+  plenum = withCatalogueBody(project, plenum);
   const terminal = project.airTerminals.find(
     (t) => t.id === plenum.attachmentId,
   );
@@ -730,6 +793,7 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
   const gap =
     (ceiling ? (terminal?.heightMm ?? 0) : (owner.depthMm ?? 0)) / 2000 +
     plenum.depthMm / 2000;
+  const shift = terminal ? trapezoidalMouthShiftM(terminal, plenum) : 0;
   return {
     ...plenum,
     systemId: terminal ? terminal.systemId : system!.id,
@@ -739,7 +803,10 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
     ...(!terminal ? { widthMm: owner.widthMm, heightMm: owner.heightMm } : {}),
     position:
       ceiling && inVoid
-        ? owner.position
+        ? {
+            x: owner.position.x - Math.sin(owner.rotation) * shift,
+            y: owner.position.y + Math.cos(owner.rotation) * shift,
+          }
         : {
             x: owner.position.x + Math.sin(owner.rotation) * gap,
             y: owner.position.y - Math.cos(owner.rotation) * gap,
@@ -748,7 +815,7 @@ function attachedPlenumPose(project: Project, plenum: Plenum): Plenum | null {
       ? ceiling
         ? Math.min(face + (terminal.depthMm ?? 0) / 1000 + height, roof) -
           height / 2
-        : face
+        : face - shift
       : room.heightM - owner.heightMm / 2000 - 0.05,
   };
 }

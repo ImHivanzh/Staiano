@@ -164,7 +164,8 @@ it("follows the terminal while proposed, then keeps its offset and follows the t
     movePlacedDevice(following, plenumId, { x: 5, y: 4 }),
     following,
   );
-  expect(placed.plenums[0].position).toEqual({ x: 5, y: 4 });
+  expect(placed.plenums[0].position.x).toBeCloseTo(5, 9);
+  expect(placed.plenums[0].position.y).toBeCloseTo(4, 9);
   expect(offset(placed)).toEqual(offset(following));
   const ownerMoved = syncAttachedPlenums(
     movePlacedDevice(placed, id, { x: 4.5, y: 2.5 }),
@@ -588,4 +589,24 @@ it("segnala il plenum macchina mancante e lo toglie quando viene creato", () => 
   ).toBe(true);
   const placed = placeSupplyPlenum(p, system.id);
   expect(missingMachinePlenums(placed, system.id)).toEqual([]);
+});
+
+it("attaches every plenum with the grille footprint, trapezoidal or not", () => {
+  for (const [family, length, mounting] of [
+    ["EDSC-C", 500, "ceiling"],
+    ["EDLS", 2000, "ceiling"],
+    ["EDLH", 1000, "wall"],
+  ] as const) {
+    let p = guidedProjectFixture();
+    p.floors[0].configurationWizard = undefined;
+    p = placeMachineOnPlan(p, p.hvacSystems[0].id, p.rooms[0].id, { x: 3, y: 3 });
+    p = addGuidedTerminal(p, length, family, mounting);
+    const grille = p.airTerminals[0];
+    const [plenum] = addTerminalPlenum(p, grille.id).plenums;
+    // Lungo la bocchetta il plenum e lungo quanto la faccia; il lato trasversale
+    // e la larghezza della bocchetta (solo il trapezio ha la parte alta piu larga).
+    expect(plenum.widthMm).toBe(grille.widthMm);
+    const across = mounting === "ceiling" ? plenum.depthMm : plenum.heightMm;
+    expect(across).toBe(family === "EDSC-C" ? grille.heightMm : 149);
+  }
 });

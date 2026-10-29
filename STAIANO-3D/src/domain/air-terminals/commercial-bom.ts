@@ -3,6 +3,11 @@ import { airTerminalFamilyAtVersion } from "@/domain/catalogs/air-terminals";
 import { ecoclimaPriceCatalog } from "@/domain/catalogs/ecoclima-prices";
 import officialArticles from "../../../catalog-data/generated/ecoclima-articles.json" with { type: "json" };
 import { terminalFinishPrice, terminalFinishLabel } from "./finishes";
+import { airTerminalFaceWidthMm } from "./geometry";
+import {
+  usesTrapezoidalDrawing,
+  TRAPEZOIDAL_PLENUM_MM,
+} from "./trapezoidal-plenum";
 import type { AirTerminalVariant } from "@/domain/catalogs/air-terminal-schema";
 import type {
   EcoclimaPrice,
@@ -20,14 +25,34 @@ type BomProject = Pick<Project, "airTerminals" | "hvacSystems"> &
  * Le misure di catalogo sono date per il plenum sopra il controsoffitto:
  * L1 x H in pianta, P in altezza. A parete il corpo è girato, quindi la faccia
  * davanti alla bocchetta è L1 x H e P diventa la profondità nel muro.
+ * Il punto d'attacco ha sempre le dimensioni della bocchetta (lunghezza della
+ * faccia x larghezza), non quelle di tabella. I plenum trapezoidali EDLS/EDLH
+ * hanno la parte alta larga 149 mm (disegni Ecoclima) e solo la bocca grande
+ * come la bocchetta; `legacy` dà la misura di tabella con cui furono salvati i
+ * plenum precedenti.
  */
 export function terminalPlenumBody<T extends number | null>(
-  terminal: Pick<Project["airTerminals"][number], "mounting">,
+  terminal: Pick<
+    Project["airTerminals"][number],
+    "mounting" | "family" | "catalogVersion" | "widthMm" | "heightMm"
+  >,
   spec: { lengthMm: T; widthMm: T; heightMm: T },
+  legacy = false,
 ) {
+  const lengthMm =
+    legacy || spec.lengthMm === null
+      ? spec.lengthMm
+      : (airTerminalFaceWidthMm(terminal) as T);
+  const widthMm = legacy
+    ? spec.widthMm
+    : usesTrapezoidalDrawing(terminal.family, spec)
+      ? (TRAPEZOIDAL_PLENUM_MM.wideMm as T)
+      : spec.widthMm === null
+        ? spec.widthMm
+        : (terminal.heightMm as T);
   return terminal.mounting === "ceiling"
-    ? { widthMm: spec.lengthMm, heightMm: spec.heightMm, depthMm: spec.widthMm }
-    : { widthMm: spec.lengthMm, heightMm: spec.widthMm, depthMm: spec.heightMm };
+    ? { widthMm: lengthMm, heightMm: spec.heightMm, depthMm: widthMm }
+    : { widthMm: lengthMm, heightMm: widthMm, depthMm: spec.heightMm };
 }
 /**
  * Un plenum salvato resta l'accessorio di catalogo finché coincide con la
@@ -37,7 +62,10 @@ export function terminalPlenumBody<T extends number | null>(
 function savedPlenumIsCatalogue(
   plenum: Project["plenums"][number],
   specification: TerminalAccessorySpecification | null,
-  terminal: Pick<Project["airTerminals"][number], "mounting">,
+  terminal: Pick<
+    Project["airTerminals"][number],
+    "mounting" | "family" | "catalogVersion" | "widthMm" | "heightMm"
+  >,
 ) {
   const spec = specification?.plenum;
   const expectedSide = spec?.connectionPosition === "upper" ? "upper" : "rear";
@@ -52,11 +80,14 @@ function savedPlenumIsCatalogue(
     !!spec &&
     sidesMatch &&
     plenum.model === spec.modelCode &&
-    // Anche i plenum salvati prima con l'orientamento da soffitto restano di catalogo.
-    [
-      terminalPlenumBody(terminal, spec),
-      terminalPlenumBody({ mounting: "ceiling" }, spec),
-    ].some(
+    // Restano di catalogo anche i plenum salvati prima con l'orientamento da
+    // soffitto o con la larghezza di tabella del plenum trapezoidale.
+    [false, true]
+      .flatMap((legacy) => [
+        terminalPlenumBody(terminal, spec, legacy),
+        terminalPlenumBody({ ...terminal, mounting: "ceiling" }, spec, legacy),
+      ])
+      .some(
       (body) =>
         plenum.widthMm === body.widthMm &&
         plenum.heightMm === body.heightMm &&

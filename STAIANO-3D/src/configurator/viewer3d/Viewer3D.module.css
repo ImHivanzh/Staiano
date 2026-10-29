@@ -51,10 +51,25 @@
 .toolbar > button {
   pointer-events: auto;
 }
-.toolbar > .bottone {
+/* Tutti i pulsanti della barra (bottoni e menu a tendina) hanno la stessa forma. */
+.toolbar > :global(.bottone),
+.toolbar > .settings {
+  box-sizing: border-box;
   height: 32px;
-  padding: 0 10px;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  background: var(--carta);
+  color: var(--testo);
   font-size: 12px;
+  font-weight: 550;
+}
+.toolbar > :global(.bottone) {
+  padding: 0 12px;
+  gap: 6px;
+}
+.toolbar > :global(.bottone):hover,
+.toolbar > .settings:hover {
+  background: var(--carta-3);
 }
 .group {
   display: flex;
@@ -78,11 +93,20 @@
   padding: 0;
 }
 .toolbar > .settings {
-  background: var(--carta);
-  border: 1px solid var(--bordo);
-  border-radius: 8px;
-  padding: 4px;
+  padding: 0;
   pointer-events: auto;
+}
+.toolbar > .settings > summary {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 12px;
+  gap: 6px;
+  color: var(--testo);
+  font-weight: inherit;
+  list-style: none;
+}
+.toolbar > .settings > summary::-webkit-details-marker {
+  display: none;
 }
 .viewBody,
 .productMenu {
@@ -112,7 +136,6 @@
 }
 .toolbar > .settings[open] {
   background: var(--tinta-tenue);
-  border-radius: 4px;
 }
 .group button,
 .group select,
