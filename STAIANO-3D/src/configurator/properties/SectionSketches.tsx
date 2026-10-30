@@ -178,3 +178,135 @@ export function CeilingSketch({
     </svg>
   );
 }
+
+export type PlenumPortSide =
+  | "rear"
+  | "front"
+  | "left"
+  | "right"
+  | "upper"
+  | "lower"
+  | "lateral"
+  | "custom";
+
+/** Pianta del plenum vista dall'alto: ogni stacco numerato sul lato da cui esce. */
+export function PlenumSketch({ positions }: { positions: PlenumPortSide[] }) {
+  const box = { x: 80, y: 46, w: 120, h: 62 };
+  const edge = (side: PlenumPortSide) =>
+    side === "custom" ? "rear" : side === "lateral" ? "right" : side;
+  const place = (side: PlenumPortSide, rank: number, count: number) => {
+    const t = (rank + 1) / (count + 1);
+    switch (edge(side)) {
+      case "rear":
+        return { x: box.x + box.w * t, y: box.y, dx: 0, dy: -18 };
+      case "front":
+        return { x: box.x + box.w * t, y: box.y + box.h, dx: 0, dy: 18 };
+      case "left":
+        return { x: box.x, y: box.y + box.h * t, dx: -18, dy: 0 };
+      case "right":
+        return { x: box.x + box.w, y: box.y + box.h * t, dx: 18, dy: 0 };
+      default:
+        return { x: box.x + box.w * t, y: box.y + box.h / 2, dx: 0, dy: 0 };
+    }
+  };
+  const counts = new Map<string, number>();
+  positions.forEach((side) =>
+    counts.set(edge(side), (counts.get(edge(side)) ?? 0) + 1),
+  );
+  const seen = new Map<string, number>();
+  return (
+    <svg
+      className="schema-inspector"
+      viewBox="0 0 260 150"
+      role="img"
+      aria-label={`Pianta del plenum vista dall’alto con ${positions.length} stacchi numerati`}
+    >
+      <rect
+        x={box.x}
+        y={box.y}
+        width={box.w}
+        height={box.h}
+        className="schema-plenum"
+      />
+      <text
+        x={box.x + box.w / 2}
+        y={box.y + box.h / 2 + 4}
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        plenum
+      </text>
+      <text
+        x={box.x + box.w / 2}
+        y="14"
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        dietro
+      </text>
+      <text
+        x={box.x + box.w / 2}
+        y="146"
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        davanti
+      </text>
+      <text
+        x={box.x - 54}
+        y={box.y + box.h / 2 + 4}
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        sx
+      </text>
+      <text
+        x={box.x + box.w + 54}
+        y={box.y + box.h / 2 + 4}
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        dx
+      </text>
+      {positions.map((side, index) => {
+        const key = edge(side);
+        const rank = seen.get(key) ?? 0;
+        seen.set(key, rank + 1);
+        const p = place(side, rank, counts.get(key) ?? 1);
+        const vertical = side === "upper" || side === "lower";
+        return (
+          <g key={index}>
+            {!vertical && (
+              <line
+                x1={p.x}
+                y1={p.y}
+                x2={p.x + p.dx}
+                y2={p.y + p.dy}
+                className="schema-stacco"
+              />
+            )}
+            <circle
+              cx={p.x + p.dx}
+              cy={p.y + p.dy}
+              r="8"
+              className="schema-numero"
+            />
+            <text
+              x={p.x + p.dx}
+              y={p.y + p.dy + 4}
+              textAnchor="middle"
+              className="schema-numero-testo"
+            >
+              {index + 1}
+            </text>
+            {vertical && (
+              <text x={p.x + 12} y={p.y + 4} className="schema-testo">
+                {side === "upper" ? "↑ sopra" : "↓ sotto"}
+              </text>
+            )}
+          </g>
+        );
+      })}
+    </svg>
+  );
+}

@@ -1242,6 +1242,23 @@ input[type="checkbox"] {
 .schema-faccia-riempita {
   fill: var(--testo);
 }
+.schema-plenum {
+  fill: #dbe7f3;
+  stroke: var(--tinta-scura);
+  stroke-width: 1.5;
+}
+.schema-stacco {
+  stroke: var(--tinta-scura);
+  stroke-width: 3;
+}
+.schema-numero {
+  fill: var(--tinta);
+}
+.schema-numero-testo {
+  fill: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
 .schema-testo {
   fill: var(--testo-tenue);
   font-size: 11px;
@@ -1453,6 +1470,41 @@ input[type="checkbox"] {
 .pannello-canali details > .campo,
 .pannello-canali details > small {
   display: block;
+}
+.stato-canale {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.stato-canale.valid {
+  background: #e3f4e7;
+  color: #1d6a30;
+}
+.stato-canale.warning {
+  background: #fff3d6;
+  color: #7a4b00;
+}
+.stato-canale.invalid {
+  background: #fde8e6;
+  color: #9f1d12;
+}
+.problema-canale {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border-left: 3px solid #c98b00;
+  background: #fff9e8;
+  border-radius: var(--r-p);
+}
+.problema-canale.invalid {
+  border-left-color: #c8372d;
+  background: #fdf1f0;
+}
+.problema-canale ol {
+  margin: 0;
+  padding-left: 20px;
 }
 .guida-canali ol {
   padding-left: 20px;

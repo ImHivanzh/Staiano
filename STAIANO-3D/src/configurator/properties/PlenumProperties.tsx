@@ -1,5 +1,7 @@
 "use client";
+import { useState } from "react";
 import type { Project } from "@/schemas/project";
+import { PlenumSketch, type PlenumPortSide } from "./SectionSketches";
 import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm } from "@/utils/format";
 import { removeSelection } from "@/domain/geometry/selection";
@@ -31,7 +33,10 @@ export function PlenumProperties({
   const connectionPositions = Array.from({ length: portCount }, (_, i) => {
     const side = plenumConnectionSide(project, plenum, i);
     return side === "top" ? "upper" : side === "bottom" ? "lower" : side;
-  });
+  }) as PlenumPortSide[];
+  // Anteprima dello schema mentre si cambiano le direzioni, prima di applicare.
+  const [draft, setDraft] = useState<{ id: string; sides: PlenumPortSide[] }>();
+  const sketchSides = draft?.id === id ? draft.sides : connectionPositions;
   return (
     <div className="corpo-proprieta">
       <h3>Plenum {plenum.use === "return" ? "di ripresa" : "di mandata"}</h3>
@@ -46,8 +51,23 @@ export function PlenumProperties({
         Modificare quote o facce degli stacchi dichiara un plenum su misura. Una
         connessione diversa dalla fonte OEM richiede una quotazione separata.
       </p>
+      <PlenumSketch positions={sketchSides} />
       <form
         key={JSON.stringify(plenum)}
+        onChange={(event) => {
+          const data = new FormData(event.currentTarget);
+          const count = Math.max(1, Number(data.get("ports")) || 1);
+          setDraft({
+            id,
+            sides: Array.from(
+              { length: Math.min(count, 24) },
+              (_, i) =>
+                (data.get(`port-position-${i}`) ??
+                  connectionPositions[i] ??
+                  "rear") as PlenumPortSide,
+            ),
+          });
+        }}
         onSubmit={(e) => {
           e.preventDefault();
           const data = new FormData(e.currentTarget);

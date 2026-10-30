@@ -1,5 +1,8 @@
 "use client";
+import { useMemo } from "react";
 import type { Project } from "@/schemas/project";
+import { validateProject } from "@/domain/validation";
+import { checkHelp, genericHelp } from "@/domain/check-help";
 import {
   addDuctWaypoint,
   ductLength,
@@ -32,6 +35,13 @@ export function DuctPanel({
   const { commit } = useProjectStore();
   const ducts = project.ducts?.filter((d) => d.systemId === systemId) ?? [];
   const codes = deviceCodes(project);
+  const problems = useMemo(
+    () =>
+      validateProject(project).filter(
+        (check) => check.status !== "valid" && check.entityId,
+      ),
+    [project],
+  );
   const lengths = ducts.map((duct) =>
     ductLength(
       ductRoute(project, duct),
@@ -43,27 +53,6 @@ export function DuctPanel({
   return (
     <section className="pannello-canali" aria-label="Canalizzazione collegata">
       <h3>Canali · {codes.get(systemId)}</h3>
-      <details className="guida-canali">
-        <summary>Come si crea un canale</summary>
-        <ol>
-          <li>
-            In pianta scegli lo strumento <strong>Canale</strong> (tasto K).
-          </li>
-          <li>
-            Clicca il plenum della bocchetta: il primo punto è già sullo stacco.
-          </li>
-          <li>Clicca la macchina.</li>
-          <li>
-            Per cambiare il percorso trascina i punti in 2D o in 3D con
-            «Flessibili».
-          </li>
-        </ol>
-        <p className="nota">
-          I percorsi sono proposte geometriche. I dati del costruttore valgono
-          solo per lo SKU scelto; sostegni e perdite dei raccordi restano da
-          verificare. Il flusso animato è illustrativo.
-        </p>
-      </details>
       <button
         className="bottone piccolo"
         onClick={() => commit((p) => generateDuctRoutes(p, systemId))}
@@ -93,6 +82,9 @@ export function DuctPanel({
         const supportedDiameter = !!product?.diametersMm.includes(
           duct.diameterMm ?? -1,
         );
+        const ductProblems = problems.filter(
+          (check) => check.entityId === duct.id,
+        );
         const airflowM3h = ductAirflowM3h(project, duct);
         const velocity = ductAirVelocityMs(project, duct);
         const lossPaM = flexibleDuctPressureLossPaM(
@@ -104,6 +96,15 @@ export function DuctPanel({
           <details key={duct.id} open={duct.id === selectedDuctId || undefined}>
             <summary>
               <strong>{codes.get(duct.id)}</strong>
+              <span
+                className={`stato-canale ${ductProblems.some((c) => c.status === "invalid") ? "invalid" : ductProblems.length ? "warning" : "valid"}`}
+              >
+                {ductProblems.some((c) => c.status === "invalid")
+                  ? "Da correggere"
+                  : ductProblems.length
+                    ? "Da verificare"
+                    : "OK"}
+              </span>
               <span>
                 {duct.terminalId
                   ? `verso ${codes.get(duct.terminalId)}`
@@ -116,6 +117,24 @@ export function DuctPanel({
                   : `${duct.widthMm} × ${duct.heightMm} mm`}
               </small>
             </summary>
+            {ductProblems.map((check) => {
+              const help = checkHelp[check.code] ?? genericHelp;
+              return (
+                <div
+                  key={check.code + check.message}
+                  className={`problema-canale ${check.status}`}
+                  role="alert"
+                >
+                  <strong>{check.message}</strong>
+                  <span>{help.meaning}</span>
+                  <ol>
+                    {help.fix.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ol>
+                </div>
+              );
+            })}
             <button
               className="bottone piccolo"
               disabled={duct.locked}
@@ -355,6 +374,27 @@ export function DuctPanel({
           </details>
         );
       })}
+      <details className="guida-canali">
+        <summary>Come si crea un canale</summary>
+        <ol>
+          <li>
+            In pianta scegli lo strumento <strong>Canale</strong> (tasto K).
+          </li>
+          <li>
+            Clicca il plenum della bocchetta: il primo punto è già sullo stacco.
+          </li>
+          <li>Clicca la macchina.</li>
+          <li>
+            Per cambiare il percorso trascina i punti in 2D o in 3D con
+            «Flessibili».
+          </li>
+        </ol>
+        <p className="nota">
+          I percorsi sono proposte geometriche. I dati del costruttore valgono
+          solo per lo SKU scelto; sostegni e perdite dei raccordi restano da
+          verificare. Il flusso animato è illustrativo.
+        </p>
+      </details>
     </section>
   );
 }

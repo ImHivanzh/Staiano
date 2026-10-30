@@ -59,6 +59,7 @@ import { nearestFootprintEdge } from "@/domain/geometry/footprint";
 import { connectionFootprintEdge } from "@/domain/geometry/footprint";
 import { linearRunMembers } from "@/domain/air-terminals/linear-run";
 import { ductRoute, createDuctFromEndpoints } from "@/domain/ducted/routes";
+import { validateProject } from "@/domain/validation";
 import { flexibleDuctCurve } from "@/domain/ducted/flexible-curve";
 import {
   placeMachineOnPlan,
@@ -645,8 +646,15 @@ export function GraphicalDuctedConfigurator({
         useProjectStore.getState().select({ kind: "device", id: machine.id });
       setDuctAnchor(null);
       setCursor(null);
+      const problems = validateProject(saved).filter(
+        (check) =>
+          check.status !== "valid" && ductIds.includes(check.entityId ?? ""),
+      );
       setNotice(
-        `Canale creato (${ductIds.length} ${ductIds.length === 1 ? "ramo" : "rami"}): percorso predefinito, modificalo in 3D o in «Flessibili».`,
+        `Canale creato (${ductIds.length} ${ductIds.length === 1 ? "ramo" : "rami"}): percorso predefinito, modificalo in 3D o in «Flessibili».` +
+          (problems.length
+            ? ` Attenzione, ${problems.length === 1 ? "1 problema" : `${problems.length} problemi`}: ${problems[0].message}${problems.length > 1 ? " Gli altri sono nel pannello Canali." : ""}`
+            : " Controllo percorso: nessuna collisione né curve troppo strette."),
       );
       return;
     }
@@ -1398,7 +1406,9 @@ export function GraphicalDuctedConfigurator({
               {missingMachinePlenums(project, system.id).map((use) => (
                 <strong key={use} role="alert">
                   {" "}
-                  Manca il plenum di {use === "supply" ? "mandata" : "ripresa"}{" "}
+                  Manca il plenum di {use === "supply"
+                    ? "mandata"
+                    : "ripresa"}{" "}
                   davanti alla macchina: i flessibili restano agganciati in
                   aria.
                 </strong>
