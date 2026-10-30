@@ -7,6 +7,38 @@ import { useProjectStore } from "@/stores/project-store";
 import { numberFromForm } from "@/utils/format";
 import { LengthInput } from "./LengthInput";
 
+/** Pianta di un angolo: la faccia interna resta ferma, lo spessore si aggiunge fuori. */
+function WallGrowthSketch() {
+  return (
+    <figure className="schema-muri">
+      <svg
+        viewBox="0 0 260 130"
+        role="img"
+        aria-label="Lo spessore dei muri esterni cresce verso l’esterno, la faccia interna e la stanza restano ferme"
+      >
+        <rect x="70" y="30" width="170" height="90" className="schema-stanza" />
+        <path d="M58 120V18H240V30H70V120Z" className="schema-muro-nuovo" />
+        <path d="M70 120V30H240" className="schema-faccia" />
+        <path d="M70 75H30M30 75l7-4M30 75l7 4" className="schema-freccia" />
+        <path d="M155 30V6M155 6l-4 7M155 6l4 7" className="schema-freccia" />
+        <text x="155" y="80" textAnchor="middle" className="schema-testo">
+          stanza invariata
+        </text>
+        <text x="30" y="92" textAnchor="middle" className="schema-testo">
+          esterno
+        </text>
+      </svg>
+      <figcaption>
+        <strong>Come crescono i muri esterni</strong>
+        <span>
+          La linea scura è la faccia interna: resta dov’è. Il muro in più si
+          aggiunge solo verso l’esterno, quindi le misure interne non cambiano.
+        </span>
+      </figcaption>
+    </figure>
+  );
+}
+
 export function ProjectSettings({ project }: { project: Project }) {
   const { commit, setFloor } = useProjectStore();
   return (
@@ -93,28 +125,37 @@ export function ProjectSettings({ project }: { project: Project }) {
             required
           />
         </div>
-        <p className="nota">
-          «Applica spessori a tutti i muri» aggiorna anche i muri già disegnati
-          mantenendo le quote interne: i muri perimetrali crescono verso
-          l’esterno, quelli interni allontanano gli ambienti quanto serve a
-          conservarne le misure nette.
-        </p>
-        <div className="azioni-progetto">
+        <WallGrowthSketch />
+        <div className="azioni-progetto azioni-muri">
           <button className="bottone pieno">Applica impostazioni</button>
-          <button
-            className="bottone chiara"
-            value="walls"
-            disabled={!project.walls.length}
-          >
-            Applica spessori a tutti i muri
-          </button>
-          <button
-            className="bottone chiara"
-            value="external-walls"
-            disabled={!project.walls.some((wall) => wall.type === "ESTERNO")}
-          >
-            Applica spessore ai soli muri esterni
-          </button>
+          <div className="azione-muri">
+            <button
+              className="bottone chiara"
+              value="external-walls"
+              disabled={!project.walls.some((wall) => wall.type === "ESTERNO")}
+            >
+              Ingrandisci tutti i muri esterni
+            </button>
+            <small>
+              Porta i muri perimetrali allo spessore «muri esterni» qui sopra.
+              Crescono sempre verso l’esterno: stanze e misure interne non
+              cambiano.
+            </small>
+          </div>
+          <div className="azione-muri">
+            <button
+              className="bottone chiara"
+              value="walls"
+              disabled={!project.walls.length}
+            >
+              Applica spessori a tutti i muri
+            </button>
+            <small>
+              Come sopra, e in più porta anche i muri interni al loro spessore:
+              gli ambienti si spostano quanto serve a conservare le misure
+              nette.
+            </small>
+          </div>
         </div>
       </form>
       <h3>Gestione piani</h3>

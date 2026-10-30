@@ -79,7 +79,7 @@ test("applica lo spessore ai soli muri esterni", async ({ page }) => {
     .getByRole("spinbutton", { name: "Spessore muri esterni (mm)" })
     .fill("500");
   await page
-    .getByRole("button", { name: "Applica spessore ai soli muri esterni" })
+    .getByRole("button", { name: "Ingrandisci tutti i muri esterni" })
     .click();
   const after = await snapshot(page);
   expect(
