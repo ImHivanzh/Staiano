@@ -41,32 +41,46 @@ export function DuctPanel({
   );
   const unmeasurable = lengths.filter((length) => length === null).length;
   return (
-    <section aria-label="Canalizzazione collegata">
-      <h3>Vista Canale · {codes.get(systemId)}</h3>
-      <p className="nota">
-        Percorsi geometrici proposti. I dati OEM si applicano solo allo SKU
-        selezionato; interasse dei sostegni e perdite dei raccordi restano da
-        verificare. Il flusso animato è illustrativo.
-      </p>
-      <p className="nota">
-        Per creare il canale: strumento <strong>Canale</strong> (K) in pianta,
-        clicca il plenum della bocchetta (il primo punto è già sullo stacco),
-        poi la macchina. Il percorso predefinito si modifica trascinando i punti
-        in 2D o 3D con «Flessibili».
-      </p>
+    <section className="pannello-canali" aria-label="Canalizzazione collegata">
+      <h3>Canali · {codes.get(systemId)}</h3>
+      <details className="guida-canali">
+        <summary>Come si crea un canale</summary>
+        <ol>
+          <li>
+            In pianta scegli lo strumento <strong>Canale</strong> (tasto K).
+          </li>
+          <li>
+            Clicca il plenum della bocchetta: il primo punto è già sullo stacco.
+          </li>
+          <li>Clicca la macchina.</li>
+          <li>
+            Per cambiare il percorso trascina i punti in 2D o in 3D con
+            «Flessibili».
+          </li>
+        </ol>
+        <p className="nota">
+          I percorsi sono proposte geometriche. I dati del costruttore valgono
+          solo per lo SKU scelto; sostegni e perdite dei raccordi restano da
+          verificare. Il flusso animato è illustrativo.
+        </p>
+      </details>
       <button
         className="bottone piccolo"
         onClick={() => commit((p) => generateDuctRoutes(p, systemId))}
       >
         Genera / aggiorna percorsi proposti
       </button>
-      <p>
-        {ducts.filter((d) => d.terminalId).length} rami collegati ·{" "}
-        {formatNumber(
-          lengths.reduce<number>((sum, length) => sum + (length ?? 0), 0),
-        )}{" "}
-        m misurabili lungo l’asse dei canali
-        {unmeasurable > 0 && ` · ${unmeasurable} percorsi da correggere`}
+      <p className="riepilogo-canali">
+        <strong>
+          {ducts.filter((d) => d.terminalId).length} rami collegati
+        </strong>
+        <span>
+          {formatNumber(
+            lengths.reduce<number>((sum, length) => sum + (length ?? 0), 0),
+          )}{" "}
+          m misurabili lungo l’asse dei canali
+          {unmeasurable > 0 && ` · ${unmeasurable} percorsi da correggere`}
+        </span>
       </p>
       {ducts.map((duct, index) => {
         const plenum = project.plenums.find(
@@ -89,14 +103,18 @@ export function DuctPanel({
         return (
           <details key={duct.id} open={duct.id === selectedDuctId || undefined}>
             <summary>
-              {codes.get(duct.id)} ·{" "}
-              {duct.terminalId
-                ? codes.get(duct.terminalId)
-                : "Macchina → plenum"}{" "}
-              · {duct.kind === "flexible" ? "Flessibile" : "Rigido"} ·{" "}
-              {duct.shape === "circle"
-                ? `Ø ${duct.diameterMm} mm`
-                : `${duct.widthMm} × ${duct.heightMm} mm`}
+              <strong>{codes.get(duct.id)}</strong>
+              <span>
+                {duct.terminalId
+                  ? `verso ${codes.get(duct.terminalId)}`
+                  : "macchina → plenum"}
+              </span>
+              <small>
+                {duct.kind === "flexible" ? "Flessibile" : "Rigido"} ·{" "}
+                {duct.shape === "circle"
+                  ? `Ø ${duct.diameterMm} mm`
+                  : `${duct.widthMm} × ${duct.heightMm} mm`}
+              </small>
             </summary>
             <button
               className="bottone piccolo"
@@ -165,7 +183,9 @@ export function DuctPanel({
                       }));
                     }}
                   >
-                    <option value="">Generico isolato · 25 mm · SKU non selezionato</option>
+                    <option value="">
+                      Generico isolato · 25 mm · SKU non selezionato
+                    </option>
                     {flexibleDuctProducts.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.sourceMetadata.manufacturer} {item.familyCode}
@@ -173,7 +193,16 @@ export function DuctPanel({
                     ))}
                   </select>
                 </label>
-                {!product && <p className="nota">Isolante {flexibleDuctInsulationMm()} mm · diametro esterno {formatNumber(flexibleDuctOuterRadiusM(duct.diameterMm ?? 160) * 2000)} mm. L’ingombro esterno è incluso nei controlli di collisione.</p>}
+                {!product && (
+                  <p className="nota">
+                    Isolante {flexibleDuctInsulationMm()} mm · diametro esterno{" "}
+                    {formatNumber(
+                      flexibleDuctOuterRadiusM(duct.diameterMm ?? 160) * 2000,
+                    )}{" "}
+                    mm. L’ingombro esterno è incluso nei controlli di
+                    collisione.
+                  </p>
+                )}
                 {product && (
                   <>
                     <label className="campo">

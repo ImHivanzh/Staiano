@@ -8,6 +8,7 @@ import { roomWallSpan } from "@/domain/geometry/placement";
 import { validateCeilingBand } from "@/domain/geometry/ceilings";
 import { numberFromForm } from "@/utils/format";
 import { LengthInput } from "../LengthInput";
+import { CeilingSketch } from "./SectionSketches";
 
 export function CeilingDesign({
   project,
@@ -107,11 +108,13 @@ export function CeilingDesign({
         Fasce ribassate lungo le pareti: servono per nascondere canali e plenum.
         La parte centrale segue la quota del controsoffitto della stanza.
       </p>
+      <CeilingSketch room={room} />
       {(room.ceilingBands ?? []).map((band) => (
         <details key={band.id}>
           <summary>
             {band.name} · quota {band.elevationM.toFixed(2)} m
           </summary>
+          <CeilingSketch room={room} band={band} />
           <form
             key={JSON.stringify(band)}
             onSubmit={(e) => {

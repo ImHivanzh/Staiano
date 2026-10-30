@@ -102,6 +102,7 @@ import { Properties, selectionWithProperties } from "./properties/Properties";
 import { ConfigurationWizard } from "./import/ConfigurationWizard";
 import { PillarDialog } from "./PillarDialog";
 import type { Project } from "@/schemas/project";
+import { checkHelp, genericHelp } from "@/domain/check-help";
 import { LengthInput } from "./LengthInput";
 import { ProjectSharing } from "./ProjectSharing";
 
@@ -832,6 +833,8 @@ export function Configurator() {
   const effectiveCheckRoom = checkRooms.some((room) => room.id === checkRoom)
     ? checkRoom
     : "";
+  const errorCount = checks.filter((c) => c.status === "invalid").length;
+  const warningCount = checks.filter((c) => c.status === "warning").length;
   const visibleChecks = p
     ? filterProjectChecks(p, checks, {
         status: checkStatus,
@@ -1906,7 +1909,19 @@ export function Configurator() {
                 </select>
               </label>
             </div>
-            <p className="nota" role="status">
+            <p className="riepilogo-controlli" role="status">
+              <strong className="invalid">
+                {errorCount} {errorCount === 1 ? "errore" : "errori"}
+              </strong>
+              <strong className="warning">
+                {warningCount} {warningCount === 1 ? "avviso" : "avvisi"}
+              </strong>
+              <span>
+                Ogni errore dice cosa significa e come risolverlo. Gli avvisi
+                non bloccano il lavoro.
+              </span>
+            </p>
+            <p className="nota">
               {visibleChecks.length} di {checks.length} controlli. I controlli
               generali restano visibili nei filtri per piano e ambiente.
             </p>
@@ -1945,6 +1960,20 @@ export function Configurator() {
                         Mostra nel progetto
                       </button>
                     )}
+                  {c.status !== "valid" && (
+                    <details
+                      className="soluzione-controllo"
+                      open={c.status === "invalid" || undefined}
+                    >
+                      <summary>Cosa significa e come risolvere</summary>
+                      <p>{(checkHelp[c.code] ?? genericHelp).meaning}</p>
+                      <ol>
+                        {(checkHelp[c.code] ?? genericHelp).fix.map((step) => (
+                          <li key={step}>{step}</li>
+                        ))}
+                      </ol>
+                    </details>
+                  )}
                 </div>
               ))}
             </div>

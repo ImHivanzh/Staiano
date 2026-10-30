@@ -5,6 +5,7 @@ import { useProjectStore } from "@/stores/project-store";
 import { setWallDrywall } from "@/domain/geometry/drywall";
 import { drywallSideForRoom } from "@/domain/geometry/drywall-sides";
 import { formatNumber } from "@/utils/format";
+import { DrywallSketch } from "./SectionSketches";
 
 export function DrywallProperties({
   project,
@@ -113,6 +114,10 @@ function DrywallSideForm({
           </option>
         </select>
       </label>
+      <DrywallSketch
+        intent={intent === "existing" ? "existing" : "new"}
+        depthCm={Number(depthCm) || 0}
+      />
       <div
         className="azioni-rapide"
         role="group"

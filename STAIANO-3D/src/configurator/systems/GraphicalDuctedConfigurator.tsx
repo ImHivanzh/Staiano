@@ -2106,7 +2106,7 @@ export function GraphicalDuctedConfigurator({
         />
       )}
       {!configurationOnly && selectedMachineSystem && !machineOpen && (
-        <details>
+        <details className="riquadro-apribile">
           <summary>Canali della macchina selezionata</summary>
           <DuctPanel project={project} systemId={selectedMachineSystem.id} />
         </details>
@@ -2116,7 +2116,7 @@ export function GraphicalDuctedConfigurator({
         !terminalOpen &&
         !configurationBlock(project, selectedTerminal.id) &&
         !needsTerminalReconfiguration(selectedTerminal) && (
-          <details>
+          <details className="riquadro-apribile">
             <summary>Posizione e accessori della bocchetta selezionata</summary>
             <TerminalEditForm project={project} id={selectedTerminal.id} />
             <TerminalCommercialOptions
