@@ -4,6 +4,8 @@ const config: NextConfig = {
   output: process.env.STAIANO_PACKAGE === "1" ? "standalone" : undefined,
   allowedDevOrigins: ["hvac.internal.staianopoint.com"],
   poweredByHeader: false,
+  // Il Proxy bufferizza il body e lo tronca a 10 MB: i limiti reali sono in MAX_PROJECT_BYTES e MAX_SKETCHUP_BYTES.
+  experimental: { proxyClientMaxBodySize: "128mb" },
   outputFileTracingExcludes: {
     "/*": [
       ".cache/**/*",

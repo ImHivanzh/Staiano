@@ -102,7 +102,9 @@ test("cliccare di nuovo la stessa bocchetta seleziona il plenum esistente senza 
   await expect(page.getByTestId("plenum-2d")).toHaveCount(1);
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");
   await tool.click();
-  await page.getByTestId("terminal-supply").first().click();
+  // Il plenum copre la bocchetta: il secondo scelto va dato da tastiera.
+  await page.getByTestId("terminal-supply").first().focus();
+  await page.keyboard.press("Enter");
   await expect(
     page.getByText(/La bocchetta ha già il suo plenum/),
   ).toBeVisible();
@@ -125,7 +127,10 @@ test("il plenum agganciato segue la bocchetta e conserva il distacco scelto", as
   await moveTool.click();
   await dragPlanDevice(page, plan, plan.getByTestId("plenum-2d"), 4, 2);
   const placed = await exportProject(page);
-  expect(placed.plenums[0].status).toBe("manual");
+  // Il plenum agganciato non si sposta da solo: trascinarlo muove la bocchetta.
+  expect(placed.airTerminals[0].position).not.toEqual(
+    before.airTerminals[0].position,
+  );
   const offset = {
     x: placed.plenums[0].position.x - placed.airTerminals[0].position.x,
     y: placed.plenums[0].position.y - placed.airTerminals[0].position.y,

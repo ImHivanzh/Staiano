@@ -3,7 +3,7 @@ import { PDFDocument, PDFDict, PDFName, PDFRawStream } from "pdf-lib";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { openDisclosure } from "./ui-helpers";
 
-test("dossier sintetico scaricato dal comando rapido: planimetrie A3 assenti e render incluso", async ({
+test("dossier sintetico scaricato dal comando rapido: planimetrie A3 e render inclusi", async ({
   page,
 }, info) => {
   await page.goto("/");
@@ -29,8 +29,8 @@ test("dossier sintetico scaricato dal comando rapido: planimetrie A3 assenti e r
   expect(pdf.getPageCount()).toBeGreaterThanOrEqual(4);
   expect(
     pdf.getPages().some((p) => p.getWidth() > 900),
-    "Il dossier sintetico non contiene le planimetrie A3, riservate al completo",
-  ).toBe(false);
+    "Il dossier sintetico include le planimetrie A3",
+  ).toBe(true);
   const panorama = pdf
     .getPages()
     .find(
@@ -104,7 +104,7 @@ test("render document cancellation releases the offscreen scene and creates no d
   await expect(page.locator(".errore-app[role='alert']")).toHaveCount(0);
 });
 
-test("dossier per stampa: bianco e nero selezionabile, render in grigio e sintetico senza A3", async ({
+test("dossier per stampa: bianco e nero selezionabile, render in grigio e sintetico con A3", async ({
   page,
 }, info) => {
   test.setTimeout(60000);
@@ -128,7 +128,7 @@ test("dossier per stampa: bianco e nero selezionabile, render in grigio e sintet
   await download.saveAs(info.outputPath("dossier-bianco-nero.pdf"));
   const pdf = await PDFDocument.load(await readFile((await download.path())!));
   expect(pdf.getTitle()).toContain("bianco e nero");
-  expect(pdf.getPages().some((sheet) => sheet.getWidth() > 900)).toBe(false);
+  expect(pdf.getPages().some((sheet) => sheet.getWidth() > 900)).toBe(true);
   let images = 0;
   for (const sheet of pdf.getPages()) {
     const objects = sheet.node

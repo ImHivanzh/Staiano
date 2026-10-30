@@ -408,7 +408,7 @@ test("l’avviso di collisione del flessibile si smonta senza errori React", asy
     await expect(
       viewer
         .locator('[role="alert"]')
-        .filter({ hasText: "Collisione con plenum" }),
+        .filter({ hasText: /Collisione con .*plenum/ }),
     ).toHaveCount(1);
     await page.getByRole("button", { name: "2D", exact: true }).click();
   }

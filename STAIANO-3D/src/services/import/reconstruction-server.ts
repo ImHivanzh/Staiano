@@ -10,7 +10,7 @@ import {
 import path from "node:path";
 import { z } from "zod";
 import { reconstructionSchema } from "./reconstruction-schema";
-import { recognizerDefaults, setupState } from "./plan-recognizer-setup";
+import { setupState } from "./plan-recognizer-setup";
 
 const runtimeSchema = z.object({
   python: z.string(),

@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     return Response.json(
       {
         message:
-          error instanceof Error && !("issues" in error)
+          error instanceof Error && error.message === "Progetto assente."
             ? error.message
             : "Progetto non valido.",
       },

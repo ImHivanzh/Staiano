@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
         },
         { headers },
       );
-    const record = records[id];
+    const record = Object.hasOwn(records, id) ? records[id] : undefined;
     requireAccess(record, user.username);
     return NextResponse.json(
       {
@@ -116,7 +116,9 @@ export async function POST(request: NextRequest) {
     if (typeof body.token !== "string" || !/^[a-f0-9-]{36}$/.test(body.token))
       throw new SharingError("Sessione di modifica non valida.");
     const result = await sharedTransaction((records) => {
-      let record = records[body.id];
+      let record = Object.hasOwn(records, body.id)
+        ? records[body.id]
+        : undefined;
       if (body.action === "publish") {
         if (record)
           throw new SharingError(

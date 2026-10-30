@@ -249,10 +249,14 @@ export async function readLicenseFile(): Promise<LicenseFileState | null> {
 function restrictToCurrentUser(path: string): void {
   if (platform() !== "win32") return;
   try {
-    const output = execFileSync("whoami.exe", ["/user", "/fo", "csv", "/nh"], {
-      encoding: "utf8",
-      windowsHide: true,
-    });
+    const output = execFileSync(
+      `${process.env.SystemRoot ?? "C:/Windows"}/System32/whoami.exe`,
+      ["/user", "/fo", "csv", "/nh"],
+      {
+        encoding: "utf8",
+        windowsHide: true,
+      },
+    );
     const sid = output.match(/S-1-\d+(?:-\d+)+/)?.[0];
     if (!sid) return;
     execFileSync(

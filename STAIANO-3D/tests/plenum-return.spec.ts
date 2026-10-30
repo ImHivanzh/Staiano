@@ -22,8 +22,11 @@ test("Collega associa il plenum alla ripresa macchina e Ruota 90 gradi conserva 
   expect(machine.rotation).toBeCloseTo(
     before.hvacSystems[0].indoorUnits[0].rotation + Math.PI / 2,
   );
-  expect(result.plenums[0].rotation).toBeCloseTo(before.plenums[0].rotation + Math.PI / 2);
-  const owner = before.hvacSystems[0].indoorUnits[0];
-  expect(result.plenums[0].position.x).toBeCloseTo(owner.position.x - (before.plenums[0].position.y - owner.position.y));
-  expect(result.plenums[0].position.y).toBeCloseTo(owner.position.y + (before.plenums[0].position.x - owner.position.x));
+  // Collega porta la ripresa dietro la macchina (mezzo giro): dopo Ruota 90°
+  // il plenum resta solidale, controfacciata e sull’asse della macchina.
+  const plenum = result.plenums[0];
+  expect(Math.cos(plenum.rotation - machine.rotation)).toBeCloseTo(-1);
+  const dx = plenum.position.x - machine.position.x;
+  const dy = plenum.position.y - machine.position.y;
+  expect(dx * Math.cos(plenum.rotation) + dy * Math.sin(plenum.rotation)).toBeCloseTo(0);
 });

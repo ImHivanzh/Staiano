@@ -104,10 +104,14 @@ async function readPassword() {
 
 function restrictFile(path) {
   if (process.platform !== "win32") return;
-  const user = execFileSync("whoami.exe", ["/user", "/fo", "csv", "/nh"], {
-    encoding: "utf8",
-    windowsHide: true,
-  });
+  const user = execFileSync(
+    `${process.env.SystemRoot ?? "C:/Windows"}/System32/whoami.exe`,
+    ["/user", "/fo", "csv", "/nh"],
+    {
+      encoding: "utf8",
+      windowsHide: true,
+    },
+  );
   const sid = user.match(/S-1-\d+(?:-\d+)+/)?.[0];
   if (!sid) throw new Error("permissions");
   execFileSync(

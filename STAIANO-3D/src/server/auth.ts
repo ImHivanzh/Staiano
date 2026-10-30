@@ -324,7 +324,7 @@ async function writeAccessConfig(nextConfig: AccessConfig) {
     );
     if (process.platform === "win32") {
       const output = execFileSync(
-        "whoami.exe",
+        `${process.env.SystemRoot ?? "C:/Windows"}/System32/whoami.exe`,
         ["/user", "/fo", "csv", "/nh"],
         { encoding: "utf8", windowsHide: true },
       );

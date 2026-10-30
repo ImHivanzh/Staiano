@@ -145,8 +145,8 @@ function FanCoilBody({
     d = unit.depthMm / 1000;
   const ceiling = unit.mounting === "ceiling";
   const product = fanCoilProductAtVersion(unit.productId, unit.catalogVersion);
-  const concealed = isConcealedFanCoil(product);
-  const concealedDucted = concealed && isDuctedFanCoil(product);
+  const concealed: boolean = Boolean(isConcealedFanCoil(product));
+  const concealedDucted: boolean = concealed && Boolean(isDuctedFanCoil(product));
   const aermec = product?.manufacturer === "Aermec" && !concealed;
   const innova = product?.manufacturer === "Innova";
   // Foto Innova SL/SLS: fronte liscio con una sola feritoia bassa. Disegno Olimpia Bi2: fronte liscio.

@@ -30,10 +30,14 @@ const credentialsFile = resolve(file, "..", "initial-user-credentials.json");
 
 function protect(path) {
   if (process.platform !== "win32") return;
-  const output = execFileSync("whoami.exe", ["/user", "/fo", "csv", "/nh"], {
-    encoding: "utf8",
-    windowsHide: true,
-  });
+  const output = execFileSync(
+    `${process.env.SystemRoot ?? "C:/Windows"}/System32/whoami.exe`,
+    ["/user", "/fo", "csv", "/nh"],
+    {
+      encoding: "utf8",
+      windowsHide: true,
+    },
+  );
   const sid = output.match(/S-1-\d+(?:-\d+)+/)?.[0];
   if (!sid) throw new Error("permissions");
   execFileSync(
