@@ -5,7 +5,10 @@ import {
   recognizerBusy,
   reconstructImage,
 } from "@/services/import/reconstruction-server";
-import { prepareRecognizer } from "@/services/import/plan-recognizer-setup";
+import {
+  installPython312,
+  prepareRecognizer,
+} from "@/services/import/plan-recognizer-setup";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
@@ -29,6 +32,12 @@ export async function POST(request: Request) {
       { status: 403 },
     );
   try {
+    if (new URL(request.url).searchParams.get("action") === "install-python") {
+      installPython312();
+      return Response.json(await recognitionAiStatus(false), {
+        headers: { "Cache-Control": "no-store" },
+      });
+    }
     return Response.json(await reconstructImage(request), {
       headers: { "Cache-Control": "no-store" },
     });

@@ -2610,3 +2610,21 @@ input[type="checkbox"] {
   overflow: hidden;
   clip-path: inset(50%);
 }
+
+.anteprima-canale {
+  margin: 0.4rem 0;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--bordo);
+  font-size: 0.9rem;
+}
+.anteprima-canale.libero {
+  background: #e6f4ea;
+  border-color: #6aa97a;
+  color: #1f5130;
+}
+.anteprima-canale.bloccato {
+  background: #fdecea;
+  border-color: #d9776c;
+  color: #7a2118;
+}

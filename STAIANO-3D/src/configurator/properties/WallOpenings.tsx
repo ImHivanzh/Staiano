@@ -1,6 +1,7 @@
 "use client";
 import { LengthInput } from "../LengthInput";
 import { useState } from "react";
+import { OpeningSketch } from "./SectionSketches";
 import type { Project, Wall } from "@/schemas/project";
 import { useProjectStore } from "@/stores/project-store";
 import { saveOpening } from "@/domain/geometry/openings";
@@ -19,6 +20,27 @@ export function WallOpenings({
   const { commit } = useProjectStore();
   const opening = project.openings.find((o) => o.id === editing);
   const items = project.openings.filter((o) => o.wallId === wall.id);
+  const wallLengthM = distance(wall.start, wall.end);
+  const wallHeightM =
+    wall.height ??
+    Math.max(
+      2.7,
+      ...project.rooms
+        .filter((room) => room.floorId === wall.floorId)
+        .map((room) => room.heightM),
+    );
+  const formKey = `${editing ?? "new"}-${type}-${wall.id}`;
+  // Anteprima dello schema mentre si digita, prima di salvare l'apertura.
+  const [draft, setDraft] = useState<{ key: string; values: number[] }>();
+  const initial = [
+    opening?.offsetM ??
+      Math.max(0, (wallLengthM - (type === "door" ? 0.9 : 1.2)) / 2),
+    opening?.widthM ?? (type === "door" ? 0.9 : 1.2),
+    opening?.heightM ?? (type === "door" ? 2.1 : 1.2),
+    opening?.sillHeightM ?? (type === "door" ? 0 : 0.9),
+  ];
+  const [offsetM, widthM, heightM, sillM] =
+    draft?.key === formKey ? draft.values : initial;
   return (
     <>
       <button
@@ -82,8 +104,35 @@ export function WallOpenings({
             </button>
           </div>
         ))}
+        <OpeningSketch
+          type={type}
+          wallLengthM={wallLengthM}
+          wallHeightM={wallHeightM}
+          offsetM={offsetM}
+          widthM={widthM}
+          heightM={heightM}
+          sillM={sillM}
+        />
         <form
-          key={`${editing ?? "new"}-${type}-${wall.id}`}
+          key={formKey}
+          onChange={(event) => {
+            const form = new FormData(event.currentTarget);
+            const read = (name: string, fallback: number) => {
+              const value = numberFromForm(form.get(name));
+              return form.get(name) && Number.isFinite(value)
+                ? value
+                : fallback;
+            };
+            setDraft({
+              key: formKey,
+              values: [
+                read("offset", offsetM),
+                read("width", widthM),
+                read("height", heightM),
+                read("sill", sillM),
+              ],
+            });
+          }}
           onSubmit={(e) => {
             e.preventDefault();
             const form = new FormData(e.currentTarget);

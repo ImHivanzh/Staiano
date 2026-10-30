@@ -5,7 +5,11 @@ import { createRoot } from "react-dom/client";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import type { Project } from "@/schemas/project";
-import type { SketchupModel } from "@/services/export/sketchup-schema";
+import {
+  MAX_SKETCHUP_BYTES,
+  type SketchupModel,
+} from "@/services/export/sketchup-schema";
+import { assertPayloadSize } from "@/utils/payload-size";
 import { ArchitectureMeshes } from "@/configurator/viewer3d/ArchitectureMeshes";
 import { DeviceMeshes } from "@/configurator/viewer3d/DeviceMeshes";
 import { DuctMeshes } from "@/configurator/viewer3d/DuctMeshes";
@@ -199,14 +203,19 @@ export async function downloadSketchup(project: Project, floorId: string) {
   const controller = new AbortController(),
     timeout = setTimeout(() => controller.abort(), 150000);
   try {
-    const response = await fetch("/api/export/sketchup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    const body = assertPayloadSize(
+      JSON.stringify({
         name: `${snapshot.name} - ${floor.name}`,
         meshes,
         background,
       }),
+      MAX_SKETCHUP_BYTES,
+      "Il modello SKP",
+    );
+    const response = await fetch("/api/export/sketchup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
       signal: controller.signal,
     });
     if (!response.ok) {

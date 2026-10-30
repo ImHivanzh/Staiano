@@ -53,7 +53,9 @@ export async function recognitionAiStatus(check = false): Promise<AiStatus> {
       available: false,
       state: "preparing",
       message:
-        "Preparazione della ricostruzione avanzata in corso: scarico modello e librerie (diversi GB, anche decine di minuti). Il riconoscimento nel browser resta disponibile.",
+        setup.phase === "python"
+          ? `${setup.message} Il riconoscimento nel browser resta disponibile.`
+          : "Preparazione della ricostruzione avanzata in corso: scarico modello e librerie (diversi GB, anche decine di minuti). Il riconoscimento nel browser resta disponibile.",
     };
   const runtime = await planRecognizerRuntime();
   if (!runtime)

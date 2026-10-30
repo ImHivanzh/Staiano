@@ -34,6 +34,22 @@ export function PlenumProperties({
     const side = plenumConnectionSide(project, plenum, i);
     return side === "top" ? "upper" : side === "bottom" ? "lower" : side;
   }) as PlenumPortSide[];
+  // Lato rivolto alla macchina: vettore plenum→macchina nel riferimento del plenum.
+  const machine = project.hvacSystems
+    .find((s) => s.id === plenum.systemId)
+    ?.indoorUnits.at(0);
+  const machineSide = (() => {
+    if (!machine) return undefined;
+    const vx = machine.position.x - plenum.position.x;
+    const vy = machine.position.y - plenum.position.y;
+    const right =
+      vx * Math.cos(plenum.rotation) + vy * Math.sin(plenum.rotation);
+    const front =
+      -vx * Math.sin(plenum.rotation) + vy * Math.cos(plenum.rotation);
+    if (Math.hypot(right, front) < 0.05) return undefined;
+    if (Math.abs(front) >= Math.abs(right)) return front > 0 ? "front" : "rear";
+    return right > 0 ? "right" : "left";
+  })();
   // Anteprima dello schema mentre si cambiano le direzioni, prima di applicare.
   const [draft, setDraft] = useState<{ id: string; sides: PlenumPortSide[] }>();
   const sketchSides = draft?.id === id ? draft.sides : connectionPositions;
@@ -51,7 +67,11 @@ export function PlenumProperties({
         Modificare quote o facce degli stacchi dichiara un plenum su misura. Una
         connessione diversa dalla fonte OEM richiede una quotazione separata.
       </p>
-      <PlenumSketch positions={sketchSides} />
+      <PlenumSketch
+        positions={sketchSides}
+        size={{ widthMm: plenum.widthMm, depthMm: plenum.depthMm }}
+        machineSide={machineSide}
+      />
       <form
         key={JSON.stringify(plenum)}
         onChange={(event) => {

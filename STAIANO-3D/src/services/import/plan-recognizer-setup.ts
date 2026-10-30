@@ -61,9 +61,65 @@ export async function reconcileInstall(
   return "replaced";
 }
 
-type Setup = { state: "running" | "error"; message: string; since: number };
+type Setup = {
+  state: "running" | "error";
+  message: string;
+  since: number;
+  phase?: "python";
+};
 let setup: Setup | null = null;
 export const setupState = () => setup;
+
+// winget: «già installato, nessun aggiornamento disponibile».
+const WINGET_ALREADY_INSTALLED = -1978335135;
+
+/**
+ * Installa Python 3.12 con winget, solo su richiesta esplicita dell'utente.
+ * Finita l'installazione, la verifica successiva prepara da sola il riconoscitore.
+ */
+export function installPython312() {
+  if (process.platform !== "win32")
+    throw new Error("Installazione guidata disponibile solo su Windows.");
+  if (setup?.state === "running") return;
+  setup = {
+    state: "running",
+    phase: "python",
+    since: Date.now(),
+    message:
+      "Installazione di Python 3.12 in corso con winget: servono alcuni minuti.",
+  };
+  let tail = "";
+  const child = spawn(
+    "winget",
+    [
+      "install",
+      "-e",
+      "--id",
+      "Python.Python.3.12",
+      "--silent",
+      "--accept-package-agreements",
+      "--accept-source-agreements",
+    ],
+    { shell: false, windowsHide: true, stdio: ["ignore", "pipe", "pipe"] },
+  );
+  const collect = (chunk: Buffer) => (tail = (tail + chunk).slice(-500));
+  child.stdout.on("data", collect);
+  child.stderr.on("data", collect);
+  const fail = (message: string) =>
+    (setup = { state: "error", since: Date.now(), message });
+  child.once("error", () =>
+    fail(
+      "winget non è disponibile sul server: installa Python 3.12 a mano da python.org e premi Verifica AI.",
+    ),
+  );
+  child.once("close", (code) => {
+    if (code === 0 || code === WINGET_ALREADY_INSTALLED) setup = null;
+    else
+      fail(
+        `Installazione di Python 3.12 non riuscita (codice ${code}). ${tail.trim().split(/\r?\n/).at(-1) ?? ""}`.trim(),
+      );
+  });
+}
 
 async function python312(): Promise<string | null> {
   if (process.env.STAIANO_PYTHON312) return process.env.STAIANO_PYTHON312;

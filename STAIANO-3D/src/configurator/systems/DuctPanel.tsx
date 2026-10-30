@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { Project } from "@/schemas/project";
 import { validateProject } from "@/domain/validation";
 import { checkHelp, genericHelp } from "@/domain/check-help";
@@ -10,6 +10,7 @@ import {
   generateDuctRoutes,
   setDuctKind,
 } from "@/domain/ducted/routes";
+import { fixDuctRoute } from "@/domain/ducted/fix-route";
 import { useProjectStore } from "@/stores/project-store";
 import { ductAirflowM3h, ductAirVelocityMs } from "@/domain/ducted/airflow";
 import { deviceCodes } from "@/services/export/device-codes";
@@ -33,6 +34,7 @@ export function DuctPanel({
   selectedDuctId?: string;
 }) {
   const { commit } = useProjectStore();
+  const [fixNote, setFixNote] = useState<Record<string, string>>({});
   const ducts = project.ducts?.filter((d) => d.systemId === systemId) ?? [];
   const codes = deviceCodes(project);
   const problems = useMemo(
@@ -135,6 +137,46 @@ export function DuctPanel({
                 </div>
               );
             })}
+            {ductProblems.some((check) =>
+              ["ductCollision", "ductBendRadius", "ductEnvelope"].includes(
+                check.code,
+              ),
+            ) && (
+              <>
+                <button
+                  className="bottone piccolo"
+                  disabled={duct.locked}
+                  onClick={() => {
+                    try {
+                      const fix = fixDuctRoute(project, duct.id);
+                      const improved = fix.after < fix.before;
+                      if (improved) commit(() => fix.project);
+                      setFixNote((notes) => ({
+                        ...notes,
+                        [duct.id]: !improved
+                          ? "Nessuna correzione automatica trovata: usa «Modifica percorso in 3D»."
+                          : fix.after
+                            ? `Percorso corretto: restano ${fix.after} problemi.`
+                            : "Percorso corretto: nessun problema.",
+                      }));
+                    } catch (error) {
+                      setFixNote((notes) => ({
+                        ...notes,
+                        [duct.id]:
+                          error instanceof Error
+                            ? error.message
+                            : "Correzione non riuscita.",
+                      }));
+                    }
+                  }}
+                >
+                  Correggi percorso automaticamente
+                </button>
+                {fixNote[duct.id] && (
+                  <small role="status">{fixNote[duct.id]}</small>
+                )}
+              </>
+            )}
             <button
               className="bottone piccolo"
               disabled={duct.locked}

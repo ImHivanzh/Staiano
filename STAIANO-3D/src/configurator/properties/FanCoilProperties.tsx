@@ -19,7 +19,10 @@ import {
   fanCoilPanelDimensions,
 } from "@/domain/catalogs/fan-coils";
 import { updateFanCoil } from "@/domain/fan-coils/apply";
-import { fanCoilCeilingRange, fanCoilWallRecess } from "@/domain/fan-coils/placement";
+import {
+  fanCoilCeilingRange,
+  fanCoilWallRecess,
+} from "@/domain/fan-coils/placement";
 import { drywallSideForRoom } from "@/domain/geometry/drywall-sides";
 import {
   ensureFanCoilAirSystem,
@@ -27,6 +30,7 @@ import {
   removeFanCoilAirSystem,
   setFanCoilAirDischarge,
 } from "@/domain/fan-coils/air";
+import { FanCoilSketch } from "./SectionSketches";
 import { MachinePlenumDetails } from "../systems/MachinePlenumDetails";
 import { DuctPanel } from "../systems/DuctPanel";
 import {
@@ -249,6 +253,13 @@ export function FanCoilProperties({
           </small>
         </label>
       )}
+      <FanCoilSketch
+        mounting={unit.mounting}
+        elevationM={unit.elevationM}
+        heightMm={visibleHeightMm}
+        depthMm={unit.depthMm}
+        roomHeightM={room.heightM}
+      />
       <details className="azione-inspector">
         <summary>Posizione · misure interne</summary>
         <p className="nota">

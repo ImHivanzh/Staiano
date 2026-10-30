@@ -104,6 +104,22 @@ function ductSegmentPolygon(start: Point, end: Point, widthM: number) {
   ].join(" ");
 }
 
+/** Problemi dei canali tra una bocchetta e una macchina, nel progetto dato. */
+function ductProblems(saved: Project, terminalId: string, systemId: string) {
+  const ductIds = (saved.ducts ?? [])
+    .filter(
+      (item) => item.terminalId === terminalId && item.systemId === systemId,
+    )
+    .map((item) => item.id);
+  return {
+    ductIds,
+    problems: validateProject(saved).filter(
+      (check) =>
+        check.status !== "valid" && ductIds.includes(check.entityId ?? ""),
+    ),
+  };
+}
+
 export function GraphicalDuctedConfigurator({
   project,
   room,
@@ -632,12 +648,7 @@ export function GraphicalDuctedConfigurator({
       );
       if (useProjectStore.getState().error) return;
       const saved = useProjectStore.getState().project!;
-      const ductIds = (saved.ducts ?? [])
-        .filter(
-          (item) =>
-            item.terminalId === terminalId && item.systemId === systemId,
-        )
-        .map((item) => item.id);
+      const { ductIds, problems } = ductProblems(saved, terminalId, systemId);
       const machine = saved.hvacSystems.find((item) => item.id === systemId)
         ?.indoorUnits[0];
       setActiveSystemId(systemId);
@@ -646,10 +657,6 @@ export function GraphicalDuctedConfigurator({
         useProjectStore.getState().select({ kind: "device", id: machine.id });
       setDuctAnchor(null);
       setCursor(null);
-      const problems = validateProject(saved).filter(
-        (check) =>
-          check.status !== "valid" && ductIds.includes(check.entityId ?? ""),
-      );
       setNotice(
         `Canale creato (${ductIds.length} ${ductIds.length === 1 ? "ramo" : "rami"}): percorso predefinito, modificalo in 3D o in «Flessibili».` +
           (problems.length
@@ -1079,6 +1086,70 @@ export function GraphicalDuctedConfigurator({
     mode === "duct" && ductAnchorPoint && cursor
       ? indoorRoute(project, room.floorId, ductAnchorPoint, cursor)
       : [];
+  // Anteprima: sopra la macchina (o il plenum) che chiuderebbe il canale, l’esito prima del clic.
+  const hoverEndpoint = (() => {
+    if (mode !== "duct" || !ductAnchor || !cursor) return null;
+    const pool =
+      ductAnchor.kind === "terminal"
+        ? systems.flatMap((system) =>
+            system.indoorUnits.slice(0, 1).map((unit) => ({
+              id: unit.id,
+              position: unit.position,
+              radius: Math.max(unit.widthMm, unit.depthMm ?? 0) / 2000 + 0.1,
+            })),
+          )
+        : terminals.flatMap((terminal) => {
+            const body = terminalPlenum(project, terminal);
+            return body
+              ? [
+                  {
+                    id: terminal.id,
+                    position: body.position,
+                    radius: Math.max(body.widthMm, body.depthMm) / 2000 + 0.1,
+                  },
+                ]
+              : [];
+          });
+    const hit = pool.find(
+      (item) =>
+        Math.hypot(item.position.x - cursor.x, item.position.y - cursor.y) <=
+        item.radius,
+    );
+    return hit ? ductEndpoint(hit.id) : null;
+  })();
+  const hoverKey = hoverEndpoint
+    ? `${hoverEndpoint.kind}:${hoverEndpoint.id}:${hoverEndpoint.rawId}`
+    : "";
+  const ductVerdict = useMemo(() => {
+    if (!ductAnchor || !hoverEndpoint || hoverEndpoint.kind === ductAnchor.kind)
+      return null;
+    try {
+      const trial = createDuctFromEndpoints(
+        project,
+        ductAnchor.rawId,
+        hoverEndpoint.rawId,
+      ).project;
+      const terminalId =
+        hoverEndpoint.kind === "terminal" ? hoverEndpoint.id : ductAnchor.id;
+      const systemId =
+        hoverEndpoint.kind === "machine" ? hoverEndpoint.id : ductAnchor.id;
+      const { problems } = ductProblems(trial, terminalId, systemId);
+      return problems.length
+        ? { ok: false, message: problems[0].message }
+        : {
+            ok: true,
+            message: "Percorso libero: nessuna collisione né curve strette.",
+          };
+    } catch (error) {
+      return {
+        ok: false,
+        message:
+          error instanceof Error ? error.message : "Canale non possibile.",
+      };
+    }
+    // L’esito cambia solo con progetto, primo punto e punto sotto il cursore.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project, ductAnchor, hoverKey]);
   const initialConfiguration = useRef(() => {
     if (!configurationOnly || !initialId) return;
     const draft = [
@@ -1421,6 +1492,14 @@ export function GraphicalDuctedConfigurator({
           >
             {instruction}
           </p>
+          {ductVerdict && (
+            <p
+              role="status"
+              className={`anteprima-canale ${ductVerdict.ok ? "libero" : "bloccato"}`}
+            >
+              {ductVerdict.ok ? "✓" : "⚠"} {ductVerdict.message}
+            </p>
+          )}
           {notice && !error && (
             <NotificationToast message={notice} tone="info" />
           )}

@@ -71,6 +71,36 @@ export function PlanAiStatus({ notes = [] }: { notes?: string[] }) {
       setLoading(false);
     }
   }
+  // Installa sul PC server solo dopo il clic: poi la preparazione del modello riparte da sola.
+  async function installPython() {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "/api/import/reconstruct?action=install-python",
+        {
+          method: "POST",
+          cache: "no-store",
+        },
+      );
+      const result = await response.json();
+      setStatus(
+        response.ok
+          ? result
+          : {
+              state: "error",
+              message: result.message ?? "Installazione non riuscita.",
+            },
+      );
+    } catch {
+      setStatus({
+        state: "error",
+        message:
+          "Installazione non avviata. Controlla che Staiano sia avviato sul PC server e riprova.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <details className={styles.analysisOptions}>
       <summary>
@@ -111,6 +141,17 @@ export function PlanAiStatus({ notes = [] }: { notes?: string[] }) {
       >
         Verifica AI
       </button>
+      {status?.state !== "preparing" &&
+        /Python 3\.12/.test(status?.message ?? "") && (
+          <button
+            type="button"
+            className="bottone piccolo"
+            disabled={loading}
+            onClick={() => void installPython()}
+          >
+            Installa Python 3.12 (winget)
+          </button>
+        )}
       {status?.state !== "preparing" && (
         <>
           <h3>Attivazione manuale</h3>

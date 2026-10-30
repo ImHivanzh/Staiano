@@ -190,7 +190,31 @@ export type PlenumPortSide =
   | "custom";
 
 /** Pianta del plenum vista dall'alto: ogni stacco numerato sul lato da cui esce. */
-export function PlenumSketch({ positions }: { positions: PlenumPortSide[] }) {
+export function PlenumSketch({
+  positions,
+  size,
+  machineSide,
+}: {
+  positions: PlenumPortSide[];
+  size?: { widthMm: number; depthMm: number };
+  /** Lato del plenum rivolto alla macchina, nel riferimento del plenum. */
+  machineSide?: "rear" | "front" | "left" | "right";
+}) {
+  const arrow = (() => {
+    const horizontal = machineSide === "left" || machineSide === "right";
+    const sign = machineSide === "left" || machineSide === "rear" ? -1 : 1;
+    const from = horizontal
+      ? { x: sign < 0 ? 80 : 200, y: 77 + 22 }
+      : { x: 160 + 40, y: sign < 0 ? 46 : 108 };
+    return {
+      from,
+      to: horizontal
+        ? { x: from.x + sign * 30, y: from.y }
+        : { x: from.x, y: from.y + sign * 22 },
+      horizontal,
+      sign,
+    };
+  })();
   const box = { x: 80, y: 46, w: 120, h: 62 };
   const edge = (side: PlenumPortSide) =>
     side === "custom" ? "rear" : side === "lateral" ? "right" : side;
@@ -236,6 +260,35 @@ export function PlenumSketch({ positions }: { positions: PlenumPortSide[] }) {
       >
         plenum
       </text>
+      {size && (
+        <text
+          x={box.x + box.w / 2}
+          y={box.y + box.h / 2 + 20}
+          textAnchor="middle"
+          className="schema-testo"
+        >
+          {size.widthMm} × {size.depthMm} mm
+        </text>
+      )}
+      {machineSide && (
+        <g>
+          <line
+            x1={arrow.from.x}
+            y1={arrow.from.y}
+            x2={arrow.to.x}
+            y2={arrow.to.y}
+            className="schema-freccia"
+          />
+          <text
+            x={arrow.to.x + (arrow.horizontal ? 0 : 6)}
+            y={arrow.to.y + (arrow.horizontal ? -6 : arrow.sign * 4)}
+            textAnchor={arrow.horizontal ? "middle" : "start"}
+            className="schema-testo"
+          >
+            macchina
+          </text>
+        </g>
+      )}
       <text
         x={box.x + box.w / 2}
         y="14"
@@ -307,6 +360,210 @@ export function PlenumSketch({ positions }: { positions: PlenumPortSide[] }) {
           </g>
         );
       })}
+    </svg>
+  );
+}
+
+const hDim = (a: number, b: number, y: number) =>
+  `M${a} ${y}H${b}M${a} ${y}l6 -3M${a} ${y}l6 3M${b} ${y}l-6 -3M${b} ${y}l-6 3`;
+const vDim = (x: number, a: number, b: number) =>
+  `M${x} ${a}V${b}M${x} ${a}l-3 6M${x} ${a}l3 6M${x} ${b}l-3 -6M${x} ${b}l3 -6`;
+
+/** Prospetto del muro con il foro in scala e le quote da inserire. */
+export function OpeningSketch({
+  type,
+  wallLengthM,
+  wallHeightM,
+  offsetM,
+  widthM,
+  heightM,
+  sillM,
+}: {
+  type: "door" | "window";
+  wallLengthM: number;
+  wallHeightM: number;
+  offsetM: number;
+  widthM: number;
+  heightM: number;
+  sillM: number;
+}) {
+  const wall = { x: 24, y: 12, w: 212, h: 84 };
+  const kx = wall.w / Math.max(wallLengthM, 0.1);
+  const ky = wall.h / Math.max(wallHeightM, 0.1);
+  const offset = clamp(offsetM, 0, wallLengthM);
+  const sill = type === "window" ? clamp(sillM, 0, wallHeightM) : 0;
+  const left = wall.x + offset * kx;
+  const width = Math.max(2, Math.min(widthM, wallLengthM - offset) * kx);
+  const bottom = wall.y + wall.h - sill * ky;
+  const height = Math.max(2, Math.min(heightM, wallHeightM - sill) * ky);
+  const dimY = wall.y + wall.h + 12;
+  return (
+    <svg
+      className="schema-inspector"
+      viewBox="0 0 260 130"
+      role="img"
+      aria-label={`Prospetto del muro: ${type === "door" ? "porta" : "finestra"} con distanza dall’inizio parete, larghezza e altezza del foro${type === "window" ? " e quota del davanzale" : ""}`}
+    >
+      <rect
+        x={wall.x}
+        y={wall.y}
+        width={wall.w}
+        height={wall.h}
+        className="schema-stanza"
+      />
+      <rect
+        x={left}
+        y={bottom - height}
+        width={width}
+        height={height}
+        className="schema-vuoto"
+      />
+      <rect
+        x={wall.x - 4}
+        y={wall.y + wall.h}
+        width={wall.w + 8}
+        height="3"
+        className="schema-muro-pieno"
+      />
+      {offset * kx > 18 && (
+        <>
+          <path d={hDim(wall.x, left, dimY)} className="schema-freccia" />
+          <text
+            x={(wall.x + left) / 2}
+            y={dimY + 14}
+            textAnchor="middle"
+            className="schema-testo"
+          >
+            distanza
+          </text>
+        </>
+      )}
+      <path d={hDim(left, left + width, dimY)} className="schema-freccia" />
+      <text
+        x={left + width / 2}
+        y={dimY + 14}
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        larghezza
+      </text>
+      <path
+        d={vDim(left + width + 6, bottom - height, bottom)}
+        className="schema-freccia"
+      />
+      <text
+        x={left + width + 12}
+        y={bottom - height / 2 + 4}
+        className="schema-testo"
+      >
+        altezza
+      </text>
+      {sill * ky > 14 && (
+        <>
+          <path
+            d={vDim(left - 6, bottom, wall.y + wall.h)}
+            className="schema-freccia"
+          />
+          <text
+            x={left - 12}
+            y={bottom + (sill * ky) / 2 + 4}
+            textAnchor="end"
+            className="schema-testo"
+          >
+            davanzale
+          </text>
+        </>
+      )}
+      <text x={wall.x} y="8" className="schema-testo">
+        inizio parete
+      </text>
+    </svg>
+  );
+}
+
+/** Sezione laterale: dove sta il ventilconvettore rispetto al pavimento e alla parete o al soffitto. */
+export function FanCoilSketch({
+  mounting,
+  elevationM,
+  heightMm,
+  depthMm,
+  roomHeightM,
+}: {
+  mounting: "wall" | "ceiling";
+  elevationM: number;
+  heightMm: number;
+  depthMm: number;
+  roomHeightM: number;
+}) {
+  const floorY = 112;
+  const k = 88 / Math.max(roomHeightM, 0.1);
+  const unitH = clamp((heightMm / 1000) * k, 8, 60);
+  const unitW = clamp((depthMm / 1000) * k, 10, 60);
+  const level = floorY - clamp(elevationM, 0, roomHeightM) * k;
+  const wall = mounting === "wall";
+  const x = wall ? 50 : 110;
+  const y = wall ? level - unitH / 2 : level - unitH;
+  const ceilingY = floorY - roomHeightM * k;
+  return (
+    <svg
+      className="schema-inspector"
+      viewBox="0 0 260 130"
+      role="img"
+      aria-label={
+        wall
+          ? "Sezione: la quota è misurata dal pavimento al centro dell’unità a parete"
+          : "Sezione: la quota è misurata dal pavimento alla faccia inferiore dell’unità a soffitto"
+      }
+    >
+      <rect
+        x="20"
+        y={floorY}
+        width="220"
+        height="3"
+        className="schema-muro-pieno"
+      />
+      {wall ? (
+        <rect
+          x="40"
+          y={ceilingY}
+          width="10"
+          height={floorY - ceilingY}
+          className="schema-muro-pieno"
+        />
+      ) : (
+        <rect
+          x="20"
+          y={ceilingY - 3}
+          width="220"
+          height="3"
+          className="schema-muro-pieno"
+        />
+      )}
+      <rect
+        x={x}
+        y={y}
+        width={unitW}
+        height={unitH}
+        className="schema-plenum"
+      />
+      <path d={`M${x} ${level}H214`} className="schema-faccia" />
+      <path d={vDim(210, level, floorY)} className="schema-freccia" />
+      <text
+        x="204"
+        y={(level + floorY) / 2 + 4}
+        textAnchor="end"
+        className="schema-testo"
+      >
+        {wall ? "quota centro" : "quota faccia inferiore"}
+      </text>
+      <text
+        x={x + unitW / 2}
+        y={y - 4}
+        textAnchor="middle"
+        className="schema-testo"
+      >
+        {wall ? "unità a parete" : "unità a soffitto"}
+      </text>
     </svg>
   );
 }

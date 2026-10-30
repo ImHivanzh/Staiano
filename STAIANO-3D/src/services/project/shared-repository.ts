@@ -1,6 +1,7 @@
 import type { Project } from "@/schemas/project";
 import { IndexedDbProjectRepository, ProjectConflictError } from "./repository";
-import { prepareProject } from "./format";
+import { MAX_PROJECT_BYTES, prepareProject } from "./format";
+import { assertPayloadSize, PayloadTooLargeError } from "@/utils/payload-size";
 export type SharedDetails = {
   project: Project;
   previous?: Project | null;
@@ -17,7 +18,11 @@ export async function sharedRequest(path = "", body?: object) {
       ? {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+          body: assertPayloadSize(
+            JSON.stringify(body),
+            MAX_PROJECT_BYTES,
+            "Il progetto",
+          ),
         }
       : {}),
   });
@@ -67,6 +72,7 @@ export class SharedProjectRepository extends IndexedDbProjectRepository {
             owner: details.owner,
             members: details.members,
             audit: details.audit,
+            previous: details.previous,
             editingBy: details.editingBy,
           }
         : details,
@@ -176,10 +182,13 @@ export class SharedProjectRepository extends IndexedDbProjectRepository {
         revision: details.revision,
         project,
       });
-      this.shared.set(project.id, updated);
+      this.shared.set(project.id, { ...updated, previous: details.project });
     } catch (error) {
-      this.readonlyIds.add(project.id);
-      this.notify();
+      // Un salvataggio troppo grande non è partito: il progetto resta modificabile.
+      if (!(error instanceof PayloadTooLargeError)) {
+        this.readonlyIds.add(project.id);
+        this.notify();
+      }
       throw error;
     }
   }

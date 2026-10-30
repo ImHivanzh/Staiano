@@ -1,6 +1,7 @@
 "use client";
 import { NotificationToast } from "./NotificationToast";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { compareProjects } from "@/domain/project-diff";
 import { ArrowClockwise, ShareNetwork, UserMinus } from "@phosphor-icons/react";
 import type { Project } from "@/schemas/project";
 import {
@@ -32,6 +33,11 @@ export function ProjectSharing({
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [open, setOpen] = useState(false);
+  const previous = details?.previous;
+  const changes = useMemo(
+    () => (open && previous ? compareProjects(previous, project) : []),
+    [open, previous, project],
+  );
   useEffect(() => {
     let active = true;
     void sharedRequest()
@@ -233,6 +239,29 @@ export function ProjectSharing({
               <ArrowClockwise aria-hidden="true" />
               Aggiorna registro
             </button>
+            <h4>Cosa è cambiato dalla versione precedente</h4>
+            {details.previous ? (
+              changes.length ? (
+                <ul data-testid="confronto-versioni">
+                  {changes.map((change) => (
+                    <li key={change.key}>
+                      {change.label}:{" "}
+                      {[
+                        change.added && `${change.added} aggiunti`,
+                        change.removed && `${change.removed} tolti`,
+                        change.changed && `${change.changed} modificati`,
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Nessuna differenza negli elementi del progetto.</p>
+              )
+            ) : (
+              <p>Nessuna versione precedente salvata sul server.</p>
+            )}
             <ol>
               {details.audit.toReversed().map((entry, i) => (
                 <li key={`${entry.at}-${i}`}>
