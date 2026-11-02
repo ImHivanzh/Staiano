@@ -13,6 +13,8 @@ export type CustomerViewValues = z.infer<typeof customerViewSchema>;
 export type CustomerViewState = CustomerViewValues & {
   social: boolean;
   recording: boolean;
+  /** Video con didascalie e invito finale (altrimenti solo immagini, logo e nome del negozio). */
+  captions: boolean;
   /** Avanzamento della creazione del video, da 0 a 1. */
   progress: number;
 };
@@ -24,6 +26,7 @@ export const useCustomerView = create<CustomerViewState>(() => ({
   explain: false,
   social: false,
   recording: false,
+  captions: true,
   progress: 0,
 }));
 export const customerViewValues = (): CustomerViewValues => {

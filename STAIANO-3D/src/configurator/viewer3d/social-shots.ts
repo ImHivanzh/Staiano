@@ -1,13 +1,13 @@
 /**
- * Durata del video social: sotto i 30 secondi, ma con il tempo di guardare ogni stanza e leggere la
- * didascalia. Apertura, tre scene, ritorno in panoramica e chiusura.
+ * Durata del video social: 30 secondi, il tempo di guardare ogni stanza e leggere la didascalia.
+ * Apertura, fino a cinque scene, ritorno in panoramica e chiusura.
  */
-export const SOCIAL_CLIP_SECONDS = 25;
+export const SOCIAL_CLIP_SECONDS = 30;
 /** Discesa d'apertura (dalla pianta vista dall'alto alla casa in 3D) e ritorno finale, in secondi. */
 const INTRO_SECONDS = 3.8;
 const OUTRO_SECONDS = 4.4;
-/** Al massimo tre scene (una per stanza), più di cinque secondi l'una. */
-export const SOCIAL_MAX_SHOTS = 3;
+/** Al massimo cinque scene (una per stanza), circa quattro secondi l'una tra volo e sosta. */
+export const SOCIAL_MAX_SHOTS = 5;
 /** Inclinazione della prima inquadratura: quasi a piombo, la casa si legge come una pianta. */
 const PLAN_POLAR = 0.08;
 

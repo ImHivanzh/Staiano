@@ -604,11 +604,18 @@ export default function Viewer3D({
           .sort((a, b) => rank[a.kind] - rank[b.kind]),
       }))
       .filter((entry) => entry.devices.length);
-    // Oltre il limite restano le stanze con più apparecchi, nell'ordine del progetto.
-    const chosenRooms = [...byRoom]
-      .sort((a, b) => b.devices.length - a.devices.length)
-      .slice(0, SOCIAL_MAX_SHOTS)
-      .sort((a, b) => byRoom.indexOf(a) - byRoom.indexOf(b));
+    // Oltre il limite si prendono stanze distribuite su tutta la casa, nell'ordine del progetto: non
+    // sempre le stesse (quelle con più apparecchi).
+    const chosenRooms =
+      byRoom.length <= SOCIAL_MAX_SHOTS
+        ? byRoom
+        : Array.from(
+            { length: SOCIAL_MAX_SHOTS },
+            (_, k) =>
+              byRoom[
+                Math.floor(((k + 0.5) * byRoom.length) / SOCIAL_MAX_SHOTS)
+              ],
+          );
     const factsOf = (inside: Device[]): SocialFacts => {
       const count = (kind: Device["kind"]) =>
         inside.filter((d) => d.kind === kind).length;

@@ -43,6 +43,13 @@ test("modalità social: colonna 9:16 con logo, orbita automatica e video scarica
   await file.saveAs(path);
   expect(statSync(path).size).toBeGreaterThan(50_000);
 
+  // Senza testi: il pulsante passa da «sì» a «no» e il video si può registrare lo stesso.
+  const captions = client.getByRole("button", { name: /^Testi/ });
+  await expect(captions).toHaveText("Testi sì");
+  await captions.click();
+  await expect(captions).toHaveText("Testi no");
+  await expect(captions).toHaveAttribute("aria-pressed", "false");
+
   await client.keyboard.press("Escape");
   await expect(client.locator("main[data-social]")).toHaveCount(0);
   await expect(

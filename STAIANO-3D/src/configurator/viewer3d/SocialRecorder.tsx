@@ -114,7 +114,9 @@ export function SocialRecorder({ invite }: { invite: string }) {
     };
     const draw = () => {
       const elapsed = socialTime();
-      const captionOn = socialCaption.alpha > 0.01 && !!socialCaption.text;
+      const withText = useCustomerView.getState().captions;
+      const captionOn =
+        withText && socialCaption.alpha > 0.01 && !!socialCaption.text;
       // Zoom d'apertura lento: si parte già in movimento, mai da un fotogramma fermo o nero.
       const punch = 1 + 0.08 * (1 - easeOut(elapsed / 2.4));
       const scale =
@@ -151,7 +153,7 @@ export function SocialRecorder({ invite }: { invite: string }) {
       floor.addColorStop(0, "rgb(8 18 28 / 0%)");
       floor.addColorStop(1, "rgb(8 18 28 / 70%)");
       context.fillStyle = floor;
-      context.fillRect(0, HEIGHT * 0.5, WIDTH, HEIGHT * 0.5);
+      if (withText) context.fillRect(0, HEIGHT * 0.5, WIDTH, HEIGHT * 0.5);
       // Nessun marchio fisso sopra la scena: distrae e sa di pubblicità. Logo e nome arrivano in chiusura.
       if (captionOn) {
         // Didascalia centrata: riga breve in una pastiglia verde, poi il titolo grande, parola per parola.
@@ -253,34 +255,36 @@ export function SocialRecorder({ invite }: { invite: string }) {
           top + logoHeight + 50 + rise(0.55),
           WIDTH - 140,
         );
-        context.font = `600 36px ${FONT}`;
-        context.fillStyle = "#5b6f80";
-        context.fillText(
-          SOCIAL_TAGLINE,
-          WIDTH / 2,
-          top + logoHeight + 146 + rise(0.75),
-          WIDTH - 140,
-        );
-        // L'invito come un pulsante: è l'unica cosa da fare dopo il video.
-        const buttonTop = top + logoHeight + 236 + rise(1);
-        context.font = `800 44px ${FONT}`;
-        const buttonWidth = Math.min(
-          WIDTH - 120,
-          context.measureText(invite).width + 96,
-        );
-        context.fillStyle = BLUE;
-        context.beginPath();
-        context.roundRect(
-          (WIDTH - buttonWidth) / 2,
-          buttonTop,
-          buttonWidth,
-          96,
-          48,
-        );
-        context.fill();
-        context.fillStyle = "#fff";
-        context.textBaseline = "middle";
-        context.fillText(invite, WIDTH / 2, buttonTop + 50, buttonWidth - 60);
+        if (withText) {
+          context.font = `600 36px ${FONT}`;
+          context.fillStyle = "#5b6f80";
+          context.fillText(
+            SOCIAL_TAGLINE,
+            WIDTH / 2,
+            top + logoHeight + 146 + rise(0.75),
+            WIDTH - 140,
+          );
+          // L'invito come un pulsante: è l'unica cosa da fare dopo il video.
+          const buttonTop = top + logoHeight + 236 + rise(1);
+          context.font = `800 44px ${FONT}`;
+          const buttonWidth = Math.min(
+            WIDTH - 120,
+            context.measureText(invite).width + 96,
+          );
+          context.fillStyle = BLUE;
+          context.beginPath();
+          context.roundRect(
+            (WIDTH - buttonWidth) / 2,
+            buttonTop,
+            buttonWidth,
+            96,
+            48,
+          );
+          context.fill();
+          context.fillStyle = "#fff";
+          context.textBaseline = "middle";
+          context.fillText(invite, WIDTH / 2, buttonTop + 50, buttonWidth - 60);
+        }
         context.restore();
       }
     };

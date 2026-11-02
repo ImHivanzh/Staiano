@@ -255,6 +255,16 @@ export function CustomerView() {
           </button>
           <button
             type="button"
+            aria-pressed={view.captions}
+            disabled={view.recording}
+            onClick={() =>
+              useCustomerView.setState({ captions: !view.captions })
+            }
+          >
+            Testi {view.captions ? "sì" : "no"}
+          </button>
+          <button
+            type="button"
             onClick={() =>
               useCustomerView.setState({ social: false, recording: false })
             }
