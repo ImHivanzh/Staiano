@@ -9,7 +9,7 @@ export function heatPumpModelUrl(
 ): string | null {
   const { manufacturer, family, widthMm, heightMm } = product;
   let name: string | null = null;
-  if (manufacturer === "Chaffoteaux" && /^ARIANEXT/.test(family))
+  if (manufacturer === "Chaffoteaux" && /^(ARIANEXT|PIGMA ADVANCE HYBRID)/.test(family))
     name = `chaffoteaux-arianext-${heightMm}`;
   else if (manufacturer === "Gree" && /^VERSATI III/.test(family))
     name = `gree-versati-iii-${heightMm}`;
@@ -19,5 +19,8 @@ export function heatPumpModelUrl(
     name = `daikin-altherma-3m-${widthMm}`;
   else if (manufacturer === "Daikin" && /^Altherma 3 (R|H HT)/.test(family))
     name = `daikin-altherma-3r-${widthMm}`;
-  return name ? `/models/hvac/heat-pump-${name}.glb` : null;
+  else if (manufacturer === "LG" && /^THERMA V Monoblocco G/.test(family))
+    name = `lg-therma-v-g-${widthMm}`;
+  else if (manufacturer === "LG") name = `lg-therma-v-${widthMm}`;
+  return name ?`/models/hvac/heat-pump-${name}.glb` : null;
 }

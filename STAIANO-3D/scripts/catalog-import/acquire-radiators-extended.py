@@ -22,6 +22,10 @@ SOURCES = {
     "cordivari-tamara": ("https://www.cordivari.it/wp-content/uploads/2023/10/EN-Cordivari_TEC-Scheda-Tamara-Vertical_N-8-2025.pdf", "N-8-2025", "https://www.cordivari.it/en/prodotto/tamara-vertical/"),
     "zehnder-charleston": ("https://www.zehnder.it/download/e80c0bebc9654d1ea2faa5304a36fc4c", "Listino 06/2026", "https://www.zehnder.it/it/radiatori-decorativi/radiatori/radiatori-idronici/zehnder-charleston-funzionamento-ad-acqua-calda"),
     "zehnder-nova": ("https://www.zehnder.it/download/95c6f47bc56841ea875caa1cd429643e", "Listino 06/2026", "https://www.zehnder.it/it/radiatori-decorativi/radiatori/radiatori-idronici/zehnder-nova-funzionamento-ad-acqua-calda"),
+    **{f"zehnder-{name}": (f"https://www.zehnder.it/download/{token}", "Listino Tecnico 06/2026", "https://www.climanext.net/brand/zehnder/") for name, token in {
+        "kleo": "2add8fa6f23d4ca3aa0f01f67f70c8a1", "orbis": "40793b245fd84b70a3555976f7939880", "ax": "be80108b6d9845f1809d765587bc1254",
+        "jetx": "068ebfcd677a4efe9cb32a78d990c82d", "arteplano": "3a560e1642af45899ccf6c0022e0fb6f", "metropolitan": "0713d3770530497f8188f9e410d842b8",
+        "toga": "177d3e4b8edd4d8fb9fec3e5a6c2b7e4", "excelsior": "a75f07c10ef342b6977420e8a583751a"}.items()},
     "lazzarini-sanremo": ("https://docga.plateforme-services.com/api/download/variant_documents_5d77b642-bd28-4767-97e2-f5b1c210a8a0/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ", "Rev. 6 -02-08-2021", "https://www.lazzariniradiatori.it/en/CLASSIC/SANREMO"),
     "lazzarini-garda": ("https://docga.plateforme-services.com/api/download/variant_documents_2816a35c-5a49-46a0-81e2-7aee4bc61bf1/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ", "Rev. 6 -22-11-2023", "https://www.lazzariniradiatori.it/en/DECORATIVE/GARDA"),
     "lazzarini-empoli": ("https://docga.plateforme-services.com/api/download/variant_documents_8101ed7b-720e-4de1-b70c-f82628f27d21/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ", "Rev. 4 -27-04-2021", "https://www.lazzariniradiatori.it/en/LIVING/Empoli"),
@@ -32,6 +36,10 @@ PHOTOS = {
     "cordivari-tamara": "https://www.cordivari.it/wp-content/uploads/2022/10/900x900-lista-RADIATORI-127-tamara-vt.jpg",
     "zehnder-charleston": "https://www.zehnder.it/fileadmin/_processed_/f/8/csm_6720_59683d6eef.png",
     "zehnder-nova": "https://www.zehnder.it/download/8e2be592419148e9987df35bdfc875b9",
+    # Gamma images published by Climanext for the Zehnder series (same technical sheets as the PDFs).
+    **{f"zehnder-{name}": f"https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-{slug}-ritaglio-400x300.jpg" for name, slug in {
+        "kleo": "kleo", "orbis": "orbis", "ax": "ax", "jetx": "jet-x", "arteplano": "arteplano", "metropolitan": "metropolitan",
+        "toga": "toga", "excelsior": "excelsior"}.items()},
 }
 
 def fetch(url):

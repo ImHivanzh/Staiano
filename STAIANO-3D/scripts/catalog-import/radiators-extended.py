@@ -139,6 +139,11 @@ for series,(page,depth,exponents,rows) in nova.items():
                     connections='3570; sfiato 1/4"',widthNote=f"Prodotto completo saldato di fabbrica: {elements} tubi verticali. Quote e rese dell'intero radiatore da p.{page}; interasse orizzontale 3570. Nessuna estrapolazione di larghezze.")
         products.append(item)
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from zehnder_series import import_series
+zehnder_rejected = import_series(products, base, pages, SOURCES)
+print("Zehnder series rows skipped (corrupt text layer or no match):", len(zehnder_rejected), zehnder_rejected)
+
 for name in ["lazzarini-sanremo","lazzarini-garda","lazzarini-empoli"]:
     finish="bianco"
     count=0

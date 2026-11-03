@@ -1,10 +1,10 @@
-"""Unità esterne delle pompe di calore (monoblocco): Chaffoteaux Arianext, Gree Versati III/V, Daikin Altherma 3.
+"""Unità esterne delle pompe di calore (monoblocco): Chaffoteaux Arianext, Gree Versati III/V, Daikin Altherma 3, LG THERMA V.
 
 Riferimento: foto ufficiali in public/catalog-assets/heat-pumps/ (corpo con ventola sul lato sinistro,
 pannello tecnico a destra, due piedi lunghi). Una mesh per ogni ingombro di catalogo, quindi nessuna
 deformazione dei GLB nel viewer: le quote arrivano da catalog-data/generated/heat-pumps.json.
-Numero e posizione delle ventole oltre la foto (Arianext 1106/1506 mm, Daikin senza vista frontale) sono
-illustrativi. Logo, etichette e valvole non sono modellati.
+Numero e posizione delle ventole oltre la foto (Arianext 1106/1506 mm, Daikin senza vista frontale, LG 1560 mm
+e Monoblocco G con 2 ventole in alto) sono illustrativi. Logo, etichette e valvole non sono modellati.
 Asse x = larghezza, y = profondità (fronte a -y), z = altezza. Crea scene proprie, non tocca quella aperta.
 Esporta public/models/hvac/heat-pump-<nome>.glb e assets/blender/heat-pump-outdoor-units.blend.
 """
@@ -47,6 +47,11 @@ MODELS = {
     "daikin-altherma-3r-740": (0.740, 0.387, 0.884, "dark", 1, 0.66),
     "daikin-altherma-3r-870": (0.870, 0.460, 1.100, "dark", 1, 0.66),
     "daikin-altherma-3r-1003": (1.003, 0.533, 1.270, "dark", 1, 0.66),
+    # LG THERMA V: S II R32 e R290 Premium hanno lo stesso aspetto (foto di gamma), quindi un GLB per ingombro.
+    "lg-therma-v-1242": (1.242, 0.391, 0.853, "lg", 1, 0.60),
+    "lg-therma-v-1320": (1.320, 0.520, 1.019, "lg", 1, 0.60),
+    "lg-therma-v-1560": (1.560, 0.520, 1.019, "lg", 1, 0.60),
+    "lg-therma-v-g-1640": (1.640, 0.825, 1.690, "lgg", 2, 0),
 }
 
 STYLE = {
@@ -61,6 +66,8 @@ STYLE = {
                    wire=(0.9, 0.9, 0.9), bevel=0.012, grille="round", foot=(0.15, 0.15, 0.16), side=(0.1, 0.55, 0.72), blades=5),
     "ebla_d": dict(body=(0.64, 0.66, 0.69), panel=(0.64, 0.66, 0.69), recess=(0.035, 0.037, 0.04), fan=(0.05, 0.05, 0.055),
                    wire=(0.1, 0.1, 0.11), bevel=0.01, grille="louvre", foot=(0.12, 0.12, 0.13)),
+    "lg": dict(body=(0.075, 0.078, 0.082), panel=(0.085, 0.088, 0.092), recess=(0.02, 0.021, 0.023), fan=(0.04, 0.04, 0.045),
+               wire=(0.07, 0.072, 0.078), bevel=0.014, grille="round", foot=(0.05, 0.05, 0.055), blades=7, ridges=True, lglogo=True),
     "dark": dict(body=(0.075, 0.08, 0.085), panel=(0.09, 0.095, 0.1), recess=(0.03, 0.032, 0.035), fan=(0.05, 0.05, 0.055),
                  wire=(0.13, 0.135, 0.14), bevel=0.01, grille="louvre", foot=(0.06, 0.06, 0.065)),
 }
@@ -188,8 +195,141 @@ def spinner(parts, k, center):
     bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
 
 
+def label(coll, text, loc, size, m):
+    """Scritta in rilievo che guarda il fronte (-y), convertita in mesh."""
+    bpy.ops.object.text_add(location=loc, rotation=(math.pi / 2, 0, 0))
+    o = bpy.context.active_object
+    o.data.body, o.data.size, o.data.extrude = text, size, 0.0012
+    o.data.align_x, o.data.align_y = "CENTER", "CENTER"
+    bpy.ops.object.convert(target="MESH")
+    o = bpy.context.active_object
+    for c in o.users_collection:
+        c.objects.unlink(o)
+    coll.objects.link(o)
+    return put(o, m)
+
+
+def zdisc(coll, loc, r, depth, m, verts=48):
+    bpy.ops.mesh.primitive_cylinder_add(vertices=verts, radius=r, depth=depth, location=loc)
+    o = bpy.context.active_object
+    bpy.ops.object.shade_smooth()
+    for c in o.users_collection:
+        c.objects.unlink(o)
+    coll.objects.link(o)
+    return put(o, m)
+
+
+def zring(coll, loc, r, wire, m):
+    bpy.ops.mesh.primitive_torus_add(major_radius=r, minor_radius=wire, major_segments=48, minor_segments=6, location=loc)
+    o = bpy.context.active_object
+    for c in o.users_collection:
+        c.objects.unlink(o)
+    coll.objects.link(o)
+    return put(o, m)
+
+
+def coil(coll, axis, sign, a0, a1, z0, z1, rec_m, mesh_m, depth):
+    """Batteria alettata dietro una rete a maglia quadra, su una faccia del cabinet (normale sign sull'asse y o x)."""
+    centre, zc, span = (a0 + a1) / 2, (z0 + z1) / 2, a1 - a0
+    face, bar = sign * (depth / 2 + 0.001), sign * (depth / 2 + 0.0045)
+    at = (lambda a, z, n: (a, n, z)) if axis == "y" else (lambda a, z, n: (n, a, z))
+    thin = lambda length, t=0.005: (length, t, t) if axis == "y" else (t, length, t)
+    box(coll, at(centre, zc, face), (span, 0.004, z1 - z0) if axis == "y" else (0.004, span, z1 - z0), rec_m)
+    rows, cols = max(2, round((z1 - z0) / 0.055)), max(2, round(span / 0.055))
+    for i in range(rows + 1):
+        box(coll, at(centre, z0 + i * (z1 - z0) / rows, bar), thin(span), mesh_m)
+    for k in range(cols + 1):
+        box(coll, at(a0 + k * span / cols, zc, bar), (0.005, 0.005, z1 - z0), mesh_m)
+
+
+def top_fan(coll, cx, cy, zt, r, m_fan, m_wire, m_rec, blades=5):
+    """Ventola assiale a scarico verso l'alto: fondo scuro, bocca, pale curve, mozzo e griglia ad anelli e raggi."""
+    zdisc(coll, (cx, cy, zt + 0.002), r, 0.004, m_rec)
+    zring(coll, (cx, cy, zt + 0.004), r, 0.008, m_wire)
+    rb = r * 0.9
+    for i in range(blades):
+        vertices = []
+        for row in range(13):
+            t = row / 12
+            radius = rb * (0.16 + 0.78 * t)
+            chord = (0.22 + 0.78 * math.sin(math.pi * t) ** 0.55) * 3 / blades
+            for col in range(7):
+                u = col / 6 - 0.5
+                angle = i * math.tau / blades - 0.65 * t + chord * u
+                vertices.append((cx + radius * math.cos(angle), cy + radius * math.sin(angle),
+                                 zt - 0.03 + rb * 0.08 * u * math.sin(math.pi * t)))
+        faces = [(row * 7 + col, row * 7 + col + 1, (row + 1) * 7 + col + 1, (row + 1) * 7 + col)
+                 for row in range(12) for col in range(6)]
+        mesh = bpy.data.meshes.new("Pala curva")
+        mesh.from_pydata(vertices, [], faces)
+        mesh.update()
+        blade = bpy.data.objects.new("Pala curva", mesh)
+        coll.objects.link(blade)
+        put(blade, m_fan)
+        bpy.ops.object.select_all(action="DESELECT")
+        blade.select_set(True)
+        bpy.context.view_layer.objects.active = blade
+        thickness = blade.modifiers.new("Spessore pala", "SOLIDIFY")
+        thickness.thickness = 0.003
+        bpy.ops.object.modifier_apply(modifier=thickness.name)
+        bpy.ops.object.shade_smooth()
+    zdisc(coll, (cx, cy, zt - 0.015), rb * 0.16, 0.04, m_fan)
+    for k in range(9):
+        zring(coll, (cx, cy, zt + 0.02), r * (0.16 + 0.84 * k / 8), 0.0015, m_wire)
+    for i in range(24):
+        a = i * math.tau / 24
+        box(coll, (cx + math.cos(a) * r * 0.5, cy + math.sin(a) * r * 0.5, zt + 0.02), (r, 0.002, 0.002), m_wire, rot=(0, 0, a))
+
+
+def build_g(name):
+    """LG THERMA V Monoblocco G (51 kW): cabinet chiaro con montanti, pannello frontale pieno e batterie con rete; ventole in alto."""
+    w, d, h, _, _, _ = MODELS[name]
+    sc = bpy.data.scenes.new(name)
+    bpy.context.window.scene = sc
+    coll = bpy.data.collections.new(name)
+    sc.collection.children.link(coll)
+    body_m = mat("lgg-corpo", (0.72, 0.73, 0.74), 0.45, 0.2)
+    frame_m = mat("lgg-telaio", (0.42, 0.43, 0.45), 0.5, 0.3)
+    mesh_m = mat("lgg-rete", (0.5, 0.51, 0.53), 0.45, 0.5)
+    rec_m = mat("lgg-batteria", (0.04, 0.045, 0.05), 0.8)
+    fan_m = mat("lgg-ventola", (0.05, 0.05, 0.055), 0.5)
+    skid_m = mat("lgg-base", (0.2, 0.2, 0.21), 0.7)
+    foot_h, pillar, top = 0.08, 0.06, 0.07
+    box(coll, (0, 0, foot_h / 2), (w - 0.02, d - 0.02, foot_h), skid_m, 0.004)
+    box(coll, (0, 0, foot_h + (h - foot_h) / 2), (w - 0.01, d - 0.01, h - foot_h), body_m, 0.008)
+    box(coll, (0, 0, h - top / 2), (w + 0.01, d + 0.01, top), frame_m, 0.012)
+    z0, z1 = foot_h + 0.06, h - top - 0.03
+    column_h, column_z = h - foot_h - top, foot_h + (h - foot_h - top) / 2
+    xs = -w / 2
+    b1 = xs + 0.22 * w
+    b2 = b1 + 0.34 * w
+    for x in (xs + pillar / 2, b1, b2, w / 2 - pillar / 2):
+        box(coll, (x, -d / 2 - 0.004, column_z), (pillar, 0.012, column_h), frame_m, 0.004)
+    for x in (xs + pillar / 2, w / 2 - pillar / 2):
+        box(coll, (x, d / 2 + 0.004, column_z), (pillar, 0.012, column_h), frame_m, 0.004)
+    coil(coll, "y", -1, xs + pillar, b1 - pillar / 2, z0, z1, rec_m, mesh_m, d)
+    coil(coll, "y", -1, b2 + pillar / 2, w / 2 - pillar, z0, z1, rec_m, mesh_m, d)
+    coil(coll, "y", 1, -w / 2 + pillar, w / 2 - pillar, z0, z1, rec_m, mesh_m, d)
+    for sign in (-1, 1):
+        coil(coll, "x", sign, -d / 2 + pillar, d / 2 - pillar, z0, z1, rec_m, mesh_m, w)
+        for y in (-d / 2 + pillar / 2, d / 2 - pillar / 2):
+            box(coll, (sign * (w / 2 + 0.004), y, column_z), (0.012, pillar, column_h), frame_m, 0.004)
+    # pannello frontale pieno con sportello di servizio e logo
+    px = (b1 + b2) / 2
+    box(coll, (px, -d / 2 - 0.0015, (z0 + z1) / 2), (b2 - b1 - pillar - 0.02, 0.003, z1 - z0 - 0.02), body_m, 0.004)
+    box(coll, (px + 0.08, -d / 2 - 0.004, z1 - 0.34), (0.16, 0.003, 0.12), frame_m, 0.003)
+    lx, lz = px - 0.1, z1 - 0.09
+    disc(coll, (lx, -d / 2 - 0.004, lz), 0.034, 0.003, mat("lgg-logo", (0.65, 0.06, 0.22), 0.4), verts=40)
+    label(coll, "LG", (lx + 0.095, -d / 2 - 0.0045, lz), 0.075, mat("lgg-logo-testo", (0.18, 0.18, 0.2), 0.4))
+    for sign in (-1, 1):
+        top_fan(coll, sign * w * 0.25, 0, h, min(w / 4, d / 2) * 0.92, fan_m, frame_m, rec_m)
+    return finalize(name, sc, coll, w, d, h)
+
+
 def build(name):
     w, d, h, style, fans, zone = MODELS[name]
+    if style == "lgg":
+        return build_g(name)
     S = STYLE[style]
     sc = bpy.data.scenes.new(name)
     bpy.context.window.scene = sc
@@ -223,6 +363,16 @@ def build(name):
             box(coll, (lx, yf - 0.0035, lz), (min(pw * .7, .09), 0.002, min(pw * .7, .09) * .75), mat('gree-targa', (.93, .93, .94), .4), 0.004)
             disc(coll, (lx - .012, yf - 0.0052, lz), .012, 0.002, mat('gree-blu', (.08, .3, .65), .4), verts=24)
             box(coll, (lx + .014, yf - 0.0052, lz - .012), (.026, 0.002, .007), mat('gree-arancio', (.95, .5, .1), .4))
+        pc = (px0 + w / 2 - 0.012) / 2
+        if S.get("ridges"):  # nervature orizzontali del pannello LG, giunto verticale con la zona ventola e logo
+            n = int((bh - 0.05) / 0.024)
+            for i in range(n):
+                box(coll, (pc, yf - 0.0035, foot_h + 0.025 + (i + 0.5) * (bh - 0.05) / n), (pw - 0.02, 0.003, 0.009), panel_m, 0.0012)
+            box(coll, (px0 - 0.006, yf - 0.002, zc), (0.003, 0.004, bh - 0.02), rec_m)
+        if S.get("lglogo"):
+            lz = zc + (bh - 0.05) * 0.36
+            disc(coll, (pc - 0.045, yf - 0.0075, lz), 0.021, 0.003, mat("lg-logo", (0.42, 0.43, 0.45), 0.35, 0.3), verts=32)
+            label(coll, "LG", (pc + 0.012, yf - 0.0085, lz), 0.034, mat("lg-logo-testo", (0.45, 0.46, 0.48), 0.35, 0.3))
         # sportello cavi/valvole in basso a destra
         box(coll, (w / 2 - 0.05, yf - 0.003, foot_h + 0.06), (0.05, 0.003, 0.022), rec_m, 0.003)
     # fessure laterali (scambiatore) sul fianco sinistro
@@ -248,6 +398,10 @@ def build(name):
             for i in range(n):
                 z = (zc if fans == 1 else cz) - rh / 2 + (i + 0.5) * rh / n
                 box(coll, (zx, yf - 0.007, z), (rw - 0.02, 0.006, 0.009), wire_m, 0.001, rot=(math.radians(-14), 0, 0))
+    return finalize(name, sc, coll, w, d, h)
+
+
+def finalize(name, sc, coll, w, d, h):
     # unisce gli oggetti per materiale
     by_mat = {}
     spinning = [o for o in coll.objects if o.name.startswith("FanBlades_")]
@@ -300,6 +454,6 @@ def build(name):
 keep = bpy.context.window.scene
 names = globals().get("ONLY") or list(MODELS)
 scenes = [build(n) for n in names]
-if not globals().get("ONLY"):
-    bpy.data.libraries.write(str(ROOT / "assets/blender/heat-pump-outdoor-units.blend"), set(scenes), fake_user=True)
+if not globals().get("ONLY") or globals().get("BLEND"):  # BLEND: file .blend alternativo per una ricostruzione parziale
+    bpy.data.libraries.write(globals().get("BLEND") or str(ROOT / "assets/blender/heat-pump-outdoor-units.blend"), set(scenes), fake_user=True)
 bpy.context.window.scene = keep

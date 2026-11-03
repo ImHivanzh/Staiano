@@ -65,18 +65,20 @@ function HeatPumpIdentification({
   height,
   depth,
 }: {
-  manufacturer: "Gree" | "Chaffoteaux" | "Daikin";
+  manufacturer: "Gree" | "Chaffoteaux" | "Daikin" | "LG";
   model: string;
   width: number;
   height: number;
   depth: number;
 }) {
+  // Gree e LG non hanno la decalcomania del logo (nessun file ufficiale per LG): resta la targhetta; la texture serve solo a mantenere l'ordine degli hook.
+  const hasLogo = manufacturer === "Daikin" || manufacturer === "Chaffoteaux";
   const logo = useTexture(
-    manufacturer === "Gree"
-      ? "/catalog-assets/brands/gree.png"
-      : manufacturer === "Daikin"
-        ? "/catalog-assets/brands/daikin.png"
-        : "/catalog-assets/brands/chaffoteaux.jpg",
+    manufacturer === "Daikin"
+      ? "/catalog-assets/brands/daikin.png"
+      : manufacturer === "Chaffoteaux"
+        ? "/catalog-assets/brands/chaffoteaux.jpg"
+        : "/catalog-assets/brands/gree.png",
   );
   const label = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -105,7 +107,7 @@ function HeatPumpIdentification({
     plateHeight = plateWidth * 0.375;
   return (
     <>
-      {manufacturer !== "Gree" && (
+      {hasLogo && (
         <mesh
           position={[width * 0.33, height * 0.3, depth / 2 + 0.0015]}
           renderOrder={1}

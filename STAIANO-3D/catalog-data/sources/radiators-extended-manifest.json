@@ -75,6 +75,126 @@
     }
   },
   {
+    "name": "zehnder-kleo",
+    "sourceUrl": "https://www.zehnder.it/download/2add8fa6f23d4ca3aa0f01f67f70c8a1",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:14.661762+00:00",
+    "sha256": "b79230209b4faa1d1320c0a75568c54e2b106be13b7831807fbec74b202f939b",
+    "pageCount": 13,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-kleo.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-kleo-ritaglio-400x300.jpg",
+      "sha256": "bcb641e739906aa2d655be6c4b417fb27b930db5fa532d451bbe2adb0d04273c",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-orbis",
+    "sourceUrl": "https://www.zehnder.it/download/40793b245fd84b70a3555976f7939880",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:21.470644+00:00",
+    "sha256": "0715466f5d6835f4402733715a2f9f1a31337884b2bfe7a28765ee1fff3ff929",
+    "pageCount": 13,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-orbis.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-orbis-ritaglio-400x300.jpg",
+      "sha256": "53e1b82d8bd4ecc3ac8c816046a8166812027d7a55dd92ef2cf6968e0be9e0eb",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-ax",
+    "sourceUrl": "https://www.zehnder.it/download/be80108b6d9845f1809d765587bc1254",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:25.747462+00:00",
+    "sha256": "8c4d37d80feeed5ef9b0c3e3125819d0f6f0003a1dc01652992b2733b432e1a0",
+    "pageCount": 12,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-ax.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-ax-ritaglio-400x300.jpg",
+      "sha256": "75efc48e5f2154f6116349765573a833da1a070cf8d12965bde5b4b5784bb854",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-jetx",
+    "sourceUrl": "https://www.zehnder.it/download/068ebfcd677a4efe9cb32a78d990c82d",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:32.990614+00:00",
+    "sha256": "4b5daecca739cd54ffe6f7bdbbbb57895dac87ef2e54035bff8ec8ad320273e9",
+    "pageCount": 14,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-jetx.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-jet-x-ritaglio-400x300.jpg",
+      "sha256": "b5acf3a76a6b0a6765b5aabe9d888f96a5087477cae0c702d8144d97f800f48a",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-arteplano",
+    "sourceUrl": "https://www.zehnder.it/download/3a560e1642af45899ccf6c0022e0fb6f",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:37.450146+00:00",
+    "sha256": "fd6163f3a1216738e50fb5ecec68d79df7a6483ea0f88f066c4033ca34bcb18d",
+    "pageCount": 14,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-arteplano.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-arteplano-ritaglio-400x300.jpg",
+      "sha256": "1cc4a063822134f87137acd03516dfff54e408f00683a51426815d966ca006cc",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-metropolitan",
+    "sourceUrl": "https://www.zehnder.it/download/0713d3770530497f8188f9e410d842b8",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:39.693621+00:00",
+    "sha256": "b9eb9c67bca555bfcec45339d4529e5555dbf9eb59ce45fe91c2b06100c0b3ee",
+    "pageCount": 8,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-metropolitan.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-metropolitan-ritaglio-400x300.jpg",
+      "sha256": "adabfbd529da6f7a5190e69471345fdcc89c232520bba7b0e418475d582f4378",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-toga",
+    "sourceUrl": "https://www.zehnder.it/download/177d3e4b8edd4d8fb9fec3e5a6c2b7e4",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:49.055868+00:00",
+    "sha256": "fdb501a1623c16deacd9d6979761fbfac13709123bcfb24f80f9be89057e7014",
+    "pageCount": 14,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-toga.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-toga-ritaglio-400x300.jpg",
+      "sha256": "8a9915845d9cd29bcc93f0d21ea5a816364cf07515b1dd74e0e25e9368874199",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-excelsior",
+    "sourceUrl": "https://www.zehnder.it/download/a75f07c10ef342b6977420e8a583751a",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-03T15:38:52.453756+00:00",
+    "sha256": "e8054ef8a08981685175dc72ccf5722f4453c8b9e8612b85b09d25c447d3a976",
+    "pageCount": 10,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-excelsior.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/zehnder-serie-excelsior-ritaglio-400x300.jpg",
+      "sha256": "be45e0f60951609c695b0636a6a8965a67f9a12d982df406b6c40c191489bb55",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
     "name": "lazzarini-sanremo",
     "sourceUrl": "https://docga.plateforme-services.com/api/download/variant_documents_5d77b642-bd28-4767-97e2-f5b1c210a8a0/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ",
     "publisherPage": "https://www.lazzariniradiatori.it/en/CLASSIC/SANREMO",

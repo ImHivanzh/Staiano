@@ -47,13 +47,13 @@ it("reconstructs screened Altherma fronts and single/double fan Versati casings"
   ).toBe(2);
 });
 
-it("keeps the physical casing and feet inside the complete published enclosure for all 162 outdoor units", () => {
+it("keeps the physical casing and feet inside the complete published enclosure for all 266 outdoor units", () => {
   const products = [
     ...splitCatalog.outdoorUnits,
     ...vrvCatalog.outdoorUnits,
     ...heatPumpCatalog.products,
   ];
-  expect(products).toHaveLength(170);
+  expect(products).toHaveLength(266);
   for (const product of products) {
     const w = product.widthMm / 1000,
       h = product.heightMm / 1000,

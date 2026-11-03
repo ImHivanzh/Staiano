@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-29T15:41:41.400Z",
+  "generatedAt": "2026-11-03T17:20:39.218Z",
   "documents": [
     {
       "sha256": "1ec5da0080c1d57539bc778b29531a481e33430524426f0854770f4359333927",
@@ -15,16 +15,58 @@
       "page": 14
     },
     {
+      "sha256": "416d80557a8c4f63c14d4d5cd5aa4af7e988af59da70b45df67bede17de69f57",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf3518-20220517110518.pdf",
+      "page": 4
+    },
+    {
       "sha256": "50dd1e10b157906c3443ab9678d1d0960a91f50189f123e0aa16a674575a0bf9",
       "manufacturer": "Chaffoteaux",
       "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf40475-20220610115628.pdf",
       "page": 4
     },
     {
+      "sha256": "676b0feb51aec486a6fa085216c5d238f176202f2c3d977543c25ad6488cf34c",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf47341-20221222151931.pdf",
+      "page": 4
+    },
+    {
+      "sha256": "73f9a0c1048584ab11d9b972e0a51e8267f27ee3a90acadae28f95225ed94c15",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf48839-20221115120927.pdf",
+      "page": 5
+    },
+    {
+      "sha256": "9444936c54bc76a32bafb91ddfe8fef9f5ba8bd0a63da8d1095f48e6f6c17ac0",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf33208-20221111123536.pdf",
+      "page": 4
+    },
+    {
+      "sha256": "c5af124205c78dcd4c6369541ec0066f5284719f71d2aa9cd7edbdebc4497d4d",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf75652-20221115124105.pdf",
+      "page": 5
+    },
+    {
       "sha256": "c83e85bb612e57d95c60f3f07c7a82b50cf3fc7a523a154b5e1a55bcb9be24ca",
       "manufacturer": "Chaffoteaux",
       "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf49969-20220517110607.pdf",
       "page": 4
+    },
+    {
+      "sha256": "cefeae37acfcd452edfdd686ec16bb62f037fc5fb5d3b94d2fc8f3d80b170cf7",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf37135-20221222153632.pdf",
+      "page": 4
+    },
+    {
+      "sha256": "cf063867499f14d4c253fb134b94ea6f1208625f1dfd99f6560341cb1accad3d",
+      "manufacturer": "Chaffoteaux",
+      "sourceUrl": "https://www.chaffoteaux.it/themes/file_product/pdf1541-20221115123231.pdf",
+      "page": 5
     },
     {
       "sha256": "23a5c7777399c7b721165ca91962ed972193c58454cd7c0f51af100cc299279d",
@@ -2847,6 +2889,36 @@
       "page": 3
     },
     {
+      "sha256": "000c4e7b85eda93a161c9c610e927a946755a1c36776f10c1e282ed276f42fcd",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm121mrs.pdf",
+      "page": 7
+    },
+    {
+      "sha256": "0d5e2437f61a219d17448c17c97d195e83e1bf24182eb68368722e6dc6e206ce",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm161mrs.pdf",
+      "page": 7
+    },
+    {
+      "sha256": "1902ec9ddb84c1b7551d507a05379cb2be5d264e370a8b8ee0b8ddabdf84dd53",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm141mrs.pdf",
+      "page": 7
+    },
+    {
+      "sha256": "2efe9742af7dcbd0d5f6e2d4f581631e92b13e3abdfc56423058fbd0dd669f13",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-r290-hm141hf.pdf",
+      "page": 9
+    },
+    {
+      "sha256": "32bc5f04c32dce7d262860a18444f189d46d399793b8db38fe80e8adcbcc35d5",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm071mrs.pdf",
+      "page": 7
+    },
+    {
       "sha256": "3490DC9F2F3CC60BF192771C008CA6F7FD9E3F004CEE281C64B2746D6DEA4C6B",
       "manufacturer": "LG",
       "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Single_Split_Round_Cassette_Leaflet%5B20230321_193842507%5D.pdf",
@@ -2871,10 +2943,46 @@
       "page": null
     },
     {
+      "sha256": "616e0b11bb468a4206fae54f020288b56c2637815b425ca7273b0a01d00561e9",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm163mrs.pdf",
+      "page": 7
+    },
+    {
+      "sha256": "6fab5094a7f5d64e9357d44bc64c88486ce79edfcb9014bd5fbf6a1892793f29",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm091mrs.pdf",
+      "page": 7
+    },
+    {
       "sha256": "846E2A2D2D80D38B9A2FED6509E8813A7C301E3A78696609110CC423A2BBD077",
       "manufacturer": "LG",
       "sourceUrl": "https://www.lg.com/gr/business/download/airsolution/Multi_Split_Leaflet%5B20210524_181956643%5D.pdf",
       "page": 16
+    },
+    {
+      "sha256": "86c1c150dfd33e5252d00e11d0bfc602d2d91de196c246bd6e1ba48ec8224c3a",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-r290-hm121hf.pdf",
+      "page": 9
+    },
+    {
+      "sha256": "919cf82b0a6fab23ff7624fd8c4411b4c0baaf60f6ca0f8dc92bf1a7c812be96",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-g-hm513mr.pdf",
+      "page": 7
+    },
+    {
+      "sha256": "941f9541e8da12ec7970a74557eb6cedf9d74d57567c99aa1fde9342639133f4",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-r290-hm161hf.pdf",
+      "page": 9
+    },
+    {
+      "sha256": "b9ef534bbfe5b21bc4295b4232a9379ca4d6effd69124422a7ae6a5c67c99d6b",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm143mrs.pdf",
+      "page": 7
     },
     {
       "sha256": "C1CC82A7231F727BC7EF4F62B8FE8EC073B59E3A7F52640713F12523A6582F70",
@@ -2889,10 +2997,28 @@
       "page": null
     },
     {
+      "sha256": "ccd950acfe774acb72d8ae08b2529de1212075f67e56d4929b2a9d9ece7aa8e5",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-r290-hm093hf.pdf",
+      "page": 9
+    },
+    {
+      "sha256": "cfcb88ca669aa1f21d5025fe2fdb1bf1fb4c171c4413f2deef06d0d33ae40f01",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm051mrs.pdf",
+      "page": 7
+    },
+    {
       "sha256": "E02FAF46CB0457F4A21CEA57D182E4FBF121DE7BE192E1006C8E23B24F16C498",
       "manufacturer": "LG",
       "sourceUrl": "https://www.lg.com/it/condizionatori/monosplit/h09s1pa/",
       "page": null
+    },
+    {
+      "sha256": "f73ff4cc059887f2faee1ed1b4b9c53386ec401aea4a3d14191bd9fda87da89b",
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-therma-v-monoblocco-s-ii-hm123mrs.pdf",
+      "page": 7
     },
     {
       "sha256": "10bbd3cb5a1b60315924b807f955f42c464959fb3d4e4d7a36f2418419bb7370",
@@ -3303,16 +3429,64 @@
       "page": null
     },
     {
+      "sha256": "0715466f5d6835f4402733715a2f9f1a31337884b2bfe7a28765ee1fff3ff929",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/40793b245fd84b70a3555976f7939880",
+      "page": 12
+    },
+    {
+      "sha256": "4b5daecca739cd54ffe6f7bdbbbb57895dac87ef2e54035bff8ec8ad320273e9",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/068ebfcd677a4efe9cb32a78d990c82d",
+      "page": 9
+    },
+    {
       "sha256": "4ec415bb4d07eeaaef950db5376bb139b73d961dcf37fd501a87f9d50a7be28f",
       "manufacturer": "Zehnder",
       "sourceUrl": "https://www.zehnder.it/download/e80c0bebc9654d1ea2faa5304a36fc4c",
       "page": 28
     },
     {
+      "sha256": "8c4d37d80feeed5ef9b0c3e3125819d0f6f0003a1dc01652992b2733b432e1a0",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/be80108b6d9845f1809d765587bc1254",
+      "page": 7
+    },
+    {
+      "sha256": "b79230209b4faa1d1320c0a75568c54e2b106be13b7831807fbec74b202f939b",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/2add8fa6f23d4ca3aa0f01f67f70c8a1",
+      "page": 12
+    },
+    {
       "sha256": "b93e54a122aa671ce0da18892526e726ac6f16ec54229f4f0852ed33b8f707c8",
       "manufacturer": "Zehnder",
       "sourceUrl": "https://www.zehnder.it/download/95c6f47bc56841ea875caa1cd429643e",
       "page": 5
+    },
+    {
+      "sha256": "b9eb9c67bca555bfcec45339d4529e5555dbf9eb59ce45fe91c2b06100c0b3ee",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/0713d3770530497f8188f9e410d842b8",
+      "page": 4
+    },
+    {
+      "sha256": "e8054ef8a08981685175dc72ccf5722f4453c8b9e8612b85b09d25c447d3a976",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/a75f07c10ef342b6977420e8a583751a",
+      "page": 7
+    },
+    {
+      "sha256": "fd6163f3a1216738e50fb5ecec68d79df7a6483ea0f88f066c4033ca34bcb18d",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/3a560e1642af45899ccf6c0022e0fb6f",
+      "page": 8
+    },
+    {
+      "sha256": "fdb501a1623c16deacd9d6979761fbfac13709123bcfb24f80f9be89057e7014",
+      "manufacturer": "Zehnder",
+      "sourceUrl": "https://www.zehnder.it/download/177d3e4b8edd4d8fb9fec3e5a6c2b7e4",
+      "page": 8
     }
   ]
 }

@@ -66,7 +66,7 @@ describe("impianto idronico documentato", () => {
     expect(clearProjectSystems(moved).heatPumpDrafts).toEqual([]);
   });
   it("has official capacities at explicit conditions and reproducible sources", () => {
-    expect(heatPumpCatalog.products).toHaveLength(61);
+    expect(heatPumpCatalog.products).toHaveLength(157);
     const daikin = heatPumpProductAtVersion(
       "daikin-altherma-3m-ebla09dv3",
       heatPumpCatalog.version,
@@ -149,7 +149,9 @@ describe("impianto idronico documentato", () => {
       const products = heatPumpCatalog.products.filter(
         (product) =>
           product.manufacturer === "Chaffoteaux" &&
-          new RegExp(`\\b${size}\\b`).test(product.model),
+          new RegExp(`\\b${size}\\b`).test(product.model) &&
+          // Le schede dei sistemi split S pubblicano solo valori nominali, senza Min/Max.
+          !/\d S(-T)?\b/.test(product.model),
       );
       expect(products.length).toBeGreaterThan(0);
       for (const product of products) {
