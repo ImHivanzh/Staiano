@@ -651,5 +651,119 @@
       "sha256": "994dfe451fe1c3d27169229dd2e195cf59828f4cc7bd5763c118ff3dc7ac0a6d",
       "caption": "LG DUALCOOL AI Premium, immagine originale della serie"
     }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Artcool Gallery Photo",
+    "title": "LG Artcool Gallery Photo",
+    "tier": 1,
+    "features": [
+      "R32",
+      "Wi-Fi integrato",
+      "Frame personalizzabile",
+      "Distribuzione aria tridirezionale"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a09ga1.pdf",
+      "sourceType": "pdf",
+      "documentRevision": "Climanext scheda tecnica LG A09GA1 (listino LG 2026)",
+      "retrievedAt": "2026-11-04T08:45:15+00:00",
+      "importedAt": "2026-11-04T08:45:15+00:00",
+      "sha256": "36ACDBD6B67E5F8B3420146625F5B239BC4A24309C3F060FA3C7819FE92C757A",
+      "page": 6
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-artcool-gallery-photo.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-artcool-gallery-photo-ritaglio-400x300.jpg",
+      "sha256": "5a5d8c56fedf2eaeef837e1926d637750e5e334cfc6aa9f756a351d180d1a5ba",
+      "caption": "LG Artcool Gallery Photo, immagine della serie dalla pagina Climanext"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Artcool Mirror",
+    "title": "LG Artcool Mirror",
+    "tier": 1,
+    "features": [
+      "R32",
+      "AI Air",
+      "Soft Air a diffusione indiretta",
+      "Wi-Fi integrato"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa09sp.pdf",
+      "sourceType": "pdf",
+      "documentRevision": "Climanext scheda tecnica LG AA09SP (listino LG 2026)",
+      "retrievedAt": "2026-11-04T08:45:15+00:00",
+      "importedAt": "2026-11-04T08:45:15+00:00",
+      "sha256": "2C88BC8E721EF7C8B1B1D56D0F3E4AD40BBB767BED44A7DEA63F885746A730AC",
+      "page": 11
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-artcool-mirror.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-artcool-mirror-ai-ritaglio-400x300.jpg",
+      "sha256": "df976f5ecf02c7f695ba27120947ae128e7bd327672d48279e38b54f0205080a",
+      "caption": "LG Artcool Mirror, immagine della serie dalla pagina Climanext"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Dualcool Libero Smart",
+    "title": "LG Dualcool Libero Smart",
+    "tier": 1,
+    "features": [
+      "R32",
+      "Wi-Fi integrato",
+      "Voice Control",
+      "Smart Diagnosis"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez09csn.pdf",
+      "sourceType": "pdf",
+      "documentRevision": "Climanext scheda tecnica LG EZ09CSN (listino LG 2026)",
+      "retrievedAt": "2026-11-04T08:45:15+00:00",
+      "importedAt": "2026-11-04T08:45:15+00:00",
+      "sha256": "997346DD2C7450D79CA76CDACB04A1C2B223C5C7AB4B3E3F44E0CA88FEA16064",
+      "page": 7
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-dualcool-libero-smart.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-dualcool-libero-smart-ez-ritaglio-400x300.jpg",
+      "sha256": "c569b4dd964b6573deb3f1a57421010ab0ca81575a87ebc9f1be4947fba7b8d6",
+      "caption": "LG Dualcool Libero Smart, immagine della serie dalla pagina Climanext"
+    }
+  },
+  {
+    "manufacturer": "LG",
+    "family": "Libero",
+    "title": "LG Libero",
+    "tier": 1,
+    "features": [
+      "Pompa di calore R32",
+      "Monosplit"
+    ],
+    "gains": [],
+    "sourceMetadata": {
+      "manufacturer": "LG",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz09awn.pdf",
+      "sourceType": "pdf",
+      "documentRevision": "Climanext scheda tecnica LG WZ09AWN (listino LG 2026)",
+      "retrievedAt": "2026-11-04T08:45:15+00:00",
+      "importedAt": "2026-11-04T08:45:15+00:00",
+      "sha256": "EFFD6CF2F322FBE6E9C638AF91F9A1EB5E82D8708A4107CFE69FE8643FA9635B",
+      "page": 2
+    },
+    "productPhoto": {
+      "localPath": "/catalog-assets/splits/lg-libero.jpg",
+      "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-libero-wz-ritaglio-400x300.jpg",
+      "sha256": "daeb3315487d6f48ad928e7b36795ffdf1bc4c77899ee9cd68db6a3f4e49d4e4",
+      "caption": "LG Libero, immagine della serie dalla pagina Climanext"
+    }
   }
 ]

@@ -35,6 +35,18 @@ if "--acquire-images" in sys.argv:
             "sourceUrl": url, "sourcePageUrl": page_url, "retrievedAt": now,
             "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
     PHOTO_MANIFEST.write_text(json.dumps(acquired, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+if "--acquire-lg-images" in sys.argv:
+    acquired = json.loads(PHOTO_MANIFEST.read_text(encoding="utf8"))
+    # Foto delle serie LG dalla pagina Climanext (agenzia LG) dei simulatori.
+    for key, name in [("lg-artcool-gallery-photo", "artcool-gallery-photo"), ("lg-artcool-mirror", "artcool-mirror-ai"),
+                      ("lg-dualcool-libero-smart", "dualcool-libero-smart-ez"), ("lg-libero", "libero-wz")]:
+        url = f"https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-{name}-ritaglio-400x300.jpg"
+        path = DEST / f"{key}.jpg"
+        path.write_bytes(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=30).read())
+        acquired[key] = {"localPath": f"/catalog-assets/splits/{path.name}", "sourceUrl": url,
+            "sourcePageUrl": "https://www.climanext.net/listini-e-schede-tecniche/", "retrievedAt": now,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+    PHOTO_MANIFEST.write_text(json.dumps(acquired, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
 official_photos = json.loads(PHOTO_MANIFEST.read_text(encoding="utf8")) if PHOTO_MANIFEST.exists() else {}
 
 
@@ -204,6 +216,17 @@ for model,family,key,features in [
     meta=next(unit["sourceMetadata"] for unit in lg_curated["indoorUnits"] if unit["model"]==model)
     describe("LG",family,"LG "+family,1,features,[],meta,
              photo(key,"",1,"",meta,f"LG {family}, immagine originale della serie"))
+
+climanext = json.loads((ROOT/"catalog-data/curation/split-lg-climanext.json").read_text(encoding="utf8"))
+for model,family,key,features in [
+    ("A09GA1.NSE","Artcool Gallery Photo","lg-artcool-gallery-photo",["R32","Wi-Fi integrato","Frame personalizzabile","Distribuzione aria tridirezionale"]),
+    ("AA09SP.NS1","Artcool Mirror","lg-artcool-mirror",["R32","AI Air","Soft Air a diffusione indiretta","Wi-Fi integrato"]),
+    ("EZ09CSN.CSJ1","Dualcool Libero Smart","lg-dualcool-libero-smart",["R32","Wi-Fi integrato","Voice Control","Smart Diagnosis"]),
+    ("WZ09AWN.SNU1","Libero","lg-libero",["Pompa di calore R32","Monosplit"]),
+]:
+    meta=next(unit["sourceMetadata"] for unit in climanext["indoorUnits"] if unit["model"]==model)
+    describe("LG",family,"LG "+family,1,features,[],meta,
+             photo(key,"",1,"",meta,f"LG {family}, immagine della serie dalla pagina Climanext"))
 
 (ROOT/"catalog-data/curation/split-series-extra.json").write_text(json.dumps({"indoorUnits":units,"combinations":combinations},ensure_ascii=False,indent=2)+"\n",encoding="utf8")
 (ROOT/"catalog-data/generated/split-series-presentation.json").write_text(json.dumps(series,ensure_ascii=False,indent=2)+"\n",encoding="utf8")

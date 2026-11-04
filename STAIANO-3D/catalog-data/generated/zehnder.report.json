@@ -1,6 +1,6 @@
 {
-  "imported": 478,
-  "added": 0,
+  "imported": 629,
+  "added": 151,
   "removed": [],
   "families": [
     "Charleston 2 colonne",
@@ -12,8 +12,22 @@
     "Nova Easy verticale ZNVL",
     "Nova Easy verticale ZNVV",
     "Nova Easy verticale ZNVLV",
+    "Charleston Turned semplice",
     "Toga",
     "Toga allacciamenti 50 mm",
+    "Zeno",
+    "Klaro Spa allacciamenti S027",
+    "Subway",
+    "Metropolitan Spa",
+    "Forma Spa semplice",
+    "Forma Spa doppio",
+    "Sfera",
+    "Sfera doppio",
+    "Yucca semplice",
+    "Yucca doppio",
+    "Yucca Asym semplice",
+    "Yucca Asym doppio",
+    "Fina Lean Bar",
     "Kleo Easy verticale semplice",
     "Kleo Easy verticale doppio",
     "Kleo Easy orizzontale semplice",
@@ -45,7 +59,9 @@
     "Excelsior Easy verticale semplice",
     "Excelsior Easy verticale doppio",
     "Metropolitan verticale",
-    "Metropolitan orizzontale"
+    "Metropolitan orizzontale",
+    "Metropolitan Bar orizzontale",
+    "Flow Form"
   ],
   "errors": 0
 }

@@ -47,5 +47,33 @@
     "sourcePageUrl": "https://www.lg.com/it/condizionatori/monosplit/h12s1pa/",
     "retrievedAt": "2026-10-25T18:38:07+00:00",
     "sha256": "994dfe451fe1c3d27169229dd2e195cf59828f4cc7bd5763c118ff3dc7ac0a6d"
+  },
+  "lg-artcool-gallery-photo": {
+    "localPath": "/catalog-assets/splits/lg-artcool-gallery-photo.jpg",
+    "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-artcool-gallery-photo-ritaglio-400x300.jpg",
+    "sourcePageUrl": "https://www.climanext.net/listini-e-schede-tecniche/",
+    "retrievedAt": "2026-11-04T08:51:38.060863+00:00",
+    "sha256": "5a5d8c56fedf2eaeef837e1926d637750e5e334cfc6aa9f756a351d180d1a5ba"
+  },
+  "lg-artcool-mirror": {
+    "localPath": "/catalog-assets/splits/lg-artcool-mirror.jpg",
+    "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-artcool-mirror-ai-ritaglio-400x300.jpg",
+    "sourcePageUrl": "https://www.climanext.net/listini-e-schede-tecniche/",
+    "retrievedAt": "2026-11-04T08:51:38.060863+00:00",
+    "sha256": "df976f5ecf02c7f695ba27120947ae128e7bd327672d48279e38b54f0205080a"
+  },
+  "lg-dualcool-libero-smart": {
+    "localPath": "/catalog-assets/splits/lg-dualcool-libero-smart.jpg",
+    "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-dualcool-libero-smart-ez-ritaglio-400x300.jpg",
+    "sourcePageUrl": "https://www.climanext.net/listini-e-schede-tecniche/",
+    "retrievedAt": "2026-11-04T08:51:38.060863+00:00",
+    "sha256": "c569b4dd964b6573deb3f1a57421010ab0ca81575a87ebc9f1be4947fba7b8d6"
+  },
+  "lg-libero": {
+    "localPath": "/catalog-assets/splits/lg-libero.jpg",
+    "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-linea-monosplit-libero-wz-ritaglio-400x300.jpg",
+    "sourcePageUrl": "https://www.climanext.net/listini-e-schede-tecniche/",
+    "retrievedAt": "2026-11-04T08:51:38.060863+00:00",
+    "sha256": "daeb3315487d6f48ad928e7b36795ffdf1bc4c77899ee9cd68db6a3f4e49d4e4"
   }
 }

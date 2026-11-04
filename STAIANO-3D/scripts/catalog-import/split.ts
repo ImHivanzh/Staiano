@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { splitCatalogSchema } from "../../src/domain/catalogs/split-schema";
-const names = ["daikin", "mitsubishi", "gree", "lg", "series-extra"];
+const names = ["daikin", "mitsubishi", "gree", "lg", "lg-climanext", "series-extra"];
 const inputs = names
   .filter((name) => existsSync(`catalog-data/curation/split-${name}.json`))
   .map((name) =>

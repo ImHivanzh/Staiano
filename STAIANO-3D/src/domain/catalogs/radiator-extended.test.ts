@@ -17,9 +17,9 @@ import {
 const product = (id: string) => radiatorProducts.find((p) => p.id === id)!;
 
 describe("cataloghi radiatori aggiuntivi su schede originali", () => {
-  it("mantiene cataloghi storici e integra 602 varianti documentate", () => {
+  it("mantiene cataloghi storici e integra 753 varianti documentate", () => {
     expect(radiatorCatalogs.map((c) => c.products.length)).toEqual([
-      135, 19, 61, 473, 478, 63,
+      135, 19, 61, 473, 629, 63,
     ]);
     for (const name of ["cordivari", "global"]) {
       const legacy = radiatorCatalogSchema.parse(

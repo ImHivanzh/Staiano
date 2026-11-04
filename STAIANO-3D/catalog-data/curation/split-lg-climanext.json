@@ -1,0 +1,1054 @@
+{
+  "manufacturer": "LG",
+  "revision": "Climanext schede tecniche LG 2026 mono split",
+  "indoorUnits": [
+    {
+      "id": "lg-a09ga1",
+      "manufacturer": "LG",
+      "family": "Artcool Gallery Photo",
+      "model": "A09GA1.NSE",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "9",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 3300,
+      "widthMm": 652,
+      "heightMm": 652,
+      "depthMm": 158,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna A09GA1.U18.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a09ga1.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG A09GA1 (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "36ACDBD6B67E5F8B3420146625F5B239BC4A24309C3F060FA3C7819FE92C757A",
+        "page": 6
+      }
+    },
+    {
+      "id": "lg-a12ga1",
+      "manufacturer": "LG",
+      "family": "Artcool Gallery Photo",
+      "model": "A12GA1.NSE",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "12",
+      "nominalCoolingW": 3500,
+      "nominalHeatingW": 4000,
+      "widthMm": 652,
+      "heightMm": 652,
+      "depthMm": 158,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna A12GA1.U18.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a12ga1.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG A12GA1 (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "1C5C0FF8563C86512EF51CC2419E73E7650245A32CBCF915E48272C6569999CF",
+        "page": 6
+      }
+    },
+    {
+      "id": "lg-aa09sp",
+      "manufacturer": "LG",
+      "family": "Artcool Mirror",
+      "model": "AA09SP.NS1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "9",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 3200,
+      "widthMm": 895,
+      "heightMm": 307,
+      "depthMm": 235,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna AA09SP.U18.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa09sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA09SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "2C88BC8E721EF7C8B1B1D56D0F3E4AD40BBB767BED44A7DEA63F885746A730AC",
+        "page": 11
+      }
+    },
+    {
+      "id": "lg-aa12sp",
+      "manufacturer": "LG",
+      "family": "Artcool Mirror",
+      "model": "AA12SP.NS1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "12",
+      "nominalCoolingW": 3500,
+      "nominalHeatingW": 4000,
+      "widthMm": 895,
+      "heightMm": 307,
+      "depthMm": 235,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna AA12SP.U18.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa12sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA12SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "CF65D287EEA408B156E8A22901372221B2C8D9C7CB9284A949BE30D8392FE98E",
+        "page": 11
+      }
+    },
+    {
+      "id": "lg-aa18sp",
+      "manufacturer": "LG",
+      "family": "Artcool Mirror",
+      "model": "AA18SP.NS1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "18",
+      "nominalCoolingW": 5000,
+      "nominalHeatingW": 5800,
+      "widthMm": 895,
+      "heightMm": 307,
+      "depthMm": 235,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna AA18SP.U18.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa18sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA18SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "E202388493C6D62EBD42A5265310D8098E8C68615B478C7FB77D02B8A0BAE69C",
+        "page": 11
+      }
+    },
+    {
+      "id": "lg-ez09csn",
+      "manufacturer": "LG",
+      "family": "Dualcool Libero Smart",
+      "model": "EZ09CSN.CSJ1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "9",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 2800,
+      "widthMm": 837,
+      "heightMm": 308,
+      "depthMm": 189,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna EZ09CSU.CA31.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez09csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ09CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "997346DD2C7450D79CA76CDACB04A1C2B223C5C7AB4B3E3F44E0CA88FEA16064",
+        "page": 7
+      }
+    },
+    {
+      "id": "lg-ez12csn",
+      "manufacturer": "LG",
+      "family": "Dualcool Libero Smart",
+      "model": "EZ12CSN.CSJ1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "12",
+      "nominalCoolingW": 3500,
+      "nominalHeatingW": 3710,
+      "widthMm": 837,
+      "heightMm": 308,
+      "depthMm": 189,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna EZ12CSU.CA31.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez12csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ12CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "2E1803C2259AB2B2B869483089441204974F4A0E704CAFEE2BE19C3141289E0C",
+        "page": 7
+      }
+    },
+    {
+      "id": "lg-ez18csn",
+      "manufacturer": "LG",
+      "family": "Dualcool Libero Smart",
+      "model": "EZ18CSN.CSK1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "18",
+      "nominalCoolingW": 5000,
+      "nominalHeatingW": 5800,
+      "widthMm": 998,
+      "heightMm": 345,
+      "depthMm": 210,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna EZ18CSU.CL21.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez18csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ18CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "DA83D2DB24CAB2CBF7B57E62BB94A484F018A6CD778AC31EB3FF3AA375438435",
+        "page": 7
+      }
+    },
+    {
+      "id": "lg-ez24csn",
+      "manufacturer": "LG",
+      "family": "Dualcool Libero Smart",
+      "model": "EZ24CSN.CSK1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "24",
+      "nominalCoolingW": 6600,
+      "nominalHeatingW": 7500,
+      "widthMm": 998,
+      "heightMm": 345,
+      "depthMm": 210,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna EZ24CSU.C241.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez24csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ24CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "9CD1963525F77225A20E0B08C055A04472C3956784AB1D7BBCCE5D1E9D114BB4",
+        "page": 7
+      }
+    },
+    {
+      "id": "lg-wz09awn",
+      "manufacturer": "LG",
+      "family": "Libero",
+      "model": "WZ09AWN.SNU1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "9",
+      "nominalCoolingW": 2500,
+      "nominalHeatingW": 2750,
+      "widthMm": 781,
+      "heightMm": 274,
+      "depthMm": 197,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna WZ09AWU.SUU1.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz09awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ09AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "EFFD6CF2F322FBE6E9C638AF91F9A1EB5E82D8708A4107CFE69FE8643FA9635B",
+        "page": 2
+      }
+    },
+    {
+      "id": "lg-wz12awn",
+      "manufacturer": "LG",
+      "family": "Libero",
+      "model": "WZ12AWN.SNU1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "12",
+      "nominalCoolingW": 3450,
+      "nominalHeatingW": 3500,
+      "widthMm": 913,
+      "heightMm": 309,
+      "depthMm": 204,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna WZ12AWU.SUU1.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz12awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ12AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "5C9756C4C099D13936DA9D89B210607FD33AE5BEB19339756E1ECB0CFCD8011C",
+        "page": 2
+      }
+    },
+    {
+      "id": "lg-wz18awn",
+      "manufacturer": "LG",
+      "family": "Libero",
+      "model": "WZ18AWN.SNU1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "18",
+      "nominalCoolingW": 5050,
+      "nominalHeatingW": 5100,
+      "widthMm": 913,
+      "heightMm": 309,
+      "depthMm": 204,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna WZ18AWU.SUU1.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz18awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ18AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "D36BBB87217D0AE8EE0B9F4726F87567773D070AD5ACED9C91F0DF988014BECA",
+        "page": 2
+      }
+    },
+    {
+      "id": "lg-wz24awn",
+      "manufacturer": "LG",
+      "family": "Libero",
+      "model": "WZ24AWN.SNU1",
+      "mounting": "wall",
+      "shape": "rectangular",
+      "sizeClass": "24",
+      "nominalCoolingW": 6950,
+      "nominalHeatingW": 6950,
+      "widthMm": 1008,
+      "heightMm": 325,
+      "depthMm": 228,
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "notes": "Unita' interna R32 della scheda Climanext; capacita' nominali del kit mono con unita' esterna WZ24AWU.SUU1.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz24awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ24AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "C6C1F6A5287E011DDA49990DC41F96A0A2A6A9EBC65A5ED56BA7274A5AE4D4F5",
+        "page": 2
+      }
+    }
+  ],
+  "outdoorUnits": [
+    {
+      "manufacturer": "LG",
+      "model": "A09GA1.U18",
+      "widthMm": 770,
+      "heightMm": 545,
+      "depthMm": 288,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext A09GA1, p. 6.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a09ga1.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG A09GA1 (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "36ACDBD6B67E5F8B3420146625F5B239BC4A24309C3F060FA3C7819FE92C757A",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "A12GA1.U18",
+      "widthMm": 770,
+      "heightMm": 545,
+      "depthMm": 288,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext A12GA1, p. 6.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a12ga1.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG A12GA1 (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "1C5C0FF8563C86512EF51CC2419E73E7650245A32CBCF915E48272C6569999CF",
+        "page": 6
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "AA09SP.U18",
+      "widthMm": 770,
+      "heightMm": 545,
+      "depthMm": 288,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext AA09SP, p. 11.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa09sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA09SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "2C88BC8E721EF7C8B1B1D56D0F3E4AD40BBB767BED44A7DEA63F885746A730AC",
+        "page": 11
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "AA12SP.U18",
+      "widthMm": 770,
+      "heightMm": 545,
+      "depthMm": 288,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext AA12SP, p. 11.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa12sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA12SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "CF65D287EEA408B156E8A22901372221B2C8D9C7CB9284A949BE30D8392FE98E",
+        "page": 11
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "AA18SP.U18",
+      "widthMm": 770,
+      "heightMm": 545,
+      "depthMm": 288,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext AA18SP, p. 11.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa18sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA18SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "E202388493C6D62EBD42A5265310D8098E8C68615B478C7FB77D02B8A0BAE69C",
+        "page": 11
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "EZ09CSU.CA31",
+      "widthMm": 717,
+      "heightMm": 495,
+      "depthMm": 230,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext EZ09CSN, p. 7.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez09csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ09CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "997346DD2C7450D79CA76CDACB04A1C2B223C5C7AB4B3E3F44E0CA88FEA16064",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "EZ12CSU.CA31",
+      "widthMm": 717,
+      "heightMm": 495,
+      "depthMm": 230,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext EZ12CSN, p. 7.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez12csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ12CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "2E1803C2259AB2B2B869483089441204974F4A0E704CAFEE2BE19C3141289E0C",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "EZ18CSU.CL21",
+      "widthMm": 770,
+      "heightMm": 545,
+      "depthMm": 288,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext EZ18CSN, p. 7.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez18csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ18CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "DA83D2DB24CAB2CBF7B57E62BB94A484F018A6CD778AC31EB3FF3AA375438435",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "EZ24CSU.C241",
+      "widthMm": 870,
+      "heightMm": 650,
+      "depthMm": 330,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext EZ24CSN, p. 7.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez24csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ24CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "9CD1963525F77225A20E0B08C055A04472C3956784AB1D7BBCCE5D1E9D114BB4",
+        "page": 7
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "WZ09AWU.SUU1",
+      "widthMm": 712,
+      "heightMm": 310,
+      "depthMm": 481,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext WZ09AWN, p. 2.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz09awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ09AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "EFFD6CF2F322FBE6E9C638AF91F9A1EB5E82D8708A4107CFE69FE8643FA9635B",
+        "page": 2
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "WZ12AWU.SUU1",
+      "widthMm": 787,
+      "heightMm": 290,
+      "depthMm": 498,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext WZ12AWN, p. 2.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz12awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ12AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "5C9756C4C099D13936DA9D89B210607FD33AE5BEB19339756E1ECB0CFCD8011C",
+        "page": 2
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "WZ18AWU.SUU1",
+      "widthMm": 863,
+      "heightMm": 349,
+      "depthMm": 602,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext WZ18AWN, p. 2.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz18awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ18AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "D36BBB87217D0AE8EE0B9F4726F87567773D070AD5ACED9C91F0DF988014BECA",
+        "page": 2
+      }
+    },
+    {
+      "manufacturer": "LG",
+      "model": "WZ24AWU.SUU1",
+      "widthMm": 927,
+      "heightMm": 380,
+      "depthMm": 699,
+      "dimensionNote": "Dimensioni mm (L x A x P) dalla scheda Climanext WZ24AWN, p. 2.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz24awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ24AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "C6C1F6A5287E011DDA49990DC41F96A0A2A6A9EBC65A5ED56BA7274A5AE4D4F5",
+        "page": 2
+      }
+    }
+  ],
+  "combinations": [
+    {
+      "id": "lg-a09ga1-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "A09GA1.U18",
+      "indoorProductIds": [
+        "lg-a09ga1"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 3300,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        3300
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a09ga1.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG A09GA1 (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "36ACDBD6B67E5F8B3420146625F5B239BC4A24309C3F060FA3C7819FE92C757A",
+        "page": 6
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-a12ga1-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "A12GA1.U18",
+      "indoorProductIds": [
+        "lg-a12ga1"
+      ],
+      "coolingCapacityW": 3500,
+      "heatingCapacityW": 4000,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        3500
+      ],
+      "indoorHeatingW": [
+        4000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-a12ga1.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG A12GA1 (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "1C5C0FF8563C86512EF51CC2419E73E7650245A32CBCF915E48272C6569999CF",
+        "page": 6
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-aa09sp-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "AA09SP.U18",
+      "indoorProductIds": [
+        "lg-aa09sp"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 3200,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        3200
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa09sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA09SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "2C88BC8E721EF7C8B1B1D56D0F3E4AD40BBB767BED44A7DEA63F885746A730AC",
+        "page": 11
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-aa12sp-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "AA12SP.U18",
+      "indoorProductIds": [
+        "lg-aa12sp"
+      ],
+      "coolingCapacityW": 3500,
+      "heatingCapacityW": 4000,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        3500
+      ],
+      "indoorHeatingW": [
+        4000
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa12sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA12SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "CF65D287EEA408B156E8A22901372221B2C8D9C7CB9284A949BE30D8392FE98E",
+        "page": 11
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-aa18sp-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "AA18SP.U18",
+      "indoorProductIds": [
+        "lg-aa18sp"
+      ],
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 5800,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        5000
+      ],
+      "indoorHeatingW": [
+        5800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-aa18sp.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG AA18SP (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "E202388493C6D62EBD42A5265310D8098E8C68615B478C7FB77D02B8A0BAE69C",
+        "page": 11
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-ez09csn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "EZ09CSU.CA31",
+      "indoorProductIds": [
+        "lg-ez09csn"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 2800,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        2800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez09csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ09CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "997346DD2C7450D79CA76CDACB04A1C2B223C5C7AB4B3E3F44E0CA88FEA16064",
+        "page": 7
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-ez12csn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "EZ12CSU.CA31",
+      "indoorProductIds": [
+        "lg-ez12csn"
+      ],
+      "coolingCapacityW": 3500,
+      "heatingCapacityW": 3710,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        3500
+      ],
+      "indoorHeatingW": [
+        3710
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez12csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ12CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "2E1803C2259AB2B2B869483089441204974F4A0E704CAFEE2BE19C3141289E0C",
+        "page": 7
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-ez18csn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "EZ18CSU.CL21",
+      "indoorProductIds": [
+        "lg-ez18csn"
+      ],
+      "coolingCapacityW": 5000,
+      "heatingCapacityW": 5800,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        5000
+      ],
+      "indoorHeatingW": [
+        5800
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez18csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ18CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "DA83D2DB24CAB2CBF7B57E62BB94A484F018A6CD778AC31EB3FF3AA375438435",
+        "page": 7
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-ez24csn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "EZ24CSU.C241",
+      "indoorProductIds": [
+        "lg-ez24csn"
+      ],
+      "coolingCapacityW": 6600,
+      "heatingCapacityW": 7500,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        6600
+      ],
+      "indoorHeatingW": [
+        7500
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-ez24csn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG EZ24CSN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "9CD1963525F77225A20E0B08C055A04472C3956784AB1D7BBCCE5D1E9D114BB4",
+        "page": 7
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-wz09awn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "WZ09AWU.SUU1",
+      "indoorProductIds": [
+        "lg-wz09awn"
+      ],
+      "coolingCapacityW": 2500,
+      "heatingCapacityW": 2750,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        2500
+      ],
+      "indoorHeatingW": [
+        2750
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz09awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ09AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "EFFD6CF2F322FBE6E9C638AF91F9A1EB5E82D8708A4107CFE69FE8643FA9635B",
+        "page": 2
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-wz12awn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "WZ12AWU.SUU1",
+      "indoorProductIds": [
+        "lg-wz12awn"
+      ],
+      "coolingCapacityW": 3450,
+      "heatingCapacityW": 3500,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        3450
+      ],
+      "indoorHeatingW": [
+        3500
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz12awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ12AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "5C9756C4C099D13936DA9D89B210607FD33AE5BEB19339756E1ECB0CFCD8011C",
+        "page": 2
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-wz18awn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "WZ18AWU.SUU1",
+      "indoorProductIds": [
+        "lg-wz18awn"
+      ],
+      "coolingCapacityW": 5050,
+      "heatingCapacityW": 5100,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        5050
+      ],
+      "indoorHeatingW": [
+        5100
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz18awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ18AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "D36BBB87217D0AE8EE0B9F4726F87567773D070AD5ACED9C91F0DF988014BECA",
+        "page": 2
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    },
+    {
+      "id": "lg-wz24awn-mono",
+      "manufacturer": "LG",
+      "mode": "mono",
+      "outdoorModel": "WZ24AWU.SUU1",
+      "indoorProductIds": [
+        "lg-wz24awn"
+      ],
+      "coolingCapacityW": 6950,
+      "heatingCapacityW": 6950,
+      "maxCoolingCapacityW": null,
+      "maxHeatingCapacityW": null,
+      "indoorCoolingW": [
+        6950
+      ],
+      "indoorHeatingW": [
+        6950
+      ],
+      "minIndoorUnits": 1,
+      "maxIndoorUnits": 1,
+      "maxConnectedCapacityW": null,
+      "approved": true,
+      "notes": "Kit monosplit LG da scheda tecnica Climanext: capacita' nominali a +35 C / +7 C.",
+      "sourceMetadata": {
+        "manufacturer": "LG",
+        "sourceUrl": "https://www.climanext.net/wp-content/uploads/2026/09/lg-scheda-mono-wz24awn.pdf",
+        "sourceType": "pdf",
+        "documentRevision": "Climanext scheda tecnica LG WZ24AWN (listino LG 2026)",
+        "retrievedAt": "2026-11-04T08:45:15+00:00",
+        "importedAt": "2026-11-04T08:45:15+00:00",
+        "sha256": "C6C1F6A5287E011DDA49990DC41F96A0A2A6A9EBC65A5ED56BA7274A5AE4D4F5",
+        "page": 2
+      },
+      "region": "Italia (LG Italia, scheda Climanext)",
+      "secondarySourceMetadata": []
+    }
+  ],
+  "quarantined": [],
+  "limitations": [
+    "Artcool Gallery LCD (A09GA2/A12GA2) esclusa: Climanext non pubblica la scheda tecnica."
+  ]
+}

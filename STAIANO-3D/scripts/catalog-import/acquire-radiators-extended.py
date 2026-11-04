@@ -4,6 +4,7 @@ Run with bundled Python (pdfplumber/pypdf), optionally --refresh.
 Existing source snapshots remain stable unless refresh is explicitly requested.
 """
 import hashlib
+import io
 import json
 import sys
 import urllib.request
@@ -25,7 +26,16 @@ SOURCES = {
     **{f"zehnder-{name}": (f"https://www.zehnder.it/download/{token}", "Listino Tecnico 06/2026", "https://www.climanext.net/brand/zehnder/") for name, token in {
         "kleo": "2add8fa6f23d4ca3aa0f01f67f70c8a1", "orbis": "40793b245fd84b70a3555976f7939880", "ax": "be80108b6d9845f1809d765587bc1254",
         "jetx": "068ebfcd677a4efe9cb32a78d990c82d", "arteplano": "3a560e1642af45899ccf6c0022e0fb6f", "metropolitan": "0713d3770530497f8188f9e410d842b8",
-        "toga": "177d3e4b8edd4d8fb9fec3e5a6c2b7e4", "excelsior": "a75f07c10ef342b6977420e8a583751a"}.items()},
+        "toga": "177d3e4b8edd4d8fb9fec3e5a6c2b7e4", "excelsior": "a75f07c10ef342b6977420e8a583751a",
+        # Altre serie idroniche del simulatore Climanext (stesso Listino Tecnico 06/2026); foto = copertina del PDF.
+        "turned": "d9940450c2d34b50b4ed88368e265c1c", "zeno": "4c928f1fc5354298910e08b6f5057dac", "aura": "a53c01acfebd4082bc36e64e54abc78d",
+        "tetris": "5228d803df5c4d0f87a07ac511dcd869", "klaro": "baeea9935af742da99b5e1d8c57dc836", "ribbon": "78930f05f340483f8f141f283c347839",
+        "subway": "9df014064dad429f878ac107b88b790d", "quaro": "2d9fcfee59c4453992cc67567dd74a70", "metropolitanspa": "dbced40106f1455f82fadf64656cfa9e",
+        "pera": "d8332de78be744c2aa2b42cb547f27b3", "alban": "67bfbb2f86294407b7ff189655e51aff", "chime": "ae33a4e2f770438bacb4a654cd1263ba",
+        "forma": "690e7ed874c04b528d4f3fd6aa07a7d6", "sfera": "3b4d564867ab4c6eb962f50a9c65151c", "yucca": "9cfb6df4fbe84d5189072b85e6209e3e",
+        "yuccaasym": "5a53887410e841d08a0a7f0fe8b5d2bf", "finalean": "ba8258dce4784ed0b6c5348e801fbcbc", "vitalospa": "758b44c94c4b470d986ff346983ce5d8",
+        "vitalobar": "2ef89306f41c42dc8c5b27c60dd19118", "foliobelt": "563641021b3543eca018fb63d3742640", "foliohybrid": "25a8a8da191a401d938ebd2a3633f801",
+        "rodatwist": "2d10451d27424a37bb1e53808ad88ffa", "archibald": "b1019f7944664b239155bfe31e044233", "flowform": "2ff9bdf5731447caa895958ea005f8ed"}.items()},
     "lazzarini-sanremo": ("https://docga.plateforme-services.com/api/download/variant_documents_5d77b642-bd28-4767-97e2-f5b1c210a8a0/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ", "Rev. 6 -02-08-2021", "https://www.lazzariniradiatori.it/en/CLASSIC/SANREMO"),
     "lazzarini-garda": ("https://docga.plateforme-services.com/api/download/variant_documents_2816a35c-5a49-46a0-81e2-7aee4bc61bf1/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ", "Rev. 6 -22-11-2023", "https://www.lazzariniradiatori.it/en/DECORATIVE/GARDA"),
     "lazzarini-empoli": ("https://docga.plateforme-services.com/api/download/variant_documents_8101ed7b-720e-4de1-b70c-f82628f27d21/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ", "Rev. 4 -27-04-2021", "https://www.lazzariniradiatori.it/en/LIVING/Empoli"),
@@ -74,6 +84,14 @@ for name, (url, revision, publisher_page) in SOURCES.items():
         if len(images) != 1:
             raise ValueError(f"Unexpected cover photo structure in {name}")
         photo_data, extension, photo_url = images[0].data, Path(images[0].name).suffix, url
+    elif name not in PHOTOS:
+        # Serie senza foto pubblicata da Climanext: la copertina del Listino Tecnico mostra il prodotto (immagine piu' grande).
+        covers = sorted(PdfReader(target).pages[0].images, key=lambda i: i.image.width * i.image.height)
+        picture = covers[-1].image.convert("RGB")
+        picture.thumbnail((1000, 1000))
+        buffer = io.BytesIO()
+        picture.save(buffer, "JPEG", quality=88)
+        photo_data, extension, photo_url = buffer.getvalue(), ".jpg", url
     else:
         photo_url = PHOTOS[name]
         asset = ASSETS / f"{name}{'.png' if name == 'zehnder-charleston' else '.jpg'}"

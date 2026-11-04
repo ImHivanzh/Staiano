@@ -121,6 +121,50 @@
     "photo": "/catalog-assets/splits/lg-dualcool-ai-premium.jpg"
   },
   {
+    "family": "Artcool Gallery Photo",
+    "url": "/models/splits/artcool-gallery-photo.glb",
+    "referenceModel": "A09GA1.NSE",
+    "dimensionsMm": [
+      652,
+      652,
+      158
+    ],
+    "photo": "/catalog-assets/splits/lg-artcool-gallery-photo.jpg"
+  },
+  {
+    "family": "Artcool Mirror",
+    "url": "/models/splits/artcool-mirror.glb",
+    "referenceModel": "AA09SP.NS1",
+    "dimensionsMm": [
+      895,
+      307,
+      235
+    ],
+    "photo": "/catalog-assets/splits/lg-artcool-mirror.jpg"
+  },
+  {
+    "family": "Dualcool Libero Smart",
+    "url": "/models/splits/dualcool-libero-smart.glb",
+    "referenceModel": "EZ09CSN.CSJ1",
+    "dimensionsMm": [
+      837,
+      308,
+      189
+    ],
+    "photo": "/catalog-assets/splits/lg-dualcool-libero-smart.jpg"
+  },
+  {
+    "family": "Libero",
+    "url": "/models/splits/libero.glb",
+    "referenceModel": "WZ09AWN.SNU1",
+    "dimensionsMm": [
+      781,
+      274,
+      197
+    ],
+    "photo": "/catalog-assets/splits/lg-libero.jpg"
+  },
+  {
     "family": "Stylish",
     "url": "/models/splits/stylish.glb",
     "referenceModel": "FTXA20CW",

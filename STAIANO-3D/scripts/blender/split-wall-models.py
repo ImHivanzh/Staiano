@@ -19,6 +19,8 @@ PHOTOS = {
     'Standard Plus': 'lg-standard-plus.png', 'Standard 2': 'lg-standard-2.png', 'Mirror': 'lg-mirror.png',
     'Deluxe': 'lg-deluxe.png', 'Air Purification': 'lg-air-purification.png',
     'DUALCOOL AI Deluxe': 'lg-dualcool-ai-deluxe.jpg', 'DUALCOOL AI Premium': 'lg-dualcool-ai-premium.jpg',
+    'Artcool Gallery Photo': 'lg-artcool-gallery-photo.jpg', 'Artcool Mirror': 'lg-artcool-mirror.jpg',
+    'Dualcool Libero Smart': 'lg-dualcool-libero-smart.jpg', 'Libero': 'lg-libero.jpg',
     'VRV 5 FXAA-A': 'vrv/daikin-fxaa-a.jpg',  # path relative to public/catalog-assets when it contains a slash
 }
 
@@ -35,6 +37,35 @@ silver=material('Alluminio satinato',(.52,.56,.57),.3,.65)
 mirror=material('Vetro fumé riflettente',(.16,.18,.19),.12,.65)
 screen=material('Sensore e display spento',(.025,.032,.035),.22)
 dark=material('ABS grafite',(.065,.07,.075),.32)
+wood=material('Cornice rovere',(.52,.36,.2),.45)
+paper=material('Stampa bianca',(.92,.92,.9),.6)
+
+def staiano_logo(scene,center,height):
+    # Vector Staiano logo (public/logo.svg) as real geometry, so the GLB needs no texture.
+    before=set(bpy.data.objects)
+    bpy.context.view_layer.active_layer_collection=bpy.context.view_layer.layer_collection
+    bpy.ops.import_curve.svg(filepath=str(ROOT/'public/logo.svg'))
+    parts=[o for o in bpy.data.objects if o not in before and o.type=='CURVE']
+    colors={'00AEEF':(0,.45,.9),'54BA51':(.09,.43,.08),'365AA8':(.04,.11,.38)}  # same order as the paths in logo.svg
+    mats=[material('Logo '+k,v,.5) for k,v in colors.items()]
+    assert len(parts)==3, len(parts)
+    low=Vector((1e9,1e9)); high=Vector((-1e9,-1e9))
+    for o in parts:
+        o.data.extrude=.0004; o.data.dimensions='2D'
+        bpy.context.view_layer.objects.active=o; o.select_set(True)
+    bpy.ops.object.convert(target='MESH')
+    for o in parts:
+        for v in o.data.vertices:
+            low.x=min(low.x,v.co.x); low.y=min(low.y,v.co.y); high.x=max(high.x,v.co.x); high.y=max(high.y,v.co.y)
+    k=height/(high.y-low.y); mid=(low+high)/2
+    ordered=sorted(parts,key=lambda o:o.name)
+    for i,o in enumerate(ordered):
+        for v in o.data.vertices: v.co=((v.co.x-mid.x)*k,(v.co.y-mid.y)*k,v.co.z*k)
+        o.data.materials.clear(); o.data.materials.append(mats[i]); o.name='Logo Staiano '+str(i+1)
+        o.rotation_euler=(math.pi/2,0,0); o.location=center
+        for c in list(o.users_collection): c.objects.unlink(o)
+        scene.collection.objects.link(o)
+        for pl in o.data.polygons: pl.use_smooth=False
 
 def box(scene,name,loc,dims,mat,bevel=.001):
     bpy.ops.mesh.primitive_cube_add(size=1,location=loc)
@@ -82,46 +113,54 @@ for family,product in families.items():
     photo=ROOT/'public/catalog-assets'/photo_path(family); assert photo.is_file(),photo
     w,h,d=[product[k]/1000 for k in ('widthMm','heightMm','depthMm')]
     scene=bpy.data.scenes.new('Split '+family); scenes.append(scene); bpy.context.window.scene=scene
-    flat=family in ('Stylish','MSZ-EF','MSZ-LN','MSZ-AY','Mirror','Airy') or family.startswith('DUALCOOL')
-    is_emura=family=='Emura'; is_mirror=family=='Mirror'; is_ln=family=='MSZ-LN'
+    flat=family in ('Stylish','MSZ-EF','MSZ-LN','MSZ-AY','Mirror','Airy','Artcool Mirror','Dualcool Libero Smart') or family.startswith('DUALCOOL')
+    is_emura=family=='Emura'; is_mirror=family in ('Mirror','Artcool Mirror'); is_gallery=family=='Artcool Gallery Photo'; is_ln=family=='MSZ-LN'
     coat=mirror if is_mirror else silver if family=='Airy' else white
-    # Complete outside envelope; the separate front panel sits in its recessed face.
-    housing=box(scene,'Carter posteriore',(0,d*.02,0),(w,d*.96,h),dark if is_mirror else white,.008 if flat else .04)
-    box(scene,'Guarnizione frontale',(0,-d*.461,h*.01 if is_emura else h*.1),(w*.974,d*.001,h*.90 if is_emura else h*.68),seam,.0002)
-    if flat:
-        box(scene,'Pannello frontale',(0,-d*.492,h*.24 if is_ln else h*.085),(w*.982,d*.016,h*.42 if is_ln else h*.78),coat,.001)
-        if is_ln: box(scene,'Pannello frontale inferiore',(0,-d*.492,-h*.22),(w*.982,d*.016,h*.42),coat,.001)
+    if is_gallery:
+        # Square framed picture: dark rear case, oak frame, printed panel and a closed lower slot.
+        box(scene,'Carter posteriore',(0,d*.02,0),(w,d*.96,h),dark,.004)
+        box(scene,'Cornice rovere',(0,-d*.42,0),(w,d*.14,h),wood,.002)
+        box(scene,'Pannello frontale',(0,-d*.492,0),(w*.9,d*.016,h*.9),paper,0)
+        staiano_logo(scene,(0,-d*.5-.0004,0),h*.68)
+        box(scene,'Deflettore chiuso',(0,-d*.35,-h*.497),(w*.8,d*.28,h*.006),seam,0)
     else:
-        front(scene,'Pannello frontale curvo',w,h,d,coat,is_emura)
-    # A closed discharge vane and its real separation lines, as in the photographs.
-    lower=-h*.37
-    if is_emura or is_ln:
-        box(scene,'Sede deflettore',(0,-d*.10,-h*.48),(w*.90,d*.65,h*.025),seam,.001)
-        flap=box(scene,'Deflettore chiuso',(0,-d*.10,-h*.482),(w*.88,d*.62,h*.02),coat,.001)
-    else:
-        box(scene,'Sede deflettore',(0,-d*.466,lower),(w*.91,d*.006,h*.168),seam,.001)
-        flap=box(scene,'Deflettore chiuso',(0,-d*.48,lower-h*.004),(w*.9,d*.02,h*.16),coat,.001)
-    if is_ln:
-        box(scene,'Profilo cromato centrale',(0,-d*.502,0),(w*.97,.0015,.003),silver,.0005)
-        box(scene,'Divisione doppio deflettore',(0,-d*.1,-h*.493),(.0015,d*.62,.001),seam,0)
-    if family.startswith('DUALCOOL') or is_mirror:
-        box(scene,'Fascia mandata scura',(0,-d*.493,-h*.325),(w*.94,.002,h*.035),screen,.0005)
-        if family=='DUALCOOL AI Premium': box(scene,'Seconda fessura mandata',(0,-d*.493,-h*.38),(w*.94,.002,h*.018),screen,.0005)
-    if is_emura:
-        box(scene,'Profilo superiore separato',(0,-d*.38,h*.465),(w*.97,d*.12,h*.06),white,.003)
-        bpy.ops.mesh.primitive_torus_add(major_radius=.009,minor_radius=.001,major_segments=32,minor_segments=6,
-            location=(w*.40,-d*.39,-h*.465),rotation=(math.pi/2,0,0))
-        sensor=bpy.context.object; sensor.name='Sensore circolare'; sensor.data.materials.append(screen)
-    else:
-        box(scene,'Display spento',(w*.40,-d*.464,-h*.20),(w*.022,.001,h*.022),screen,.001)
-    # Top intake is a real recessed strip with transverse ribs.
-    cutter=box(scene,'Taglio ripresa',(0,d*.02,h*.495),(w*.88,d*.48,h*.05),seam,0)
-    modifier=housing.modifiers.new('Apertura ripresa','BOOLEAN'); modifier.object=cutter; modifier.operation='DIFFERENCE'
-    bpy.context.view_layer.objects.active=housing; bpy.ops.object.modifier_apply(modifier=modifier.name)
-    bpy.data.objects.remove(cutter,do_unlink=True)
-    box(scene,'Ripresa superiore',(0,d*.02,h*.473),(w*.88,d*.48,.001),seam,0)
-    for index in range(31):
-        box(scene,'Nervatura ripresa',((index/30-.5)*w*.88,d*.02,h*.498),(.003,d*.48,.001),white,0)
+        # Complete outside envelope; the separate front panel sits in its recessed face.
+        housing=box(scene,'Carter posteriore',(0,d*.02,0),(w,d*.96,h),dark if is_mirror else white,.008 if flat else .04)
+        box(scene,'Guarnizione frontale',(0,-d*.461,h*.01 if is_emura else h*.1),(w*.974,d*.001,h*.90 if is_emura else h*.68),seam,.0002)
+        if flat:
+            box(scene,'Pannello frontale',(0,-d*.492,h*.24 if is_ln else h*.085),(w*.982,d*.016,h*.42 if is_ln else h*.78),coat,.001)
+            if is_ln: box(scene,'Pannello frontale inferiore',(0,-d*.492,-h*.22),(w*.982,d*.016,h*.42),coat,.001)
+        else:
+            front(scene,'Pannello frontale curvo',w,h,d,coat,is_emura)
+        # A closed discharge vane and its real separation lines, as in the photographs.
+        lower=-h*.37
+        if is_emura or is_ln:
+            box(scene,'Sede deflettore',(0,-d*.10,-h*.48),(w*.90,d*.65,h*.025),seam,.001)
+            flap=box(scene,'Deflettore chiuso',(0,-d*.10,-h*.482),(w*.88,d*.62,h*.02),coat,.001)
+        else:
+            box(scene,'Sede deflettore',(0,-d*.466,lower),(w*.91,d*.006,h*.168),seam,.001)
+            flap=box(scene,'Deflettore chiuso',(0,-d*.48,lower-h*.004),(w*.9,d*.02,h*.16),coat,.001)
+        if is_ln:
+            box(scene,'Profilo cromato centrale',(0,-d*.502,0),(w*.97,.0015,.003),silver,.0005)
+            box(scene,'Divisione doppio deflettore',(0,-d*.1,-h*.493),(.0015,d*.62,.001),seam,0)
+        if family.startswith('DUALCOOL') or is_mirror:
+            box(scene,'Fascia mandata scura',(0,-d*.493,-h*.325),(w*.94,.002,h*.035),screen,.0005)
+            if family=='DUALCOOL AI Premium': box(scene,'Seconda fessura mandata',(0,-d*.493,-h*.38),(w*.94,.002,h*.018),screen,.0005)
+        if is_emura:
+            box(scene,'Profilo superiore separato',(0,-d*.38,h*.465),(w*.97,d*.12,h*.06),white,.003)
+            bpy.ops.mesh.primitive_torus_add(major_radius=.009,minor_radius=.001,major_segments=32,minor_segments=6,
+                location=(w*.40,-d*.39,-h*.465),rotation=(math.pi/2,0,0))
+            sensor=bpy.context.object; sensor.name='Sensore circolare'; sensor.data.materials.append(screen)
+        else:
+            box(scene,'Display spento',(w*.40,-d*.464,-h*.20),(w*.022,.001,h*.022),screen,.001)
+        # Top intake is a real recessed strip with transverse ribs.
+        cutter=box(scene,'Taglio ripresa',(0,d*.02,h*.495),(w*.88,d*.48,h*.05),seam,0)
+        modifier=housing.modifiers.new('Apertura ripresa','BOOLEAN'); modifier.object=cutter; modifier.operation='DIFFERENCE'
+        bpy.context.view_layer.objects.active=housing; bpy.ops.object.modifier_apply(modifier=modifier.name)
+        bpy.data.objects.remove(cutter,do_unlink=True)
+        box(scene,'Ripresa superiore',(0,d*.02,h*.473),(w*.88,d*.48,.001),seam,0)
+        for index in range(31):
+            box(scene,'Nervatura ripresa',((index/30-.5)*w*.88,d*.02,h*.498),(.003,d*.48,.001),white,0)
     # Export only model meshes, excluding the studio camera and lights.
     bpy.ops.object.select_all(action='DESELECT')
     for o in scene.objects:
@@ -138,8 +177,8 @@ for family,product in families.items():
         o=bpy.data.objects.new(name,data); scene.collection.objects.link(o); o.location=loc
         o.rotation_euler=(-o.location).to_track_quat('-Z','Y').to_euler()
     scene.world=bpy.data.worlds.new('Studio'); scene.world.color=(.2,.2,.2)
-    scene.render.engine='CYCLES'; scene.cycles.samples=24
-    scene.render.resolution_x=900; scene.render.resolution_y=420; scene.render.resolution_percentage=100
+    scene.render.engine='CYCLES'; scene.cycles.samples=globals().get('SAMPLES',24)
+    scene.render.resolution_x=900; scene.render.resolution_y=420; scene.render.resolution_percentage=globals().get('PERCENT',100)
     scene.render.filepath=str(ROOT/'output/verifiche-realismo'/('split-'+slug+'.png')); bpy.ops.render.render(write_still=True)
 (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
 bpy.data.libraries.write(str(ROOT/'assets/blender/split-wall-models.blend'),set(scenes),fake_user=True)

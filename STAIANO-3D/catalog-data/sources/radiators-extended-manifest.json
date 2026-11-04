@@ -195,6 +195,366 @@
     }
   },
   {
+    "name": "zehnder-turned",
+    "sourceUrl": "https://www.zehnder.it/download/d9940450c2d34b50b4ed88368e265c1c",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:00.355439+00:00",
+    "sha256": "5e1487b3a15acdb1076282682274e5055a8a8ab582eb332a7f04ba9a7f8c616a",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-turned.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/d9940450c2d34b50b4ed88368e265c1c",
+      "sha256": "d84c2d2670ebacd25153fde4dfa7073fad1e3bd542b19869ca861c4b30c250e6",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-zeno",
+    "sourceUrl": "https://www.zehnder.it/download/4c928f1fc5354298910e08b6f5057dac",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:02.426818+00:00",
+    "sha256": "69993f642bf6266776722a00b59d883054b19bc2f39c813d1f584c7ea6d5a5b3",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-zeno.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/4c928f1fc5354298910e08b6f5057dac",
+      "sha256": "dcf0bece85d60a3972ed1a57662b5b69ffd445b060dc3b4571141c0f8b9e2c3e",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-aura",
+    "sourceUrl": "https://www.zehnder.it/download/a53c01acfebd4082bc36e64e54abc78d",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:05.083053+00:00",
+    "sha256": "8e09ca212a21805f0080fd23cb62b8620ddaac0900c19b897fa36efeb7edd466",
+    "pageCount": 8,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-aura.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/a53c01acfebd4082bc36e64e54abc78d",
+      "sha256": "5f0c9ccb1ecec8db0434a95ed11c5d6031f821766fcfbc0968fbc5bc0af30d80",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-tetris",
+    "sourceUrl": "https://www.zehnder.it/download/5228d803df5c4d0f87a07ac511dcd869",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:07.594698+00:00",
+    "sha256": "70a37bff76b161d55c7f437502d275a4f9e5123f5b3e3afae9368d654ed03790",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-tetris.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/5228d803df5c4d0f87a07ac511dcd869",
+      "sha256": "eadb0360c8b57422a3252fefb287a7b57be13e411ed796784538f03619fa43c6",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-klaro",
+    "sourceUrl": "https://www.zehnder.it/download/baeea9935af742da99b5e1d8c57dc836",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:09.280261+00:00",
+    "sha256": "68896fd7166fb6a356e5cfdfa1a80199218d8dfc70eb5f12db6865d0d2229f8d",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-klaro.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/baeea9935af742da99b5e1d8c57dc836",
+      "sha256": "e793d1a97448e4951ec1092fe2eefb1f96915257743599f651f39004bac90490",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-ribbon",
+    "sourceUrl": "https://www.zehnder.it/download/78930f05f340483f8f141f283c347839",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:11.712729+00:00",
+    "sha256": "422651a656ddedcec9ee0ecaac8e8e74146ce30627a89984551ce25da5d74d02",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-ribbon.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/78930f05f340483f8f141f283c347839",
+      "sha256": "ddbe02006f0feae82f54d1f914fb4bd081145568e55d056f602d650722a0e4bf",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-subway",
+    "sourceUrl": "https://www.zehnder.it/download/9df014064dad429f878ac107b88b790d",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:13.453020+00:00",
+    "sha256": "6e9c63ad184492e71904df4c90323e26516b620dad126dd21339860c68b8805d",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-subway.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/9df014064dad429f878ac107b88b790d",
+      "sha256": "9493dc5e41e70722419ac8343c652c404a010184a70f0b004281fe61b3c85313",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-quaro",
+    "sourceUrl": "https://www.zehnder.it/download/2d9fcfee59c4453992cc67567dd74a70",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:15.474892+00:00",
+    "sha256": "661f664a0fe478a2fd5247d3c02318f77618f94b77cc1c4a83678fe4ffac537d",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-quaro.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/2d9fcfee59c4453992cc67567dd74a70",
+      "sha256": "88c1f3ecf50cf7b0275d1cf48b188b8f5c9fd71c2c56c719d3cf9a0d2b821742",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-metropolitanspa",
+    "sourceUrl": "https://www.zehnder.it/download/dbced40106f1455f82fadf64656cfa9e",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:17.044983+00:00",
+    "sha256": "2dba843189aad46d5851d33cdbce6fcc549c4770da7357526283a3433e9b5bdf",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-metropolitanspa.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/dbced40106f1455f82fadf64656cfa9e",
+      "sha256": "3e010a9de04578ea924929678264a219e8435dea03eb7cf9b30b37b6ea1db4e7",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-pera",
+    "sourceUrl": "https://www.zehnder.it/download/d8332de78be744c2aa2b42cb547f27b3",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:18.499254+00:00",
+    "sha256": "caf238f5590b343a35880c1919d43e3abdd57989ebaeb1cc743b33b7c848c754",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-pera.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/d8332de78be744c2aa2b42cb547f27b3",
+      "sha256": "408586a09a22a3808c53f82ad39f54bbc796e33b9bdce55424b9fb1e1913cd8a",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-alban",
+    "sourceUrl": "https://www.zehnder.it/download/67bfbb2f86294407b7ff189655e51aff",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:20.094703+00:00",
+    "sha256": "2702aaab57dbc3321afb8bea83bf45f30ff19085b6a062c46932a01922cbf8e1",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-alban.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/67bfbb2f86294407b7ff189655e51aff",
+      "sha256": "beb2b8fbfd6543f7370188f04129d85dcdb83e6ccbee5c6b3c748f3a1c5bc03e",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-chime",
+    "sourceUrl": "https://www.zehnder.it/download/ae33a4e2f770438bacb4a654cd1263ba",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:21.644771+00:00",
+    "sha256": "6f59a1550881553a516596a2a1f145866c9704b4acad1932cb5cc763818c1acf",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-chime.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/ae33a4e2f770438bacb4a654cd1263ba",
+      "sha256": "e23af5e64c6e78d6d75815a43555234fb98abb086c14d5e5e56bac31a14e076f",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-forma",
+    "sourceUrl": "https://www.zehnder.it/download/690e7ed874c04b528d4f3fd6aa07a7d6",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:24.314191+00:00",
+    "sha256": "d78b93a29d4a5fc8a23a41b5117de0f850e046204c50a957c55dfcf633442793",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-forma.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/690e7ed874c04b528d4f3fd6aa07a7d6",
+      "sha256": "dfcbefabd98eb1a2972862272db0345da83090fdb5ea4cf9b1449ea47b7c9859",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-sfera",
+    "sourceUrl": "https://www.zehnder.it/download/3b4d564867ab4c6eb962f50a9c65151c",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:27.003576+00:00",
+    "sha256": "e3249f16fc33d950a34bc57b1a27d943f58ce911979d71e3c65287b4edaf4535",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-sfera.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/3b4d564867ab4c6eb962f50a9c65151c",
+      "sha256": "ee3ac05134c89514585951887e711da38f085b7cc8d58373be612229e6673570",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-yucca",
+    "sourceUrl": "https://www.zehnder.it/download/9cfb6df4fbe84d5189072b85e6209e3e",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:29.013419+00:00",
+    "sha256": "2c1c92958083b892f7e20d17ac41c89b2564b03298ae62da071d3601605fa3b9",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-yucca.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/9cfb6df4fbe84d5189072b85e6209e3e",
+      "sha256": "0f11874d851eff3c49e973d870c156295545dcb476aea19c27656bed8bf3a53e",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-yuccaasym",
+    "sourceUrl": "https://www.zehnder.it/download/5a53887410e841d08a0a7f0fe8b5d2bf",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:31.570114+00:00",
+    "sha256": "6f5b279e1ba542571c3f4851b83e44e698a21ace82cdf65f1099d7f36e996ac8",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-yuccaasym.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/5a53887410e841d08a0a7f0fe8b5d2bf",
+      "sha256": "4e06256ddc848d5811bdf7bc0e4a073e8b4e33ac2c7fd29bfcc416b7cd7f3d9f",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-finalean",
+    "sourceUrl": "https://www.zehnder.it/download/ba8258dce4784ed0b6c5348e801fbcbc",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:33.205562+00:00",
+    "sha256": "be04ed91d5d8911ea4807db6a20a542633c4c4274bf93d7176c7fb60953e6ab0",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-finalean.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/ba8258dce4784ed0b6c5348e801fbcbc",
+      "sha256": "fe32325c0a759697ace8691d5bfd9800d219e7a17e853e57b5c74632470ca9b1",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-vitalospa",
+    "sourceUrl": "https://www.zehnder.it/download/758b44c94c4b470d986ff346983ce5d8",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:35.080288+00:00",
+    "sha256": "b02874e2c556f1b64ba10053899dcf2a5c637fb6bb18bc7d209fd3836246a725",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-vitalospa.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/758b44c94c4b470d986ff346983ce5d8",
+      "sha256": "40efcdf174378190956afff80521e0ecb6a8f12f641f5f26979ab79dd23d2019",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-vitalobar",
+    "sourceUrl": "https://www.zehnder.it/download/2ef89306f41c42dc8c5b27c60dd19118",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:37.295930+00:00",
+    "sha256": "585a58f7308fd3a28455e4fa0c3d81fd7511b7bbbca20b37303362f119a4ef05",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-vitalobar.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/2ef89306f41c42dc8c5b27c60dd19118",
+      "sha256": "46c6b5c8fa9dedbf16cb3fdcc9251e2aefaac86cb07b47c628f4aad966a977e8",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-foliobelt",
+    "sourceUrl": "https://www.zehnder.it/download/563641021b3543eca018fb63d3742640",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:40.028001+00:00",
+    "sha256": "430edb30c7af7561d9ddba0696191778139db2dc58ec131aa52ce8522c6d90a8",
+    "pageCount": 6,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-foliobelt.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/563641021b3543eca018fb63d3742640",
+      "sha256": "bcb728d5217de2390e0314aca8f124bc7b5972966aa2ea360704bde9020f3b05",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-foliohybrid",
+    "sourceUrl": "https://www.zehnder.it/download/25a8a8da191a401d938ebd2a3633f801",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:41.517959+00:00",
+    "sha256": "96fba62b79e1a27bd1fb97b497b2f9d48445dfba1d02c3fb9106d878eeb24882",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-foliohybrid.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/25a8a8da191a401d938ebd2a3633f801",
+      "sha256": "f118e6cf6f802abc8ce7cb0e471163b88370d3ae516c491f2c886c007401880e",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-rodatwist",
+    "sourceUrl": "https://www.zehnder.it/download/2d10451d27424a37bb1e53808ad88ffa",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:43.865261+00:00",
+    "sha256": "e7e85184d77a41294bd3d487bd014f18f29ca5d84e5fa68a5cda5e6ce9c55cda",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-rodatwist.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/2d10451d27424a37bb1e53808ad88ffa",
+      "sha256": "6c975ed1719637685b2a2cd31c875e03b96f5da627a807699d0e05ba6f11ceef",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-archibald",
+    "sourceUrl": "https://www.zehnder.it/download/b1019f7944664b239155bfe31e044233",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:45.205682+00:00",
+    "sha256": "81f3bcc4c7d89e9c8a7dbcdf9554110c44c363a3dd7c1f7fc250c0385a151ea9",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-archibald.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/b1019f7944664b239155bfe31e044233",
+      "sha256": "29728b1865f3d333ba874d354567ec943dc6a00e5f1cd8e9d169daff81a92f93",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
+    "name": "zehnder-flowform",
+    "sourceUrl": "https://www.zehnder.it/download/2ff9bdf5731447caa895958ea005f8ed",
+    "publisherPage": "https://www.climanext.net/brand/zehnder/",
+    "documentRevision": "Listino Tecnico 06/2026",
+    "retrievedAt": "2026-11-04T09:02:47.914373+00:00",
+    "sha256": "287bb6a133a017874e9f9e20f329b321199c29e605b65b63622c6502fbe6124f",
+    "pageCount": 4,
+    "productPhoto": {
+      "localPath": "/catalog-assets/radiators/zehnder-flowform.jpg",
+      "sourceUrl": "https://www.zehnder.it/download/2ff9bdf5731447caa895958ea005f8ed",
+      "sha256": "1dc98b1c6d317197b27d6f6af0afe30ccbda7ed2d09a7e341445e49f84826341",
+      "caption": "Fotografia ufficiale di famiglia; dimensioni, finitura e allacciamenti dipendono dal modello selezionato."
+    }
+  },
+  {
     "name": "lazzarini-sanremo",
     "sourceUrl": "https://docga.plateforme-services.com/api/download/variant_documents_5d77b642-bd28-4767-97e2-f5b1c210a8a0/i9j4Xef8em2500zJDfUxx-8YCi0v24OZ",
     "publisherPage": "https://www.lazzariniradiatori.it/en/CLASSIC/SANREMO",
