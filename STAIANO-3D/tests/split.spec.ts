@@ -1,13 +1,30 @@
+import type { Locator } from "@playwright/test";
 import { expect, test } from "./browser-test";
 import { openDisclosure, pickPlanPoint, openInspector } from "./ui-helpers";
 import { exportPlenumFixture } from "./plenum-ui-fixture";
+
+const sizeGroup = (popup: Locator) =>
+  popup.getByRole("group", { name: "Taglia split", exact: true });
+const pressedSplit = (popup: Locator) =>
+  sizeGroup(popup).locator('[aria-pressed="true"]');
+/** Marca → Modello → Taglia: apre i modelli finché la taglia cercata compare. */
+async function pickSplit(popup: Locator, id: string) {
+  const size = sizeGroup(popup).locator(`[data-id="${id}"]`);
+  const models = popup
+    .getByRole("group", { name: "Modello split", exact: true })
+    .getByRole("button");
+  for (let i = 0; i < (await models.count()) && !(await size.count()); i++)
+    await models.nth(i).click();
+  await size.click();
+}
 
 test("split reale: salva, ricarica e sincronizza selezione2D/3D", async ({
   page,
 }) => {
   const splitAssets: number[] = [];
   page.on("response", (response) => {
-    if (/\/models\/splits\/[^/]+\.glb$/.test(new URL(response.url()).pathname)) splitAssets.push(response.status());
+    if (/\/models\/splits\/[^/]+\.glb$/.test(new URL(response.url()).pathname))
+      splitAssets.push(response.status());
   });
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
@@ -27,11 +44,10 @@ test("split reale: salva, ricarica e sincronizza selezione2D/3D", async ({
     exact: true,
   });
   await popup
-    .getByRole("combobox", { name: "Marca split", exact: true })
-    .selectOption("Daikin");
-  const selected = await popup
-    .getByRole("combobox", { name: "Serie e modello split", exact: true })
-    .inputValue();
+    .getByRole("group", { name: "Marca split", exact: true })
+    .getByRole("button", { name: "Daikin", exact: true })
+    .click();
+  const selected = (await pressedSplit(popup).getAttribute("data-id"))!;
   await popup
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
@@ -47,9 +63,7 @@ test("split reale: salva, ricarica e sincronizza selezione2D/3D", async ({
     saved.hvacSystems,
   );
   await plan.getByTestId("split-2d").click();
-  await expect(
-    popup.getByRole("combobox", { name: "Serie e modello split", exact: true }),
-  ).toHaveValue(selected);
+  await expect(pressedSplit(popup)).toHaveAttribute("data-id", selected);
   await popup
     .locator("footer")
     .getByRole("button", { name: "Annulla", exact: true })
@@ -112,9 +126,10 @@ test("LG Standard Plus a parete è configurabile e persiste", async ({
     exact: true,
   });
   await popup
-    .getByRole("combobox", { name: "Marca split", exact: true })
-    .selectOption("LG");
-  const wallCatalog = popup.getByText(/Catalogo LG a parete · 37 modelli/);
+    .getByRole("group", { name: "Marca split", exact: true })
+    .getByRole("button", { name: "LG", exact: true })
+    .click();
+  const wallCatalog = popup.getByText(/Catalogo LG a parete · 50 modelli/);
   await expect(wallCatalog).toBeVisible();
   await wallCatalog.click();
   await expect(popup.getByText(/Mirror · AM07BH\.NSJ/)).toBeVisible();
@@ -126,17 +141,7 @@ test("LG Standard Plus a parete è configurabile e persiste", async ({
       .getByRole("listitem")
       .filter({ hasText: /DUALCOOL AI Deluxe · H09S1DA/ }),
   ).toBeVisible();
-  const model = popup.getByRole("combobox", {
-    name: "Serie e modello split",
-    exact: true,
-  });
-  await expect(
-    model.locator("option").filter({ hasText: "MJ12PC.NSJ" }),
-  ).toHaveCount(1);
-  await expect(
-    model.locator("option").filter({ hasText: "UT36F.NY0" }),
-  ).toHaveCount(1);
-  await model.selectOption("lg-mu2r15-mj12-single");
+  await pickSplit(popup, "lg-mu2r15-mj12-single");
   await popup
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
@@ -154,14 +159,7 @@ test("LG Standard Plus a parete è configurabile e persiste", async ({
     wallSaved.hvacSystems,
   );
   await plan.getByTestId("split-2d").click();
-  const monoModel = popup.getByRole("combobox", {
-    name: "Serie e modello split",
-    exact: true,
-  });
-  await expect(
-    monoModel.locator("option").filter({ hasText: "H18S1DA" }),
-  ).toHaveCount(1);
-  await monoModel.selectOption("lg-h18s1da-mono");
+  await pickSplit(popup, "lg-h18s1da-mono");
   await popup
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
@@ -196,19 +194,10 @@ test("LG Round Cassette resta circolare in pianta dopo il reload", async ({
     exact: true,
   });
   await popup
-    .getByRole("combobox", { name: "Marca split", exact: true })
-    .selectOption("LG");
-  const model = popup.getByRole("combobox", {
-    name: "Serie e modello split",
-    exact: true,
-  });
-  await expect(
-    model.locator("option").filter({ hasText: "MJ12PC.NSJ" }),
-  ).toHaveCount(1);
-  await expect(
-    model.locator("option").filter({ hasText: "UT36F.NY0" }),
-  ).toHaveCount(1);
-  await model.selectOption("lg-round-ut36f-uud1-u30-mono");
+    .getByRole("group", { name: "Marca split", exact: true })
+    .getByRole("button", { name: "LG", exact: true })
+    .click();
+  await pickSplit(popup, "lg-round-ut36f-uud1-u30-mono");
   await popup
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })

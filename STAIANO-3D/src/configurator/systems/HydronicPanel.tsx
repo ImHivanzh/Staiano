@@ -25,6 +25,7 @@ import configurationStyles from "./SystemConfiguration.module.css";
 import { lastAvailableManufacturer } from "./manufacturer-preference";
 import { HydronicProperties } from "../properties/HydronicProperties";
 import panelStyles from "./HydronicPanel.module.css";
+import { BrandModelSize } from "./BrandModelSize";
 
 export function HydronicPanel({
   project,
@@ -213,29 +214,73 @@ export function HydronicPanel({
               />
             </label>
           )}
-          <label className="campo">
-            <span>Marca pompa di calore</span>
-            <select
-              value={manufacturer}
-              onChange={(e) => {
-                setManufacturer(e.target.value);
-                setProductId(
-                  heatPumpCatalog.products
-                    .filter((p) => p.manufacturer === e.target.value)
-                    .sort(
-                      (a, b) => heatPumpPreference(a) - heatPumpPreference(b),
-                    )[0].id,
-                );
-                setOperatingPointIndex(1);
-              }}
-            >
-              {[
-                ...new Set(heatPumpCatalog.products.map((p) => p.manufacturer)),
-              ].map((m) => (
-                <option key={m}>{m}</option>
-              ))}
-            </select>
-          </label>
+          <BrandModelSize
+            name="pompa di calore"
+            brands={brands.map((brand) => ({ key: brand, title: brand }))}
+            brand={manufacturer}
+            onBrand={(brand) => {
+              setManufacturer(brand);
+              setProductId(
+                heatPumpCatalog.products
+                  .filter((p) => p.manufacturer === brand)
+                  .sort(
+                    (a, b) => heatPumpPreference(a) - heatPumpPreference(b),
+                  )[0].id,
+              );
+              setOperatingPointIndex(1);
+            }}
+            models={
+              formId
+                ? []
+                : [...new Set(products.map((p) => p.family))].map((family) => {
+                    const inFamily = products.filter(
+                      (p) => p.family === family,
+                    );
+                    return {
+                      key: family,
+                      title: family,
+                      detail: `${inFamily.length} ${inFamily.length === 1 ? "taglia" : "taglie"}`,
+                      photo: {
+                        src: inFamily[0].productPhoto.localPath,
+                      },
+                      recommended: recommended?.family === family,
+                    };
+                  })
+            }
+            model={product.family}
+            onModel={(family) => {
+              setProductId(
+                (recommended?.family === family
+                  ? recommended
+                  : products.find((p) => p.family === family)!
+                ).id,
+              );
+              setOperatingPointIndex(1);
+            }}
+            sizes={
+              formId
+                ? []
+                : orderedProducts
+                    .filter((p) => p.family === product.family)
+                    .map((p) => {
+                      const rating = heatPumpCapacity(
+                        p.operatingPoints[operatingPointIndex] ??
+                          p.operatingPoints[0],
+                      );
+                      return {
+                        key: p.id,
+                        title: p.model,
+                        detail: `${formatNumber(rating.heatingW / 1000)} kW caldo · ${formatNumber(rating.coolingW / 1000)} kW freddo`,
+                        recommended: p.id === recommended?.id,
+                      };
+                    })
+            }
+            size={product.id}
+            onSize={(id) => {
+              setProductId(id);
+              setOperatingPointIndex(1);
+            }}
+          />
           {recommended && (
             <div
               className={configurationStyles.recommendation}
@@ -262,24 +307,6 @@ export function HydronicPanel({
               Nessun modello di questa marca copre entrambi i fabbisogni e trova
               spazio nella posizione scelta.
             </p>
-          )}
-          {!formId && (
-            <label className="campo">
-              <span>Serie e modello pompa</span>
-              <select
-                value={product.id}
-                onChange={(e) => {
-                  setProductId(e.target.value);
-                  setOperatingPointIndex(1);
-                }}
-              >
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.family} · {p.model}
-                  </option>
-                ))}
-              </select>
-            </label>
           )}
           <Image
             unoptimized

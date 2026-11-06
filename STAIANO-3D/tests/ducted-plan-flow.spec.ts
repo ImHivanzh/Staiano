@@ -1,7 +1,11 @@
 import { readFileSync } from "node:fs";
 import type { Locator, Page } from "@playwright/test";
 import { test, expect } from "./browser-test";
-import { chooseFanCoilModel, dragPlanDevice, openDisclosure } from "./ui-helpers";
+import {
+  chooseFanCoilModel,
+  dragPlanDevice,
+  openDisclosure,
+} from "./ui-helpers";
 import { projectSchema } from "../src/schemas/project";
 
 const legacy = JSON.parse(
@@ -208,9 +212,11 @@ for (const width of [1920, 1024]) {
         .getByRole("group", { name: "Ventilconvettori collegati" })
         .getByRole("checkbox"),
     ).toBeChecked();
-    await expect(pumpDialog.getByLabel("Marca pompa di calore")).toHaveValue(
-      "Chaffoteaux",
-    );
+    await expect(
+      pumpDialog
+        .getByRole("group", { name: "Marca pompa di calore" })
+        .getByRole("button", { name: "Chaffoteaux", exact: true }),
+    ).toHaveAttribute("aria-pressed", "true");
     await pumpDialog
       .locator("footer")
       .getByRole("button", { name: "Salva", exact: true })

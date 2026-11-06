@@ -168,16 +168,21 @@ test("3D climatizzatori placement preserves the explicitly chosen real brand and
     exact: true,
   });
   await palette
-    .getByLabel("Marca split", { exact: true })
-    .selectOption("Mitsubishi Electric");
-  const select = palette.getByLabel("Serie e modello split", { exact: true });
-  const choices = select.locator("option").filter({ hasText: /MSZ/ });
+    .getByRole("group", { name: "Marca split", exact: true })
+    .getByRole("button", { name: "Mitsubishi Electric", exact: true })
+    .click();
+  const choices = palette
+    .getByRole("group", { name: "Taglia split", exact: true })
+    .getByRole("button")
+    .filter({ hasText: /MSZ/ });
   expect(await choices.count()).toBeGreaterThan(0);
   const chosen = choices.nth(Math.min(1, (await choices.count()) - 1));
-  const chosenId = (await chosen.getAttribute("value"))!;
-  const chosenModel = (await chosen.textContent())!.match(/\bMSZ\S*\d\S*/)![0];
-  await select.selectOption(chosenId);
-  await expect(select).toHaveValue(chosenId);
+  const chosenId = (await chosen.getAttribute("data-id"))!;
+  const chosenModel = (await chosen.locator("strong").textContent())!.match(
+    /\bMSZ\S*\d\S*/,
+  )![0];
+  await chosen.click();
+  await expect(chosen).toHaveAttribute("aria-pressed", "true");
   await page.screenshot({
     path: testInfo.outputPath("novice-split-model-catalog.png"),
     fullPage: true,
@@ -272,7 +277,10 @@ test("two independently configured ducted zones keep each terminal assigned afte
       name: "Scegli macchina canalizzata",
       exact: true,
     });
-    await picker.getByLabel("Marca canalizzato").selectOption(brand);
+    await picker
+      .getByRole("group", { name: "Marca canalizzato" })
+      .getByRole("button", { name: brand, exact: true })
+      .click();
     await picker
       .locator("footer")
       .getByRole("button", { name: "Salva", exact: true })

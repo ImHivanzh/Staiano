@@ -13,6 +13,7 @@ import { formatNumber } from "@/utils/format";
 import { FullscreenDialog } from "../FullscreenDialog";
 import { MachinePlenumDetails } from "./MachinePlenumDetails";
 import { ManualMachineForm } from "./ManualMachineForm";
+import { BrandModelSize } from "./BrandModelSize";
 import { lastAvailableManufacturer } from "./manufacturer-preference";
 import styles from "./DuctedMachinePicker.module.css";
 
@@ -282,17 +283,32 @@ export function DuctedMachinePicker({
                       onChange={(e) => setSystemName(e.target.value)}
                     />
                   </label>
-                  <label className="campo">
-                    <span>Marca canalizzato</span>
-                    <select
-                      value={manufacturer}
-                      onChange={(e) => setManufacturer(e.target.value)}
-                    >
-                      {brands.map((b) => (
-                        <option key={b}>{b}</option>
-                      ))}
-                    </select>
-                  </label>
+                  <BrandModelSize
+                    name="canalizzato"
+                    brands={brands.map((b) => ({ key: b, title: b }))}
+                    brand={manufacturer}
+                    onBrand={(brand) => {
+                      setManufacturer(brand);
+                      setProductId("");
+                    }}
+                    models={[...new Set(candidates.map((p) => p.family))].map(
+                      (family) => ({
+                        key: family,
+                        title: family,
+                        detail: `${candidates.filter((p) => p.family === family).length} taglie compatibili`,
+                        recommended: candidates[0].family === family,
+                      }),
+                    )}
+                    model={selected?.family ?? ""}
+                    onModel={(family) =>
+                      setProductId(
+                        candidates.find((p) => p.family === family)?.id ?? "",
+                      )
+                    }
+                    sizes={[]}
+                    size=""
+                    onSize={() => undefined}
+                  />
                   <label className="campo">
                     <span>Macchine sugli stessi ambienti</span>
                     <input
@@ -435,35 +451,47 @@ export function DuctedMachinePicker({
                   </p>
                 )}
                 <div className={styles.models}>
-                  {candidates.map((product) => (
-                    <button
-                      type="button"
-                      className={styles.model}
-                      key={product.id}
-                      aria-pressed={selected?.id === product.id}
-                      onClick={() => setProductId(product.id)}
-                    >
-                      <span className={styles.modelName}>
-                        <strong>{product.indoorModel}</strong>
-                        <span>{product.outdoorModel}</span>
-                      </span>
-                      <span>
-                        {formatNumber(product.coolingCapacityW / 1000)} kW
-                        freddo ·{" "}
-                        {formatNumber((product.heatingCapacityW ?? 0) / 1000)}{" "}
-                        kW caldo
-                      </span>
-                      <span>
-                        {formatNumber(
-                          maximumAirflowOption(product)!.airflowM3h,
-                        )}{" "}
-                        m³/h · {product.staticPressurePa ?? "—"} Pa
-                      </span>
-                      <span className={styles.selectedLabel}>
-                        {selected?.id === product.id ? "Selezionato" : "Scegli"}
-                      </span>
-                    </button>
-                  ))}
+                  {candidates
+                    .filter((product) => product.family === selected?.family)
+                    .map((product) => (
+                      <button
+                        type="button"
+                        className={styles.model}
+                        key={product.id}
+                        aria-pressed={selected?.id === product.id}
+                        data-recommended={
+                          product.id === candidates[0].id ? "true" : undefined
+                        }
+                        onClick={() => setProductId(product.id)}
+                      >
+                        <span className={styles.modelName}>
+                          <strong>{product.indoorModel}</strong>
+                          <span>{product.outdoorModel}</span>
+                          {product.id === candidates[0].id && (
+                            <span className={styles.recommendedLabel}>
+                              Taglia consigliata
+                            </span>
+                          )}
+                        </span>
+                        <span>
+                          {formatNumber(product.coolingCapacityW / 1000)} kW
+                          freddo ·{" "}
+                          {formatNumber((product.heatingCapacityW ?? 0) / 1000)}{" "}
+                          kW caldo
+                        </span>
+                        <span>
+                          {formatNumber(
+                            maximumAirflowOption(product)!.airflowM3h,
+                          )}{" "}
+                          m³/h · {product.staticPressurePa ?? "—"} Pa
+                        </span>
+                        <span className={styles.selectedLabel}>
+                          {selected?.id === product.id
+                            ? "Selezionato"
+                            : "Scegli"}
+                        </span>
+                      </button>
+                    ))}
                 </div>
               </section>
             )}

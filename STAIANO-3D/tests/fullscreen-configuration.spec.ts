@@ -65,7 +65,10 @@ for (const viewport of [
     await page.keyboard.press("Escape");
     await expect(plan.getByTestId("draft-machine")).toHaveCount(1);
     await plan.getByTestId("draft-machine").click();
-    await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
+    await picker
+      .getByRole("group", { name: "Marca canalizzato" })
+      .getByRole("button", { name: "Daikin", exact: true })
+      .click();
     const models = picker
       .getByRole("region", { name: "Modelli macchina compatibili" })
       .getByRole("button");

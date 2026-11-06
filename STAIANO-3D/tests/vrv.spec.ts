@@ -53,7 +53,11 @@ test("VRV/VRF Daikin: inserimento, configurazione, salvataggio e ricaricamento",
   await expect(
     popup.getByRole("heading", { name: "VRV/VRF Daikin" }),
   ).toBeVisible();
-  await expect(popup.getByLabel("Serie e modello VRV")).not.toHaveValue("");
+  await expect(
+    popup
+      .getByRole("group", { name: "Taglia VRV", exact: true })
+      .locator('[aria-pressed="true"]'),
+  ).toHaveCount(1);
   await popup.getByRole("button", { name: "Salva", exact: true }).click();
   await expect(page.getByTestId("vrv-2d")).toHaveCount(1);
   await expect(page.getByTestId("save-status")).toHaveText("Salvato");

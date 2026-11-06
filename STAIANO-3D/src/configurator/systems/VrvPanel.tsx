@@ -9,6 +9,7 @@ import { removeHvacSystem } from "@/domain/ducted/apply";
 import { useProjectStore } from "@/stores/project-store";
 import { formatNumber } from "@/utils/format";
 import styles from "./SystemConfiguration.module.css";
+import { BrandModelSize } from "./BrandModelSize";
 
 export function VrvPanel({
   project,
@@ -87,25 +88,48 @@ export function VrvPanel({
               ))}
             </fieldset>
           </details>
-          <label className="campo">
-            <span>Serie e modello VRV</span>
-            <select
-              aria-label="Serie e modello VRV"
-              value={preview?.outdoor.id ?? ""}
-              onChange={(event) => setOutdoorId(event.target.value)}
-            >
-              {solutions.map((solution) => (
-                <option key={solution.outdoor.id} value={solution.outdoor.id}>
-                  {solution.outdoor.family} · {solution.outdoor.model} ·{" "}
-                  {formatNumber(solution.outdoor.coolingW / 1000)} kW · CR{" "}
-                  {formatNumber(solution.connectionRatio, 0)}%
-                </option>
-              ))}
-            </select>
-          </label>
+          <BrandModelSize
+            name="VRV"
+            brands={[{ key: "Daikin", title: "Daikin" }]}
+            brand="Daikin"
+            onBrand={() => setOutdoorId("")}
+            models={[...new Set(solutions.map((s) => s.outdoor.family))].map(
+              (family) => {
+                const inFamily = solutions.filter(
+                  (s) => s.outdoor.family === family,
+                );
+                return {
+                  key: family,
+                  title: family,
+                  detail: `${inFamily.length} ${inFamily.length === 1 ? "taglia" : "taglie"}`,
+                  photo: {
+                    src: inFamily[0].outdoor.productPhoto.localPath,
+                  },
+                  recommended: solutions[0].outdoor.family === family,
+                };
+              },
+            )}
+            model={preview?.outdoor.family ?? ""}
+            onModel={(family) =>
+              setOutdoorId(
+                solutions.find((s) => s.outdoor.family === family)?.outdoor
+                  .id ?? "",
+              )
+            }
+            sizes={solutions
+              .filter((s) => s.outdoor.family === preview?.outdoor.family)
+              .map((s, i) => ({
+                key: s.outdoor.id,
+                title: s.outdoor.model,
+                detail: `${formatNumber(s.outdoor.coolingW / 1000)} kW · CR ${formatNumber(s.connectionRatio, 0)}%`,
+                recommended: i === 0,
+              }))}
+            size={preview?.outdoor.id ?? ""}
+            onSize={setOutdoorId}
+          />
           {solutions[0] && (
             <div className={styles.recommendation} aria-label="VRV consigliato">
-              <strong>Consigliato</strong>
+              <strong>Taglia consigliata</strong>
               <p>
                 {solutions[0].outdoor.model} ·{" "}
                 {solutions[0].assignments
@@ -118,7 +142,7 @@ export function VrvPanel({
                 aria-pressed={preview?.outdoor.id === solutions[0].outdoor.id}
                 onClick={() => setOutdoorId(solutions[0].outdoor.id)}
               >
-                Usa consigliato
+                Usa taglia consigliata
               </button>
             </div>
           )}

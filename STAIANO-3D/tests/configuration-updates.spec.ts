@@ -99,7 +99,10 @@ test("second ducted placement defaults to previous project manufacturer", async 
   await plan.getByRole("button", { name: "Macchina", exact: true }).click();
   await pickPlanPoint(plan, 2, 2);
   await openConnectedMachine(page, plan);
-  await picker.getByLabel("Marca canalizzato").selectOption("Daikin");
+  await picker
+    .getByRole("group", { name: "Marca canalizzato" })
+    .getByRole("button", { name: "Daikin", exact: true })
+    .click();
   await picker
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
@@ -108,7 +111,11 @@ test("second ducted placement defaults to previous project manufacturer", async 
   await plan.getByRole("button", { name: "Macchina", exact: true }).click();
   await pickPlanPoint(plan, 3.5, 3);
   await openConnectedMachine(page, plan);
-  await expect(picker.getByLabel("Marca canalizzato")).toHaveValue("Daikin");
+  await expect(
+    picker
+      .getByRole("group", { name: "Marca canalizzato" })
+      .getByRole("button", { name: "Daikin", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
   await expect(picker.getByRole("checkbox")).toHaveCount(0);
 });
 

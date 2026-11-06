@@ -7,7 +7,10 @@ import {
   splitCombinationAtVersion,
 } from "@/domain/catalogs/splits";
 import { applySplitSystem } from "@/domain/air-conditioning/apply";
-import { sizeSplitSystems } from "@/domain/air-conditioning/size";
+import {
+  sizeSplitSystems,
+  type SplitSolution,
+} from "@/domain/air-conditioning/size";
 import { wattsToBtuh } from "@/domain/thermal/calculate";
 import { removeHvacSystem } from "@/domain/ducted/apply";
 import { useProjectStore } from "@/stores/project-store";
@@ -16,6 +19,8 @@ import { splitUnitPresentation } from "@/domain/catalogs/split-presentation";
 import Image from "next/image";
 import styles from "./SystemConfiguration.module.css";
 import { lastAvailableManufacturer } from "./manufacturer-preference";
+import { BrandModelSize, type PickerOption } from "./BrandModelSize";
+const SPLIT_BRANDS = ["Daikin", "Mitsubishi Electric", "Gree", "LG"];
 export function SplitPanel({
   project,
   room,
@@ -44,7 +49,7 @@ export function SplitPanel({
       existing?.manufacturer ??
         lastAvailableManufacturer(
           project.hvacSystems.map((system) => system.manufacturer),
-          ["Daikin", "Mitsubishi Electric", "Gree", "LG"],
+          SPLIT_BRANDS,
         ),
     ),
     [roomIds, setRoomIds] = useState(
@@ -70,6 +75,36 @@ export function SplitPanel({
       ? splitCombinationAtVersion(existing.productId, existing.catalogVersion)
       : null,
     combo = preview?.combination ?? installed;
+  const familyOf = (s: SplitSolution) =>
+    [...new Set(s.assignments.map((a) => a.indoor.family))].join(" + ");
+  const activeFamily = preview ? familyOf(preview) : "";
+  const models: PickerOption[] = [...new Set(choices.map(familyOf))].map(
+    (family) => {
+      const inFamily = choices.filter((s) => familyOf(s) === family),
+        series = splitUnitPresentation(inFamily[0].assignments[0].indoor);
+      return {
+        key: family,
+        title: series?.title ?? family,
+        detail: `${inFamily.length} ${inFamily.length === 1 ? "taglia" : "taglie"}`,
+        photo: series
+          ? {
+              src: series.productPhoto.localPath,
+            }
+          : undefined,
+        recommended: !!solutions[0] && familyOf(solutions[0]) === family,
+      };
+    },
+  );
+  const familyRecommended = solutions.find((s) => familyOf(s) === activeFamily);
+  const sizes: PickerOption[] = choices
+    .filter((s) => familyOf(s) === activeFamily)
+    .map((s) => ({
+      key: s.combination.id,
+      title: s.assignments.map((a) => a.indoor.model).join(" + "),
+      detail: `${s.combination.outdoorModel} · ${formatNumber((s.combination.maxCoolingCapacityW ?? s.combination.coolingCapacityW) / 1000)} kW freddo`,
+      warning: s.meetsLoad ? undefined : "Potenza insufficiente",
+      recommended: s === familyRecommended,
+    }));
   const catalog = existing
     ? splitCatalogAtVersion(existing.catalogVersion)
     : splitCatalog;
@@ -96,39 +131,28 @@ export function SplitPanel({
       <div className={styles.layout}>
         <div className={styles.controls}>
           <h4>Marca, modello e ambienti</h4>
-          <label className="campo">
-            <span>Marca split</span>
-            <select
-              aria-label="Marca split"
-              value={manufacturer}
-              onChange={(e) => setManufacturer(e.target.value)}
-            >
-              {["Daikin", "Mitsubishi Electric", "Gree", "LG"].map((brand) => (
-                <option key={brand}>{brand}</option>
-              ))}
-            </select>
-          </label>
-          <label className="campo">
-            <span>Serie e modello</span>
-            <select
-              aria-label="Serie e modello split"
-              value={preview?.combination.id ?? ""}
-              onChange={(e) => setCombinationId(e.target.value)}
-            >
-              {choices.map((s) => (
-                <option key={s.combination.id} value={s.combination.id}>
-                  {s.assignments
-                    .map(
-                      (a) =>
-                        `${splitUnitPresentation(a.indoor)?.title ?? a.indoor.family} · ${a.indoor.model}`,
-                    )
-                    .join(" + ")}{" "}
-                  / {s.combination.outdoorModel}
-                  {!s.meetsLoad ? " · potenza insufficiente" : ""}
-                </option>
-              ))}
-            </select>
-          </label>
+          <BrandModelSize
+            name="split"
+            brands={SPLIT_BRANDS.map((brand) => ({ key: brand, title: brand }))}
+            brand={manufacturer}
+            onBrand={(brand) => {
+              setManufacturer(brand);
+              setCombinationId("");
+            }}
+            models={models}
+            model={activeFamily}
+            onModel={(family) =>
+              setCombinationId(
+                (
+                  solutions.find((s) => familyOf(s) === family) ??
+                  choices.find((s) => familyOf(s) === family)
+                )?.combination.id ?? "",
+              )
+            }
+            sizes={sizes}
+            size={preview?.combination.id ?? ""}
+            onSize={setCombinationId}
+          />
           <details open>
             <summary>Ambienti climatizzati · {roomIds.length}</summary>
             <fieldset>
@@ -158,7 +182,7 @@ export function SplitPanel({
               className={styles.recommendation}
               aria-label="Split consigliato"
             >
-              <strong>Consigliato</strong>
+              <strong>Taglia consigliata</strong>
               <p>
                 {solutions[0].assignments
                   .map((item) => item.indoor.model)
@@ -173,7 +197,7 @@ export function SplitPanel({
                 }
                 onClick={() => setCombinationId(solutions[0].combination.id)}
               >
-                Usa consigliato
+                Usa taglia consigliata
               </button>
             </div>
           )}

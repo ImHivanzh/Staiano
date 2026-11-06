@@ -186,8 +186,9 @@ test("Innova M7 and Gree outdoor heat pump are real editable objects with summar
     exact: true,
   });
   await hydronic
-    .getByRole("combobox", { name: "Marca pompa di calore", exact: true })
-    .selectOption("Gree");
+    .getByRole("group", { name: "Marca pompa di calore", exact: true })
+    .getByRole("button", { name: "Gree", exact: true })
+    .click();
   await hydronic
     .locator("footer")
     .getByRole("button", { name: "Salva", exact: true })
