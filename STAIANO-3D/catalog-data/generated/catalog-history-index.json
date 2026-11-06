@@ -41,6 +41,14 @@
       "2026-10-04-lazzarini-d89694f428a9": {
         "file": "ce9ccf53695040f37c30660893ad74f7cb6b96c00024dbd40b1ea31511789dd6.json",
         "sha256": "ce9ccf53695040f37c30660893ad74f7cb6b96c00024dbd40b1ea31511789dd6"
+      },
+      "2026-10-04-zehnder-97514099a313": {
+        "file": "1526ef095ad28b445b3be3b576e6cd9c68864dbbf08369a2ddbbd088644509cc.json",
+        "sha256": "1526ef095ad28b445b3be3b576e6cd9c68864dbbf08369a2ddbbd088644509cc"
+      },
+      "2026-10-04-zehnder-e733aa3cf142": {
+        "file": "2132d7405a3f990b18a092230039479db38910e9bb22302783b824d4cc67bd09.json",
+        "sha256": "2132d7405a3f990b18a092230039479db38910e9bb22302783b824d4cc67bd09"
       }
     },
     "airTerminals": {
@@ -249,6 +257,18 @@
       "heat-pumps-9e3730348d934831": {
         "file": "74a6c83e6808391d785461f0d558643abf2f37595f58bf1067a337d60dd14290.json",
         "sha256": "74a6c83e6808391d785461f0d558643abf2f37595f58bf1067a337d60dd14290"
+      },
+      "heat-pumps-6887d71cf50927c4": {
+        "file": "5f8a13b5b2d6f700e86dad7b4e5943a32051152e26dd152e114e4a14e1a2ca07.json",
+        "sha256": "5f8a13b5b2d6f700e86dad7b4e5943a32051152e26dd152e114e4a14e1a2ca07"
+      },
+      "heat-pumps-27a82dc292333f25": {
+        "file": "e00fbee4390ba15e85fdf76f05940eb7e86ea9f147d2f70932a2e0c34090c9f9.json",
+        "sha256": "e00fbee4390ba15e85fdf76f05940eb7e86ea9f147d2f70932a2e0c34090c9f9"
+      },
+      "heat-pumps-362036efca39ad9e": {
+        "file": "61a08ac687dcf98fd546d675d532747856b7ab0b7cf1db349c7d190c521ed846.json",
+        "sha256": "61a08ac687dcf98fd546d675d532747856b7ab0b7cf1db349c7d190c521ed846"
       }
     },
     "splits": {
@@ -287,6 +307,10 @@
       "split-471073151286aef9": {
         "file": "3177724fe0da5f2eb8a3a9afb3c3c489a6b5cc89baf189d839a94d3bc3e727d1.json",
         "sha256": "3177724fe0da5f2eb8a3a9afb3c3c489a6b5cc89baf189d839a94d3bc3e727d1"
+      },
+      "split-14b8642426c39c7c": {
+        "file": "90b5ca52d65be4b2759cfc899d8607f6b71f1ee1752999920dbc608b83100db9.json",
+        "sha256": "90b5ca52d65be4b2759cfc899d8607f6b71f1ee1752999920dbc608b83100db9"
       }
     },
     "vrv": {}
