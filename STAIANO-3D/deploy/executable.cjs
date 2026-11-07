@@ -608,6 +608,72 @@ function hostRequest(dataRoot, run = runHostAction) {
   return result;
 }
 
+function verifyHostCommand(token, publicKey, machineId, nonce, now = Date.now()) {
+  const parts = typeof token === "string" ? token.split(".") : [];
+  if (
+    parts.length !== 2 ||
+    !crypto.verify(
+      null,
+      Buffer.from(`staiano-host-v1.${parts[0]}`),
+      publicKey,
+      Buffer.from(parts[1], "base64url"),
+    )
+  )
+    throw new Error("Firma del comando non valida.");
+  const value = JSON.parse(Buffer.from(parts[0], "base64url"));
+  if (
+    value.v !== 1 ||
+    value.app !== "staiano-hvac" ||
+    value.machineId !== machineId ||
+    value.nonce !== nonce ||
+    !["anydesk", "reboot"].includes(value.action) ||
+    typeof value.id !== "string" ||
+    !Number.isSafeInteger(value.issuedAt) ||
+    !Number.isSafeInteger(value.expiresAt) ||
+    value.issuedAt > now / 1000 + 30 ||
+    value.expiresAt <= now / 1000 ||
+    value.expiresAt - value.issuedAt > 300
+  )
+    throw new Error("Comando non valido o scaduto.");
+  return value;
+}
+
+// Comando richiesto dal pannello licenze: l'attività Update (elevata) lo chiede
+// al Worker ogni 5 minuti; nessuna porta aperta sul server. Non deve mai far
+// fallire l'aggiornamento.
+async function remoteHostCommand(dataRoot, config, run = runHostAction) {
+  const resultFile = path.join(dataRoot, ".cache", "host-request-result.json");
+  let value;
+  try {
+    const state = JSON.parse(
+      fs.readFileSync(path.join(dataRoot, ".cache", "license.json"), "utf8"),
+    );
+    const machineId = fingerprint(state.machineId);
+    if (state.machineId !== machineId) return null;
+    const nonce = crypto.randomBytes(32).toString("hex");
+    const response = await fetch(`${SERVER}/updates/host`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ licenseKey: state.key, machineId, nonce }),
+      redirect: "error",
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!response.ok) return null;
+    const body = await response.json();
+    if (body.status !== "command") return null;
+    value = verifyHostCommand(body.command, config.publicKey, machineId, nonce);
+    run(value.action);
+    const result = { action: value.action, remote: true, ok: true, at: new Date().toISOString() };
+    atomicJson(resultFile, result);
+    return result;
+  } catch (error) {
+    if (!value) return null;
+    const result = { action: value.action, remote: true, ok: false, error: error.message, at: new Date().toISOString() };
+    atomicJson(resultFile, result);
+    return result;
+  }
+}
+
 async function update(dataRoot, config) {
   const install = path.dirname(dataRoot),
     activeFile = path.join(install, "active.json");
@@ -746,7 +812,10 @@ async function main() {
       } finally {
         fs.unlinkSync(lock);
         // Dopo l'aggiornamento, così un riavvio non lo interrompe a metà.
-        if (args.includes("--update")) hostRequest(dataRoot);
+        if (args.includes("--update")) {
+          hostRequest(dataRoot);
+          await remoteHostCommand(dataRoot, config);
+        }
       }
     }
     return;
@@ -790,6 +859,8 @@ module.exports = {
   ensureCatalogDocuments,
   requireCurrentVersion,
   hostRequest,
+  verifyHostCommand,
+  remoteHostCommand,
 };
 if (sea.isSea())
   main().catch((error) => {

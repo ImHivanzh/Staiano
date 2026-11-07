@@ -911,3 +911,58 @@ describe("Worker licenze — regressioni e pannello", () => {
     ).toBe(200);
   });
 });
+
+describe("Worker licenze — comandi al server", () => {
+  async function activeSeat() {
+    const created = await createLicense(env);
+    const activated = await call(env, "/activate", {
+      method: "POST",
+      body: { licenseKey: created.key, machineId: MACHINE_A, hostname: "SERVER" },
+    });
+    expect(activated.status).toBe(200);
+    return created;
+  }
+  const queue = (id: string, body: unknown) =>
+    call(env, `/admin/licenses/${id}/host`, {
+      method: "POST",
+      token: ADMIN_TOKEN,
+      body,
+    });
+  const fetchCommand = (key: string, machineId = MACHINE_A) =>
+    call(env, "/updates/host", {
+      method: "POST",
+      body: { licenseKey: key, machineId, nonce: "c".repeat(64) },
+    });
+
+  it("consegna un comando firmato una sola volta", async () => {
+    const { key, license } = await activeSeat();
+    expect((await queue(license.id, { machineId: MACHINE_A, action: "anydesk" })).status).toBe(200);
+    const first = await (await fetchCommand(key)).json();
+    expect(first.status).toBe("command");
+    const [encoded] = first.command.split(".");
+    expect(JSON.parse(Buffer.from(encoded, "base64url").toString())).toMatchObject({
+      action: "anydesk",
+      machineId: MACHINE_A,
+      nonce: "c".repeat(64),
+    });
+    expect(await (await fetchCommand(key)).json()).toEqual({ status: "none" });
+  });
+
+  it("rifiuta azioni sconosciute, postazioni non attive e richiesta senza admin", async () => {
+    const { key, license } = await activeSeat();
+    expect((await queue(license.id, { machineId: MACHINE_A, action: "format" })).status).toBe(400);
+    expect((await queue(license.id, { machineId: MACHINE_B, action: "reboot" })).status).toBe(409);
+    expect(
+      (await call(env, `/admin/licenses/${license.id}/host`, { method: "POST", body: { machineId: MACHINE_A, action: "reboot" } })).status,
+    ).toBe(401);
+    expect((await fetchCommand(key, MACHINE_B)).status).toBe(403);
+    expect(await (await fetchCommand(key)).json()).toEqual({ status: "none" });
+  });
+
+  it("ignora richieste vecchie di 15 minuti", async () => {
+    const { key, license } = await activeSeat();
+    await queue(license.id, { machineId: MACHINE_A, action: "reboot" });
+    db.exec(`UPDATE host_commands SET created_at = created_at - 1000`);
+    expect(await (await fetchCommand(key)).json()).toEqual({ status: "none" });
+  });
+});

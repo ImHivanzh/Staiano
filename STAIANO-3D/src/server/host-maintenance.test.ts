@@ -67,3 +67,27 @@ describe("richieste al computer host", () => {
     expect(JSON.parse(await readFile(path.join(root, ".cache", "host-request-result.json"), "utf8")).ok).toBe(false);
   });
 });
+
+describe("comando remoto firmato", () => {
+  const { verifyHostCommand } = createRequire(import.meta.url)("../../deploy/executable.cjs");
+  const { generateKeyPairSync, sign } = createRequire(import.meta.url)("node:crypto");
+  const { publicKey, privateKey } = generateKeyPairSync("ed25519");
+  const machine = `mch_${"a".repeat(32)}`, nonce = "d".repeat(64);
+  const token = (over = {}, prefix = "staiano-host-v1") => {
+    const now = Math.floor(Date.now() / 1000);
+    const encoded = Buffer.from(JSON.stringify({ v: 1, app: "staiano-hvac", id: "x", action: "reboot", machineId: machine, nonce, issuedAt: now, expiresAt: now + 300, ...over })).toString("base64url");
+    return `${encoded}.${sign(null, Buffer.from(`${prefix}.${encoded}`), privateKey).toString("base64url")}`;
+  };
+  it("accetta un comando valido", () => {
+    expect(verifyHostCommand(token(), publicKey, machine, nonce).action).toBe("reboot");
+  });
+  it.each([
+    ["altra postazione", token({ machineId: `mch_${"b".repeat(32)}` })],
+    ["nonce diverso", token({ nonce: "e".repeat(64) })],
+    ["azione sconosciuta", token({ action: "format" })],
+    ["scaduto", token({ expiresAt: 1, issuedAt: 0 })],
+    ["firma di un altro tipo di messaggio", token({}, "staiano-update-v1")],
+  ])("rifiuta: %s", (_, bad) => {
+    expect(() => verifyHostCommand(bad, publicKey, machine, nonce)).toThrow();
+  });
+});

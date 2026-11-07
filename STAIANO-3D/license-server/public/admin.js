@@ -199,6 +199,22 @@
             name.append(element("span", seat.machine_id, "machine-id"));
             const action = element("td");
             if (!seat.released_at)
+              for (const [label, hostAction, warning] of [
+                ["Riavvia AnyDesk", "anydesk", "La connessione AnyDesk cade per qualche secondo."],
+                ["Riavvia PC", "reboot", "Il computer si spegne e riparte: i programmi aperti si chiudono."],
+              ])
+                action.append(
+                  button(label, async () => {
+                    if (!confirm(`${label} su ${seat.hostname || seat.machine_id}? ${warning} Parte entro 5 minuti.`))
+                      return;
+                    await api(`/admin/licenses/${item.id}/host`, "POST", {
+                      machineId: seat.machine_id,
+                      action: hostAction,
+                    });
+                    message("Richiesta in coda: parte entro 5 minuti.");
+                  }),
+                );
+            if (!seat.released_at)
               action.append(
                 button("Libera posto", async () => {
                   if (

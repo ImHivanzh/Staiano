@@ -596,7 +596,7 @@ async function handleAdmin(
   }
 
   const action = pathname.match(
-    /^\/admin\/licenses\/([A-Za-z0-9_]+)\/(revoke|restore|release|rotate)$/,
+    /^\/admin\/licenses\/([A-Za-z0-9_]+)\/(revoke|restore|release|rotate|host)$/,
   );
   if (action && request.method === "POST") {
     const [, id, operation] = action;
@@ -632,6 +632,32 @@ async function handleAdmin(
     const machineId = text(body.machineId);
     if (!isMachineId(machineId))
       return json({ message: "Identificativo macchina non valido." }, 400);
+    if (operation === "host") {
+      const hostAction = text(body.action);
+      const seat = await activation(env, id, machineId);
+      if (hostAction !== "anydesk" && hostAction !== "reboot")
+        return json({ message: "Azione non valida." }, 400);
+      if (license.status !== "active" || !seat || seat.released_at)
+        return json({ message: "Postazione non attiva." }, 409);
+      // Una sola richiesta in attesa per postazione.
+      await env.DB.prepare(
+        "DELETE FROM host_commands WHERE machine_id = ? AND delivered_at IS NULL",
+      )
+        .bind(machineId)
+        .run();
+      await env.DB.prepare(
+        "INSERT INTO host_commands (id, license_id, machine_id, action, created_at) VALUES (?, ?, ?, ?, ?)",
+      )
+        .bind(
+          crypto.randomUUID(),
+          id,
+          machineId,
+          hostAction,
+          Math.floor(Date.now() / 1000),
+        )
+        .run();
+      return json({ status: "queued", id, machineId, action: hostAction });
+    }
     await env.DB.prepare(
       "UPDATE activations SET released_at = ? WHERE license_id = ? AND machine_id = ?",
     )
@@ -806,6 +832,17 @@ async function handleUpdate(env: Env, request: Request): Promise<Response> {
     issuedAt: now,
     expiresAt: now + 300,
   };
+  return json({
+    status: "available",
+    manifest: await signPayload(env, "staiano-update-v1", payload),
+  });
+}
+
+async function signPayload(
+  env: Env,
+  prefix: string,
+  payload: Record<string, unknown>,
+): Promise<string> {
   const encoded = base64UrlEncode(
     new TextEncoder().encode(JSON.stringify(payload)),
   );
@@ -819,11 +856,45 @@ async function handleUpdate(env: Env, request: Request): Promise<Response> {
   const signature = await crypto.subtle.sign(
     "Ed25519",
     signingKey,
-    new TextEncoder().encode(`staiano-update-v1.${encoded}`),
+    new TextEncoder().encode(`${prefix}.${encoded}`),
   );
+  return `${encoded}.${base64UrlEncode(new Uint8Array(signature))}`;
+}
+
+// Comando di manutenzione per una postazione: monouso, firmato, valido 5 minuti.
+async function handleHostCommand(env: Env, request: Request): Promise<Response> {
+  const body = await readBody(request);
+  const key = normalizeLicenseKey(text(body.licenseKey)),
+    machineId = text(body.machineId),
+    nonce = text(body.nonce);
+  if (!key || !isMachineId(machineId) || !/^[a-f0-9]{64}$/.test(nonce))
+    return json({ message: "Richiesta non valida." }, 400);
+  const license = await findLicense(env, key);
+  const seat = license ? await activation(env, license.id, machineId) : null;
+  if (!license || license.status !== "active" || !seat || seat.released_at)
+    return json({ message: "Postazione non autorizzata." }, 403);
+  const now = Math.floor(Date.now() / 1000);
+  const command = await env.DB.prepare(
+    "SELECT id, action FROM host_commands WHERE license_id = ? AND machine_id = ? AND delivered_at IS NULL AND created_at > ? ORDER BY created_at DESC LIMIT 1",
+  )
+    .bind(license.id, machineId, now - 900)
+    .first<{ id: string; action: string }>();
+  if (!command) return json({ status: "none" });
+  await env.DB.prepare("UPDATE host_commands SET delivered_at = ? WHERE id = ?")
+    .bind(now, command.id)
+    .run();
   return json({
-    status: "available",
-    manifest: `${encoded}.${base64UrlEncode(new Uint8Array(signature))}`,
+    status: "command",
+    command: await signPayload(env, "staiano-host-v1", {
+      v: 1,
+      app: "staiano-hvac",
+      id: command.id,
+      action: command.action,
+      machineId,
+      nonce,
+      issuedAt: now,
+      expiresAt: now + 300,
+    }),
   });
 }
 
@@ -894,6 +965,7 @@ async function route(request: Request, env: Env): Promise<Response> {
         "/updates/check",
         "/updates/version",
         "/updates/download",
+        "/updates/host",
       ].includes(pathname)
     )
       return json({ message: "Endpoint non riconosciuto." }, 404);
@@ -910,6 +982,7 @@ async function route(request: Request, env: Env): Promise<Response> {
       )
     )
       return await handleUpdate(env, request);
+    if (pathname === "/updates/host") return await handleHostCommand(env, request);
     if (pathname === "/activate") return await handleActivate(env, request);
     if (pathname === "/verify") return await handleVerify(env, request);
     return await handleDeactivate(env, request);
