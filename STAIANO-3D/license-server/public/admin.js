@@ -104,6 +104,14 @@
       const identifier = element("p", item.id, "meta");
       identifier.title = item.id;
       title.append(identifier);
+      for (const seat of item.activations.filter((x) => !x.released_at))
+        title.append(
+          element(
+            "p",
+            `${seat.hostname || "Postazione"} · ${versionLabel(seat, item.productId)} · visto ${date(seat.last_seen)}`,
+            "meta",
+          ),
+        );
       const product = element(
         "div",
         productNames.get(item.productId) || item.productId,
@@ -233,7 +241,7 @@
             row.append(
               name,
               element("td", date(seat.last_seen)),
-              element("td", seat.app_version || "—", "machine-version"),
+              element("td", versionLabel(seat, item.productId), "machine-version"),
               element("td", seat.released_at ? "Liberata" : "Attiva"),
               action,
             );
@@ -248,6 +256,15 @@
       fragment.append(article);
     }
     $("licenses").replaceChildren(fragment);
+  }
+  // Ultima revisione pubblicata di Staiano HVAC; serve a dire se una postazione è aggiornata.
+  let latest = "";
+  function versionLabel(seat, productId) {
+    const version = seat.app_version;
+    if (!version) return "versione sconosciuta";
+    const short = version.slice(0, 7);
+    if (productId !== "staiano-hvac" || !latest) return short;
+    return `${short} · ${version === latest ? "aggiornata" : "da aggiornare"}`;
   }
   async function load() {
     const [registered, data, releaseResult] = await Promise.all([
@@ -277,6 +294,7 @@
       .map((product) => `${product.name} (${product.id})`)
       .join(" · ");
     licenses = data.licenses;
+    latest = releaseResult.value?.release?.commit_sha ?? "";
     render();
     try {
       if (releaseResult.error) throw new Error("Pacchetto non disponibile");
