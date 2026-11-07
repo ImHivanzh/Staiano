@@ -457,6 +457,11 @@ function unpack(dataRoot, config) {
   process.env.LICENSE_PUBLIC_KEY = config.publicKey;
   process.env.LICENSE_FILE = path.join(dataRoot, ".cache", "license.json");
   process.env.AUTH_FILE = path.join(dataRoot, ".cache", "app-auth.json");
+  process.env.HOST_REQUEST_FILE = path.join(
+    dataRoot,
+    ".cache",
+    "host-request.json",
+  );
   process.env.STAIANO_PACKAGED = "1";
   process.env.STAIANO_CATALOG_SOURCES = path.join(
     dataRoot,
@@ -559,6 +564,48 @@ function powershell(script, args = []) {
     ["-NoProfile", "-NonInteractive", "-Command", script, ...args],
     { encoding: "utf8", windowsHide: true, timeout: 90000 },
   );
+}
+
+function runHostAction(action) {
+  if (action === "anydesk")
+    powershell("Restart-Service -Name AnyDesk -Force -ErrorAction Stop");
+  else
+    execFileSync(
+      "shutdown.exe",
+      ["/r", "/t", "30", "/c", "Riavvio richiesto dal pannello Staiano HVAC"],
+      { windowsHide: true, timeout: 30000 },
+    );
+}
+
+// Richiesta scritta dal pannello admin (src/server/host-maintenance.ts); l'app
+// ha permessi limitati, questo processo (task Update) è elevato.
+// shortcut: AnyDesk riavviato solo se installato come servizio Windows «AnyDesk»; il riavvio può interrompere un altro aggiornamento in corso.
+function hostRequest(dataRoot, run = runHostAction) {
+  const file = path.join(dataRoot, ".cache", "host-request.json");
+  let raw;
+  try {
+    raw = fs.readFileSync(file, "utf8");
+  } catch {
+    return null;
+  }
+  fs.rmSync(file, { force: true });
+  const result = { at: new Date().toISOString() };
+  try {
+    const request = JSON.parse(raw);
+    result.action = request.action;
+    if (
+      !["anydesk", "reboot"].includes(request.action) ||
+      !(Date.now() - Date.parse(request.requestedAt) < 15 * 60 * 1000)
+    )
+      throw new Error("Richiesta scaduta o non valida.");
+    run(request.action);
+    result.ok = true;
+  } catch (error) {
+    result.ok = false;
+    result.error = error.message;
+  }
+  atomicJson(path.join(dataRoot, ".cache", "host-request-result.json"), result);
+  return result;
 }
 
 async function update(dataRoot, config) {
@@ -698,6 +745,8 @@ async function main() {
         fs.closeSync(fd);
       } finally {
         fs.unlinkSync(lock);
+        // Dopo l'aggiornamento, così un riavvio non lo interrompe a metà.
+        if (args.includes("--update")) hostRequest(dataRoot);
       }
     }
     return;
@@ -740,6 +789,7 @@ module.exports = {
   verifyCatalogDocuments,
   ensureCatalogDocuments,
   requireCurrentVersion,
+  hostRequest,
 };
 if (sea.isSea())
   main().catch((error) => {

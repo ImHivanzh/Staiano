@@ -1,5 +1,6 @@
 "use client";
 import { NotificationToast } from "./NotificationToast";
+import { HostMaintenance } from "./HostMaintenance";
 import { useEffect, useState, type FormEvent } from "react";
 import { FloppyDisk, Key, UserPlus } from "@phosphor-icons/react";
 import type { ManagedUser } from "@/server/auth";
@@ -211,6 +212,7 @@ export function AdminUsers({ username }: { username: string }) {
           ))}
         </section>
       </div>
+      <HostMaintenance />
     </main>
   );
 }
